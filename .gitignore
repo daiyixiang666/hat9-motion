@@ -1,0 +1,16 @@
+
+# Mixkit 素材不随仓库再分发（见 examples/aefx/assets/broll/CREDITS.md）
+examples/aefx/assets/broll/*.jpg
+examples/aefx/assets/broll/*.png
+
+# build outputs (re-create with scripts/render.py); renders live in assets/previews as web-size copies
+examples/*/build/
+examples/*/renders/
+examples/*/previews/
+dist/
+**/__pycache__/
+.hyperframes/
+**/.hyperframes/
+examples/*/assets/audio/tts/
+*.f32
+.DS_Store

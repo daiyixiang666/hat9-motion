@@ -1,0 +1,46 @@
+# 九帽动效 · 效果索引（给 AI 读）
+
+在 video.json 里写 {"scene": "fx", "fx": "<id>", ...}；转场写在下一个 beat："tr": "<id>"。配方卡：references/effects/<id>.md
+
+- parallax [照片]: 2.5D 照片视差 (#2, VoluMax/Photomotion; MDMZ 1171万播放) — 开场大图、人物故事
+- burst [图形]: 形状元素爆发 (Shape Elements burst) — 爆款、数字揭晓、强调
+- stomp [字效]: 重拍排版 Stomp (#4, TypoKing 1.34万份; B站动态歌词排版 898万) — 节奏快的一句话、金句拆字
+- mask_up [字效]: 行遮罩上移 (the most-used title reveal) — 任何标题、两行观点
+- mosaic [照片]: 照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份) — 大量案例、作品合集
+- cartoon [图形]: 卡通冲击特效 (#7, 140 Flash FX 1.47万份) — 搞笑、吐槽、意外
+- apple_blur [字效]: 苹果式逐字模糊渐显 (#9, 206.8万 2025) — 结论、产品口吻的判断句
+- portal [照片]: 瞳孔穿梭 / 穿洞推进 (#10, B站364.5万 2025) — 从一个画面进入另一个话题
+- shine [字效]: 光泽扫过 (Shine / CC Light Sweep) on a title — 收尾、品牌
+- neon [字效]: 霓虹点亮 (#12, Neon Sign Kit 1万份) — 夜景、潮流、店招
+- notify [界面]: 手机通知界面 (#13, Envato Elements「Elements」热门第1) — 平台反馈、增长、消息
+- lower3 [界面]: 下三分之一字条 (#14, Lower Thirds 第1名 6.3K) — 人物 / 账号介绍、结尾
+- glitch [字效]: 故障 RGB 分离 (Glitch / RGB split) — 出错、警告、反转
+- triple [界面]: 三连 (like · coin · favourite) — 片尾求三连 / 关注
+- callout [照片]: 标注引线 (Callout title) — 指出图里的细节
+- odometer [数据]: 数字滚轮 (Odometer / number wheel) — 任何数字、比例
+- collage [照片]: 拼贴剪纸 (#21, Fakeplastictree Collage 203.5万) — 资料拼贴、证据
+- write_on [字效]: 描边书写 → 填色 (Trim Paths on text / 手写签名) — 关键词、签名、毛笔字
+- match_cut [字效]: 文字匹配剪辑 Text Match Cut (#23, Envato Elements 标题热门第1/2) — 一个词贯穿多个场景
+- impact [字效]: 冲击抖动 (#24, Bricks 106.8万 2025) — 重点结论、冲击句
+- typewriter [字效]: 打字机 + 光标 — 提示词、命令、搜索
+- scramble [字效]: 乱码解码 (Decoder / Scramble) — 技术名词、英文代号
+- tracking [字效]: 字距收拢 (Tracking In) — 电影感标题、一个词
+- flip3d [字效]: 逐字三维翻转 (3D Flip per character) — 账号名、章节名
+- ghost_type [字效]: 巨型虚影背景字 (Ghost / outline background type) — 章节标题 + 小字说明
+- lockup [字效]: 中英双语锁定 + 注释引线 (type specimen lockup) — 中英双语标题、字体展示
+- diffuse [图形]: 弥散光 (diffuse gradient blobs) — 安静的过渡、情绪句
+- gooey [图形]: 粘性碰撞 (gooey metaballs) — 合并、碰撞、两者关系
+
+## 转场
+- zoomin: #1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）
+- spin: #1 无缝旋转 · Seamless Spin（Motion Bro 免费包 >100万下载）
+- whip: #25 甩镜 · Whip Pan（SonduckFilm 102.8万播放）
+- wipe: 色块擦除 · Shape Wipe
+- bars: 色条 · Bars
+- iris: 圆形开合 · Iris
+- glitch: 故障转场 · Glitch（4.5K份）
+- flash: 闪白 · Flash
+- leak: 漏光 · Light Leak
+- burn: 胶片烧 · Film Burn
+- ink: 墨晕 · Ink
+- shutter: 快门 · Shutter

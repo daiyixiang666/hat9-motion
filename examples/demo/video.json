@@ -1,0 +1,103 @@
+{
+ "meta": {
+  "title": "凭什么是你",
+  "aspect": "16:9",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "mascot": "assets/video/shiba.webm",
+  "folio": "第九顶帽子",
+  "tail": 0.8
+ },
+ "beats": [
+  {
+   "scene": "title",
+   "t": 0,
+   "kicker": "第九顶帽子 · 判断力",
+   "title": "大家都在用 *AI*",
+   "sub": "结果凭什么是你的",
+   "image": "assets/img/desk.jpg",
+   "wall": [
+    "assets/img/desk.jpg",
+    "assets/img/cup_mag.jpg",
+    "assets/img/cup_cheap.jpg",
+    "assets/img/hands.jpg"
+   ]
+  },
+  {
+   "scene": "compare",
+   "t": "@同一个",
+   "chip": "同一个模型 · 同样的提示词",
+   "left": {
+    "img": "assets/img/cup_mag.jpg",
+    "label": "像杂志",
+    "file": "A.png"
+   },
+   "right": {
+    "img": "assets/img/cup_cheap.jpg",
+    "label": "像地摊海报",
+    "file": "B.png",
+    "stickers": [
+     "爆款",
+     "限时特价",
+     "包邮"
+    ]
+   },
+   "at_left": "@像杂志",
+   "at_right": "@像地摊",
+   "at_stickers": "@海报",
+   "verdict": "left",
+   "at_verdict": "@海报$+0.25",
+   "marks": [
+    {
+     "on": ".A",
+     "verb": "circle",
+     "at": "@杂志$",
+     "label": "光 · 留白",
+     "side": "top"
+    }
+   ]
+  },
+  {
+   "scene": "statement",
+   "t": "@差别",
+   "lines": [
+    "差别不在*工具*",
+    "在*判断*"
+   ],
+   "at": [
+    "@差别",
+    "@在判断"
+   ],
+   "host": true
+  },
+  {
+   "scene": "number",
+   "t": "@百分之",
+   "value": 90,
+   "unit": "%",
+   "label": "的人只会*多生成几张*，再挑一张",
+   "sub": "大多数人的做法",
+   "hl": 10,
+   "at": "@百分之",
+   "at_hl": "@再挑",
+   "split_labels": [
+    "多生成几张，再挑一张",
+    "知道哪张不能要"
+   ]
+  },
+  {
+   "scene": "quote",
+   "t": "@真正",
+   "text": "真正拉开差距的，|是你知道哪一张*不能要*",
+   "image": "assets/img/hands.jpg",
+   "at_em": "@不能要"
+  },
+  {
+   "scene": "outro",
+   "t": "@这里是",
+   "title": "第九顶帽子",
+   "sub": "大家都在用 AI，结果凭什么是你的",
+   "cta": "关注 · 一起练判断"
+  }
+ ]
+}

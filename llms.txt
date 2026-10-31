@@ -1,0 +1,20 @@
+# 九帽动效 hat9-motion
+
+> 中文优先的口播动效视频技能：文案 / 录音 → 横屏或竖屏 mp4。HTML + GSAP 场景由 HyperFrames 逐帧确定渲染；内置按 VideoHive 销量和 YouTube / B 站播放量排序复刻的 AE 动效库。
+
+## 入口
+- [SKILL.md](SKILL.md): 给 AI 助手的使用说明（先读）
+- [AGENTS.md](AGENTS.md): 编码智能体速查
+- [README.md](README.md): 人类读者首页
+
+## 文档
+- [docs/effects.md](docs/effects.md): 全部效果与转场，含预览与参数
+- [references/video-json.md](references/video-json.md): video.json 格式与 "@关键词" 对时
+- [references/sentence-to-visual.md](references/sentence-to-visual.md): 句型 → 画面
+- [references/motion-rules.md](references/motion-rules.md): 缓动、时长、对口播的数字规矩
+- [references/styles.md](references/styles.md): 风格目录
+
+## 代码
+- [scripts/hat9.py](scripts/hat9.py): 命令行（doctor / quick / plan / build / render / fx / styles / pack）
+- [scripts/h9/aefx.py](scripts/h9/aefx.py): AE 动效库
+- [scripts/build.py](scripts/build.py): video.json → HyperFrames 工程

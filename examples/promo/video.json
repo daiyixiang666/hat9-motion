@@ -1,0 +1,83 @@
+{
+ "meta": {
+  "title": "九帽动效",
+  "aspect": "16:9",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "tail": 0.9,
+  "caption_mode": "reading"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": 0,
+   "text": "九帽动效",
+   "sub": "HAT9 MOTION"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": "@一条",
+   "words": [
+    "一条口播",
+    "变成",
+    "AE级",
+    "动效成片"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "mosaic",
+   "t": "@四十",
+   "images": [
+    "assets/img/w00.jpg",
+    "assets/img/w01.jpg",
+    "assets/img/w02.jpg",
+    "assets/img/w03.jpg",
+    "assets/img/w04.jpg",
+    "assets/img/w05.jpg",
+    "assets/img/w06.jpg",
+    "assets/img/w07.jpg",
+    "assets/img/w08.jpg",
+    "assets/img/w09.jpg",
+    "assets/img/w10.jpg",
+    "assets/img/w11.jpg"
+   ],
+   "tr": "zoomin"
+  },
+  {
+   "scene": "fx",
+   "fx": "dual",
+   "t": "@横屏",
+   "img_h": "assets/img/dual_h.jpg",
+   "img_v": "assets/img/dual_v.jpg",
+   "text": "横屏 · 竖屏 · 同一套代码",
+   "tr": "whip"
+  },
+  {
+   "scene": "fx",
+   "fx": "typewriter",
+   "t": "@对",
+   "text": "hat9 quick \"一段文案\"",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "impact",
+   "t": "@不用",
+   "text": "0 API KEY",
+   "sub": "本地渲染 · 免费 · MIT",
+   "tr": "spin"
+  },
+  {
+   "scene": "fx",
+   "fx": "lower3",
+   "t": "@第九",
+   "text": "第九顶帽子",
+   "sub": "HAT9-MOTION · GITHUB",
+   "tr": "hard"
+  }
+ ]
+}

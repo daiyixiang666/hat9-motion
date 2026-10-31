@@ -1,0 +1,5 @@
+{"out_dir": "examples/promo/assets/audio/tts",
+ "engine": "voxcpm2", "model": "mlx-community/VoxCPM2-4bit",
+ "instruct": "自信、利落的年轻男声，像产品发布会旁白，语速偏快，咬字清楚，有节奏感",
+ "cfg": 2.0, "steps": 10, "takes": 2, "gap": 0.2, "tempo": 1.08,
+ "scenes": [{"id": "promo", "sentences": ["九帽动效。", "一条口播，变成 AE 级动效成片。", "四十个最受欢迎的 AE 动效，按销量和播放量复刻。", "横屏竖屏，同一套代码。", "对 AI 说一句话，就能出片。", "不用任何 API key，本地就能渲染。", "第九顶帽子出品。"]}]}

@@ -1,0 +1,318 @@
+{
+ "effects": [
+  {
+   "id": "parallax",
+   "title": "2.5D 照片视差 (#2, VoluMax/Photomotion; MDMZ 1171万播放)",
+   "how": "clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers.",
+   "cat": "照片",
+   "ref": "VoluMax 2.64万份 · MDMZ 教程 1171万播放",
+   "label": "#2 2.5D 照片视差 · Photo Parallax",
+   "suit": "开场大图、人物故事"
+  },
+  {
+   "id": "burst",
+   "title": "形状元素爆发 (Shape Elements burst)",
+   "how": "radial lines + ring + dots fire as the word slams in.",
+   "cat": "图形",
+   "ref": "Graphics Pack 2.62万份 · SonduckFilm 321万播放",
+   "label": "#3 放射爆发 · Shape Burst",
+   "suit": "爆款、数字揭晓、强调"
+  },
+  {
+   "id": "stomp",
+   "title": "重拍排版 Stomp (#4, TypoKing 1.34万份; B站动态歌词排版 898万)",
+   "how": "one word per beat slams full-frame, sizes alternate, every third beat inverts the frame; a 2-frame jolt on each hit. With narration timestamps each word lands the moment it is spoken (like lyric typography).",
+   "cat": "字效",
+   "ref": "TypoKing 1.34万份 · B站动态歌词排版 898万播放",
+   "label": "#4 重拍排版 · Stomp",
+   "suit": "节奏快的一句话、金句拆字"
+  },
+  {
+   "id": "mask_up",
+   "title": "行遮罩上移 (the most-used title reveal)",
+   "how": "each line rises out of its own mask, expo.out.",
+   "cat": "字效",
+   "ref": "YouTube 153万 / 145万播放",
+   "label": "#5 遮罩上滑 · Mask Reveal",
+   "suit": "任何标题、两行观点"
+  },
+  {
+   "id": "mosaic",
+   "title": "照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份)",
+   "how": "12 tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame.",
+   "cat": "照片",
+   "ref": "Mosaic Photo Reveal 1.6万份",
+   "label": "#6 照片墙拼合 · Mosaic Reveal",
+   "suit": "大量案例、作品合集"
+  },
+  {
+   "id": "cartoon",
+   "title": "卡通冲击特效 (#7, 140 Flash FX 1.47万份)",
+   "how": "speed lines, a jagged impact star, smoke puffs — on twos (12 fps steps).",
+   "cat": "图形",
+   "ref": "140 Flash FX 1.47万份",
+   "label": "#7 卡通冲击特效 · Flash FX",
+   "suit": "搞笑、吐槽、意外"
+  },
+  {
+   "id": "apple_blur",
+   "title": "苹果式逐字模糊渐显 (#9, 206.8万 2025)",
+   "how": "each glyph fades up out of a soft blur and a small rise, grey→white.",
+   "cat": "字效",
+   "ref": "206.8万播放（2025）",
+   "label": "#9 苹果式逐字模糊 · Blur Fade",
+   "suit": "结论、产品口吻的判断句"
+  },
+  {
+   "id": "portal",
+   "title": "瞳孔穿梭 / 穿洞推进 (#10, B站364.5万 2025)",
+   "how": "a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen.",
+   "cat": "照片",
+   "ref": "B站 364.5万播放（2025）",
+   "label": "#10 瞳孔穿梭 · Zoom-Through Portal",
+   "suit": "从一个画面进入另一个话题"
+  },
+  {
+   "id": "shine",
+   "title": "光泽扫过 (Shine / CC Light Sweep) on a title",
+   "how": "a bright band travels across the glyphs once.",
+   "cat": "字效",
+   "ref": "Gold Simple Titles 1.1万份",
+   "label": "#11 光泽扫过 · Shine Sweep",
+   "suit": "收尾、品牌"
+  },
+  {
+   "id": "neon",
+   "title": "霓虹点亮 (#12, Neon Sign Kit 1万份)",
+   "how": "tube text stutters on (stepped flicker pattern), then holds with a steady glow.",
+   "cat": "字效",
+   "ref": "Neon Sign Kit 1万份",
+   "label": "#12 霓虹点亮 · Neon Flicker",
+   "suit": "夜景、潮流、店招"
+  },
+  {
+   "id": "notify",
+   "title": "手机通知界面 (#13, Envato Elements「Elements」热门第1)",
+   "how": "iOS-style banners drop in one after another and stack.",
+   "cat": "界面",
+   "ref": "Envato Elements「Elements」热门第1",
+   "label": "#13 手机通知 · UI Mockup",
+   "suit": "平台反馈、增长、消息"
+  },
+  {
+   "id": "lower3",
+   "title": "下三分之一字条 (#14, Lower Thirds 第1名 6.3K)",
+   "how": "accent bar grows, name slides out of a mask, role follows.",
+   "cat": "界面",
+   "ref": "Lower Thirds 第1名 6.3K份",
+   "label": "#14 下三分之一字条 · Lower Third",
+   "suit": "人物 / 账号介绍、结尾"
+  },
+  {
+   "id": "glitch",
+   "title": "故障 RGB 分离 (Glitch / RGB split)",
+   "how": "red & cyan copies jitter on stepped frames, then lock.",
+   "cat": "字效",
+   "ref": "Video Copilot 198万播放",
+   "label": "#15 故障分离 · Glitch",
+   "suit": "出错、警告、反转"
+  },
+  {
+   "id": "triple",
+   "title": "三连 (like · coin · favourite)",
+   "how": "icons pop in sequence, each with a ring burst; the B站/抖音 staple ending.",
+   "cat": "界面",
+   "ref": "555 Animated Icons 6.4K份 · B站三连 157万",
+   "label": "#16 动态图标 · Animated Icons",
+   "suit": "片尾求三连 / 关注"
+  },
+  {
+   "id": "callout",
+   "title": "标注引线 (Callout title)",
+   "how": "a dot pops on the subject, the leader line draws out, the label slides along it.",
+   "cat": "照片",
+   "ref": "Call-Out Titles 4.5K份",
+   "label": "#18 引线标注 · Line Callout",
+   "suit": "指出图里的细节"
+  },
+  {
+   "id": "odometer",
+   "title": "数字滚轮 (Odometer / number wheel)",
+   "how": "each digit column spins down to its value, staggered.",
+   "cat": "数据",
+   "ref": "YouTube 162.6万播放",
+   "label": "#20 数字滚动 · Counter",
+   "suit": "任何数字、比例"
+  },
+  {
+   "id": "collage",
+   "title": "拼贴剪纸 (#21, Fakeplastictree Collage 203.5万)",
+   "how": "torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow.",
+   "cat": "照片",
+   "ref": "Fakeplastictree 203.5万播放",
+   "label": "#21 拼贴剪纸 · Collage",
+   "suit": "资料拼贴、证据"
+  },
+  {
+   "id": "write_on",
+   "title": "描边书写 → 填色 (Trim Paths on text / 手写签名)",
+   "how": "glyph outlines draw on, then the fill floods in.",
+   "cat": "字效",
+   "ref": "YouTube 128.5万 / 123.7万播放",
+   "label": "#22 描边书写 · Write-on",
+   "suit": "关键词、签名、毛笔字"
+  },
+  {
+   "id": "match_cut",
+   "title": "文字匹配剪辑 Text Match Cut (#23, Envato Elements 标题热门第1/2)",
+   "how": "the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads.",
+   "cat": "字效",
+   "ref": "Envato Elements 标题热门第1、2名",
+   "label": "#23 文字匹配剪辑 · Text Match Cut",
+   "suit": "一个词贯穿多个场景"
+  },
+  {
+   "id": "impact",
+   "title": "冲击抖动 (#24, Bricks 106.8万 2025)",
+   "how": "the title slams in and the whole frame takes a decaying camera shake.",
+   "cat": "字效",
+   "ref": "Bricks 106.8万播放（2025）",
+   "label": "#24 冲击抖动 · Impact Shake",
+   "suit": "重点结论、冲击句"
+  },
+  {
+   "id": "typewriter",
+   "title": "打字机 + 光标",
+   "how": "one glyph per 2 frames, blinking caret (deterministic blink on the timeline).",
+   "cat": "字效",
+   "ref": "T5 · 科技 / 教程类必备",
+   "label": "打字机 · Typewriter",
+   "suit": "提示词、命令、搜索"
+  },
+  {
+   "id": "scramble",
+   "title": "乱码解码 (Decoder / Scramble)",
+   "how": "every slot is a reel of random glyphs that steps (not slides) onto its real character, slots settling left→right. Pure transforms with a steps() ease, so it seeks in any order.",
+   "cat": "字效",
+   "ref": "科技类标题高频",
+   "label": "乱码解码 · Decoder",
+   "suit": "技术名词、英文代号"
+  },
+  {
+   "id": "tracking",
+   "title": "字距收拢 (Tracking In)",
+   "how": "glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre), so it never snaps to whole pixels like letter-spacing would.",
+   "cat": "字效",
+   "ref": "电影片头经典",
+   "label": "字距收拢 · Tracking In",
+   "suit": "电影感标题、一个词"
+  },
+  {
+   "id": "flip3d",
+   "title": "逐字三维翻转 (3D Flip per character)",
+   "how": "rotateX from -100°, transform-origin bottom, perspective on the line.",
+   "cat": "字效",
+   "ref": "文字动效合集高频",
+   "label": "逐字三维翻转 · 3D Flip",
+   "suit": "账号名、章节名"
+  },
+  {
+   "id": "ghost_type",
+   "title": "巨型虚影背景字 (Ghost / outline background type)",
+   "how": "a huge outlined word drifts behind small foreground copy.",
+   "cat": "字效",
+   "ref": "B站「碰撞吧！」107万播放",
+   "label": "巨型虚影背景字 · Ghost Type",
+   "suit": "章节标题 + 小字说明"
+  },
+  {
+   "id": "lockup",
+   "title": "中英双语锁定 + 注释引线 (type specimen lockup)",
+   "how": "headline, latin line, two leader-line annotations.",
+   "cat": "字效",
+   "ref": "B站「碰撞吧！」107万播放",
+   "label": "双语锁定 · Type Lockup",
+   "suit": "中英双语标题、字体展示"
+  },
+  {
+   "id": "diffuse",
+   "title": "弥散光 (diffuse gradient blobs)",
+   "how": "3 soft colour blobs orbit slowly behind a calm title.",
+   "cat": "图形",
+   "ref": "B站「碰撞吧！」107万播放",
+   "label": "弥散光 · Gradient Blobs",
+   "suit": "安静的过渡、情绪句"
+  },
+  {
+   "id": "gooey",
+   "title": "粘性碰撞 (gooey metaballs)",
+   "how": "two balls approach, merge with a liquid neck, bounce apart; squash & stretch.",
+   "cat": "图形",
+   "ref": "S5 · B站「碰撞吧！」107万播放",
+   "label": "粘性融球 · Goo Blobs",
+   "suit": "合并、碰撞、两者关系"
+  }
+ ],
+ "transitions": [
+  {
+   "id": "zoomin",
+   "label": "#1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）",
+   "file": "tr_zoomin"
+  },
+  {
+   "id": "spin",
+   "label": "#1 无缝旋转 · Seamless Spin（Motion Bro 免费包 >100万下载）",
+   "file": "tr_spin"
+  },
+  {
+   "id": "whip",
+   "label": "#25 甩镜 · Whip Pan（SonduckFilm 102.8万播放）",
+   "file": "tr_whip"
+  },
+  {
+   "id": "wipe",
+   "label": "色块擦除 · Shape Wipe",
+   "file": "tr_wipe"
+  },
+  {
+   "id": "bars",
+   "label": "色条 · Bars",
+   "file": "tr_bars"
+  },
+  {
+   "id": "iris",
+   "label": "圆形开合 · Iris",
+   "file": "tr_iris"
+  },
+  {
+   "id": "glitch",
+   "label": "故障转场 · Glitch（4.5K份）",
+   "file": "tr_glitch"
+  },
+  {
+   "id": "flash",
+   "label": "闪白 · Flash",
+   "file": "tr_flash"
+  },
+  {
+   "id": "leak",
+   "label": "漏光 · Light Leak",
+   "file": "tr_leak"
+  },
+  {
+   "id": "burn",
+   "label": "胶片烧 · Film Burn",
+   "file": "tr_burn"
+  },
+  {
+   "id": "ink",
+   "label": "墨晕 · Ink",
+   "file": "tr_ink"
+  },
+  {
+   "id": "shutter",
+   "label": "快门 · Shutter",
+   "file": "tr_shutter"
+  }
+ ]
+}

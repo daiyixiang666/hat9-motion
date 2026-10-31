@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>九帽动效画廊</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;800&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* layout: a dark screening wall — sticky filter bar, then an auto-fill grid of looping previews; one accent (shiba orange) */
+:root {
+  --wall: #111110; --card: #191817; --ink: #efe9df; --dim: #958f85; --rule: #2a2826; --hot: #ff6a2b;
+  --f-display: 'Noto Serif SC', 'Songti SC', serif;
+  --f-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--wall); color: var(--ink); font: 15px/1.6 var(--f-body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--wall); }
+.wrap { max-width: 1360px; margin: 0 auto; padding-block: 44px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.kick { font: 600 12px var(--f-mono); letter-spacing: .2em; color: var(--hot); text-transform: uppercase; }
+h1 { font: 800 clamp(30px, 4.6vw, 54px)/1.15 var(--f-display); margin: 8px 0 6px; text-wrap: balance; }
+.lede { margin: 0; color: var(--dim); max-width: 46em; }
+.lede code { font-family: var(--f-mono); color: var(--ink); background: var(--card); padding: 1px 6px; border-radius: 4px; }
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--wall) 92%, transparent); backdrop-filter: blur(8px);
+  margin: 26px 0 18px; padding-block: 12px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border-bottom: 1px solid var(--rule); }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+.seg button, .chip { font: 500 14px var(--f-body); color: var(--dim); background: transparent; border: 0; padding: 7px 14px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--wall); }
+.chip { border: 1px solid var(--rule); border-radius: 999px; padding: 5px 12px; }
+.chip[aria-pressed="true"] { border-color: var(--hot); color: var(--ink); }
+.search { flex: 1 1 200px; min-width: 0; font: 14px var(--f-body); color: var(--ink); background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; }
+button:focus-visible, .search:focus-visible, .card:focus-visible { outline: 2px solid var(--hot); outline-offset: 2px; }
+.count { font: 12px var(--f-mono); color: var(--dim); margin-left: auto; }
+.grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.grid.v { grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); }
+.card { background: var(--card); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; scroll-margin-top: 80px; }
+.card .pv { aspect-ratio: 16 / 9; background: #000; display: block; width: 100%; object-fit: cover; }
+.grid.v .card .pv { aspect-ratio: 9 / 16; }
+.card .meta { padding: 12px 14px 14px; display: grid; gap: 4px; }
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.id { font: 600 13px var(--f-mono); color: var(--hot); background: none; border: 0; padding: 0; cursor: copy; }
+.cat { font: 12px var(--f-body); color: var(--dim); border: 1px solid var(--rule); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+.card h3 { margin: 0; font: 700 16px/1.35 var(--f-body); }
+.card p { margin: 0; font-size: 13px; color: var(--dim); }
+.card .ref { color: var(--ink); opacity: .75; }
+h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
+.tgrid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--wall);
+  font: 600 14px var(--f-body); padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+.empty { color: var(--dim); padding: 40px 0; }
+.show { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 16fr) minmax(0, 5.4fr); gap: 18px; align-items: start; }
+.show figure { margin: 0; background: var(--card); border-radius: 10px; overflow: hidden; }
+.show video { display: block; width: 100%; height: auto; background: #000; }
+.show figcaption { padding: 10px 14px 12px; font-size: 13px; color: var(--dim); }
+.show figcaption b { color: var(--ink); font-weight: 700; }
+@media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show figure:last-child { max-width: 300px; } }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+</head><body>
+
+<div class="wrap">
+  <div class="kick">hat9-motion · 第九顶帽子</div>
+  <h1>一条口播，变成 AE 级动效成片</h1>
+  <p class="lede">按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效库，横屏竖屏同一套代码。每个效果都放在一句真实口播里演示。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
+
+  <section class="show" aria-label="完整示例">
+    <figure><video id="sh-h" controls playsinline preload="metadata"></video><figcaption><b>完整示例《一杯 4 块钱的柠檬水》</b> · 横屏 16:9 · 31 秒 · press 财经刊风格</figcaption></figure>
+    <figure><video id="sh-v" controls playsinline preload="metadata"></video><figcaption><b>同一条</b> · 竖屏 9:16，各自排版</figcaption></figure>
+  </section>
+
+  <div class="bar" role="toolbar" aria-label="筛选">
+    <div class="seg" role="group" aria-label="画幅">
+      <button type="button" id="o-h" aria-pressed="true">横屏 16:9</button><button type="button" id="o-v" aria-pressed="false">竖屏 9:16</button>
+    </div>
+    <div id="cats" role="group" aria-label="类别"></div>
+    <input class="search" id="q" type="search" placeholder="搜索：标题、照片、数字、转场……" aria-label="搜索效果">
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>没有匹配的效果，换个词试试。</p>
+
+  <h2 id="transitions">转场</h2>
+  <div class="tgrid grid" id="tgrid"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(async function () {
+  const ROOT = (location.pathname.includes("/gallery/") ? "../" : "") + "assets/previews/";
+  const PV = ROOT + "fx/";
+  for (const [id, f] of [["sh-h", "mixue_16x9"], ["sh-v", "mixue_9x16"]]) { const v = document.getElementById(id); v.poster = ROOT + f + ".jpg"; v.src = ROOT + f + ".mp4"; }
+  let data = { effects: [], transitions: [] };
+  try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
+  let orient = "h", cat = "全部", q = "";
+  try { orient = localStorage.getItem("h9-orient") || "h"; } catch (e) {}
+  const grid = document.getElementById("grid"), tgrid = document.getElementById("tgrid");
+  const cats = ["全部", ...new Set(data.effects.map((e) => e.cat))];
+  const catsEl = document.getElementById("cats");
+  cats.forEach((c) => { const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = c; b.setAttribute("aria-pressed", c === cat);
+    b.onclick = () => { cat = c; catsEl.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x.textContent === c)); render(); }; catsEl.appendChild(b); });
+  const toast = (msg) => { const t = document.getElementById("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), 1400); };
+  const copy = async (id) => { try { await navigator.clipboard.writeText(id); toast(`已复制 ${id}`); } catch (e) { toast(`效果 id：${id}`); } };
+  const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function card(e) {
+    const src = PV + e.id + (orient === "v" ? "_v" : "") + ".webp";
+    return `<article class="card" id="${e.id}"><img class="pv" src="${src}" alt="${esc(e.title)} 预览" loading="lazy">
+      <div class="meta"><div class="row"><button class="id" type="button" data-id="${e.id}" title="复制效果 id">${e.id}</button><span class="cat">${esc(e.cat)}</span></div>
+      <h3>${esc(e.title.replace(/\s*\(.*$/, ""))}</h3><p>${esc(e.suit)}</p><p class="ref">${esc(e.ref)}</p></div></article>`;
+  }
+  function render() {
+    const k = q.trim().toLowerCase();
+    const list = data.effects.filter((e) => (cat === "全部" || e.cat === cat) && (!k || [e.id, e.title, e.suit, e.cat, e.how].join(" ").toLowerCase().includes(k)));
+    grid.className = "grid" + (orient === "v" ? " v" : "");
+    grid.innerHTML = list.map(card).join("");
+    document.getElementById("empty").hidden = list.length > 0;
+    document.getElementById("count").textContent = `${list.length} / ${data.effects.length} 个效果 · ${data.transitions.length} 种转场`;
+    tgrid.className = "tgrid grid" + (orient === "v" ? " v" : "");
+    tgrid.innerHTML = data.transitions.map((t) => `<article class="card" id="tr-${t.id}"><img class="pv" src="${PV + t.file + (orient === "v" ? "_v" : "")}.webp" alt="${esc(t.label)}" loading="lazy">
+      <div class="meta"><div class="row"><button class="id" type="button" data-id="${t.id}">${t.id}</button></div><p>${esc(t.label)}</p></div></article>`).join("");
+  }
+  document.addEventListener("click", (ev) => { const b = ev.target.closest(".id"); if (b) copy(b.dataset.id); });
+  const setO = (o) => { orient = o; try { localStorage.setItem("h9-orient", o); } catch (e) {}
+    document.getElementById("o-h").setAttribute("aria-pressed", o === "h"); document.getElementById("o-v").setAttribute("aria-pressed", o === "v"); render(); };
+  document.getElementById("o-h").onclick = () => setO("h"); document.getElementById("o-v").onclick = () => setO("v");
+  document.getElementById("q").addEventListener("input", (ev) => { q = ev.target.value; render(); });
+  setO(orient);
+  if (location.hash) { const el = document.querySelector(location.hash); if (el) el.scrollIntoView(); }
+})();
+</script>
+
+</body></html>
