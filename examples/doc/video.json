@@ -1,0 +1,380 @@
+{
+ "meta": {
+  "title": "一个铁箱子",
+  "aspect": "16:9",
+  "style": "doc",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.22,
+  "mascot": "../mixue/assets/video/shiba.webm",
+  "tail": 1.2,
+  "section": "商业拆解",
+  "year_roll": {
+   "from": "1956",
+   "to": "2024",
+   "at": "@将近七十年"
+  },
+  "caption_fix": {
+   "一九五六年": "1956 年",
+   "百分之九十七": "97%",
+   "五点八三美元": "5.83 美元",
+   "五十八个": "58 个",
+   "十六美分": "16 美分",
+   "五千一百五十万": "5150 万"
+  }
+ },
+ "beats": [
+  {
+   "scene": "shot",
+   "id": "s01",
+   "t": 0,
+   "src": "industry/cargo-ship-containers-cranes_mixkit-4011.mp4",
+   "in": 0.4,
+   "ramp": [
+    [
+     1.2,
+     3.0
+    ],
+    [
+     0.6,
+     1.6
+    ]
+   ],
+   "lut": "teal-orange",
+   "push": [
+    1.12,
+    1.04
+   ],
+   "pan": [
+    0.66,
+    0.5
+   ],
+   "ease": "power3.out",
+   "stamp": {
+    "big": "1956",
+    "small": "NEWARK · NEW JERSEY",
+    "until": "@开卡车+0.45"
+   }
+  },
+  {
+   "scene": "shot",
+   "id": "s02",
+   "t": "@一个开卡车",
+   "src": "industry/tokyo-cargo-port-top-view_mixkit-4445.mp4",
+   "in": 1.0,
+   "lut": "teal-orange",
+   "push": [
+    1.0,
+    1.08
+   ],
+   "pan": [
+    0.35,
+    0.55
+   ],
+   "at_l3": "@开卡车+0.4",
+   "l3": {
+    "name": "马尔科姆·麦克莱恩",
+    "latin": "Malcom McLean · 1913–2001",
+    "role": "卡车运输商 · 集装箱航运的开创者",
+    "until": "@百分之九十七-0.35"
+   }
+  },
+  {
+   "scene": "shot",
+   "id": "s03",
+   "t": "@把装船",
+   "src": "industry/port-cranes-unloading_mixkit-4012.mp4",
+   "in": 0.5,
+   "lut": "teal-orange",
+   "push": [
+    1.04,
+    1.14
+   ],
+   "pan": [
+    0.42,
+    0.52
+   ],
+   "at_call": "@百分之九十七",
+   "call": [
+    {
+     "label": "装船成本 · 1956",
+     "pre": "−",
+     "fig": "97",
+     "count": 0,
+     "unit": "%",
+     "sub": "",
+     "src": "来源：Marc Levinson《The Box》(2006)"
+    }
+   ]
+  },
+  {
+   "scene": "shot",
+   "id": "s04",
+   "t": "@在那之前",
+   "src": "archive/ocean-liner-tugboats_prelinger-manhattanwat-79.mp4",
+   "in": 1.5,
+   "lut": "bw-soft",
+   "push": [
+    1.06,
+    1.12
+   ],
+   "pan": [
+    0.5,
+    0.4
+   ],
+   "tag": "档案影像 · 纽约港 · 1930 年代"
+  },
+  {
+   "scene": "shot",
+   "id": "s05",
+   "t": "@码头工人",
+   "src": "archive/cargo-ships-harbor-1950s_prelinger-miracleo1955-161.mp4",
+   "in": 3.0,
+   "lut": "warm-archive",
+   "push": [
+    1.08,
+    1.0
+   ],
+   "pan": [
+    0.72,
+    0.56
+   ],
+   "tag": "档案影像 · 特拉华河港口 · 1955"
+  },
+  {
+   "scene": "shot",
+   "id": "s06",
+   "t": "@每装一吨",
+   "src": "archive/manhattan-skyline-tugboat_prelinger-manhattanwat-46.mp4",
+   "in": 0.2,
+   "lut": "bw-soft",
+   "push": [
+    1.0,
+    1.08
+   ],
+   "pan": [
+    0.55,
+    0.45
+   ],
+   "at_call": "@五点八三",
+   "call": [
+    {
+     "label": "每吨装船成本 · 散货",
+     "pre": "$",
+     "fig": "5.83",
+     "count": 0,
+     "dec": 2,
+     "sub": "货靠人力，一件件装卸",
+     "src": "来源：Marc Levinson《The Box》(2006)"
+    }
+   ]
+  },
+  {
+   "scene": "card",
+   "id": "c1",
+   "t": "@他把货",
+   "tr": "flash",
+   "kicker": "1956 · 04 · 26",
+   "title": "第一个集装箱",
+   "sub": "Ideal-X",
+   "meta": "纽瓦克 → 休斯敦 · 58 个箱子"
+  },
+  {
+   "scene": "shot",
+   "id": "s07",
+   "t": "@铁箱子",
+   "src": "industry/cargo-ship-containers-cranes_mixkit-4011.mp4",
+   "in": 9.0,
+   "lut": "teal-orange",
+   "push": [
+    1.15,
+    1.22
+   ],
+   "pan": [
+    0.55,
+    0.62
+   ],
+   "ease": "none"
+  },
+  {
+   "scene": "shot",
+   "id": "s08",
+   "t": "@第一艘船",
+   "src": "industry/tokyo-cargo-port-top-view_mixkit-4445.mp4",
+   "in": 8.0,
+   "lut": "teal-orange",
+   "push": [
+    1.06,
+    1.12
+   ],
+   "pan": [
+    0.62,
+    0.48
+   ],
+   "at_trk": "@第一艘船",
+   "trk": {
+    "x": 62,
+    "y": 48,
+    "w": 230,
+    "h": 120,
+    "label": "20 FT · 标准箱",
+    "dx": -30,
+    "dy": -6
+   },
+   "at_call": "@五十八",
+   "at_call1": "@十六美分",
+   "call": [
+    {
+     "label": "第一艘集装箱船 · 装箱数",
+     "fig": "58",
+     "count": 0,
+     "unit": "个",
+     "sub": "Ideal-X · 1956.4.26",
+     "src": "来源：Levinson《The Box》；Smithsonian Magazine"
+    },
+    {
+     "label": "每吨装船成本 · 集装箱",
+     "pre": "$",
+     "fig": "0.16",
+     "count": 5.83,
+     "dec": 2,
+     "sub": "比散货便宜约 97%",
+     "src": "来源：Marc Levinson《The Box》(2006)"
+    }
+   ],
+   "tag": "画面：今日集装箱码头（示意）"
+  },
+  {
+   "scene": "shot",
+   "id": "s09",
+   "t": "@将近七十年",
+   "src": "city/aerial-tokyo-dusk_mixkit-4308.mp4",
+   "in": 0.5,
+   "ramp": [
+    [
+     6.0,
+     4.0
+    ]
+   ],
+   "lut": "teal-orange",
+   "push": [
+    1.0,
+    1.06
+   ],
+   "pan": [
+    0.62,
+    0.62
+   ],
+   "stamp": {
+    "big": "2024",
+    "small": "将近七十年后",
+    "until": "@上海港"
+   }
+  },
+  {
+   "scene": "shot",
+   "id": "s10",
+   "t": "@上海港",
+   "src": "industry/port-cranes-unloading_mixkit-4012.mp4",
+   "in": 8.5,
+   "lut": "teal-orange",
+   "push": [
+    1.1,
+    1.22
+   ],
+   "pan": [
+    0.5,
+    0.42
+   ],
+   "at_call": "@五千一百",
+   "call": [
+    {
+     "label": "上海港 · 2024 年集装箱吞吐量",
+     "fig": "5150.6",
+     "count": 0,
+     "dec": 1,
+     "unit": "万标准箱",
+     "sub": "全球首个破 5000 万的港口",
+     "src": "来源：上港集团 2024 年度业绩快报（2025-01）"
+    }
+   ],
+   "tag": "画面：集装箱码头（示意，非上海港）"
+  },
+  {
+   "scene": "shot",
+   "id": "s11",
+   "t": "@全球大约",
+   "src": "industry/empty-cargo-ship-port_mixkit-4209.mp4",
+   "in": 2.0,
+   "lut": "teal-orange",
+   "push": [
+    1.04,
+    1.12
+   ],
+   "pan": [
+    0.4,
+    0.55
+   ],
+   "at_call": "@八成",
+   "call": [
+    {
+     "label": "国际货物贸易量 · 海运占比",
+     "pre": "≈",
+     "fig": "80",
+     "count": 0,
+     "unit": "%",
+     "bar": 80,
+     "sub": "按货物重量计",
+     "src": "来源：UNCTAD《Review of Maritime Transport》"
+    }
+   ]
+  },
+  {
+   "scene": "shot",
+   "id": "s12",
+   "t": "@改变世界",
+   "src": "city/traffic-light-trails-night-timelapse_mixkit-4240.mp4",
+   "in": 0.3,
+   "lut": "teal-orange",
+   "push": [
+    1.0,
+    1.07
+   ],
+   "pan": [
+    0.5,
+    0.5
+   ],
+   "scrim": true,
+   "say": "改变世界的，|往往不是新发明"
+  },
+  {
+   "scene": "shot",
+   "id": "s13",
+   "t": "@而是把成本",
+   "src": "city/aerial-glass-office-towers-night_mixkit-49845.mp4",
+   "in": 4.0,
+   "lut": "teal-orange",
+   "push": [
+    1.0,
+    1.08
+   ],
+   "pan": [
+    0.45,
+    0.6
+   ],
+   "scrim": true,
+   "say": "而是把*成本*|打下来的人"
+  },
+  {
+   "scene": "card",
+   "id": "c2",
+   "t": "@这里是",
+   "host": true,
+   "kicker": "商业拆解 · THE BOX",
+   "title": "第九顶帽子",
+   "sub": "Malcom McLean · 1956",
+   "meta": "看懂谁在赚钱"
+  }
+ ]
+}

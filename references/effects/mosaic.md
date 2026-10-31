@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/mosaic.webp" width="480" alt="mosaic 横屏"> <img src="../../assets/previews/fx/mosaic_v.webp" width="160" alt="mosaic 竖屏">
 
-**怎么动**：12 tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame.
+**怎么动**：tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops; 12–24 → one tile each, the grid re-shapes to the count).
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 照片 |
 | 适合的句子 | 大量案例、作品合集 |
 | 建议时长 | 2.5–3 秒 |
-| 参数 | `images` |
+| 参数 | `focus`, `image`, `images` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | Mosaic Photo Reveal 1.6万份 |
 

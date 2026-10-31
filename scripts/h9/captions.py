@@ -7,7 +7,7 @@ Two modes (style or meta.caption_mode):
   punch   — 9:16 / hooks. 2–6 glyphs per page, page pops 0.85→1.0 (back.out), keyword enlarged in the accent colour.
 """
 PUN = "，,。.!！?？、；;：:"
-SOFT = "，,。.、；;：:"
+SOFT = "，,、；;：:"          # 。！？ always end a page, even after a single glyph
 
 
 def regroup(words):

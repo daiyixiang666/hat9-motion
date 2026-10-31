@@ -4,7 +4,7 @@ description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE �
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
   author: 第九顶帽子
 ---
 
@@ -49,4 +49,4 @@ metadata:
 - `scripts/hat9.py` 命令行 · `scripts/build.py` video.json → HyperFrames 工程 · `scripts/h9/aefx.py` **AE 动效库**
 - `gallery/` 在线画廊（`llms.txt` 效果索引、`effects.json`）· `references/effects/<id>.md` 每个效果的配方卡
 - `references/video-json.md` 格式 · `references/motion-rules.md` 缓动 / 时长 / 对口播 · `references/sentence-to-visual.md` 句型 → 画面 · `references/aesthetics.md` 出图规则
-- `styles/` 风格（`press` 财经刊：商业拆解 / 数据口播首选；`reel` 动效库；`hud` 暗场 HUD；`studio` / `clay` 三维影棚）· `examples/` 可直接渲染的示例
+- `styles/` 风格：`press` 财经刊（商业拆解 / 数据）· `screen` AI 工具台（产品界面 / AI 工具）· `atlas` 地图纪录（贸易 / 地缘）· `doc` 实拍纪录（实拍视频）· `poster` 瑞士海报（观点 / 金句）· `reel` 动效库 · `hud` · `studio` / `clay` 三维。选法见 `references/styles.md`，输入范围见 `references/inputs.md`· `examples/` 可直接渲染的示例

@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/callout.webp" width="480" alt="callout 横屏"> <img src="../../assets/previews/fx/callout_v.webp" width="160" alt="callout 竖屏">
 
-**怎么动**：a dot pops on the subject, the leader line draws out, the label slides along it.
+**怎么动**：a dot pops on the subject, the leader line draws out, the label slides along it. image | video (+focus) as the ground; one point (x, y, text, sub) or points: [{x, y, text, sub}, …] up to 4. Labels turn left when the point is on the right third, and drop below when it is near the top.
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 照片 |
 | 适合的句子 | 指出图里的细节 |
 | 建议时长 | 2–3 秒 |
-| 参数 | `image`, `sub`, `text`, `x`, `y` |
+| 参数 | `focus`, `image`, `points`, `sub`, `text`, `video`, `x`, `y` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | Call-Out Titles 4.5K份 |
 

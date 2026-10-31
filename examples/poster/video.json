@@ -1,0 +1,29 @@
+{
+ "meta": {
+  "title": "专注，就是学会说不",
+  "aspect": "16:9",
+  "style": "poster",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.2,
+  "mascot": "../mixue/assets/video/shiba.webm",
+  "tail": 2.0,
+  "section": "判断",
+  "caption_mode": "reading"
+ },
+ "beats": [
+  {"scene": "hundred", "t": 0, "at_n": "@一百个", "pre": "一口气生成", "big": "一百个|答案",
+   "en": "100 answers in one breath. Generating is almost free now."},
+  {"scene": "problem", "t": "@可问题", "at_strike": "@不够多$", "big": "问题", "q": "从来不是", "claim": "答案|不够多", "strike": "不够多"},
+  {"scene": "quote", "t": "@一九九七", "at_quote": "@专注", "at_no": "@说不", "year": "1997",
+   "who": "乔布斯 · 苹果开发者大会", "who_sub": "WWDC CLOSING CHAT · 13 MAY 1997",
+   "q1": "专注，", "q2": "就是学会", "q3": "说不。", "en": "“Focusing is about saying no.” — Steve Jobs",
+   "src": "出处：Steve Jobs, Apple WWDC Closing Chat, 1997-05-13（allaboutstevejobs.com 文字稿）"},
+  {"scene": "price", "t": "@生成变", "at_low": "@便宜", "at_high": "@变贵", "left": ["生成", "变便宜了"], "right": ["判断", "变贵了"]},
+  {"scene": "keep", "t": "@你能", "at_make": "@做出", "at_toss": "@扔掉", "at_keep": "@才重要",
+   "a": ["你能做出", "多少张图", "不重要"], "b": ["你敢扔掉", "多少张", "才重要"]},
+  {"scene": "thesis", "t": "@选择", "at_rest": "@才是", "big": "选择", "rest": "才是|新的创作"},
+  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子", "sub": "AI 时代的审美与判断", "mo": "FOLLOW · 关注 · 每周一期"}
+ ]
+}

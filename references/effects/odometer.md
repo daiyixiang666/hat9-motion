@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/odometer.webp" width="480" alt="odometer 横屏"> <img src="../../assets/previews/fx/odometer_v.webp" width="160" alt="odometer 竖屏">
 
-**怎么动**：each digit column spins down to its value, staggered.
+**怎么动**：each digit column spins down to its value, staggered. value: 46479 | "46,479" | -3.5 | "97.5" | 1.2e9 (numbers get thousands separators; zh:true → 万/亿).
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 数据 |
 | 适合的句子 | 任何数字、比例 |
 | 建议时长 | 2–3 秒 |
-| 参数 | `sub`, `unit`, `value` |
+| 参数 | `unit`, `value`, `zh` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | YouTube 162.6万播放 |
 

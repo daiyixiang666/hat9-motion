@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/tracking.webp" width="480" alt="tracking 横屏"> <img src="../../assets/previews/fx/tracking_v.webp" width="160" alt="tracking 竖屏">
 
-**怎么动**：glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre), so it never snaps to whole pixels like letter-spacing would.
+**怎么动**：glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre of its own line), so it never snaps to whole pixels like letter-spacing would.
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 字效 |
 | 适合的句子 | 电影感标题、一个词 |
 | 建议时长 | 2–3 秒 |
-| 参数 | `spread`, `sub`, `text` |
+| 参数 | `spread` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | 电影片头经典 |
 

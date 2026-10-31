@@ -110,6 +110,28 @@ def burst(n=14, r1=50, r2=40):
 
 
 # ---------------------------------------------------------------- helpers
+from h9 import fit
+
+
+def numw(s):
+    """width in em of a figure set in Archivo at wdth 62 (the condensed numerals used everywhere here)."""
+    return sum(0.42 if c.isdigit() else 0.2 if c in ".,:" else 0.62 if c == "%" else 0.34 if c in "-+−" else fit.gw(c) * 0.8 for c in str(s)) or 1
+
+
+def fs(text, box_w, max_px, min_px=None, box_h=None, lines=1, lh=1.1, num=False):
+    """the font size (and the balanced lines) at which `text` fits box_w × box_h — numbers use the condensed figure widths."""
+    if num:
+        return int(min(max_px, box_w / numw(text))), [str(text)]
+    f = fit.fit_text(fit.as_text(text), box_w, box_h or max_px * lh * lines, max_px, min_px or max_px * 0.4, lh=lh, max_lines=lines)
+    return f.px, f.lines
+
+
+def decs(v):
+    """decimals a counter should show for a value as written (44.5 → 1, 46479 → 0, "97.50" → 2)."""
+    s = str(v)
+    return len(s.split(".")[1]) if "." in s and not isinstance(v, int) else 0
+
+
 def T(X, b, k, t, dflt):
     v = X.T(b.get(k), t) if b.get(k) is not None else None
     return float(v) if v is not None else dflt
@@ -148,15 +170,24 @@ def drift(X, sel, t, d, s=1.035):
 
 def shots(X, sel, t, d, keys):
     """camera choreography on a page: keys = [(time, scale, fx, fy), ...] with fx/fy the point to centre (0–1 of the frame).
-    Moves are expo.inOut 0.9 s; between moves the camera keeps creeping (+1.5%) so no second is dead. Edges never show."""
+    Moves are expo.inOut 0.9 s; between moves the camera keeps creeping (+1.5%) so no second is dead.
+    The page's own text must stay readable, so the push is capped (1.08, less if the side margins would go), the kicker line never slides under the
+    header rule, and the left/right margins stay on screen (an impossible pan falls back to a centred push)."""
     W, H = X.W, X.H
+    P = X.portrait
+    hb, top0, m = (226, 262, 56) if P else (96, 136, 96)
+    cap = min(1.08, (W - 80) / (W - 2 * m))                  # the push may never cost the side margins (≈1.03 portrait, 1.065 landscape)
     def xy(sc, fx, fy):
+        sc = min(sc, cap)
         x = min(0, max(W - sc * W, W / 2 - sc * fx * W)); y = min(0, max(H - sc * H, H / 2 - sc * fy * H))
-        return x, y
+        lo, hi = 40 - sc * m, (W - 40) - sc * (W - m)
+        x = (lo + hi) / 2 if lo > hi else min(max(x, lo), hi)
+        y = max(y, hb - sc * top0)
+        return sc, x, y
     X.tw(f'tl.set("{sel}", {{transformOrigin:"0 0"}}, {t:.3f});')
     keys = sorted(keys)
     for k, (tk, sc, fx, fy) in enumerate(keys):
-        x, y = xy(sc, fx, fy)
+        sc, x, y = xy(sc, fx, fy)
         nxt = keys[k + 1][0] if k + 1 < len(keys) else t + d
         if k == 0:
             X.tw(f'tl.set("{sel}", {{scale:{sc}, x:{x:.1f}, y:{y:.1f}}}, {tk:.3f});')
@@ -166,8 +197,9 @@ def shots(X, sel, t, d, keys):
             X.tw(f'tl.to("{sel}", {{scale:{sc}, x:{x:.1f}, y:{y:.1f}, duration:{mv:.2f}, ease:"expo.inOut"}}, {tk:.3f});')
             hold0 = tk + mv
         if nxt - hold0 > 0.25:     # creep toward the same focus while holding
-            x2, y2 = xy(sc * 1.015, fx, fy)
-            X.tw(f'tl.to("{sel}", {{scale:{sc * 1.015:.4f}, x:{x2:.1f}, y:{y2:.1f}, duration:{nxt - hold0:.2f}, ease:"none"}}, {hold0:.3f});')
+            sc2, x2, y2 = xy(min(sc * 1.015, cap), fx, fy)
+            if (sc2, round(x2), round(y2)) != (sc, round(x), round(y)):
+                X.tw(f'tl.to("{sel}", {{scale:{sc2:.4f}, x:{x2:.1f}, y:{y2:.1f}, duration:{nxt - hold0:.2f}, ease:"none"}}, {hold0:.3f});')
 
 
 # ---------------------------------------------------------------- scenes
@@ -207,13 +239,23 @@ def hook(b, X, t, d, cid):
 #root.v .pr-hook .big { left:52px; top:1000px; } #root.v .pr-hook .big .num { font-size:330px; } #root.v .pr-hook .big .u { font-size:120px; }
 #root.v .pr-hook .rule { left:60px; right:60px; top:1290px; } #root.v .pr-hook .sub { display:none; }
 """)
-    c = b.get("price", "¥4")
+    c = str(b.get("price", "¥4"))
+    val = b.get("value", 44.5); vs = fit.fmt_num(val, zh=False, dec=decs(val)) if isinstance(val, (int, float)) else str(val)
+    u, u2 = str(b.get("unit", "亿")), str(b.get("unit2", "元"))
+    P = X.portrait
+    colw = (X.W - 104) if P else (X.W - 892 - 96)
+    umax = 120 if P else 150
+    upx = min(umax, colw * 0.34 / max(fit.width(u) + 0.43 * fit.width(u2), 0.5))
+    npx = min(330 if P else 420, (colw - upx * (fit.width(u) + 0.43 * fit.width(u2)) - 14) / numw(vs))
+    bpx = min(118, 190 / numw(c))
+    ipx, il = fs(b.get("item", ""), (X.W - 112) if P else 640, 40 if P else 46, 26, lines=2)
+    spx, sl = fs(b.get("sub", ""), colw, 36, 24, lines=2)
     inner = (f'<div class="pr pr-hook"><div class="cam"><div class="panel"></div><div class="cup">{CUP}</div>'
-             f'<div class="bst">{burst()}<div class="p"><b>{X.rich(c)}</b><small>{X.rich(b.get("price_sub", "一杯"))}</small></div></div>'
-             f'<div class="tag"><b>{X.rich(b.get("item", ""))}</b><span>{X.rich(b.get("item_en", ""))}</span></div>'
+             f'<div class="bst">{burst()}<div class="p"><b style="font-size:{bpx:.0f}px">{X.rich(c)}</b><small>{X.rich(b.get("price_sub", "一杯"))}</small></div></div>'
+             f'<div class="tag"><b style="font-size:{ipx}px">{"<br>".join(X.rich(l) for l in il)}</b><span>{X.rich(b.get("item_en", ""))}</span></div>'
              f'<div class="kick">{X.rich(b.get("kicker", ""))}</div>'
-             f'<div class="big"><span class="num n">0</span><span class="u">{X.rich(b.get("unit", "亿"))}<small>{X.rich(b.get("unit2", "元"))}</small></span></div>'
-             f'<div class="rule"></div><div class="sub">{X.rich(b.get("sub", ""))}</div></div>{furn(X, b)}</div>')
+             f'<div class="big"><span class="num n" style="font-size:{npx:.0f}px">0</span><span class="u" style="font-size:{upx:.0f}px">{X.rich(u)}<small style="font-size:{upx * 0.43:.0f}px">{X.rich(u2)}</small></span></div>'
+             f'<div class="rule"></div><div class="sub" style="font-size:{spx}px">{"<br>".join(X.rich(l) for l in sl)}</div></div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     tp, tn = T(X, b, "at_price", t, t + 0.8), T(X, b, "at_num", t, t + 1.6)
     s = f"#{cid}"
@@ -226,7 +268,8 @@ def hook(b, X, t, d, cid):
     X.sfx(tp - 0.1, "pop")
     X.tw(f'tl.from("{s} .kick", {{x:-30, opacity:0, duration:0.5, ease:"expo.out"}}, {t + 0.3:.3f});')
     X.tw(f'tl.from("{s} .big", {{y:60, opacity:0, duration:0.6, ease:"expo.out"}}, {tn - 0.45:.3f});')
-    counter(X, f"{s} .n", tn - 0.4, 0, float(b.get("value", 44.5)), dur=1.1, dec=1)
+    if isinstance(val, (int, float)): counter(X, f"{s} .n", tn - 0.4, 0, float(val), dur=1.1, dec=decs(val))
+    else: X.tw(f'tl.set("{s} .n", {{textContent:"{vs}"}}, {tn - 0.4:.3f});'); X.used_text.update(vs)
     X.sfx(tn - 0.4, "count")
     X.tw(f'tl.from("{s} .big .u", {{scale:0.6, opacity:0, duration:0.4, ease:"back.out(2)"}}, {tn + 0.5:.3f});')
     X.sfx(tn + 0.55, "hit")
@@ -238,20 +281,23 @@ def hook(b, X, t, d, cid):
 def stores(b, X, t, d, cid):
     """two dot fields (1 dot = 100 stores), the extra columns lit; counters run with the fill."""
     A, B = b["a"], b["b"]
-    per = int(b.get("per", 100)); rows = 15
-    na, nb = round(A["n"] / per), round(B["n"] / per)
+    an, bn = float(A["n"]), float(B["n"])
+    per = int(b.get("per") or fit.nice_unit(an, bn, lo=40, hi=640))
+    na, nb = max(1, round(an / per)), max(1, round(bn / per))
+    P = X.portrait
+    rows = int(b.get("rows") or (min(15, max(6, -(-max(na, nb) // 48))) if P else min(18, max(8, -(-max(na, nb) // 36)))))
     ca, cb = -(-na // rows), -(-nb // rows)
     X.css("pr-stores", """
 .pr-stores .kick { left:96px; top:136px; }
 .pr-stores .hl { left:96px; top:178px; font-size:84px; }
 .pr-stores .blk { position:absolute; top:330px; }
-.pr-stores .lab { display:flex; align-items:baseline; gap:22px; height:150px; }
+.pr-stores .lab { display:flex; align-items:baseline; gap:22px; height:150px; white-space:nowrap; }
 .pr-stores .lab b { font-family:var(--f-display); font-weight:900; font-size:44px; color:var(--ink); }
 .pr-stores .lab .num { font-size:150px; }
 .pr-stores .dots { display:grid; grid-auto-flow:column; grid-template-rows:repeat(15, 16px); grid-auto-columns:16px; gap:6px; margin-top:14px; }
 .pr-stores .dots i { display:block; width:16px; height:16px; border-radius:50%; }
 .pr-stores .A .dots i { background:var(--red); } .pr-stores .B .dots i { background:var(--mcd); }
-.pr-stores .A .dots i.x { box-shadow:0 0 0 0 var(--ink); }
+.pr-stores .dots i.x { box-shadow:0 0 0 0 var(--ink); }
 .pr-stores .A .num { color:var(--red); } .pr-stores .B .num { color:var(--mcd); }
 .pr-stores .diff { position:absolute; display:flex; flex-direction:column; align-items:center; }
 .pr-stores .diff .br { width:100%; height:16px; border:3px solid var(--ink); border-top:0; transform-origin:50% 0; }
@@ -265,45 +311,62 @@ def stores(b, X, t, d, cid):
 #root.v .pr-stores .dots { grid-template-rows:repeat(15, 14px); grid-auto-columns:14px; gap:5px; margin-top:8px; }
 #root.v .pr-stores .dots i { width:14px; height:14px; }
 """)
-    gap, dot = (19, 14) if X.portrait else (22, 16)
+    gap, dot = (19, 14) if P else (22, 16)
     wa, wb = ca * gap - (gap - dot), cb * gap - (gap - dot)
     sp = 120
-    x0 = (X.W - wa - sp - wb) // 2
-    extra = na - nb
-    xc = max(1, -(-extra // rows))     # columns that hold the difference
-    dots_a = "".join(f'<i class="{"x" if k >= (ca - xc) * rows else ""}"></i>' for k in range(na))
-    dots_b = "".join("<i></i>" for _ in range(nb))
-    if X.portrait:
-        da = f'left:{60 + (ca - xc) * gap}px; top:{430 + 116 + 8 + rows * gap - 2}px; width:{xc * gap - (gap - dot)}px'
-    else:
-        da = f'left:{x0 + (ca - xc) * gap}px; top:{330 + 150 + 14 + rows * gap - 2}px; width:{xc * gap - (gap - dot)}px'
+    lw = (X.W - 120) if P else (X.W - 192 - sp) / 2          # room for a block's label row
+    ba, bb = (lw, lw) if P else (max(wa, min(lw, 520)), max(wb, min(lw, 520)))
+    x0 = 60 if P else (X.W - ba - sp - bb) // 2
+    big_is_a = na >= nb
+    extra = abs(na - nb)
+    xc = -(-extra // rows) if extra else 0                    # columns that hold the difference (in the larger block)
+    cbig = ca if big_is_a else cb
+    def dots(n, mine):
+        lit = mine and xc
+        return "".join(f'<i class="{"x" if lit and k >= (cbig - xc) * rows else ""}"></i>' for k in range(n))
+    dots_a, dots_b = dots(na, big_is_a), dots(nb, not big_is_a)
+    lab_h = 116 if P else 150
+    top_a, top_b = (430, 930) if P else (330, 330)
+    bx = x0 if big_is_a else (x0 if P else x0 + ba + sp)
+    by = (top_a if big_is_a else top_b) + lab_h + (8 if P else 14) + rows * gap - 2
+    da = f'left:{bx + (cbig - xc) * gap}px; top:{by}px; width:{max(xc * gap - (gap - dot), dot)}px'
+    unit = b.get("unit", "家")
+    diff = b.get("diff") if b.get("diff") is not None else (f"+{fit.fmt_num(abs(an - bn), zh=False)} {unit}" if an != bn else "")
+    legend = b.get("legend") or f"= {fit.fmt_num(per, zh=False)} {b.get('per_label', '家门店')}"
+    hpx, hl_ = fs(b.get("title", ""), X.W - (112 if P else 192), 76 if P else 84, 40, lines=1)   # one line: the blocks sit right under it
+    def lab(name, n, cls):
+        ns = fit.fmt_num(n, zh=False, dec=decs(n))
+        npx = min(120 if P else 150, lw * 0.62 / numw(ns))
+        nm_px = min(38 if P else 44, max(lw - npx * numw(ns) - 30, lw * 0.3) / max(fit.width(name), 1))
+        return f'<div class="lab"><b style="font-size:{nm_px:.0f}px">{X.rich(name)}</b><span class="num {cls}" style="font-size:{npx:.0f}px">0</span></div>'
     inner = (f'<div class="pr pr-stores"><div class="cam"><div class="kick">{X.rich(b.get("kicker", ""))}</div>'
-             f'<div class="hl">{lines(X, b.get("title", ""))}</div>'
-             f'<div class="leg"><i></i>= {per} 家门店</div>'
-             f'<div class="blk A" style="left:{x0}px"><div class="lab"><b>{X.rich(A["name"])}</b><span class="num na">0</span></div><div class="dots">{dots_a}</div></div>'
-             f'<div class="blk B" style="left:{x0 + wa + sp}px"><div class="lab"><b>{X.rich(B["name"])}</b><span class="num nb">0</span></div><div class="dots">{dots_b}</div></div>'
-             f'<div class="diff" style="{da}"><div class="br"></div><b>{X.rich(b.get("diff", ""))}</b></div></div>{furn(X, b)}</div>')
-    X.used_text.update(f"= {per} 家门店")
+             f'<div class="hl" style="font-size:{hpx}px">{"".join(f"<span class=ln><span>{X.rich(l)}</span></span>" for l in hl_)}</div>'
+             f'<div class="leg"><i></i>{X.rich(legend)}</div>'
+             f'<div class="blk A" style="left:{x0}px; width:{ba:.0f}px">{lab(A["name"], A["n"], "na")}<div class="dots" style="grid-template-rows:repeat({rows}, {dot}px)">{dots_a}</div></div>'
+             f'<div class="blk B" style="left:{x0 if P else x0 + ba + sp:.0f}px; width:{bb:.0f}px">{lab(B["name"], B["n"], "nb")}<div class="dots" style="grid-template-rows:repeat({rows}, {dot}px)">{dots_b}</div></div>'
+             + (f'<div class="diff" data-layout-allow-overflow style="{da}"><div class="br"></div><b>{X.rich(diff)}</b></div>' if diff and xc else "") + f'</div>{furn(X, b)}</div>')
+    X.used_text.update(legend)
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
     ta, tb = T(X, b, "at_a", t, t + 0.6), T(X, b, "at_b", t, t + 2.0)
     X.tw(f'tl.from("{s} .kick, {s} .leg", {{opacity:0, x:-24, duration:0.5, ease:"expo.out", stagger:0.1}}, {t:.3f});')
     X.tw(f'tl.from("{s} .A .lab > *", {{yPercent:60, opacity:0, duration:0.5, ease:"expo.out", stagger:0.08}}, {t + 0.05:.3f});')
     X.tw(f'tl.from("{s} .A .dots i", {{scale:0, duration:0.3, ease:"back.out(3)", stagger:{{grid:[{rows},{ca}], axis:null, from:[0,0], amount:1.1}}}}, {min(ta - 0.3, t + 0.15):.3f});')
-    counter(X, f"{s} .na", min(ta - 0.3, t + 0.15), 0, A["n"], dur=max(1.3, ta + 0.6 - t))
+    counter(X, f"{s} .na", min(ta - 0.3, t + 0.15), 0, an, dur=max(1.3, ta + 0.6 - t), dec=decs(A["n"]))
     X.sfx(min(ta - 0.3, t + 0.15), "count")
     X.tw(f'tl.from("{s} .B .lab > *", {{yPercent:60, opacity:0, duration:0.5, ease:"expo.out", stagger:0.08}}, {tb - 0.5:.3f});')
     X.tw(f'tl.from("{s} .B .dots i", {{scale:0, duration:0.3, ease:"back.out(3)", stagger:{{grid:[{rows},{cb}], axis:null, from:[0,0], amount:0.9}}}}, {tb - 0.35:.3f});')
-    counter(X, f"{s} .nb", tb - 0.35, 0, B["n"], dur=1.1)
+    counter(X, f"{s} .nb", tb - 0.35, 0, bn, dur=1.1, dec=decs(B["n"]))
     lift(X, f"{s} .hl .ln > span", tb - 0.1)
     X.sfx(tb, "enter")
     tx = tb + 0.3
-    X.tw(f'tl.to("{s} .A .dots i.x", {{backgroundColor:"#f6ce3a", boxShadow:"0 0 0 2.5px #111", duration:0.25, stagger:{{each:0.006, from:"start"}}}}, {tx:.3f});')
-    X.tw(f'tl.fromTo("{s} .A .dots i.x", {{scale:1}}, {{keyframes:[{{scale:1.6, duration:0.12}}, {{scale:1, duration:0.3, ease:"back.out(3)"}}], stagger:{{each:0.006, from:"start"}}, immediateRender:false}}, {tx:.3f});')
+    X.tw(f'tl.to("{s} .dots i.x", {{backgroundColor:"#f6ce3a", boxShadow:"0 0 0 2.5px #111", duration:0.25, stagger:{{each:0.006, from:"start"}}}}, {tx:.3f});')
+    X.tw(f'tl.fromTo("{s} .dots i.x", {{scale:1}}, {{keyframes:[{{scale:1.6, duration:0.12}}, {{scale:1, duration:0.3, ease:"back.out(3)"}}], stagger:{{each:0.006, from:"start"}}, immediateRender:false}}, {tx:.3f});')
     X.tw(f'tl.from("{s} .diff .br", {{scaleY:0, opacity:0, duration:0.3}}, {tx + 0.2:.3f});')
     X.tw(f'tl.from("{s} .diff b", {{y:-14, opacity:0, duration:0.4, ease:"back.out(2)"}}, {tx + 0.3:.3f});')
     X.sfx(tx + 0.3, "hit")
-    shots(X, f"{s} .cam", t, d, [(t, 1.18, *((0.4, 0.36) if X.portrait else (0.3, 0.6))), (tb - 0.55, 1.0, 0.5, 0.5), (tx, 1.06, *((0.3, 0.45) if X.portrait else (0.3, 0.7)))])
+    fa = (0.4, 0.36) if P else ((x0 + ba / 2) / X.W, 0.6)
+    shots(X, f"{s} .cam", t, d, [(t, 1.18, *fa), (tb - 0.55, 1.0, 0.5, 0.5), (tx, 1.06, *((0.3, 0.45) if P else (0.3, 0.7)))])
 
 
 def turn(b, X, t, d, cid):
@@ -313,21 +376,29 @@ def turn(b, X, t, d, cid):
 .pr-turn .q { position:absolute; left:160px; top:300px; font-family:var(--f-display); font-weight:700; font-size:64px; color:var(--white); }
 .pr-turn .big { position:absolute; left:148px; top:400px; font-family:var(--f-display); font-weight:900; font-size:270px; line-height:1.05; color:var(--white); letter-spacing:-.02em; white-space:nowrap; }
 .pr-turn .big .s { position:relative; display:inline-block; }
-.pr-turn .big .s i.k { position:absolute; left:-2%; right:-2%; top:50%; height:34px; margin-top:-10px; background:var(--ink); transform-origin:0 50%; transform:rotate(-3deg); }
+.pr-turn .big .s i.k { position:absolute; left:-2%; right:-2%; top:50%; height:.13em; margin-top:-.04em; background:var(--ink); transform-origin:0 50%; transform:rotate(-3deg); }
 .pr-turn .nb { position:absolute; right:110px; top:330px; font-family:var(--f-num); font-variation-settings:"wdth" 62, "wght" 900; font-size:300px; line-height:.8; color:rgba(0,0,0,.14); }
 #root.v .pr-turn .q { left:70px; top:560px; font-size:58px; }
-#root.v .pr-turn .big { left:62px; top:650px; font-size:210px; white-space:normal; }
+#root.v .pr-turn .big { left:62px; top:650px; font-size:210px; }
 #root.v .pr-turn .nb { right:60px; top:320px; font-size:240px; }
 """)
     q, big, s_ = b.get("q", ""), b.get("pre", "不是"), b.get("struck", "")
-    br = "<br>" if X.portrait else ""
-    inner = (f'<div class="pr pr-turn inv"><div class="cam"><div class="nb">?</div><div class="q">{X.rich(q)}</div>'
-             f'<div class="big">{X.rich(big, split="chars")}{br}<span class="s">{X.rich(s_, split="chars")}<i class="k"></i></span></div></div>{furn(X, b)}</div>')
+    P = X.portrait
+    room = (X.W - 124) if P else (X.W - 148 - 260)
+    two = P or fit.width(big + s_) * 140 > room                   # long → pre and struck on their own lines
+    if two:
+        bpx = min(210 if P else 270, room / max(fit.width(big), fit.width(s_), 1) * 0.97, (X.H * (0.34 if P else 0.5)) / 2.1)
+    else:
+        bpx = min(270, room / max(fit.width(big + s_), 1) * 0.97)
+    qpx, ql = fs(q, room, 58 if P else 64, 32, lines=2)
+    br = "<br>" if two else ""
+    inner = (f'<div class="pr pr-turn inv"><div class="cam"><div class="nb">?</div><div class="q" style="font-size:{qpx}px">{"<br>".join(X.rich(l) for l in ql)}</div>'
+             f'<div class="big" data-layout-allow-occlusion style="font-size:{bpx:.0f}px; top:{(650 if P else 400) + (len(ql) - 1) * qpx * 1.1:.0f}px">{X.rich(big, split="chars")}{br}<span class="s">{X.rich(s_, split="chars")}<i class="k" data-layout-allow-occlusion></i></span></div></div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
     tk = T(X, b, "at_strike", t, t + d * 0.6)
     X.tw(f'tl.from("{s} .q", {{y:30, opacity:0, duration:0.5, ease:"expo.out"}}, {t + 0.05:.3f});')
-    X.tw(f'tl.from("{s} .big .c", {{scale:1.6, opacity:0, filter:"blur(12px)", duration:0.45, ease:"expo.out", stagger:0.05}}, {t + 0.35:.3f});')
+    X.tw(f'tl.from("{s} .big .c", {{scale:1.6, opacity:0, filter:"blur(12px)", duration:0.45, ease:"expo.out", stagger:{min(0.05, d * 0.3 / max(len(fit.plain(big + s_)), 1)):.3f}}}, {t + 0.35:.3f});')
     X.tw(f'tl.from("{s} .nb", {{x:80, opacity:0, duration:0.8, ease:"expo.out"}}, {t:.3f});')
     X.tw(f'tl.fromTo("{s} .big .s i.k", {{scaleX:0}}, {{scaleX:1, duration:0.32, ease:"power4.out"}}, {tk - 0.12:.3f});')
     X.tw(f'tl.to("{s} .big .s .c", {{opacity:0.55, duration:0.2}}, {tk:.3f});')
@@ -372,42 +443,66 @@ def split(b, X, t, d, cid):
 #root.v .pr-split .pl { left:60px; top:676px; } #root.v .pr-split .pl b { font-size:76px; } #root.v .pr-split .pl span { font-size:34px; }
 #root.v .pr-split .bar { left:60px; right:60px; top:950px; height:100px; }
 #root.v .pr-split .tot { font-size:28px; left:20px; } #root.v .pr-split .lead { right:72px; top:880px; height:70px; } #root.v .pr-split .flag { right:60px; top:830px; font-size:28px; }
-#root.v .pr-split .chips { left:60px; top:1090px; gap:14px; } #root.v .pr-split .chip { height:70px; padding:0 20px 0 12px; } #root.v .pr-split .chip b { font-size:34px; }
+#root.v .pr-split .chips { left:60px; right:60px; top:1090px; gap:14px; flex-wrap:wrap; } #root.v .pr-split .chip { height:70px; padding:0 20px 0 12px; } #root.v .pr-split .chip b { font-size:34px; }
 #root.v .pr-split .to { display:none; }
 #root.v .pr-split .z2 .q { left:60px; top:300px; font-size:72px; }
 #root.v .pr-split .z2 .big { left:44px; top:420px; } #root.v .pr-split .z2 .big .num { font-size:400px; } #root.v .pr-split .z2 .big small { font-size:170px; }
 #root.v .pr-split .z2 .lab { left:60px; top:880px; } #root.v .pr-split .z2 .lab b { font-size:64px; }
 """)
-    chips = "".join(f'<div class="chip">{ic(k)}<b>{X.rich(w)}</b></div>' for k, w in b.get("items", []))
+    P = X.portrait
+    p = min(99.9, max(0.1, p))
+    dp, dr = decs(b.get("pct", 97.5)), max(decs(b.get("pct", 97.5)), 1 if (100 - p) % 1 else 0)
+    items = [(it if isinstance(it, (list, tuple)) else ("box", it)) for it in fit.as_list(b.get("items", []))][:5]
+    icons = [k if k in ICONS else "box" for k, _ in items]
+    cw_ = (X.W - 120) if P else (X.W - 192 - 420)            # room for the chip row
+    chip_px = min(34 if P else 38, max(20, (cw_ - len(items) * (78 + 20)) / max(sum(fit.width(w) for _, w in items), 1))) if items else 38
+    chips = "".join(f'<div class="chip">{ic(k)}<b style="font-size:{chip_px:.0f}px">{X.rich(w)}</b></div>' for k, (_, w) in zip(icons, items))
     z2 = b.get("small", {})
+    W_ = X.W
+    pct_s = f"{p:.{dp}f}"
+    pmax = 280 if P else 330
+    ppx = min(pmax, ((W_ - 120) if P else 720) / (numw(pct_s) + 0.62 * 150 / 330))
+    plx = 60 if P else int(84 + ppx * numw(pct_s) + ppx * 0.3 + 40)
+    plw = (W_ - 120) if P else (W_ - plx - 96)
+    pl_px, pl_l = fs(b.get("pl", ""), plw, 76 if P else 96, 40, lines=2)
+    pre_px, _ = fs(b.get("pl_pre", ""), plw, 34 if P else 40, 24)
+    hpx, hl_ = fs(b.get("title", ""), W_ - (112 if P else 192), 70 if P else 84, 44, lines=2)
+    fill_w = (W_ - (120 if P else 192) - 8) * p / 100
+    tpx, _ = fs(b.get("total", ""), max(fill_w - 56, 10), 28 if P else 34, 16)
+    tot = f'<div class="tot" style="font-size:{tpx}px">{X.rich(b.get("total", ""))}</div>' if fill_w > 240 else ""
+    rem_s = f"{100 - p:.{dr}f}"
+    rpx = min(400 if P else 520, ((W_ - 104) if P else 940) / (numw(rem_s) + 0.62 * 220 / 520))
+    lab_x = 60 if P else int(80 + rpx * numw(rem_s) + rpx * 0.42 + 60)
+    lab_w = (W_ - 120) if P else max(W_ - lab_x - 96, 360)
+    lpx, ll = fs(z2.get("label", ""), lab_w, 64 if P else 72, 36, lines=2)
     inner = (f'<div class="pr pr-split"><div class="cam"><div class="zm">'
-             f'<div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="hl">{lines(X, b.get("title", ""))}</div>'
-             f'<div class="pct"><span class="num n">0</span><small>%</small></div>'
-             f'<div class="pl"><span>{X.rich(b.get("pl_pre", ""))}</span><b>{X.rich(b.get("pl", ""))}</b><div class="mono">{X.rich(b.get("pl_sub", ""))}</div></div>'
+             f'<div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="hl" style="font-size:{hpx}px">{"".join(f"<span class=ln><span>{X.rich(l)}</span></span>" for l in hl_)}</div>'
+             f'<div class="pct"><span class="num n" style="font-size:{ppx:.0f}px">0</span><small style="font-size:{ppx * 150 / 330:.0f}px">%</small></div>'
+             f'<div class="pl" style="{"" if P else f"left:{plx}px;"}"><span style="font-size:{pre_px}px">{X.rich(b.get("pl_pre", ""))}</span><b style="font-size:{pl_px}px">{"<br>".join(X.rich(l) for l in pl_l)}</b><div class="mono">{X.rich(b.get("pl_sub", ""))}</div></div>'
              f'<div class="lead"></div><div class="flag">{X.rich(b.get("flag", ""))}</div>'
-             f'<div class="bar"><div class="f" style="width:{p}%"><div class="tot">{X.rich(b.get("total", ""))}</div></div><div class="sl" style="width:{100 - p:.2f}%"></div></div>'
+             f'<div class="bar"><div class="f" style="width:{p}%">{tot}</div><div class="sl" style="width:{100 - p:.2f}%"></div></div>'
              f'<div class="chips">{chips}<div class="to">{X.rich(b.get("to", ""))}</div></div></div>'
-             f'<div class="z2"><div class="q">{X.rich(z2.get("q", ""))}</div><div class="big"><span class="num n2">0</span><small>%</small></div>'
-             f'<div class="lab"><b>{X.rich(z2.get("label", ""))}</b><span>{X.rich(z2.get("tag", ""))}</span></div></div></div>{furn(X, b)}</div>')
+             f'<div class="z2"><div class="q">{X.rich(z2.get("q", ""))}</div><div class="big"><span class="num n2" style="font-size:{rpx:.0f}px">0</span><small style="font-size:{rpx * 220 / 520:.0f}px">%</small></div>'
+             f'<div class="lab" style="{"" if P else f"left:{lab_x}px;"}"><b style="font-size:{lpx}px">{"<br>".join(X.rich(l) for l in ll)}</b><span>{X.rich(z2.get("tag", ""))}</span></div></div></div>{furn(X, b)}</div>')
     X.used_text.update("%")
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
     tt, tp = T(X, b, "at_total", t, t + 0.2), T(X, b, "at_pct", t, t + 1.4)
-    ti = [T(X, b, k, t, tp + 1 + j * 0.4) for j, k in enumerate(("at_i1", "at_i2", "at_i3"))]
+    ti = [T(X, b, f"at_i{j + 1}", t, tp + 1 + j * 0.4) for j in range(max(len(items), 1))]
     tz, ts = T(X, b, "at_zoom", t, t + d * 0.6), T(X, b, "at_small", t, t + d * 0.8)
     X.tw(f'tl.from("{s} .kick", {{x:-24, opacity:0, duration:0.5, ease:"expo.out"}}, {t:.3f});')
     lift(X, f"{s} .hl .ln > span", t + 0.05)
     X.tw(f'tl.fromTo("{s} .bar", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:0.8, ease:"expo.inOut"}}, {tt:.3f});')
     X.tw(f'tl.from("{s} .bar .f", {{scaleX:0, duration:0.9, ease:"power3.inOut"}}, {tp - 0.3:.3f});')
     X.tw(f'tl.from("{s} .pct", {{y:50, opacity:0, duration:0.5, ease:"expo.out"}}, {tp - 0.35:.3f});')
-    counter(X, f"{s} .n", tp - 0.3, 0, p, dur=0.9, dec=1)
+    counter(X, f"{s} .n", tp - 0.3, 0, p, dur=0.9, dec=dp)
     X.sfx(tp - 0.3, "count")
     X.tw(f'tl.from("{s} .pl > *", {{x:40, opacity:0, duration:0.5, ease:"expo.out", stagger:0.08}}, {tp + 0.3:.3f});')
     X.tw(f'tl.from("{s} .bar .sl", {{opacity:0, duration:0.25}}, {tp + 0.55:.3f});')
     X.tw(f'tl.from("{s} .lead", {{scaleY:0, duration:0.35, ease:"expo.out"}}, {tp + 0.6:.3f});')
     X.tw(f'tl.from("{s} .flag", {{y:20, opacity:0, duration:0.4, ease:"back.out(2)"}}, {tp + 0.75:.3f});')
     X.tw(f'tl.from("{s} .tot", {{x:-30, opacity:0, duration:0.5, ease:"expo.out"}}, {tp + 0.3:.3f});')
-    for j, tj in enumerate(ti):
+    for j, tj in enumerate(ti[:len(items)]):
         X.tw(f'tl.from("{s} .chip:nth-child({j + 1})", {{y:40, scale:0.8, opacity:0, duration:0.45, ease:"back.out(2)"}}, {tj - 0.15:.3f});')
         X.sfx(tj - 0.1, "click")
     X.tw(f'tl.from("{s} .to", {{x:-20, opacity:0, duration:0.4}}, {ti[-1] + 0.3:.3f});')
@@ -420,7 +515,7 @@ def split(b, X, t, d, cid):
     X.tw(f'tl.set("{s} .z2", {{opacity:1}}, {tz + 0.53:.3f});')
     X.tw(f'tl.set("{s} .zm", {{opacity:0}}, {tz + 0.55:.3f});')
     X.tw(f'tl.from("{s} .z2 .q, {s} .z2 .big, {s} .z2 .lab", {{scale:0.86, opacity:0, duration:0.55, ease:"expo.out", stagger:0.08, transformOrigin:"0% 50%"}}, {tz + 0.55:.3f});')
-    counter(X, f"{s} .n2", max(ts - 0.3, tz + 0.6), 0, 100 - p, dur=0.7, dec=1)
+    counter(X, f"{s} .n2", max(ts - 0.3, tz + 0.6), 0, 100 - p, dur=0.7, dec=dr)
     X.sfx(max(ts - 0.3, tz + 0.6), "hit")
     shots(X, f"{s} .cam", t, tz - 0.25 - t, [(t, 1.16, *((0.3, 0.25) if X.portrait else (0.25, 0.3))), (tt + 0.2, 1.0, 0.5, 0.5),
                                          (ti[0] - 0.3, 1.07, *((0.45, 0.55) if X.portrait else (0.42, 0.66)))])
@@ -437,8 +532,9 @@ def chain(b, X, t, d, cid):
 .pr-chain .hl .ln + .ln { position:absolute; left:0; top:0; }
 .pr-chain .nd { position:absolute; width:180px; display:flex; flex-direction:column; align-items:center; }
 .pr-chain .nd .o { width:180px; height:180px; border-radius:50%; background:var(--white); border:4px solid var(--ink); display:grid; place-items:center; color:var(--ink); position:relative; z-index:2; }
-.pr-chain .nd .o svg { width:86px; height:86px; }
+.pr-chain .nd .o svg { width:48%; height:48%; }
 .pr-chain .nd b { margin-top:20px; font-family:var(--f-display); font-weight:900; font-size:46px; color:var(--ink); white-space:nowrap; }
+.pr-chain .nd > b, .pr-chain .nd > span { display:block; text-align:center; }
 .pr-chain .nd span { margin-top:6px; font-family:var(--f-display); font-weight:500; font-size:26px; color:var(--muted); white-space:nowrap; }
 .pr-chain .nd.hot .o { background:var(--red); border-color:var(--ink); color:var(--white); }
 .pr-chain .rail { position:absolute; height:4px; transform-origin:0 50%; }
@@ -468,21 +564,28 @@ def chain(b, X, t, d, cid):
 #root.v .pr-chain .brl small { display:none; }
 """)
     P = X.portrait
+    nodes = nodes[:7]; n = len(nodes)
     if P:
-        cx = 160; ys = [460 + k * 172 for k in range(n)]
+        sp_ = min(172, (1250 - 460) / max(n - 1, 1)); cx = 160; ys = [460 + k * sp_ for k in range(n)]
         pos = [(cx, y) for y in ys]
+        r = min(60, sp_ * 0.36)
     else:
-        y = 470; xs = [250 + k * (1420 / (n - 1)) for k in range(n)]
+        sp_ = 1420 / max(n - 1, 1); y = 470; xs = [250 + k * sp_ for k in range(n)]
         pos = [(x, y) for x in xs]
-    r = 60 if P else 90
+        r = min(90, sp_ * 0.3)
     html = []
+    lab_w = (900 - 160 - r - 40) if P else sp_ * 0.94
+    lab_h = 0                                               # tallest label block under a circle (for the bracket)
     for k, nd in enumerate(nodes):
         x, y = pos[k]
-        tx = f'<div class="tx"><b>{X.rich(nd["name"])}</b><span>{X.rich(nd.get("sub", ""))}</span></div>' if P else f'<b>{X.rich(nd["name"])}</b><span>{X.rich(nd.get("sub", ""))}</span>'
-        st = f"left:{x - r}px; top:{y - r}px"
-        html.append(f'<div class="nd" data-k="{k}" style="{st}"><div class="o">{ic(nd["icon"])}</div>{tx}</div>')
+        npx = min(40 if P else 46, lab_w / max(fit.width(nd["name"]), 1)); spx = min(26, lab_w / max(fit.width(nd.get("sub", "")), 1))
+        nm = f'<b style="font-size:{npx:.0f}px">{X.rich(nd["name"])}</b><span style="font-size:{spx:.0f}px">{X.rich(nd.get("sub", ""))}</span>'
+        lab_h = max(lab_h, 20 + npx * 1.4 + (6 + spx * 1.45 if nd.get("sub") else 0))
+        tx = f'<div class="tx">{nm}</div>' if P else nm
+        st = f"left:{x - r}px; top:{y - r}px" if P else f"left:{x - lab_w / 2:.0f}px; top:{y - r}px; width:{lab_w:.0f}px"   # label-wide box, circle centred
+        html.append(f'<div class="nd" data-k="{k}" style="{st}"><div class="o" style="width:{2 * r:.0f}px; height:{2 * r:.0f}px">{ic(nd.get("icon", "box"))}</div>{tx}</div>')
     rails = []
-    off_g, off_m = -30, 30
+    off_g, off_m = -round(r * 0.33), round(r * 0.33)
     for k in range(n - 1):
         (x1, y1), (x2, y2) = pos[k], pos[k + 1]
         if P:
@@ -492,7 +595,7 @@ def chain(b, X, t, d, cid):
             rails.append(f'<i class="rail g" data-k="{k}" style="left:{x1 + r}px; top:{y1 + off_g}px; width:{x2 - x1 - 2 * r}px"></i>')
             rails.append(f'<i class="rail m" data-k="{k}" style="left:{x1 + r}px; top:{y1 + off_m}px; width:{x2 - x1 - 2 * r}px"></i>')
     # hot rail: goods side, from the first node to the franchisee
-    hk = int(b.get("hot", n - 2))
+    hk = min(max(int(b.get("hot", n - 2)), 0), n - 1)
     (hx1, hy1), (hx2, hy2) = pos[0], pos[hk]
     hot = (f'<i class="hotrail" style="left:{hx1 + off_g - 2}px; top:{hy1}px; height:{hy2 - hy1}px"></i>' if P
            else f'<i class="hotrail" style="left:{hx1}px; top:{hy1 + off_g}px; width:{hx2 - hx1}px"></i>')
@@ -502,13 +605,15 @@ def chain(b, X, t, d, cid):
         brk = f'<div class="brk" style="left:{900}px; top:{pos[0][1] - r}px; height:{pos[hk][1] - pos[0][1] + 2 * r}px"></div><div class="brl" style="left:{946}px; top:{pos[0][1] - r + 10}px">{X.rich(b.get("bracket", ""))}</div>'
         rl = ""
     else:
-        brk = (f'<div class="brk" style="left:{pos[0][0] - r}px; top:{pos[0][1] + 180}px; width:{pos[hk][0] - pos[0][0] + 2 * r}px"></div>'
-               f'<div class="brl" style="left:{pos[0][0] - r}px; top:{pos[0][1] + 216}px">{X.rich(b.get("bracket", ""))}<small>{X.rich(b.get("bracket_sub", ""))}</small></div>')
+        by_ = pos[0][1] + r + lab_h + 14
+        brk = (f'<div class="brk" style="left:{pos[0][0] - r}px; top:{by_:.0f}px; width:{pos[hk][0] - pos[0][0] + 2 * r}px"></div>'
+               f'<div class="brl" style="left:{pos[0][0] - r}px; top:{by_ + 36:.0f}px">{X.rich(b.get("bracket", ""))}<small>{X.rich(b.get("bracket_sub", ""))}</small></div>')
         rl = (f'<div class="rl" style="left:96px; top:{pos[0][1] + off_g - 18}px">货 →</div><div class="rl" style="left:96px; top:{pos[0][1] + off_m - 18}px">← 钱</div>')
         X.used_text.update("货钱→←")
     titles = b.get("title", "").split("||")
+    hpx = min(fs(x, X.W - (112 if P else 192), 68 if P else 84, 40)[0] for x in titles)
     hl = "".join(f'<span class="ln"><span>{X.rich(x)}</span></span>' for x in titles)
-    inner = (f'<div class="pr pr-chain"><div class="cam"><div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="hl">{hl}</div>'
+    inner = (f'<div class="pr pr-chain"><div class="cam"><div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="hl" style="font-size:{hpx}px">{hl}</div>'
              f'{rl}{"".join(rails)}{hot}{"".join(html)}{toks}{brk}</div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
@@ -560,7 +665,8 @@ def chain(b, X, t, d, cid):
 def wheel(b, X, t, d, cid):
     """the flywheel: four stations on a ring, a red comet runs it and lights each station on its word."""
     import math
-    st = b["stations"]
+    st = [str(x) for x in fit.as_list(b.get("stations"))][:6] or ["价格更低", "卖得更多", "原料走量", "采购更便宜"]
+    n = len(st)
     X.css("pr-wheel", """
 .pr-wheel .kick { left:96px; top:136px; }
 .pr-wheel .q { position:absolute; left:96px; top:300px; font-family:var(--f-display); font-weight:700; font-size:64px; color:var(--ink); }
@@ -586,19 +692,25 @@ def wheel(b, X, t, d, cid):
     cx, cy, R = (540, 960, 255) if X.portrait else (1330, 560, 285)
     ring = f'<div class="ring" style="left:{cx - R}px; top:{cy - R}px; width:{2 * R}px; height:{2 * R}px"></div><div class="ring2" style="left:{cx - R - 34}px; top:{cy - R - 34}px; width:{2 * R + 68}px; height:{2 * R + 68}px"></div>'
     arws = ""
-    for k in range(4):
-        a = math.radians(45 + 90 * k)
+    step = 360 / n
+    for k in range(n):
+        a = math.radians((k + 0.5) * step)
         x, y = cx + R * math.sin(a), cy - R * math.cos(a)
-        arws += f'<i class="arw" style="left:{x:.0f}px; top:{y:.0f}px; transform:rotate({90 + 45 + 90 * k}deg)"></i>'
+        arws += f'<i class="arw" style="left:{x:.0f}px; top:{y:.0f}px; transform:rotate({90 + (k + 0.5) * step:.0f}deg)"></i>'
     stn = ""
+    spx = min(36 if X.portrait else 40, R * (1.05 if n <= 4 else 0.8) / max(max(fit.width(w) for w in st), 1))
     for k, w in enumerate(st):
-        a = math.radians(90 * k)
+        a = math.radians(step * k)
         x, y = cx + R * math.sin(a), cy - R * math.cos(a)
-        stn += f'<div class="stn" data-k="{k}" style="left:{x:.0f}px; top:{y:.0f}px">{X.rich(w)}<span class="hot">{X.rich(w)}</span></div>'
+        stn += f'<div class="stn" data-k="{k}" style="left:{x:.0f}px; top:{y:.0f}px; font-size:{spx:.0f}px">{X.rich(w)}<span class="hot">{X.rich(w)}</span></div>'
     orb = f'<div class="orb" style="left:{cx - R}px; top:{cy - R}px; width:{2 * R}px; height:{2 * R}px"><i></i></div>'
-    ctr = f'<div class="ctr" style="left:{cx}px; top:{cy}px"><b>{X.rich(b.get("center", "飞轮"))}</b><span>{X.rich(b.get("center_en", "FLYWHEEL"))}</span></div>'
-    inner = (f'<div class="pr pr-wheel"><div class="cam"><div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="q">{X.rich(b.get("q", ""))}</div>'
-             f'<div class="big">{X.rich(b.get("big", ""), split="chars")}</div><div class="sum">{X.rich(b.get("sum", ""))}</div>'
+    cpx = min(64, R * 0.9 / max(fit.width(b.get("center", "飞轮")), 1))
+    bpx, bl = fs(b.get("big", ""), (X.W - 104) if X.portrait else 780, 150 if X.portrait else 180, 70, lines=2, lh=1.05)
+    qpx, _ = fs(b.get("q", ""), (X.W - 104) if X.portrait else 780, 56 if X.portrait else 64, 30)
+    sumpx, sl = fs(b.get("sum", ""), 700, 28, 18, lines=4, lh=1.7)
+    ctr = f'<div class="ctr" style="left:{cx}px; top:{cy}px"><b style="font-size:{cpx:.0f}px">{X.rich(b.get("center", "飞轮"))}</b><span>{X.rich(b.get("center_en", "FLYWHEEL"))}</span></div>'
+    inner = (f'<div class="pr pr-wheel"><div class="cam"><div class="kick">{X.rich(b.get("kicker", ""))}</div><div class="q" style="font-size:{qpx}px">{X.rich(b.get("q", ""))}</div>'
+             f'<div class="big" style="font-size:{bpx}px">{"<br>".join(X.rich(l, split="chars") for l in bl)}</div><div class="sum" style="font-size:{sumpx}px; top:{max(640, 380 + len(bl) * bpx * 1.05 + 36):.0f}px">{"<br>".join(X.rich(l) for l in sl)}</div>'
              f'{ring}{arws}{orb}{stn}{ctr}</div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
@@ -613,17 +725,21 @@ def wheel(b, X, t, d, cid):
     X.tw(f'tl.from("{s} .sum", {{opacity:0, y:20, duration:0.5}}, {t + 0.8:.3f});')
     X.sfx(t + 0.25, "enter")
     # comet: N at t, E on "卖得越多", S on "原料走得越多", then W, N, and keep going
-    marks = [(t + 0.35, 0), (tm, 90), (tr, 180), (tr + 0.75, 270), (tr + 1.5, 360)]
+    hits = [t + 0.35, tm] + ([tr] if n > 2 else [])
+    while len(hits) < n: hits.append(hits[-1] + 0.75)
+    hits = sorted(hits[:n])
+    marks = [(h, k * step) for k, h in enumerate(hits)] + [(hits[-1] + 0.75, 360)]
     for (a0, r0), (a1, r1) in zip(marks, marks[1:]):
         X.tw(f'tl.fromTo("{s} .orb", {{rotation:{r0}}}, {{rotation:{r1}, duration:{max(0.2, a1 - a0):.3f}, ease:"power1.inOut", immediateRender:false}}, {a0:.3f});')
     end = t + d
-    if end > tr + 1.5:
-        X.tw(f'tl.fromTo("{s} .orb", {{rotation:360}}, {{rotation:{360 + 220 * (end - tr - 1.5):.0f}, duration:{end - tr - 1.5:.3f}, ease:"none", immediateRender:false}}, {tr + 1.5:.3f});')
-    for k, (tk, _) in enumerate(marks[:4]):
+    tail0 = marks[-1][0]
+    if end > tail0:
+        X.tw(f'tl.fromTo("{s} .orb", {{rotation:360}}, {{rotation:{360 + 220 * (end - tail0):.0f}, duration:{end - tail0:.3f}, ease:"none", immediateRender:false}}, {tail0:.3f});')
+    for k, (tk, _) in enumerate(marks[:n]):
         X.tw(f'tl.fromTo("{s} .stn[data-k=\'{k}\'] .hot", {{opacity:0}}, {{opacity:1, duration:0.15, immediateRender:false}}, {tk:.3f});')
         X.tw(f'tl.fromTo("{s} .stn[data-k=\'{k}\']", {{scale:1}}, {{keyframes:[{{scale:1.15, duration:0.15}}, {{scale:1, duration:0.35, ease:"back.out(3)"}}], immediateRender:false}}, {tk:.3f});')
         X.sfx(tk, "click")
-    shots(X, f"{s} .cam", t, d, [(t, 1.0, 0.5, 0.5), (tm - 0.2, 1.08, *((0.5, 0.55) if X.portrait else (0.68, 0.52)))])
+    shots(X, f"{s} .cam", t, d, [(t, 1.0, 0.5, 0.5), (tm - 0.2, 1.06, *((0.5, 0.5) if X.portrait else (0.62, 0.52)))])
 
 
 def thesis(b, X, t, d, cid):
@@ -632,9 +748,8 @@ def thesis(b, X, t, d, cid):
 .pr-thesis .kick { left:160px; top:270px; }
 .pr-thesis .l1 { position:absolute; left:150px; top:330px; font-family:var(--f-serif); font-weight:900; font-size:176px; line-height:1.15; color:var(--ink); letter-spacing:-.01em; }
 .pr-thesis .l2 { position:absolute; left:160px; top:590px; font-family:var(--f-serif); font-weight:700; font-size:84px; line-height:1.2; color:var(--ink); }
-.pr-thesis .mk { position:relative; display:inline-block; }
-.pr-thesis .mk i { position:absolute; left:-2%; right:-2%; bottom:.08em; height:.26em; background:var(--red); transform-origin:0 50%; }
-.pr-thesis .mk .t { position:relative; }
+#root .pr-thesis .em .emb { display:block; left:-2%; right:-2%; bottom:.08em; height:.26em; background:var(--red); transform-origin:0 50%; }
+#root .pr-thesis .em .emt { color:var(--ink); }
 .pr-thesis .st { position:relative; display:inline-block; color:var(--muted); }
 .pr-thesis .st i { position:absolute; left:-3%; right:-3%; top:52%; height:6px; background:var(--muted); transform-origin:0 50%; }
 .pr-thesis .qm { position:absolute; right:150px; top:150px; font-family:var(--f-serif); font-weight:900; font-size:300px; line-height:1; color:var(--lemon); }
@@ -643,27 +758,34 @@ def thesis(b, X, t, d, cid):
 #root.v .pr-thesis .l1 { left:52px; top:530px; font-size:150px; }
 #root.v .pr-thesis .l2 { left:60px; top:900px; font-size:66px; display:none; }
 """)
+    P = X.portrait
     l1, em = b.get("l1", ""), b.get("em", "")
-    a, _, z = l1.partition(em)
+    marked = l1.replace(em, f"*{em}*", 1) if em and "*" not in l1 else l1
+    w1 = (X.W - 104) if P else (X.W - 150 - 96)
+    p1, ln1 = fs(marked, w1, 150 if P else 176, 70, lines=3 if P else 2, lh=1.15)
     l2, st = b.get("l2", ""), b.get("struck", "")
-    p, _, q = l2.partition(st)
-    br = "<br>" if X.portrait else ""
+    p2, ln2 = fs(l2, (X.W - 120) if P else (X.W - 160 - 96), 66 if P else 84, 40, lines=2, lh=1.2)
+    def strike(line):
+        if st and st in line:
+            a_, _, z_ = line.partition(st)
+            return f'{X.rich(a_)}<span class="st" data-layout-allow-occlusion>{X.rich(st)}<i data-layout-allow-occlusion></i></span>{X.rich(z_)}'
+        return X.rich(line)
+    top1 = 530 if P else 330
+    top2 = top1 + len(ln1) * p1 * 1.15 + (40 if P else 50)
     inner = (f'<div class="pr pr-thesis"><div class="cam"><div class="qm">“</div><div class="kick">{X.rich(b.get("kicker", ""))}</div>'
-             f'<div class="l1"><span class="ln"><span>{X.rich(a)}{br}<span class="mk"><i></i><span class="t">{X.rich(em)}</span></span>{X.rich(z)}</span></span></div>'
-             f'<div class="l2"><span class="ln"><span>{X.rich(p)}<span class="st">{X.rich(st)}<i></i></span>{X.rich(q)}</span></span></div></div>{furn(X, b)}</div>')
+             f'<div class="l1" style="font-size:{p1}px">{"".join(f"<span class=ln><span>{X.rich(l)}</span></span>" for l in ln1)}</div>'
+             f'<div class="l2" style="font-size:{p2}px; top:{top2:.0f}px">{"".join(f"<span class=ln><span>{strike(l)}</span></span>" for l in ln2)}</div></div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
     te, ts = T(X, b, "at_em", t, t + 0.8), T(X, b, "at_struck", t, t + 2.2)
     X.tw(f'tl.from("{s} .qm", {{y:-40, opacity:0, duration:0.7, ease:"expo.out"}}, {t:.3f});')
     X.tw(f'tl.from("{s} .kick", {{x:-24, opacity:0, duration:0.5, ease:"expo.out"}}, {t + 0.05:.3f});')
     lift(X, f"{s} .l1 .ln > span", t + 0.1, dur=0.8)
-    X.tw(f'tl.from("{s} .l1 .mk i", {{scaleX:0, duration:0.45, ease:"power3.out"}}, {te - 0.05:.3f});')
+    X.tw(f'tl.from("{s} .l1 .em .emb", {{scaleX:0, duration:0.45, ease:"power3.out"}}, {te - 0.05:.3f});')
     X.sfx(te, "line")
     lift(X, f"{s} .l2 .ln > span", min(ts - 0.6, t + 1.2), dur=0.7)
     X.tw(f'tl.from("{s} .l2 .st i", {{scaleX:0, duration:0.3, ease:"power3.out"}}, {ts + 0.1:.3f});')
     drift(X, f"{s} .cam", t, d, 1.03)
-    if X.portrait:   # the second line moves into the captions in portrait; keep the page calm
-        pass
 
 
 def outro(b, X, t, d, cid):
@@ -676,8 +798,13 @@ def outro(b, X, t, d, cid):
 #root.v .pr-outro .bar { left:60px; top:470px; } #root.v .pr-outro .ttl { left:52px; top:500px; font-size:130px; }
 #root.v .pr-outro .sub { left:60px; top:690px; font-size:40px; } #root.v .pr-outro .cta { left:60px; top:780px; }
 """)
-    inner = (f'<div class="pr pr-outro dark"><div class="cam"><div class="bar"></div><div class="ttl">{X.rich(b.get("title", "第九顶帽子"), split="chars")}</div>'
-             f'<div class="sub">{X.rich(b.get("sub", ""))}</div><div class="cta">{X.rich(b.get("cta", ""))}</div></div>{furn(X, b)}</div>')
+    P = X.portrait
+    tpx, tl_ = fs(b.get("title", "第九顶帽子"), X.W - (104 if P else 300), 130 if P else 150, 60, lines=2)
+    spx, _ = fs(b.get("sub", ""), X.W - (120 if P else 320), 40 if P else 42, 24)
+    cpx, _ = fs(b.get("cta", ""), X.W - (180 if P else 380), 36, 22)
+    y_sub = (500 if P else 360) + len(tl_) * tpx * 1.1 + 30
+    inner = (f'<div class="pr pr-outro dark"><div class="cam"><div class="bar"></div><div class="ttl" style="font-size:{tpx}px">{"<br>".join(X.rich(l, split="chars") for l in tl_)}</div>'
+             f'<div class="sub" style="font-size:{spx}px; top:{y_sub:.0f}px">{X.rich(b.get("sub", ""))}</div><div class="cta" style="font-size:{cpx}px; top:{y_sub + spx * 1.4 + 40:.0f}px">{X.rich(b.get("cta", ""))}</div></div>{furn(X, b)}</div>')
     X.clip(cid, t, d, inner, "scene", 2)
     s = f"#{cid}"
     X.tw(f'tl.from("{s} .bar", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t + 0.05:.3f});')

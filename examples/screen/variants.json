@@ -1,0 +1,589 @@
+{
+ "meta": {
+  "title": "screen 变体测试",
+  "aspect": "16:9",
+  "style": "screen",
+  "duration": 48.0,
+  "mascot": "assets/video/shiba.webm",
+  "section": "AI 工具台",
+  "case": "变体测试"
+ },
+ "beats": [
+  {
+   "scene": "dash",
+   "value": 8,
+   "label": "周活",
+   "series": [
+    [
+     "1月",
+     3
+    ],
+    [
+     "2月",
+     8
+    ]
+   ],
+   "series_unit": "",
+   "tag0": "起点",
+   "paid": 1,
+   "paid_label": "付费",
+   "q": "？",
+   "answer": "八个。",
+   "images": [
+    "assets/shots/portrait_dash.jpg"
+   ],
+   "src": "变体 A：最短文字 · 2 个点 · 1 张竖屏截图",
+   "t": 0.0,
+   "d": 3.0,
+   "at_num": 0.6,
+   "at_paid": 1.2,
+   "at_then": 2.0
+  },
+  {
+   "scene": "dash",
+   "value": 1234567890123,
+   "label": "一个非常非常长的指标名称：过去十二个月里每周至少打开一次应用并完成一次对话的去重用户数",
+   "series": [
+    [
+     "2024.01",
+     120
+    ],
+    [
+     "2024.04",
+     180
+    ],
+    [
+     "2024.07",
+     260
+    ],
+    [
+     "2024.10",
+     300
+    ],
+    [
+     "2025.01",
+     420
+    ],
+    [
+     "2025.04",
+     500
+    ],
+    [
+     "2025.07",
+     700
+    ],
+    [
+     "2025.10",
+     800
+    ],
+    [
+     "2026.01",
+     930
+    ]
+   ],
+   "hl": 5,
+   "tag0": "这里开始加速",
+   "paid": 37.5,
+   "paid_label": "付费用户占比（按月度去重、剔除试用与教育优惠账户后的口径）",
+   "q": "这个指标到底是怎么统计出来的，口径和去年比有没有变化？",
+   "answer": "按每周至少一次完成对话的去重账户计算，剔除测试账号；2025 年起把企业席位也算进来了，所以和去年不能直接比。",
+   "images": [
+    "assets/shots/portrait_dash.jpg",
+    "assets/shots/land_api.jpg",
+    "assets/shots/square_grid.jpg",
+    "assets/shots/wide_palette.jpg",
+    "assets/shots/portrait_pricing.jpg"
+   ],
+   "src": "变体 B：超长文字 · 13 位数 · 9 个点 · 5 张混合比例截图",
+   "t": 3.0,
+   "d": 3.0,
+   "at_num": 4.0,
+   "at_paid": 4.5,
+   "at_then": 5.2
+  },
+  {
+   "scene": "api",
+   "label": "QPS",
+   "big": 3,
+   "big_unit": "次",
+   "unit": "峰值",
+   "note": "",
+   "src": "变体 A：最短 · 无明细数字 · 无备注",
+   "t": 6.0,
+   "d": 3.0,
+   "at_num": 7.0
+  },
+  {
+   "scene": "api",
+   "label": "过去 24 小时里，所有区域的推理集群合计处理的输入与输出 token 总量（含缓存命中）",
+   "big": 12345.6,
+   "big_unit": "万亿",
+   "value": 98765432109876,
+   "unit": "tokens / 天（含缓存命中与批处理请求）",
+   "note": "这一段备注故意写得很长，用来测试三行以内自动缩小字号、在词与词之间平衡断行，而且 *不会* 把一个词拆成两半。",
+   "images": [
+    "assets/shots/land_api.jpg",
+    "assets/shots/land_forecast.jpg",
+    "assets/shots/square_grid.jpg"
+   ],
+   "endpoints": [
+    "/v2/batch/very/long/endpoint/name",
+    "/v1/x"
+   ],
+   "src": "变体 B：超长标签 · 大数字 · 截图代替柱状条",
+   "t": 9.0,
+   "d": 3.0,
+   "at_num": 10.6
+  },
+  {
+   "scene": "pricing",
+   "value": 2,
+   "unit": "人",
+   "label": "付费",
+   "plans": [
+    [
+     "免费",
+     "¥0",
+     "",
+     ""
+    ],
+    [
+     "会员",
+     "¥9",
+     "/月",
+     ""
+    ]
+   ],
+   "focus": [
+    1
+   ],
+   "paid_cells": 0,
+   "legend": [
+    [
+     "付费",
+     "2"
+    ]
+   ],
+   "src": "变体 A：2 张卡 · 0 个付费格 · 1 条图例",
+   "t": 12.0,
+   "d": 3.0,
+   "at_num": 12.8,
+   "at_p1": 13.4,
+   "at_free": 14.3
+  },
+  {
+   "scene": "pricing",
+   "value": 123456789,
+   "unit": "位付费订阅者（含企业席位）",
+   "label": "一条很长的副标题，用来测试单行自动缩小：全球各区域、各渠道、各计费周期合计口径",
+   "plans": [
+    [
+     "Free",
+     "$0",
+     "/ 月",
+     "免费使用，有用量上限"
+    ],
+    [
+     "Go",
+     "$5",
+     "/ 月",
+     "入门订阅，适合轻度使用"
+    ],
+    [
+     "Plus",
+     "$20",
+     "/ 月",
+     "个人订阅，更高用量与更新模型"
+    ],
+    [
+     "Pro",
+     "$200",
+     "/ 月",
+     "重度用户订阅"
+    ],
+    [
+     "Team",
+     "$30",
+     "/ 人·月",
+     "团队协作、共享空间与管理后台"
+    ],
+    [
+     "Enterprise 企业版（年付，含专属支持）",
+     "面议",
+     "",
+     "按席位与用量定制，含安全合规与专属客户成功"
+    ],
+    [
+     "Edu",
+     "$0",
+     "/ 月",
+     "教育优惠"
+    ]
+   ],
+   "focus": [
+    2,
+    5
+   ],
+   "paid_cells": 63,
+   "legend": [
+    [
+     "免费",
+     "37%"
+    ],
+    [
+     "个人付费 · Go / Plus / Pro",
+     "41%",
+     "on"
+    ],
+    [
+     "团队",
+     "12%"
+    ],
+    [
+     "企业",
+     "9%"
+    ],
+    [
+     "教育",
+     "1%"
+    ]
+   ],
+   "src": "变体 B：7 张卡 · 63 个付费格 · 5 条图例",
+   "t": 15.0,
+   "d": 3.0,
+   "at_num": 16.0,
+   "at_p1": 16.5,
+   "at_p2": 17.1,
+   "at_free": 17.6
+  },
+  {
+   "scene": "forecast",
+   "heading": "增长",
+   "value": 3,
+   "unit": "倍",
+   "label": "",
+   "bars": [
+    [
+     "2025",
+     3,
+     "actual",
+     "3"
+    ]
+   ],
+   "src": "变体 A：1 根柱 · 无通知",
+   "t": 18.0,
+   "d": 3.0,
+   "at_year": 19.0,
+   "at_num": 19.8
+  },
+  {
+   "scene": "forecast",
+   "heading": "一个很长的标题：全球付费用户的实际值与公司内部给投资人的五年预测",
+   "heading_sub": "单位：百万人，按年末口径",
+   "value": 1234.5,
+   "unit": "百万",
+   "label": "2030 年目标（假设渗透率持续上升）",
+   "bars": [
+    [
+     "2022 年末",
+     12,
+     "actual",
+     "1,200 万"
+    ],
+    [
+     "2023 年末",
+     40,
+     "actual",
+     "4,000 万"
+    ],
+    [
+     "2025 年中",
+     120,
+     "actual",
+     "1.2 亿"
+    ],
+    [
+     "2027（预测）",
+     500,
+     "proj",
+     "5 亿"
+    ],
+    [
+     "2030（预测）",
+     1234.5,
+     "proj",
+     "12.3 亿"
+    ]
+   ],
+   "notes": [
+    "起点",
+    "翻了三倍多",
+    "最近一次公开数据",
+    "中期目标（含企业席位）",
+    "长期目标"
+   ],
+   "mult": "≈ 100×",
+   "toast": [
+    "内部预测，未经审计",
+    "这一段通知正文故意很长：据媒体报道，公司在融资材料里给出的预测假设付费率逐年上升，同时总用户数增长到原来的三倍以上。",
+    "第三方未能独立核实"
+   ],
+   "src": "变体 B：5 根柱 · 长标签长备注 · 长通知",
+   "t": 21.0,
+   "d": 3.0,
+   "at_year": 21.9,
+   "at_num": 23.0
+  },
+  {
+   "scene": "shots",
+   "title": "暂无截图",
+   "images": [],
+   "src": "变体 A：0 张图 → 骨架卡片",
+   "t": 24.0,
+   "d": 3.0
+  },
+  {
+   "scene": "shots",
+   "kicker": "CASE 01",
+   "title": "看这张",
+   "images": [
+    {
+     "src": "assets/shots/portrait_dash.jpg",
+     "label": "竖屏截图"
+    }
+   ],
+   "hl": 0,
+   "src": "变体 B：1 张竖屏截图",
+   "t": 27.0,
+   "d": 3.0,
+   "at_hl": 28.6
+  },
+  {
+   "scene": "shots",
+   "title": "三张不同比例的截图放在一起",
+   "images": [
+    {
+     "src": "assets/shots/land_api.jpg",
+     "label": "横屏"
+    },
+    {
+     "src": "assets/shots/square_grid.jpg",
+     "label": "方图"
+    },
+    {
+     "src": "assets/shots/portrait_pricing.jpg",
+     "label": "竖屏",
+     "focus": [
+      50,
+      20
+     ]
+    }
+   ],
+   "hl": 2,
+   "src": "变体 C：3 张混合比例",
+   "t": 30.0,
+   "d": 3.0,
+   "at_hl": 31.8
+  },
+  {
+   "scene": "shots",
+   "kicker": "20 张",
+   "title": "一个很长的截图墙标题，测试两行以内自动缩小字号、在词与词之间平衡断行，不会把一个词拆开",
+   "images": [
+    {
+     "src": "assets/shots/portrait_dash.jpg",
+     "label": "#1"
+    },
+    {
+     "src": "assets/shots/land_api.jpg",
+     "label": "#2"
+    },
+    {
+     "src": "assets/shots/square_grid.jpg",
+     "label": "#3"
+    },
+    {
+     "src": "assets/shots/wide_palette.jpg",
+     "label": "#4"
+    },
+    {
+     "src": "assets/shots/portrait_pricing.jpg",
+     "label": "#5"
+    },
+    {
+     "src": "assets/shots/land_forecast.jpg",
+     "label": "#6"
+    },
+    {
+     "src": "assets/shots/portrait_dash.jpg",
+     "label": "#7"
+    },
+    {
+     "src": "assets/shots/land_api.jpg",
+     "label": "#8"
+    },
+    {
+     "src": "assets/shots/square_grid.jpg",
+     "label": "#9"
+    },
+    {
+     "src": "assets/shots/wide_palette.jpg",
+     "label": "#10"
+    },
+    {
+     "src": "assets/shots/portrait_pricing.jpg",
+     "label": "#11"
+    },
+    {
+     "src": "assets/shots/land_forecast.jpg",
+     "label": "#12"
+    },
+    {
+     "src": "assets/shots/portrait_dash.jpg",
+     "label": "#13"
+    },
+    {
+     "src": "assets/shots/land_api.jpg",
+     "label": "#14"
+    },
+    {
+     "src": "assets/shots/square_grid.jpg",
+     "label": "#15"
+    },
+    {
+     "src": "assets/shots/wide_palette.jpg",
+     "label": "#16"
+    },
+    {
+     "src": "assets/shots/portrait_pricing.jpg",
+     "label": "#17"
+    },
+    {
+     "src": "assets/shots/land_forecast.jpg",
+     "label": "#18"
+    },
+    {
+     "src": "assets/shots/portrait_dash.jpg",
+     "label": "#19"
+    },
+    {
+     "src": "assets/shots/land_api.jpg",
+     "label": "#20"
+    }
+   ],
+   "src": "变体 D：20 张 → 超过上限显示 +N",
+   "t": 33.0,
+   "d": 3.0
+  },
+  {
+   "scene": "palette",
+   "a": "",
+   "b": "付费",
+   "query": "付",
+   "results": [
+    [
+     "付费",
+     "5%",
+     true
+    ],
+    [
+     "免费",
+     "95%",
+     false
+    ]
+   ],
+   "src": "变体 A：最短 · 2 条结果",
+   "t": 36.0,
+   "d": 3.0,
+   "at_b": 36.8,
+   "at_sel": 37.6
+  },
+  {
+   "scene": "palette",
+   "host": true,
+   "a": "别只看谁的用户多，也别只看谁的融资额大，更别只看谁的发布会热闹",
+   "b": "要看谁*愿意持续付钱*，而且付得越来越多",
+   "query": "谁愿意持续付钱而且付得越来越多（按留存与客单价排序）",
+   "results": [
+    [
+     "指标 1：周活跃用户",
+     "8 亿",
+     false
+    ],
+    [
+     "指标 2：月活跃用户",
+     "12 亿",
+     false
+    ],
+    [
+     "指标 3：付费用户",
+     "3,500 万",
+     false
+    ],
+    [
+     "指标 4：付费占比",
+     "≈5%",
+     true
+    ],
+    [
+     "指标 5：客单价",
+     "$20 / $200",
+     false
+    ],
+    [
+     "指标 6：年留存率",
+     "—",
+     false
+    ],
+    [
+     "指标 7：企业席位",
+     "—",
+     false
+    ],
+    [
+     "指标 8：API 收入占比",
+     "—",
+     false
+    ],
+    [
+     "指标 9：广告收入",
+     "0",
+     false
+    ],
+    [
+     "指标 10：毛利率",
+     "—",
+     false
+    ],
+    [
+     "指标 11：现金流",
+     "—",
+     false
+    ]
+   ],
+   "src": "变体 B：长文字 · 11 条结果 → 还有 N 项",
+   "t": 39.0,
+   "d": 3.0,
+   "at_b": 40.0,
+   "at_sel": 41.0
+  },
+  {
+   "scene": "outro",
+   "title": "九",
+   "sub": "",
+   "cta": "",
+   "src": "变体 A：1 个字",
+   "t": 42.0,
+   "d": 3.0
+  },
+  {
+   "scene": "outro",
+   "title": "第九顶帽子 · AI 工具台与商业拆解特别版",
+   "sub": "一段很长的副标题：每周拆一家公司，用数据看懂谁在赚钱、钱从哪里来、能不能持续",
+   "cta": "关注第九顶帽子，下期继续拆一家正在烧钱的 AI 公司",
+   "src": "变体 B：长标题 · 长副标题 · 长按钮",
+   "t": 45.0,
+   "d": 3.0
+  }
+ ]
+}

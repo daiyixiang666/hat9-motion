@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/notify.webp" width="480" alt="notify 横屏"> <img src="../../assets/previews/fx/notify_v.webp" width="160" alt="notify 竖屏">
 
-**怎么动**：iOS-style banners drop in one after another and stack.
+**怎么动**：iOS-style banners drop in one after another and stack. items: 1–6 of "应用：消息" | [应用, 消息] | {app, text}; long messages wrap to two lines; the stack scales to fit.
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 界面 |
 | 适合的句子 | 平台反馈、增长、消息 |
 | 建议时长 | 2–3 秒 |
-| 参数 | `items` |
+| 参数 | `items`, `line` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | Envato Elements「Elements」热门第1 |
 

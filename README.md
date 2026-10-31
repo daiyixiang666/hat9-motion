@@ -5,9 +5,9 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看完整示例](#完整示例一杯-4-块钱的柠檬水) · [🎛 在线看全部 40 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看 5 条成片](#成片示例同一套工具5-种完全不同的片子) · [🎛 在线看全部 50 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.4.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.5.0-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -17,18 +17,21 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 ---
 
-## 完整示例：一杯 4 块钱的柠檬水
+## 成片示例：同一套工具，5 种完全不同的片子
 
-一条 31 秒的商业拆解口播，真实数据、真实配音节奏，横竖屏各排一版：
+每条都是真实题材、核对过的数据（来源印在画面上）、横竖屏各自排版、有镜头调度和合成配乐。点图看成片。
 
-| 横屏 16:9 | 竖屏 9:16 |
-|---|---|
-| <a href="assets/previews/mixue_16x9.mp4"><img src="assets/previews/mixue_16x9.jpg" width="560" alt="横屏成片"></a> | <a href="assets/previews/mixue_9x16.mp4"><img src="assets/previews/mixue_9x16.jpg" width="190" alt="竖屏成片"></a> |
+| 横屏 16:9 | 竖屏 9:16 | 题材 · 风格 |
+|---|---|---|
+| <a href="assets/previews/mixue_16x9.mp4"><img src="assets/previews/mixue_16x9.jpg" width="420" alt="一杯 4 块钱的柠檬水 横屏"></a> | <a href="assets/previews/mixue_9x16.mp4"><img src="assets/previews/mixue_9x16.jpg" width="120" alt="一杯 4 块钱的柠檬水 竖屏"></a> | **《一杯 4 块钱的柠檬水》**<br>`press` 财经刊：大字 + 色块，点阵对比、收入构成条一路推进到 2.5%、钱货两条线、飞轮。<br><sub>蜜雪集团 2024 年度业绩公告 · McDonald's 2024 10-K</sub> |
+| <a href="assets/previews/screen_16x9.mp4"><img src="assets/previews/screen_16x9.jpg" width="420" alt="8 亿人在用，5% 在付钱 横屏"></a> | <a href="assets/previews/screen_9x16.mp4"><img src="assets/previews/screen_9x16.jpg" width="120" alt="8 亿人在用，5% 在付钱 竖屏"></a> | **《8 亿人在用，5% 在付钱》**<br>`screen` AI 工具台：深色产品界面，仪表盘、实时日志计数、定价卡、预测图、⌘K 命令面板，光标真的在点。<br><sub>OpenAI DevDay 2025 · The Information（路透未能核实，画面已标注）· ChatGPT 官方定价</sub> |
+| <a href="assets/previews/atlas_16x9.mp4"><img src="assets/previews/atlas_16x9.jpg" width="420" alt="货船为什么不走苏伊士了 横屏"></a> | <a href="assets/previews/atlas_9x16.mp4"><img src="assets/previews/atlas_9x16.jpg" width="120" alt="货船为什么不走苏伊士了 竖屏"></a> | **《货船为什么不走苏伊士了》**<br>`atlas` 地图纪录：一张连续的世界地图，镜头推拉，航线实时绘制、船在走，危险区、运河、运价折线叠在地图上。<br><sub>苏伊士运河管理局 · 世界银行 · Drewry WCI · WEF</sub> |
+| <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" width="420" alt="一个铁箱子 横屏"></a> | <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" width="120" alt="一个铁箱子 竖屏"></a> | **《一个铁箱子》**<br>`doc` 实拍纪录：2.39 遮幅 + 调色 + 颗粒，1956 档案片接现代港口实拍，年份计数器、数据卡贴在画面上。<br><sub>Levinson《The Box》· 上港集团 2024 快报 · UNCTAD</sub> |
+| <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" width="420" alt="专注，就是学会说不 横屏"></a> | <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" width="120" alt="专注，就是学会说不 竖屏"></a> | **《专注，就是学会说不》**<br>`poster` 瑞士海报：12 栏网格随每句话重排，黑白 + 一个信号蓝，100 格答案矩阵、24 张图扔到只剩 1 张。<br><sub>Steve Jobs，WWDC 1997 收尾问答</sub> |
 
-- **文案**：9 句，钩子句先给冲突（4 块钱对 44 亿），数据全部来自蜜雪集团 2024 年度业绩公告和 McDonald's 2024 10-K，来源印在每一页的页脚。
-- **画面**：`press` 财经刊风格。矢量插画、点阵对比（1 点 = 100 家店）、收入构成条，以及从 2.5% 那一小段一路推进去的镜头、钱和货两条线、飞轮。每页都有镜头调度，没有一秒是静止的。
-- **声音**：本地 VoxCPM2 配音（逐字时间戳，画面卡在字上），`scripts/music.py` 现场合成的背景音乐，19 种合成音效。全程零 API key。
-- **耗时**：分镜写好后，在 Apple M5 上横屏渲染 23 秒、竖屏 25 秒。源文件：[`examples/mixue/`](examples/mixue/video.json)。
+- **怎么做出来的**：文案 → 配音（VoxCPM2，逐字时间戳，画面卡在字上）→ 一份 `video.json`（每句一个场景）→ HyperFrames 逐帧渲染。分镜写好后，在 Apple M5 上渲染一条 30 秒的成片约 25 秒。
+- **素材适配**：每个场景和动效都吃得下长短不一的文字、不同条数的列表、任意张数和比例的图片，部分还支持视频。各参数的范围见 [`references/inputs.md`](references/inputs.md)，压力测试脚本是 `scripts/stress.py`。
+- **源文件**：[`examples/`](examples/)，每个文件夹一条片子。
 
 ## 你说 → 会发生什么
 
@@ -94,7 +97,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
 | 配音 | macOS 系统语音 / 本地 VoxCPM2 / 静音按字数估时 | 你自己的录音（推荐） |
-| 画面 | 40 个代码动效 + 你的图片 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
+| 画面 | 50 个代码动效（38 效果 + 12 转场）+ 你的图片和视频 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
 | 字体 | 思源黑体 / 宋体、得意黑、霞鹜文楷等 OFL 字体 | — |
@@ -131,8 +134,8 @@ scripts/hat9.py     命令行：doctor · quick · plan · build · render · fx
 scripts/h9/aefx.py  AE 动效库（每个效果一个函数）  scripts/build.py      video.json → HyperFrames 工程
 gallery/            在线画廊（index.html · effects.json · llms.txt）
 references/effects/ 每个效果一张配方卡             references/           格式、动效规矩、句型→画面、出图规则
-styles/             press 财经刊 · reel 动效库 · hud 暗场 HUD · studio / clay 三维影棚
-examples/           mixue（完整示例）· aefx（动效在真实口播里）· demo / promo（旧版，待重做）
+styles/             press 财经刊 · screen AI 工具台 · atlas 地图纪录 · doc 实拍纪录 · poster 瑞士海报 · reel 动效库 · hud · studio / clay 三维
+examples/           mixue · screen · atlas · doc · poster（5 条成片）· aefx（动效在真实口播里）· stress（素材压力测试）· demo / promo（旧版）
 research/           调研：AE 动效人气排名、标杆仓库、国内外口播包装、动效工艺
 ```
 
@@ -160,7 +163,8 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
-- 🆕 **2026-10-31 · 0.4.0** 例子全部重做：完整示例《一杯 4 块钱的柠檬水》（`press` 财经刊风格，横竖屏各自排版，带镜头调度）；动效库的每个效果都换成真实口播里的一页；合成背景音乐。
+- 🆕 **2026-10-31 · 0.5.0** 新增 4 个风格和各自的成片：`screen` AI 工具台、`atlas` 地图纪录、`doc` 实拍纪录、`poster` 瑞士海报。新增 10 个动效：地球推近、地图航线、柱状图、折线、环形图、时间轴、AI 对话、HUD 锁定、液态玻璃、镂空字视频。素材适配层支持任意长度的文字、任意张数和比例的图片、部分支持视频，并配压力测试。
+- **2026-10-31 · 0.4.0** 例子全部重做：完整示例《一杯 4 块钱的柠檬水》（`press` 财经刊风格，横竖屏各自排版，带镜头调度）；动效库的每个效果都换成真实口播里的一页；合成背景音乐。
 - **2026-10-31 · 0.3.0** 按人气复刻的 AE 动效库（28 效果 + 12 转场），横竖屏同一套代码；`hat9` 命令行，`quick` 一条命令出片；在线画廊与配方卡；SRT 字幕导出。
 - **2026-10-31 · 0.2.0** 三维引擎：从字体轮廓挤出真正的立体中文字；陶土影棚、暗场 HUD 风格；美学方向板。
 - **2026-10-31 · 0.1.0** 引擎：video.json → HyperFrames；"@关键词" 对口播；手绘标注；字幕；柴犬主持人。

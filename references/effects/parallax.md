@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/parallax.webp" width="480" alt="parallax 横屏"> <img src="../../assets/previews/fx/parallax_v.webp" width="160" alt="parallax 竖屏">
 
-**怎么动**：clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers.
+**怎么动**：clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers. plate | image | video as the ground (+focus); fg optional (a transparent PNG cut-out).
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 照片 |
 | 适合的句子 | 开场大图、人物故事 |
 | 建议时长 | 2–4 秒 |
-| 参数 | `fg`, `plate`, `text` |
+| 参数 | `fg`, `focus`, `image`, `plate`, `text`, `video` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | VoluMax 2.64万份 · MDMZ 教程 1171万播放 |
 

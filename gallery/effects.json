@@ -3,7 +3,7 @@
   {
    "id": "parallax",
    "title": "2.5D 照片视差 (#2, VoluMax/Photomotion; MDMZ 1171万播放)",
-   "how": "clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers.",
+   "how": "clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers. plate | image | video as the ground (+focus); fg optional (a transparent PNG cut-out).",
    "cat": "照片",
    "ref": "VoluMax 2.64万份 · MDMZ 教程 1171万播放",
    "label": "#2 2.5D 照片视差 · Photo Parallax",
@@ -21,7 +21,7 @@
   {
    "id": "stomp",
    "title": "重拍排版 Stomp (#4, TypoKing 1.34万份; B站动态歌词排版 898万)",
-   "how": "one word per beat slams full-frame, sizes alternate, every third beat inverts the frame; a 2-frame jolt on each hit. With narration timestamps each word lands the moment it is spoken (like lyric typography).",
+   "how": "one word per beat slams full-frame, sizes alternate, every third beat inverts the frame; a 2-frame jolt on each hit. words: 1–12 (a list, \"a|b|c\", or just text → split into words). Long words wrap to two lines. With narration timestamps each word lands the moment it is spoken (like lyric typography).",
    "cat": "字效",
    "ref": "TypoKing 1.34万份 · B站动态歌词排版 898万播放",
    "label": "#4 重拍排版 · Stomp",
@@ -39,7 +39,7 @@
   {
    "id": "mosaic",
    "title": "照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份)",
-   "how": "12 tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame.",
+   "how": "tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops; 12–24 → one tile each, the grid re-shapes to the count).",
    "cat": "照片",
    "ref": "Mosaic Photo Reveal 1.6万份",
    "label": "#6 照片墙拼合 · Mosaic Reveal",
@@ -66,7 +66,7 @@
   {
    "id": "portal",
    "title": "瞳孔穿梭 / 穿洞推进 (#10, B站364.5万 2025)",
-   "how": "a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen.",
+   "how": "a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen. image|video and image2|video2 (+focus, focus2).",
    "cat": "照片",
    "ref": "B站 364.5万播放（2025）",
    "label": "#10 瞳孔穿梭 · Zoom-Through Portal",
@@ -93,7 +93,7 @@
   {
    "id": "notify",
    "title": "手机通知界面 (#13, Envato Elements「Elements」热门第1)",
-   "how": "iOS-style banners drop in one after another and stack.",
+   "how": "iOS-style banners drop in one after another and stack. items: 1–6 of \"应用：消息\" | [应用, 消息] | {app, text}; long messages wrap to two lines; the stack scales to fit.",
    "cat": "界面",
    "ref": "Envato Elements「Elements」热门第1",
    "label": "#13 手机通知 · UI Mockup",
@@ -119,8 +119,8 @@
   },
   {
    "id": "triple",
-   "title": "三连 (like · coin · favourite)",
-   "how": "icons pop in sequence, each with a ring burst; the B站/抖音 staple ending.",
+   "title": "三连 (like · coin · favourite …)",
+   "how": "1–5 icons pop in sequence, each with a ring burst; the B站/抖音 staple ending. labels: list of 1–5 (icons in order: 点赞 投币 收藏 转发 评论); icons: optional indices into that set.",
    "cat": "界面",
    "ref": "555 Animated Icons 6.4K份 · B站三连 157万",
    "label": "#16 动态图标 · Animated Icons",
@@ -129,7 +129,7 @@
   {
    "id": "callout",
    "title": "标注引线 (Callout title)",
-   "how": "a dot pops on the subject, the leader line draws out, the label slides along it.",
+   "how": "a dot pops on the subject, the leader line draws out, the label slides along it. image | video (+focus) as the ground; one point (x, y, text, sub) or points: [{x, y, text, sub}, …] up to 4. Labels turn left when the point is on the right third, and drop below when it is near the top.",
    "cat": "照片",
    "ref": "Call-Out Titles 4.5K份",
    "label": "#18 引线标注 · Line Callout",
@@ -138,7 +138,7 @@
   {
    "id": "odometer",
    "title": "数字滚轮 (Odometer / number wheel)",
-   "how": "each digit column spins down to its value, staggered.",
+   "how": "each digit column spins down to its value, staggered. value: 46479 | \"46,479\" | -3.5 | \"97.5\" | 1.2e9 (numbers get thousands separators; zh:true → 万/亿).",
    "cat": "数据",
    "ref": "YouTube 162.6万播放",
    "label": "#20 数字滚动 · Counter",
@@ -147,7 +147,7 @@
   {
    "id": "collage",
    "title": "拼贴剪纸 (#21, Fakeplastictree Collage 203.5万)",
-   "how": "torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow.",
+   "how": "torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape); text: the handwritten note.",
    "cat": "照片",
    "ref": "Fakeplastictree 203.5万播放",
    "label": "#21 拼贴剪纸 · Collage",
@@ -165,7 +165,7 @@
   {
    "id": "match_cut",
    "title": "文字匹配剪辑 Text Match Cut (#23, Envato Elements 标题热门第1/2)",
-   "how": "the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads.",
+   "how": "the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled).",
    "cat": "字效",
    "ref": "Envato Elements 标题热门第1、2名",
    "label": "#23 文字匹配剪辑 · Text Match Cut",
@@ -201,7 +201,7 @@
   {
    "id": "tracking",
    "title": "字距收拢 (Tracking In)",
-   "how": "glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre), so it never snaps to whole pixels like letter-spacing would.",
+   "how": "glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre of its own line), so it never snaps to whole pixels like letter-spacing would.",
    "cat": "字效",
    "ref": "电影片头经典",
    "label": "字距收拢 · Tracking In",
@@ -228,7 +228,7 @@
   {
    "id": "lockup",
    "title": "中英双语锁定 + 注释引线 (type specimen lockup)",
-   "how": "headline, latin line, two leader-line annotations.",
+   "how": "headline, latin line, 0–4 leader-line annotations.",
    "cat": "字效",
    "ref": "B站「碰撞吧！」107万播放",
    "label": "双语锁定 · Type Lockup",
@@ -237,7 +237,7 @@
   {
    "id": "diffuse",
    "title": "弥散光 (diffuse gradient blobs)",
-   "how": "3 soft colour blobs orbit slowly behind a calm title.",
+   "how": "1–5 soft colour blobs orbit slowly behind a calm title.",
    "cat": "图形",
    "ref": "B站「碰撞吧！」107万播放",
    "label": "弥散光 · Gradient Blobs",
@@ -246,11 +246,101 @@
   {
    "id": "gooey",
    "title": "粘性碰撞 (gooey metaballs)",
-   "how": "two balls approach, merge with a liquid neck, bounce apart; squash & stretch.",
+   "how": "two balls approach, merge with a liquid neck, bounce apart; squash & stretch. labels: optional [左, 右] — two words that ride under the balls (e.g. 流量 / 供应链).",
    "cat": "图形",
    "ref": "S5 · B站「碰撞吧！」107万播放",
    "label": "粘性融球 · Goo Blobs",
    "suit": "合并、碰撞、两者关系"
+  },
+  {
+   "id": "earth_zoom",
+   "title": "",
+   "how": "",
+   "cat": "地图",
+   "ref": "Ultimate Earth Zoom Toolkit 9.5K · Google Earth Studio 缩放教程 207万播放",
+   "label": "#8 地球推近 · Earth Zoom",
+   "suit": "地点揭晓、「在哪里」、开场定位"
+  },
+  {
+   "id": "map_route",
+   "title": "",
+   "how": "",
+   "cat": "地图",
+   "ref": "Map Route Generator 3.5K · Ignace Aleya 动画旅行地图 169.5万播放",
+   "label": "#19 地图路线 · Map Route",
+   "suit": "路线、物流、扩张、从 A 到 B"
+  },
+  {
+   "id": "bars",
+   "title": "",
+   "how": "",
+   "cat": "数据",
+   "ref": "Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "label": "D2 柱状图生长 · Bar Chart",
+   "suit": "逐年对比、排行、增长 / 下滑"
+  },
+  {
+   "id": "line_draw",
+   "title": "",
+   "how": "",
+   "cat": "数据",
+   "ref": "Envato Popular「Line Chart Infographic」· SonduckFilm 23.2万播放",
+   "label": "D2 折线描绘 · Line Chart",
+   "suit": "趋势、增长曲线、穿过零线的变化"
+  },
+  {
+   "id": "donut",
+   "title": "",
+   "how": "",
+   "cat": "数据",
+   "ref": "Envato Popular「Infographic Pie Chart 250+」· Move Shapes 17.6万播放",
+   "label": "D3 环形占比 · Donut",
+   "suit": "占比、构成、「一半以上」"
+  },
+  {
+   "id": "timeline",
+   "title": "",
+   "how": "",
+   "cat": "数据",
+   "ref": "Company Timeline 3.2K（Titles 第 9）· Smertimba 23.9万播放",
+   "label": "D4 时间轴 · Timeline",
+   "suit": "发展历程、关键年份、复盘"
+  },
+  {
+   "id": "chat",
+   "title": "",
+   "how": "",
+   "cat": "界面",
+   "ref": "Envato Elements「Elements」Popular 第 1 · Text Messages 3.8K",
+   "label": "#13 UI 界面 · Chat Mockup",
+   "suit": "问 AI、对话、提示词演示"
+  },
+  {
+   "id": "hud_lock",
+   "title": "",
+   "how": "",
+   "cat": "界面",
+   "ref": "Quantum HUD Infographic 5.9K（Infographics 第 1）",
+   "label": "#17 HUD 科技界面 · HUD Lock-on",
+   "suit": "锁定目标、指出关键人 / 物、选址"
+  },
+  {
+   "id": "glass",
+   "title": "",
+   "how": "",
+   "cat": "界面",
+   "ref": "Bricks「Animate Like Apple」76万播放（2025）· Envato「Real Glass FX」Popular 第 4",
+   "label": "液态玻璃 · Liquid Glass",
+   "suit": "一个核心数字浮在实拍上"
+  },
+  {
+   "id": "text_mask",
+   "title": "",
+   "how": "",
+   "cat": "照片",
+   "ref": "SonduckFilm「5 Quick Text Effects」76.7万播放 · Mixkit Video Mask Title",
+   "label": "文字镂空透视频 · Video Inside Text",
+   "suit": "一个关键词 + 实拍，转场进入画面"
   }
  ],
  "transitions": [

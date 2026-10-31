@@ -1,0 +1,29 @@
+{
+ "meta": {"title": "doc 变体压力测试", "aspect": "16:9", "style": "doc", "duration": 33, "section": "商业拆解 · 变体测试",
+          "year_roll": {"from": "956", "to": "2024", "at": 15}},
+ "beats": [
+  {"scene": "shot", "id": "v01", "t": 0, "media": [{"src": "assets/variant/crossing.jpg", "focus": [0.25, 0.6], "to": [0.4, 0.5]}, "assets/variant/towers.jpg"],
+   "stamp": {"big": "一", "small": "ONE GLYPH · STILLS ONLY"}},
+  {"scene": "shot", "id": "v02", "t": 3, "media": "assets/variant/portrait_clip.mp4",
+   "l3": {"name": "马尔科姆·珀塞尔·麦克莱恩（Malcom Purcell McLean）", "latin": "Malcom Purcell McLean · trucking entrepreneur and the father of containerization, 1913–2001",
+          "role": "北卡罗来纳州 · 卡车运输商 · 海陆公司创始人 · 集装箱航运的开创者"}},
+  {"scene": "shot", "id": "v03", "t": 6, "media": {"src": "assets/variant/portrait_still.jpg", "focus": [0.5, 0.3]}, "l3": {"name": "麦", "latin": "M.", "role": ""},
+   "tag": "画面说明可以很长：这是一张竖幅静帧，在横屏里完整显示并用自身的模糊副本铺底，在竖屏里按焦点铺满"},
+  {"scene": "shot", "id": "v04", "t": 9, "media": "assets/variant/archive43.mp4", "at_call": 9.4, "at_call1": 10.8,
+   "call": [{"label": "一个特别长的数据标签：全球主要港口二〇二四年集装箱吞吐量合计（按标准箱折算，含空箱和转运）", "pre": "≈", "fig": "1,234,567,890", "unit": "标准箱（TEU）",
+             "sub": "副标题也可以很长：这一行用来测试三行以内的均衡断行，以及字号会不会自动缩小到不溢出画面边界，同时保持可读的最小字号", "src": "来源：一个很长的来源名称 · 某某国际组织年度报告第十七版第三章表格 3.2（2025 年 9 月发布）"},
+            {"label": "短", "fig": "3", "unit": "%"}]},
+  {"scene": "shot", "id": "v05", "t": 12, "media": "assets/variant/ultrawide.mp4",
+   "list": {"title": "八项清单的标题也可以很长：集装箱革命改变了什么", "items": ["运费", "港口从城市中心搬到郊区的深水港", "码头工人", "全球供应链", "制造业外包到更远的地方",
+            "保险", "仓储与库存管理方式彻底改变，准时制生产成为可能", "城市"]}},
+  {"scene": "shot", "id": "v06", "t": 15.5, "media": ["assets/variant/towers.jpg", "assets/variant/portrait_clip.mp4", {"src": "assets/variant/crossing.jpg", "w": 2}],
+   "list": {"items": ["装", "卸"]}, "trk": {"x": 58, "y": 40, "w": 260, "h": 150, "label": "TRACKING LABEL THAT IS DELIBERATELY QUITE LONG · 标准箱 20 FT"}},
+  {"scene": "shot", "id": "v07", "t": 19, "media": "assets/variant/crossing.jpg",
+   "say": "真正改变世界的往往不是那些最耀眼的新发明，而是那些默默地把*成本*一点点打下来、让所有人都用得起的人。"},
+  {"scene": "shot", "id": "v08", "t": 22.5, "media": "assets/variant/towers.jpg", "say": "*成本*",
+   "stamp": {"big": "将近七十年后的今天，全球港口", "small": "A LONG STAMP THAT MUST BREAK ONTO TWO OR THREE LINES", "until": 24.5}},
+  {"scene": "card", "id": "v09", "t": 26, "kicker": "第三章 · 一个很长的章节编号与副标题 · CHAPTER THREE", "title": "第一个集装箱如何改变了全球贸易的版图",
+   "sub": "How one steel box rewired the entire world economy in under seventy years", "meta": "纽瓦克 → 休斯敦 · 58 个箱子 · 1956 年 4 月 26 日 · 理想 X 号"},
+  {"scene": "card", "id": "v10", "t": 30, "title": "完"}
+ ]
+}

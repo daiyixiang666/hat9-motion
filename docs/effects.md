@@ -14,9 +14,9 @@
 
 <img src="../assets/previews/fx/parallax.webp" width="480" alt="parallax">
 
-clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers.
+clean plate + cut-out subject on separate depths, the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers. plate | image | video as the ground (+focus); fg optional (a transparent PNG cut-out).
 
-- 参数：`fg`, `plate`, `text`
+- 参数：`fg`, `focus`, `image`, `plate`, `text`, `video`
 - 人气：VoluMax 2.64万份 · MDMZ 教程 1171万播放
 
 ### `burst` — 形状元素爆发 (Shape Elements burst)
@@ -25,16 +25,16 @@ clean plate + cut-out subject on separate depths, the camera dollies in so the s
 
 radial lines + ring + dots fire as the word slams in.
 
-- 参数：`text`
+- 参数：—
 - 人气：Graphics Pack 2.62万份 · SonduckFilm 321万播放
 
 ### `stomp` — 重拍排版 Stomp (#4, TypoKing 1.34万份; B站动态歌词排版 898万)
 
 <img src="../assets/previews/fx/stomp.webp" width="480" alt="stomp">
 
-one word per beat slams full-frame, sizes alternate, every third beat inverts the frame; a 2-frame jolt on each hit. With narration timestamps each word lands the moment it is spoken (like lyric typography).
+one word per beat slams full-frame, sizes alternate, every third beat inverts the frame; a 2-frame jolt on each hit. words: 1–12 (a list, "a|b|c", or just text → split into words). Long words wrap to two lines. With narration timestamps each word lands the moment it is spoken (like lyric typography).
 
-- 参数：`beat`, `words`
+- 参数：`beat`, `text`, `words`
 - 人气：TypoKing 1.34万份 · B站动态歌词排版 898万播放
 
 ### `mask_up` — 行遮罩上移 (the most-used title reveal)
@@ -43,16 +43,16 @@ one word per beat slams full-frame, sizes alternate, every third beat inverts th
 
 each line rises out of its own mask, expo.out.
 
-- 参数：`sub`, `text`
+- 参数：—
 - 人气：YouTube 153万 / 145万播放
 
 ### `mosaic` — 照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份)
 
 <img src="../assets/previews/fx/mosaic.webp" width="480" alt="mosaic">
 
-12 tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame.
+tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops; 12–24 → one tile each, the grid re-shapes to the count).
 
-- 参数：`images`
+- 参数：`focus`, `image`, `images`
 - 人气：Mosaic Photo Reveal 1.6万份
 
 ### `cartoon` — 卡通冲击特效 (#7, 140 Flash FX 1.47万份)
@@ -70,16 +70,16 @@ speed lines, a jagged impact star, smoke puffs — on twos (12 fps steps).
 
 each glyph fades up out of a soft blur and a small rise, grey→white.
 
-- 参数：`sub`, `text`
+- 参数：—
 - 人气：206.8万播放（2025）
 
 ### `portal` — 瞳孔穿梭 / 穿洞推进 (#10, B站364.5万 2025)
 
 <img src="../assets/previews/fx/portal.webp" width="480" alt="portal">
 
-a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen.
+a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen. image|video and image2|video2 (+focus, focus2).
 
-- 参数：`image`, `image2`, `x`, `y`
+- 参数：`focus`, `focus2`, `image`, `image2`, `video`, `video2`, `x`, `y`
 - 人气：B站 364.5万播放（2025）
 
 ### `shine` — 光泽扫过 (Shine / CC Light Sweep) on a title
@@ -88,7 +88,7 @@ a hole opens on a point of frame A showing frame B, then the camera dives throug
 
 a bright band travels across the glyphs once.
 
-- 参数：`text`
+- 参数：—
 - 人气：Gold Simple Titles 1.1万份
 
 ### `neon` — 霓虹点亮 (#12, Neon Sign Kit 1万份)
@@ -97,16 +97,16 @@ a bright band travels across the glyphs once.
 
 tube text stutters on (stepped flicker pattern), then holds with a steady glow.
 
-- 参数：`color`, `text`
+- 参数：`color`
 - 人气：Neon Sign Kit 1万份
 
 ### `notify` — 手机通知界面 (#13, Envato Elements「Elements」热门第1)
 
 <img src="../assets/previews/fx/notify.webp" width="480" alt="notify">
 
-iOS-style banners drop in one after another and stack.
+iOS-style banners drop in one after another and stack. items: 1–6 of "应用：消息" | [应用, 消息] | {app, text}; long messages wrap to two lines; the stack scales to fit.
 
-- 参数：`items`
+- 参数：`items`, `line`
 - 人气：Envato Elements「Elements」热门第1
 
 ### `lower3` — 下三分之一字条 (#14, Lower Thirds 第1名 6.3K)
@@ -127,40 +127,40 @@ red & cyan copies jitter on stepped frames, then lock.
 - 参数：`text`
 - 人气：Video Copilot 198万播放
 
-### `triple` — 三连 (like · coin · favourite)
+### `triple` — 三连 (like · coin · favourite …)
 
 <img src="../assets/previews/fx/triple.webp" width="480" alt="triple">
 
-icons pop in sequence, each with a ring burst; the B站/抖音 staple ending.
+1–5 icons pop in sequence, each with a ring burst; the B站/抖音 staple ending. labels: list of 1–5 (icons in order: 点赞 投币 收藏 转发 评论); icons: optional indices into that set.
 
-- 参数：`labels`
+- 参数：`icons`, `labels`
 - 人气：555 Animated Icons 6.4K份 · B站三连 157万
 
 ### `callout` — 标注引线 (Callout title)
 
 <img src="../assets/previews/fx/callout.webp" width="480" alt="callout">
 
-a dot pops on the subject, the leader line draws out, the label slides along it.
+a dot pops on the subject, the leader line draws out, the label slides along it. image | video (+focus) as the ground; one point (x, y, text, sub) or points: [{x, y, text, sub}, …] up to 4. Labels turn left when the point is on the right third, and drop below when it is near the top.
 
-- 参数：`image`, `sub`, `text`, `x`, `y`
+- 参数：`focus`, `image`, `points`, `sub`, `text`, `video`, `x`, `y`
 - 人气：Call-Out Titles 4.5K份
 
 ### `odometer` — 数字滚轮 (Odometer / number wheel)
 
 <img src="../assets/previews/fx/odometer.webp" width="480" alt="odometer">
 
-each digit column spins down to its value, staggered.
+each digit column spins down to its value, staggered. value: 46479 | "46,479" | -3.5 | "97.5" | 1.2e9 (numbers get thousands separators; zh:true → 万/亿).
 
-- 参数：`sub`, `unit`, `value`
+- 参数：`unit`, `value`, `zh`
 - 人气：YouTube 162.6万播放
 
 ### `collage` — 拼贴剪纸 (#21, Fakeplastictree Collage 203.5万)
 
 <img src="../assets/previews/fx/collage.webp" width="480" alt="collage">
 
-torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow.
+torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape); text: the handwritten note.
 
-- 参数：`images`, `text`
+- 参数：`focus`, `image`, `images`, `text`
 - 人气：Fakeplastictree 203.5万播放
 
 ### `write_on` — 描边书写 → 填色 (Trim Paths on text / 手写签名)
@@ -176,9 +176,9 @@ glyph outlines draw on, then the fill floods in.
 
 <img src="../assets/previews/fx/match_cut.webp" width="480" alt="match_cut">
 
-the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads.
+the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled).
 
-- 参数：`images`, `text`
+- 参数：`focus`, `images`, `text`
 - 人气：Envato Elements 标题热门第1、2名
 
 ### `impact` — 冲击抖动 (#24, Bricks 106.8万 2025)
@@ -187,7 +187,7 @@ the word holds its exact place while everything around it hard-cuts — backgrou
 
 the title slams in and the whole frame takes a decaying camera shake.
 
-- 参数：`sub`, `text`
+- 参数：—
 - 人气：Bricks 106.8万播放（2025）
 
 ### `typewriter` — 打字机 + 光标
@@ -212,9 +212,9 @@ every slot is a reel of random glyphs that steps (not slides) onto its real char
 
 <img src="../assets/previews/fx/tracking.webp" width="480" alt="tracking">
 
-glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre), so it never snaps to whole pixels like letter-spacing would.
+glyphs start spread wide and drift together while sharpening — done with transforms (x offset ∝ distance from the centre of its own line), so it never snaps to whole pixels like letter-spacing would.
 
-- 参数：`spread`, `sub`, `text`
+- 参数：`spread`
 - 人气：电影片头经典
 
 ### `flip3d` — 逐字三维翻转 (3D Flip per character)
@@ -223,7 +223,7 @@ glyphs start spread wide and drift together while sharpening — done with trans
 
 rotateX from -100°, transform-origin bottom, perspective on the line.
 
-- 参数：`text`
+- 参数：—
 - 人气：文字动效合集高频
 
 ### `ghost_type` — 巨型虚影背景字 (Ghost / outline background type)
@@ -232,35 +232,125 @@ rotateX from -100°, transform-origin bottom, perspective on the line.
 
 a huge outlined word drifts behind small foreground copy.
 
-- 参数：`ghost`, `sub`, `text`
+- 参数：`ghost`, `text`
 - 人气：B站「碰撞吧！」107万播放
 
 ### `lockup` — 中英双语锁定 + 注释引线 (type specimen lockup)
 
 <img src="../assets/previews/fx/lockup.webp" width="480" alt="lockup">
 
-headline, latin line, two leader-line annotations.
+headline, latin line, 0–4 leader-line annotations.
 
-- 参数：`notes`, `sub`, `text`
+- 参数：`notes`
 - 人气：B站「碰撞吧！」107万播放
 
 ### `diffuse` — 弥散光 (diffuse gradient blobs)
 
 <img src="../assets/previews/fx/diffuse.webp" width="480" alt="diffuse">
 
-3 soft colour blobs orbit slowly behind a calm title.
+1–5 soft colour blobs orbit slowly behind a calm title.
 
-- 参数：`colors`, `sub`, `text`
+- 参数：`colors`
 - 人气：B站「碰撞吧！」107万播放
 
 ### `gooey` — 粘性碰撞 (gooey metaballs)
 
 <img src="../assets/previews/fx/gooey.webp" width="480" alt="gooey">
 
-two balls approach, merge with a liquid neck, bounce apart; squash & stretch.
+two balls approach, merge with a liquid neck, bounce apart; squash & stretch. labels: optional [左, 右] — two words that ride under the balls (e.g. 流量 / 供应链).
 
-- 参数：—
+- 参数：`labels`
 - 人气：S5 · B站「碰撞吧！」107万播放
+
+### `earth_zoom` — 
+
+<img src="../assets/previews/fx/earth_zoom.webp" width="480" alt="earth_zoom">
+
+
+
+- 参数：`from_lat`, `from_lon`, `km`, `lat`, `lon`, `sub`, `text`, `zoom`
+- 人气：Ultimate Earth Zoom Toolkit 9.5K · Google Earth Studio 缩放教程 207万播放
+
+### `map_route` — 
+
+<img src="../assets/previews/fx/map_route.webp" width="480" alt="map_route">
+
+
+
+- 参数：`chips`, `from`, `from_sub`, `points`, `stops`, `to`, `to_sub`
+- 人气：Map Route Generator 3.5K · Ignace Aleya 动画旅行地图 169.5万播放
+
+### `bars` — 
+
+<img src="../assets/previews/fx/bars.webp" width="480" alt="bars">
+
+
+
+- 参数：`compact`, `dec`, `growth`, `hl`, `items`, `note`, `orient`, `title`, `unit`
+- 人气：Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放
+
+### `line_draw` — 
+
+<img src="../assets/previews/fx/line_draw.webp" width="480" alt="line_draw">
+
+
+
+- 参数：`compact`, `dec`, `note`, `points`, `title`, `unit`
+- 人气：Envato Popular「Line Chart Infographic」· SonduckFilm 23.2万播放
+
+### `donut` — 
+
+<img src="../assets/previews/fx/donut.webp" width="480" alt="donut">
+
+
+
+- 参数：`center`, `dec`, `segments`, `sub`, `text`, `value`
+- 人气：Envato Popular「Infographic Pie Chart 250+」· Move Shapes 17.6万播放
+
+### `timeline` — 
+
+<img src="../assets/previews/fx/timeline.webp" width="480" alt="timeline">
+
+
+
+- 参数：`hl`, `items`
+- 人气：Company Timeline 3.2K（Titles 第 9）· Smertimba 23.9万播放
+
+### `chat` — 
+
+<img src="../assets/previews/fx/chat.webp" width="480" alt="chat">
+
+
+
+- 参数：`a`, `hl`, `placeholder`, `q`, `title`, `turns`
+- 人气：Envato Elements「Elements」Popular 第 1 · Text Messages 3.8K
+
+### `hud_lock` — 
+
+<img src="../assets/previews/fx/hud_lock.webp" width="480" alt="hud_lock">
+
+
+
+- 参数：`image`, `readouts`, `text`, `v`, `video`, `video_start`
+- 人气：Quantum HUD Infographic 5.9K（Infographics 第 1）
+
+### `glass` — 
+
+<img src="../assets/previews/fx/glass.webp" width="480" alt="glass">
+
+
+
+- 参数：`compact`, `dec`, `image`, `kicker`, `rows`, `tag`, `text`, `unit`, `value`, `value_text`, `video`, `video_start`
+- 人气：Bricks「Animate Like Apple」76万播放（2025）· Envato「Real Glass FX」Popular 第 4
+
+### `text_mask` — 
+
+<img src="../assets/previews/fx/text_mask.webp" width="480" alt="text_mask">
+
+
+
+- 参数：`image`, `images`, `sub`, `text`
+- 人气：SonduckFilm「5 Quick Text Effects」76.7万播放 · Mixkit Video Mask Title
 
 ## 转场
 

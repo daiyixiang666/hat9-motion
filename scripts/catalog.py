@@ -22,9 +22,10 @@ CAT = {   # gallery filter categories
     "字效": ["pop", "mask_up", "tracking", "blur_focus", "apple_blur", "typewriter", "scramble", "write_on", "flip3d", "slice_text", "shine",
              "glitch", "neon", "stomp", "match_cut", "impact", "ghost_type", "lockup"],
     "图形": ["burst", "cartoon", "gooey", "diffuse"],
-    "照片": ["parallax", "mosaic", "collage", "portal", "callout"],
-    "数据": ["odometer"],
-    "界面": ["notify", "lower3", "triple"],
+    "照片": ["parallax", "mosaic", "collage", "portal", "callout", "text_mask"],
+    "数据": ["odometer", "bars", "line_draw", "donut", "timeline"],
+    "地图": ["earth_zoom", "map_route"],
+    "界面": ["notify", "lower3", "triple", "chat", "hud_lock", "glass"],
 }
 def cat_of(fx): return next((k for k, v in CAT.items() if fx in v), "其他")
 
@@ -51,8 +52,14 @@ SUIT = {
     "cartoon": "搞笑、吐槽、意外", "gooey": "合并、碰撞、两者关系", "diffuse": "安静的过渡、情绪句", "parallax": "开场大图、人物故事",
     "mosaic": "大量案例、作品合集", "collage": "资料拼贴、证据", "portal": "从一个画面进入另一个话题", "callout": "指出图里的细节",
     "odometer": "任何数字、比例", "notify": "平台反馈、增长、消息", "lower3": "人物 / 账号介绍、结尾", "triple": "片尾求三连 / 关注",
+    "earth_zoom": "地点揭晓、「在哪里」、开场定位", "map_route": "路线、物流、扩张、从 A 到 B", "bars": "逐年对比、排行、增长 / 下滑",
+    "line_draw": "趋势、增长曲线、穿过零线的变化", "donut": "占比、构成、「一半以上」", "timeline": "发展历程、关键年份、复盘",
+    "chat": "问 AI、对话、提示词演示", "hud_lock": "锁定目标、指出关键人 / 物、选址", "glass": "一个核心数字浮在实拍上",
+    "text_mask": "一个关键词 + 实拍，转场进入画面",
 }
-DUR = {"stomp": "按口播，每词 0.3–0.5 秒", "portal": "2.5–3 秒", "mosaic": "2.5–3 秒", "match_cut": "2–3 秒（每 0.22 秒一切）", "parallax": "2–4 秒"}
+DUR = {"stomp": "按口播，每词 0.3–0.5 秒", "portal": "2.5–3 秒", "mosaic": "2.5–3 秒", "match_cut": "2–3 秒（每 0.22 秒一切）", "parallax": "2–4 秒",
+       "earth_zoom": "3–4 秒", "map_route": "3–4 秒", "bars": "3 秒起，每多 5 根 +0.5 秒", "line_draw": "3–4 秒", "timeline": "每个节点 ≥ 0.5 秒",
+       "chat": "一问一答 3.5 秒；每多一条 +1 秒", "hud_lock": "3 秒", "text_mask": "3 秒（多图每张 ≥ 0.15 秒）"}
 PIT = {
     "parallax": "需要先抠图 + 修补背景板（scripts/cutout 流程）；主体太小时视差不明显。",
     "stomp": "词太长会自动缩字号；一页最好 2–4 个字。",
@@ -61,6 +68,15 @@ PIT = {
     "match_cut": "每个画面的底色和字色是成对设计的，换图时保持一深一浅交替。",
     "write_on": "笔画描边依赖字体轮廓；毛笔字体（马善政）效果最好。",
     "ghost_type": "虚影字是故意半透明的，check 时已标记为允许重叠。",
+    "earth_zoom": "只画陆地不画国界；需要国界时必须换中国视角数据并核对标准地图。d3 / topojson 走 jsdelivr，渲染机要能联网。",
+    "map_route": "途经点决定线走哪条走廊，只给起终点会画成大圆航线；跨日期变更线的路线会自动以路线为中心。",
+    "bars": "超过 10 根（竖屏 7 根）或标签很长时自动改横向；负数挂在零线下方并换浅色；大于 10 万自动换算万 / 亿。",
+    "line_draw": "点很多时横轴标签自动隔几个显示；有负数时画零线，面积填到零线。",
+    "donut": "segments 会按总和归一化，最多 6 段。",
+    "chat": "文字太多时字号会缩到 2vmin，再多就让旧消息上滚出窗口。",
+    "hud_lock": "竖屏会裁图，用 v: {x, y, w, h, ox} 单独给竖屏的框和裁切位置。",
+    "glass": "用视频做背景时卡片的模糊依赖 backdrop-filter，渲染里已验证有效。",
+    "text_mask": "多图时每张图在字里切换；没有图时用强调色渐变填字、不做穿透。",
 }
 
 

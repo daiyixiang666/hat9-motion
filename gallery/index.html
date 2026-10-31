@@ -49,7 +49,11 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   font: 600 14px var(--f-body); padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
 .toast.on { opacity: 1; }
 .empty { color: var(--dim); padding: 40px 0; }
-.show { margin-top: 28px; display: grid; grid-template-columns: minmax(0, 16fr) minmax(0, 5.4fr); gap: 18px; align-items: start; }
+.films { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
+.films button { font: 500 14px var(--f-body); color: var(--dim); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
+.films button[aria-selected="true"] { color: var(--ink); border-color: var(--hot); }
+.films button b { font: 600 12px var(--f-mono); color: var(--hot); margin-right: 6px; }
+.show { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 16fr) minmax(0, 5.4fr); gap: 18px; align-items: start; }
 .show figure { margin: 0; background: var(--card); border-radius: 10px; overflow: hidden; }
 .show video { display: block; width: 100%; height: auto; background: #000; }
 .show figcaption { padding: 10px 14px 12px; font-size: 13px; color: var(--dim); }
@@ -64,9 +68,10 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   <h1>一条口播，变成 AE 级动效成片</h1>
   <p class="lede">按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效库，横屏竖屏同一套代码。每个效果都放在一句真实口播里演示。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
-  <section class="show" aria-label="完整示例">
-    <figure><video id="sh-h" controls playsinline preload="metadata"></video><figcaption><b>完整示例《一杯 4 块钱的柠檬水》</b> · 横屏 16:9 · 31 秒 · press 财经刊风格</figcaption></figure>
-    <figure><video id="sh-v" controls playsinline preload="metadata"></video><figcaption><b>同一条</b> · 竖屏 9:16，各自排版</figcaption></figure>
+  <div class="films" role="tablist" aria-label="成片示例" id="films"></div>
+  <section class="show" aria-label="成片示例">
+    <figure><video id="sh-h" controls playsinline preload="metadata"></video><figcaption id="cap-h"></figcaption></figure>
+    <figure><video id="sh-v" controls playsinline preload="metadata"></video><figcaption>同一条 · 竖屏 9:16，各自排版</figcaption></figure>
   </section>
 
   <div class="bar" role="toolbar" aria-label="筛选">
@@ -90,7 +95,17 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 (async function () {
   const ROOT = (location.pathname.includes("/gallery/") ? "../" : "") + "assets/previews/";
   const PV = ROOT + "fx/";
-  for (const [id, f] of [["sh-h", "mixue_16x9"], ["sh-v", "mixue_9x16"]]) { const v = document.getElementById(id); v.poster = ROOT + f + ".jpg"; v.src = ROOT + f + ".mp4"; }
+  const FILMS = [
+    ["mixue", "press", "一杯 4 块钱的柠檬水", "财经刊 · 商业拆解"], ["screen", "screen", "8 亿人在用，5% 在付钱", "AI 工具台 · 产品界面"],
+    ["atlas", "atlas", "货船为什么不走苏伊士了", "地图纪录 · 连续世界地图"], ["doc", "doc", "一个铁箱子", "实拍纪录 · 档案片 + 现代实拍"],
+    ["poster", "poster", "专注，就是学会说不", "瑞士海报 · 网格动态字"]];
+  const filmsEl = document.getElementById("films");
+  const showFilm = (k) => { const f = FILMS[k];
+    for (const [id, tag] of [["sh-h", "16x9"], ["sh-v", "9x16"]]) { const v = document.getElementById(id); v.pause(); v.poster = ROOT + f[0] + "_" + tag + ".jpg"; v.src = ROOT + f[0] + "_" + tag + ".mp4"; }
+    document.getElementById("cap-h").innerHTML = `<b>《${f[2]}》</b> · 横屏 16:9 · ${f[3]} · 风格 <code>${f[1]}</code>`;
+    filmsEl.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-selected", i === k)); };
+  FILMS.forEach((f, i) => { const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.innerHTML = `<b>${f[1]}</b>${f[2]}`; b.onclick = () => showFilm(i); filmsEl.appendChild(b); });
+  showFilm(0);
   let data = { effects: [], transitions: [] };
   try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
   let orient = "h", cat = "全部", q = "";

@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/portal.webp" width="480" alt="portal 横屏"> <img src="../../assets/previews/fx/portal_v.webp" width="160" alt="portal 竖屏">
 
-**怎么动**：a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen.
+**怎么动**：a hole opens on a point of frame A showing frame B, then the camera dives through the hole until B fills the screen. image|video and image2|video2 (+focus, focus2).
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 照片 |
 | 适合的句子 | 从一个画面进入另一个话题 |
 | 建议时长 | 2.5–3 秒 |
-| 参数 | `image`, `image2`, `x`, `y` |
+| 参数 | `focus`, `focus2`, `image`, `image2`, `video`, `video2`, `x`, `y` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | B站 364.5万播放（2025） |
 

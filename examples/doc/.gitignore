@@ -1,0 +1,7 @@
+# graded / cropped footage is derived from Mixkit clips (no redistribution) — rebuild with prep_clips.py
+assets/clips/
+assets/variant/
+# raw TTS takes
+assets/audio/takes/
+build/
+renders/

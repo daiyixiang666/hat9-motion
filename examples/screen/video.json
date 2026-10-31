@@ -1,0 +1,198 @@
+{
+ "meta": {
+  "title": "8 亿人在用，5% 在付钱",
+  "aspect": "16:9",
+  "style": "screen",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "mascot": "assets/video/shiba.webm",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.2,
+  "tail": 1.8,
+  "section": "AI 工具台",
+  "case": "ChatGPT · 用户与付费",
+  "src": "OpenAI DevDay 2025；The Information",
+  "caption_fix": {
+   "八亿": " 8 亿 ",
+   "百分之五": "5%",
+   "一亿": "1 亿",
+   "六十亿": "60 亿",
+   "三千五百万": "3,500 万",
+   "二十美元": "20 美元",
+   "两百美元": "200 美元",
+   "九成五": "95%",
+   "二零三零年": "2030 年",
+   "两亿两千万": "2.2 亿"
+  }
+ },
+ "beats": [
+  {
+   "scene": "dash",
+   "t": 0,
+   "at_num": "@八亿",
+   "at_paid": "@百分之五",
+   "at_then": "@两年前",
+   "value": 800000000,
+   "label": "ChatGPT 每周活跃用户（2025 年 10 月）",
+   "series": [
+    [
+     "2023.11",
+     100
+    ],
+    [
+     "2025.03",
+     500
+    ],
+    [
+     "2025.08",
+     700
+    ],
+    [
+     "2025.10",
+     800
+    ]
+   ],
+   "tag0": "2023 · 1 亿",
+   "paid": 5,
+   "paid_label": "付费用户占周活|约 3,500 万人（2025 年 7 月）",
+   "q": "ChatGPT 每周有多少人在用？",
+   "answer": "据 OpenAI 2025 年 10 月 DevDay：每周活跃用户超过 *8 亿*。",
+   "input": "继续问……",
+   "src": "OpenAI DevDay 2025（TechCrunch 2025-10-06）；付费占比：The Information，2025 年 7 月数据"
+  },
+  {
+   "scene": "api",
+   "t": "@现在它",
+   "at_num": "@六十亿",
+   "label": "API 每分钟处理的 token",
+   "value": 6000000000,
+   "unit": "tokens / 分钟",
+   "note": "另有 *400 万* 开发者在用它的接口做产品",
+   "src": "Sam Altman，OpenAI DevDay 2025 主题演讲",
+   "big": 60,
+   "big_unit": "亿"
+  },
+  {
+   "scene": "pricing",
+   "t": "@但付费",
+   "at_num": "@三千五百万",
+   "at_p1": "@二十美元",
+   "at_p2": "@两百美元",
+   "at_free": "@九成五",
+   "value": 3500,
+   "unit": "万人付费",
+   "label": "ChatGPT 付费订阅用户 · 2025 年 7 月",
+   "plans": [
+    [
+     "Free",
+     "$0",
+     "/ 月",
+     "免费使用，有用量上限"
+    ],
+    [
+     "Plus",
+     "$20",
+     "/ 月",
+     "个人订阅"
+    ],
+    [
+     "Pro",
+     "$200",
+     "/ 月",
+     "重度用户订阅"
+    ]
+   ],
+   "paid_cells": 5,
+   "legend": [
+    [
+     "付费 · Plus / Pro",
+     "≈5%",
+     "on"
+    ],
+    [
+     "免费",
+     "≈95%",
+     ""
+    ]
+   ],
+   "src": "The Information（2025-11 报道 2025 年 7 月数据）；ChatGPT 官方定价"
+  },
+  {
+   "scene": "forecast",
+   "t": "@OpenAI押",
+   "at_year": "@二零三零",
+   "at_num": "@两亿两千万",
+   "bars": [
+    [
+     "2025.07",
+     35,
+     "actual",
+     "3,500 万"
+    ],
+    [
+     "2030（预测）",
+     220,
+     "proj",
+     "2.2 亿"
+    ]
+   ],
+   "mult": "≈ 6.3×",
+   "value": 2.2,
+   "unit": "亿",
+   "label": "2030 年付费用户目标（占周活 8.5%）",
+   "toast": [
+    "OpenAI 内部预测",
+    "据 The Information：2030 年周活 26 亿，其中 8.5% 付费",
+    "Reuters：未能独立核实"
+   ],
+   "src": "The Information（2025-11）；Reuters 转述",
+   "notes": [
+    "占周活 ≈5%",
+    "占周活 8.5%（周活 26 亿）"
+   ],
+   "heading": "ChatGPT 付费用户",
+   "heading_sub": "2025 实际 vs 2030 预测"
+  },
+  {
+   "scene": "palette",
+   "t": "@所以别",
+   "at_b": "@要看谁",
+   "at_sel": "@愿意付钱",
+   "host": true,
+   "a": "别只看谁的用户多",
+   "b": "要看谁*愿意付钱*",
+   "query": "谁愿意付钱",
+   "results": [
+    [
+     "周活跃用户",
+     "8 亿",
+     false
+    ],
+    [
+     "付费占比",
+     "≈5%",
+     true
+    ],
+    [
+     "客单价",
+     "$20 / $200",
+     false
+    ],
+    [
+     "付费用户",
+     "3,500 万",
+     false
+    ]
+   ],
+   "src": "第九顶帽子"
+  },
+  {
+   "scene": "outro",
+   "t": "@这里是",
+   "title": "第九顶帽子",
+   "sub": "AI 工具台 · 看懂谁在赚钱",
+   "cta": "关注，一起算账",
+   "src": "第九顶帽子"
+  }
+ ]
+}

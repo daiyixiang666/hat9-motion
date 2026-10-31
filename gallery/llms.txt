@@ -15,7 +15,7 @@
 - notify [界面]: 手机通知界面 (#13, Envato Elements「Elements」热门第1) — 平台反馈、增长、消息
 - lower3 [界面]: 下三分之一字条 (#14, Lower Thirds 第1名 6.3K) — 人物 / 账号介绍、结尾
 - glitch [字效]: 故障 RGB 分离 (Glitch / RGB split) — 出错、警告、反转
-- triple [界面]: 三连 (like · coin · favourite) — 片尾求三连 / 关注
+- triple [界面]: 三连 (like · coin · favourite …) — 片尾求三连 / 关注
 - callout [照片]: 标注引线 (Callout title) — 指出图里的细节
 - odometer [数据]: 数字滚轮 (Odometer / number wheel) — 任何数字、比例
 - collage [照片]: 拼贴剪纸 (#21, Fakeplastictree Collage 203.5万) — 资料拼贴、证据
@@ -30,6 +30,16 @@
 - lockup [字效]: 中英双语锁定 + 注释引线 (type specimen lockup) — 中英双语标题、字体展示
 - diffuse [图形]: 弥散光 (diffuse gradient blobs) — 安静的过渡、情绪句
 - gooey [图形]: 粘性碰撞 (gooey metaballs) — 合并、碰撞、两者关系
+- earth_zoom [地图]:  — 地点揭晓、「在哪里」、开场定位
+- map_route [地图]:  — 路线、物流、扩张、从 A 到 B
+- bars [数据]:  — 逐年对比、排行、增长 / 下滑
+- line_draw [数据]:  — 趋势、增长曲线、穿过零线的变化
+- donut [数据]:  — 占比、构成、「一半以上」
+- timeline [数据]:  — 发展历程、关键年份、复盘
+- chat [界面]:  — 问 AI、对话、提示词演示
+- hud_lock [界面]:  — 锁定目标、指出关键人 / 物、选址
+- glass [界面]:  — 一个核心数字浮在实拍上
+- text_mask [照片]:  — 一个关键词 + 实拍，转场进入画面
 
 ## 转场
 - zoomin: #1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）

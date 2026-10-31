@@ -18,13 +18,14 @@ def run(*a): subprocess.run(a, check=True)
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("example"); ap.add_argument("--cuts", required=True); ap.add_argument("--style", default="press")
+    ap.add_argument("example"); ap.add_argument("--cuts", default=""); ap.add_argument("--style", default="press")
+    ap.add_argument("--no-hero", action="store_true", help="only the web-size films + posters (for the showcase grid)")
     ap.add_argument("--name", default=None); ap.add_argument("--poster", type=float, default=2.6)
     ap.add_argument("--h", type=int, default=520); ap.add_argument("--fps", type=int, default=12)
     a = ap.parse_args()
     ex = Path(a.example).resolve(); name = a.name or ex.name
     h16, h9 = ex / "renders" / f"{a.style}_16x9.mp4", ex / "renders" / f"{a.style}_9x16.mp4"
-    cuts = [tuple(map(float, c.split("-"))) for c in a.cuts.split(",")]
+    cuts = [tuple(map(float, c.split("-"))) for c in a.cuts.split(",") if c]
     sel = "+".join(f"between(t,{s},{e})" for s, e in cuts)
     OUT.mkdir(parents=True, exist_ok=True)
     # web-size films + posters
@@ -32,6 +33,9 @@ def main():
         run("ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", f"scale={w}:-2", "-c:v", "libx264", "-preset", "slow", "-crf", "25",
             "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-movflags", "+faststart", str(OUT / f"{name}_{tag}.mp4"))
         run("ffmpeg", "-v", "error", "-y", "-ss", str(a.poster), "-i", str(src), "-frames:v", "1", "-vf", f"scale={w}:-2", "-q:v", "3", str(OUT / f"{name}_{tag}.jpg"))
+    if a.no_hero:
+        for f in (f"{name}_16x9.mp4", f"{name}_9x16.mp4"): print(OUT / f, f"{(OUT / f).stat().st_size / 1e6:.1f} MB")
+        return
     # hero: the same moments from both aspects, side by side on a dark card
     H = a.h; W16 = round(H * 16 / 9 / 2) * 2; W9 = round(H * 9 / 16 / 2) * 2; gap, pad = 24, 28
     fc = (f"[0:v]select='{sel}',setpts=N/FRAME_RATE/TB,fps={a.fps},scale={W16}:{H}:flags=lanczos[a];"
