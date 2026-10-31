@@ -87,7 +87,8 @@ def main():
         if reel_v.exists(): cut(reel_v, b["t"], b["d"], OUT / f"{fx}_v", w=240)
         doc = (aefx.FX[fx].__doc__ or "").strip().replace("\n", " ")
         title, _, how = doc.partition(":")
-        params = sorted(set(re.findall(r'p\[["\'](\w+)["\']\]|p\.get\(["\'](\w+)["\']', open(aefx.__file__).read().split(f"def {fx}(")[1].split("\ndef ")[0])))
+        import inspect
+        params = sorted(set(re.findall(r'p\[["\'](\w+)["\']\]|p\.get\(["\'](\w+)["\']', inspect.getsource(aefx.FX[fx]))))
         keys = sorted({a or b_ for a, b_ in params} - {"label", "ref"})
         rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", "")))
         ex = {k: v for k, v in b.items() if k not in ("t", "d", "tr", "label", "ref")}

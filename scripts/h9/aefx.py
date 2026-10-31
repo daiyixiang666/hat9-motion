@@ -532,3 +532,18 @@ def dual(X, cid, t, d, p):
 
 
 FX = {k: v for k, v in globals().items() if callable(v) and not k.startswith("_") and k not in ("math",)}
+
+
+def _plugins():
+    """more effects live one-per-file in scripts/h9/fx/<name>.py (each exports FX = {"name": fn}); they may use
+    this module's helpers (_clip, _chars, THEMES). Lets several people add effects without touching this file."""
+    import importlib.util, pathlib
+    for f in sorted((pathlib.Path(__file__).parent / "fx").glob("[!_]*.py")):
+        spec = importlib.util.spec_from_file_location(f"h9fx_{f.stem}", f)
+        m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+        for k, v in getattr(m, "FX", {}).items():
+            if k in FX: raise SystemExit(f"effect {k!r} in {f.name} clashes with an existing effect")
+            FX[k] = v
+
+
+_plugins()
