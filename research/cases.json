@@ -1,0 +1,2799 @@
+{
+ "total": 277,
+ "families": {
+  "A": "文字形态",
+  "B": "数字与数据",
+  "C": "图片：数量、种类、比例",
+  "D": "视频",
+  "E": "文档",
+  "F": "引用与信源",
+  "G": "界面与产品",
+  "H": "地图与地理",
+  "I": "人物与组织",
+  "J": "对比与排名",
+  "K": "流程与步骤",
+  "L": "叙事结构",
+  "M": "平台特有",
+  "N": "语言与符号",
+  "O": "声音情况",
+  "P": "极端与边界",
+  "Q": "强调与标注",
+  "R": "情绪与梗",
+  "S": "节奏与不说话的时刻",
+  "T": "按观众想要什么",
+  "U": "按视频类型",
+  "V": "按制作情境"
+ },
+ "cases": [
+  {
+   "id": "A01",
+   "family": "文字形态",
+   "case": "2–8 字的金句大字",
+   "example": "「凭什么是你」",
+   "status": "handled",
+   "covered_by": "pop · impact · stomp · mask_up",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "A02",
+   "family": "文字形态",
+   "case": "20–40 字长句标题",
+   "example": "「真正拉开差距的，不是你会不会用，而是你知道哪一张不能要」",
+   "status": "handled",
+   "covered_by": "fit.py 自动缩字号 + 按词换行（mask_up、apple_blur 等）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "A03",
+   "family": "文字形态",
+   "case": "80–200 字的一段话，要分屏读完",
+   "example": "引一段定义或判决原文",
+   "status": "partial",
+   "covered_by": "fit.py 缩到 3–4 行后加省略号；没有自动分页",
+   "priority": "P1",
+   "proposal": "text_pages：按句分页，逐句高亮推进"
+  },
+  {
+   "id": "A04",
+   "family": "文字形态",
+   "case": "句中关键词强调",
+   "example": "「差别不在工具，*在判断*」",
+   "status": "handled",
+   "covered_by": "rich() 的 *强调* + marks 标注",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "A05",
+   "family": "文字形态",
+   "case": "同一句话里换词",
+   "example": "「不是 A，是 B」「它可以做 X / Y / Z」",
+   "status": "partial",
+   "covered_by": "press turn 能划掉再替换；没有老虎机式滚动换词",
+   "priority": "P0",
+   "proposal": "word_swap：句中一个槽位滚动换词，宽度跟着词变"
+  },
+  {
+   "id": "A06",
+   "family": "文字形态",
+   "case": "设问卡",
+   "example": "「为什么？」「凭什么？」大问号",
+   "status": "partial",
+   "covered_by": "poster problem、press turn 是专用场景；没有通用问题卡",
+   "priority": "P1",
+   "proposal": "question_card：问号卡（小Lin说式）"
+  },
+  {
+   "id": "A07",
+   "family": "文字形态",
+   "case": "名词解释卡",
+   "example": "「飞轮效应：Flywheel，指……」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P0",
+   "proposal": "term_card：术语 + 英文/拼音 + 一句释义，像词典条目"
+  },
+  {
+   "id": "A08",
+   "family": "文字形态",
+   "case": "3–7 条要点逐条出现",
+   "example": "「三个原因：一、……二、……三、……」",
+   "status": "partial",
+   "covered_by": "hud 编号栈只有 2 项设计；doc list 2–8 条只在 doc 里",
+   "priority": "P0",
+   "proposal": "list_stack：通用编号列表，当前条放大、其余压暗"
+  },
+  {
+   "id": "A09",
+   "family": "文字形态",
+   "case": "大标题缩成角标，内容在下面展开",
+   "example": "标题先占满屏，再退到左上角当章节名",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "title_demote：标题降级动画"
+  },
+  {
+   "id": "A10",
+   "family": "文字形态",
+   "case": "打错字、删掉、重打",
+   "example": "「它不是工具……它是判断」",
+   "status": "missing",
+   "covered_by": "typewriter 只会正向打字",
+   "priority": "P2",
+   "proposal": "typewriter 加 retype 参数"
+  },
+  {
+   "id": "A11",
+   "family": "文字形态",
+   "case": "中英双行字幕或标题",
+   "example": "中文一行，下面一行小英文",
+   "status": "partial",
+   "covered_by": "lockup 有中英锁定；字幕没有双语模式",
+   "priority": "P1",
+   "proposal": "captions 增加 bilingual 模式"
+  },
+  {
+   "id": "A12",
+   "family": "文字形态",
+   "case": "竖排中文标题",
+   "example": "古风或章节竖排大字",
+   "status": "partial",
+   "covered_by": "只有 press 竖屏链条的括号用了竖排",
+   "priority": "P2",
+   "proposal": "vertical_title"
+  },
+  {
+   "id": "A13",
+   "family": "文字形态",
+   "case": "手写或毛笔字",
+   "example": "「判断」毛笔字描边",
+   "status": "handled",
+   "covered_by": "write_on（马善政字体）",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "A14",
+   "family": "文字形态",
+   "case": "带出处的引号金句",
+   "example": "「Focusing is about saying no.」—— 乔布斯",
+   "status": "handled",
+   "covered_by": "hud quote · poster quote · cite_quote（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "A15",
+   "family": "文字形态",
+   "case": "卡拉 OK 逐字填色字幕",
+   "example": "说到哪个字，哪个字变色",
+   "status": "partial",
+   "covered_by": "punch 字幕只放大关键词；没有逐字填色",
+   "priority": "P1",
+   "proposal": "captions 增加 karaoke 模式"
+  },
+  {
+   "id": "A16",
+   "family": "文字形态",
+   "case": "关键词从远处飞过镜头",
+   "example": "一串关键词穿过透视隧道",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "flying_words"
+  },
+  {
+   "id": "B01",
+   "family": "数字与数据",
+   "case": "一个大数字滚动",
+   "example": "「44.5 亿」",
+   "status": "handled",
+   "covered_by": "odometer · press hook · 各风格 counter",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B02",
+   "family": "数字与数据",
+   "case": "中文大数单位",
+   "example": "「4.6 万家」「248 亿」",
+   "status": "handled",
+   "covered_by": "fit.py 自动换算万/亿；odometer zh",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B03",
+   "family": "数字与数据",
+   "case": "百分比 / 占比",
+   "example": "「97.5%」「57.4%」",
+   "status": "handled",
+   "covered_by": "donut · press split · poster hundred · screen 100 格",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B04",
+   "family": "数字与数据",
+   "case": "两个数对比",
+   "example": "蜜雪 46,479 家对麦当劳 43,477 家",
+   "status": "handled",
+   "covered_by": "press stores 点阵 · bars",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B05",
+   "family": "数字与数据",
+   "case": "增长曲线",
+   "example": "新能源车三年销量",
+   "status": "handled",
+   "covered_by": "line_draw · screen dash",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B06",
+   "family": "数字与数据",
+   "case": "3–15 根柱子",
+   "example": "各年收入、各品牌份额",
+   "status": "handled",
+   "covered_by": "bars（超过 8 根自动转横向）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "B07",
+   "family": "数字与数据",
+   "case": "排行随时间变化（柱状图赛跑）",
+   "example": "2000–2024 市值前十",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "bar_race：逐年重排的赛跑图"
+  },
+  {
+   "id": "B08",
+   "family": "数字与数据",
+   "case": "多段堆叠条",
+   "example": "收入按 5 个板块拆",
+   "status": "partial",
+   "covered_by": "press split 只做两段",
+   "priority": "P1",
+   "proposal": "stack_bar：1–8 段，逐段点亮"
+  },
+  {
+   "id": "B09",
+   "family": "数字与数据",
+   "case": "瀑布图：从收入一路扣到净利",
+   "example": "营收 → 成本 → 费用 → 净利润",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "waterfall：逐级扣减、正负着色"
+  },
+  {
+   "id": "B10",
+   "family": "数字与数据",
+   "case": "尺度换算对比",
+   "example": "「相当于 3 个三峡」「N 个足球场」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P0",
+   "proposal": "scale_compare：参照物图标堆叠或等比放大"
+  },
+  {
+   "id": "B11",
+   "family": "数字与数据",
+   "case": "象形单位图",
+   "example": "1 个人形 = 100 万用户",
+   "status": "partial",
+   "covered_by": "press stores 用圆点；没有图标单位",
+   "priority": "P1",
+   "proposal": "icon_unit：图标阵列，可换任意图标"
+  },
+  {
+   "id": "B12",
+   "family": "数字与数据",
+   "case": "数据表格聚焦一行",
+   "example": "3×5 表格，高亮某一行",
+   "status": "missing",
+   "covered_by": "screen pricing 是卡片，不是表格",
+   "priority": "P0",
+   "proposal": "table：逐格出现、行列聚焦、数字滚动"
+  },
+  {
+   "id": "B13",
+   "family": "数字与数据",
+   "case": "公式或计算推导",
+   "example": "「收入 = 单价 × 销量」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "formula_card：算式逐项代入数字"
+  },
+  {
+   "id": "B14",
+   "family": "数字与数据",
+   "case": "多指标仪表盘",
+   "example": "用户数、付费率、营收同屏",
+   "status": "handled",
+   "covered_by": "screen dash",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "B15",
+   "family": "数字与数据",
+   "case": "预测对实际（虚线预测）",
+   "example": "2030 年预测 2.2 亿",
+   "status": "handled",
+   "covered_by": "screen forecast",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "B16",
+   "family": "数字与数据",
+   "case": "分级设色地图",
+   "example": "各省 GDP 深浅",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 H04"
+  },
+  {
+   "id": "B17",
+   "family": "数字与数据",
+   "case": "散点 / 气泡图",
+   "example": "价格对销量",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "scatter"
+  },
+  {
+   "id": "B18",
+   "family": "数字与数据",
+   "case": "负值、亏损",
+   "example": "净利润为负，红色向下",
+   "status": "handled",
+   "covered_by": "bars、line_draw 支持负值区间",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "B19",
+   "family": "数字与数据",
+   "case": "转化漏斗",
+   "example": "曝光 → 点击 → 下单",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "funnel"
+  },
+  {
+   "id": "B20",
+   "family": "数字与数据",
+   "case": "价格标签和价格对比",
+   "example": "¥4 一杯、$20/月对 $200/月",
+   "status": "handled",
+   "covered_by": "press hook 爆炸贴 · screen pricing",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "C01",
+   "family": "图片：数量、种类、比例",
+   "case": "1 张图全屏",
+   "example": "一张开场大图",
+   "status": "handled",
+   "covered_by": "plate · media 1 张档（G 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "C02",
+   "family": "图片：数量、种类、比例",
+   "case": "2 张图对比",
+   "example": "修图前后、A 对 B",
+   "status": "handled",
+   "covered_by": "media 2 张档：分屏加擦除滑块（G 在做）· dual",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "C03",
+   "family": "图片：数量、种类、比例",
+   "case": "3 张图",
+   "example": "三个案例",
+   "status": "handled",
+   "covered_by": "media 3 张档：发牌扇形（G 在做）· collage",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "C04",
+   "family": "图片：数量、种类、比例",
+   "case": "4–6 张",
+   "example": "一组作品",
+   "status": "handled",
+   "covered_by": "media 便当格（G 在做）· collage",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "C05",
+   "family": "图片：数量、种类、比例",
+   "case": "7–24 张网格墙",
+   "example": "二十个案例",
+   "status": "handled",
+   "covered_by": "media 网格墙（G 在做）· mosaic",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "C06",
+   "family": "图片：数量、种类、比例",
+   "case": "25–99 张密集墙",
+   "example": "一个月的作品",
+   "status": "handled",
+   "covered_by": "media 密集马赛克（G 在做）",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "C07",
+   "family": "图片：数量、种类、比例",
+   "case": "100–500 张图快速闪过",
+   "example": "「两百张图里只有一张能用」",
+   "status": "handled",
+   "covered_by": "media 洪流加计数器（G 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "C08",
+   "family": "图片：数量、种类、比例",
+   "case": "横图、竖图、方图混在一起",
+   "example": "手机截图和横版照片混排",
+   "status": "handled",
+   "covered_by": "fit.py 按比例摆放、焦点裁切、模糊铺底",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "C09",
+   "family": "图片：数量、种类、比例",
+   "case": "超长竖版截图要滚动",
+   "example": "一整页网页、一长串聊天记录（1:5–1:10）",
+   "status": "missing",
+   "covered_by": "现在会被模糊铺底缩成一条",
+   "priority": "P0",
+   "proposal": "scroll_shot：设备框里匀速滚动，在目标处减速停住并高亮"
+  },
+  {
+   "id": "C10",
+   "family": "图片：数量、种类、比例",
+   "case": "透明 PNG 主体悬浮展示",
+   "example": "产品抠图、人物抠图",
+   "status": "partial",
+   "covered_by": "parallax 支持前景抠图；没有通用的悬浮产品展示",
+   "priority": "P1",
+   "proposal": "cutout_float：投影、轻微转动、标签引线"
+  },
+  {
+   "id": "C11",
+   "family": "图片：数量、种类、比例",
+   "case": "Logo 墙",
+   "example": "几十个品牌 logo 排满",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "logo_wall：逐个点亮，一个放大"
+  },
+  {
+   "id": "C12",
+   "family": "图片：数量、种类、比例",
+   "case": "低清图不显糊",
+   "example": "200px 的老图、截图",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "halftone / duotone 处理，把糊变成风格"
+  },
+  {
+   "id": "C13",
+   "family": "图片：数量、种类、比例",
+   "case": "梗图舞台，一句话换一张",
+   "example": "黑底中间一张梗图，节奏硬切",
+   "status": "partial",
+   "covered_by": "plate 能放；没有连续换图的节奏模板",
+   "priority": "P1",
+   "proposal": "meme_stage：按口播逐句切图，带轻微抖动"
+  },
+  {
+   "id": "C14",
+   "family": "图片：数量、种类、比例",
+   "case": "图上局部放大镜",
+   "example": "圈出图里的一个细节放大",
+   "status": "missing",
+   "covered_by": "callout 只有引线",
+   "priority": "P1",
+   "proposal": "magnifier：放大镜跟随移动"
+  },
+  {
+   "id": "C15",
+   "family": "图片：数量、种类、比例",
+   "case": "照片条做时间线",
+   "example": "一个人从 2010 到 2024 的照片",
+   "status": "partial",
+   "covered_by": "timeline 有年份节点但不能放照片",
+   "priority": "P1",
+   "proposal": "photo_strip：胶片条随年份推进"
+  },
+  {
+   "id": "C16",
+   "family": "图片：数量、种类、比例",
+   "case": "GIF 动图",
+   "example": "一个表情包 GIF",
+   "status": "missing",
+   "covered_by": "img 标签里的 GIF 不随时间轴 seek，渲染结果不确定",
+   "priority": "P1",
+   "proposal": "构建时把 GIF 转成 mp4，按视频处理"
+  },
+  {
+   "id": "C17",
+   "family": "图片：数量、种类、比例",
+   "case": "没有素材（0 张）",
+   "example": "只有文案",
+   "status": "handled",
+   "covered_by": "fit.py 骨架卡、占位卡",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "C18",
+   "family": "图片：数量、种类、比例",
+   "case": "SVG 矢量插画",
+   "example": "一张品牌插画",
+   "status": "partial",
+   "covered_by": "可以当图片放；没测试过缩放和着色",
+   "priority": "P2",
+   "proposal": "svg 输入：保留矢量、可改主题色"
+  },
+  {
+   "id": "C19",
+   "family": "图片：数量、种类、比例",
+   "case": "拍照的文档或白板（歪、带阴影）",
+   "example": "手机拍的合同、白板",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "doc_photo：纠偏 + 纸张阴影 + 高亮"
+  },
+  {
+   "id": "D01",
+   "family": "视频",
+   "case": "实拍空镜全屏播放",
+   "example": "城市航拍、港口",
+   "status": "handled",
+   "covered_by": "doc shot · plate video",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "D02",
+   "family": "视频",
+   "case": "竖屏视频放进横屏",
+   "example": "手机拍的视频",
+   "status": "handled",
+   "covered_by": "doc：模糊铺底 + 按焦点构图",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "D03",
+   "family": "视频",
+   "case": "横屏视频放进竖屏",
+   "example": "电影片段做竖屏",
+   "status": "handled",
+   "covered_by": "doc 竖屏重新构图",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "D04",
+   "family": "视频",
+   "case": "真实录屏：推近点击位置",
+   "example": "录一段 AI 工具操作",
+   "status": "missing",
+   "covered_by": "screen 风格是代码仿的界面，不吃真实录屏",
+   "priority": "P0",
+   "proposal": "screencast：设备框 + 跟随光标推近 + 点击涟漪 + 关键区高亮"
+  },
+  {
+   "id": "D05",
+   "family": "视频",
+   "case": "口播人像画中画",
+   "example": "主播缩进角落小窗",
+   "status": "partial",
+   "covered_by": "柴犬可以在角落；真人口播视频没有画中画",
+   "priority": "P1",
+   "proposal": "pip：圆角或圆形小窗，可在全屏和小窗之间切换"
+  },
+  {
+   "id": "D06",
+   "family": "视频",
+   "case": "2–4 路视频同屏",
+   "example": "四个场景同时播放",
+   "status": "partial",
+   "covered_by": "media 网格能放视频，但限制同时播放数（G 在做）",
+   "priority": "P2",
+   "proposal": "quad_split"
+  },
+  {
+   "id": "D07",
+   "family": "视频",
+   "case": "视频定格 + 标注",
+   "example": "暂停在某一帧，圈出细节",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "freeze_annotate：定格、压暗、标注、继续播放"
+  },
+  {
+   "id": "D08",
+   "family": "视频",
+   "case": "变速：快进、慢放",
+   "example": "工厂流水线快进",
+   "status": "missing",
+   "covered_by": "只能指定起点",
+   "priority": "P2",
+   "proposal": "video 参数 speed"
+  },
+  {
+   "id": "D09",
+   "family": "视频",
+   "case": "引用别人的视频片段",
+   "example": "播放器框 + 出处 + 时间码",
+   "status": "handled",
+   "covered_by": "cite_video（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "D10",
+   "family": "视频",
+   "case": "从 10 分钟长视频里截一段",
+   "example": "只要第 3 分 12 秒到 3 分 20 秒",
+   "status": "partial",
+   "covered_by": "data-media-start 能给起点；没有 in/out 参数",
+   "priority": "P1",
+   "proposal": "video 参数 in / out"
+  },
+  {
+   "id": "D11",
+   "family": "视频",
+   "case": "视频自带字幕或人声时的避让",
+   "example": "原片底部已有字幕",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "safe_box：自动把我们的字幕挪到不重叠的位置"
+  },
+  {
+   "id": "D12",
+   "family": "视频",
+   "case": "老片 + 新片统一调色",
+   "example": "档案片接现代实拍",
+   "status": "handled",
+   "covered_by": "doc 用 LUT 预调色",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "D13",
+   "family": "视频",
+   "case": "视频在文字里播放",
+   "example": "字的笔画里是实拍",
+   "status": "handled",
+   "covered_by": "text_mask",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "D14",
+   "family": "视频",
+   "case": "实拍背景上的玻璃卡片",
+   "example": "车流上浮一张数据卡",
+   "status": "handled",
+   "covered_by": "glass",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "E01",
+   "family": "文档",
+   "case": "PDF 某一页高亮一句原文",
+   "example": "判决书第 N 页一句话",
+   "status": "handled",
+   "covered_by": "cite_pdf（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "E02",
+   "family": "文档",
+   "case": "法律文书带页码引用",
+   "example": "案件名、法院、日期、页码",
+   "status": "handled",
+   "covered_by": "cite_pdf（H 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "E03",
+   "family": "文档",
+   "case": "论文卡片",
+   "example": "标题、作者、会议、摘要高亮",
+   "status": "handled",
+   "covered_by": "cite_paper（H 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "E04",
+   "family": "文档",
+   "case": "从论文整页裁出图表放大",
+   "example": "论文里的 Figure 2",
+   "status": "partial",
+   "covered_by": "cite_paper 可以放图，但不会从 PDF 页面里自动裁",
+   "priority": "P1",
+   "proposal": "cite_pdf 增加 region 裁切放大"
+  },
+  {
+   "id": "E05",
+   "family": "文档",
+   "case": "PPT 幻灯片翻页",
+   "example": "发布会的几页 PPT",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "slides：一页页翻，可聚焦某页"
+  },
+  {
+   "id": "E06",
+   "family": "文档",
+   "case": "Excel 表格聚焦一行一列",
+   "example": "一张数据表",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 B12 table（支持 CSV 输入）"
+  },
+  {
+   "id": "E07",
+   "family": "文档",
+   "case": "财报三张表，高亮关键科目",
+   "example": "利润表里的「净利润」",
+   "status": "partial",
+   "covered_by": "cite_pdf 能高亮原文，但不能把表格变成动态表",
+   "priority": "P0",
+   "proposal": "statement_table：从 CSV 或 PDF 表格生成可动画的财务表"
+  },
+  {
+   "id": "E08",
+   "family": "文档",
+   "case": "合同条款逐条划重点",
+   "example": "用户协议里的一句",
+   "status": "partial",
+   "covered_by": "cite_pdf（H 在做）",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "E09",
+   "family": "文档",
+   "case": "专利图、技术图纸标注",
+   "example": "专利附图编号",
+   "status": "partial",
+   "covered_by": "callout 能在图上做 1–4 个标注",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "E10",
+   "family": "文档",
+   "case": "多页文档快速翻阅",
+   "example": "一本 300 页的报告哗哗翻",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "doc_flip：翻页或纸页堆叠滚动，停在目标页"
+  },
+  {
+   "id": "E11",
+   "family": "文档",
+   "case": "一叠文件里抽出一页",
+   "example": "几十份材料中抽一份",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "doc_stack_pick"
+  },
+  {
+   "id": "E12",
+   "family": "文档",
+   "case": "手写笔记、白板照片",
+   "example": "会议白板",
+   "status": "partial",
+   "covered_by": "plate 能放",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "F01",
+   "family": "引用与信源",
+   "case": "新闻报道卡",
+   "example": "媒体名、标题、日期、摘句",
+   "status": "handled",
+   "covered_by": "cite_article（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "F02",
+   "family": "引用与信源",
+   "case": "十几条新闻标题刷屏",
+   "example": "「各大媒体都在报」",
+   "status": "partial",
+   "covered_by": "cite_stack 只做 2–5 条（H 在做）",
+   "priority": "P1",
+   "proposal": "headline_wall：标题瀑布，最后一条停住"
+  },
+  {
+   "id": "F03",
+   "family": "引用与信源",
+   "case": "名人语录",
+   "example": "乔布斯 1997 年那句",
+   "status": "handled",
+   "covered_by": "cite_quote（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "F04",
+   "family": "引用与信源",
+   "case": "社交平台帖子",
+   "example": "一条推文、一条微博",
+   "status": "handled",
+   "covered_by": "cite_post（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "F05",
+   "family": "引用与信源",
+   "case": "评论区截图、评论楼层",
+   "example": "抖音或 B 站热评、回复嵌套、点赞数",
+   "status": "missing",
+   "covered_by": "cite_post 只有单条帖子",
+   "priority": "P0",
+   "proposal": "comment_thread：楼层逐条弹出，高亮热评"
+  },
+  {
+   "id": "F06",
+   "family": "引用与信源",
+   "case": "弹幕飘过",
+   "example": "一屏「哈哈哈」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "danmu：多轨弹幕，可设关键词高亮"
+  },
+  {
+   "id": "F07",
+   "family": "引用与信源",
+   "case": "微信式聊天记录",
+   "example": "两个人的对话截图",
+   "status": "partial",
+   "covered_by": "chat 是 AI 问答；没有双人 IM 气泡、头像、时间",
+   "priority": "P0",
+   "proposal": "im_chat：双人气泡逐条出现，可设已读、撤回、语音条"
+  },
+  {
+   "id": "F08",
+   "family": "引用与信源",
+   "case": "邮件截图",
+   "example": "CEO 内部信",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "email_card"
+  },
+  {
+   "id": "F09",
+   "family": "引用与信源",
+   "case": "小票、收据、订单截图",
+   "example": "一杯咖啡的小票",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "receipt：小票打印出纸，金额逐行累加"
+  },
+  {
+   "id": "F10",
+   "family": "引用与信源",
+   "case": "引用视频",
+   "example": "别人视频里的一段话",
+   "status": "handled",
+   "covered_by": "cite_video（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "F11",
+   "family": "引用与信源",
+   "case": "引用播客或音频",
+   "example": "播客里的一句话",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "audio_quote：波形 + 字幕 + 出处"
+  },
+  {
+   "id": "F12",
+   "family": "引用与信源",
+   "case": "引用论文",
+   "example": "Attention Is All You Need",
+   "status": "handled",
+   "covered_by": "cite_paper（H 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "F13",
+   "family": "引用与信源",
+   "case": "引用判决书",
+   "example": "US v. Google 判决原文",
+   "status": "handled",
+   "covered_by": "cite_pdf（H 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "F14",
+   "family": "引用与信源",
+   "case": "多方信源交叉核对",
+   "example": "三个来源对上同一个数",
+   "status": "handled",
+   "covered_by": "cite_stack（H 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "F15",
+   "family": "引用与信源",
+   "case": "每页印数据来源",
+   "example": "页脚「来源：……」",
+   "status": "handled",
+   "covered_by": "press / screen 页脚 · 动效页面 ctx 页脚",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "F16",
+   "family": "引用与信源",
+   "case": "辟谣、存疑盖章",
+   "example": "「未核实」「假消息」印章",
+   "status": "partial",
+   "covered_by": "glitch 能做故障感；没有判定印章",
+   "priority": "P2",
+   "proposal": "verdict_stamp"
+  },
+  {
+   "id": "F17",
+   "family": "引用与信源",
+   "case": "官方公告、通知文件",
+   "example": "政府或公司公告",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "notice_card：中性公文版式（不得仿冒真实红头）"
+  },
+  {
+   "id": "F18",
+   "family": "引用与信源",
+   "case": "网页截图套浏览器框",
+   "example": "一个官网页面",
+   "status": "partial",
+   "covered_by": "cite_article 能用截图（H 在做）；没有通用浏览器框",
+   "priority": "P1",
+   "proposal": "browser_frame：地址栏 + 滚动 + 高亮"
+  },
+  {
+   "id": "G01",
+   "family": "界面与产品",
+   "case": "AI 对话：提问、流式回答",
+   "example": "问 AI 一个问题",
+   "status": "handled",
+   "covered_by": "chat · screen palette",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "G02",
+   "family": "界面与产品",
+   "case": "App 操作流程：点击、跳转",
+   "example": "注册、下单流程",
+   "status": "partial",
+   "covered_by": "screen 是专用界面；没有手机框加多屏流程的通用效果",
+   "priority": "P1",
+   "proposal": "app_flow：手机框里一屏屏切，光标点击推动"
+  },
+  {
+   "id": "G03",
+   "family": "界面与产品",
+   "case": "手机通知弹出",
+   "example": "「你的视频播放量破 10 万」",
+   "status": "handled",
+   "covered_by": "notify 1–6 条",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "G04",
+   "family": "界面与产品",
+   "case": "网页滚动浏览",
+   "example": "一个官网从上滚到下",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 C09 scroll_shot"
+  },
+  {
+   "id": "G05",
+   "family": "界面与产品",
+   "case": "代码片段：高亮、逐行出现、diff",
+   "example": "一段 Python",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "code：语法高亮、逐行打出、增删行着色"
+  },
+  {
+   "id": "G06",
+   "family": "界面与产品",
+   "case": "终端命令运行",
+   "example": "npm install 跑起来",
+   "status": "partial",
+   "covered_by": "screen api 日志 · typewriter；没有终端窗口",
+   "priority": "P1",
+   "proposal": "terminal：命令 + 滚动输出 + 进度条"
+  },
+  {
+   "id": "G07",
+   "family": "界面与产品",
+   "case": "光标演示：移动、点击、拖拽",
+   "example": "在任意截图上演示操作",
+   "status": "partial",
+   "covered_by": "光标只在 screen 风格内部",
+   "priority": "P1",
+   "proposal": "cursor：可叠在任何截图或录屏上"
+  },
+  {
+   "id": "G08",
+   "family": "界面与产品",
+   "case": "设置开关、表单填写",
+   "example": "打开一个开关、填表单",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "form_fill"
+  },
+  {
+   "id": "G09",
+   "family": "界面与产品",
+   "case": "产品 3D 转台",
+   "example": "一部手机转一圈",
+   "status": "partial",
+   "covered_by": "studio 只有立体字",
+   "priority": "P2",
+   "proposal": "turntable：用抠图或 3D 模型"
+  },
+  {
+   "id": "G10",
+   "family": "界面与产品",
+   "case": "设备框",
+   "example": "截图套手机、电脑、平板外壳",
+   "status": "partial",
+   "covered_by": "dual 有简易框",
+   "priority": "P1",
+   "proposal": "device：真实比例的设备框，可横可竖"
+  },
+  {
+   "id": "G11",
+   "family": "界面与产品",
+   "case": "搜索框打字，结果出现",
+   "example": "搜索「奶茶加盟」",
+   "status": "partial",
+   "covered_by": "screen palette",
+   "priority": "P1",
+   "proposal": "search_box"
+  },
+  {
+   "id": "G12",
+   "family": "界面与产品",
+   "case": "订阅方案、价格表",
+   "example": "Free / Plus / Pro",
+   "status": "handled",
+   "covered_by": "screen pricing 1–8 张卡",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "H01",
+   "family": "地图与地理",
+   "case": "世界地图上标一个点",
+   "example": "上海港",
+   "status": "handled",
+   "covered_by": "earth_zoom · atlas pins",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "H02",
+   "family": "地图与地理",
+   "case": "两地航线",
+   "example": "重庆到杜伊斯堡",
+   "status": "handled",
+   "covered_by": "map_route · atlas routes",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "H03",
+   "family": "地图与地理",
+   "case": "中国地图，省份高亮",
+   "example": "广东、浙江高亮",
+   "status": "missing",
+   "covered_by": "atlas 是世界尺度；earth_zoom 只画陆地",
+   "priority": "P0",
+   "proposal": "china_map：Natural Earth 中国省级（公有领域）+ 合规南海诸岛"
+  },
+  {
+   "id": "H04",
+   "family": "地图与地理",
+   "case": "分级设色（各省数据）",
+   "example": "各省门店数深浅",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "china_map 增加 choropleth"
+  },
+  {
+   "id": "H05",
+   "family": "地图与地理",
+   "case": "几千个门店点位分布",
+   "example": "蜜雪全国门店撒点",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "dot_density：按经纬度撒点，逐片点亮"
+  },
+  {
+   "id": "H06",
+   "family": "地图与地理",
+   "case": "国家高亮 + 标注",
+   "example": "埃及高亮",
+   "status": "handled",
+   "covered_by": "atlas highlight",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "H07",
+   "family": "地图与地理",
+   "case": "地图上的数据卡",
+   "example": "地图旁一张运价折线",
+   "status": "handled",
+   "covered_by": "atlas cards",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "H08",
+   "family": "地图与地理",
+   "case": "面积对比：把 A 国叠到 B 国上",
+   "example": "把日本叠到中国上",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "area_overlay"
+  },
+  {
+   "id": "H09",
+   "family": "地图与地理",
+   "case": "版图或扩张动画",
+   "example": "门店从郑州扩到全国",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "见 H05，按时间逐年撒点"
+  },
+  {
+   "id": "H10",
+   "family": "地图与地理",
+   "case": "城市街区级地图",
+   "example": "某条商业街",
+   "status": "missing",
+   "covered_by": "需要街道数据",
+   "priority": "P2",
+   "proposal": "street_map（数据来源另议）"
+  },
+  {
+   "id": "H11",
+   "family": "地图与地理",
+   "case": "中国地图合规",
+   "example": "南海诸岛、台湾、藏南",
+   "status": "handled",
+   "covered_by": "atlas 用中国视角数据；earth_zoom 不画国界",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "I01",
+   "family": "人物与组织",
+   "case": "人物名片：头像 + 名字 + 身份",
+   "example": "「雷军，小米创始人」",
+   "status": "partial",
+   "covered_by": "lower3 没有头像",
+   "priority": "P0",
+   "proposal": "profile_card：头像或首字母 + 名字 + 身份 + 一句话"
+  },
+  {
+   "id": "I02",
+   "family": "人物与组织",
+   "case": "3–6 个人物并列介绍",
+   "example": "几位创始人",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "people_row：人物卡一排，逐个点亮"
+  },
+  {
+   "id": "I03",
+   "family": "人物与组织",
+   "case": "组织架构图",
+   "example": "公司事业部",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "org_chart：树形逐层展开"
+  },
+  {
+   "id": "I04",
+   "family": "人物与组织",
+   "case": "关系图：谁投资谁",
+   "example": "投资关系网",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "relation_graph：节点 + 连线 + 标签"
+  },
+  {
+   "id": "I05",
+   "family": "人物与组织",
+   "case": "股权穿透、持股比例",
+   "example": "「实际控制人持股 36%」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P0",
+   "proposal": "equity_tree：股权层层穿透，比例滚动"
+  },
+  {
+   "id": "I06",
+   "family": "人物与组织",
+   "case": "人物生平时间线",
+   "example": "1997 刨冰摊到 2025 上市",
+   "status": "partial",
+   "covered_by": "timeline 有年份节点，不能放照片",
+   "priority": "P1",
+   "proposal": "见 C15 photo_strip"
+  },
+  {
+   "id": "I07",
+   "family": "人物与组织",
+   "case": "公司、品牌 logo 出场",
+   "example": "一个品牌亮相",
+   "status": "partial",
+   "covered_by": "lockup 只有文字",
+   "priority": "P1",
+   "proposal": "logo_reveal：logo 图片入场"
+  },
+  {
+   "id": "I08",
+   "family": "人物与组织",
+   "case": "主持人和内容互动",
+   "example": "柴犬指向图表、缩成头像小圆",
+   "status": "partial",
+   "covered_by": "柴犬只能在角落或客串",
+   "priority": "P1",
+   "proposal": "host_point / host_chip"
+  },
+  {
+   "id": "I09",
+   "family": "人物与组织",
+   "case": "几十个用户头像",
+   "example": "「已有 300 人加入」",
+   "status": "partial",
+   "covered_by": "media 网格可以放（G 在做）",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "I10",
+   "family": "人物与组织",
+   "case": "采访或双人对话",
+   "example": "两个人轮流说话",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "dialogue：两个人物卡轮流说话"
+  },
+  {
+   "id": "J01",
+   "family": "对比与排名",
+   "case": "左右对比",
+   "example": "A 对 B",
+   "status": "handled",
+   "covered_by": "hud compare · poster price · media 2 张档（G 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "J02",
+   "family": "对比与排名",
+   "case": "前后对比滑块",
+   "example": "修图前后",
+   "status": "handled",
+   "covered_by": "media 2 张档滑块（G 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "J03",
+   "family": "对比与排名",
+   "case": "优缺点两栏",
+   "example": "✓ 和 ✗",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "pros_cons"
+  },
+  {
+   "id": "J04",
+   "family": "对比与排名",
+   "case": "Top N 排行榜倒数揭晓",
+   "example": "第 10 名到第 1 名",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P0",
+   "proposal": "ranking：倒数逐个揭晓，第一名特写"
+  },
+  {
+   "id": "J05",
+   "family": "对比与排名",
+   "case": "几个选项里选中一个",
+   "example": "四个方案选一个",
+   "status": "partial",
+   "covered_by": "poster keep · screen palette",
+   "priority": "P2",
+   "proposal": "chip_select"
+  },
+  {
+   "id": "J06",
+   "family": "对比与排名",
+   "case": "雷达图、多维对比",
+   "example": "六项能力对比",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "radar"
+  },
+  {
+   "id": "J07",
+   "family": "对比与排名",
+   "case": "产品参数对比表",
+   "example": "两款手机规格",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 B12 table"
+  },
+  {
+   "id": "J08",
+   "family": "对比与排名",
+   "case": "过去对现在",
+   "example": "1956 年对 2024 年",
+   "status": "partial",
+   "covered_by": "doc 有年份计数器；没有今昔分屏",
+   "priority": "P2",
+   "proposal": "then_now"
+  },
+  {
+   "id": "J09",
+   "family": "对比与排名",
+   "case": "投票条、胜负条",
+   "example": "52% 对 48%",
+   "status": "partial",
+   "covered_by": "donut · bars",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "J10",
+   "family": "对比与排名",
+   "case": "2×2 象限图",
+   "example": "高价高频、低价高频",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "quadrant：象限逐个点亮，点位落入"
+  },
+  {
+   "id": "K01",
+   "family": "流程与步骤",
+   "case": "3–7 步流程",
+   "example": "第一步、第二步、第三步",
+   "status": "partial",
+   "covered_by": "press chain 是供应链样式；没有通用步骤图",
+   "priority": "P0",
+   "proposal": "steps：横竖两种排法，当前步高亮"
+  },
+  {
+   "id": "K02",
+   "family": "流程与步骤",
+   "case": "循环、飞轮",
+   "example": "价格低 → 卖得多 → 采购便宜",
+   "status": "handled",
+   "covered_by": "press wheel 3–6 站",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "K03",
+   "family": "流程与步骤",
+   "case": "因果链",
+   "example": "A 导致 B 导致 C",
+   "status": "handled",
+   "covered_by": "press chain",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "K04",
+   "family": "流程与步骤",
+   "case": "决策树、分叉",
+   "example": "如果……就……否则……",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "decision_tree"
+  },
+  {
+   "id": "K05",
+   "family": "流程与步骤",
+   "case": "产业链上下游",
+   "example": "AI 产业链 12 层",
+   "status": "partial",
+   "covered_by": "press chain · hud 编号栈",
+   "priority": "P1",
+   "proposal": "见 A08 list_stack"
+  },
+  {
+   "id": "K06",
+   "family": "流程与步骤",
+   "case": "多个来源汇到一点",
+   "example": "五个渠道汇成一笔收入",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "converge：曲线汇聚动画"
+  },
+  {
+   "id": "K07",
+   "family": "流程与步骤",
+   "case": "时间线",
+   "example": "公司大事记",
+   "status": "handled",
+   "covered_by": "timeline",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "K08",
+   "family": "流程与步骤",
+   "case": "阶段进度、甘特图",
+   "example": "项目三个阶段",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "gantt"
+  },
+  {
+   "id": "K09",
+   "family": "流程与步骤",
+   "case": "清单逐项打勾",
+   "example": "四件事做完了三件",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "checklist"
+  },
+  {
+   "id": "L01",
+   "family": "叙事结构",
+   "case": "开头 3 秒钩子",
+   "example": "4 块钱对 44 亿",
+   "status": "handled",
+   "covered_by": "press hook · impact · stomp",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "L02",
+   "family": "叙事结构",
+   "case": "倒计时",
+   "example": "3、2、1，或「第 5 个」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "countdown：数字弧形掠过后停住"
+  },
+  {
+   "id": "L03",
+   "family": "叙事结构",
+   "case": "章节卡",
+   "example": "「第二部分：供应链」",
+   "status": "handled",
+   "covered_by": "flip3d · doc card · poster 章节号",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "L04",
+   "family": "叙事结构",
+   "case": "章节进度条",
+   "example": "目录里当前在第几节",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "chapter_bar：整片目录，当前节点亮"
+  },
+  {
+   "id": "L05",
+   "family": "叙事结构",
+   "case": "结尾三点总结",
+   "example": "「总结一下：……」",
+   "status": "partial",
+   "covered_by": "缺通用列表（见 A08）",
+   "priority": "P1",
+   "proposal": "见 A08 list_stack"
+  },
+  {
+   "id": "L06",
+   "family": "叙事结构",
+   "case": "反转",
+   "example": "「但它真正的生意，不是卖奶茶」",
+   "status": "handled",
+   "covered_by": "press turn · slice_text",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "L07",
+   "family": "叙事结构",
+   "case": "结尾求关注、三连",
+   "example": "点赞、投币、收藏",
+   "status": "handled",
+   "covered_by": "triple · outro · lower3",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "L08",
+   "family": "叙事结构",
+   "case": "下期预告",
+   "example": "「下期拆瑞幸」",
+   "status": "partial",
+   "covered_by": "outro 只能放文字",
+   "priority": "P2",
+   "proposal": "next_teaser：下期封面一闪"
+  },
+  {
+   "id": "L09",
+   "family": "叙事结构",
+   "case": "先抛问题，再揭晓答案",
+   "example": "「猜猜是多少？」→ 数字揭晓",
+   "status": "partial",
+   "covered_by": "没有成套的问答节奏",
+   "priority": "P1",
+   "proposal": "reveal：问号卡 + 悬停 + 揭晓"
+  },
+  {
+   "id": "L10",
+   "family": "叙事结构",
+   "case": "一镜到底的连续世界",
+   "example": "整片在一张地图或一个布景里",
+   "status": "handled",
+   "covered_by": "atlas · studio WORLD",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "L11",
+   "family": "叙事结构",
+   "case": "系列栏目片头",
+   "example": "每期开头 3 秒统一包装",
+   "status": "partial",
+   "covered_by": "press 有页眉页脚；没有片头",
+   "priority": "P1",
+   "proposal": "opener：栏目片头，可换期数和标题"
+  },
+  {
+   "id": "L12",
+   "family": "叙事结构",
+   "case": "口播广告位",
+   "example": "「本期视频由……支持」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "sponsor_card"
+  },
+  {
+   "id": "M01",
+   "family": "平台特有",
+   "case": "抖音竖屏安全区",
+   "example": "顶部标签栏、右侧按钮、底部文案",
+   "status": "partial",
+   "covered_by": "各风格竖屏手动避让；压力测试不检查安全区",
+   "priority": "P0",
+   "proposal": "stress.py 增加安全区规则，越界即失败"
+  },
+  {
+   "id": "M02",
+   "family": "平台特有",
+   "case": "点赞关注三连",
+   "example": "结尾三连",
+   "status": "handled",
+   "covered_by": "triple",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "M03",
+   "family": "平台特有",
+   "case": "关注卡",
+   "example": "抖音、小红书、X 的关注按钮动效",
+   "status": "partial",
+   "covered_by": "triple 只有图标",
+   "priority": "P1",
+   "proposal": "follow_card：头像 + 账号 + 关注按钮按下"
+  },
+  {
+   "id": "M04",
+   "family": "平台特有",
+   "case": "封面：16:9、4:3、3:4 三个比例",
+   "example": "每条片子的封面",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P0",
+   "proposal": "cover.py：从成片关键帧和标题生成三比例封面"
+  },
+  {
+   "id": "M05",
+   "family": "平台特有",
+   "case": "1:1、4:5、3:4 比例",
+   "example": "小红书 3:4、B 站动态 1:1",
+   "status": "partial",
+   "covered_by": "引擎支持这些比例，但场景只为横竖屏排过版",
+   "priority": "P1",
+   "proposal": "各风格补 1:1 和 3:4 排版"
+  },
+  {
+   "id": "M06",
+   "family": "平台特有",
+   "case": "AI 生成内容标识",
+   "example": "画面角落「AI 生成」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "meta.ai_label：自动加角标"
+  },
+  {
+   "id": "M07",
+   "family": "平台特有",
+   "case": "不同平台的字幕样式",
+   "example": "视频号、小红书、B 站的字幕习惯",
+   "status": "partial",
+   "covered_by": "只有 reading 和 punch 两种",
+   "priority": "P2",
+   "proposal": "caption presets"
+  },
+  {
+   "id": "M08",
+   "family": "平台特有",
+   "case": "平台水印避让",
+   "example": "右下角平台水印位置",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "watermark_safe"
+  },
+  {
+   "id": "M09",
+   "family": "平台特有",
+   "case": "直播切片风格",
+   "example": "大字幕 + 表情 + 时间戳",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "clip_style"
+  },
+  {
+   "id": "N01",
+   "family": "语言与符号",
+   "case": "中英混排",
+   "example": "「ChatGPT 每周 8 亿人在用」",
+   "status": "handled",
+   "covered_by": "fit.py 区分中文和拉丁字宽",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "N02",
+   "family": "语言与符号",
+   "case": "繁体中文",
+   "example": "港台观众",
+   "status": "partial",
+   "covered_by": "思源黑体本身支持繁体；没测试过",
+   "priority": "P2",
+   "proposal": "压力测试加繁体样例"
+  },
+  {
+   "id": "N03",
+   "family": "语言与符号",
+   "case": "数学公式",
+   "example": "LaTeX 公式",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "formula：构建时用 KaTeX 渲染成 SVG"
+  },
+  {
+   "id": "N04",
+   "family": "语言与符号",
+   "case": "化学式、上下标",
+   "example": "H₂O、CO₂、10⁸",
+   "status": "partial",
+   "covered_by": "Unicode 下标能显示；没有上下标语法",
+   "priority": "P2",
+   "proposal": "rich() 支持 ^上标^ 和 _下标_"
+  },
+  {
+   "id": "N05",
+   "family": "语言与符号",
+   "case": "emoji",
+   "example": "「🔥 爆了」",
+   "status": "partial",
+   "covered_by": "Chrome 用系统 emoji 字体；没测试过",
+   "priority": "P2",
+   "proposal": "压力测试加 emoji"
+  },
+  {
+   "id": "N06",
+   "family": "语言与符号",
+   "case": "日文、韩文",
+   "example": "引用日本品牌原文",
+   "status": "missing",
+   "covered_by": "字体注册表没有日文和韩文字体",
+   "priority": "P2",
+   "proposal": "fonts.json 加 Noto Sans JP/KR"
+  },
+  {
+   "id": "N07",
+   "family": "语言与符号",
+   "case": "竖排古文",
+   "example": "引一段古文",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "见 A12"
+  },
+  {
+   "id": "N08",
+   "family": "语言与符号",
+   "case": "单位和符号",
+   "example": "℃、‰、¥、$、≈",
+   "status": "handled",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "N09",
+   "family": "语言与符号",
+   "case": "阿拉伯语等从右往左的文字",
+   "example": "中东市场",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "rtl"
+  },
+  {
+   "id": "O01",
+   "family": "声音情况",
+   "case": "有逐字时间戳的配音",
+   "example": "TTS 或对齐好的录音",
+   "status": "handled",
+   "covered_by": "words.json 和 \"@关键词\" 对时",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "O02",
+   "family": "声音情况",
+   "case": "只有录音，没有逐字时间",
+   "example": "用户自己录的 voice.wav",
+   "status": "partial",
+   "covered_by": "需要外部对齐工具，没有内置",
+   "priority": "P0",
+   "proposal": "align 步骤：可选接入 Whisper 类对齐器，doctor 给出安装指引"
+  },
+  {
+   "id": "O03",
+   "family": "声音情况",
+   "case": "只有稿子，没有录音",
+   "example": "先出无声版",
+   "status": "handled",
+   "covered_by": "静音按字数估时",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "O04",
+   "family": "声音情况",
+   "case": "自己的录音有噪音",
+   "example": "手机录的、有回声",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "可选降噪步骤（DeepFilterNet 等）"
+  },
+  {
+   "id": "O05",
+   "family": "声音情况",
+   "case": "纯音乐驱动，没有口播",
+   "example": "卡点混剪",
+   "status": "partial",
+   "covered_by": "music.py 有 bpm；不能从现成音乐里提节拍",
+   "priority": "P1",
+   "proposal": "接入 hyperframes beats，镜头切换对齐节拍"
+  },
+  {
+   "id": "O06",
+   "family": "声音情况",
+   "case": "背景音乐自动让位给人声",
+   "example": "说话时音乐压低",
+   "status": "missing",
+   "covered_by": "现在是固定音量",
+   "priority": "P1",
+   "proposal": "ducking：按 words.json 自动压低音乐"
+  },
+  {
+   "id": "O07",
+   "family": "声音情况",
+   "case": "音效自动配",
+   "example": "出现时 pop、转场时 whoosh",
+   "status": "handled",
+   "covered_by": "sfx 角色，19 种合成音效",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "O08",
+   "family": "声音情况",
+   "case": "多段录音拼接、剪掉口误",
+   "example": "录了三遍",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "takes 拼接"
+  },
+  {
+   "id": "P01",
+   "family": "极端与边界",
+   "case": "0 个素材",
+   "example": "只有一句话",
+   "status": "handled",
+   "covered_by": "fit.py 骨架、占位",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "P02",
+   "family": "极端与边界",
+   "case": "500 张图",
+   "example": "一年的作品",
+   "status": "handled",
+   "covered_by": "media 洪流用纹理图集（G 在做）",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "P03",
+   "family": "极端与边界",
+   "case": "100 字的超长标题",
+   "example": "整段当标题",
+   "status": "handled",
+   "covered_by": "fit.py 缩字号，最后才加省略号",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "P04",
+   "family": "极端与边界",
+   "case": "只有 1 个字",
+   "example": "「钱」",
+   "status": "handled",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "P05",
+   "family": "极端与边界",
+   "case": "10 分钟长片",
+   "example": "一期完整节目",
+   "status": "partial",
+   "covered_by": "没测过；一个页面上几百个片段可能变慢",
+   "priority": "P1",
+   "proposal": "按章节分段构建、分段渲染再拼接"
+  },
+  {
+   "id": "P06",
+   "family": "极端与边界",
+   "case": "一句话里有 10 个数字",
+   "example": "密集数据句",
+   "status": "partial",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "数字自动拆成多页"
+  },
+  {
+   "id": "P07",
+   "family": "极端与边界",
+   "case": "素材文件缺失",
+   "example": "路径写错",
+   "status": "handled",
+   "covered_by": "X.asset 报错并给出路径",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "P08",
+   "family": "极端与边界",
+   "case": "字体缺失",
+   "example": "没装思源黑体",
+   "status": "handled",
+   "covered_by": "fonts.py 回退并给出下载地址",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "P09",
+   "family": "极端与边界",
+   "case": "透明视频（webm 带 alpha）",
+   "example": "柴犬主持人",
+   "status": "handled",
+   "covered_by": "mascot webm",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "P10",
+   "family": "极端与边界",
+   "case": "没有网络，CDN 加载失败",
+   "example": "离线渲染",
+   "status": "partial",
+   "covered_by": "GSAP、d3 依赖 jsdelivr",
+   "priority": "P1",
+   "proposal": "可选本地缓存（d3/topojson 可随包；GSAP 不入库）"
+  },
+  {
+   "id": "Q01",
+   "family": "强调与标注",
+   "case": "手绘圈注",
+   "example": "圈出一个数字",
+   "status": "handled",
+   "covered_by": "marks circle",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "Q02",
+   "family": "强调与标注",
+   "case": "下划线、荧光笔",
+   "example": "划重点",
+   "status": "handled",
+   "covered_by": "marks underline / highlight",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "Q03",
+   "family": "强调与标注",
+   "case": "箭头指向",
+   "example": "指向图里一处",
+   "status": "handled",
+   "covered_by": "marks arrow",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "Q04",
+   "family": "强调与标注",
+   "case": "聚光灯：其余压暗",
+   "example": "只看这一行",
+   "status": "partial",
+   "covered_by": "hud 的 dim 只在 hud 里",
+   "priority": "P0",
+   "proposal": "spotlight：任意元素或坐标的聚光灯标记"
+  },
+  {
+   "id": "Q05",
+   "family": "强调与标注",
+   "case": "四角取景框锁定",
+   "example": "锁定一个人或一个数字",
+   "status": "handled",
+   "covered_by": "hud_lock · hud 取景框",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "Q06",
+   "family": "强调与标注",
+   "case": "划掉再替换",
+   "example": "「不是卖奶茶」",
+   "status": "handled",
+   "covered_by": "marks strike · press turn",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "Q07",
+   "family": "强调与标注",
+   "case": "急推到某个细节",
+   "example": "镜头冲到图表某一格",
+   "status": "partial",
+   "covered_by": "portal、zoomin 能做；没有推到任意坐标的通用镜头",
+   "priority": "P1",
+   "proposal": "zoom_to：按坐标或元素急推，带回弹"
+  },
+  {
+   "id": "Q08",
+   "family": "强调与标注",
+   "case": "潦草涂鸦标注",
+   "example": "手写批注",
+   "status": "partial",
+   "covered_by": "marks 是规整线条",
+   "priority": "P2",
+   "proposal": "scribble"
+  },
+  {
+   "id": "Q09",
+   "family": "强调与标注",
+   "case": "扫描线逐块标注",
+   "example": "扫描线扫过页面",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "scanline"
+  },
+  {
+   "id": "R01",
+   "family": "情绪与梗",
+   "case": "表情反应贴纸",
+   "example": "问号、感叹号、汗",
+   "status": "partial",
+   "covered_by": "cartoon · burst",
+   "priority": "P1",
+   "proposal": "reaction_sticker 贴纸库"
+  },
+  {
+   "id": "R02",
+   "family": "情绪与梗",
+   "case": "黑屏重击",
+   "example": "「啪」一下黑屏",
+   "status": "partial",
+   "covered_by": "flash、dip 转场",
+   "priority": "P2",
+   "proposal": ""
+  },
+  {
+   "id": "R03",
+   "family": "情绪与梗",
+   "case": "全屏色块大字",
+   "example": "「搞笑呢吧」",
+   "status": "handled",
+   "covered_by": "press turn · impact",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "R04",
+   "family": "情绪与梗",
+   "case": "计数连击",
+   "example": "combo ×3",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "combo"
+  },
+  {
+   "id": "R05",
+   "family": "情绪与梗",
+   "case": "惊讶放大加震动",
+   "example": "画面一抖",
+   "status": "handled",
+   "covered_by": "impact",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "S01",
+   "family": "节奏与不说话的时刻",
+   "case": "句中停顿 1–2 秒，画面不能死",
+   "example": "「你猜怎么着……（停）」",
+   "status": "partial",
+   "covered_by": "press 的 shots() 在停顿时缓慢推进；aefx 效果入场后就静止",
+   "priority": "P0",
+   "proposal": "idle 层：每个效果入场后自带呼吸动作（缓推、漂浮、光斑）"
+  },
+  {
+   "id": "S02",
+   "family": "节奏与不说话的时刻",
+   "case": "换气、口头停顿",
+   "example": "说完一句换口气",
+   "status": "partial",
+   "covered_by": "字幕在超过 0.45 秒的空白处断页；画面没有对应",
+   "priority": "P1",
+   "proposal": "按 words.json 的空白自动加微动作（镜头轻推、元素轻弹）"
+  },
+  {
+   "id": "S03",
+   "family": "节奏与不说话的时刻",
+   "case": "留白画面：一句话后停住让观众想",
+   "example": "说完金句停 2 秒",
+   "status": "partial",
+   "covered_by": "thesis、outro 会停住；没有专门的留白页",
+   "priority": "P0",
+   "proposal": "breather：留白呼吸页（大字停住 + 环境微动 + 音乐抬起）"
+  },
+  {
+   "id": "S04",
+   "family": "节奏与不说话的时刻",
+   "case": "B-roll 过场：不说话，放一段空镜",
+   "example": "两章之间 3 秒城市航拍",
+   "status": "partial",
+   "covered_by": "doc shot、plate 能放；不会自动从素材里挑一段塞进空白",
+   "priority": "P0",
+   "proposal": "interlude：按时长自动挑空镜、配音乐重音和章节小字"
+  },
+  {
+   "id": "S05",
+   "family": "节奏与不说话的时刻",
+   "case": "纯音乐段落",
+   "example": "间奏 8 秒只有音乐",
+   "status": "partial",
+   "covered_by": "music.py 生成配乐；画面不知道这段没有人声",
+   "priority": "P1",
+   "proposal": "music_only beat：画面按音乐节拍走"
+  },
+  {
+   "id": "S06",
+   "family": "节奏与不说话的时刻",
+   "case": "音乐卡点（beat drop）",
+   "example": "重拍落下，画面切换",
+   "status": "partial",
+   "covered_by": "music.py 能在指定时间加重音；画面切换不会自动对齐节拍",
+   "priority": "P0",
+   "proposal": "beat_cut：读节拍（hyperframes beats），在重拍上切画面或冲击"
+  },
+  {
+   "id": "S07",
+   "family": "节奏与不说话的时刻",
+   "case": "章节之间的喘息",
+   "example": "第一章讲完，过渡到第二章",
+   "status": "partial",
+   "covered_by": "章节标记会用风格的招牌转场；没有 2–3 秒的喘息页",
+   "priority": "P1",
+   "proposal": "chapter_breather：章节小结 + 下一章标题 + 进度"
+  },
+  {
+   "id": "S08",
+   "family": "节奏与不说话的时刻",
+   "case": "无声开场（先画面后说话）",
+   "example": "黑场 1.5 秒后标题砸下，再开口",
+   "status": "missing",
+   "covered_by": "配音总从第 0 秒开始",
+   "priority": "P0",
+   "proposal": "meta.lead：配音整体后移，开场画面独立编排"
+  },
+  {
+   "id": "S09",
+   "family": "节奏与不说话的时刻",
+   "case": "无声结尾",
+   "example": "说完后画面再走 3 秒",
+   "status": "handled",
+   "covered_by": "meta.tail 控制尾长，outro 停住",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "S10",
+   "family": "节奏与不说话的时刻",
+   "case": "揭晓前悬停",
+   "example": "「答案是……」停 1 秒再出数字",
+   "status": "partial",
+   "covered_by": "可以用 \"@关键词\" 控制揭晓时刻；没有悬停的动画",
+   "priority": "P0",
+   "proposal": "suspense：鼓点渐强 + 镜头慢推 + 遮挡物，然后揭晓"
+  },
+  {
+   "id": "S11",
+   "family": "节奏与不说话的时刻",
+   "case": "反应镜头：好笑",
+   "example": "说完一个梗，画面「？？？」",
+   "status": "partial",
+   "covered_by": "cartoon、burst",
+   "priority": "P1",
+   "proposal": "reaction 好笑款：问号、汗、静止 + 音效"
+  },
+  {
+   "id": "S12",
+   "family": "节奏与不说话的时刻",
+   "case": "反应镜头：难过、沉重",
+   "example": "讲到裁员、去世",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "reaction 沉重款：去色、慢推、留白、低音"
+  },
+  {
+   "id": "S13",
+   "family": "节奏与不说话的时刻",
+   "case": "反应镜头：震惊",
+   "example": "「44 亿！」",
+   "status": "handled",
+   "covered_by": "impact 震动、press hook",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "S14",
+   "family": "节奏与不说话的时刻",
+   "case": "等待、加载状态",
+   "example": "「AI 正在生成……」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "loading：进度条、转圈、打字点，时长可伸缩"
+  },
+  {
+   "id": "S15",
+   "family": "节奏与不说话的时刻",
+   "case": "想一想的循环画面",
+   "example": "主播停顿思考时的过渡",
+   "status": "partial",
+   "covered_by": "有颗粒和缓推；没有可循环的思考画面",
+   "priority": "P2",
+   "proposal": "think_loop：问号漂浮、光点循环"
+  },
+  {
+   "id": "S16",
+   "family": "节奏与不说话的时刻",
+   "case": "画面要拉长去贴合配音",
+   "example": "一句话讲了 6 秒，动效 2 秒就做完",
+   "status": "partial",
+   "covered_by": "press 的镜头会继续推进；aefx 效果做完就静止",
+   "priority": "P0",
+   "proposal": "弹性时长：效果动画按拍长伸缩，太长时自动加第二段动作"
+  },
+  {
+   "id": "S17",
+   "family": "节奏与不说话的时刻",
+   "case": "画面要压缩去贴合配音",
+   "example": "一句话只有 1 秒",
+   "status": "partial",
+   "covered_by": "入场还没做完就切了",
+   "priority": "P0",
+   "proposal": "弹性时长：拍太短时自动换成快速版入场"
+  },
+  {
+   "id": "S18",
+   "family": "节奏与不说话的时刻",
+   "case": "语速很快（6–7 字/秒）",
+   "example": "带货、速报",
+   "status": "partial",
+   "covered_by": "动效节奏固定",
+   "priority": "P1",
+   "proposal": "按语速自动调 stagger 和入场时长"
+  },
+  {
+   "id": "S19",
+   "family": "节奏与不说话的时刻",
+   "case": "语速很慢（3 字/秒）",
+   "example": "沉稳讲述、情感",
+   "status": "partial",
+   "covered_by": "画面会显得空",
+   "priority": "P1",
+   "proposal": "慢速时增加镜头运动和氛围层"
+  },
+  {
+   "id": "S20",
+   "family": "节奏与不说话的时刻",
+   "case": "句子中间长停顿",
+   "example": "「这家公司……（3 秒）……倒闭了」",
+   "status": "partial",
+   "covered_by": "字幕会断开；画面不会在停顿处做文章",
+   "priority": "P1",
+   "proposal": "停顿处插悬停或遮挡，下半句再落"
+  },
+  {
+   "id": "S21",
+   "family": "节奏与不说话的时刻",
+   "case": "口播比画面长",
+   "example": "画面已经讲完，人还在说",
+   "status": "partial",
+   "covered_by": "拍长跟口播走；画面内容不会补",
+   "priority": "P1",
+   "proposal": "补足层：自动给长拍补数据回顾或关键词卡"
+  },
+  {
+   "id": "S22",
+   "family": "节奏与不说话的时刻",
+   "case": "多人对话、两个说话人",
+   "example": "主持人和嘉宾",
+   "status": "missing",
+   "covered_by": "只有一条配音轨，字幕一种样式",
+   "priority": "P1",
+   "proposal": "speakers：每个说话人一种字幕颜色和名字条，对话画面自动左右分"
+  },
+  {
+   "id": "S23",
+   "family": "节奏与不说话的时刻",
+   "case": "说错了纠正",
+   "example": "「不对，是 4.6 万家」",
+   "status": "partial",
+   "covered_by": "marks strike 能划掉；字幕会把两句都显示",
+   "priority": "P2",
+   "proposal": "correction：错的划掉、对的落下，字幕同步"
+  },
+  {
+   "id": "S24",
+   "family": "节奏与不说话的时刻",
+   "case": "音效主导的段落",
+   "example": "收银机「叮」、键盘声",
+   "status": "partial",
+   "covered_by": "sfx 角色可以在指定时间放",
+   "priority": "P2",
+   "proposal": "sound_moment：音效和画面冲击绑定"
+  },
+  {
+   "id": "S25",
+   "family": "节奏与不说话的时刻",
+   "case": "情绪转折：轻松转严肃",
+   "example": "前面讲梗，后面讲风险",
+   "status": "partial",
+   "covered_by": "aefx 每拍可换 theme；风格级别的情绪不会变",
+   "priority": "P1",
+   "proposal": "mood 参数：同一风格的明暗两套色板和音乐切换"
+  },
+  {
+   "id": "S26",
+   "family": "节奏与不说话的时刻",
+   "case": "慢镜头、定格的戏剧时刻",
+   "example": "关键一帧慢放",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "见 D07、D08"
+  },
+  {
+   "id": "S27",
+   "family": "节奏与不说话的时刻",
+   "case": "黑场一句话",
+   "example": "黑底只出一句字",
+   "status": "handled",
+   "covered_by": "impact、press turn、poster thesis",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "T01",
+   "family": "按观众想要什么",
+   "case": "想学会：一步一步看懂",
+   "example": "「三步做出一张海报」",
+   "status": "partial",
+   "covered_by": "缺通用步骤图（见 K01）",
+   "priority": "P0",
+   "proposal": "见 WP1 steps"
+  },
+  {
+   "id": "T02",
+   "family": "按观众想要什么",
+   "case": "想比较：哪个更好",
+   "example": "两款工具对比",
+   "status": "partial",
+   "covered_by": "左右对比有；参数表和优缺点没有",
+   "priority": "P1",
+   "proposal": "见 B12 table、J03 pros_cons"
+  },
+  {
+   "id": "T03",
+   "family": "按观众想要什么",
+   "case": "被说服：证据链",
+   "example": "数据 + 原文 + 信源",
+   "status": "handled",
+   "covered_by": "cite_*（H 在做）· 数据效果 · 页脚来源",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "T04",
+   "family": "按观众想要什么",
+   "case": "想笑：反差和梗",
+   "example": "严肃数据配一个梗",
+   "status": "partial",
+   "covered_by": "cartoon、burst；没有梗图舞台",
+   "priority": "P1",
+   "proposal": "见 C13 meme_stage、S11 reaction"
+  },
+  {
+   "id": "T05",
+   "family": "按观众想要什么",
+   "case": "被打动：情绪段落",
+   "example": "讲一个人的故事",
+   "status": "missing",
+   "covered_by": "没有慢节奏、去色、留白的情绪模板",
+   "priority": "P1",
+   "proposal": "见 S12、S03"
+  },
+  {
+   "id": "T06",
+   "family": "按观众想要什么",
+   "case": "想信任：看得到来源",
+   "example": "每个数字都有出处",
+   "status": "handled",
+   "covered_by": "页脚来源 · cite_stack（H 在做）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "T07",
+   "family": "按观众想要什么",
+   "case": "想记住：一句话能截图",
+   "example": "结尾金句卡",
+   "status": "handled",
+   "covered_by": "thesis、poster thesis",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "T08",
+   "family": "按观众想要什么",
+   "case": "想行动：下单、关注、私信",
+   "example": "带货下单、关注账号",
+   "status": "partial",
+   "covered_by": "triple、outro；没有购物车和优惠券",
+   "priority": "P1",
+   "proposal": "见 U08 带货"
+  },
+  {
+   "id": "T09",
+   "family": "按观众想要什么",
+   "case": "想转发：可分享的结论卡",
+   "example": "一张能单独发出去的图",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "share_card：导出单帧金句图"
+  },
+  {
+   "id": "T10",
+   "family": "按观众想要什么",
+   "case": "想评论：引导互动",
+   "example": "「你会选哪个？评论区告诉我」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "poll_card：投票选项卡"
+  },
+  {
+   "id": "U01",
+   "family": "按视频类型",
+   "case": "知识科普",
+   "example": "「为什么天是蓝的」",
+   "status": "handled",
+   "covered_by": "press · atlas · poster · 各种数据效果",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "U02",
+   "family": "按视频类型",
+   "case": "商业拆解",
+   "example": "《一杯 4 块钱的柠檬水》",
+   "status": "handled",
+   "covered_by": "press（示例 mixue）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "U03",
+   "family": "按视频类型",
+   "case": "测评",
+   "example": "两款耳机测评：评分、参数、优缺点",
+   "status": "missing",
+   "covered_by": "没有评分卡、星级、参数表",
+   "priority": "P1",
+   "proposal": "review_card：评分条、星级、优缺点、结论徽章"
+  },
+  {
+   "id": "U04",
+   "family": "按视频类型",
+   "case": "教程",
+   "example": "「三步做出一张海报」",
+   "status": "partial",
+   "covered_by": "screen 仿界面；缺步骤图和真实录屏",
+   "priority": "P0",
+   "proposal": "见 WP1 steps、WP3 screencast"
+  },
+  {
+   "id": "U05",
+   "family": "按视频类型",
+   "case": "新闻速报",
+   "example": "「刚刚，某公司宣布……」",
+   "status": "missing",
+   "covered_by": "没有快讯条、滚动字幕、时间戳",
+   "priority": "P1",
+   "proposal": "news_flash：快讯横幅、滚动字幕、发布时间"
+  },
+  {
+   "id": "U06",
+   "family": "按视频类型",
+   "case": "观点、金句",
+   "example": "《专注，就是学会说不》",
+   "status": "handled",
+   "covered_by": "poster（示例 poster）",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "U07",
+   "family": "按视频类型",
+   "case": "故事、人物",
+   "example": "讲一个创始人的故事",
+   "status": "partial",
+   "covered_by": "doc 实拍纪录；缺人物卡和情绪段落",
+   "priority": "P1",
+   "proposal": "见 I01、S12"
+  },
+  {
+   "id": "U08",
+   "family": "按视频类型",
+   "case": "带货",
+   "example": "「原价 99，今天 49」",
+   "status": "missing",
+   "covered_by": "没有划价、优惠券、倒计时、购物车",
+   "priority": "P1",
+   "proposal": "deal_card：原价划掉、现价砸下、优惠券、限时倒计时"
+  },
+  {
+   "id": "U09",
+   "family": "按视频类型",
+   "case": "访谈切片",
+   "example": "嘉宾一句话 + 字幕",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 S22 speakers、I10"
+  },
+  {
+   "id": "U10",
+   "family": "按视频类型",
+   "case": "播客切片",
+   "example": "音频 + 头像 + 字幕",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 F11 audio_quote"
+  },
+  {
+   "id": "U11",
+   "family": "按视频类型",
+   "case": "Vlog 式口播（真人出镜为主）",
+   "example": "手机拍的口播加包装",
+   "status": "partial",
+   "covered_by": "能放视频，但没有真人口播的字幕和贴纸包装",
+   "priority": "P1",
+   "proposal": "talking_head：人像视频 + 关键词贴纸 + 画中画切换"
+  },
+  {
+   "id": "U12",
+   "family": "按视频类型",
+   "case": "盘点合集",
+   "example": "「年度十大 AI 产品」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "见 J04 ranking"
+  },
+  {
+   "id": "U13",
+   "family": "按视频类型",
+   "case": "数据新闻",
+   "example": "地图 + 图表 + 来源",
+   "status": "handled",
+   "covered_by": "atlas（示例 atlas）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "V01",
+   "family": "按制作情境",
+   "case": "只有文案，没有任何素材",
+   "example": "一段 200 字稿子",
+   "status": "handled",
+   "covered_by": "quick 一键出片；press / poster 全矢量",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "V02",
+   "family": "按制作情境",
+   "case": "有 100 个素材",
+   "example": "一个文件夹的截图和照片",
+   "status": "handled",
+   "covered_by": "media 按数量编排（G 在做）",
+   "priority": "P1",
+   "proposal": ""
+  },
+  {
+   "id": "V03",
+   "family": "按制作情境",
+   "case": "只有一段手机录音",
+   "example": "voice.m4a，没有稿子",
+   "status": "partial",
+   "covered_by": "需要外部转写和对齐（见 O02）",
+   "priority": "P0",
+   "proposal": "见 WP6 align"
+  },
+  {
+   "id": "V04",
+   "family": "按制作情境",
+   "case": "只有一个 PDF",
+   "example": "一份年报、一篇论文",
+   "status": "partial",
+   "covered_by": "cite_pdf 能引用某一页（H 在做）；不会从 PDF 自动出分镜",
+   "priority": "P1",
+   "proposal": "pdf_brief：抽取要点、页码和表格，生成初版 video.json"
+  },
+  {
+   "id": "V05",
+   "family": "按制作情境",
+   "case": "只有一个网址",
+   "example": "一篇文章或一个产品官网",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P1",
+   "proposal": "url_brief：构建时截网页长图 + 抽要点，生成 scroll_shot 和 cite_article"
+  },
+  {
+   "id": "V06",
+   "family": "按制作情境",
+   "case": "只有 Excel / CSV 数据",
+   "example": "一张销售表",
+   "status": "missing",
+   "covered_by": "数据效果要手写 JSON",
+   "priority": "P0",
+   "proposal": "csv 输入：bars、line、table、bar_race 直接读 CSV 列"
+  },
+  {
+   "id": "V07",
+   "family": "按制作情境",
+   "case": "一段 10 分钟的讲话要剪成 1 分钟",
+   "example": "一场演讲",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "cut_list：按逐字稿挑金句段落，生成精剪 video.json"
+  },
+  {
+   "id": "V08",
+   "family": "按制作情境",
+   "case": "一个系列要统一风格",
+   "example": "每周一期商业拆解",
+   "status": "partial",
+   "covered_by": "风格和页眉页脚统一；没有期数、片头和系列封面",
+   "priority": "P1",
+   "proposal": "series 元数据：期数、片头、封面模板"
+  },
+  {
+   "id": "V09",
+   "family": "按制作情境",
+   "case": "品牌色、品牌字体已经定好",
+   "example": "公司账号",
+   "status": "partial",
+   "covered_by": "可以改风格 tokens；没有一键品牌套件",
+   "priority": "P1",
+   "proposal": "brand.json：颜色、字体、logo 一次替换所有风格"
+  },
+  {
+   "id": "V10",
+   "family": "按制作情境",
+   "case": "横竖两版一起交付",
+   "example": "同一条发抖音和 B 站",
+   "status": "handled",
+   "covered_by": "两个画幅各自排版，一条命令出两版",
+   "priority": "P0",
+   "proposal": ""
+  },
+  {
+   "id": "V11",
+   "family": "按制作情境",
+   "case": "要交给剪辑师继续改",
+   "example": "剪映、Premiere",
+   "status": "partial",
+   "covered_by": "有 SRT 字幕和 HyperFrames 工程；没有剪映草稿",
+   "priority": "P2",
+   "proposal": "导出剪映草稿或 FCPXML"
+  },
+  {
+   "id": "V12",
+   "family": "按制作情境",
+   "case": "有一条参考视频，想学它的节奏",
+   "example": "「照这个博主的节奏做」",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "ref_pacing：测参考片的剪辑密度，映射成拍长"
+  },
+  {
+   "id": "V13",
+   "family": "按制作情境",
+   "case": "要出多语种版本",
+   "example": "中文版 + 英文版",
+   "status": "missing",
+   "covered_by": "—",
+   "priority": "P2",
+   "proposal": "同一份 video.json 多语言字段"
+  },
+  {
+   "id": "V14",
+   "family": "按制作情境",
+   "case": "只改一句话重新出片",
+   "example": "第 3 句数字改了",
+   "status": "handled",
+   "covered_by": "只改 video.json 对应 beat，重新渲染",
+   "priority": "P1",
+   "proposal": ""
+  }
+ ]
+}

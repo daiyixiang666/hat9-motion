@@ -33,3 +33,10 @@
 - `examples/doc/`：Prelinger Archives 档案片（公有领域）和 Mixkit 免费视频（Mixkit Stock Video Free License，素材不随仓库再分发，见 `examples/doc/assets/broll/CREDITS.md`，用 `prep_clips.py` 重建）。
 - 地图类动效在渲染时从 jsdelivr 加载 d3-geo 和 topojson-client（ISC），与 GSAP 相同。
 - 各示例的背景音乐由 `scripts/music.py` 合成（MIT）。
+
+## OpenDesign（Apache-2.0）
+- 来源：[nexu-io/open-design](https://github.com/nexu-io/open-design)，Apache License 2.0。只读取文本后用我们的写法重写，没有复制代码文件。
+- `references/craft.md`、`scripts/craft_lint.py`：规则改编自它的 `craft/anti-ai-slop.md`、`craft/animation-discipline.md`、`craft/typography.md`，以及 HyperFrames 模板里的 `house-style.md`、`data-in-motion.md`、`references/motion-principles.md`、`references/typography.md`。其中 anti-ai-slop 和 typography 又改编自 [referodesign/refero_skill](https://github.com/referodesign/refero_skill)（MIT）。
+- `scripts/design_md.py`：按它的 DESIGN.md / tokens.css 格式（`design-systems/_schema`）读取颜色、字体和圆角。没有带入任何品牌设计系统。
+- `.claude-plugin/`：清单格式参照它和 anthropics/skills 的写法，并通过 `claude plugin validate --strict` 校验。
+- `examples/brand/DESIGN.md` 是虚构品牌，只作演示。

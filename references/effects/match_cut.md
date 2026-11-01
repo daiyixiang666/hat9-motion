@@ -2,7 +2,7 @@
 
 <img src="../../assets/previews/fx/match_cut.webp" width="480" alt="match_cut 横屏"> <img src="../../assets/previews/fx/match_cut_v.webp" width="160" alt="match_cut 竖屏">
 
-**怎么动**：the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled).
+**怎么动**：the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled; clips play as grounds).
 
 | 项 | 内容 |
 |---|---|

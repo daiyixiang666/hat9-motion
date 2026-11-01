@@ -1,0 +1,257 @@
+{
+ "meta": {
+  "title": "结构与文字 · 在真实口播里",
+  "aspect": "16:9",
+  "duration": 40.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "list_stack",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "4 块钱的三个底气",
+   "items": [
+    [
+     "自有工厂",
+     "原料和包材自己生产"
+    ],
+    [
+     "自建仓配",
+     "从仓库直接送到门店"
+    ],
+    [
+     "规模采购",
+     "4.6 万家店一起下单"
+    ]
+   ],
+   "line": "蜜雪能卖 4 块钱，靠的是*三件事*。",
+   "src": "蜜雪集团招股书 · 2024 年度业绩公告",
+   "label": "要点列表 · List Stack",
+   "ref": "Envato Elements「Checklist Pack」热门 · talkcraft numbered-step-stack",
+   "t": 0.0
+  },
+  {
+   "scene": "fx",
+   "fx": "steps",
+   "d": 4.4,
+   "theme": "ink",
+   "topic": "做内容",
+   "title": "一条口播，四步做完",
+   "items": [
+    [
+     "写稿",
+     "冲突放在第一句"
+    ],
+    [
+     "配音",
+     "逐字时间戳"
+    ],
+    [
+     "分镜",
+     "一句一个画面"
+    ],
+    [
+     "渲染",
+     "横竖屏各一版"
+    ]
+   ],
+   "line": "用九帽动效做一条口播，只要*四步*。",
+   "src": "hat9-motion 工作流",
+   "label": "步骤流程 · Process Steps",
+   "ref": "talkcraft step-timeline-vertical · 教程类「三步做出……」",
+   "t": 4.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "ranking",
+   "d": 4.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "门店数 · 2024",
+   "unit": "家",
+   "items": [
+    [
+     "蜜雪冰城",
+     46479,
+     "截至 2024-12-31"
+    ],
+    [
+     "麦当劳",
+     43477,
+     "截至 2024-12-31"
+    ],
+    [
+     "星巴克",
+     40199,
+     "截至 2024-09-29"
+    ],
+    [
+     "瑞幸咖啡",
+     22340,
+     "截至 2024-12-31"
+    ]
+   ],
+   "line": "四家连锁比门店数，第一名是*蜜雪冰城*。",
+   "src": "蜜雪 2024 业绩公告 · McDonald's 10-K · Starbucks FY24 · 瑞幸 FY24",
+   "label": "排行榜倒数 · Countdown Ranking",
+   "ref": "盘点类「年度十大」格式 · talkcraft number-slab-pop",
+   "t": 8.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "term_card",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "host": true,
+   "term": "飞轮效应",
+   "reading": "Flywheel Effect",
+   "pos": "商业概念",
+   "definition": "推动一个沉重的飞轮，每一圈都在积累动能，越转越快，*最终不再需要额外用力*。",
+   "example": "价格越低 → 卖得越多 → 采购越便宜 → 价格还能更低",
+   "source": "出处：Jim Collins《从优秀到卓越》（Good to Great，2001）",
+   "line": "这就是吉姆·柯林斯说的*飞轮效应*。",
+   "src": "Jim Collins, Good to Great (2001)",
+   "label": "名词解释 · Term Card",
+   "ref": "talkcraft info-term-card · 回形针 / 所长林超的概念卡",
+   "t": 13.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "word_swap",
+   "d": 4.2,
+   "theme": "red",
+   "topic": "AI 与判断",
+   "host": true,
+   "pre": "AI 能帮你",
+   "words": [
+    "写稿",
+    "配音",
+    "做图",
+    "剪辑"
+   ],
+   "line": "AI 能帮你写稿、配音、做图、*剪辑*。",
+   "label": "句中换词 · Word Slot",
+   "ref": "talkcraft word-slot-cycle · Rotating Words 标题模板",
+   "t": 18.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "pros_cons",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "labels": [
+    "加盟的好处",
+    "加盟的代价"
+   ],
+   "pros": [
+    "开店快",
+    "总部不出店租和人力",
+    "4.6 万家店一起采购更便宜"
+   ],
+   "cons": [
+    "品控难统一",
+    "加盟店之间互相抢客",
+    "一家出事，全网受影响"
+   ],
+   "verdict": "规模越大，管住质量越难",
+   "line": "加盟模式的*好处和代价*，要一起看。",
+   "src": "第九顶帽子分析",
+   "label": "优缺点两栏 · Pros & Cons",
+   "ref": "测评类口播标配 · Envato Elements Checklist Pack",
+   "t": 22.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "quadrant",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "x_axis": [
+    "便宜",
+    "贵"
+   ],
+   "y_axis": [
+    "店少",
+    "店多"
+   ],
+   "quads": [
+    "便宜又多",
+    "贵还很多",
+    "便宜但少",
+    "贵而少"
+   ],
+   "items": [
+    {
+     "text": "蜜雪冰城",
+     "x": 10,
+     "y": 93
+    },
+    {
+     "text": "瑞幸咖啡",
+     "x": 42,
+     "y": 45
+    },
+    {
+     "text": "星巴克",
+     "x": 86,
+     "y": 80
+    }
+   ],
+   "hl": 0,
+   "note": "横轴：大致客单价 · 纵轴：全球门店数（2024）",
+   "line": "又便宜、店又多，蜜雪站在*左上角*。",
+   "src": "各公司 2024 年报（门店数）· 客单价为示意",
+   "label": "象限图 · 2×2 Matrix",
+   "ref": "咨询式 2×2 定位图（BCG 矩阵式）",
+   "t": 27.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "countdown",
+   "d": 4.4,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "host": true,
+   "question": "蜜雪一年卖出多少杯？",
+   "reveal": "约 90 亿杯",
+   "line": "给你 *5 秒*：蜜雪一年卖出多少杯？",
+   "src": "2024 年全年约数（媒体报道）",
+   "label": "倒计时 · Countdown",
+   "ref": "VideoHive Elements countdown 大类 · talkcraft countdown-arc-scatter",
+   "from": 5,
+   "to": 1,
+   "t": 31.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "chapter_bar",
+   "d": 4.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "这期分三部分",
+   "chapters": [
+    "门店有多少",
+    "钱从哪来",
+    "为什么不怕便宜"
+   ],
+   "hl": 1,
+   "line": "接下来第二部分：*钱从哪来*。",
+   "label": "章节进度条 · Chapter Progress",
+   "ref": "talkcraft chapter-progress-list · B 站分 P 目录",
+   "t": 36.0,
+   "tr": "hard"
+  }
+ ]
+}

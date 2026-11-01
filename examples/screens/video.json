@@ -1,0 +1,240 @@
+{
+ "meta": {
+  "title": "录屏 · 长截图 · 代码",
+  "aspect": "16:9",
+  "duration": 53.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "scroll_shot",
+   "t": 0,
+   "d": 5.2,
+   "theme": "paper",
+   "topic": "怎么用",
+   "image": "assets/readme.jpg",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "README",
+   "stops": [
+    {
+     "heading": "装上就有",
+     "label": "装上就有"
+    },
+    {
+     "heading": "成片示例",
+     "label": "成片示例"
+    },
+    {
+     "heading": "安装",
+     "label": "安装"
+    }
+   ],
+   "line": "README 一屏装不下，我们滚到*装上就有*这一节。",
+   "label": "长截图滚动 · Website Scroll",
+   "ref": "VideoHive Minimal Website Presentation 1.9K",
+   "src": "github.com/daiyixiang666/hat9-motion"
+  },
+  {
+   "scene": "fx",
+   "fx": "scroll_shot",
+   "t": 5.2,
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "怎么用",
+   "image": "assets/gallery_phone.jpg",
+   "frame": "phone",
+   "toc": true,
+   "stops": [
+    {
+     "heading": "2.5D 照片视差",
+     "label": "2.5D 照片视差"
+    },
+    {
+     "heading": "照片墙拼合",
+     "label": "照片墙拼合"
+    },
+    {
+     "heading": "霓虹点亮",
+     "label": "霓虹点亮"
+    }
+   ],
+   "line": "手机上看画廊，效果卡*一张接一张*往下滑。",
+   "label": "长截图滚动 · 手机框",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "screencast",
+   "t": 10.2,
+   "d": 8.6,
+   "theme": "ink",
+   "topic": "怎么用",
+   "video": "assets/gallery_rec.mp4",
+   "clicks_json": "assets/gallery_rec.json",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "tab": "九帽动效画廊",
+   "steps": [
+    "选「数据」分类",
+    "点搜索框",
+    "搜「增长」，点名字复制 id"
+   ],
+   "line": "在画廊里选*数据*，再搜增长，点名字就复制好了。",
+   "label": "真实录屏推近 · Screencast",
+   "ref": "VideoHive iTouch 2 App Promo 2.1K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "screencast",
+   "t": 18.8,
+   "d": 6.5,
+   "theme": "paper",
+   "topic": "怎么用",
+   "video": "assets/gallery_phone_rec.mp4",
+   "clicks_json": "assets/gallery_phone_rec.json",
+   "steps": [
+    "打开画廊",
+    "点「竖屏 9:16」",
+    "预览换成竖版"
+   ],
+   "line": "手机上点一下*竖屏*，预览就换成 9:16。",
+   "label": "竖屏录屏 · 手机框",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "spotlight",
+   "t": 25.3,
+   "d": 5.6,
+   "theme": "ink",
+   "topic": "怎么用",
+   "image": "assets/gallery_top.jpg",
+   "frame": "browser",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "boxes": [
+    {
+     "box": [
+      16,
+      236,
+      1016,
+      34
+     ],
+     "label": "五条成片，一键切换"
+    },
+    {
+     "box": [
+      954,
+      284,
+      310,
+      552
+     ],
+     "label": "同一条的竖屏版"
+    },
+    {
+     "box": [
+      446,
+      430,
+      420,
+      160
+     ],
+     "label": "画面里的数据"
+    }
+   ],
+   "line": "看这里：五条成片能切换，*横竖屏*各排一版。",
+   "label": "聚光灯 · Spotlight",
+   "ref": "VideoHive Explainer Video Toolkit 4 2.5K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "code",
+   "t": 30.9,
+   "d": 6.4,
+   "theme": "paper",
+   "topic": "怎么做的",
+   "file": "scripts/h9/fit.py#L153-L187",
+   "hl": "170-183",
+   "line": "放不下时先缩字号、再换行，*实在不行*才加省略号。",
+   "label": "代码逐行打出 · Code",
+   "ref": "Askiko Typewriter Text Effect 113.3 万播放",
+   "src": "scripts/h9/fit.py",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "code",
+   "t": 37.3,
+   "d": 4.8,
+   "theme": "ink",
+   "topic": "怎么做的",
+   "mode": "diff",
+   "lang": "python",
+   "title": "scripts/h9/captions.py",
+   "code": "  punch   — 9:16 / hooks. 2–6 glyphs per page, page pops 0.85→1.0 (back.out).\n\"\"\"\nPUN = \"，,。.!！?？、；;：:\"\n-SOFT = \"，,。.、；;：:\"\n+SOFT = \"，,、；;：:\"          # 。！？ always end a page, even after a single glyph\n\n\ndef regroup(words):",
+   "line": "这一行改动，让*句号问号*总能断开字幕。",
+   "label": "代码 diff · 增删行",
+   "ref": "MoSidd「Vox-Style Motion Graphics Using Only Claude Code」25.1 万播放",
+   "src": "commit 31d11da",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "code",
+   "t": 42.1,
+   "d": 5.2,
+   "theme": "paper",
+   "topic": "怎么用",
+   "mode": "terminal",
+   "title": "Terminal",
+   "cmd": "python3 scripts/hat9.py doctor",
+   "output": [
+    "九帽动效 · 环境检查",
+    "  ✓ Python 3.13.9",
+    "  ✓ Node.js v24.11.0",
+    "  ✓ FFmpeg",
+    "  ✓ HyperFrames 0.8.191",
+    "  ✓ 核心字体（思源黑体 / 思源宋体 / Inter / JetBrains Mono）",
+    "  ✓ fontTools（可选）",
+    "  ✓ jieba（可选）",
+    "全部就绪 ✓"
+   ],
+   "line": "装好以后跑*一条命令*，环境有没有问题一眼就知道。",
+   "label": "终端 · Terminal",
+   "ref": "Envato Elements「Search Screen Pro - Typing Animation」Popular 第 7",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scroll_shot",
+   "t": 47.3,
+   "d": 5.7,
+   "theme": "paper",
+   "topic": "怎么用",
+   "image": "assets/brief/page.jpg",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "hat9-motion",
+   "stops": [
+    {
+     "heading": "九帽动效 · hat9-motion",
+     "label": "九帽动效 · hat9-motion"
+    },
+    {
+     "heading": "60 秒出第一条",
+     "label": "60 秒出第一条"
+    },
+    {
+     "heading": "目录",
+     "label": "目录"
+    }
+   ],
+   "line": "只给一个网址：先截下整页，再*按小节*停下来。",
+   "label": "只给网址 · url_brief",
+   "ref": "VideoHive Minimal Website Presentation 1.9K",
+   "src": "scripts/url_brief.py",
+   "tr": "hard"
+  }
+ ]
+}

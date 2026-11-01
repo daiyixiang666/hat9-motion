@@ -1,0 +1,45 @@
+{
+ "meta": {
+  "title": "卡拉 OK 字幕演示",
+  "aspect": "9:16",
+  "style": "press",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "duration": 9.6,
+  "caption_mode": "karaoke",
+  "section": "流水线演示",
+  "src": "蜜雪集团 2024 年度业绩公告"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": 0,
+   "theme": "paper",
+   "text": "一杯 4 块钱",
+   "sub": "one cup · ¥4"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": "@蜜雪冰城",
+   "theme": "paper",
+   "words": [
+    "蜜雪冰城",
+    "4.6 万家店",
+    "比麦当劳",
+    "还多"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "impact",
+   "t": "@但它",
+   "theme": "red",
+   "text": "不是卖奶茶",
+   "sub": "not a tea business",
+   "tr": "hard"
+  }
+ ]
+}

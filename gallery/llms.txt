@@ -40,6 +40,46 @@
 - hud_lock [界面]:  — 锁定目标、指出关键人 / 物、选址
 - glass [界面]:  — 一个核心数字浮在实拍上
 - text_mask [照片]:  — 一个关键词 + 实拍，转场进入画面
+- cite_pdf [引用]:  — 引用判决书、报告、财报原文
+- cite_paper [引用]:  — 引用论文
+- cite_article [引用]:  — 引用新闻报道
+- cite_quote [引用]:  — 引用某人说过的话
+- cite_post [引用]:  — 引用一条社交帖子
+- cite_video [引用]:  — 引用别人的视频片段
+- cite_stack [引用]:  — 多个信源交叉验证
+- list_stack [结构]:  — 「三个原因」「四个要点」、清单、结尾总结
+- steps [结构]:  — 教程、流程、「三步做出……」
+- ranking [结构]:  — 盘点、年度十大、门店 / 销量排行
+- term_card [字效]:  — 名词解释、概念、术语
+- word_swap [字效]:  — 「不是 A，是 B」「它能做 X / Y / Z」
+- pros_cons [结构]:  — 测评、优缺点、该不该
+- quadrant [结构]:  — 定位、谁在哪个位置、2×2 矩阵
+- countdown [结构]:  — 「给你 5 秒」、悬念、倒数
+- chapter_bar [结构]:  — 目录、第几部分、章节过渡
+- table [数据]:  — 多年财务、对比清单、参数表
+- statement_table [数据]:  — 利润表 / 资产负债表里的一行
+- waterfall [数据]:  — 从收入一路扣到净利
+- scale_compare [数据]:  — 「相当于 N 个…」「绕赤道 N 圈」
+- bar_race [数据]:  — 排名随时间变化、超车
+- stacked_bars [数据]:  — 构成变化、占比
+- formula [数据]:  — 一个比率怎么算出来
+- bars_csv [数据]:  — 手上只有一张表格
+- scroll_shot [屏幕]:  — 长截图、网页、长聊天记录
+- screencast [屏幕]:  — 真实录屏、教程、产品演示
+- spotlight [屏幕]:  — 「看这里」「只看这一行」
+- code [屏幕]:  — 代码、命令行、改动前后
+- comment_thread [界面]:  — 评论区截图、热评
+- im_chat [界面]:  — 聊天记录、对话证据
+- profile_card [人物]:  — 人物介绍、创始人、管理层
+- equity_tree [人物]:  — 股权穿透、组织架构
+- china_map [地图]:  — 省份对比、分级设色、门店撒点
+- danmaku [界面]:  — 弹幕刷屏、高能时刻
+- receipt [界面]:  — 小票、账单、客单价
+- cold_open [节奏]:  — 片头先画面后说话
+- suspense [节奏]:  — 「答案是……」揭晓数字
+- interlude [节奏]:  — 章节之间的空镜、纯音乐段
+- beat_cut [节奏]:  — 音乐卡点、快节奏蒙太奇
+- breather [节奏]:  — 金句后的停顿、留白
 
 ## 转场
 - zoomin: #1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）

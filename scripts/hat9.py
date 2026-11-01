@@ -40,9 +40,12 @@ def doctor(_):
     from h9 import fonts
     miss = [k for k in ("noto-sans-sc", "noto-serif-sc", "inter", "jetbrains-mono") if not fonts.find(fonts.REG[k]["file"])]
     line("核心字体（思源黑体 / 思源宋体 / Inter / JetBrains Mono）", not miss, f"缺 {', '.join(miss)}：放进 assets/fonts/，地址见 assets/fonts.json")
-    for mod, why in (("fontTools", "字体子集化，渲染更快"), ("jieba", "字幕按词断行")):
+    for mod, pkg, why in (("fontTools", "fonttools", "字体子集化，渲染更快"), ("jieba", "jieba", "字幕按词断行"),
+                          ("faster_whisper", "faster-whisper", "自己的录音自动对齐出逐字时间（scripts/align.py）"),
+                          ("whisperx", "whisperx", "更准的强制对齐，二选一即可")):
         try: __import__(mod); print(f"  ✓ {mod}（可选）")
-        except ImportError: print(f"  · {mod} 未安装（可选：pip install {mod.lower()}，{why}）")
+        except ImportError: print(f"  · {mod} 未安装（可选：pip install {pkg}，{why}）")
+    print("  · 没装对齐模型也行：scripts/align.py --backend silence 按停顿切分（也可用 --transcript 导入已有逐字时间）")
     print("全部就绪 ✓" if ok else "有缺项，按提示补齐后再试")
 
 

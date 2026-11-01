@@ -1,0 +1,77 @@
+{
+ "meta": {
+  "title": "无声开场 + 插入停顿 + 音乐让位",
+  "aspect": "16:9",
+  "style": "press",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.35,
+  "lead": 3.0,
+  "gaps": [
+   {
+    "after": "@四十四亿多$",
+    "dur": 1.6
+   }
+  ],
+  "duck": 10,
+  "duration": 14.4,
+  "caption_fix": {
+   "四十四亿多": "44 亿多",
+   "四万六千多": "4.6 万多"
+  },
+  "section": "流水线演示",
+  "src": "蜜雪集团 2024 年度业绩公告"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "cold_open",
+   "t": 0,
+   "d": 3.0,
+   "title": "一杯 4 块钱的柠檬水",
+   "kicker": "商业拆解",
+   "sub": "30 秒看懂蜜雪的生意"
+  },
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": "@一杯",
+   "theme": "paper",
+   "text": "一杯 4 块钱",
+   "sub": "one cup · ¥4",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "breather",
+   "t": "@四十四亿多$+0.15",
+   "theme": "ink",
+   "text": "44 亿",
+   "sub": "一年净利润",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": "@蜜雪冰城",
+   "theme": "paper",
+   "words": [
+    "蜜雪冰城",
+    "4.6 万家店",
+    "比麦当劳",
+    "还多"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "impact",
+   "t": "@但它",
+   "theme": "red",
+   "text": "不是卖奶茶",
+   "sub": "not a tea business",
+   "tr": "hard"
+  }
+ ]
+}

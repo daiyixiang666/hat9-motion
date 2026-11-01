@@ -1,0 +1,203 @@
+{
+ "meta": {
+  "title": "弹性时长 · 0.8 秒与 6 秒",
+  "aspect": "16:9",
+  "duration": 54.4,
+  "style": "reel"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": 0.0,
+   "d": 0.8,
+   "theme": "paper",
+   "text": "判断",
+   "sub": "judgment"
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 0.8,
+   "d": 0.8,
+   "theme": "ink",
+   "text": "差别不在工具|在判断",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "apple_blur",
+   "t": 1.6,
+   "d": 0.8,
+   "theme": "lemon",
+   "text": "看懂谁在赚钱",
+   "sub": "follow the money",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": 2.4,
+   "d": 0.8,
+   "theme": "red",
+   "words": [
+    "一杯",
+    "4 块钱",
+    "柠檬水"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "odometer",
+   "t": 3.2,
+   "d": 0.8,
+   "theme": "paper",
+   "value": "46479",
+   "unit": "家",
+   "sub": "蜜雪冰城全球门店",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "bars",
+   "t": 4.0,
+   "d": 0.8,
+   "theme": "ink",
+   "title": "蜜雪集团 · 年收入",
+   "unit": "亿元",
+   "src": "蜜雪集团招股书；2024 年度业绩公告",
+   "tr": "hard",
+   "items": [
+    [
+     "2022",
+     135.8
+    ],
+    [
+     "2023",
+     203.0
+    ],
+    [
+     "2024",
+     248.3
+    ]
+   ]
+  },
+  {
+   "scene": "fx",
+   "fx": "tracking",
+   "t": 4.8,
+   "d": 0.8,
+   "theme": "lemon",
+   "text": "审 美",
+   "sub": "TASTE",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "burst",
+   "t": 5.6,
+   "d": 0.8,
+   "theme": "red",
+   "text": "能爆",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": 6.4,
+   "d": 6.0,
+   "theme": "paper",
+   "text": "判断",
+   "sub": "judgment",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 12.4,
+   "d": 6.0,
+   "theme": "ink",
+   "text": "差别不在工具|在判断",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "apple_blur",
+   "t": 18.4,
+   "d": 6.0,
+   "theme": "lemon",
+   "text": "看懂谁在赚钱",
+   "sub": "follow the money",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": 24.4,
+   "d": 6.0,
+   "theme": "red",
+   "words": [
+    "一杯",
+    "4 块钱",
+    "柠檬水"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "odometer",
+   "t": 30.4,
+   "d": 6.0,
+   "theme": "paper",
+   "value": "46479",
+   "unit": "家",
+   "sub": "蜜雪冰城全球门店",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "bars",
+   "t": 36.4,
+   "d": 6.0,
+   "theme": "ink",
+   "title": "蜜雪集团 · 年收入",
+   "unit": "亿元",
+   "src": "蜜雪集团招股书；2024 年度业绩公告",
+   "tr": "hard",
+   "items": [
+    [
+     "2022",
+     135.8
+    ],
+    [
+     "2023",
+     203.0
+    ],
+    [
+     "2024",
+     248.3
+    ]
+   ]
+  },
+  {
+   "scene": "fx",
+   "fx": "tracking",
+   "t": 42.4,
+   "d": 6.0,
+   "theme": "lemon",
+   "text": "审 美",
+   "sub": "TASTE",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "burst",
+   "t": 48.4,
+   "d": 6.0,
+   "theme": "red",
+   "text": "能爆",
+   "tr": "hard"
+  }
+ ]
+}

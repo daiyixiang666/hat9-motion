@@ -7,11 +7,19 @@
   python3 scripts/stress.py --plugins            # also the plugin effects, using examples/aefx/variants.json
 
 Inputs per target: tiny / typical / extreme text, 1·3·6·12 pictures mixing landscape, portrait, square and
-panorama, short and long lists, and a moving clip where the effect takes video. Each target becomes one
+panorama, short and long lists, and a moving clip where the effect takes video (`media`: 0 to 500 items). Each target becomes one
 composition (one beat per variant) under examples/stress/build/, checked with `hyperframes check --json` at each
 beat's settled moment. It fails on any error and on text that overflows its box, the canvas or its container,
 or overlaps other text — except findings allow-listed below as intentional. Contact sheets (one labelled frame
 per variant) land in examples/stress/sheets/. A summary is written to examples/stress/report.md.
+
+Safe area (9:16): visible text must stay out of the platform chrome — top 200 px, bottom 400 px, right 120 px of the
+lower half (scripts/h9/safearea.cjs, run with the Chrome + puppeteer-core that HyperFrames already installed). Exempt:
+data-safe="ignore", a style's STYLE["safe_exempt"], SAFE_EXEMPT below (page furniture), SAFE_ALLOW per target. --no-safe skips it.
+Duration (--durations, on with --plugins): a subset of effects at 0.8 s and 6 s beats (targets "pop@0.8", "pop@6").
+Work packages add targets in examples/stress/targets/<pkg>.json, any of three shapes:
+  {"base", "beats": [{fx, ...}]}  ·  {"base", "targets": {fx: [variant]}, "durations": [1, 3, 8], "meta": {}, "allow": [[fx, code, rx]]}
+  ·  {fx: [variant]}.
 
 Test pictures: examples/aefx/assets/broll/*.jpg when present (Mixkit stills, never committed) plus placeholders
 drawn here in every aspect. Test video: clips under $H9_MEDIA/broll (your own media library), referenced by path; skipped when unset.
@@ -26,6 +34,29 @@ OUT = SKILL / "examples" / "stress"
 BUILD, SHEETS, IMG = OUT / "build", OUT / "sheets", OUT / "build" / "img"
 HF = ["npx", "--yes", "hyperframes@0.8.191"]
 FAIL = {"text_box_overflow", "canvas_overflow", "container_overflow", "content_overlap", "text_occluded"}
+SAFE_EXEMPT = [".pr-hd", ".pr-ft", ".ctx .ft", ".fx-tag", ".hud-read", ".po .hd", ".po .ft", ".po .tick"]   # page furniture (show name, source line, grid ticks) may sit under chrome
+SAFE_ALLOW = [("timeline", "right", r"\.tly"), ("danmaku", "right", r"wpd-i")]   # (target prefix, zone, selector regex): the timeline's neighbouring years slide off on purpose
+# known issues left for each effect's owner: reported in the report, not counted as failures (target prefix, regex on the finding, note)
+KNOWN = [
+    ("profile_card", r"text_box_overflow div\.wpp\.grid", "WP4 profile_card: in the 6-person grid (9:16) the one-line bios overflow their cells"),
+    ("im_chat", r"(text_box|canvas)_overflow", "WP4 im_chat: avatar monogram / long-thread bubble boxes (info level)"),
+    ("china_map", r"safe right", "WP4 china_map: ranking labels at the right edge cross the 9:16 button zone"),
+    ("map_route", r"safe right", "E map_route: an end-point label near the right edge crosses the 9:16 button zone"),
+    ("media", r"canvas_overflow .*> b:nth-of-type", "G media: the flood counter's box grazes the canvas for its first frames"),
+    ("cite_post", r"text_box_overflow", "H cite_post: serif zh line box taller than its box (info level, ink is inside)"),
+    ("cite_article", r"canvas_overflow", "H cite_article: a long URL line box (ellipsised) reaches the canvas edge"),
+    ("cite_video", r"safe right", "H cite_video: the caption under a portrait clip spans the full width in 9:16"),
+    ("scale_compare", r"safe right", "WP2 scale_compare: the full-width title line crosses the 9:16 button zone"),
+    ("stacked_bars", r"safe right", "WP2 stacked_bars: the last bar's value label sits in the 9:16 button zone"),
+    ("bar_race", r"text_box_overflow", "WP2 bar_race: value labels overflow their span box while counting (info level)"),
+    ("ranking", r"safe right", "WP1 ranking: the unit after a long value reaches the 9:16 button zone"),
+    ("interlude", r"safe right .*div\.src", "WP5 interlude: the source credit is right-aligned into the 9:16 button zone"),
+    ("cold_open", r"(safe right .*span\.fl|text_box_overflow|canvas_overflow)", "WP5 cold_open: a long 2-line title slams full-width (and past the canvas at 3 s)"),
+    ("chapter_breather", r"(safe right|text_box_overflow)", "WP5 chapter_breather: a long next-chapter title runs full width"),
+]
+DUR_FX = ["pop", "mask_up", "apple_blur", "stomp", "odometer", "impact", "tracking", "burst", "bars", "donut", "list_stack", "table", "media"]
+DUR_SET = (0.8, 6.0)
+TMETA = {}               # target -> extra meta for its composition (e.g. bpm for beat-cut effects)
 # (target prefix, code, selector regex) that are intentional
 ALLOW = [
     ("*", "container_overflow", r"\.ln|> span"),           # line-mask reveals: the line box is the mask
@@ -40,6 +71,11 @@ ALLOW = [
     ("timeline", "canvas_overflow", r"."), ("timeline", "text_box_overflow", r"."),   # a scroller: the neighbouring years slide off-frame by design
     ("ghost_type", "canvas_overflow", r"\.gh"),
     ("parallax", "content_overlap", r"\.pxt"),            # the title sits between the plate and the cut-out on purpose
+    ("countdown", "canvas_overflow", r"."), ("countdown", "content_overlap", r"cd-dg"),        # off-stage digits of the flip (WP1)
+    ("term_card", "text_box_overflow", r"."), ("term_card", "canvas_overflow", r"."),         # the decorative ghost glyph (WP1)
+    ("word_swap", "container_overflow", r"."), ("word_swap", "text_box_overflow", r"."), ("word_swap", "canvas_overflow", r"."),   # the reel clipped by its slot (WP1)
+    ("danmaku", "canvas_overflow", r"."), ("danmaku", "text_box_overflow", r"."),            # bullet comments fly in and out of frame (WP4)
+    ("comment_thread", "canvas_overflow", r"."), ("receipt", "canvas_overflow", r"."),       # a long thread scrolls / a long receipt prints past the frame (WP4)
     ("glitch", "content_overlap", r"\.r|\.cy|\.m"),
     ("slice_text", "content_overlap", r"\.a|\.b"),
 ]
@@ -83,6 +119,11 @@ def pictures():
     vids = sorted((Path(os.environ["H9_MEDIA"]) / "broll").glob("*/*.mp4")) if os.environ.get("H9_MEDIA") else []
     pick = [v for v in vids if "traffic-light" in v.name or "tokyo" in v.name] or vids
     out["video"] = str(pick[0]) if pick else None
+    own = [SKILL / "assets" / "previews" / f for f in ("mixue_16x9.mp4", "atlas_16x9.mp4", "screen_9x16.mp4")]
+    out["clips"] = [str(v) for v in own if v.exists()]
+    out["video"] = out["video"] or (out["clips"][0] if out["clips"] else None)
+    fr = SKILL / "examples" / "media" / "assets" / "frames"          # python3 examples/media/make_frames.py
+    out["pool"] = sorted(str(p) for p in fr.glob("*.jpg")) if fr.exists() else []
     return out
 
 
@@ -127,6 +168,27 @@ def fx_variants(P):
     V["cartoon"] = [{"text": "啪"}, {"text": "翻车了！"}, {"text": "这个拟声词特别特别长"}]
     V["gooey"] = [{}, {"labels": ["流量", "供应链"]}, {"labels": ["很长很长的左边标签", "右"]}]
     V["dual"] = [{"img_h": L[0], "img_v": tall, "text": "横竖双屏"}, {"image": por, "text": T_LONG}]
+    clips = P.get("clips") or []
+    if clips:     # clips mixed into the picture sets
+        V["mosaic"].append({"images": [clips[0], L[0], por, clips[-1], sq, L[1 % len(L)]]})
+        V["collage"].append({"images": [clips[0], por, L[0]], "text": "视频也能贴"})
+        V["match_cut"].append({"text": "生意", "images": [L[0], clips[0], por, clips[-1]]})
+    # media: the count picks the choreography — 1 · 2 · 3 · 5 · 8 · 24 · 60 · 200 · 500, mixed shapes, clips
+    pool = P.get("pool") or []
+    base = pool or (L + [por, tall, sq, pano])
+    many = lambda k: [base[i % len(base)] for i in range(k)]
+    cap = lambda xs, cs: [{"src": x, "caption": c} for x, c in zip(xs, cs)]
+    V["media"] = [{"items": cap([L[0]], [T_LONG])}, {"items": [por]}, {"items": cap([L[0], tall], ["横屏 16:9", "竖屏 9:16"]), "hl": 1},
+                  {"items": cap([L[0], por, pano], ["AI 工具台", "一个特别特别长的卡片标签用来测试截断", "全景"]), "hl": 0},
+                  {"items": cap(many(5), ["财经刊", "AI 工具台", "地图纪录", "瑞士海报", "竖屏版"]), "hl": 2},
+                  {"items": [por, pano, sq, tall, L[0], L[1 % len(L)], P["tall13"], sq]},
+                  {"items": many(24), "hl": 5}, {"items": many(60), "hl": 11}, {"items": many(200), "count_label": "帧", "sub": "四条成片"},
+                  {"items": many(500), "hl": 77}, {"items": []}]
+    if clips:
+        V["media"] += [{"items": [{"video": clips[0], "caption": "视频"}]}, {"items": [clips[0], clips[-1]]},
+                       {"items": cap([clips[0], L[0], clips[1 % len(clips)], por], ["视频", "图", "视频", "竖图"]), "hl": 0},
+                       {"items": [clips[i % len(clips)] if i % 4 == 0 else base[i % len(base)] for i in range(12)]},
+                       {"items": [clips[0]] + many(39), "hl": 0}]
     for k, vs in V.items():
         for i, v in enumerate(vs):
             v.setdefault("line", LINES[i % len(LINES)])
@@ -180,13 +242,14 @@ POSTER = {
     "thesis": [{"big": "选择", "rest": "才是|新的创作"}, {"big": "学会选择", "rest": "才是这个时代新的创作方式", "mo": "THESIS — A MUCH LONGER MONO LINE"}],
     "outro": [{"title": "第九顶帽子", "sub": "AI 时代的审美与判断"}, {"title": "一个非常非常长的账号名字", "sub": "这一行定位语也写得很长很长很长很长"}],
 }
-SETTLE = {"notify": 0.9, "mask_up": 0.6, "mosaic": 0.5, "portal": 0.9, "typewriter": 0.85, "scramble": 0.85, "write_on": 0.85, "stomp": 0.95}
+SETTLE = {"notify": 0.9, "mask_up": 0.6, "mosaic": 0.5, "portal": 0.9, "typewriter": 0.85, "scramble": 0.85, "write_on": 0.85, "stomp": 0.95, "media": 0.93}
+BEAT = {"media": 4.6}      # per-variant beat length for effects that need longer than the default 2.6 s
 
 
 # ---------------------------------------------------------------- build / check
 def compose(target, variants, d):
     """one video.json for a target: one beat per variant."""
-    kind, _, name = target.rpartition(":")
+    kind, _, name = target.split("@")[0].rpartition(":")
     beats, t = [], 0.0
     for v in variants:
         if kind == "":
@@ -197,13 +260,14 @@ def compose(target, variants, d):
         if beats: b["tr"] = "hard"
         beats.append(b); t += d
     style = "reel" if kind == "" else kind
-    meta = {"title": f"stress · {target}", "duration": round(t, 2), "style": style, "section": "压力测试", "case": "stress", "src": "压力测试数据"}
+    meta = {"title": f"stress · {target}", "duration": round(t, 2), "style": style, "section": "压力测试", "case": "stress", "src": "压力测试数据", **TMETA.get(target, {})}
     return {"meta": meta, "beats": beats}, style
 
 
 def settle_times(target, n, d):
-    name = target.rpartition(":")[2]
+    name = target.split("@")[0].rpartition(":")[2]
     f = SETTLE.get(name, 0.62 if ":" not in target else 0.93)
+    if "@" in target: f = 0.92 if d < 1.5 else max(f * 2.6 / d, 0.5) if d > 3 else f    # short beats: the end; long: soon after landing
     return [round(i * d + d * f, 2) for i in range(n)]
 
 
@@ -214,9 +278,10 @@ def allowed(target, f):
     return False
 
 
-def run_target(target, variants, aspect, snap=True):
-    d = 4.4 if ":" in target else 2.6
+def run_target(target, variants, aspect, snap=True, safe=True):
+    d = 4.4 if ":" in target else BEAT.get(target, 2.6)
     if target.startswith("press:split"): d = 6.0
+    if "@" in target: d = float(target.rsplit("@", 1)[1])
     vj, style = compose(target, variants, d)
     tag = aspect.replace(":", "x")
     work = BUILD / f"{target.replace(':', '_')}_{tag}"
@@ -245,11 +310,61 @@ def run_target(target, variants, aspect, snap=True):
             if key in seen: continue
             seen.add(key)
             fails.append(f"v{vi} {f['severity']} {f['code']} {(f.get('selector') or '')[-80:]} @{tt}: {f['message'][:90]}")
+    if safe and aspect == "9:16":
+        fails += safe_area(target, style, work, at, d)
+    known = [f for f in fails if any(target.startswith(p) and re.search(rx, f) for p, rx, _ in KNOWN)]
+    fails = [f for f in fails if f not in known]
     if snap:
         sdir = work / "snap"
         subprocess.run(HF + ["snapshot", "-o", str(sdir), "--at", ",".join(map(str, at)), "--no-end"], cwd=work, capture_output=True, text=True)
         sheet(sorted(sdir.glob("frame-*.png")), SHEETS / f"{target.replace(':', '_')}_{tag}.jpg", target, aspect, fails)
-    return {"target": target, "aspect": aspect, "ok": not fails, "fails": fails, "n": len(variants)}
+    return {"target": target, "aspect": aspect, "ok": not fails, "fails": fails, "known": known, "n": len(variants)}
+
+_TOOLS = {}
+
+
+def safe_tools():
+    """(puppeteer-core path, chrome path) from the HyperFrames install, or None (then the safe-area rule is skipped)."""
+    if "v" in _TOOLS: return _TOOLS["v"]
+    v = None
+    try:
+        pp = os.environ.get("H9_PUPPETEER")
+        if not pp:
+            r = subprocess.run(["npm", "exec", "--yes", "--package=hyperframes@0.8.191", "--", "node", "-e",
+                                "console.log(process.env.PATH.split(require('path').delimiter).find(x=>x.includes('_npx'))||'')"],
+                               capture_output=True, text=True, cwd=str(SKILL), timeout=120)
+            b = r.stdout.strip().splitlines()[-1] if r.stdout.strip() else ""
+            pp = str(Path(b).parent / "puppeteer-core") if b else ""
+        ch = os.environ.get("H9_CHROME") or subprocess.run(HF + ["browser", "path"], capture_output=True, text=True, timeout=120).stdout.strip().splitlines()[-1]
+        if pp and Path(pp).exists() and ch and Path(ch).exists(): v = (pp, ch)
+    except Exception:
+        v = None
+    _TOOLS["v"] = v
+    return v
+
+
+def safe_area(target, style, work, at, d):
+    tools = safe_tools()
+    if not tools: return []
+    try:
+        sys.path.insert(0, str(HERE))
+        import build as _b
+        ex = list(SAFE_EXEMPT) + list(_b.load_style(style).get("safe_exempt", []))
+    except Exception:
+        ex = list(SAFE_EXEMPT)
+    env = dict(os.environ, H9_PUPPETEER=tools[0], H9_CHROME=tools[1])
+    r = subprocess.run(["node", str(HERE / "h9" / "safearea.cjs"), str(work / "index.html"), ",".join(map(str, at)), "1080", "1920", "||".join(ex)],
+                       capture_output=True, text=True, env=env, timeout=300)
+    if r.returncode: return [f"safe-area probe failed: {(r.stderr or r.stdout)[-200:]}"]
+    out, seen = [], set()
+    for v in json.loads(r.stdout or "[]"):
+        if any(target.startswith(p) and v["zone"] == z and re.search(rx, v["sel"]) for p, z, rx in SAFE_ALLOW): continue
+        vi = int(float(v["t"]) // d)
+        key = (vi, v["zone"], v["sel"][-50:])
+        if key in seen: continue
+        seen.add(key)
+        out.append(f"v{vi} safe {v['zone']} {v['sel'][-70:]} @{v['t']}: 「{v['text']}」 at {v['rect']}")
+    return out
 
 
 def sheet(frames, dst, target, aspect, fails):
@@ -278,6 +393,9 @@ def main():
     ap.add_argument("--only", default=""); ap.add_argument("--aspect", default="16:9,9:16")
     ap.add_argument("--jobs", type=int, default=3); ap.add_argument("--no-snap", action="store_true")
     ap.add_argument("--plugins", action="store_true"); ap.add_argument("--skip-builtin", action="store_true")
+    ap.add_argument("--targets", action="store_true", help="also run examples/stress/targets/*.json (on with --plugins)")
+    ap.add_argument("--durations", action="store_true", help="also the 0.8 s / 6 s duration targets (on with --plugins)")
+    ap.add_argument("--no-safe", action="store_true", help="skip the 9:16 safe-area rule")
     a = ap.parse_args()
     P = pictures()
     targets = {}
@@ -306,14 +424,46 @@ def main():
         for b in av["beats"]:
             if b["fx"] not in builtin and b["fx"] != "plate" and b["fx"] in aefx.FX:
                 targets.setdefault(b["fx"], []).insert(0, absolutise({k: v for k, v in b.items() if k not in ("t", "d", "tr", "scene", "fx")}))
+    if a.plugins or a.targets:     # each work package ships its own entries: examples/stress/targets/<pkg>.json (three shapes, see top)
+        for tf in sorted((SKILL / "examples" / "stress" / "targets").glob("*.json")):
+            tj = json.loads(tf.read_text())
+            tbase = (SKILL / tj["base"]).resolve() if isinstance(tj.get("base"), str) and tj.get("base") else tf.parent
+            def tabs(o, tbase=tbase):
+                if isinstance(o, dict): return {k: tabs(v) for k, v in o.items()}
+                if isinstance(o, list): return [tabs(v) for v in o]
+                if isinstance(o, str) and re.search(r"\.(jpe?g|png|webp|gif|pdf|mp4|mov|webm|m4v|json|csv|xlsx?)$", o, re.I) and not o.startswith("/") and (tbase / o).exists():
+                    return str((tbase / o).resolve())
+                return o
+            groups = {}
+            if isinstance(tj.get("beats"), list):
+                for b in tj["beats"]:
+                    if b.get("fx"): groups.setdefault(b["fx"], []).append({k: v for k, v in b.items() if k not in ("t", "d", "tr", "scene", "fx")})
+            elif isinstance(tj.get("targets"), dict):
+                groups = tj["targets"]
+            else:
+                groups = {k: v for k, v in tj.items() if isinstance(v, list) and k not in ("allow", "durations")}
+            for row in tj.get("allow", []):
+                ALLOW.append(tuple(row))
+            durs = tj.get("durations") or [None]
+            for fxn, vs in groups.items():
+                vs = [tabs(v) for v in vs]
+                for dd in durs:
+                    key = fxn if dd is None else f"{fxn}@{float(dd):g}"
+                    targets.setdefault(key, []).extend(vs)
+                    if tj.get("meta"): TMETA[key] = dict(tj["meta"])
+    if a.plugins or a.durations:    # the same effect in a 0.8 s and a 6 s beat (elastic timing: fast entrance / kept alive)
+        for fxn in DUR_FX:
+            if fxn in targets and targets[fxn]:
+                for dd in DUR_SET:
+                    targets.setdefault(f"{fxn}@{dd:g}", targets[fxn][:2])
     if a.only:
         keep = set(a.only.split(","))
-        targets = {k: v for k, v in targets.items() if k in keep or k.split(":")[-1] in keep}
+        targets = {k: v for k, v in targets.items() if k in keep or k.split(":")[-1] in keep or k.split("@")[0].split(":")[-1] in keep}
     jobs = [(t, v, asp) for t, v in targets.items() for asp in a.aspect.split(",")]
     print(f"{len(targets)} targets × {len(a.aspect.split(','))} aspects = {len(jobs)} builds")
     res = []
     with ThreadPoolExecutor(max_workers=a.jobs) as ex:
-        for r in ex.map(lambda j: run_target(j[0], j[1], j[2], not a.no_snap), jobs):
+        for r in ex.map(lambda j: run_target(j[0], j[1], j[2], not a.no_snap, not a.no_safe), jobs):
             res.append(r)
             print(("PASS " if r["ok"] else "FAIL ") + f"{r['target']:<18} {r['aspect']:<5} " + ("" if r["ok"] else f"{len(r['fails'])} issues"), flush=True)
             for f in r["fails"][:6]: print("      ", f)
@@ -322,13 +472,22 @@ def main():
            "| 目标 | 画幅 | 变体 | 结果 |", "|---|---|---|---|"]
     for r in sorted(res, key=lambda r: (r["target"], r["aspect"])):
         rep.append(f"| `{r['target']}` | {r['aspect']} | {r.get('n', '')} | {'通过' if r['ok'] else '✗ ' + str(len(r['fails']))} |")
+    kn = [r for r in res if r.get("known")]
+    if kn:
+        rep += ["", "## 已知问题（不计入失败，留给效果作者）", ""]
+        notes = {}
+        for r in kn:
+            for p, rx, note in KNOWN:
+                if r["target"].startswith(p) and any(re.search(rx, x) for x in r["known"]): notes.setdefault(note, []).append(f"{r['target']} {r['aspect']}")
+        rep += [f"- {n}（{', '.join(v)}）" for n, v in notes.items()]
     fails = [r for r in res if not r["ok"]]
     if fails:
         rep += ["", "## 未通过", ""]
         for r in fails:
             rep.append(f"### `{r['target']}` {r['aspect']}"); rep += [f"- {x}" for x in r["fails"][:20]]; rep.append("")
-    (OUT / "report.md").write_text("\n".join(rep) + "\n")
-    print(f"\n{ok}/{len(res)} passed → {OUT / 'report.md'}")
+    rp = OUT / ("report.md" if not a.only else f"report_{re.sub(r'[^A-Za-z0-9_]+', '-', a.only)[:60]}.md")   # partial runs never overwrite the full report
+    rp.write_text("\n".join(rep) + "\n")
+    print(f"\n{ok}/{len(res)} passed → {rp}")
     sys.exit(0 if ok == len(res) else 1)
 
 

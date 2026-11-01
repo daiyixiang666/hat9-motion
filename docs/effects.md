@@ -43,16 +43,16 @@ one word per beat slams full-frame, sizes alternate, every third beat inverts th
 
 each line rises out of its own mask, expo.out.
 
-- 参数：—
+- 参数：`sub`
 - 人气：YouTube 153万 / 145万播放
 
 ### `mosaic` — 照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份)
 
 <img src="../assets/previews/fx/mosaic.webp" width="480" alt="mosaic">
 
-tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops; 12–24 → one tile each, the grid re-shapes to the count).
+tiles fly in from depth and assemble a wall, then the camera pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops; 12–24 → one tile each, the grid re-shapes to the count); clips may be mixed in (up to 6 play, the rest show a still).
 
-- 参数：`focus`, `image`, `images`
+- 参数：`focus`, `image`, `images`, `video`
 - 人气：Mosaic Photo Reveal 1.6万份
 
 ### `cartoon` — 卡通冲击特效 (#7, 140 Flash FX 1.47万份)
@@ -158,9 +158,9 @@ each digit column spins down to its value, staggered. value: 46479 | "46,479" | 
 
 <img src="../assets/previews/fx/collage.webp" width="480" alt="collage">
 
-torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape); text: the handwritten note.
+torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape; clips play inside their frames); text: the handwritten note.
 
-- 参数：`focus`, `image`, `images`, `text`
+- 参数：`focus`, `image`, `images`, `text`, `video`
 - 人气：Fakeplastictree 203.5万播放
 
 ### `write_on` — 描边书写 → 填色 (Trim Paths on text / 手写签名)
@@ -176,7 +176,7 @@ glyph outlines draw on, then the fill floods in.
 
 <img src="../assets/previews/fx/match_cut.webp" width="480" alt="match_cut">
 
-the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled).
+the word holds its exact place while everything around it hard-cuts — background, colour field and typeface change every few frames. Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled; clips play as grounds).
 
 - 参数：`focus`, `images`, `text`
 - 人气：Envato Elements 标题热门第1、2名
@@ -351,6 +351,386 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 
 - 参数：`image`, `images`, `sub`, `text`
 - 人气：SonduckFilm「5 Quick Text Effects」76.7万播放 · Mixkit Video Mask Title
+
+<img src="../assets/previews/fx/media-1.webp" width="320" alt="media 1 张"> 1 张
+
+<img src="../assets/previews/fx/media-2.webp" width="320" alt="media 2 张"> 2 张
+
+<img src="../assets/previews/fx/media-3.webp" width="320" alt="media 3 张"> 3 张
+
+<img src="../assets/previews/fx/media-5.webp" width="320" alt="media 5 张"> 5 张
+
+<img src="../assets/previews/fx/media-12.webp" width="320" alt="media 12 张"> 12 张
+
+<img src="../assets/previews/fx/media-40.webp" width="320" alt="media 40 张"> 40 张
+
+<img src="../assets/previews/fx/media-200.webp" width="320" alt="media 200 张"> 200 张
+
+<img src="../assets/previews/fx/media-video.webp" width="320" alt="media 视频混排"> 视频混排
+
+### `cite_pdf` — 
+
+<img src="../assets/previews/fx/cite_pdf.webp" width="480" alt="cite_pdf">
+
+
+
+- 参数：`cite`, `file`, `kicker`, `page_label`, `pdf`, `quote`, `zh`
+- 人气：判决书 / 财报 / 研报原文高亮
+
+### `cite_paper` — 
+
+<img src="../assets/previews/fx/cite_paper.webp" width="480" alt="cite_paper">
+
+
+
+- 参数：`abstract`, `arxiv`, `authors`, `cites`, `doi`, `figure`, `hl`, `max_authors`, `takeaway`, `title`, `venue`, `year`
+- 人气：论文标题页 + 摘要高亮
+
+### `cite_article` — 
+
+<img src="../assets/previews/fx/cite_article.webp" width="480" alt="cite_article">
+
+
+
+- 参数：`box`, `byline`, `date`, `dek`, `excerpt`, `focus`, `headline`, `hl`, `image`, `kicker`, `outlet`, `points`, `section`, `url`
+- 人气：「据某某报道」：标题 + 原文摘录 + 要点
+
+### `cite_quote` — 
+
+<img src="../assets/previews/fx/cite_quote.webp" width="480" alt="cite_quote">
+
+
+
+- 参数：`date`, `hl`, `image`, `name`, `role`, `source`, `text`, `year`, `zh`
+- 人气：名人原话 + 出处 + 译文
+
+### `cite_post` — 
+
+<img src="../assets/previews/fx/cite_post.webp" width="480" alt="cite_post">
+
+
+
+- 参数：`avatar`, `counts`, `date`, `handle`, `hl`, `image`, `name`, `stat`, `text`, `time`, `verified`, `zh`
+- 人气：平台中立的帖子卡：不用任何平台界面和标志
+
+### `cite_video` — 
+
+<img src="../assets/previews/fx/cite_video.webp" width="480" alt="cite_video">
+
+
+
+- 参数：`caption`, `focus`, `hl`, `image`, `kicker`, `license`, `quote`, `source`, `start`, `title`, `video`, `year`
+- 人气：片段真实播放 · 进度条 · 时间码
+
+### `cite_stack` — 
+
+<img src="../assets/previews/fx/cite_stack.webp" width="480" alt="cite_stack">
+
+
+
+- 参数：`claim`, `kicker`, `sources`, `tally`
+- 人气：交叉验证：每条来源打勾，连线汇到结论
+
+### `list_stack` — 
+
+<img src="../assets/previews/fx/list_stack.webp" width="480" alt="list_stack">
+
+
+
+- 参数：`hl`, `items`, `strike`, `style`, `title`
+- 人气：Envato Elements「Checklist Pack」热门 · talkcraft numbered-step-stack
+
+### `steps` — 
+
+<img src="../assets/previews/fx/steps.webp" width="480" alt="steps">
+
+
+
+- 参数：`hl`, `items`, `title`
+- 人气：talkcraft step-timeline-vertical · 教程类「三步做出……」
+
+### `ranking` — 
+
+<img src="../assets/previews/fx/ranking.webp" width="480" alt="ranking">
+
+
+
+- 参数：`hide_top`, `items`, `title`, `unit`
+- 人气：盘点类「年度十大」格式 · talkcraft number-slab-pop
+
+### `term_card` — 
+
+<img src="../assets/previews/fx/term_card.webp" width="480" alt="term_card">
+
+
+
+- 参数：`definition`, `example`, `host`, `pos`, `reading`, `source`, `sub`, `term`, `text`
+- 人气：talkcraft info-term-card · 回形针 / 所长林超的概念卡
+
+### `word_swap` — 
+
+<img src="../assets/previews/fx/word_swap.webp" width="480" alt="word_swap">
+
+
+
+- 参数：`host`, `mode`, `post`, `pre`, `words`
+- 人气：talkcraft word-slot-cycle · Rotating Words 标题模板
+
+### `pros_cons` — 
+
+<img src="../assets/previews/fx/pros_cons.webp" width="480" alt="pros_cons">
+
+
+
+- 参数：`cons`, `labels`, `pros`, `verdict`
+- 人气：测评类口播标配 · Envato Elements Checklist Pack
+
+### `quadrant` — 
+
+<img src="../assets/previews/fx/quadrant.webp" width="480" alt="quadrant">
+
+
+
+- 参数：`hl`, `items`, `note`, `quads`, `x_axis`, `y_axis`
+- 人气：咨询式 2×2 定位图（BCG 矩阵式）
+
+### `countdown` — 
+
+<img src="../assets/previews/fx/countdown.webp" width="480" alt="countdown">
+
+
+
+- 参数：`ask`, `from`, `question`, `reveal`, `to`
+- 人气：VideoHive Elements countdown 大类 · talkcraft countdown-arc-scatter
+
+### `chapter_bar` — 
+
+<img src="../assets/previews/fx/chapter_bar.webp" width="480" alt="chapter_bar">
+
+
+
+- 参数：`chapters`, `hl`, `now`, `title`
+- 人气：talkcraft chapter-progress-list · B 站分 P 目录
+
+### `table` — 
+
+<img src="../assets/previews/fx/table.webp" width="480" alt="table">
+
+
+
+- 参数：`compact`, `header`, `hl_cell`, `hl_col`, `hl_row`, `max_rows`, `note`, `paren`, `title`, `transpose`
+- 人气：VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放
+
+### `statement_table` — 
+
+<img src="../assets/previews/fx/statement_table.webp" width="480" alt="statement_table">
+
+
+
+- 参数：`dec`, `hl`, `hl_note`, `period`, `title`, `unit`
+- 人气：VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放
+
+### `waterfall` — 
+
+<img src="../assets/previews/fx/waterfall.webp" width="480" alt="waterfall">
+
+
+
+- 参数：`compact`, `dec`, `note`, `orient`, `readout`, `title`, `unit`
+- 人气：VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放
+
+### `scale_compare` — 
+
+<img src="../assets/previews/fx/scale_compare.webp" width="480" alt="scale_compare">
+
+
+
+- 参数：`a_label`, `b_label`, `basis`, `dec`, `head`, `icon`, `method`, `mode`, `ratio`, `ratio_label`, `ref_value`, `unit_name`, `value`
+- 人气：Envato Popular Infographic · Mapal VOX 式信息图 34.6万播放
+
+### `bar_race` — 
+
+<img src="../assets/previews/fx/bar_race.webp" width="480" alt="bar_race">
+
+
+
+- 参数：`compact`, `csv`, `dec`, `hl`, `note`, `title`, `top`, `transpose`, `unit`
+- 人气：Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放
+
+### `stacked_bars` — 
+
+<img src="../assets/previews/fx/stacked_bars.webp" width="480" alt="stacked_bars">
+
+
+
+- 参数：`compact`, `csv`, `dec`, `hl`, `note`, `orient`, `percent`, `title`, `total_col`, `totals`, `unit`, `x`
+- 人气：SonduckFilm Bar Infographics 23.2万播放 · Infographic Maker 2.6K
+
+### `formula` — 
+
+<img src="../assets/previews/fx/formula.webp" width="480" alt="formula">
+
+
+
+- 参数：`dec`, `lhs`, `note`, `ops`, `result`, `terms`, `unit`
+- 人气：YouTube 数字滚动教程 162.6万播放 · Envato Popular Number Counter
+
+### `bars_csv` — 
+
+<img src="../assets/previews/fx/bars_csv.webp" width="480" alt="bars_csv">
+
+
+
+- 参数：`fxid`, `limit`, `scale`, `sort`
+- 人气：VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放
+
+### `scroll_shot` — 
+
+<img src="../assets/previews/fx/scroll_shot.webp" width="480" alt="scroll_shot">
+
+
+
+- 参数：`dark_chrome`, `frame`, `image`, `shot`, `tab`, `toc`, `url`
+- 人气：VideoHive Minimal Website Presentation 1.9K
+
+### `screencast` — 
+
+<img src="../assets/previews/fx/screencast.webp" width="480" alt="screencast">
+
+
+
+- 参数：`clicks`, `clicks_json`, `cursor`, `dark_chrome`, `frame`, `hl`, `image`, `start`, `steps`, `tab`, `url`, `video`
+- 人气：VideoHive iTouch 2 App Promo 2.1K
+
+### `spotlight` — 
+
+<img src="../assets/previews/fx/spotlight.webp" width="480" alt="spotlight">
+
+
+
+- 参数：`boxes`, `dark_chrome`, `dim`, `frame`, `image`, `start`, `url`, `video`, `zoom`
+- 人气：VideoHive Explainer Video Toolkit 4 2.5K
+
+### `code` — 
+
+<img src="../assets/previews/fx/code.webp" width="480" alt="code">
+
+
+
+- 参数：`at_hl`, `cmd`, `hl`, `mode`, `output`, `prompt`, `title`
+- 人气：Askiko Typewriter Text Effect 113.3 万播放
+
+### `comment_thread` — 
+
+<img src="../assets/previews/fx/comment_thread.webp" width="480" alt="comment_thread">
+
+
+
+- 参数：`comments`, `hl`, `items`, `mock`, `mock_label`, `placeholder`, `sort`, `text`, `title`, `total`
+- 人气：Envato「Social Media Comments」评论截图包常年在社交类前列
+
+### `im_chat` — 
+
+<img src="../assets/previews/fx/im_chat.webp" width="480" alt="im_chat">
+
+
+
+- 参数：`items`, `messages`, `mock`, `mock_label`, `read`, `title`
+- 人气：Envato「Text Messages」3.8K 份
+
+### `profile_card` — 
+
+<img src="../assets/previews/fx/profile_card.webp" width="480" alt="profile_card">
+
+
+
+- 参数：`follow`, `hl`, `mock`, `mock_label`
+- 人气：Envato「Lower Thirds」6.3K 份 · 社交名片模板
+
+<img src="../assets/previews/fx/profile_card-group.webp" width="320" alt="profile_card 多人并列"> 多人并列
+
+### `equity_tree` — 
+
+<img src="../assets/previews/fx/equity_tree.webp" width="480" alt="equity_tree">
+
+
+
+- 参数：`hl`, `holders`, `mock`, `mock_label`, `mode`, `root`, `subs`, `summary`
+- 人气：企查查 / 天眼查式股权图 · Envato「Organizational Chart」
+
+### `china_map` — 
+
+<img src="../assets/previews/fx/china_map.webp" width="480" alt="china_map">
+
+
+
+- 参数：`dec`, `dot_unit`, `dots`, `focus`, `highlight`, `hl`, `legend`, `list`, `mock`, `mock_label`, `points`, `seed`, `title`, `top`, `unit`, `values`
+- 人气：Envato「China Map」地图信息图包
+
+<img src="../assets/previews/fx/china_map-dots.webp" width="320" alt="china_map 门店撒点"> 门店撒点
+
+### `danmaku` — 
+
+<img src="../assets/previews/fx/danmaku.webp" width="480" alt="danmaku">
+
+
+
+- 参数：`bg`, `count`, `hl_text`, `items`, `mock`, `mock_label`, `seed`, `speed`, `t_hl`
+- 人气：B站弹幕刷屏 · 二创与口播常用
+
+### `receipt` — 
+
+<img src="../assets/previews/fx/receipt.webp" width="480" alt="receipt">
+
+
+
+- 参数：`currency`, `discount`, `items`, `mock`, `mock_label`, `no`, `note`, `paid`, `seed`, `store`, `time`, `total`
+- 人气：Envato「Receipt」mockup
+
+### `cold_open` — 
+
+<img src="../assets/previews/fx/cold_open.webp" width="480" alt="cold_open">
+
+
+
+- 参数：`clips`, `grade`, `kicker`, `sub`, `title`
+- 人气：电影预告 / 纪录片冷开场
+
+### `suspense` — 
+
+<img src="../assets/previews/fx/suspense.webp" width="480" alt="suspense">
+
+
+
+- 参数：`countdown`, `dec`, `q`, `reveal`, `sub`, `unit`, `value`
+- 人气：句中停 1.15 秒，再落数字
+
+### `interlude` — 
+
+<img src="../assets/previews/fx/interlude.webp" width="480" alt="interlude">
+
+
+
+- 参数：`beats`, `bpm`, `clips`, `grade`, `kicker`, `letterbox`, `source`, `title`
+- 人气：不说话的 2.8 秒
+
+### `beat_cut` — 
+
+<img src="../assets/previews/fx/beat_cut.webp" width="480" alt="beat_cut">
+
+
+
+- 参数：`every`, `items`, `theme`, `ticks`
+- 人气：纯音乐 3.6 秒，100 bpm，每拍一切
+
+### `breather` — 
+
+<img src="../assets/previews/fx/breather.webp" width="480" alt="breather">
+
+
+
+- 参数：`focus`, `held`, `image`, `kicker`, `lift`, `meter`, `mood`, `sub`, `text`, `video`
+- 人气：金句后停 2.6 秒
 
 ## 转场
 

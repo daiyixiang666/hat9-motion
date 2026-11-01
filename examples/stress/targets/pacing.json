@@ -1,0 +1,258 @@
+{
+ "note": "WP5 pacing effects. Expand every variant × every duration (beat d); media paths are relative to examples/pacing; the 'at_rel' keys scale with d (clamped inside the beat).",
+ "base": "examples/pacing",
+ "durations": [
+  1.0,
+  3.0,
+  8.0
+ ],
+ "meta": {
+  "bpm": 100
+ },
+ "targets": {
+  "breather": [
+   {
+    "text": "想清楚",
+    "kicker": "留白"
+   },
+   {
+    "text": "看懂谁在*赚钱*，比看懂谁在卖货更重要",
+    "sub": "—— 这期的判断",
+    "mood": "calm"
+   },
+   {
+    "text": "",
+    "image": "assets/stills/kitchen.jpg",
+    "mood": "heavy",
+    "sub": "（停顿）"
+   }
+  ],
+  "interlude": [
+   {
+    "clips": [],
+    "kicker": "Chapter 03",
+    "title": "下一章"
+   },
+   {
+    "clips": [
+     "assets/clips/taxis.mp4"
+    ],
+    "kicker": "Chapter 02",
+    "title": "一个很长很长的章节标题，用来测试两行换行",
+    "source": "Prelinger Archives"
+   },
+   {
+    "clips": [
+     "assets/clips/taxis.mp4",
+     "assets/stills/harbor.jpg",
+     "assets/clips/avenue.mp4",
+     "assets/stills/shoppers_tall.jpg",
+     "assets/clips/factory.mp4"
+    ],
+    "kicker": "Ch 4",
+    "title": "钱",
+    "grade": "mono"
+   }
+  ],
+  "suspense": [
+   {
+    "q": "答案是",
+    "reveal": "是",
+    "at_rel": 0.6
+   },
+   {
+    "q": "一杯 4 块钱的柠檬水，一年净赚……",
+    "value": 44.5,
+    "unit": "亿",
+    "sub": "蜜雪集团 2024 年净利润",
+    "at_rel": 2.0
+   },
+   {
+    "q": "到底是谁在赚钱？",
+    "reveal": "卖原料的那个人",
+    "sub": "答案藏在收入构成里",
+    "countdown": true,
+    "at_rel": 5.6
+   }
+  ],
+  "cold_open": [
+   {
+    "title": "¥4",
+    "at_rel": 0.5
+   },
+   {
+    "title": "一杯 *¥4* 的生意",
+    "kicker": "第九顶帽子",
+    "clips": [
+     "assets/clips/shoppers.mp4",
+     "assets/stills/kitchen.jpg"
+    ]
+   },
+   {
+    "title": "一个很长的开场标题测试两行排版是否会溢出",
+    "kicker": "冷开场",
+    "sub": "副标题也可以很长很长",
+    "clips": [
+     "assets/clips/shoppers.mp4",
+     "assets/clips/kitchen.mp4",
+     "assets/clips/toaster.mp4",
+     "assets/clips/gas.mp4",
+     "assets/stills/harbor.jpg"
+    ]
+   }
+  ],
+  "beat_cut": [
+   {
+    "items": [
+     "卡",
+     "点"
+    ]
+   },
+   {
+    "items": [
+     "卖*原料*",
+     "assets/clips/tanks.mp4",
+     "卖*包材*",
+     "assets/stills/harbor.jpg"
+    ]
+   },
+   {
+    "items": [
+     "一",
+     "二",
+     "三",
+     "四",
+     "五",
+     "六",
+     "七",
+     "八",
+     "assets/clips/factory.mp4",
+     "很长很长的一句卡点字幕测试"
+    ],
+    "every": 1
+   }
+  ],
+  "reaction": [
+   {
+    "mood": "funny"
+   },
+   {
+    "mood": "funny",
+    "text": "？？？这也行",
+    "image": "assets/stills/kitchen.jpg"
+   },
+   {
+    "mood": "heavy",
+    "text": "那一年，三千家店关了门",
+    "video": "assets/clips/avenue.mp4"
+   }
+  ],
+  "loading": [
+   {
+    "label": "生成中"
+   },
+   {
+    "label": "AI 正在生成……",
+    "steps": [
+     "读取文案",
+     "拆分镜",
+     "配音"
+    ],
+    "style": "ring"
+   },
+   {
+    "label": "正在渲染一条很长的视频，请稍候",
+    "steps": [
+     "读取文案",
+     "拆分镜",
+     "生成配音",
+     "对齐字幕",
+     "渲染画面",
+     "混音导出"
+    ]
+   }
+  ],
+  "think_loop": [
+   {},
+   {
+    "text": "让我想想"
+   },
+   {
+    "text": "这个问题其实没那么简单",
+    "orbits": 8,
+    "glyph": "？"
+   }
+  ],
+  "chapter_breather": [
+   {
+    "next": "第二章",
+    "n": 2,
+    "total": 3
+   },
+   {
+    "done": "门店为什么这么多",
+    "next": "钱到底从哪来",
+    "n": 2,
+    "total": 4,
+    "recap": [
+     "4.6 万家店",
+     "比麦当劳还多"
+    ]
+   },
+   {
+    "done": "第一章：一个很长很长的章节标题",
+    "next": "第三章：另一个同样很长很长的章节标题测试",
+    "n": 3,
+    "total": 12,
+    "recap": [
+     "要点一",
+     "要点二比较长一点",
+     "要点三",
+     "要点四"
+    ]
+   }
+  ]
+ },
+ "allow": [
+  [
+   "cold_open",
+   "container_overflow",
+   "\\.p5co|> div:nth-of-type\\(1\\) > div:nth-of-type\\(1\\) > div:nth-of-type\\([12]\\)"
+  ],
+  [
+   "reaction",
+   "text_occluded",
+   "\\.qm|b:nth-of-type"
+  ],
+  [
+   "reaction",
+   "container_overflow",
+   "\\.pg|\\.bgm|img"
+  ],
+  [
+   "loading",
+   "container_overflow",
+   "\\.st"
+  ],
+  [
+   "loading",
+   "text_box_overflow",
+   "\\.st"
+  ],
+  [
+   "loading",
+   "text_occluded",
+   "\\.st|div:nth-of-type\\(3\\) > div"
+  ],
+  [
+   "think_loop",
+   "content_overlap",
+   "\\.orb|b:nth-of-type"
+  ],
+  [
+   "chapter_breather",
+   "container_overflow",
+   "\\.no|span:nth-of-type\\(1\\)"
+  ]
+ ]
+}

@@ -18,6 +18,7 @@ F = sys.modules["h9fx__fit"]
 def bars(X, cid, t, d, p):
     items = [(str(lb), float(v)) for lb, v in p["items"]]
     n = len(items)
+    has_gr = False
     vals = [v for _, v in items]
     div, suf = F.compact(max(abs(v) for v in vals), p.get("compact", "cn"))
     unit = (suf + p.get("unit", "")) if div != 1 else p.get("unit", "")
@@ -74,11 +75,13 @@ def bars(X, cid, t, d, p):
             _, ll = F.fit(lb, w * 1.25, 6, lab_size, lab_size, 2)
             html.append(f'<div class="bcl" data-i="{i}" style="left:{x + w / 2:.2f}vmin; transform:translateX(-50%); top:calc(100% + 1.6vmin); font-size:{lab_size:.2f}vmin; text-align:center">{F.lines_html(X, ll)}</div>')
         if 0 <= hl < n and items[hl][1] > 0 and items[0][1] > 0 and hl != 0 and n <= 10:
-            grow = p.get("growth") or f"+{(items[hl][1] / items[0][1] - 1) * 100:.0f}%"
+            pct = (items[hl][1] / items[0][1] - 1) * 100
+            grow = p.get("growth") or f"{'+' if pct >= 0 else ''}{pct:.0f}%"      # WP6 fix: a fall read "+-14%"
             xh = gap * w * (hl + 1) + w * hl + w / 2
             hh = items[hl][1] / span * 100
             html.append(f'<div class="bcgr" style="left:{xh:.2f}vmin; transform:translateX(-50%); bottom:calc({(1 - zr) * 100 + hh:.2f}% + {vs + 2.2:.2f}vmin)"><b>{X.rich(grow)}</b>'
                         '<svg viewBox="0 0 40 40"><path d="M4 34 C 14 30, 26 20, 34 6 M34 6 l-9 2 M34 6 l-1 9"/></svg></div>')
+            has_gr = True
         grow_axis = "scaleY"
     else:
         rh = ch / n
@@ -125,7 +128,8 @@ def bars(X, cid, t, d, p):
         ax2 = "scaleX" if not horiz else "scaleY"
         X.tw(f'tl.to("{s} .bcb.hl", {{keyframes:[{{{ax2}:1.08, duration:0.12}}, {{{ax2}:1, duration:0.3, ease:"back.out(3)"}}]}}, {th:.3f});')
         X.sfx(th + 0.1, "hit")
-    X.tw(f'tl.from("{s} .bcgr", {{scale:0, transformOrigin:"50% 100%", duration:0.4, ease:"back.out(2.5)"}}, {th + 0.1:.3f});')
+    if has_gr:      # WP6 fix: no badge, no tween (it was a GSAP "target not found")
+        X.tw(f'tl.from("{s} .bcgr", {{scale:0, transformOrigin:"50% 100%", duration:0.4, ease:"back.out(2.5)"}}, {th + 0.1:.3f});')
 
 
 FX = {"bars": bars}

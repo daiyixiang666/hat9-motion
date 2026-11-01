@@ -1,0 +1,357 @@
+{
+ "meta": {
+  "title": "pacing variants · 1 s / 3 s / 8 s",
+  "aspect": "16:9",
+  "style": "reel",
+  "duration": 108.0,
+  "bpm": 100
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "breather",
+   "t": 0.0,
+   "d": 1.0,
+   "theme": "paper",
+   "text": "想清楚",
+   "kicker": "留白"
+  },
+  {
+   "scene": "fx",
+   "fx": "breather",
+   "t": 1.0,
+   "d": 3.0,
+   "theme": "ink",
+   "text": "看懂谁在*赚钱*，比看懂谁在卖货更重要",
+   "sub": "—— 这期的判断",
+   "mood": "calm",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "breather",
+   "t": 4.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "text": "",
+   "image": "assets/stills/kitchen.jpg",
+   "mood": "heavy",
+   "sub": "（停顿）",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "interlude",
+   "t": 12.0,
+   "d": 1.0,
+   "theme": "paper",
+   "clips": [],
+   "kicker": "Chapter 03",
+   "title": "下一章",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "interlude",
+   "t": 13.0,
+   "d": 3.0,
+   "theme": "ink",
+   "clips": [
+    "assets/clips/taxis.mp4"
+   ],
+   "kicker": "Chapter 02",
+   "title": "一个很长很长的章节标题，用来测试两行换行",
+   "source": "Prelinger Archives",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "interlude",
+   "t": 16.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "clips": [
+    "assets/clips/taxis.mp4",
+    "assets/stills/harbor.jpg",
+    "assets/clips/avenue.mp4",
+    "assets/stills/shoppers_tall.jpg",
+    "assets/clips/factory.mp4"
+   ],
+   "kicker": "Ch 4",
+   "title": "钱",
+   "grade": "mono",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "suspense",
+   "t": 24.0,
+   "d": 1.0,
+   "theme": "paper",
+   "q": "答案是",
+   "reveal": "是",
+   "at_rel": 0.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "suspense",
+   "t": 25.0,
+   "d": 3.0,
+   "theme": "ink",
+   "q": "一杯 4 块钱的柠檬水，一年净赚……",
+   "value": 44.5,
+   "unit": "亿",
+   "sub": "蜜雪集团 2024 年净利润",
+   "at_rel": 2.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "suspense",
+   "t": 28.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "q": "到底是谁在赚钱？",
+   "reveal": "卖原料的那个人",
+   "sub": "答案藏在收入构成里",
+   "countdown": true,
+   "at_rel": 5.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "cold_open",
+   "t": 36.0,
+   "d": 1.0,
+   "theme": "paper",
+   "title": "¥4",
+   "at_rel": 0.5,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "cold_open",
+   "t": 37.0,
+   "d": 3.0,
+   "theme": "ink",
+   "title": "一杯 *¥4* 的生意",
+   "kicker": "第九顶帽子",
+   "clips": [
+    "assets/clips/shoppers.mp4",
+    "assets/stills/kitchen.jpg"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "cold_open",
+   "t": 40.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "title": "一个很长的开场标题测试两行排版是否会溢出",
+   "kicker": "冷开场",
+   "sub": "副标题也可以很长很长",
+   "clips": [
+    "assets/clips/shoppers.mp4",
+    "assets/clips/kitchen.mp4",
+    "assets/clips/toaster.mp4",
+    "assets/clips/gas.mp4",
+    "assets/stills/harbor.jpg"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "beat_cut",
+   "t": 48.0,
+   "d": 1.0,
+   "theme": "paper",
+   "items": [
+    "卡",
+    "点"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "beat_cut",
+   "t": 49.0,
+   "d": 3.0,
+   "theme": "ink",
+   "items": [
+    "卖*原料*",
+    "assets/clips/tanks.mp4",
+    "卖*包材*",
+    "assets/stills/harbor.jpg"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "beat_cut",
+   "t": 52.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "items": [
+    "一",
+    "二",
+    "三",
+    "四",
+    "五",
+    "六",
+    "七",
+    "八",
+    "assets/clips/factory.mp4",
+    "很长很长的一句卡点字幕测试"
+   ],
+   "every": 1,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "reaction",
+   "t": 60.0,
+   "d": 1.0,
+   "theme": "paper",
+   "mood": "funny",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "reaction",
+   "t": 61.0,
+   "d": 3.0,
+   "theme": "ink",
+   "mood": "funny",
+   "text": "？？？这也行",
+   "image": "assets/stills/kitchen.jpg",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "reaction",
+   "t": 64.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "mood": "heavy",
+   "text": "那一年，三千家店关了门",
+   "video": "assets/clips/avenue.mp4",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "loading",
+   "t": 72.0,
+   "d": 1.0,
+   "theme": "paper",
+   "label": "生成中",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "loading",
+   "t": 73.0,
+   "d": 3.0,
+   "theme": "ink",
+   "label": "AI 正在生成……",
+   "steps": [
+    "读取文案",
+    "拆分镜",
+    "配音"
+   ],
+   "style": "ring",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "loading",
+   "t": 76.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "label": "正在渲染一条很长的视频，请稍候",
+   "steps": [
+    "读取文案",
+    "拆分镜",
+    "生成配音",
+    "对齐字幕",
+    "渲染画面",
+    "混音导出"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "think_loop",
+   "t": 84.0,
+   "d": 1.0,
+   "theme": "paper",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "think_loop",
+   "t": 85.0,
+   "d": 3.0,
+   "theme": "ink",
+   "text": "让我想想",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "think_loop",
+   "t": 88.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "text": "这个问题其实没那么简单",
+   "orbits": 8,
+   "glyph": "？",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "chapter_breather",
+   "t": 96.0,
+   "d": 1.0,
+   "theme": "paper",
+   "next": "第二章",
+   "n": 2,
+   "total": 3,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "chapter_breather",
+   "t": 97.0,
+   "d": 3.0,
+   "theme": "ink",
+   "done": "门店为什么这么多",
+   "next": "钱到底从哪来",
+   "n": 2,
+   "total": 4,
+   "recap": [
+    "4.6 万家店",
+    "比麦当劳还多"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "chapter_breather",
+   "t": 100.0,
+   "d": 8.0,
+   "theme": "lemon",
+   "done": "第一章：一个很长很长的章节标题",
+   "next": "第三章：另一个同样很长很长的章节标题测试",
+   "n": 3,
+   "total": 12,
+   "recap": [
+    "要点一",
+    "要点二比较长一点",
+    "要点三",
+    "要点四"
+   ],
+   "tr": "hard"
+  }
+ ]
+}

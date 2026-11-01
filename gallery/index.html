@@ -119,9 +119,9 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   const copy = async (id) => { try { await navigator.clipboard.writeText(id); toast(`已复制 ${id}`); } catch (e) { toast(`效果 id：${id}`); } };
   const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function card(e) {
-    const src = PV + e.id + (orient === "v" ? "_v" : "") + ".webp";
-    return `<article class="card" id="${e.id}"><img class="pv" src="${src}" alt="${esc(e.title)} 预览" loading="lazy">
-      <div class="meta"><div class="row"><button class="id" type="button" data-id="${e.id}" title="复制效果 id">${e.id}</button><span class="cat">${esc(e.cat)}</span></div>
+    const f = e.file || e.id, src = PV + f + (orient === "v" ? "_v" : "") + ".webp";
+    return `<article class="card" id="${f}"><img class="pv" src="${src}" alt="${esc(e.title)} 预览" loading="lazy">
+      <div class="meta"><div class="row"><button class="id" type="button" data-id="${e.id}" title="复制效果 id">${e.id}</button><span class="cat">${esc(e.band || e.cat)}</span></div>
       <h3>${esc(e.title.replace(/\s*\(.*$/, ""))}</h3><p>${esc(e.suit)}</p><p class="ref">${esc(e.ref)}</p></div></article>`;
   }
   function render() {
@@ -130,7 +130,8 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
     grid.className = "grid" + (orient === "v" ? " v" : "");
     grid.innerHTML = list.map(card).join("");
     document.getElementById("empty").hidden = list.length > 0;
-    document.getElementById("count").textContent = `${list.length} / ${data.effects.length} 个效果 · ${data.transitions.length} 种转场`;
+    const nfx = new Set(data.effects.map((e) => e.id)).size;
+    document.getElementById("count").textContent = `${list.length} 张卡 · ${nfx} 个效果 · ${data.transitions.length} 种转场`;
     tgrid.className = "tgrid grid" + (orient === "v" ? " v" : "");
     tgrid.innerHTML = data.transitions.map((t) => `<article class="card" id="tr-${t.id}"><img class="pv" src="${PV + t.file + (orient === "v" ? "_v" : "")}.webp" alt="${esc(t.label)}" loading="lazy">
       <div class="meta"><div class="row"><button class="id" type="button" data-id="${t.id}">${t.id}</button></div><p>${esc(t.label)}</p></div></article>`).join("");

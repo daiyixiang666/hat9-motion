@@ -1,5 +1,11 @@
 # 更新记录
 
+## 0.6.0 · 2026-10-31
+- 新效果 50 个（`scripts/h9/fx/`）：`media`（按张数换编排，1–2000 张，可混视频）；引用 `cite_pdf` `cite_paper` `cite_article` `cite_quote` `cite_post` `cite_video` `cite_stack`；结构 `list_stack` `steps` `ranking` `term_card` `word_swap` `pros_cons` `quadrant` `countdown` `chapter_bar`；数据 `table` `statement_table` `waterfall` `scale_compare` `bar_race` `stacked_bars` `formula` `bars_csv` `line_csv`；屏幕 `scroll_shot` `screencast` `spotlight` `code`；社交人物 `comment_thread` `im_chat` `profile_card` `equity_tree` `china_map` `danmaku` `receipt`；节奏 `breather` `interlude` `suspense` `cold_open` `beat_cut` `reaction` `loading` `think_loop` `chapter_breather`。
+- 流水线：弹性时长；`meta.lead` / `gaps` / `duck` / `speakers` / `caption_tr`；卡拉 OK 字幕；`scripts/align.py`（录音对齐）、`scripts/cover.py`（三比例封面）、`scripts/url_brief.py`（网址出片）、`scripts/h9/data.py`（CSV / Excel）。
+- 压力测试加入竖屏安全区和时长维度；`scripts/craft_lint.py` 检查常见的 AI 默认手法；`scripts/design_md.py` 导入 DESIGN.md 品牌规范。
+- Claude Code 插件安装（`.claude-plugin/`）。
+
 ## 0.5.0 · 2026-10-31
 - 新风格：`screen` AI 工具台、`atlas` 地图纪录、`doc` 实拍纪录、`poster` 瑞士海报，各带一条示例成片。
 - 新动效：`earth_zoom` `map_route` `bars` `line_draw` `donut` `timeline` `chat` `hud_lock` `glass` `text_mask`（`scripts/h9/fx/`，一个效果一个文件）。

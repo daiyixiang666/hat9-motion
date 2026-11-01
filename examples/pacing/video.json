@@ -1,0 +1,154 @@
+{
+ "meta": {
+  "title": "不说话的时刻 · 节奏演示",
+  "aspect": "16:9",
+  "style": "reel",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.24,
+  "bpm": 100,
+  "host_video": "../mixue/assets/video/shiba.webm",
+  "duration": 27.5
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "cold_open",
+   "t": 0,
+   "d": 3.0,
+   "at_rel": 1.8,
+   "clips": [
+    "assets/clips/shoppers.mp4",
+    "assets/clips/kitchen.mp4",
+    "assets/clips/toaster.mp4",
+    "assets/clips/gas.mp4"
+   ],
+   "kicker": "第九顶帽子 · 商业拆解",
+   "title": "一杯 *¥4* 的生意",
+   "sub": "蜜雪冰城 · 2024 年报",
+   "label": "S08 无声开场 · Cold Open",
+   "ref": "电影预告 / 纪录片冷开场"
+  },
+  {
+   "scene": "fx",
+   "fx": "suspense",
+   "t": 3.0,
+   "d": 4.26,
+   "at": "@四十四亿",
+   "theme": "paper",
+   "q": "一杯 4 块钱的柠檬水，一年净赚……",
+   "value": 44.5,
+   "unit": "亿",
+   "dec": 1,
+   "sub": "蜜雪集团 2024 年净利润",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "S10 揭晓前悬停 · Suspense",
+   "ref": "句中停 1.15 秒，再落数字"
+  },
+  {
+   "scene": "fx",
+   "fx": "odometer",
+   "t": 7.26,
+   "d": 3.88,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "value": "46479",
+   "unit": "家",
+   "sub": "蜜雪冰城全球门店 · 截至 2024 年底",
+   "line": "蜜雪冰城，*四万六千多家店*，比麦当劳还多。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "#20 数字滚动 · Counter",
+   "ref": "YouTube 162.6万播放"
+  },
+  {
+   "scene": "fx",
+   "fx": "interlude",
+   "t": 11.14,
+   "d": 2.8,
+   "clips": [
+    "assets/clips/taxis.mp4",
+    "assets/clips/avenue.mp4",
+    "assets/clips/shoppers.mp4"
+   ],
+   "kicker": "Chapter 02",
+   "title": "它真正卖的是什么",
+   "source": "档案片 · Prelinger Archives（公有领域）",
+   "label": "S04 空镜过场 · Interlude",
+   "ref": "不说话的 2.8 秒"
+  },
+  {
+   "scene": "fx",
+   "fx": "impact",
+   "t": 13.94,
+   "d": 2.14,
+   "theme": "red",
+   "topic": "商业拆解",
+   "text": "不是卖奶茶",
+   "sub": "it does not sell tea",
+   "line": "但它真正的生意，*不是卖奶茶*。",
+   "label": "#24 冲击抖动 · Impact Shake",
+   "ref": "Bricks 106.8万播放（2025）",
+   "host": true
+  },
+  {
+   "scene": "fx",
+   "fx": "beat_cut",
+   "t": 16.08,
+   "d": 3.6,
+   "theme": "lemon",
+   "items": [
+    "卖*原料*",
+    "assets/clips/tanks.mp4",
+    "卖*包材*",
+    "assets/clips/factory.mp4",
+    "卖*设备*",
+    "assets/clips/harbor.mp4",
+    "卖给 *4.6 万*家店"
+   ],
+   "label": "S06 音乐卡点 · Beat Cut",
+   "ref": "纯音乐 3.6 秒，100 bpm，每拍一切"
+  },
+  {
+   "scene": "fx",
+   "fx": "apple_blur",
+   "t": 19.68,
+   "d": 2.76,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "text": "看懂谁在赚钱",
+   "sub": "比看懂谁在卖货更重要",
+   "line": "*看懂谁在赚钱*，比看懂谁在卖货更重要。",
+   "label": "#9 苹果式逐字模糊 · Blur Fade",
+   "ref": "206.8万播放（2025）",
+   "host": true
+  },
+  {
+   "scene": "fx",
+   "fx": "breather",
+   "t": 22.44,
+   "d": 2.6,
+   "theme": "ink",
+   "kicker": "这期的判断",
+   "text": "看懂谁在*赚钱*",
+   "sub": "比看懂谁在卖货更重要",
+   "held": true,
+   "label": "S03 留白呼吸页 · Breather",
+   "ref": "金句后停 2.6 秒"
+  },
+  {
+   "scene": "fx",
+   "fx": "lower3",
+   "t": 25.04,
+   "d": 2.46,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "host": true,
+   "text": "第九顶帽子",
+   "sub": "商业拆解 · 看懂谁在赚钱",
+   "line": "这里是*第九顶帽子*。",
+   "label": "#14 下三分之一字条 · Lower Third",
+   "ref": "Lower Thirds 第1名 6.3K份"
+  }
+ ]
+}

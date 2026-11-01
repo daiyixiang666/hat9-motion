@@ -3,6 +3,7 @@
 
   python3 scripts/render.py examples/demo/video.json --styles schematic,archive [--aspect 16:9] [--preview]
   python3 scripts/render.py examples/demo/video.json --styles all --preview
+  python3 scripts/render.py examples/demo/video.json --styles press --lint    # + craft lint (AI-design tells), report only
 
 Outputs  <video dir>/renders/<style>_<aspect>.mp4  (+ previews/<style>_<aspect>.mp4 and .jpg poster with --preview).
 """
@@ -24,6 +25,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video"); ap.add_argument("--styles", default="all"); ap.add_argument("--aspect", default=None)
     ap.add_argument("--preview", action="store_true"); ap.add_argument("--quality", default="standard")
+    ap.add_argument("--lint", action="store_true", help="run scripts/craft_lint.py on each build (report only, never blocks the render)")
     a = ap.parse_args()
     v = Path(a.video).resolve()
     styles = sorted(p.stem for p in (SKILL / "styles").glob("[!_]*.py")) if a.styles == "all" else a.styles.split(",")
@@ -38,6 +40,9 @@ def main():
         j = json.loads(chk[chk.find("{"):])
         errs = [(sec, f) for sec, v in j.items() if isinstance(v, dict) for f in v.get("findings", []) if f["severity"] == "error"]
         for sec, f in errs: print(f"  {sec} error", f["code"], f.get("selector", ""), f.get("time", ""), f["message"][:140])
+        if a.lint:
+            lint = subprocess.run([sys.executable, str(HERE / "craft_lint.py"), str(out)], capture_output=True, text=True).stdout
+            print("  " + lint.strip().replace("\n", "\n  "))
         if errs: continue
         mp4 = v.parent / "renders" / f"{sid}_{tag}.mp4"
         run(HF + ["render", "--quality", a.quality, "--output", str(mp4)], cwd=out)

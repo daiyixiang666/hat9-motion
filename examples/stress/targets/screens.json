@@ -1,0 +1,304 @@
+{
+ "base": "examples/screens",
+ "note": "WP3 screen effects (scroll_shot · screencast · spotlight · code): one entry per variant; media paths are relative to `base`. Each beat is {fx, ...params} (no t/d). These effects need ~5 s per beat (scroll stops, clicks).",
+ "beat": 5.0,
+ "beats": [
+  {
+   "fx": "scroll_shot",
+   "theme": "paper",
+   "topic": "压力测试",
+   "image": "assets/gallery_top.jpg",
+   "frame": "none",
+   "stops": [
+    {
+     "box": [
+      16,
+      236,
+      1016,
+      34
+     ],
+     "label": "五条成片切换"
+    },
+    {
+     "box": [
+      954,
+      284,
+      310,
+      552
+     ],
+     "label": "竖屏版"
+    }
+   ],
+   "line": "横向截图滚不动时，改成*推近*到每个目标。"
+  },
+  {
+   "fx": "scroll_shot",
+   "theme": "ink",
+   "topic": "压力测试",
+   "image": "assets/gallery.jpg",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "line": "不给停点，就从头*匀速*滚到尾。"
+  },
+  {
+   "fx": "scroll_shot",
+   "theme": "paper",
+   "topic": "压力测试",
+   "image": "assets/readme.jpg",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "stops": [
+    {
+     "heading": "装上就有",
+     "label": "装上就有：九种风格、五十个动效、给 AI 的说明全在里面"
+    },
+    {
+     "heading": "安装",
+     "label": "安装"
+    },
+    {
+     "heading": "60 秒出第一条",
+     "label": "60 秒出第一条"
+    },
+    {
+     "heading": "FAQ",
+     "label": "常见问题"
+    },
+    {
+     "y": 0.85,
+     "label": "许可"
+    },
+    {
+     "heading": "更新",
+     "label": "更新记录，一版一行"
+    }
+   ],
+   "line": "六个停点、长短不一的*标签*也排得下。"
+  },
+  {
+   "fx": "scroll_shot",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "image": "assets/gallery_phone.jpg",
+   "frame": "phone",
+   "toc": false,
+   "stops": [
+    {
+     "heading": "霓虹点亮",
+     "label": "霓虹点亮"
+    }
+   ],
+   "line": "1:18 的手机长图，只停*一处*。"
+  },
+  {
+   "fx": "screencast",
+   "theme": "paper",
+   "topic": "压力测试",
+   "image": "assets/gallery_top.jpg",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "clicks": [
+    {
+     "at": 0.9,
+     "x": 0.5,
+     "y": 0.235,
+     "label": "切换成片"
+    },
+    {
+     "at": 2.6,
+     "x": 0.86,
+     "y": 0.5,
+     "zoom": 2.2
+    }
+   ],
+   "steps": [
+    "打开画廊页面，先看最上面的五条成片",
+    "点一下想看的那一条",
+    "竖屏版在右边同步播放",
+    "最后往下翻到动效卡片",
+    "点名字复制 id"
+   ],
+   "line": "没有录屏，用一张*静态截图*也能演示点击。"
+  },
+  {
+   "fx": "screencast",
+   "theme": "ink",
+   "topic": "压力测试",
+   "video": "assets/gallery_rec.mp4",
+   "start": 3.0,
+   "cursor": false,
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "hl": [
+    {
+     "box": [
+      0.3,
+      0.12,
+      0.5,
+      0.06
+     ],
+     "at": 0.8,
+     "until": 2.6
+    }
+   ],
+   "line": "录屏自带光标时可以关掉我们的，只框出*关键区*。"
+  },
+  {
+   "fx": "screencast",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "video": "assets/gallery_phone_rec.mp4",
+   "steps": [
+    "竖屏录屏",
+    "没有点击时慢推"
+   ],
+   "line": "没有点击数据，就*慢慢推近*。"
+  },
+  {
+   "fx": "spotlight",
+   "theme": "ink",
+   "topic": "压力测试",
+   "image": "assets/gallery_top.jpg",
+   "frame": "bleed",
+   "boxes": [
+    {
+     "box": [
+      258,
+      395,
+      122,
+      125
+     ],
+     "shape": "circle",
+     "label": "价签"
+    },
+    {
+     "box": [
+      446,
+      430,
+      420,
+      160
+     ],
+     "shape": "circle",
+     "label": "利润"
+    }
+   ],
+   "line": "铺满全屏、*圆形*聚光灯。"
+  },
+  {
+   "fx": "spotlight",
+   "theme": "paper",
+   "topic": "压力测试",
+   "video": "assets/gallery_rec.mp4",
+   "start": 1.0,
+   "zoom": 1.3,
+   "boxes": [
+    {
+     "box": [
+      0.0,
+      0.1,
+      0.75,
+      0.08
+     ],
+     "label": "筛选栏"
+    }
+   ],
+   "line": "聚光灯也能打在*视频*上，还能顺手推近。"
+  },
+  {
+   "fx": "spotlight",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "image": "assets/gallery_top.jpg",
+   "frame": "phone",
+   "boxes": [
+    {
+     "box": [
+      16,
+      40,
+      300,
+      24
+     ],
+     "label": "栏目名"
+    },
+    {
+     "box": [
+      16,
+      70,
+      760,
+      70
+     ],
+     "label": "一条口播，变成 AE 级动效成片"
+    },
+    {
+     "box": [
+      16,
+      236,
+      200,
+      34
+     ],
+     "label": "press"
+    },
+    {
+     "box": [
+      222,
+      236,
+      228,
+      34
+     ],
+     "label": "screen"
+    },
+    {
+     "box": [
+      954,
+      284,
+      310,
+      552
+     ],
+     "label": "这里是同一条片子的竖屏版本，标签很长也只排一行"
+    }
+   ],
+   "line": "五个目标、*很长*的标签，标签自己躲开边缘。"
+  },
+  {
+   "fx": "code",
+   "theme": "paper",
+   "topic": "压力测试",
+   "code": "x = fit_text(\"凭什么是你\", 900, 300, 120)\nprint(x.px, x.lines)\n# 只有三行",
+   "lang": "python",
+   "title": "demo.py",
+   "hl": "2",
+   "line": "三行代码，字号*放大*。"
+  },
+  {
+   "fx": "code",
+   "theme": "ink",
+   "topic": "压力测试",
+   "file": "scripts/h9/fit.py#L1-L60",
+   "mode": "lines",
+   "hl": "25-30",
+   "line": "六十行代码，*逐行*出现再滚到重点。"
+  },
+  {
+   "fx": "code",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "file": "scripts/webpage.mjs#L23-L42",
+   "line": "JavaScript 也能*高亮*。"
+  },
+  {
+   "fx": "code",
+   "theme": "paper",
+   "topic": "压力测试",
+   "mode": "terminal",
+   "cmd": "python3 scripts/hat9.py styles",
+   "output": [
+    "  atlas      地图纪录     Vox 地图段落 · Johnny Harris · 回形针 PaperClip",
+    "  clay       陶土影棚     Buck · Ordinary Folk · Apple iPhone 陶土片",
+    "  doc        实拍纪录     Bloomberg Originals · Netflix 商业纪录片 · Vox Atlas",
+    "  hud        暗场 HUD   所长林超 · 小Lin说 · 回形针PaperClip",
+    "  poster     瑞士海报     Josef Müller-Brockmann · Experimental Jetset · Pentagram motion identities",
+    "  press      财经刊      Bloomberg Businessweek · FT / The Economist 图表 · 小Lin说",
+    "  reel       动效库展示",
+    "  screen     AI 工具台   Linear / Raycast 发布片 · OpenAI DevDay 数据图 · 归藏产品视频",
+    "  studio     三维影棚     Apple 产品片 · ManvsMachine · Buck"
+   ],
+   "line": "终端输出很长时*自动换宽*，不会切掉。"
+  }
+ ]
+}

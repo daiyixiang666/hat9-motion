@@ -2,14 +2,14 @@
 
 <img src="../../assets/previews/fx/collage.webp" width="480" alt="collage 横屏"> <img src="../../assets/previews/fx/collage_v.webp" width="160" alt="collage 竖屏">
 
-**怎么动**：torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape); text: the handwritten note.
+**怎么动**：torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow. images: 1–9 of any aspect (each piece keeps its picture's shape; clips play inside their frames); text: the handwritten note.
 
 | 项 | 内容 |
 |---|---|
 | 类别 | 照片 |
 | 适合的句子 | 资料拼贴、证据 |
 | 建议时长 | 2–3 秒 |
-| 参数 | `focus`, `image`, `images`, `text` |
+| 参数 | `focus`, `image`, `images`, `text`, `video` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | Fakeplastictree 203.5万播放 |
 

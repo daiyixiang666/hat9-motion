@@ -4,7 +4,7 @@ description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE �
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.5.0"
+  version: "0.6.0"
   author: 第九顶帽子
 ---
 
@@ -19,7 +19,10 @@ metadata:
 | 「把这段文案 / 录音做成视频」 | **A. 整片** |
 | 「用 xx 效果做一个片头 / 这一句加个 xx」 | **B. 单个效果**：读 `gallery/llms.txt` 选 id，再读 `references/effects/<id>.md` |
 | 「改一下第 3 句 / 换个转场 / 字太小」 | **C. 改已有片**：只改 `video.json` 对应 beat，重新 render |
-| 「只要封面 / 静帧」 | 用 `scripts/board.py` 排静帧，或 `snapshot --at` 抽帧 |
+| 「只要封面 / 静帧」 | `scripts/cover.py` 出 16:9 / 4:3 / 3:4 封面，或 `snapshot --at` 抽帧 |
+| 「我有 PDF / 论文 / 新闻 / 截图 / 录屏 / 表格 / 一堆图 / 一个网址」 | 先查 `references/inputs.md` 找对应效果（`cite_*`、`media`、`scroll_shot`、`screencast`、`table` …）；网址用 `scripts/url_brief.py`，表格用 `csv` 参数 |
+| 「只有录音没有逐字时间」 | `scripts/align.py 录音 稿子 --out words.json` |
+| 「看着像 AI 模板 / 不高级」 | 先读 `references/craft.md`，再跑 `python3 scripts/craft_lint.py <构建目录>` 查默认手法 |
 | 环境报错 | `hat9.py doctor`，按提示补齐 |
 
 ## A. 整片（默认流程）

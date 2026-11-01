@@ -1,0 +1,38 @@
+[
+ {
+  "scene": "fx",
+  "fx": "scroll_shot",
+  "image": "page.jpg",
+  "url": "https://github.com/daiyixiang666/hat9-motion",
+  "tab": "GitHub - daiyixiang666/hat9-mo",
+  "frame": "browser",
+  "stops": [
+   {
+    "heading": "九帽动效 · hat9-motion",
+    "label": "九帽动效 · hat9-motion"
+   },
+   {
+    "heading": "60 秒出第一条",
+    "label": "60 秒出第一条"
+   },
+   {
+    "heading": "目录",
+    "label": "目录"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://github.com/daiyixiang666/hat9-motion"
+ },
+ {
+  "scene": "fx",
+  "fx": "cite_article",
+  "outlet": "GitHub",
+  "headline": "GitHub - daiyixiang666/hat9-motion: 九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys · GitHub",
+  "dek": "九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys - daiyixiang666/hat9-motion",
+  "excerpt": "一条口播，变成 AE 级动效成片。\nTurn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.",
+  "url": "https://github.com/daiyixiang666/hat9-motion",
+  "image": "page.jpg",
+  "line": "（写这一句口播）",
+  "src": "https://github.com/daiyixiang666/hat9-motion"
+ }
+]

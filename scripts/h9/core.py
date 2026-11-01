@@ -106,6 +106,13 @@ class Ctx:
         t = self.chars[i + len(word) - 1][2] if end else self.chars[i][1]
         return Cue(round(t + off, 3))
 
+    def speaker_at(self, t):
+        """who is speaking at t (words may carry "spk"; meta.speakers names them) — a layout hint for dialogue scenes,
+        e.g. put the visual on the side opposite the speaker's caption. None when unknown."""
+        for w in getattr(self, "_words", []):
+            if w.get("spk") is not None and w["s"] - 0.05 <= t <= w["e"] + 0.3: return w["spk"]
+        return None
+
     # ---------------- output pieces
     def uid(self, p):
         self._ids[p] = self._ids.get(p, 0) + 1

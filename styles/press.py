@@ -243,7 +243,7 @@ def hook(b, X, t, d, cid):
     val = b.get("value", 44.5); vs = fit.fmt_num(val, zh=False, dec=decs(val)) if isinstance(val, (int, float)) else str(val)
     u, u2 = str(b.get("unit", "亿")), str(b.get("unit2", "元"))
     P = X.portrait
-    colw = (X.W - 104) if P else (X.W - 892 - 96)
+    colw = (X.W - 52 - 140) if P else (X.W - 892 - 96)     # 9:16: the number sits in the lower half — clear of the right-hand buttons (WP6)
     umax = 120 if P else 150
     upx = min(umax, colw * 0.34 / max(fit.width(u) + 0.43 * fit.width(u2), 0.5))
     npx = min(330 if P else 420, (colw - upx * (fit.width(u) + 0.43 * fit.width(u2)) - 14) / numw(vs))

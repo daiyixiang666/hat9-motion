@@ -25,8 +25,17 @@ CAT = {   # gallery filter categories
     "照片": ["parallax", "mosaic", "collage", "portal", "callout", "text_mask"],
     "数据": ["odometer", "bars", "line_draw", "donut", "timeline"],
     "地图": ["earth_zoom", "map_route"],
-    "界面": ["notify", "lower3", "triple", "chat", "hud_lock", "glass"],
+    "界面": ["notify", "lower3", "triple", "chat", "hud_lock", "glass", "comment_thread", "im_chat", "danmaku", "receipt"],
+    "结构": ["list_stack", "steps", "ranking", "pros_cons", "quadrant", "countdown", "chapter_bar"],
+    "素材": ["media"],
+    "引用": ["cite_pdf", "cite_paper", "cite_article", "cite_quote", "cite_post", "cite_video", "cite_stack"],
+    "屏幕": ["scroll_shot", "screencast", "spotlight", "code"],
+    "人物": ["profile_card", "equity_tree"],
+    "节奏": ["breather", "interlude", "suspense", "cold_open", "beat_cut", "reaction", "loading", "think_loop", "chapter_breather"],
 }
+CAT["字效"] += ["term_card", "word_swap"]
+CAT["数据"] += ["table", "statement_table", "waterfall", "scale_compare", "bar_race", "stacked_bars", "formula", "bars_csv", "line_csv"]
+CAT["地图"] += ["china_map"]
 def cat_of(fx): return next((k for k, v in CAT.items() if fx in v), "其他")
 
 
@@ -80,15 +89,62 @@ PIT = {
 }
 
 
+REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing")]   # every demo reel that feeds the gallery
+
+
+def beats():
+    """(beat, reel_16x9, reel_9x16) across all demo reels that have been rendered."""
+    for ex in REELS:
+        vj, r = ex / "video.json", ex / "renders" / "reel_16x9.mp4"
+        if not (vj.exists() and r.exists()): continue
+        for b in json.loads(vj.read_text())["beats"]:
+            yield b, r, ex / "renders" / "reel_9x16.mp4"
+
+SUIT.update({
+    "media": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+    "cite_pdf": "引用判决书、报告、财报原文", "cite_paper": "引用论文", "cite_article": "引用新闻报道", "cite_quote": "引用某人说过的话",
+    "cite_post": "引用一条社交帖子", "cite_video": "引用别人的视频片段", "cite_stack": "多个信源交叉验证",
+    "list_stack": "「三个原因」「四个要点」、清单、结尾总结", "steps": "教程、流程、「三步做出……」", "ranking": "盘点、年度十大、门店 / 销量排行",
+    "term_card": "名词解释、概念、术语", "word_swap": "「不是 A，是 B」「它能做 X / Y / Z」", "pros_cons": "测评、优缺点、该不该",
+    "quadrant": "定位、谁在哪个位置、2×2 矩阵", "countdown": "「给你 5 秒」、悬念、倒数", "chapter_bar": "目录、第几部分、章节过渡",
+    "table": "多年财务、对比清单、参数表", "statement_table": "利润表 / 资产负债表里的一行", "waterfall": "从收入一路扣到净利",
+    "scale_compare": "「相当于 N 个…」「绕赤道 N 圈」", "bar_race": "排名随时间变化、超车", "stacked_bars": "构成变化、占比",
+    "formula": "一个比率怎么算出来", "bars_csv": "手上只有一张表格", "line_csv": "手上只有一张表格（趋势）",
+    "scroll_shot": "长截图、网页、长聊天记录", "screencast": "真实录屏、教程、产品演示", "spotlight": "「看这里」「只看这一行」", "code": "代码、命令行、改动前后",
+    "comment_thread": "评论区截图、热评", "im_chat": "聊天记录、对话证据", "danmaku": "弹幕刷屏、高能时刻", "receipt": "小票、账单、客单价",
+    "profile_card": "人物介绍、创始人、管理层", "equity_tree": "股权穿透、组织架构", "china_map": "省份对比、分级设色、门店撒点",
+    "breather": "金句后的停顿、留白", "interlude": "章节之间的空镜、纯音乐段", "suspense": "「答案是……」揭晓数字", "cold_open": "片头先画面后说话",
+    "beat_cut": "音乐卡点、快节奏蒙太奇", "reaction": "好笑 / 沉重的反应时刻", "loading": "等待、加载、「正在生成」", "think_loop": "思考停顿", "chapter_breather": "章节之间喘口气",
+})
+DUR.update({
+    "media": "1–3 张 3–4 秒，几十张以上 4–6 秒", "list_stack": "每条 0.6–1 秒 + 1 秒", "steps": "每步 0.6–1 秒 + 1 秒", "ranking": "每条 0.4–0.6 秒 + 第 1 名 1.5 秒",
+    "word_swap": "每个词 0.5–0.8 秒", "countdown": "每下 0.5–1 秒", "term_card": "3.5–5 秒", "table": "3.5–5 秒", "statement_table": "4–5 秒", "waterfall": "4–6 秒",
+    "scale_compare": "4–5 秒", "bar_race": "每个时间点 1.5–3 秒", "stacked_bars": "4–5 秒", "formula": "3.5–4.5 秒", "scroll_shot": "每个停点 1–1.5 秒",
+    "screencast": "跟录屏一样长（3–10 秒）", "code": "3–6 秒（行多就更长）", "comment_thread": "3.5–5 秒", "im_chat": "4–6 秒", "equity_tree": "4–5 秒", "china_map": "4–5 秒",
+    "cite_pdf": "4–5 秒", "cite_video": "跟引用片段一样长", "cite_stack": "每个信源 1–1.5 秒",
+    **{k: "1–8 秒（按时长伸缩）" for k in ("breather", "interlude", "cold_open", "reaction", "loading", "think_loop", "chapter_breather")},
+    "suspense": "悬停 1–3 秒最佳", "beat_cut": "按小节，100 bpm 每拍 0.6 秒",
+})
+PIT.update({
+    "media": "items 可以混放图片和视频；几十张以上用缩略图拼图，视频只显示静帧。",
+    "cite_pdf": "quote 要和 PDF 里的原文一字不差才能定位；扫描件用 box 手动框。", "cite_video": "视频要能逐帧定位（mp4 / webm）；字幕写原话或描述，别编台词。",
+    "list_stack": "条目里的「：」会把后半句拆成小字说明；不想拆就用 [\"整句\", \"\"]。", "ranking": "第 1 名放在 items 第一个；默认先显示问号卡再翻开，hide_top: false 关掉。",
+    "countdown": "问题用 question（label 是画廊页脚）。", "quadrant": "x、y 是 0–100 的相对位置，不是原始数值。", "word_swap": "replace 模式只用前两个词。",
+    "table": "行数超过上限会折叠；高亮用首列文字比用序号稳。", "statement_table": "负数写成负值即可，显示时自动加括号；值单位用 unit 写明。",
+    "waterfall": "最后一行留空就自动算合计；kind 用 sub 插小计。", "scale_compare": "ratio 自己算好写进去，method 写明换算口径。", "bar_race": "不同公司的财年口径要在 note 里写明。",
+    "scroll_shot": "停点用 heading / find 时，截图旁要有 webpage.mjs 生成的同名 .json。", "screencast": "clicks 里的 t 是录屏里的秒数，at 是这一拍里的秒数或 \"@关键词\"。",
+    "code": "文件参数叫 file（src 是页脚来源）。", "china_map": "需要中国视角数据和南海诸岛附图（已内置）；各省数据要能引用来源。",
+    "profile_card": "单人的一句话简介用 bio，line 是口播字幕。", "cold_open": "配音要整体后移（meta.lead），否则会压在开场上。",
+    "beat_cut": "要有 meta.bpm 或 beats，否则按 0.5 秒切。", "suspense": "揭晓用 at: \"@词\"，否则在 62% 处。", "think_loop": "圈数参数叫 orbits（marks 是保留字）。",
+})
+
+
 def main():
-    v = json.loads((EX / "video.json").read_text())
     OUT.mkdir(parents=True, exist_ok=True); DOC.parent.mkdir(parents=True, exist_ok=True)
-    reel = EX / "renders" / "reel_16x9.mp4"
-    reel_v = EX / "renders" / "reel_9x16.mp4"
     CARDS.mkdir(parents=True, exist_ok=True); GALLERY.mkdir(parents=True, exist_ok=True)
     rows, trans = [], []
-    seen = set()
-    for b in v["beats"]:
+    seen, carded = set(), set()
+    for b, reel, reel_v in beats():
         fx = b["fx"]
         if fx == "plate":
             if b.get("tr") and b["tr"] != "hard":
@@ -97,16 +153,20 @@ def main():
                 if reel_v.exists(): cut(reel_v, b["t"] - 0.45, 1.2, OUT / f"{name}_v", w=200)
                 trans.append((b["tr"], b.get("label", ""), name))
             continue
-        if fx in seen: continue
-        seen.add(fx)
-        cut(reel, b["t"], b["d"], OUT / fx)
-        if reel_v.exists(): cut(reel_v, b["t"], b["d"], OUT / f"{fx}_v", w=240)
+        band = b.get("preview")                 # a variant worth its own card (e.g. media with 3 vs 200 items)
+        key = f"{fx}-{band}" if band else fx
+        if key in seen: continue
+        seen.add(key)
+        cut(reel, b["t"], b["d"], OUT / key)
+        if reel_v.exists(): cut(reel_v, b["t"], b["d"], OUT / f"{key}_v", w=240)
         doc = (aefx.FX[fx].__doc__ or "").strip().replace("\n", " ")
         title, _, how = doc.partition(":")
         import inspect
         params = sorted(set(re.findall(r'p\[["\'](\w+)["\']\]|p\.get\(["\'](\w+)["\']', inspect.getsource(aefx.FX[fx]))))
         keys = sorted({a or b_ for a, b_ in params} - {"label", "ref"})
-        rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", "")))
+        rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", ""), key, b.get("band_label", "")))
+        if fx in carded: continue
+        carded.add(fx)
         ex = {k: v for k, v in b.items() if k not in ("t", "d", "tr", "label", "ref")}
         ex = {"scene": "fx", **{k: v for k, v in ex.items() if k != "scene"}, "t": "@关键词"}
         (CARDS / f"{fx}.md").write_text(f"""# `{fx}` · {title.strip()}
@@ -133,7 +193,10 @@ def main():
     md = ["# 效果目录 · Effects", "", "每个效果都是 `scripts/h9/aefx.py` 里的一个函数，在 `video.json` 里写成一个 beat：", "",
           '```json\n{"scene": "fx", "fx": "stomp", "words": ["大家", "都在用", "AI"], "t": "@大家"}\n```', "",
           "排名和人气依据见 [`research/ae_popular.md`](../research/ae_popular.md)。横屏、竖屏同一套参数。", "", "## 效果", ""]
-    for fx, title, how, keys, label, ref in rows:
+    for fx, title, how, keys, label, ref, key, band in rows:
+        if key != fx:      # band variants: one extra preview line under the effect
+            md += [f'<img src="../assets/previews/fx/{key}.webp" width="320" alt="{fx} {band}"> {band}', ""]
+            continue
         md += [f"### `{fx}` — {title}", "", f'<img src="../assets/previews/fx/{fx}.webp" width="480" alt="{fx}">', "",
                how, "", f"- 参数：{', '.join(f'`{k}`' for k in keys) or '—'}", f"- 人气：{ref or '—'}", ""]
     md += ["## 转场", "", "写在下一个 beat 上：`\"tr\": \"zoomin\"`。", "", "| 转场 | 预览 | 说明 |", "|---|---|---|"]
@@ -142,13 +205,14 @@ def main():
     DOC.write_text("\n".join(md) + "\n")
     # agent index: one line per effect, pick by name without reading the library
     idx = ["# 九帽动效 · 效果索引（给 AI 读）", "", "在 video.json 里写 {\"scene\": \"fx\", \"fx\": \"<id>\", ...}；转场写在下一个 beat：\"tr\": \"<id>\"。配方卡：references/effects/<id>.md", ""]
-    idx += [f"- {fx} [{cat_of(fx)}]: {title} — {SUIT.get(fx, '')}" for fx, title, *_ in rows]
+    idx += [f"- {r[0]} [{cat_of(r[0])}]: {r[1]} — {SUIT.get(r[0], '')}" for r in rows if r[6] == r[0]]
     idx += ["", "## 转场"] + [f"- {k}: {label}" for k, label, _ in trans]
     (GALLERY / "llms.txt").write_text("\n".join(idx) + "\n")
     (GALLERY / "effects.json").write_text(json.dumps(
-        {"effects": [{"id": fx, "title": title, "how": how, "cat": cat_of(fx), "ref": ref, "label": label, "suit": SUIT.get(fx, "")} for fx, title, how, keys, label, ref in rows],
+        {"effects": [{"id": fx, "file": key, "band": band, "title": title, "how": how, "cat": cat_of(fx), "ref": ref, "label": label, "suit": SUIT.get(fx, "")}
+                     for fx, title, how, keys, label, ref, key, band in rows],
          "transitions": [{"id": k, "label": label, "file": name} for k, label, name in trans]}, ensure_ascii=False, indent=1))
-    print(DOC, len(rows), "effects,", len(trans), "transitions")
+    print(DOC, len({r[0] for r in rows}), "effects,", len(rows), "cards,", len(trans), "transitions")
 
 
 if __name__ == "__main__":

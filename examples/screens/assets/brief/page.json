@@ -1,0 +1,140 @@
+{
+ "url": "https://github.com/daiyixiang666/hat9-motion",
+ "title": "GitHub - daiyixiang666/hat9-motion: 九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys · GitHub",
+ "description": "九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys - daiyixiang666/hat9-motion",
+ "site": "GitHub",
+ "width": 1920,
+ "height": 11973,
+ "scale": 1.5,
+ "headings": [
+  {
+   "text": "九帽动效 · hat9-motion",
+   "level": 1,
+   "x": 98,
+   "y": 1823,
+   "w": 1257,
+   "h": 76
+  },
+  {
+   "text": "装上就有",
+   "level": 2,
+   "x": 98,
+   "y": 2843,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "成片示例",
+   "level": 2,
+   "x": 98,
+   "y": 3458,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "你说 → 会发生什么",
+   "level": 2,
+   "x": 98,
+   "y": 4936,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "安装",
+   "level": 2,
+   "x": 98,
+   "y": 5460,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "60 秒出第一条",
+   "level": 2,
+   "x": 98,
+   "y": 6135,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "动效库：按人气复刻，不是自己编",
+   "level": 2,
+   "x": 98,
+   "y": 6522,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "零 key 能得到什么",
+   "level": 2,
+   "x": 98,
+   "y": 8043,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "交付物",
+   "level": 2,
+   "x": 98,
+   "y": 8622,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "怎么工作",
+   "level": 2,
+   "x": 98,
+   "y": 9054,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "目录",
+   "level": 2,
+   "x": 98,
+   "y": 9644,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "FAQ",
+   "level": 2,
+   "x": 98,
+   "y": 10046,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "许可",
+   "level": 2,
+   "x": 98,
+   "y": 10559,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "致谢",
+   "level": 2,
+   "x": 98,
+   "y": 10916,
+   "w": 1257,
+   "h": 57
+  },
+  {
+   "text": "更新",
+   "level": 2,
+   "x": 98,
+   "y": 11177,
+   "w": 1257,
+   "h": 57
+  }
+ ],
+ "boxes": [],
+ "paragraphs": [
+  "一条口播，变成 AE 级动效成片。\nTurn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.",
+  "▶ 看成片 · 🎛 在线看全部 50 个动效 · ⚡ 60 秒出第一条 · 🤖 交给 AI 用 · 📖 效果目录",
+  "示例《一杯 4 块钱的柠檬水》：左横屏、右竖屏，同一份 video.json，各自排版。",
+  "点图看成片。每条都横竖屏各排一版，数据来源印在画面上。",
+  "每条片子就是一份 video.json（每句一个场景）加配音，源文件在 examples/。",
+  "需要 Python 3.9+、Node.js 22+、FFmpeg；Chrome 由 HyperFrames 第一次渲染时自动下载。可选 pip install fonttools jieba（字体子集化更快、字幕按词断行）。"
+ ]
+}

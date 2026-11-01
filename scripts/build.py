@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -64,6 +64,7 @@ img { display:block; }
 .cap .cp { display:inline-block; font-family:var(--f-cap, var(--f-body)); font-size:var(--cap-size, 46px); font-weight:var(--cap-weight, 700); color:var(--cap-fg, #fff);
   text-shadow:var(--cap-shadow, 0 2px 0 rgba(0,0,0,.8), 0 0 18px rgba(0,0,0,.6)); background:var(--cap-bg, none); padding:var(--cap-pad, 0); letter-spacing:.02em; border-radius:var(--cap-radius, 0); }
 .cap .em .emb { display:none; } .cap .em .emt { color:var(--cap-em, var(--accent)); }
+#root.v .cap { padding-left:120px; padding-right:120px; }   /* 9:16: clear of the platform's right-hand buttons */
 .mascot { pointer-events:none; }
 .mascot.mf-tv { background:var(--tv-screen, #1d2b2a); border-radius:26px / 22px; padding:10px; object-fit:contain;
   box-shadow:0 0 0 12px var(--tv-bezel, #2a2622), 0 0 0 14px #000, inset 0 0 40px rgba(0,0,0,.8), 0 24px 50px rgba(0,0,0,.55); }
@@ -97,7 +98,10 @@ def main():
         X._words = [w for x in data for w in (x["words"] if "words" in x else [x])]
     else:
         X._words = []
-    D = float(meta.get("duration") or 0) or (probe(vpath.parent / voice) + float(meta.get("tail", 0.6)) if voice else 0)
+    # time edits: inserted silences (meta.gaps) and a silent lead-in (meta.lead) move the voice and every cue
+    voice_url = X.asset(voice, "audio") if voice else None
+    voice_url, lead, _ = pacing.time_edits(X, meta, voice_url)
+    D = float(meta.get("duration") or 0) or (lead + probe(out / voice_url) + float(meta.get("tail", 0.6)) if voice else 0)
     beats = video["beats"]
     times = []
     for i, b in enumerate(beats):
@@ -120,7 +124,9 @@ def main():
         cid = b.get("id") or X.uid("s")
         X.beat = {"t": t, "d": d, "i": i, "n": len(beats)}
         X.beat_marks = marks.build(X, cid, b)
+        n_tw, n_audio, n_els = len(X.tws), len(X.audio), len(X.els)
         scene_fn(b["scene"], style)(b, X, t, d, cid)
+        pacing.elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i)     # keep the beat alive / fit a short entrance
         if i > 0:
             tr = b.get("tr")
             if isinstance(tr, str) and tr not in ("cut", "hard", "slide", "zoom", "rise", "step", "zoomin", "whip", "spin"): fx.transition(X, t, tr)
@@ -155,9 +161,10 @@ def main():
     # audio
     aud = []
     if voice:
-        aud.append(f'<audio id="voice" class="clip" src="{X.asset(voice, "audio")}" data-start="0" data-duration="{D:.3f}" data-track-index="40" data-volume="1"></audio>')
+        aud.append(f'<audio id="voice" class="clip" src="{voice_url}" data-start="{(f"{lead:.3f}" if lead else "0")}" data-duration="{D - lead:.3f}" data-track-index="40" data-volume="1"></audio>')
     if meta.get("music"):
-        aud.append(f'<audio id="music" class="clip" src="{X.asset(meta["music"], "audio")}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="0.8" data-fade-out="2"></audio>')
+        music_url = pacing.duck(X, meta, X.asset(meta["music"], "audio"))
+        aud.append(f'<audio id="music" class="clip" src="{music_url}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="0.8" data-fade-out="2"></audio>')
     lanes = []   # greedy lane allocation so no two SFX share a track while overlapping
     for i, (t, url, vol) in enumerate(sorted(X.audio)):
         if t >= D - 0.05: continue

@@ -1,0 +1,243 @@
+{
+ "meta": {
+  "title": "引用类动效 · 变体测试",
+  "aspect": "16:9",
+  "duration": 35.4
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "t": 0,
+   "d": 4.4,
+   "fx": "cite_pdf",
+   "theme": "ink",
+   "topic": "版式测试",
+   "pdf": "assets/fda_nexium_review_p3.pdf",
+   "file": "fda_nexium_medical_review.pdf",
+   "page": 1,
+   "page_label": "p. 3 / 41",
+   "quote": "the s-enantiomer of omeprazole and the first proton pump inhibitor (PPI) to be developed as a single isomer",
+   "box": [
+    [
+     6,
+     13.4,
+     87,
+     2.2
+    ],
+    [
+     6,
+     15.3,
+     60,
+     2.2
+    ]
+   ],
+   "kicker": "扫描件 · 无文字层",
+   "cite": {
+    "title": "FDA Medical Officer's Review · NDA 21-153",
+    "meta": "Center for Drug Evaluation and Research · 2000-09-21"
+   },
+   "line": "扫描版 PDF 没有文字层：用 *box* 手动框出引文。",
+   "label": "变体 · 扫描件",
+   "ref": "search_for 找不到 → 手动框选",
+   "src": "FDA 审评报告（公有领域）"
+  },
+  {
+   "scene": "fx",
+   "t": 4.4,
+   "d": 4.4,
+   "fx": "cite_paper",
+   "theme": "paper",
+   "topic": "版式测试",
+   "title": "A Mathematical Theory of Communication",
+   "authors": "C. E. Shannon",
+   "venue": "Bell System Technical Journal",
+   "year": 1948,
+   "doi": "vol. 27, pp. 379–423",
+   "abstract": "The fundamental problem of communication is that of reproducing at one point either exactly or approximately a message selected at another point.",
+   "hl": "reproducing at one point",
+   "takeaway": "一个作者、没有 arXiv：作者行和头像行自动收缩",
+   "line": "单作者、长摘要：卡片按内容收缩，*不留半页空白*。",
+   "label": "变体 · 单作者",
+   "ref": "1 位作者 / 长摘要",
+   "src": "Shannon, BSTJ 1948",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 8.8,
+   "d": 4.4,
+   "fx": "cite_paper",
+   "theme": "ink",
+   "topic": "版式测试",
+   "title": "一个故意写得非常非常长、需要折成三行才能放下的论文标题，用来测试标题自动缩放",
+   "authors": [
+    "作者1",
+    "作者2",
+    "作者3",
+    "作者4",
+    "作者5",
+    "作者6",
+    "作者7",
+    "作者8",
+    "作者9",
+    "作者10",
+    "作者11",
+    "作者12"
+   ],
+   "venue": "虚构会议 2026",
+   "arxiv": "arXiv:0000.00000",
+   "year": 2026,
+   "cites": 12345,
+   "abstract": "摘要也很长：这里放一段中文摘要，用来测试中文的均衡换行和自动字号，以及*高亮可以出现在中间任何位置*，后面还有很多字继续占位。",
+   "figure": "../screen/assets/shots/land_forecast.jpg",
+   "takeaway": "12 位作者 → 前 3 位 + 等 12 人；头像 8 个 + “+4”",
+   "line": "十二位作者、带配图、带引用数：*全部自适应*。",
+   "label": "变体 · 多作者（虚构数据）",
+   "ref": "12 位作者 / 配图 / 引用数",
+   "src": "虚构数据，仅测版式",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 13.2,
+   "d": 4.4,
+   "fx": "cite_article",
+   "theme": "paper",
+   "topic": "版式测试",
+   "image": "../screen/assets/shots/portrait_dash.jpg",
+   "focus": 55,
+   "box": [
+    8,
+    46,
+    84,
+    16
+   ],
+   "url": "example.com/a-very-tall-screenshot",
+   "points": [
+    "截图模式：高截图自动滚到引文",
+    "红框框出要看的那一段"
+   ],
+   "line": "网页截图也能引：*自动滚动 + 框选*。",
+   "label": "变体 · 截图模式",
+   "ref": "竖长截图 / 滚动 / 框选",
+   "src": "本仓库渲染截图",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 17.6,
+   "d": 4.0,
+   "fx": "cite_quote",
+   "theme": "paper",
+   "topic": "版式测试",
+   "text": "学而不思则罔，思而不学则殆。",
+   "hl": "思而不学则殆",
+   "name": "孔子",
+   "role": "",
+   "source": "《论语·为政》",
+   "line": "中文原话、没有译文、没有年份：*版式照样成立*。",
+   "label": "变体 · 中文原话",
+   "ref": "无译文 / 无头像 / 无年份",
+   "src": "《论语·为政》",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 21.6,
+   "d": 4.4,
+   "fx": "cite_post",
+   "theme": "ink",
+   "topic": "版式测试",
+   "name": "示例账号",
+   "handle": "@example",
+   "verified": true,
+   "text": "这是一条很长的中文帖子，用来测试多行文本、带配图、带互动数据的帖子卡片会不会溢出。数字会自动换算成万和亿，配图按比例裁切。",
+   "image": "../screen/assets/shots/wide_palette.jpg",
+   "time": "2026-10-31 21:00",
+   "counts": {
+    "replies": 1280,
+    "reposts": 36000,
+    "likes": 452000,
+    "views": 18800000
+   },
+   "line": "长帖子 + 配图 + 互动数：*数字自动换算万和亿*。",
+   "label": "变体 · 长帖子（虚构数据）",
+   "ref": "6 行文本 / 配图 / 4 个计数",
+   "src": "虚构数据，仅测版式",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 26.0,
+   "d": 4.4,
+   "fx": "cite_video",
+   "theme": "paper",
+   "topic": "版式测试",
+   "video": "assets/harbor_vertical.mp4",
+   "start": 1.0,
+   "title": "Manhattan Waterfront (c.1930s)",
+   "source": "Prelinger Archives · archive.org",
+   "year": "c.1930s",
+   "license": "公有领域",
+   "caption": "竖屏素材放进横屏画面：播放器按素材比例变成竖的，信息栏变宽",
+   "kicker": "竖屏素材",
+   "line": "竖的视频素材：*播放器跟着素材变形*。",
+   "label": "变体 · 竖屏素材",
+   "ref": "9:16 素材 / 起点偏移 1 秒",
+   "src": "Manhattan Waterfront, Prelinger Archives（公有领域）",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": 30.4,
+   "d": 5.0,
+   "fx": "cite_stack",
+   "theme": "paper",
+   "topic": "版式测试",
+   "claim": "网传：ChatGPT 上线一周用户就破了 1 亿",
+   "sources": [
+    {
+     "kind": "帖子",
+     "name": "Sam Altman",
+     "date": "2022-12-05",
+     "text": "上线 5 天是 100 万，不是 1 亿",
+     "verdict": "no"
+    },
+    {
+     "kind": "新闻",
+     "name": "Reuters · UBS",
+     "date": "2023-02-01",
+     "text": "约 2 个月才到 1 亿月活",
+     "verdict": "no"
+    },
+    {
+     "kind": "数据",
+     "name": "Similarweb",
+     "date": "2023-01",
+     "text": "1 月日均独立访客约 1300 万",
+     "verdict": "no"
+    },
+    {
+     "kind": "自媒体",
+     "name": "某转载文章",
+     "date": "—",
+     "text": "未注明出处",
+     "verdict": "?"
+    },
+    {
+     "kind": "官方",
+     "name": "OpenAI",
+     "date": "—",
+     "text": "未公布这一说法",
+     "verdict": "?"
+    }
+   ],
+   "tally": "来源支持",
+   "line": "五个来源、结论相反：*打叉和存疑也能表达*。",
+   "label": "变体 · 5 个来源",
+   "ref": "5 张卡 / ✗ 与 ? 混合",
+   "src": "@sama · Reuters · Similarweb",
+   "tr": "hard"
+  }
+ ]
+}

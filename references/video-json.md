@@ -52,3 +52,18 @@
 | `outro` | 收尾 | `title`、`sub`、`cta` |
 
 字很长时：**拆成两个 beat 或换场景，不要缩字号。** 动效标题每屏 4–12 个汉字。
+
+
+## 节奏与字幕开关（写在 `meta` 里）
+
+| 开关 | 写法 | 作用 |
+|---|---|---|
+| `lead` | 秒数 | 配音和所有 `"@关键词"` 整体后移，前面空出来给无声开场（配合 `cold_open`） |
+| `gaps` | `[{"after": "@词$", "dur": 1.5}]` | 在那个词之后插入静音，后面的词和关键词一起后移（配合 `breather` / `interlude`） |
+| `duck` | `true` 或分贝数（默认 10） | 说话时背景音乐自动压低，停顿里恢复 |
+| `elastic` | 默认开启；`false` 关掉 | 拍短时入场按比例加快，拍长时落定后镜头继续推进；单个 beat 写 `"hold": "static"` 关掉 |
+| `speakers` | `{"A": {"name": "主持人", "color": "#f6ce3a", "side": "left"}}` | 多人对话：words.json 里每个词带 `spk`，字幕按说话人分色、分左右、带名牌 |
+| `caption_mode` | `"reading"` / `"punch"` / `"karaoke"` | 卡拉 OK：整句先暗着，说到哪个字亮哪个字 |
+| `caption_tr` | 每句一行 | 第二语言字幕（按 。！？ 切句对齐） |
+
+工具：`scripts/align.py`（录音 + 稿子 → words.json）、`scripts/cover.py`（16:9 / 4:3 / 3:4 封面）、`scripts/url_brief.py`（网址 → 长截图 + 引用 beat）、`scripts/h9/data.py`（数据效果直接读 CSV / Excel）。

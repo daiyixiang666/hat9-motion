@@ -56,8 +56,8 @@ CTX_CSS = r"""
 .ctx.photo .hd, .ctx.photo .ft { color:#fff; border-color:rgba(255,255,255,.7); text-shadow:0 1px 8px rgba(0,0,0,.6); opacity:1; }
 .ctx.photo .hd .fxid { background:#fff; color:#111; text-shadow:none; }
 .ctx.photo .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 18%, rgba(0,0,0,0) 72%, rgba(0,0,0,.6)); }
-#root.v .ctx .hd { left:56px; right:56px; top:176px; } #root.v .ctx .ft { left:56px; right:56px; bottom:auto; top:1478px; }
-#root.v .ctx .cap { bottom:auto; top:1330px; padding:0 56px; } #root.v .ctx .cap > span { font-size:44px; max-width:100%; }
+#root.v .fx .sub { max-width:840px; } #root.v .ctx .hd { left:56px; right:56px; top:206px; } #root.v .ctx .ft { left:56px; right:56px; bottom:auto; top:1478px; }
+#root.v .ctx .cap { bottom:auto; top:1330px; padding:0 120px; } #root.v .ctx .cap > span { font-size:44px; max-width:100%; }
 """
 PHOTO = {"parallax", "portal", "mosaic", "callout", "match_cut", "plate"}
 
@@ -80,9 +80,10 @@ def _context(X, cid, t, d, p):
     fpx = 17 if X.portrait else 16
     fw = ((X.W - 112) if X.portrait else (X.W - 192)) * (0.6 if p.get("src") else 0.96)
     foot = X.rich(fit.fit_text(foot_s, fw, fpx * 1.4, fpx, fpx, max_lines=1, mono=True).lines[0]) if foot_s else ""   # ellipsized to its slot
-    cw = (X.W - 112 - 48) if X.portrait else X.W * 0.8 - 48         # caption: at most two lines, shrinking to 28 px
-    mx = 44 if X.portrait else 40
-    cf = fit.fit_text(fit.as_text(p["line"], " "), cw, mx * 1.3 * 2, mx, 28, lh=1.3, max_lines=2)
+    cw = (X.W - 2 * SAFE_R - 48) if X.portrait else X.W * 0.8 - 48   # caption: two lines (three in 9:16), shrinking to 28 px;
+    mx = 44 if X.portrait else 40                                     # 9:16 keeps 120 px both sides for the platform buttons
+    ml = 3 if X.portrait else 2
+    cf = fit.fit_text(fit.as_text(p["line"], " "), cw, mx * 1.3 * ml, mx, 28, lh=1.3, max_lines=ml)
     cap = "<br>".join(X.rich(l) for l in cf.lines)
     inner = (('<div class="scrim"></div>' if photo else "")
              + f'<div class="hd"><div><b>第九顶帽子</b><span>{X.rich(p.get("topic", ""))}</span></div><div class="fxid">{X.rich(fxid)}</div></div>'
@@ -118,8 +119,12 @@ def _clip(X, cid, t, d, inner, p, extra_cls="", transparent=False):
 def _vm(X, v): return min(X.W, X.H) * v / 100
 
 
+SAFE_R = 120     # 9:16: platform buttons sit in the right 120 px of the lower half — centred text keeps that margin on both sides
+
+
 def _fit(X, text, box=(0.84, 0.46), max_vmin=15, min_vmin=4.2, max_lines=3, mono=False, lh=1.12, ls=0.0):
-    return fit.fit_text(fit.as_text(text), X.W * box[0], X.H * box[1], _vm(X, max_vmin), _vm(X, min_vmin),
+    bw = min(X.W * box[0], X.W - 2 * SAFE_R) if X.portrait else X.W * box[0]
+    return fit.fit_text(fit.as_text(text), bw, X.H * box[1], _vm(X, max_vmin), _vm(X, min_vmin),
                         lh=lh, max_lines=max_lines, mono=mono, ls=ls)
 
 
@@ -162,8 +167,9 @@ def mask_up(X, cid, t, d, p):
     big, f = _big(X, p, mode="ln", max_lines=4)
     _clip(X, cid, t, d, f'<div class="col">{big}{_sub(X, p)}</div>', p)
     X.tw(f'tl.from("#{cid} .ln .w", {{yPercent:115, duration:0.85, ease:"expo.out", stagger:{_st(d, f.n, 0.12, 0.3):.3f}}}, {t + 0.1:.3f});')
-    X.tw(f'tl.from("#{cid} .sub", {{yPercent:100, opacity:0, duration:0.6, ease:"expo.out"}}, {t + 0.5:.3f});')
-    X.tw(f'tl.to("#{cid} .ln .w", {{yPercent:-115, duration:0.45, ease:"power3.in", stagger:0.06}}, {t + d - 0.55:.3f});')
+    if p.get("sub"): X.tw(f'tl.from("#{cid} .sub", {{yPercent:100, opacity:0, duration:0.6, ease:"expo.out"}}, {t + 0.5:.3f});')
+    if d >= 1.8:      # the exit only when the beat is long enough to read the line first
+        X.tw(f'tl.to("#{cid} .ln .w", {{yPercent:-115, duration:0.45, ease:"power3.in", stagger:0.06}}, {t + d - 0.55:.3f});')
     X.sfx(t + 0.1, "enter")
 
 
@@ -442,7 +448,7 @@ def triple(X, cid, t, d, p):
     lbl = [str(x) for x in fit.as_list(p.get("labels", ["点赞", "投币", "收藏"]))][:5] or ["点赞"]
     idx = [int(i) % len(TRI_ICONS) for i in fit.as_list(p.get("icons"))] or list(range(len(lbl)))
     n = len(lbl)
-    avail = X.W * (0.86 if X.portrait else 0.7)
+    avail = (X.W - 2 * SAFE_R - _vm(X, 6)) if X.portrait else X.W * 0.7      # 9:16: labels stay clear of the right-hand buttons
     isz = min(12.0, avail / _vm(X, 1) / (n * 1.9))          # icon size in vmin
     gap = min(12.0, (avail / _vm(X, 1) - n * isz) / max(n - 1, 1))
     lpx = min(_vm(X, 2.6), _vm(X, isz * 1.6) / max(max(fit.width(l) for l in lbl), 1))
@@ -529,10 +535,13 @@ def stomp(X, cid, t, d, p):
 def mosaic(X, cid, t, d, p):
     """照片墙拼合 (#6, Mosaic Photo Reveal 1.6万份): tiles fly in from depth and assemble a wall, then the camera
     pushes into one tile until it fills the frame. images: 1…24 of any aspect (fewer than 12 → varied crops;
-    12–24 → one tile each, the grid re-shapes to the count)."""
-    srcs = [s for s in fit.as_list(p.get("images")) if s] or [p.get("image")]
+    12–24 → one tile each, the grid re-shapes to the count); clips may be mixed in (up to 6 play, the rest show a still)."""
+    srcs = [s for s in fit.as_list(p.get("images")) if s] or [p.get("image") or p.get("video")]
     srcs = [s for s in srcs if s]
     m = min(24, max(12, len(srcs)))
+    import sys; M = sys.modules.get("h9fx__media")                 # clips play in up to 6 tiles (see fx/_media.py)
+    play = [k for k in range(m) if srcs and fit.is_video(srcs[k % len(srcs)])][:6] if M else []
+    R = f"#{cid}_st" if play else f"#{cid}"
     r = X.rand
     bw, bh, ar = (X.W * 0.84, X.H * 0.63, 1.0) if X.portrait else (X.W * 0.86, X.H * 0.86, 4 / 3)
     gap = _vm(X, 1.4)
@@ -543,22 +552,30 @@ def mosaic(X, cid, t, d, p):
     tiles = []
     for k in range(m):
         if srcs:
-            u = X.asset(srcs[k % len(srcs)])
+            src = srcs[k % len(srcs)]
+            if k in play:
+                tiles.append(f'<i class="mt mtv">{M.vtile(X, src, t, d, p.get("focus"), start=k * 1.3)}</i>'); continue
+            u = M.poster(X, src)[0] if (M and fit.is_video(src)) else X.asset(src)
             bg = (f"url({u}) {fit.focus_css(p.get('focus'))}/cover" if len(srcs) > 12
                   else f"url({u}) {r.randint(0, 100)}% {r.randint(0, 100)}%/{r.randint(180, 320)}% auto")
         else:
             bg = f"hsl({(k * 37) % 360} 30% {30 + (k * 7) % 30}%)"
         tiles.append(f'<i class="mt" style="background:{bg}"></i>')
-    _clip(X, cid, t, d, f'<div class="mw" style="grid-template-columns:repeat({cols}, 1fr); grid-auto-rows:{th_:.1f}px; width:{ww:.0f}px; height:{wh:.0f}px">{"".join(tiles)}</div>', p)
-    X.css("aefx-mo", ".fx .mw { display:grid; gap:1.4vmin; } .fx .mt { display:block; border-radius:.8vmin; box-shadow:0 1vmin 3vmin rgba(0,0,0,.45); }")
+    wall = f'<div class="mw" style="grid-template-columns:repeat({cols}, 1fr); grid-auto-rows:{th_:.1f}px; width:{ww:.0f}px; height:{wh:.0f}px">{"".join(tiles)}</div>'
+    if play:
+        _clip(X, cid, t, d, "", p)
+        M.stage(X, cid, t, d, f'<div class="stage">{wall}</div>', _theme_style(p, paint=False))
+    else:
+        _clip(X, cid, t, d, wall, p)
+    X.css("aefx-mo", ".fx .mw { display:grid; gap:1.4vmin; } .fx .mt { display:block; border-radius:.8vmin; box-shadow:0 1vmin 3vmin rgba(0,0,0,.45); } .fx .mt.mtv { position:relative; overflow:hidden; }")
     rots = [r.randint(-25, 25) for _ in range(m)]
     rank = fit.seeded_order(m, r)
-    X.tw(f'tl.from("#{cid} .mt", {{opacity:0, scale:0.2, z:-400, rotation:(i)=>[{",".join(map(str, rots))}][i], duration:0.7, ease:"back.out(1.4)", stagger:(i)=>[{",".join(map(str, rank))}][i]*{_st(d - 1.6, m, 0.05, 0.5):.3f}}}, {t + 0.05:.3f});')
+    X.tw(f'tl.from("{R} .mt", {{opacity:0, scale:0.2, z:-400, rotation:(i)=>[{",".join(map(str, rots))}][i], duration:0.7, ease:"back.out(1.4)", stagger:(i)=>[{",".join(map(str, rank))}][i]*{_st(d - 1.6, m, 0.05, 0.5):.3f}}}, {t + 0.05:.3f});')
     tk = (rows // 2) * cols + min(cols - 1, cols // 2 + 1) if m > 2 else 0          # a tile right of centre
     rr, cc = divmod(tk, cols)
     ox = (cc * (tw_ + gap) + tw_ / 2) / ww * 100; oy = (rr * (th_ + gap) + th_ / 2) / wh * 100
     sc = max(X.W / tw_, X.H / th_) * 1.08
-    X.tw(f'tl.to("#{cid} .mw", {{scale:{sc:.2f}, transformOrigin:"{ox:.1f}% {oy:.1f}%", duration:0.9, ease:"power3.inOut"}}, {t + d - 1.1:.3f});')
+    X.tw(f'tl.to("{R} .mw", {{scale:{sc:.2f}, transformOrigin:"{ox:.1f}% {oy:.1f}%", duration:0.9, ease:"power3.inOut"}}, {t + d - 1.1:.3f});')
     X.sfx(t + 0.05, "whoosh_soft")
 
 
@@ -660,7 +677,7 @@ def lower3(X, cid, t, d, p):
     role = f'<div class="rl"><span style="font-size:{rf.px}px">{_lines(X, rf)}</span></div>' if rf else ""
     lift = max(0, _cap_clear(X, p) - _vm(X, 14))             # clear a two-line caption
     _clip(X, cid, t, d, f'<div class="l3" style="margin-bottom:{lift:.0f}px"><i class="bar"></i><div class="nm"><span style="font-size:{nf.px}px">{_lines(X, nf)}</span></div>{role}</div>', p, "fx-l3")
-    X.css("aefx-l3", ".fx-l3 > .stage { align-items:flex-end !important; justify-content:flex-start !important; padding:0 0 14vmin 10vmin; } .fx .l3 { position:relative; padding-left:3vmin; max-width:80%; } .fx .l3 .bar { position:absolute; left:0; top:0; bottom:0; width:.9vmin; background:var(--accent); transform-origin:50% 100%; } .fx .l3 .nm, .fx .l3 .rl { overflow:hidden; } .fx .l3 .nm span { display:block; font:800 7vmin var(--f-display); color:var(--fg); white-space:nowrap; } .fx .l3 .rl span { display:block; font:500 2.6vmin var(--f-mono, monospace); color:var(--muted); letter-spacing:.18em; margin-top:1vmin; line-height:1.4; }")
+    X.css("aefx-l3", ".fx-l3 > .stage { align-items:flex-end !important; justify-content:flex-start !important; padding:0 0 14vmin 10vmin; } #root.v .fx-l3 > .stage { padding:0 0 620px 10vmin; } .fx .l3 { position:relative; padding-left:3vmin; max-width:80%; } .fx .l3 .bar { position:absolute; left:0; top:0; bottom:0; width:.9vmin; background:var(--accent); transform-origin:50% 100%; } .fx .l3 .nm, .fx .l3 .rl { overflow:hidden; } .fx .l3 .nm span { display:block; font:800 7vmin var(--f-display); color:var(--fg); white-space:nowrap; } .fx .l3 .rl span { display:block; font:500 2.6vmin var(--f-mono, monospace); color:var(--muted); letter-spacing:.18em; margin-top:1vmin; line-height:1.4; }")
     X.tw(f'tl.from("#{cid} .l3 .bar", {{scaleY:0, duration:0.4, ease:"power3.out"}}, {t + 0.1:.3f});')
     X.tw(f'tl.from("#{cid} .l3 .nm span", {{xPercent:-105, duration:0.6, ease:"expo.out"}}, {t + 0.3:.3f});')
     X.tw(f'tl.from("#{cid} .l3 .rl span", {{yPercent:110, duration:0.5, ease:"expo.out"}}, {t + 0.55:.3f});')
@@ -668,9 +685,12 @@ def lower3(X, cid, t, d, p):
 
 def collage(X, cid, t, d, p):
     """拼贴剪纸 (#21, Fakeplastictree Collage 203.5万): torn-edge photo pieces land on paper on twos, tape, a hand-drawn arrow.
-    images: 1–9 of any aspect (each piece keeps its picture's shape); text: the handwritten note."""
-    srcs = [s for s in fit.as_list(p.get("images")) if s][:9] or ([p["image"]] if p.get("image") else [])
+    images: 1–9 of any aspect (each piece keeps its picture's shape; clips play inside their frames); text: the handwritten note."""
+    srcs = [s for s in fit.as_list(p.get("images")) if s][:9] or ([p.get("image") or p.get("video")] if (p.get("image") or p.get("video")) else [])
     r = X.rand
+    import sys; M = sys.modules.get("h9fx__media")                 # clips play inside their torn frames (fx/_media.py)
+    play = {i for i, s_ in enumerate(srcs) if fit.is_video(s_)} if M else set()
+    R = f"#{cid}_st" if play else f"#{cid}"
     ars = [min(2.4, max(0.5, fit.aspect(X, s))) for s in srcs] or [1.5]
     ars = [1.5 if 1.3 <= a <= 1.9 else a for a in ars]          # ordinary landscape photos print as 3:2
     if len(srcs) == 3 and not X.portrait and all(a == 1.5 for a in ars):
@@ -680,45 +700,72 @@ def collage(X, cid, t, d, p):
     clips = ["polygon(2% 4%,30% 0,62% 3%,98% 1%,100% 30%,97% 64%,99% 98%,64% 100%,32% 96%,1% 99%,3% 62%,0 28%)",
              "polygon(0 2%,40% 4%,100% 0,98% 40%,100% 100%,55% 97%,0 100%,2% 50%)",
              "polygon(3% 0,100% 3%,96% 52%,100% 97%,48% 100%,1% 96%,4% 45%)"]
+    def face(i):
+        if i in play: return f'<div class="cpv" style="aspect-ratio:{ars[i]:.3f}">{M.vtile(X, srcs[i], t, d, p.get("focus"))}</div>'
+        u = M.poster(X, srcs[i])[0] if (M and fit.is_video(srcs[i])) else X.asset(srcs[i])
+        return f'<img src="{u}" alt="" style="aspect-ratio:{ars[i]:.3f}; object-position:{fit.focus_css(p.get("focus"))}">'
     pieces = "".join(f'<div class="cp" style="left:{x}%;top:{y}%;width:{w}%;transform:rotate({rot}deg)"><div class="ph" style="clip-path:{clips[i % 3]}">'
-                     f'<img src="{X.asset(srcs[i])}" alt="" style="aspect-ratio:{ars[i]:.3f}; object-position:{fit.focus_css(p.get("focus"))}"></div><i class="tp"></i></div>'
+                     f'{face(i)}</div><i class="tp"></i></div>'
                      for i, (x, y, w, rot) in enumerate(pos) if i < len(srcs))
     note = fit.as_text(p.get("text", "这张才对"), " ")
     nf = fit.fit_text(note, X.W * 0.3, X.H * 0.14, _vm(X, 6), _vm(X, 3.2), lh=1.1, max_lines=2)
-    nx, ny = (54, 80) if X.portrait else (66, 72)
-    _clip(X, cid, t, d, f'<div class="cbg"></div>{pieces}<svg class="arw" viewBox="0 0 300 200" style="left:{nx - 10}%;top:{ny - 16}%"><path d="M20 160 C 90 40, 200 30, 270 80 M270 80 l-34 -6 M270 80 l-14 30"/></svg>'
-                        f'<div class="cnote" style="left:{nx}%;top:{ny}%;font-size:{nf.px}px">{"<br>".join(X.rich(l) for l in nf.lines)}</div>', p)
+    nx, ny = (50, 63) if X.portrait else (66, 72)      # 9:16: above the caption and clear of the platform's bottom bar
+    body = (f'<div class="cbg"></div>{pieces}<svg class="arw" viewBox="0 0 300 200" style="left:{nx - 10}%;top:{ny - 16}%"><path d="M20 160 C 90 40, 200 30, 270 80 M270 80 l-34 -6 M270 80 l-14 30"/></svg>'
+            f'<div class="cnote" style="left:{nx}%;top:{ny}%;font-size:{nf.px}px">{"<br>".join(X.rich(l) for l in nf.lines)}</div>')
+    if play:
+        _clip(X, cid, t, d, "", p)
+        M.stage(X, cid, t, d, body, _theme_style(p, paint=False))
+    else:
+        _clip(X, cid, t, d, body, p)
+    X.css("aefx-clv", ".fx .cp .cpv { position:relative; width:100%; overflow:hidden; }")
     X.css("aefx-cl", ".fx .cbg { position:absolute; inset:0; background:#ece6da; } .fx .cp { position:absolute; } .fx .cp .ph { background:#fff; padding:1vmin; box-shadow:0 1vmin 2.4vmin rgba(60,40,10,.3); } .fx .cp img { display:block; width:100%; aspect-ratio:3/2; object-fit:cover; } .fx .cp .tp { position:absolute; left:50%; top:-1.4vmin; width:9vmin; height:2.8vmin; margin-left:-4.5vmin; background:rgba(235,220,170,.85); transform:rotate(-4deg); } .fx .arw { position:absolute; width:22%; overflow:visible; } .fx .arw path { fill:none; stroke:#d1281f; stroke-width:7; stroke-linecap:round; stroke-linejoin:round; } .fx .cnote { position:absolute; font:400 6vmin var(--f-hand, cursive); color:#d1281f; transform:rotate(-4deg); white-space:nowrap; line-height:1.1; }")
     each = _st(d - 1.2, max(len(srcs), 1), 0.33, 0.55)
-    X.tw(f'tl.from("#{cid} .cp", {{y:"-30vmin", rotation:"+=18", opacity:0, duration:0.33, ease:"steps(4)", stagger:{each:.3f}}}, {t + 0.1:.3f});')
+    X.tw(f'tl.from("{R} .cp", {{y:"-30vmin", rotation:"+=18", opacity:0, duration:0.33, ease:"steps(4)", stagger:{each:.3f}}}, {t + 0.1:.3f});')
     ta = t + 0.1 + each * max(len(srcs) - 1, 0) + 0.45
-    X.tw(f'tl.fromTo("#{cid} .arw path", {{strokeDasharray:600, strokeDashoffset:600}}, {{strokeDashoffset:0, duration:0.5, ease:"steps(6)"}}, {min(ta, t + d - 0.9):.3f});')
-    X.tw(f'tl.from("#{cid} .cnote", {{opacity:0, scale:0.6, duration:0.25, ease:"steps(3)"}}, {min(ta + 0.4, t + d - 0.5):.3f});')
+    X.tw(f'tl.fromTo("{R} .arw path", {{strokeDasharray:600, strokeDashoffset:600}}, {{strokeDashoffset:0, duration:0.5, ease:"steps(6)"}}, {min(ta, t + d - 0.9):.3f});')
+    X.tw(f'tl.from("{R} .cnote", {{opacity:0, scale:0.6, duration:0.25, ease:"steps(3)"}}, {min(ta + 0.4, t + d - 0.5):.3f});')
     for k in range(min(len(srcs), 4)): X.sfx(t + 0.1 + k * each, "paper")
 
 
 def match_cut(X, cid, t, d, p):
     """文字匹配剪辑 Text Match Cut (#23, Envato Elements 标题热门第1/2): the word holds its exact place while
     everything around it hard-cuts — background, colour field and typeface change every few frames.
-    Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled)."""
+    Each cut is a designed pair (ground + type treatment), so the word always reads. images: 0…N (all are cycled; clips play as grounds)."""
     srcs = [s for s in fit.as_list(p.get("images")) if s]
+    import sys; M = sys.modules.get("h9fx__media")                 # clip grounds: one timed layer per clip, shown on its cuts
+    vk = {s_: j for j, s_ in enumerate(dict.fromkeys(x for x in srcs if fit.is_video(x)))} if M else {}
+    R = f"#{cid}_st" if vk else f"#{cid}"
     D_ = "var(--f-display)"; S_ = "'h9-noto-serif-sc', serif"; H_ = "var(--f-hand, cursive)"; M_ = "var(--f-mono, monospace)"
     combos = [("img", D_, 900, "#fff"), ("#ece6da", S_, 700, "#111"), ("img", H_, 400, "#fff"), ("#1a3bd8", D_, 900, "#fff"),
               ("img", S_, 700, "#fff"), ("#111", M_, 700, "var(--accent)"), ("img", D_, 900, "#fff"), ("var(--accent)", S_, 700, "#111")]
     n = int((d - 0.4) / 0.22)
     f = _fit(X, p.get("text", ""), max_vmin=20, min_vmin=6, box=(0.84, 0.5), max_lines=2, lh=1.0)
-    _clip(X, cid, t, d, f'<div class="mcb"></div><div class="mcw" style="font-size:{f.px}px">{_lines(X, f)}</div>', p)
+    vl = "".join(f'<div class="mcv" data-k="{j}">{M.vtile(X, s_, t, d)}</div>' for s_, j in vk.items())
+    body = f'<div class="mcb"></div>{vl}<div class="mcw" style="font-size:{f.px}px">{_lines(X, f)}</div>'
+    if vk:
+        _clip(X, cid, t, d, "", p)
+        M.stage(X, cid, t, d, f'<div class="stage">{body}</div>', _theme_style(p, paint=False))
+        X.css("aefx-mcv", ".fx .mcv { position:absolute; inset:0; opacity:0; overflow:hidden; }")
+    else:
+        _clip(X, cid, t, d, body, p)
     X.css("aefx-mc", ".fx .mcb { position:absolute; inset:0; background-size:cover; background-position:center; } .fx .mcw { position:relative; font-size:20vmin; line-height:1; text-shadow:0 .03em .25em rgba(0,0,0,.35); text-align:center; }")
     ii = 0
     for k in range(n):
         tt = t + 0.1 + k * 0.22
         g, fnt, w, c = combos[k % len(combos)]
+        shown = None
         if g == "img":
-            if srcs: bg = fit.bg_css(X, srcs[ii % len(srcs)], p.get("focus")); ii += 1
+            if srcs:
+                cur = srcs[ii % len(srcs)]; ii += 1
+                if cur in vk: shown, bg = vk[cur], "#111"
+                else: bg = fit.bg_css(X, cur, p.get("focus"))
             else: bg = "#111"
         else: bg = g
-        X.tw(f'tl.set("#{cid} .mcb", {{background:"{bg}"}}, {tt:.3f});')
-        X.tw(f'tl.set("#{cid} .mcw", {{fontFamily:"{fnt}", fontWeight:{w}, color:"{c}"}}, {tt:.3f});')
+        X.tw(f'tl.set("{R} .mcb", {{background:"{bg}"}}, {tt:.3f});')
+        if vk:
+            X.tw(f'tl.set("{R} .mcv", {{opacity:0}}, {tt:.3f});')
+            if shown is not None: X.tw(f'tl.set("{R} .mcv[data-k=\'{shown}\']", {{opacity:1}}, {tt:.3f});')
+        X.tw(f'tl.set("{R} .mcw", {{fontFamily:"{fnt}", fontWeight:{w}, color:"{c}"}}, {tt:.3f});')
         X.sfx(tt, "click")
 
 
@@ -744,7 +791,7 @@ def dual(X, cid, t, d, p):
     tf = _fit(X, p.get("text", ""), box=(0.8, 0.08), max_vmin=5, min_vmin=2.6, max_lines=1) if p.get("text") else None
     _clip(X, cid, t, d, f'<div class="du"><div class="dh"><img src="{X.asset(ih)}" alt="" style="object-position:{fc}"><span>16:9</span></div><div class="dv"><img src="{X.asset(iv)}" alt="" style="object-position:{fc}"><span>9:16</span></div></div>'
                         + (f'<div class="dut" style="font-size:{tf.px}px; bottom:{max(_vm(X, 9), _cap_clear(X, p)):.0f}px">{_lines(X, tf)}</div>' if tf else ""), p)
-    X.css("aefx-du", ".fx .du { display:flex; align-items:center; gap:5vmin; } #root.v .fx .du { flex-direction:column; gap:4vmin; } .fx .dh, .fx .dv { position:relative; border-radius:2vmin; overflow:hidden; box-shadow:0 0 0 .6vmin #2a2826, 0 3vmin 8vmin rgba(0,0,0,.6); } .fx .dh { width:62vmin; aspect-ratio:16/9; } .fx .dv { width:22vmin; aspect-ratio:9/16; border-radius:3vmin; } #root.v .fx .dh { width:78vmin; } #root.v .fx .dv { width:34vmin; } .fx .du img { width:100%; height:100%; object-fit:cover; display:block; } .fx .du span { position:absolute; left:1.4vmin; bottom:1.2vmin; font:600 2vmin var(--f-mono, monospace); color:#fff; background:rgba(0,0,0,.55); padding:.3vmin 1vmin; border-radius:.6vmin; } .fx .dut { position:absolute; left:0; right:0; bottom:9vmin; text-align:center; font:800 5vmin var(--f-display); color:var(--fg); white-space:nowrap; }")
+    X.css("aefx-du", ".fx .du { display:flex; align-items:center; gap:5vmin; } #root.v .fx .du { flex-direction:column; gap:4vmin; } .fx .dh, .fx .dv { position:relative; border-radius:2vmin; overflow:hidden; box-shadow:0 0 0 .6vmin #2a2826, 0 3vmin 8vmin rgba(0,0,0,.6); } .fx .dh { width:62vmin; aspect-ratio:16/9; } .fx .dv { width:22vmin; aspect-ratio:9/16; border-radius:3vmin; } #root.v .fx .dh { width:66vmin; } #root.v .fx .dv { width:26vmin; } #root.v .fx .du { gap:3vmin; } #root.v .fx .dut { bottom:auto; top:330px; } .fx .du img { width:100%; height:100%; object-fit:cover; display:block; } .fx .du span { position:absolute; left:1.4vmin; bottom:1.2vmin; font:600 2vmin var(--f-mono, monospace); color:#fff; background:rgba(0,0,0,.55); padding:.3vmin 1vmin; border-radius:.6vmin; } .fx .dut { position:absolute; left:0; right:0; bottom:9vmin; text-align:center; font:800 5vmin var(--f-display); color:var(--fg); white-space:nowrap; }")
     X.tw(f'tl.from("#{cid} .dh", {{x:"-30vmin", opacity:0, rotationY:25, duration:0.7, ease:"expo.out"}}, {t + 0.05:.3f});')
     X.tw(f'tl.from("#{cid} .dv", {{x:"30vmin", opacity:0, rotationY:-25, duration:0.7, ease:"expo.out"}}, {t + 0.15:.3f});')
     X.tw(f'tl.from("#{cid} .dut", {{opacity:0, y:20, duration:0.5}}, {t + 0.5:.3f});')

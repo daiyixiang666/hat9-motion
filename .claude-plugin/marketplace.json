@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "hat9-motion",
+  "owner": {
+    "name": "daiyixiang666",
+    "url": "https://github.com/daiyixiang666/hat9-motion"
+  },
+  "metadata": {
+    "description": "九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）",
+    "version": "0.6.0"
+  },
+  "plugins": [
+    {
+      "name": "hat9-motion",
+      "source": "./",
+      "description": "Turn a voiceover or script into AE-grade motion graphics for 16:9 and 9:16: 9 styles, 100 effects, citations (PDF / paper / article / quote / post / video), count-adaptive media, rendered with HyperFrames, zero API keys.",
+      "version": "0.6.0",
+      "category": "creative",
+      "keywords": [
+        "video",
+        "motion-graphics",
+        "hyperframes",
+        "after-effects",
+        "explainer",
+        "口播",
+        "动效"
+      ]
+    }
+  ]
+}

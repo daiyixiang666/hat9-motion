@@ -1,0 +1,257 @@
+{
+ "meta": {
+  "title": "数据进阶 · 表格直读",
+  "aspect": "16:9",
+  "duration": 37.6,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "table",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "蜜雪集团 · 三年财务",
+   "note": "单位：亿元 · 净利率 = 净利润 ÷ 收入",
+   "rows": [
+    [
+     "年份",
+     "收入",
+     "净利润",
+     "净利率"
+    ],
+    [
+     "2022",
+     "135.8",
+     "20.1",
+     "14.8%"
+    ],
+    [
+     "2023",
+     "203.0",
+     "31.9",
+     "15.7%"
+    ],
+    [
+     "2024",
+     "248.3",
+     "44.5",
+     "17.9%"
+    ]
+   ],
+   "hl_row": "2024",
+   "line": "三年里，蜜雪的净利率从 14.8% 涨到了 *17.9%*。",
+   "src": "蜜雪集团招股书；2024 年度业绩公告",
+   "label": "表格聚焦 · Table Focus",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 0.0
+  },
+  {
+   "scene": "fx",
+   "fx": "statement_table",
+   "d": 4.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "蜜雪集团 · 利润表（摘要）",
+   "period": "截至 2024 年 12 月 31 日止年度",
+   "unit": "人民币亿元",
+   "cols": [
+    "2024"
+   ],
+   "items": [
+    {
+     "label": "营业收入",
+     "value": 248.3,
+     "yoy": "+22.3%"
+    },
+    {
+     "label": "销售成本",
+     "value": -167.7,
+     "indent": 1
+    },
+    {
+     "label": "毛利",
+     "value": 80.6,
+     "kind": "sub",
+     "yoy": "+34.4%"
+    },
+    {
+     "label": "费用、税项及其他",
+     "value": -36.1,
+     "indent": 1
+    },
+    {
+     "label": "净利润",
+     "value": 44.5,
+     "kind": "total",
+     "yoy": "+39.8%"
+    }
+   ],
+   "hl": "净利润",
+   "hl_note": "净利率 17.9%",
+   "line": "一张利润表看下来，最后剩下的是 *44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告；成本、费用由公告数字推算",
+   "label": "财报表 · Statement",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 4.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "waterfall",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "248.3 亿收入，最后剩多少",
+   "note": "蜜雪集团 2024 · 单位：亿元",
+   "unit": "亿",
+   "dec": 1,
+   "readout": "剩下",
+   "steps": [
+    [
+     "营业收入",
+     248.3,
+     "start"
+    ],
+    [
+     "销售成本",
+     -167.7
+    ],
+    [
+     "毛利",
+     null,
+     "sub"
+    ],
+    [
+     "费用、税项及其他",
+     -36.1
+    ],
+    [
+     "净利润",
+     null,
+     "end"
+    ]
+   ],
+   "line": "248 亿收入，扣掉成本和费用，落到口袋里的是 *44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告；成本、费用由公告数字推算",
+   "label": "瀑布图 · Waterfall",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 9.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scale_compare",
+   "d": 5.0,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "mode": "laps",
+   "ratio": 7.835,
+   "dec": 1,
+   "head": "上海港一年|5150 万个标准箱，首尾相连",
+   "ratio_label": "圈",
+   "ref": "Envato Popular Infographic · Mapal VOX 式信息图 34.6万播放",
+   "method": "按 20 英尺箱长 6.096 米、赤道周长 40,075 公里计算",
+   "line": "上海港一年的集装箱首尾相连，能绕赤道 *7.8 圈*。",
+   "src": "上港集团 2024 年业务快报",
+   "label": "尺度换算 · Scale Compare",
+   "t": 14.2,
+   "tr": "hard",
+   "basis": "绕地球赤道"
+  },
+  {
+   "scene": "fx",
+   "fx": "bar_race",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "csv": "assets/stores.csv",
+   "x": "时间",
+   "hl": "蜜雪冰城",
+   "title": "全球门店数",
+   "note": "星巴克为财年末（9 月底）",
+   "line": "一年时间，蜜雪冰城从第三冲到了*第一*。",
+   "src": "McDonald's、Starbucks 10-K；蜜雪集团 2024 年度业绩公告",
+   "label": "柱状图赛跑 · Bar Race",
+   "ref": "Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放",
+   "t": 19.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "stacked_bars",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "csv": "assets/nev_sales.csv",
+   "x": "年份",
+   "series_cols": [
+    "纯电动",
+    "插电混动"
+   ],
+   "hl": "插电混动",
+   "unit": "万辆",
+   "dec": 1,
+   "title": "中国新能源车 · 年销量",
+   "note": "单位：万辆 · 读自 nev_sales.csv",
+   "line": "四年里，插混从 60 万辆涨到了 *514 万辆*。",
+   "src": "中国汽车工业协会；2024 年拆分按占比推算",
+   "label": "堆叠柱状图 · Stacked Bars",
+   "ref": "SonduckFilm Bar Infographics 23.2万播放 · Infographic Maker 2.6K",
+   "t": 24.2,
+   "tr": "hard",
+   "total_col": "合计"
+  },
+  {
+   "scene": "fx",
+   "fx": "formula",
+   "d": 4.4,
+   "theme": "red",
+   "topic": "商业拆解",
+   "lhs": "净利率",
+   "terms": [
+    [
+     "净利润",
+     "44.5 亿"
+    ],
+    [
+     "营业收入",
+     "248.3 亿"
+    ]
+   ],
+   "ops": [
+    "÷"
+   ],
+   "result": "17.9%",
+   "note": "蜜雪集团 2024 年",
+   "line": "净利率怎么算？*44.5 除以 248.3*。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "公式卡 · Formula",
+   "ref": "YouTube 数字滚动教程 162.6万播放 · Envato Popular Number Counter",
+   "t": 29.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "bars_csv",
+   "d": 4.2,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "csv": "assets/nev_sales.csv",
+   "x": "年份",
+   "y": "合计",
+   "unit": "万辆",
+   "dec": 1,
+   "title": "中国新能源车 · 年销量",
+   "note": "读自 nev_sales.csv",
+   "growth": "×3.65",
+   "line": "四年涨到 3.6 倍，*1286.6 万辆*。",
+   "src": "中国汽车工业协会",
+   "label": "表格直读 · CSV → 柱状图",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 33.4,
+   "tr": "hard"
+  }
+ ]
+}

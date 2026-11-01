@@ -1,0 +1,65 @@
+{
+ "meta": {
+  "title": "对话字幕演示（同一段旁白按句标成两人）",
+  "aspect": "16:9",
+  "style": "press",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words_dialogue.json",
+  "duration": 9.6,
+  "speakers": {
+   "A": {
+    "name": "主持人",
+    "color": "#f6ce3a",
+    "side": "left"
+   },
+   "B": {
+    "name": "嘉宾",
+    "color": "#7fd3ff",
+    "side": "right"
+   }
+  },
+  "caption_tr": [
+   "One ¥4 cup of lemon water — over ¥4.4 billion net profit a year.",
+   "Mixue: 46,000+ stores, more than McDonald's.",
+   "But its real business isn't selling tea."
+  ],
+  "caption_fix": {
+   "四十四亿多": "44 亿多",
+   "四万六千多": "4.6 万多"
+  },
+  "section": "流水线演示",
+  "src": "蜜雪集团 2024 年度业绩公告"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "pop",
+   "t": 0,
+   "theme": "paper",
+   "text": "一杯 4 块钱",
+   "sub": "one cup · ¥4"
+  },
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "t": "@蜜雪冰城",
+   "theme": "paper",
+   "words": [
+    "蜜雪冰城",
+    "4.6 万家店",
+    "比麦当劳",
+    "还多"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "impact",
+   "t": "@但它",
+   "theme": "red",
+   "text": "不是卖奶茶",
+   "sub": "not a tea business",
+   "tr": "hard"
+  }
+ ]
+}
