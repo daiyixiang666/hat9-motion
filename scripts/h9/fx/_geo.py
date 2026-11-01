@@ -11,5 +11,6 @@ DATA = Path(__file__).parent / "data"
 def need_geo(X):
     if "H9GEO" in X.extra_head: return
     land = (DATA / "land-50m.topo.json").read_text()
-    X.extra_head += (f'<script src="{D3}"></script>\n<script src="{TOPO}"></script>\n'
+    tags = X.geo_scripts() if hasattr(X, "geo_scripts") else f'<script src="{D3}"></script>\n<script src="{TOPO}"></script>'   # vendored copies when present
+    X.extra_head += (f'{tags}\n'
                      f'<script>window.H9GEO = window.H9GEO || {{}}; H9GEO.land = {land};</script>\n')

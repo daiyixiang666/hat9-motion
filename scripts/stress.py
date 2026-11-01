@@ -32,6 +32,8 @@ HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 OUT = SKILL / "examples" / "stress"
 BUILD, SHEETS, IMG = OUT / "build", OUT / "sheets", OUT / "build" / "img"
+# file params in target beats are made absolute against the target's base when the file exists there
+MEDIA_RX = re.compile(r"\.(jpe?g|png|webp|gif|avif|svg|pdf|mp4|mov|webm|m4v|mp3|wav|m4a|aac|ogg|flac|json|csv|xlsx?|txt|md|srt|vtt|html?)$", re.I)
 HF = ["npx", "--yes", "hyperframes@0.8.191"]
 FAIL = {"text_box_overflow", "canvas_overflow", "container_overflow", "content_overlap", "text_occluded"}
 SAFE_EXEMPT = [".pr-hd", ".pr-ft", ".ctx .ft", ".fx-tag", ".hud-read", ".po .hd", ".po .ft", ".po .tick"]   # page furniture (show name, source line, grid ticks) may sit under chrome
@@ -56,6 +58,21 @@ KNOWN = [
 ]
 DUR_FX = ["pop", "mask_up", "apple_blur", "stomp", "odometer", "impact", "tracking", "burst", "bars", "donut", "list_stack", "table", "media"]
 DUR_SET = (0.8, 6.0)
+# extra aspects (laid out as 9:16 behind a window, see core.CANVAS): a representative subset, on with --plugins
+EXTRA_ASPECTS = ("1:1", "3:4")
+ASPECT_SUBSET = ["press:hook", "press:split", "press:chain", "press:wheel", "mask_up", "stomp", "notify", "media", "table", "cite_quote", "list_stack"]
+# platform watermarks (approximate boxes where each app stamps its logo / account id), checked on the already-built
+# 9:16 / 16:9 pages of a subset: readable text must not sit under them. Furniture is exempt (SAFE_EXEMPT + WM_EXEMPT:
+# the show-name row, the effect tag, the thesis page's giant quote mark). Douyin's download stamp also visits the top
+# left, which is the page header's place by design, so only its bottom-right box is checked. Saved Douyin videos carry
+# a moving logo + account id at the bottom right; the box is an estimate that starts under the 9:16 caption band (~1500).
+WM = {
+    "douyin":      ("9:16", [{"n": "wm-douyin-br", "x0": 640, "y0": 1500, "x1": 1050, "y1": 1640, "tx": 6, "ty": 10}]),
+    "xiaohongshu": ("9:16", [{"n": "wm-xhs-br", "x0": 690, "y0": 1690, "x1": 1060, "y1": 1870, "tx": 6, "ty": 10}]),
+    "bilibili":    ("16:9", [{"n": "wm-bili-tr", "x0": 1500, "y0": 26, "x1": 1894, "y1": 110, "tx": 6, "ty": 8}]),
+}
+WM_EXEMPT = [".ctx .hd", ".pr-thesis .qm"]
+WM_SUBSET = ["press:hook", "press:stores", "press:thesis", "mask_up", "apple_blur", "lower3", "odometer", "cite_quote", "list_stack", "table"]
 TMETA = {}               # target -> extra meta for its composition (e.g. bpm for beat-cut effects)
 # (target prefix, code, selector regex) that are intentional
 ALLOW = [
@@ -343,18 +360,19 @@ def safe_tools():
     return v
 
 
-def safe_area(target, style, work, at, d):
+def safe_area(target, style, work, at, d, zones=None, W=1080, H=1920, extra_ex=()):
     tools = safe_tools()
     if not tools: return []
     try:
         sys.path.insert(0, str(HERE))
         import build as _b
-        ex = list(SAFE_EXEMPT) + list(_b.load_style(style).get("safe_exempt", []))
+        ex = list(SAFE_EXEMPT) + list(_b.load_style(style).get("safe_exempt", [])) + list(extra_ex)
     except Exception:
-        ex = list(SAFE_EXEMPT)
+        ex = list(SAFE_EXEMPT) + list(extra_ex)
     env = dict(os.environ, H9_PUPPETEER=tools[0], H9_CHROME=tools[1])
-    r = subprocess.run(["node", str(HERE / "h9" / "safearea.cjs"), str(work / "index.html"), ",".join(map(str, at)), "1080", "1920", "||".join(ex)],
-                       capture_output=True, text=True, env=env, timeout=300)
+    args = ["node", str(HERE / "h9" / "safearea.cjs"), str(work / "index.html"), ",".join(map(str, at)), str(W), str(H), "||".join(ex)]
+    if zones: args.append(json.dumps(zones))
+    r = subprocess.run(args, capture_output=True, text=True, env=env, timeout=300)
     if r.returncode: return [f"safe-area probe failed: {(r.stderr or r.stdout)[-200:]}"]
     out, seen = [], set()
     for v in json.loads(r.stdout or "[]"):
@@ -396,6 +414,9 @@ def main():
     ap.add_argument("--targets", action="store_true", help="also run examples/stress/targets/*.json (on with --plugins)")
     ap.add_argument("--durations", action="store_true", help="also the 0.8 s / 6 s duration targets (on with --plugins)")
     ap.add_argument("--no-safe", action="store_true", help="skip the 9:16 safe-area rule")
+    ap.add_argument("--aspects-extra", action="store_true", help="also 1:1 and 3:4 on a subset (on with --plugins)")
+    ap.add_argument("--watermark", action="store_true", help="platform watermark zones on a subset (on with --plugins)")
+    ap.add_argument("--only-aspects", action="store_true", help=argparse.SUPPRESS)
     a = ap.parse_args()
     P = pictures()
     targets = {}
@@ -409,7 +430,7 @@ def main():
         def absolutise(o):    # the plugin variants name their media relative to examples/aefx
             if isinstance(o, dict): return {k: absolutise(v) for k, v in o.items()}
             if isinstance(o, list): return [absolutise(v) for v in o]
-            if isinstance(o, str) and re.search(r"\.(jpe?g|png|webp|mp4|mov|webm|m4v|json)$", o, re.I) and not o.startswith("/") and (base / o).exists():
+            if isinstance(o, str) and MEDIA_RX.search(o) and not o.startswith("/") and (base / o).exists():
                 return str((base / o).resolve())
             return o
         if vp.exists():
@@ -431,7 +452,7 @@ def main():
             def tabs(o, tbase=tbase):
                 if isinstance(o, dict): return {k: tabs(v) for k, v in o.items()}
                 if isinstance(o, list): return [tabs(v) for v in o]
-                if isinstance(o, str) and re.search(r"\.(jpe?g|png|webp|gif|pdf|mp4|mov|webm|m4v|json|csv|xlsx?)$", o, re.I) and not o.startswith("/") and (tbase / o).exists():
+                if isinstance(o, str) and MEDIA_RX.search(o) and not o.startswith("/") and (tbase / o).exists():
                     return str((tbase / o).resolve())
                 return o
             groups = {}
@@ -460,13 +481,30 @@ def main():
         keep = set(a.only.split(","))
         targets = {k: v for k, v in targets.items() if k in keep or k.split(":")[-1] in keep or k.split("@")[0].split(":")[-1] in keep}
     jobs = [(t, v, asp) for t, v in targets.items() for asp in a.aspect.split(",")]
-    print(f"{len(targets)} targets × {len(a.aspect.split(','))} aspects = {len(jobs)} builds")
+    if (a.plugins or a.aspects_extra) and not a.only_aspects:
+        jobs += [(t, targets[t], asp) for t in ASPECT_SUBSET if t in targets for asp in EXTRA_ASPECTS]
+    print(f"{len(targets)} targets × {len(a.aspect.split(','))} aspects (+ {len(EXTRA_ASPECTS)} extra aspects on a subset) = {len(jobs)} builds")
     res = []
     with ThreadPoolExecutor(max_workers=a.jobs) as ex:
         for r in ex.map(lambda j: run_target(j[0], j[1], j[2], not a.no_snap, not a.no_safe), jobs):
             res.append(r)
             print(("PASS " if r["ok"] else "FAIL ") + f"{r['target']:<18} {r['aspect']:<5} " + ("" if r["ok"] else f"{len(r['fails'])} issues"), flush=True)
             for f in r["fails"][:6]: print("      ", f)
+    if (a.plugins or a.watermark) and not a.no_safe:
+        for plat, (asp, zones) in WM.items():
+            W_, H_ = (1080, 1920) if asp == "9:16" else (1920, 1080)
+            for t in WM_SUBSET:
+                if t not in targets or asp not in a.aspect.split(","): continue
+                work = BUILD / f"{t.replace(':', '_')}_{asp.replace(':', 'x')}"
+                if not (work / "index.html").exists(): continue
+                d = 4.4 if ":" in t else BEAT.get(t, 2.6)
+                if t.startswith("press:split"): d = 6.0
+                style = "reel" if ":" not in t else t.split(":")[0]
+                fl = safe_area(t, style, work, settle_times(t, len(targets[t]), d), d, zones=zones, W=W_, H=H_, extra_ex=WM_EXEMPT)
+                r = {"target": f"{t} [wm {plat}]", "aspect": asp, "ok": not fl, "fails": fl, "known": [], "n": len(targets[t])}
+                res.append(r)
+                print(("PASS " if r["ok"] else "FAIL ") + f"{r['target']:<28} {asp:<5} " + ("" if r["ok"] else f"{len(fl)} issues"), flush=True)
+                for f in fl[:4]: print("      ", f)
     ok = sum(r["ok"] for r in res)
     rep = [f"# 压力测试报告", "", f"{ok} / {len(res)} 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。", "",
            "| 目标 | 画幅 | 变体 | 结果 |", "|---|---|---|---|"]

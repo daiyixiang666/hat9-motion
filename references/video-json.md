@@ -67,3 +67,22 @@
 | `caption_tr` | 每句一行 | 第二语言字幕（按 。！？ 切句对齐） |
 
 工具：`scripts/align.py`（录音 + 稿子 → words.json）、`scripts/cover.py`（16:9 / 4:3 / 3:4 封面）、`scripts/url_brief.py`（网址 → 长截图 + 引用 beat）、`scripts/h9/data.py`（数据效果直接读 CSV / Excel）。
+
+## 交付开关（写在 `meta` 里，0.7）
+
+| 开关 | 写法 | 作用 |
+|---|---|---|
+| `breath` | `true` | 旁白 0.25–1.4 秒的停顿里，画面轻轻「吸一口气」 |
+| `rate_adapt` | `true` | 语速快（每秒 6 字以上）时入场整体加速，最多 1.6 倍；语速慢（每秒 3.5 字以下）时镜头推得更开，并加柔光层 |
+| beat `sfx` | `[{"at": "@词", "name": "hit", "vol": 0.5, "hit": "flash"}]` | 音效和画面冲击在同一帧；`hit` 可选 flash / dark / shake / punch |
+| beat `mood` + `music_moods` | `"mood": "heavy"`；`{"heavy": "重.mp3"}` | 沉重段落换深色调和配乐，后面的 beat 沿用 |
+| `aspect` | `1:1` / `4:5` / `3:4` | 按 9:16 排版后缩放裁切；`canvas: false` 关掉 |
+| `ai_label` | `true` / `"AI 生成"` / `{"text", "pos"}` | 画面角落常驻「AI 生成」标识 |
+| `caption_preset` | `douyin` / `shipinhao` / `xiaohongshu` / `bilibili` / `youtube` | 套用对应平台的字幕样式 |
+| `brand` | brand.json 路径或对象 | 颜色、字体、圆角、logo 套到任何风格（用 `design_md.py --brand-json` 生成） |
+| `series` | `{"name", "ep", "opener": true}` | 加 1.8 秒系列片头，封面眉题自动带期数 |
+| `lang` / `--lang` | `"ja"` | 多语言字段 `{"zh", "en", "ja", …}` 里选一种；日文、韩文、繁体、阿拉伯文、希伯来文自动换字体 |
+| `offline` | `true` | 地图只用仓库自带的 d3-geo 和 topojson，缺文件就报错 |
+| 文字标记 | `CO_{2}`、`mc^{2}` | 下标、上标 |
+
+工具：`scripts/cut_list.py`（长口播挑段精剪）、`scripts/ref_pacing.py`（量参考片的剪辑节奏）、`scripts/export_edit.py`（FCPXML + 分轨音频 + SRT，可导入剪辑软件）、`scripts/longform.py`（长片按章节分段渲染再拼接）、`scripts/share_card.py`（导出单张金句图）、`scripts/audio_tools.py`（降噪、拼接录音、剪口误）。

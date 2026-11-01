@@ -1,34 +1,300 @@
 {
-  "noto-sans-sc":   {"file": "NotoSansSC-VF.ttf", "weight": "100 900", "fallback": "'PingFang SC','Microsoft YaHei',sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/notosanssc"},
-  "noto-serif-sc":  {"file": "NotoSerifSC-VF.ttf", "weight": "200 900", "fallback": "'Songti SC','SimSun',serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/notoserifsc"},
-  "lxgw-wenkai":    {"file": "LXGWWenKai-Medium.ttf", "weight": "500", "fallback": "'Kaiti SC',serif", "license": "OFL-1.1", "url": "https://github.com/lxgw/LxgwWenKai"},
-  "smiley-sans":    {"file": "SmileySans-Oblique.ttf", "weight": "400", "fallback": "sans-serif", "license": "OFL-1.1", "url": "https://github.com/atelier-anchor/smiley-sans"},
-  "zcool-kuaile":   {"file": "ZCOOLKuaiLe-Regular.ttf", "weight": "400", "fallback": "sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/zcoolkuaile"},
-  "zcool-xiaowei":  {"file": "ZCOOLXiaoWei-Regular.ttf", "weight": "400", "fallback": "serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/zcoolxiaowei"},
-  "zcool-qingke":   {"file": "ZCOOLQingKeHuangYou-Regular.ttf", "weight": "400", "fallback": "sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/zcoolqingkehuangyou"},
-  "ma-shan-zheng":  {"file": "MaShanZheng-Regular.ttf", "weight": "400", "fallback": "'Kaiti SC',serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/mashanzheng"},
-  "long-cang":      {"file": "LongCang-Regular.ttf", "weight": "400", "fallback": "cursive", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/longcang"},
-  "inter":          {"file": "Inter[opsz,wght].ttf", "weight": "100 900", "fallback": "'Helvetica Neue',Arial,sans-serif", "license": "OFL-1.1", "url": "https://github.com/rsms/inter"},
-  "space-grotesk":  {"file": "SpaceGrotesk[wght].ttf", "weight": "300 700", "fallback": "sans-serif", "license": "OFL-1.1", "url": "https://github.com/floriankarsten/space-grotesk"},
-  "archivo":        {"file": "Archivo[wdth,wght].ttf", "weight": "100 900", "fallback": "sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/archivo"},
-  "barlow-cond":    {"file": "BarlowCondensed-Bold.ttf", "weight": "700", "fallback": "'Arial Narrow',sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"},
-  "barlow-cond-black": {"file": "BarlowCondensed-Black.ttf", "weight": "900", "fallback": "'Arial Narrow',sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"},
-  "oswald":         {"file": "Oswald[wght].ttf", "weight": "200 700", "fallback": "'Arial Narrow',sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/oswald"},
-  "anton":          {"file": "Anton-Regular.ttf", "weight": "400", "fallback": "Impact,sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/anton"},
-  "bebas":          {"file": "BebasNeue-Regular.ttf", "weight": "400", "fallback": "Impact,sans-serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/bebasneue"},
-  "playfair":       {"file": "PlayfairDisplay[wght].ttf", "weight": "400 900", "fallback": "Georgia,serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"},
-  "playfair-italic": {"file": "PlayfairDisplay-Italic[wght].ttf", "weight": "400 900", "style": "italic", "fallback": "Georgia,serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"},
-  "fraunces":       {"file": "Fraunces[SOFT,WONK,opsz,wght].ttf", "weight": "100 900", "fallback": "Georgia,serif", "license": "OFL-1.1", "url": "https://github.com/undercasetype/Fraunces"},
-  "eb-garamond":    {"file": "EBGaramond[wght].ttf", "weight": "400 800", "fallback": "Garamond,serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"},
-  "eb-garamond-italic": {"file": "EBGaramond-Italic[wght].ttf", "weight": "400 800", "style": "italic", "fallback": "Garamond,serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"},
-  "dm-serif":       {"file": "DMSerifDisplay-Regular.ttf", "weight": "400", "fallback": "Georgia,serif", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/dmserifdisplay"},
-  "jetbrains-mono": {"file": "JetBrainsMono[wght].ttf", "weight": "100 800", "fallback": "Menlo,Consolas,monospace", "license": "OFL-1.1", "url": "https://github.com/JetBrains/JetBrainsMono"},
-  "ibm-plex-mono":  {"file": "IBMPlexMono-Medium.ttf", "weight": "500", "fallback": "Menlo,monospace", "license": "OFL-1.1", "url": "https://github.com/IBM/plex"},
-  "space-mono":     {"file": "SpaceMono-Regular.ttf", "weight": "400", "fallback": "monospace", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/spacemono"},
-  "special-elite":  {"file": "SpecialElite-Regular.ttf", "weight": "400", "fallback": "'Courier New',monospace", "license": "Apache-2.0", "url": "https://github.com/google/fonts/tree/main/apache/specialelite"},
-  "courier-prime":  {"file": "CourierPrime-Regular.ttf", "weight": "400", "fallback": "'Courier New',monospace", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/courierprime"},
-  "vt323":          {"file": "VT323-Regular.ttf", "weight": "400", "fallback": "monospace", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/vt323"},
-  "permanent-marker": {"file": "PermanentMarker-Regular.ttf", "weight": "400", "fallback": "cursive", "license": "Apache-2.0", "url": "https://github.com/google/fonts/tree/main/apache/permanentmarker"},
-  "caveat":         {"file": "Caveat[wght].ttf", "weight": "400 700", "fallback": "cursive", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/caveat"},
-  "kalam":          {"file": "Kalam-Bold.ttf", "weight": "700", "fallback": "cursive", "license": "OFL-1.1", "url": "https://github.com/google/fonts/tree/main/ofl/kalam"}
+ "noto-sans-sc": {
+  "file": "NotoSansSC-VF.ttf",
+  "weight": "100 900",
+  "fallback": "'PingFang SC','Microsoft YaHei',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosanssc"
+ },
+ "noto-serif-sc": {
+  "file": "NotoSerifSC-VF.ttf",
+  "weight": "200 900",
+  "fallback": "'Songti SC','SimSun',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notoserifsc"
+ },
+ "lxgw-wenkai": {
+  "file": "LXGWWenKai-Medium.ttf",
+  "weight": "500",
+  "fallback": "'Kaiti SC',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/lxgw/LxgwWenKai"
+ },
+ "smiley-sans": {
+  "file": "SmileySans-Oblique.ttf",
+  "weight": "400",
+  "fallback": "sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/atelier-anchor/smiley-sans"
+ },
+ "zcool-kuaile": {
+  "file": "ZCOOLKuaiLe-Regular.ttf",
+  "weight": "400",
+  "fallback": "sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolkuaile"
+ },
+ "zcool-xiaowei": {
+  "file": "ZCOOLXiaoWei-Regular.ttf",
+  "weight": "400",
+  "fallback": "serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolxiaowei"
+ },
+ "zcool-qingke": {
+  "file": "ZCOOLQingKeHuangYou-Regular.ttf",
+  "weight": "400",
+  "fallback": "sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolqingkehuangyou"
+ },
+ "ma-shan-zheng": {
+  "file": "MaShanZheng-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Kaiti SC',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/mashanzheng"
+ },
+ "long-cang": {
+  "file": "LongCang-Regular.ttf",
+  "weight": "400",
+  "fallback": "cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/longcang"
+ },
+ "inter": {
+  "file": "Inter[opsz,wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Helvetica Neue',Arial,sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/rsms/inter"
+ },
+ "space-grotesk": {
+  "file": "SpaceGrotesk[wght].ttf",
+  "weight": "300 700",
+  "fallback": "sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/floriankarsten/space-grotesk"
+ },
+ "archivo": {
+  "file": "Archivo[wdth,wght].ttf",
+  "weight": "100 900",
+  "fallback": "sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/archivo"
+ },
+ "barlow-cond": {
+  "file": "BarlowCondensed-Bold.ttf",
+  "weight": "700",
+  "fallback": "'Arial Narrow',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"
+ },
+ "barlow-cond-black": {
+  "file": "BarlowCondensed-Black.ttf",
+  "weight": "900",
+  "fallback": "'Arial Narrow',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"
+ },
+ "oswald": {
+  "file": "Oswald[wght].ttf",
+  "weight": "200 700",
+  "fallback": "'Arial Narrow',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/oswald"
+ },
+ "anton": {
+  "file": "Anton-Regular.ttf",
+  "weight": "400",
+  "fallback": "Impact,sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/anton"
+ },
+ "bebas": {
+  "file": "BebasNeue-Regular.ttf",
+  "weight": "400",
+  "fallback": "Impact,sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/bebasneue"
+ },
+ "playfair": {
+  "file": "PlayfairDisplay[wght].ttf",
+  "weight": "400 900",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"
+ },
+ "playfair-italic": {
+  "file": "PlayfairDisplay-Italic[wght].ttf",
+  "weight": "400 900",
+  "style": "italic",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"
+ },
+ "fraunces": {
+  "file": "Fraunces[SOFT,WONK,opsz,wght].ttf",
+  "weight": "100 900",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/undercasetype/Fraunces"
+ },
+ "eb-garamond": {
+  "file": "EBGaramond[wght].ttf",
+  "weight": "400 800",
+  "fallback": "Garamond,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"
+ },
+ "eb-garamond-italic": {
+  "file": "EBGaramond-Italic[wght].ttf",
+  "weight": "400 800",
+  "style": "italic",
+  "fallback": "Garamond,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"
+ },
+ "dm-serif": {
+  "file": "DMSerifDisplay-Regular.ttf",
+  "weight": "400",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/dmserifdisplay"
+ },
+ "jetbrains-mono": {
+  "file": "JetBrainsMono[wght].ttf",
+  "weight": "100 800",
+  "fallback": "Menlo,Consolas,monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/JetBrains/JetBrainsMono"
+ },
+ "ibm-plex-mono": {
+  "file": "IBMPlexMono-Medium.ttf",
+  "weight": "500",
+  "fallback": "Menlo,monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/IBM/plex"
+ },
+ "space-mono": {
+  "file": "SpaceMono-Regular.ttf",
+  "weight": "400",
+  "fallback": "monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/spacemono"
+ },
+ "special-elite": {
+  "file": "SpecialElite-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Courier New',monospace",
+  "license": "Apache-2.0",
+  "url": "https://github.com/google/fonts/tree/main/apache/specialelite"
+ },
+ "courier-prime": {
+  "file": "CourierPrime-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Courier New',monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/courierprime"
+ },
+ "vt323": {
+  "file": "VT323-Regular.ttf",
+  "weight": "400",
+  "fallback": "monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/vt323"
+ },
+ "permanent-marker": {
+  "file": "PermanentMarker-Regular.ttf",
+  "weight": "400",
+  "fallback": "cursive",
+  "license": "Apache-2.0",
+  "url": "https://github.com/google/fonts/tree/main/apache/permanentmarker"
+ },
+ "caveat": {
+  "file": "Caveat[wght].ttf",
+  "weight": "400 700",
+  "fallback": "cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/caveat"
+ },
+ "kalam": {
+  "file": "Kalam-Bold.ttf",
+  "weight": "700",
+  "fallback": "cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/kalam"
+ },
+ "noto-sans-jp": {
+  "file": "NotoSansJP[wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Hiragino Sans','Yu Gothic','Noto Sans JP',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosansjp",
+  "optional": true,
+  "note": "日文；没装时回退到系统日文字体"
+ },
+ "noto-sans-kr": {
+  "file": "NotoSansKR[wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosanskr",
+  "optional": true,
+  "note": "韩文；没装时回退到系统韩文字体"
+ },
+ "noto-sans-tc": {
+  "file": "NotoSansTC[wght].ttf",
+  "weight": "100 900",
+  "fallback": "'PingFang TC','Microsoft JhengHei',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosanstc",
+  "optional": true,
+  "note": "繁体中文字形；没装时用思源黑体 SC（字都能显示，字形是简体习惯）"
+ },
+ "noto-serif-jp": {
+  "file": "NotoSerifJP[wght].ttf",
+  "weight": "200 900",
+  "fallback": "'Hiragino Mincho ProN','Yu Mincho','Noto Serif JP',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notoserifjp",
+  "optional": true,
+  "note": "日文衬线；没装时回退到系统明朝体"
+ },
+ "noto-serif-kr": {
+  "file": "NotoSerifKR[wght].ttf",
+  "weight": "200 900",
+  "fallback": "'AppleMyungjo','Batang','Noto Serif KR',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notoserifkr",
+  "optional": true,
+  "note": "韩文衬线；没装时回退到系统明朝体"
+ },
+ "noto-sans-arabic": {
+  "file": "NotoSansArabic[wdth,wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Geeza Pro','Segoe UI','Noto Sans Arabic',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosansarabic",
+  "optional": true,
+  "note": "阿拉伯文（无衬线）；没装时回退到系统字体"
+ },
+ "noto-naskh-arabic": {
+  "file": "NotoNaskhArabic[wght].ttf",
+  "weight": "400 700",
+  "fallback": "'Geeza Pro','Times New Roman','Noto Naskh Arabic',serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notonaskharabic",
+  "optional": true,
+  "note": "阿拉伯文（誊抄体，正文 / 引文）；没装时回退到系统字体"
+ },
+ "noto-sans-hebrew": {
+  "file": "NotoSansHebrew[wdth,wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Arial Hebrew','Segoe UI','Noto Sans Hebrew',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosanshebrew",
+  "optional": true,
+  "note": "希伯来文；没装时回退到系统字体"
+ }
 }

@@ -1,0 +1,108 @@
+{
+ "meta": {
+  "title": {
+   "zh": "上标、下标与多语言",
+   "en": "Super, sub and languages",
+   "ja": "上付き・下付き・多言語"
+  },
+  "aspect": "16:9",
+  "duration": 10.4,
+  "style": "reel"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 0,
+   "d": 2.6,
+   "theme": "paper",
+   "topic": {
+    "zh": "化学",
+    "en": "Chemistry",
+    "ja": "化学"
+   },
+   "text": {
+    "zh": "一吨 CO_{2}|等于 0.27 吨碳",
+    "en": "One tonne of CO_{2}|is 0.27 t of carbon",
+    "ja": "CO_{2} 1 トンは|炭素 0.27 トン"
+   },
+   "line": {
+    "zh": "一吨 *CO_{2}*，按质量算只含 0.27 吨碳。",
+    "en": "A tonne of *CO_{2}* holds only 0.27 t of carbon.",
+    "ja": "*CO_{2}* 1 トンに含まれる炭素は 0.27 トンだけ。"
+   },
+   "src": "12/44 = 0.273（C 与 CO₂ 的摩尔质量比）"
+  },
+  {
+   "scene": "fx",
+   "fx": "apple_blur",
+   "t": 2.6,
+   "d": 2.6,
+   "tr": "hard",
+   "theme": "ink",
+   "topic": {
+    "zh": "物理",
+    "en": "Physics",
+    "ja": "物理"
+   },
+   "text": "E = mc^{2}",
+   "sub": {
+    "zh": "质能方程",
+    "en": "mass–energy equivalence",
+    "ja": "質量とエネルギーの等価性"
+   },
+   "line": {
+    "zh": "爱因斯坦的 *E = mc^{2}*，一个平方，就是光速的平方。",
+    "en": "Einstein's *E = mc^{2}*: the square is the speed of light, squared.",
+    "ja": "アインシュタインの *E = mc^{2}*。二乗は光速の二乗。"
+   }
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 5.2,
+   "d": 2.6,
+   "tr": "hard",
+   "theme": "lemon",
+   "topic": {
+    "zh": "数学",
+    "en": "Maths",
+    "ja": "数学"
+   },
+   "text": "a^{2} + b^{2} = c^{2}",
+   "sub": {
+    "zh": "勾股定理",
+    "en": "Pythagorean theorem",
+    "ja": "三平方の定理"
+   },
+   "line": {
+    "zh": "直角三角形里，*a^{2} + b^{2} = c^{2}*。",
+    "en": "In a right triangle, *a^{2} + b^{2} = c^{2}*.",
+    "ja": "直角三角形では *a^{2} + b^{2} = c^{2}*。"
+   }
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 7.8,
+   "d": 2.6,
+   "tr": "hard",
+   "theme": "paper",
+   "topic": {
+    "zh": "繁体与 emoji",
+    "en": "Traditional & emoji",
+    "ja": "繁体字と絵文字"
+   },
+   "text": {
+    "zh": "臺灣・香港 繁體字|也能正常顯示 ✅",
+    "en": "繁體字 and emoji ✅|render fine",
+    "ja": "繁體字と絵文字 ✅|も表示できる"
+   },
+   "line": {
+    "zh": "繁體字和 *emoji* 都能直接放进来 🎬",
+    "en": "Traditional characters and *emoji* go straight in 🎬",
+    "ja": "繁體字も *絵文字* もそのまま 🎬"
+   }
+  }
+ ]
+}

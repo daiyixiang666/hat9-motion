@@ -1,0 +1,495 @@
+{
+ "base": "examples/docs2",
+ "note": "W4 image & document effects: 3 deliberately different inputs each; media paths relative to base.",
+ "beats": [
+  {
+   "fx": "logo_wall",
+   "theme": "paper",
+   "logos": [
+    "北岸咖啡",
+    "Lumen",
+    "叁号工厂"
+   ],
+   "hl": 1
+  },
+  {
+   "fx": "logo_wall",
+   "theme": "ink",
+   "logos": [
+    "北岸咖啡",
+    "Lumen Labs",
+    "青舟研究所",
+    "Orbit & Co.",
+    "山野茶社",
+    "PixelForge",
+    "一个名字特别特别长的虚构品牌",
+    "Nord",
+    "星河零售",
+    "Delta Nine",
+    "叁号工厂",
+    "Moss",
+    "Kite Studio",
+    "月台书店",
+    "Arcadia Mobility",
+    "小满",
+    "Quartz",
+    "白塔物流",
+    "Helix",
+    "南风",
+    "Vela Robotics",
+    "川流",
+    "Opal",
+    "长名字 Long Name Holdings"
+   ],
+   "hl": 17,
+   "title": "二十四个虚构品牌，测试拥挤的情况",
+   "sub": "Vela Robotics · 虚构"
+  },
+  {
+   "fx": "logo_wall",
+   "theme": "lemon",
+   "logos": [
+    {
+     "src": "assets/meme_lemon.jpg",
+     "name": "柠檬"
+    },
+    {
+     "src": "assets/meme_turn.jpg",
+     "name": "反转"
+    },
+    {
+     "src": "assets/meme_dash.jpg",
+     "name": "仪表盘"
+    },
+    {
+     "src": "assets/square.jpg",
+     "name": "方图"
+    },
+    {
+     "src": "assets/tiny_portrait.jpg",
+     "name": "竖图"
+    },
+    {
+     "src": "assets/wide_strip.jpg",
+     "name": "长条"
+    }
+   ],
+   "hl": 4,
+   "title": "自带图片当 logo：横的、竖的、方的、很长的都行",
+   "kicker": "图片 logo"
+  },
+  {
+   "fx": "halftone",
+   "theme": "ink",
+   "image": "assets/tiny_portrait.jpg",
+   "mode": "duotone",
+   "title": "90 像素宽的竖图"
+  },
+  {
+   "fx": "halftone",
+   "theme": "paper",
+   "image": "assets/tiny_dash.jpg",
+   "mode": "riso",
+   "kicker": "RISO",
+   "title": "双色孔版：一张 160 像素的截图，也能印出层次感"
+  },
+  {
+   "fx": "halftone",
+   "theme": "red",
+   "image": "assets/wide_strip.jpg",
+   "mode": "halftone"
+  },
+  {
+   "fx": "meme_stage",
+   "theme": "paper",
+   "items": [
+    "assets/meme_dash.jpg"
+   ]
+  },
+  {
+   "fx": "meme_stage",
+   "theme": "ink",
+   "mode": "swap",
+   "items": [
+    {
+     "src": "assets/meme_lemon.jpg",
+     "caption": "第一张"
+    },
+    {
+     "src": "assets/meme_turn.jpg",
+     "caption": "第二张的说明文字写得很长很长很长，看会不会换行"
+    },
+    {
+     "src": "assets/meme_dash.jpg",
+     "caption": "三"
+    },
+    {
+     "src": "assets/square.jpg",
+     "caption": "方图"
+    },
+    {
+     "src": "assets/tiny_portrait.jpg",
+     "caption": "竖图"
+    },
+    {
+     "src": "assets/wide_strip.jpg",
+     "caption": "一条很宽的长图"
+    }
+   ]
+  },
+  {
+   "fx": "meme_stage",
+   "theme": "lemon",
+   "items": [
+    {
+     "src": "assets/tiny_portrait.jpg",
+     "caption": "竖"
+    },
+    {
+     "src": "assets/wide_strip.jpg",
+     "caption": "横"
+    },
+    {
+     "src": "assets/square.jpg",
+     "caption": "方"
+    }
+   ],
+   "title": "三种比例混在一起"
+  },
+  {
+   "fx": "gif_clip",
+   "theme": "paper",
+   "gif": "assets/stomp.gif",
+   "frame": "phone",
+   "caption": "手机框"
+  },
+  {
+   "fx": "gif_clip",
+   "theme": "ink",
+   "gif": "assets/tiny.gif",
+   "frame": "window",
+   "title": "一个只有 120 像素、三帧的小 GIF",
+   "caption": "窗口框：GIF 很短时会一直循环，直到这一拍结束；说明文字也可以写得比较长"
+  },
+  {
+   "fx": "gif_clip",
+   "theme": "lemon",
+   "gif": "assets/stomp.gif",
+   "frame": "none",
+   "speed": 2.0
+  },
+  {
+   "fx": "svg_art",
+   "theme": "paper",
+   "svg": "assets/cup.svg",
+   "draw": false
+  },
+  {
+   "fx": "svg_art",
+   "theme": "ink",
+   "svg": "assets/cup.svg",
+   "recolor": false,
+   "title": "不重新上色：保留插画原本的颜色，标题写得长一点看换行",
+   "caption": "recolor 设为 false"
+  },
+  {
+   "fx": "svg_art",
+   "theme": "lemon",
+   "svg": "assets/store.svg",
+   "swap": "red",
+   "title": "线条图标",
+   "caption": "描边先画出来，再换成红色主题"
+  },
+  {
+   "fx": "doc_photo",
+   "theme": "ink",
+   "image": "assets/photo_ruling.jpg"
+  },
+  {
+   "fx": "doc_photo",
+   "theme": "paper",
+   "image": "assets/photo_ruling.jpg",
+   "corners": [
+    [
+     20.62,
+     10.0
+    ],
+    [
+     77.5,
+     15.83
+    ],
+    [
+     81.25,
+     92.5
+    ],
+    [
+     15.62,
+     88.33
+    ]
+   ],
+   "hl": [
+    [
+     42.5,
+     12.9,
+     46.56,
+     2.42
+    ],
+    [
+     11.44,
+     16.39,
+     10.97,
+     2.42
+    ],
+    [
+     10,
+     40,
+     60,
+     3
+    ]
+   ],
+   "kicker": "扫描",
+   "title": "三处标注",
+   "caption": "角点手动给出；第三处标注只是测试位置，不对应原文内容，说明文字写长一点看看换行"
+  },
+  {
+   "fx": "doc_photo",
+   "theme": "lemon",
+   "image": "assets/meme_dash.jpg",
+   "title": "照片里找不到纸张时，整张照片照常使用"
+  },
+  {
+   "fx": "slides",
+   "theme": "paper",
+   "slides": [
+    "assets/meme_lemon.jpg",
+    "assets/meme_turn.jpg"
+   ]
+  },
+  {
+   "fx": "slides",
+   "theme": "ink",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "range": "all",
+   "focus": 20,
+   "zoom": [
+    10,
+    10,
+    60,
+    20
+   ],
+   "title": "24 页 PDF 快速翻到第 20 页"
+  },
+  {
+   "fx": "slides",
+   "theme": "lemon",
+   "slides": [
+    "assets/tiny_portrait.jpg",
+    "assets/meme_1997.jpg",
+    "assets/tiny_portrait.jpg"
+   ],
+   "counter": false,
+   "title": "竖版幻灯片"
+  },
+  {
+   "fx": "doc_flip",
+   "theme": "paper",
+   "pages": [
+    "assets/meme_lemon.jpg",
+    "assets/meme_turn.jpg",
+    "assets/meme_dash.jpg",
+    "assets/square.jpg",
+    "assets/meme_1997.jpg"
+   ],
+   "target": 3,
+   "title": "图片当页面"
+  },
+  {
+   "fx": "doc_flip",
+   "theme": "ink",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "target": 14,
+   "caption": "不给引文，只翻到第 14 页"
+  },
+  {
+   "fx": "doc_flip",
+   "theme": "lemon",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "range": [
+    1,
+    4
+   ],
+   "target": 4,
+   "hl": [
+    10,
+    20,
+    70,
+    6
+   ],
+   "title": "只有四页，翻得慢一些也没关系，标题写长一点",
+   "of": 286
+  },
+  {
+   "fx": "doc_pick",
+   "theme": "paper",
+   "pages": [
+    "assets/meme_lemon.jpg",
+    "assets/meme_turn.jpg"
+   ],
+   "pick": 2,
+   "tag": "第二张"
+  },
+  {
+   "fx": "doc_pick",
+   "theme": "ink",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "range": "all",
+   "pick": 5,
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly",
+   "title": "二十四页里抽一页",
+   "caption": "页面多于十二张时会抽样显示；说明文字写长一点，看看它在竖屏里会不会和抽出来的那页打架"
+  },
+  {
+   "fx": "doc_pick",
+   "theme": "lemon",
+   "pages": [
+    "assets/tiny_portrait.jpg",
+    "assets/square.jpg",
+    "assets/wide_strip.jpg",
+    "assets/meme_dash.jpg"
+   ],
+   "pick": 1,
+   "tag": "竖图",
+   "title": "比例不一的一叠"
+  },
+  {
+   "fx": "handwrite",
+   "theme": "paper",
+   "lines": [
+    "*好*"
+   ],
+   "paper": "plain",
+   "ink": "black"
+  },
+  {
+   "fx": "handwrite",
+   "theme": "ink",
+   "title": "八条笔记",
+   "lines": [
+    "一、写下来比记在脑子里*可靠*",
+    "二、每条笔记一句话",
+    "三、关键词画圈",
+    "四、重要的事说三遍",
+    "五、*字太多就自动缩小*",
+    "六、行距跟着字号走",
+    "七、最后一行",
+    "八、真的最后一行了，这一行写得比前面都长一些"
+   ],
+   "paper": "grid",
+   "mark": "circle"
+  },
+  {
+   "fx": "handwrite",
+   "theme": "lemon",
+   "title": "牛皮纸",
+   "lines": [
+    "毛笔字体",
+    "*马善政*"
+   ],
+   "paper": "kraft",
+   "font": "ma-shan-zheng",
+   "ink": "red"
+  },
+  {
+   "fx": "email_card",
+   "theme": "paper",
+   "subject": "收到",
+   "body": [
+    "好的，*收到*。"
+   ],
+   "inbox": [],
+   "sender": "小王"
+  },
+  {
+   "fx": "email_card",
+   "theme": "ink",
+   "subject": "这是一封标题特别特别长的邮件，用来测试标题在三行之内能不能放下，以及放不下时会不会缩小",
+   "sender": "一个名字很长很长的发件人 <a.very.long.address@example.com>",
+   "to": "所有人",
+   "date": "2026-10-31",
+   "body": [
+    "第一段。",
+    "第二段写得长一点，看看正文在一屏里放不下时，字号会不会自动缩小，而且不会把附件挤出画面。",
+    "*第三段是重点*，要被划出来。",
+    "第四段。",
+    "第五段，也是最后一段。"
+   ],
+   "attachments": [
+    "附件一.pdf",
+    "附件二.xlsx",
+    "附件三.mp4",
+    "附件四.zip"
+   ],
+   "stamp": "示意"
+  },
+  {
+   "fx": "email_card",
+   "theme": "lemon",
+   "subject": "Re: Weekly sync",
+   "sender": "Alexandra Montgomery-Smith <alex@example.com>",
+   "to": "team",
+   "date": "Fri 09:12",
+   "body": [
+    "Thanks all — *notes attached*.",
+    "See you next week."
+   ],
+   "attachments": [
+    "notes.pdf"
+   ],
+   "stamp": "示意"
+  },
+  {
+   "fx": "notice_card",
+   "theme": "paper",
+   "org": "青舟研究所",
+   "kind": "说明",
+   "title": "一句话的说明",
+   "body": [
+    "本说明仅有一条。"
+   ],
+   "date": "2026-11-01"
+  },
+  {
+   "fx": "notice_card",
+   "theme": "ink",
+   "org": "一个名字非常非常长的虚构机构 · 研究与发布中心",
+   "kind": "通知",
+   "no": "XX-2026-123",
+   "title": "关于测试很长的条款和很多条款时版式是否正常的通知",
+   "body": [
+    "第一条写得很长很长，测试一条条款折成好几行时，行距和缩进是否正常，会不会和下一条挤在一起。",
+    "第二条。",
+    "*第三条是重点条款*。",
+    "第四条。",
+    "第五条。",
+    "第六条。",
+    "第七条。",
+    "第八条，最后一条。"
+   ],
+   "date": "2026-10-31",
+   "signer": "虚构机构"
+  },
+  {
+   "fx": "notice_card",
+   "theme": "red",
+   "org": "第九顶帽子",
+   "kind": "备忘",
+   "title": "自定义水印",
+   "body": [
+    "水印文字可以改。",
+    "*也可以关掉*。"
+   ],
+   "watermark": "仅供测试",
+   "date": "2026-11-01"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+ "name": "青舟研究所",
+ "source": "examples/brand/DESIGN.md",
+ "colors": {
+  "bg": "#eef1ed",
+  "fg": "#14211d",
+  "muted": "#566660",
+  "line": "#c6d1cb",
+  "card": "#fbfcfa",
+  "accent": "#0f6e62",
+  "accent2": "#d9a23f",
+  "alert": "#b23a2b"
+ },
+ "fonts": {
+  "display": "noto-serif-sc",
+  "mono": "ibm-plex-mono"
+ },
+ "tokens": {
+  "radius": "6px",
+  "cap-radius": "6px"
+ },
+ "logo": "assets/logo.svg"
+}

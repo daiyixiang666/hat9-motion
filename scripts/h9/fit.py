@@ -64,6 +64,7 @@ def gw(ch, mono=False):
         return 0.54
     if 0x2000 <= o < 0x2070: return 0.6 if ch not in "—…" else 1.0
     if 0xff61 <= o <= 0xffdc: return 0.5            # halfwidth forms
+    if 0x0590 <= o < 0x0900 or 0xfb1d <= o < 0xfe00 or 0xfe70 <= o < 0xff00: return 0.55   # Hebrew / Arabic (joined letters)
     return 1.0
 
 
@@ -346,6 +347,21 @@ def media(X, cid, key, src, t, d, cls, focus=None, box_ar=None, fill="auto", z=2
         return (f'<div class="{cls} mfill" style="{extra_style}"><img class="mb" src="{url}" alt="" data-layout-allow-overflow><img class="mc" src="{url}" alt="" style="object-position:{pos}"></div>',
                 f"#{cid} .{cls.split()[0]}")
     return f'<img class="{cls}" src="{url}" alt="" style="object-position:{pos}; {extra_style}">', f"#{cid} .{cls.split()[0]}"
+
+
+_WRAP = re.compile(r'<div id="([^"]+)" class="fxv[ "].*?<video id="\1v" [^>]*?data-start="([\d.]+)" data-duration="([\d.]+)"', re.S)
+
+
+def scope_media(X):
+    """the untimed video wrappers made by media() live all film; hide each one outside its video's window, so a painted
+    card (shadow, plate, border) does not show through later beats. build.py calls this once after the last beat,
+    outside the elastic / rate wraps, so the hide lands exactly when the video ends."""
+    for el in X.els:
+        m = _WRAP.match(el)
+        if not m: continue
+        wid, t, d = m.group(1), float(m.group(2)), float(m.group(3))
+        X.css(f"fit-scope-{wid}", f"#{wid} {{ visibility:hidden; }}")
+        X.tw(f'tl.set("#{wid}", {{visibility:"visible"}}, {t:.3f}); tl.set("#{wid}", {{visibility:"hidden"}}, {t + d:.3f});')
 
 
 def bg_css(X, src, focus=None):

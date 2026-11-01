@@ -1,15 +1,26 @@
 # 压力测试报告
 
-296 / 296 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
+480 / 480 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
 
 | 目标 | 画幅 | 变体 | 结果 |
 |---|---|---|---|
+| `app_flow` | 16:9 | 3 | 通过 |
+| `app_flow` | 9:16 | 3 | 通过 |
 | `apple_blur` | 16:9 | 6 | 通过 |
 | `apple_blur` | 9:16 | 6 | 通过 |
+| `apple_blur [wm bilibili]` | 16:9 | 6 | 通过 |
+| `apple_blur [wm douyin]` | 9:16 | 6 | 通过 |
+| `apple_blur [wm xiaohongshu]` | 9:16 | 6 | 通过 |
 | `apple_blur@0.8` | 16:9 | 2 | 通过 |
 | `apple_blur@0.8` | 9:16 | 2 | 通过 |
 | `apple_blur@6` | 16:9 | 2 | 通过 |
 | `apple_blur@6` | 9:16 | 2 | 通过 |
+| `area_overlay` | 16:9 | 4 | 通过 |
+| `area_overlay` | 9:16 | 4 | 通过 |
+| `audio_quote@3` | 16:9 | 3 | 通过 |
+| `audio_quote@3` | 9:16 | 3 | 通过 |
+| `audio_quote@6` | 16:9 | 3 | 通过 |
+| `audio_quote@6` | 9:16 | 3 | 通过 |
 | `bar_race` | 16:9 | 4 | 通过 |
 | `bar_race` | 9:16 | 4 | 通过 |
 | `bars` | 16:9 | 3 | 通过 |
@@ -26,6 +37,8 @@
 | `beat_cut@3` | 9:16 | 3 | 通过 |
 | `beat_cut@8` | 16:9 | 3 | 通过 |
 | `beat_cut@8` | 9:16 | 3 | 通过 |
+| `black_slam` | 16:9 | 4 | 通过 |
+| `black_slam` | 9:16 | 4 | 通过 |
 | `blur_focus` | 16:9 | 6 | 通过 |
 | `blur_focus` | 9:16 | 6 | 通过 |
 | `breather@1` | 16:9 | 3 | 通过 |
@@ -56,6 +69,8 @@
 | `chat` | 9:16 | 2 | 通过 |
 | `china_map` | 16:9 | 5 | 通过 |
 | `china_map` | 9:16 | 5 | 通过 |
+| `choose_one` | 16:9 | 4 | 通过 |
+| `choose_one` | 9:16 | 4 | 通过 |
 | `cite_article` | 16:9 | 2 | 通过 |
 | `cite_article` | 9:16 | 2 | 通过 |
 | `cite_paper` | 16:9 | 3 | 通过 |
@@ -65,11 +80,18 @@
 | `cite_post` | 16:9 | 2 | 通过 |
 | `cite_post` | 9:16 | 2 | 通过 |
 | `cite_quote` | 16:9 | 2 | 通过 |
+| `cite_quote` | 1:1 | 2 | 通过 |
+| `cite_quote` | 3:4 | 2 | 通过 |
 | `cite_quote` | 9:16 | 2 | 通过 |
+| `cite_quote [wm bilibili]` | 16:9 | 2 | 通过 |
+| `cite_quote [wm douyin]` | 9:16 | 2 | 通过 |
+| `cite_quote [wm xiaohongshu]` | 9:16 | 2 | 通过 |
 | `cite_stack` | 16:9 | 2 | 通过 |
 | `cite_stack` | 9:16 | 2 | 通过 |
 | `cite_video` | 16:9 | 2 | 通过 |
 | `cite_video` | 9:16 | 2 | 通过 |
+| `clip_style` | 16:9 | 3 | 通过 |
+| `clip_style` | 9:16 | 3 | 通过 |
 | `code` | 16:9 | 4 | 通过 |
 | `code` | 9:16 | 4 | 通过 |
 | `cold_open@1` | 16:9 | 3 | 通过 |
@@ -80,14 +102,32 @@
 | `cold_open@8` | 9:16 | 3 | 通过 |
 | `collage` | 16:9 | 6 | 通过 |
 | `collage` | 9:16 | 6 | 通过 |
+| `combo` | 16:9 | 3 | 通过 |
+| `combo` | 9:16 | 3 | 通过 |
 | `comment_thread` | 16:9 | 4 | 通过 |
 | `comment_thread` | 9:16 | 4 | 通过 |
+| `converge` | 16:9 | 4 | 通过 |
+| `converge` | 9:16 | 4 | 通过 |
 | `countdown` | 16:9 | 3 | 通过 |
 | `countdown` | 9:16 | 3 | 通过 |
+| `cursor` | 16:9 | 4 | 通过 |
+| `cursor` | 9:16 | 4 | 通过 |
 | `danmaku` | 16:9 | 4 | 通过 |
 | `danmaku` | 9:16 | 4 | 通过 |
+| `deal_card` | 16:9 | 3 | 通过 |
+| `deal_card` | 9:16 | 3 | 通过 |
+| `decision_tree` | 16:9 | 4 | 通过 |
+| `decision_tree` | 9:16 | 4 | 通过 |
+| `dialogue` | 16:9 | 3 | 通过 |
+| `dialogue` | 9:16 | 3 | 通过 |
 | `diffuse` | 16:9 | 6 | 通过 |
 | `diffuse` | 9:16 | 6 | 通过 |
+| `doc_flip` | 16:9 | 3 | 通过 |
+| `doc_flip` | 9:16 | 3 | 通过 |
+| `doc_photo` | 16:9 | 3 | 通过 |
+| `doc_photo` | 9:16 | 3 | 通过 |
+| `doc_pick` | 16:9 | 3 | 通过 |
+| `doc_pick` | 9:16 | 3 | 通过 |
 | `donut` | 16:9 | 2 | 通过 |
 | `donut` | 9:16 | 2 | 通过 |
 | `donut@0.8` | 16:9 | 2 | 通过 |
@@ -98,22 +138,52 @@
 | `dual` | 9:16 | 2 | 通过 |
 | `earth_zoom` | 16:9 | 2 | 通过 |
 | `earth_zoom` | 9:16 | 2 | 通过 |
+| `email_card` | 16:9 | 3 | 通过 |
+| `email_card` | 9:16 | 3 | 通过 |
 | `equity_tree` | 16:9 | 4 | 通过 |
 | `equity_tree` | 9:16 | 4 | 通过 |
 | `flip3d` | 16:9 | 6 | 通过 |
 | `flip3d` | 9:16 | 6 | 通过 |
+| `flying_words` | 16:9 | 3 | 通过 |
+| `flying_words` | 9:16 | 3 | 通过 |
+| `footage@3` | 16:9 | 3 | 通过 |
+| `footage@3` | 9:16 | 3 | 通过 |
+| `footage@6` | 16:9 | 3 | 通过 |
+| `footage@6` | 9:16 | 3 | 通过 |
+| `form_fill` | 16:9 | 3 | 通过 |
+| `form_fill` | 9:16 | 3 | 通过 |
 | `formula` | 16:9 | 4 | 通过 |
 | `formula` | 9:16 | 4 | 通过 |
+| `freeze_frame@3` | 16:9 | 3 | 通过 |
+| `freeze_frame@3` | 9:16 | 3 | 通过 |
+| `freeze_frame@6` | 16:9 | 3 | 通过 |
+| `freeze_frame@6` | 9:16 | 3 | 通过 |
+| `funnel` | 16:9 | 4 | 通过 |
+| `funnel` | 9:16 | 4 | 通过 |
+| `gantt` | 16:9 | 4 | 通过 |
+| `gantt` | 9:16 | 4 | 通过 |
 | `ghost_type` | 16:9 | 3 | 通过 |
 | `ghost_type` | 9:16 | 3 | 通过 |
+| `gif_clip` | 16:9 | 3 | 通过 |
+| `gif_clip` | 9:16 | 3 | 通过 |
 | `glass` | 16:9 | 2 | 通过 |
 | `glass` | 9:16 | 2 | 通过 |
 | `glitch` | 16:9 | 6 | 通过 |
 | `glitch` | 9:16 | 6 | 通过 |
 | `gooey` | 16:9 | 3 | 通过 |
 | `gooey` | 9:16 | 3 | 通过 |
+| `halftone` | 16:9 | 3 | 通过 |
+| `halftone` | 9:16 | 3 | 通过 |
+| `handwrite` | 16:9 | 3 | 通过 |
+| `handwrite` | 9:16 | 3 | 通过 |
+| `host_point@3` | 16:9 | 3 | 通过 |
+| `host_point@3` | 9:16 | 3 | 通过 |
+| `host_point@6` | 16:9 | 3 | 通过 |
+| `host_point@6` | 9:16 | 3 | 通过 |
 | `hud_lock` | 16:9 | 2 | 通过 |
 | `hud_lock` | 9:16 | 2 | 通过 |
+| `icon_unit` | 16:9 | 4 | 通过 |
+| `icon_unit` | 9:16 | 4 | 通过 |
 | `im_chat` | 16:9 | 4 | 通过 |
 | `im_chat` | 9:16 | 4 | 通过 |
 | `impact` | 16:9 | 6 | 通过 |
@@ -128,12 +198,19 @@
 | `interlude@3` | 9:16 | 3 | 通过 |
 | `interlude@8` | 16:9 | 3 | 通过 |
 | `interlude@8` | 9:16 | 3 | 通过 |
+| `interview` | 16:9 | 3 | 通过 |
+| `interview` | 9:16 | 3 | 通过 |
 | `line_csv` | 16:9 | 3 | 通过 |
 | `line_csv` | 9:16 | 3 | 通过 |
 | `line_draw` | 16:9 | 3 | 通过 |
 | `line_draw` | 9:16 | 3 | 通过 |
 | `list_stack` | 16:9 | 4 | 通过 |
+| `list_stack` | 1:1 | 4 | 通过 |
+| `list_stack` | 3:4 | 4 | 通过 |
 | `list_stack` | 9:16 | 4 | 通过 |
+| `list_stack [wm bilibili]` | 16:9 | 4 | 通过 |
+| `list_stack [wm douyin]` | 9:16 | 4 | 通过 |
+| `list_stack [wm xiaohongshu]` | 9:16 | 4 | 通过 |
 | `list_stack@0.8` | 16:9 | 2 | 通过 |
 | `list_stack@0.8` | 9:16 | 2 | 通过 |
 | `list_stack@6` | 16:9 | 2 | 通过 |
@@ -146,12 +223,24 @@
 | `loading@8` | 9:16 | 3 | 通过 |
 | `lockup` | 16:9 | 4 | 通过 |
 | `lockup` | 9:16 | 4 | 通过 |
+| `logo_wall` | 16:9 | 3 | 通过 |
+| `logo_wall` | 9:16 | 3 | 通过 |
 | `lower3` | 16:9 | 3 | 通过 |
 | `lower3` | 9:16 | 3 | 通过 |
+| `lower3 [wm bilibili]` | 16:9 | 3 | 通过 |
+| `lower3 [wm douyin]` | 9:16 | 3 | 通过 |
+| `lower3 [wm xiaohongshu]` | 9:16 | 3 | 通过 |
 | `map_route` | 16:9 | 2 | 通过 |
 | `map_route` | 9:16 | 2 | 通过 |
+| `map_timeline` | 16:9 | 4 | 通过 |
+| `map_timeline` | 9:16 | 4 | 通过 |
 | `mask_up` | 16:9 | 6 | 通过 |
+| `mask_up` | 1:1 | 6 | 通过 |
+| `mask_up` | 3:4 | 6 | 通过 |
 | `mask_up` | 9:16 | 6 | 通过 |
+| `mask_up [wm bilibili]` | 16:9 | 6 | 通过 |
+| `mask_up [wm douyin]` | 9:16 | 6 | 通过 |
+| `mask_up [wm xiaohongshu]` | 9:16 | 6 | 通过 |
 | `mask_up@0.8` | 16:9 | 2 | 通过 |
 | `mask_up@0.8` | 9:16 | 2 | 通过 |
 | `mask_up@6` | 16:9 | 2 | 通过 |
@@ -159,27 +248,56 @@
 | `match_cut` | 16:9 | 5 | 通过 |
 | `match_cut` | 9:16 | 5 | 通过 |
 | `media` | 16:9 | 16 | 通过 |
+| `media` | 1:1 | 16 | 通过 |
+| `media` | 3:4 | 16 | 通过 |
 | `media` | 9:16 | 16 | 通过 |
 | `media@0.8` | 16:9 | 2 | 通过 |
 | `media@0.8` | 9:16 | 2 | 通过 |
 | `media@6` | 16:9 | 2 | 通过 |
 | `media@6` | 9:16 | 2 | 通过 |
+| `meme_stage` | 16:9 | 3 | 通过 |
+| `meme_stage` | 9:16 | 3 | 通过 |
 | `mosaic` | 16:9 | 5 | 通过 |
 | `mosaic` | 9:16 | 5 | 通过 |
 | `neon` | 16:9 | 6 | 通过 |
 | `neon` | 9:16 | 6 | 通过 |
+| `news_flash` | 16:9 | 3 | 通过 |
+| `news_flash` | 9:16 | 3 | 通过 |
+| `next_teaser` | 16:9 | 3 | 通过 |
+| `next_teaser` | 9:16 | 3 | 通过 |
+| `notice_card` | 16:9 | 3 | 通过 |
+| `notice_card` | 9:16 | 3 | 通过 |
 | `notify` | 16:9 | 3 | 通过 |
+| `notify` | 1:1 | 3 | 通过 |
+| `notify` | 3:4 | 3 | 通过 |
 | `notify` | 9:16 | 3 | 通过 |
+| `number_pages` | 16:9 | 3 | 通过 |
+| `number_pages` | 9:16 | 3 | 通过 |
 | `odometer` | 16:9 | 6 | 通过 |
 | `odometer` | 9:16 | 6 | 通过 |
+| `odometer [wm bilibili]` | 16:9 | 6 | 通过 |
+| `odometer [wm douyin]` | 9:16 | 6 | 通过 |
+| `odometer [wm xiaohongshu]` | 9:16 | 6 | 通过 |
 | `odometer@0.8` | 16:9 | 2 | 通过 |
 | `odometer@0.8` | 9:16 | 2 | 通过 |
 | `odometer@6` | 16:9 | 2 | 通过 |
 | `odometer@6` | 9:16 | 2 | 通过 |
+| `opener` | 16:9 | 3 | 通过 |
+| `opener` | 9:16 | 3 | 通过 |
 | `parallax` | 16:9 | 4 | 通过 |
 | `parallax` | 9:16 | 4 | 通过 |
+| `pip@3` | 16:9 | 3 | 通过 |
+| `pip@3` | 9:16 | 3 | 通过 |
+| `pip@6` | 16:9 | 3 | 通过 |
+| `pip@6` | 9:16 | 3 | 通过 |
 | `plate` | 16:9 | 5 | 通过 |
 | `plate` | 9:16 | 5 | 通过 |
+| `podcast@3` | 16:9 | 3 | 通过 |
+| `podcast@3` | 9:16 | 3 | 通过 |
+| `podcast@6` | 16:9 | 3 | 通过 |
+| `podcast@6` | 9:16 | 3 | 通过 |
+| `poll_card` | 16:9 | 3 | 通过 |
+| `poll_card` | 9:16 | 3 | 通过 |
 | `pop` | 16:9 | 6 | 通过 |
 | `pop` | 9:16 | 6 | 通过 |
 | `pop@0.8` | 16:9 | 2 | 通过 |
@@ -203,20 +321,37 @@
 | `poster:thesis` | 16:9 | 2 | 通过 |
 | `poster:thesis` | 9:16 | 2 | 通过 |
 | `press:chain` | 16:9 | 2 | 通过 |
+| `press:chain` | 1:1 | 2 | 通过 |
+| `press:chain` | 3:4 | 2 | 通过 |
 | `press:chain` | 9:16 | 2 | 通过 |
 | `press:hook` | 16:9 | 3 | 通过 |
+| `press:hook` | 1:1 | 3 | 通过 |
+| `press:hook` | 3:4 | 3 | 通过 |
 | `press:hook` | 9:16 | 3 | 通过 |
+| `press:hook [wm bilibili]` | 16:9 | 3 | 通过 |
+| `press:hook [wm douyin]` | 9:16 | 3 | 通过 |
+| `press:hook [wm xiaohongshu]` | 9:16 | 3 | 通过 |
 | `press:outro` | 16:9 | 2 | 通过 |
 | `press:outro` | 9:16 | 2 | 通过 |
 | `press:split` | 16:9 | 4 | 通过 |
+| `press:split` | 1:1 | 4 | 通过 |
+| `press:split` | 3:4 | 4 | 通过 |
 | `press:split` | 9:16 | 4 | 通过 |
 | `press:stores` | 16:9 | 4 | 通过 |
 | `press:stores` | 9:16 | 4 | 通过 |
+| `press:stores [wm bilibili]` | 16:9 | 4 | 通过 |
+| `press:stores [wm douyin]` | 9:16 | 4 | 通过 |
+| `press:stores [wm xiaohongshu]` | 9:16 | 4 | 通过 |
 | `press:thesis` | 16:9 | 3 | 通过 |
 | `press:thesis` | 9:16 | 3 | 通过 |
+| `press:thesis [wm bilibili]` | 16:9 | 3 | 通过 |
+| `press:thesis [wm douyin]` | 9:16 | 3 | 通过 |
+| `press:thesis [wm xiaohongshu]` | 9:16 | 3 | 通过 |
 | `press:turn` | 16:9 | 2 | 通过 |
 | `press:turn` | 9:16 | 2 | 通过 |
 | `press:wheel` | 16:9 | 2 | 通过 |
+| `press:wheel` | 1:1 | 2 | 通过 |
+| `press:wheel` | 3:4 | 2 | 通过 |
 | `press:wheel` | 9:16 | 2 | 通过 |
 | `profile_card` | 16:9 | 5 | 通过 |
 | `profile_card` | 9:16 | 5 | 通过 |
@@ -224,6 +359,10 @@
 | `pros_cons` | 9:16 | 3 | 通过 |
 | `quadrant` | 16:9 | 3 | 通过 |
 | `quadrant` | 9:16 | 3 | 通过 |
+| `question_card` | 16:9 | 4 | 通过 |
+| `question_card` | 9:16 | 4 | 通过 |
+| `radar` | 16:9 | 4 | 通过 |
+| `radar` | 9:16 | 4 | 通过 |
 | `ranking` | 16:9 | 4 | 通过 |
 | `ranking` | 9:16 | 4 | 通过 |
 | `reaction@1` | 16:9 | 3 | 通过 |
@@ -234,18 +373,40 @@
 | `reaction@8` | 9:16 | 3 | 通过 |
 | `receipt` | 16:9 | 4 | 通过 |
 | `receipt` | 9:16 | 4 | 通过 |
+| `relation_graph` | 16:9 | 3 | 通过 |
+| `relation_graph` | 9:16 | 3 | 通过 |
+| `review_card` | 16:9 | 3 | 通过 |
+| `review_card` | 9:16 | 3 | 通过 |
 | `scale_compare` | 16:9 | 5 | 通过 |
 | `scale_compare` | 9:16 | 5 | 通过 |
+| `scanline` | 16:9 | 3 | 通过 |
+| `scanline` | 9:16 | 3 | 通过 |
+| `scatter` | 16:9 | 4 | 通过 |
+| `scatter` | 9:16 | 4 | 通过 |
 | `scramble` | 16:9 | 6 | 通过 |
 | `scramble` | 9:16 | 6 | 通过 |
 | `screencast` | 16:9 | 3 | 通过 |
 | `screencast` | 9:16 | 3 | 通过 |
+| `scribble` | 16:9 | 3 | 通过 |
+| `scribble` | 9:16 | 3 | 通过 |
 | `scroll_shot` | 16:9 | 4 | 通过 |
 | `scroll_shot` | 9:16 | 4 | 通过 |
+| `search_box` | 16:9 | 3 | 通过 |
+| `search_box` | 9:16 | 3 | 通过 |
+| `share_card` | 16:9 | 3 | 通过 |
+| `share_card` | 9:16 | 3 | 通过 |
 | `shine` | 16:9 | 6 | 通过 |
 | `shine` | 9:16 | 6 | 通过 |
 | `slice_text` | 16:9 | 6 | 通过 |
 | `slice_text` | 9:16 | 6 | 通过 |
+| `slides` | 16:9 | 3 | 通过 |
+| `slides` | 9:16 | 3 | 通过 |
+| `speed_ramp@3` | 16:9 | 3 | 通过 |
+| `speed_ramp@3` | 9:16 | 3 | 通过 |
+| `speed_ramp@6` | 16:9 | 3 | 通过 |
+| `speed_ramp@6` | 9:16 | 3 | 通过 |
+| `sponsor_card` | 16:9 | 3 | 通过 |
+| `sponsor_card` | 9:16 | 3 | 通过 |
 | `spotlight` | 16:9 | 3 | 通过 |
 | `spotlight` | 9:16 | 3 | 通过 |
 | `stacked_bars` | 16:9 | 4 | 通过 |
@@ -255,27 +416,46 @@
 | `steps` | 16:9 | 4 | 通过 |
 | `steps` | 9:16 | 4 | 通过 |
 | `stomp` | 16:9 | 5 | 通过 |
+| `stomp` | 1:1 | 5 | 通过 |
+| `stomp` | 3:4 | 5 | 通过 |
 | `stomp` | 9:16 | 5 | 通过 |
 | `stomp@0.8` | 16:9 | 2 | 通过 |
 | `stomp@0.8` | 9:16 | 2 | 通过 |
 | `stomp@6` | 16:9 | 2 | 通过 |
 | `stomp@6` | 9:16 | 2 | 通过 |
+| `street_map` | 16:9 | 4 | 通过 |
+| `street_map` | 9:16 | 4 | 通过 |
 | `suspense@1` | 16:9 | 3 | 通过 |
 | `suspense@1` | 9:16 | 3 | 通过 |
 | `suspense@3` | 16:9 | 3 | 通过 |
 | `suspense@3` | 9:16 | 3 | 通过 |
 | `suspense@8` | 16:9 | 3 | 通过 |
 | `suspense@8` | 9:16 | 3 | 通过 |
+| `svg_art` | 16:9 | 3 | 通过 |
+| `svg_art` | 9:16 | 3 | 通过 |
 | `table` | 16:9 | 5 | 通过 |
+| `table` | 1:1 | 5 | 通过 |
+| `table` | 3:4 | 5 | 通过 |
 | `table` | 9:16 | 5 | 通过 |
+| `table [wm bilibili]` | 16:9 | 5 | 通过 |
+| `table [wm douyin]` | 9:16 | 5 | 通过 |
+| `table [wm xiaohongshu]` | 9:16 | 5 | 通过 |
 | `table@0.8` | 16:9 | 2 | 通过 |
 | `table@0.8` | 9:16 | 2 | 通过 |
 | `table@6` | 16:9 | 2 | 通过 |
 | `table@6` | 9:16 | 2 | 通过 |
+| `talking_head@3` | 16:9 | 3 | 通过 |
+| `talking_head@3` | 9:16 | 3 | 通过 |
+| `talking_head@6` | 16:9 | 3 | 通过 |
+| `talking_head@6` | 9:16 | 3 | 通过 |
 | `term_card` | 16:9 | 3 | 通过 |
 | `term_card` | 9:16 | 3 | 通过 |
 | `text_mask` | 16:9 | 3 | 通过 |
 | `text_mask` | 9:16 | 3 | 通过 |
+| `text_pages` | 16:9 | 4 | 通过 |
+| `text_pages` | 9:16 | 4 | 通过 |
+| `then_now` | 16:9 | 4 | 通过 |
+| `then_now` | 9:16 | 4 | 通过 |
 | `think_loop@1` | 16:9 | 3 | 通过 |
 | `think_loop@1` | 9:16 | 3 | 通过 |
 | `think_loop@3` | 16:9 | 3 | 通过 |
@@ -292,8 +472,12 @@
 | `tracking@6` | 9:16 | 2 | 通过 |
 | `triple` | 16:9 | 4 | 通过 |
 | `triple` | 9:16 | 4 | 通过 |
+| `turntable` | 16:9 | 3 | 通过 |
+| `turntable` | 9:16 | 3 | 通过 |
 | `typewriter` | 16:9 | 6 | 通过 |
 | `typewriter` | 9:16 | 6 | 通过 |
+| `vertical_title` | 16:9 | 4 | 通过 |
+| `vertical_title` | 9:16 | 4 | 通过 |
 | `waterfall` | 16:9 | 4 | 通过 |
 | `waterfall` | 9:16 | 4 | 通过 |
 | `word_swap` | 16:9 | 3 | 通过 |

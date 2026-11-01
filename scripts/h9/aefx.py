@@ -9,6 +9,7 @@ Only generic techniques are re-created (no template designs or assets copied).
 import math
 
 from h9 import fit
+from h9.core import RTL_RX
 
 CSS = r"""
 .fx { overflow:hidden; }
@@ -27,6 +28,7 @@ CSS = r"""
 def _chars(X, s, cls="c"):
     """every glyph in its own <i class="c"> (for staggers); *强调* survives."""
     if cls == "c": return X.rich(s, split="chars")
+    if RTL_RX.search(str(s)): return f'<i class="{cls}">{X.rich(s)}</i>'      # Arabic / Hebrew keep their joins: one run
     return "".join(f'<i class="{cls}">{X.rich(ch)}</i>' if ch.strip() else " " for ch in fit.plain(s))
 
 
@@ -78,8 +80,18 @@ def _context(X, cid, t, d, p):
     fxid = p.get("fxid") or p.get("fx", "")
     foot_s = (fit.plain(p["label"]) + ("　" + fit.plain(p["ref"]) if p.get("ref") else "")) if p.get("label") else ""
     fpx = 17 if X.portrait else 16
-    fw = ((X.W - 112) if X.portrait else (X.W - 192)) * (0.6 if p.get("src") else 0.96)
-    foot = X.rich(fit.fit_text(foot_s, fw, fpx * 1.4, fpx, fpx, max_lines=1, mono=True).lines[0]) if foot_s else ""   # ellipsized to its slot
+    avail = (X.W - 112) if X.portrait else (X.W - 192)
+    wpx = lambda s: (fit.width(s, mono=True) + 0.04 * len(fit.plain(s))) * fpx      # mono + .04em tracking
+    src_s, src = p.get("src", ""), X.rich(p.get("src", ""))
+    if src_s:      # label 60 % / source 60 % as before; when both are long they split the row instead of overlapping
+        sw = min(wpx(src_s), avail * 0.6)
+        fw = max(avail * 0.4, min(avail * 0.6, avail - sw - 32))
+        sw = min(sw, avail - fw - 32)
+        if wpx(src_s) > sw: src = X.rich(fit.fit_text(src_s, sw, fpx * 1.4, fpx, fpx, max_lines=1, mono=True, ls=0.04).lines[0])
+    else:
+        fw = avail * 0.96
+    if p.get("ref") and wpx(fit.plain(p["label"]) + "　") > fw - 6 * fpx: foot_s = fit.plain(p["label"])   # no room for the ref: drop it, not the label
+    foot = X.rich(fit.fit_text(foot_s, fw, fpx * 1.4, fpx, fpx, max_lines=1, mono=True, ls=0.04).lines[0]) if foot_s else ""   # ellipsized to its slot
     cw = (X.W - 2 * SAFE_R - 48) if X.portrait else X.W * 0.8 - 48   # caption: two lines (three in 9:16), shrinking to 28 px;
     mx = 44 if X.portrait else 40                                     # 9:16 keeps 120 px both sides for the platform buttons
     ml = 3 if X.portrait else 2
@@ -87,7 +99,7 @@ def _context(X, cid, t, d, p):
     cap = "<br>".join(X.rich(l) for l in cf.lines)
     inner = (('<div class="scrim"></div>' if photo else "")
              + f'<div class="hd"><div><b>第九顶帽子</b><span>{X.rich(p.get("topic", ""))}</span></div><div class="fxid">{X.rich(fxid)}</div></div>'
-             + f'<div class="cap"><span style="font-size:{cf.px}px">{cap}</span></div><div class="ft"><div>{foot}</div><div>{X.rich(p.get("src", ""))}</div></div>')
+             + f'<div class="cap"><span style="font-size:{cf.px}px">{cap}</span></div><div class="ft"><div>{foot}</div><div>{src}</div></div>')
     X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if photo else ''}", 30, track=20, sty=sty)
     if p.get("host"):    # the faceless host (talking shiba) in the corner, as a presenter would be
         src = X.v.get("meta", {}).get("host_video")

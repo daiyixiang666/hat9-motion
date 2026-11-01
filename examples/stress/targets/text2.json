@@ -1,0 +1,482 @@
+{
+ "base": "examples/text2",
+ "note": "W2 文字与强调：每个效果 3–4 种刻意不同的输入（繁体、emoji、从右往左、极短 / 极长、少量 / 大量）",
+ "beats": [
+  {
+   "fx": "text_pages",
+   "text": "一句话。",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "短。"
+  },
+  {
+   "fx": "text_pages",
+   "text": "這是一段故意寫得很長的繁體中文段落，用來測試分頁。第一句講背景，第二句講數據，第三句講結論。第四句再補充一點細節，第五句收尾。第六句是為了讓它不得不分成兩頁甚至三頁。第七句結束。",
+   "title": "繁體 · 長段落",
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "一段很长的繁体字，自动分页。"
+  },
+  {
+   "fx": "text_pages",
+   "text": "AI 不会取代你 🤖。但会用 AI 的人，可能会。So learn it today! 今天就开始。",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "line": "中英混排加 emoji。"
+  },
+  {
+   "fx": "text_pages",
+   "text": "שלום עולם. זה משפט שני בעברית.",
+   "translation": [
+    "你好，世界。这是第二句希伯来语。"
+   ],
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "希伯来语，从右往左。"
+  },
+  {
+   "fx": "question_card",
+   "q": "为什么？",
+   "answer": "因为便宜。",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "没有选项，翻面揭晓。"
+  },
+  {
+   "fx": "question_card",
+   "q": "一个故意写得很长很长的问题，看看卡片会不会自己长高、字号会不会自己变小，最后还能不能读完？",
+   "options": [
+    "选项一",
+    "选项二",
+    "选项三",
+    "选项四",
+    "选项五"
+   ],
+   "answer": 0,
+   "reveal": "答案是第一个，揭晓文字也写得长一些来测试换行。",
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "五个选项。"
+  },
+  {
+   "fx": "question_card",
+   "q": "哪個是對的？🍋",
+   "options": [
+    "🥤 A",
+    "📦 B"
+   ],
+   "answer": "📦 B",
+   "theme": "red",
+   "topic": "压力测试",
+   "line": "繁体加 emoji。"
+  },
+  {
+   "fx": "question_card",
+   "q": "ما هو الصحيح؟",
+   "options": [
+    "الأول",
+    "الثاني"
+   ],
+   "answer": 1,
+   "theme": "lemon",
+   "topic": "压力测试",
+   "line": "阿拉伯语问题。"
+  },
+  {
+   "fx": "vertical_title",
+   "text": "赢",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "一个字。"
+  },
+  {
+   "fx": "vertical_title",
+   "text": "天地玄黃宇宙洪荒日月盈昃辰宿列張寒來暑往秋收冬藏閏餘成歲律呂調陽雲騰致雨露結為霜金生麗水玉出崑岡劍號巨闕珠稱夜光",
+   "sub": "《千字文》",
+   "seal": "千字文",
+   "mode": "classical",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "长古文自动折列。"
+  },
+  {
+   "fx": "vertical_title",
+   "text": "第九顶|帽子|商业拆解",
+   "seal": "九",
+   "mode": "title",
+   "font": "hand",
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "三列标题，毛笔字。"
+  },
+  {
+   "fx": "vertical_title",
+   "text": "ひらがなの縦書き",
+   "mode": "title",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "line": "日文竖排。"
+  },
+  {
+   "fx": "flying_words",
+   "words": [
+    "便宜",
+    "好喝"
+   ],
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "两个词。"
+  },
+  {
+   "fx": "flying_words",
+   "words": [
+    "原料",
+    "包材",
+    "设备",
+    "仓储",
+    "物流",
+    "门店",
+    "品牌",
+    "营销",
+    "IP",
+    "雪王",
+    "加盟商",
+    "供应链：一条完整的长链路"
+   ],
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "十二个词，最后一个很长。"
+  },
+  {
+   "fx": "flying_words",
+   "words": [
+    "🍋 柠檬",
+    "🧋 奶茶",
+    "☕ 咖啡",
+    "🍦 冰淇淋"
+   ],
+   "final": 0,
+   "sub": "emoji 也能飞",
+   "theme": "red",
+   "topic": "压力测试",
+   "line": "emoji 关键词。"
+  },
+  {
+   "fx": "number_pages",
+   "text": "只有 1 个数字：100%。",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "一个数字。"
+  },
+  {
+   "fx": "number_pages",
+   "items": [
+    [
+     "负增长",
+     "-14.2",
+     "%"
+    ],
+    [
+     "巨大数字",
+     "1,234,567,890",
+     "元"
+    ],
+    [
+     "小数",
+     "0.05",
+     "倍"
+    ]
+   ],
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "负数、巨大数、小数。"
+  },
+  {
+   "fx": "number_pages",
+   "text": "2023 年營收 203.0 億元，2024 年 248.3 億元，增長 22.3%，淨利 44.5 億元，門店 46,479 家，海外 4,895 家，杯數約 90 億杯，加盟收入 6.2 億元，佔 2.5%，同比 +39.8%，毛利 80.6 億元，第十二個數 12 個。",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "line": "繁体，十二个数字。"
+  },
+  {
+   "fx": "combo",
+   "count": 2,
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "两连击。"
+  },
+  {
+   "fx": "combo",
+   "count": 120,
+   "tag": "超級連擊",
+   "unit": "次",
+   "final": "一百二十連擊",
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "一百二十连击，繁体。"
+  },
+  {
+   "fx": "combo",
+   "count": 8,
+   "hits": [
+    "👍 点赞",
+    "💬 评论",
+    "⭐ 收藏",
+    "🔁 转发",
+    "👍 点赞",
+    "💬 评论",
+    "⭐ 收藏",
+    "🔁 转发"
+   ],
+   "final": "三连走一波 🙏",
+   "theme": "red",
+   "topic": "压力测试",
+   "line": "emoji 连击。"
+  },
+  {
+   "fx": "black_slam",
+   "text": "！",
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "一个感叹号。"
+  },
+  {
+   "fx": "black_slam",
+   "text": "一个故意写得很长很长的冲击句，看它会不会换成三行并且自动缩小字号，*关键词*也要能换行",
+   "sub": "副标题也长一点，看它会不会两行显示，而且打字效果还在。",
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "长句。"
+  },
+  {
+   "fx": "black_slam",
+   "hits": [
+    "一",
+    "二",
+    "三",
+    "四",
+    "五",
+    "六",
+    "七",
+    "八"
+   ],
+   "theme": "red",
+   "topic": "压力测试",
+   "line": "八连击，没有正文。"
+  },
+  {
+   "fx": "black_slam",
+   "text": "🔥 *爆了* 🔥",
+   "theme": "lemon",
+   "topic": "压力测试",
+   "line": "emoji。"
+  },
+  {
+   "fx": "scribble",
+   "text": "赚",
+   "scribbles": [
+    {
+     "type": "circle",
+     "target": "赚"
+    }
+   ],
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "一个字画圈。"
+  },
+  {
+   "fx": "scribble",
+   "text": "很多人以為|蜜雪靠加盟費|賺錢",
+   "scribbles": [
+    {
+     "type": "strike",
+     "target": "加盟費",
+     "note": "錯"
+    },
+    {
+     "type": "circle",
+     "target": "賺錢",
+     "note": "97.5% 靠賣原料"
+    },
+    {
+     "type": "scrawl",
+     "target": "很多人以為"
+    },
+    {
+     "type": "check",
+     "target": "蜜雪"
+    }
+   ],
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "繁体，四种笔迹。"
+  },
+  {
+   "fx": "scribble",
+   "image": "assets/us_v_google_p8.png",
+   "scribbles": [
+    {
+     "type": "box",
+     "box": [
+      11,
+      12.6,
+      78,
+      6
+     ],
+     "note": "关键句"
+    },
+    {
+     "type": "arrow",
+     "box": [
+      60,
+      60,
+      -20,
+      -14
+     ]
+    },
+    {
+     "type": "underline",
+     "box": [
+      47,
+      23,
+      41,
+      3
+     ],
+     "note": "垄断力"
+    }
+   ],
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "图片上标注。"
+  },
+  {
+   "fx": "scanline",
+   "image": "assets/us_v_google_p8.png",
+   "blocks": [
+    {
+     "box": [
+      11,
+      12.6,
+      78,
+      6
+     ],
+     "label": "一块"
+    }
+   ],
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "一个块。"
+  },
+  {
+   "fx": "scanline",
+   "image": "assets/us_v_google_p8.png",
+   "dir": "right",
+   "blocks": [
+    {
+     "box": [
+      10,
+      10,
+      10,
+      5
+     ],
+     "label": "一"
+    },
+    {
+     "box": [
+      25,
+      20,
+      10,
+      5
+     ],
+     "label": "二"
+    },
+    {
+     "box": [
+      40,
+      30,
+      10,
+      5
+     ],
+     "label": "三"
+    },
+    {
+     "box": [
+      55,
+      40,
+      10,
+      5
+     ],
+     "label": "四"
+    },
+    {
+     "box": [
+      70,
+      50,
+      10,
+      5
+     ],
+     "label": "五"
+    },
+    {
+     "box": [
+      12,
+      60,
+      30,
+      5
+     ],
+     "label": "六 · 很长的标签也要放得下",
+     "value": "0x06"
+    },
+    {
+     "box": [
+      50,
+      70,
+      30,
+      5
+     ],
+     "label": "七"
+    },
+    {
+     "box": [
+      20,
+      80,
+      40,
+      5
+     ],
+     "label": "八"
+    }
+   ],
+   "theme": "paper",
+   "topic": "压力测试",
+   "line": "八个块，从左往右扫。"
+  },
+  {
+   "fx": "scanline",
+   "text": "没有图片时，扫一段文字。第一段讲背景。第二段讲数据：门店 46,479 家。第三段讲结论。",
+   "blocks": [
+    {
+     "box": [
+      5,
+      20,
+      90,
+      10
+     ],
+     "label": "数据",
+     "value": "46,479"
+    },
+    {
+     "box": [
+      5,
+      45,
+      90,
+      10
+     ],
+     "label": "结论"
+    }
+   ],
+   "theme": "ink",
+   "topic": "压力测试",
+   "line": "文字当文档。"
+  }
+ ]
+}

@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks, pacing  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -79,14 +79,22 @@ img { display:block; }
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video"); ap.add_argument("--style"); ap.add_argument("--aspect"); ap.add_argument("--out")
+    ap.add_argument("--lang", help="pick this language from multilingual fields (default meta.lang, else zh)")
     a = ap.parse_args()
     vpath = Path(a.video).resolve()
     video = json.loads(vpath.read_text())
+    lang = a.lang or (video.get("meta") or {}).get("lang") or "zh"
+    video = delivery.resolve_lang(video, lang)          # {"zh": …, "en": …} anywhere in the file -> one language
     meta = video.setdefault("meta", {})
+    meta["lang"] = lang
     sid = a.style or meta.get("style", "ledger")
     style = load_style(sid)
+    brand = delivery.apply_brand(style, meta, vpath.parent)
+    series = meta.get("series") or {}
+    if series.get("opener") and not meta.get("lead"):
+        meta["lead"] = float(series.get("opener_dur", 1.8))     # the narration starts after the series card
     aspect = a.aspect or meta.get("aspect", "16:9")
-    out = Path(a.out) if a.out else vpath.parent / "build" / f"{sid}_{aspect.replace(':', 'x')}"
+    out = Path(a.out).resolve() if a.out else vpath.parent / "build" / f"{sid}_{aspect.replace(':', 'x')}"
     out.mkdir(parents=True, exist_ok=True)
     X = core.Ctx(video, style, out, vpath.parent, aspect)
 
@@ -107,6 +115,8 @@ def main():
     for i, b in enumerate(beats):
         t = X.T(b.get("t", 0 if i == 0 else None) if b.get("t") is not None else (times[-1][0] + times[-1][1]))
         times.append([t, b.get("d")])
+    if series.get("opener") and times and times[0][0] < lead:     # the first page starts when the series card ends
+        times[0][0] = lead
     for i, (t, d) in enumerate(times):
         nxt = times[i + 1][0] if i + 1 < len(times) else D
         times[i][1] = float(d) if d else nxt - t
@@ -117,22 +127,32 @@ def main():
     X.extra_head = X.extra_body = ""
     world = getattr(style["_mod"], "WORLD", None)
     if world: world(beats, times, X, D)
-    prev = None
+    prev, mood, spans = None, None, []
     for i, (b, (t, d)) in enumerate(zip(beats, times)):
         if world: break
         # scenes + seams: inside a chapter = (velocity-matched) cut; a new chapter = the style's signature transition
         cid = b.get("id") or X.uid("s")
-        X.beat = {"t": t, "d": d, "i": i, "n": len(beats)}
+        X.beat = {"t": t, "d": d, "i": i + int(meta.get("beat_offset", 0)), "n": int(meta.get("beat_total", len(beats)))}   # longform chapters keep global page numbers
         X.beat_marks = marks.build(X, cid, b)
         n_tw, n_audio, n_els = len(X.tws), len(X.audio), len(X.els)
         scene_fn(b["scene"], style)(b, X, t, d, cid)
+        mood = b.get("mood", mood) if i else b.get("mood")
+        delivery.paint_mood(X, cid, n_els, mood)                          # "mood": "heavy" → the dark token set for this beat
+        pacing.rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els)          # speaking rate sets the tempo (meta.rate_adapt)
         pacing.elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i)     # keep the beat alive / fit a short entrance
+        pacing.sound_moments(X, b, t, d, cid)                             # "sfx": sound + visual hit on one frame
+        spans.append((cid, t, d, b.get("hold") == "static"))
         if i > 0:
             tr = b.get("tr")
             if isinstance(tr, str) and tr not in ("cut", "hard", "slide", "zoom", "rise", "step", "zoomin", "whip", "spin"): fx.transition(X, t, tr)
             elif b.get("chapter") or tr is True: fx.transition(X, t, None)
             else: fx.cut(X, prev, cid, t, tr if isinstance(tr, str) else None)
         prev = cid
+    pacing.breaths(X, spans, D)                                           # a small inhale in each narration pause (meta.breath)
+    fit.scope_media(X)                                                    # video wrappers only while their video plays
+    if series.get("opener"): delivery.series_opener(X, meta, float(meta.get("lead") or 1.8))
+    delivery.ai_label(X, D, meta)
+    delivery.logo_mark(X, D, brand)
     fx.overlays(X, D)
     captions.build(X, D, meta.get("caption_fix"), meta.get("caption_len"))
     captions.srt(X, D, out / "captions.srt", meta.get("caption_fix"))
@@ -162,7 +182,16 @@ def main():
     aud = []
     if voice:
         aud.append(f'<audio id="voice" class="clip" src="{voice_url}" data-start="{(f"{lead:.3f}" if lead else "0")}" data-duration="{D - lead:.3f}" data-track-index="40" data-volume="1"></audio>')
-    if meta.get("music"):
+    mm = meta.get("music_moods") or {}
+    if meta.get("music") and mm and not world:
+        # mood changes swap the music bed: one clip per segment, each starting at the same point of its own track, crossfaded
+        for k, (m0, m1, md) in enumerate(delivery.mood_segments(beats, times, D)):
+            src = mm.get(md, meta["music"])
+            url = pacing.duck(X, meta, X.asset(src, "audio"))
+            a0, a1 = max(0.0, m0 - (0.4 if k else 0)), min(D, m1 + 0.4)
+            aud.append(f'<audio id="music{k}" class="clip" src="{url}" data-start="{a0:.3f}" data-duration="{a1 - a0:.3f}" data-media-start="{a0:.3f}" data-track-index="{41 if k % 2 == 0 else 39}" '
+                       f'data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="{0.8 if k == 0 else 0.4}" data-fade-out="{2 if a1 >= D - 0.01 else 0.4}"></audio>')
+    elif meta.get("music"):
         music_url = pacing.duck(X, meta, X.asset(meta["music"], "audio"))
         aud.append(f'<audio id="music" class="clip" src="{music_url}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="0.8" data-fade-out="2"></audio>')
     lanes = []   # greedy lane allocation so no two SFX share a track while overlapping
@@ -179,17 +208,30 @@ def main():
     tok = style["tokens"]
     tok_css = ":root { " + " ".join(f"--{k}:{v};" for k, v in tok.items()) + " }"
     font_css = fonts.build(X, "".join(X.used_text))
-    css = "\n".join([font_css, tok_css, BASE_CSS.replace("{W}", str(X.W)).replace("{H}", str(X.H)), fx.TR_CSS,
+    base_css = BASE_CSS.replace("{W}", str(X.W)).replace("{H}", str(X.H))
+    TW, TH = X.target
+    if X.canvas:     # laid out as the base aspect, shown through a window of the target size
+        sc, tx, ty = X.canvas
+        # the runtime sizes #root and its timed children to the target, so the base-size page lives in an untimed
+        # #canvas inside it (timed clips nested in an untimed wrapper keep their own timing); audio stays at the root
+        base_css = base_css.replace(f"html, body {{ width:{X.W}px; height:{X.H}px;", f"html, body {{ width:{TW}px; height:{TH}px;")
+        base_css = base_css.replace(f"#root {{ position:relative; width:{X.W}px; height:{X.H}px;", f"#root {{ position:relative; width:{TW}px; height:{TH}px;")
+        base_css += (f"\n#canvas {{ position:absolute; left:0; top:0; width:{X.W}px; height:{X.H}px; overflow:hidden; background:var(--bg);"
+                     f" transform:translate({tx:.2f}px, {ty:.2f}px) scale({sc}); transform-origin:0 0; }}\n")
+    if lang in delivery.RTL:     # Arabic / Hebrew lines run right to left (punctuation on the correct side); the layout itself is not mirrored
+        base_css += "\n#root :is(h1, h2, h3, p, div, span, b, em, i, li, td, th) { unicode-bidi:plaintext; }\n"
+    base_css += "\nsup.ss, sub.ss { font-size:.58em; line-height:0; position:relative; vertical-align:baseline; } sup.ss { top:-.62em; } sub.ss { top:.24em; }\n"
+    css = "\n".join([font_css, tok_css, base_css, fx.TR_CSS,
                      *X.css_parts.values(), style.get("css", "")])
     page = f"""<!doctype html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width={X.W}, height={X.H}">
+<html lang="{ {"zh": "zh-CN", "en": "en", "ja": "ja", "ko": "ko"}.get(lang, lang) }"><head><meta charset="UTF-8"><meta name="viewport" content="width={TW}, height={TH}">
 <title>{core.esc(meta.get('title', 'hat9'))} · {sid}</title>
 <script src="{GSAP}"></script>
 {X.extra_head}
 <style>{css}</style></head>
 <body>
-<div id="root" class="st-{sid} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and style.get('mascot', {}).get('mode', 'corner') == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{X.W}" data-height="{X.H}">
-{chr(10).join(X.els)}
+<div id="root" class="st-{sid} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and style.get('mascot', {}).get('mode', 'corner') == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{TW}" data-height="{TH}">
+{(f'<div id="canvas">' + chr(10).join(X.els) + '</div>') if X.canvas else chr(10).join(X.els)}
 {chr(10).join(aud)}
 </div>
 <script>
@@ -207,7 +249,7 @@ window.__timelines["main"] = tl;
         "paths": {"blocks": "compositions", "components": "compositions/components", "assets": "assets"}, "media": {"autoProxy": True}}, indent=2))
     (out / "meta.json").write_text(json.dumps({"id": f"hat9-{sid}", "name": f"{meta.get('title', 'hat9')} · {style['name']}"}, ensure_ascii=False))
     (out / "package.json").write_text(json.dumps({"name": f"hat9-{sid}", "private": True, "type": "module"}, indent=2))
-    print(f"{out}  {X.W}x{X.H}  {D:.2f}s  {len(X.els)} clips  {len(X.tws)} tweens  style={sid}")
+    print(f"{out}  {TW}x{TH}{f' (laid out as {X.layout})' if X.canvas else ''}  {D:.2f}s  {len(X.els)} clips  {len(X.tws)} tweens  style={sid}")
 
 
 if __name__ == "__main__":

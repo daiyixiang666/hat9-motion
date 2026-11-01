@@ -1,0 +1,137 @@
+{
+ "meta": {
+  "title": "一杯四块钱的柠檬水，一年",
+  "aspect": "9:16",
+  "voice": "voice.wav",
+  "words": "words.json",
+  "tail": 0.8,
+  "source_cut": {
+   "from": "talk_words.json",
+   "sentences": 15,
+   "of": 45
+  }
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "t": 0,
+   "fx": "mask_up",
+   "text": "一杯四块钱的柠檬水|一年净赚四十四亿多"
+  },
+  {
+   "scene": "fx",
+   "t": "@蜜雪冰",
+   "fx": "apple_blur",
+   "text": "蜜雪冰城，四万六千多家店|比麦当劳还多",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@但它真",
+   "fx": "mask_up",
+   "text": "但它真正的生意|不是卖奶茶",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@加盟费",
+   "fx": "impact",
+   "text": "加盟费呢",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@只占百",
+   "fx": "odometer",
+   "value": "2",
+   "unit": "%",
+   "sub": "只占点五",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@所以它",
+   "fx": "stomp",
+   "words": [
+    "所以它",
+    "不怕便宜"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@看懂谁",
+   "fx": "impact",
+   "text": "看懂谁在赚钱|比看懂谁在卖货更重要",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@每周八",
+   "fx": "odometer",
+   "value": "5",
+   "unit": "%",
+   "sub": "每周八亿人在用ChatGPT，真正掏钱的，只有大约！",
+   "tr": "zoomin"
+  },
+  {
+   "scene": "fx",
+   "t": "@两年前",
+   "fx": "blur_focus",
+   "text": "两年前|这个数字还是一亿",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@现在它",
+   "fx": "tracking",
+   "text": "现在它的接口|每分钟要处理六十亿个token",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@但付费",
+   "fx": "flip3d",
+   "text": "但付费的人|大约三千五百万",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@一个月",
+   "fx": "apple_blur",
+   "text": "一个月二十美元|或者两百美元",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@剩下的",
+   "fx": "mask_up",
+   "text": "剩下的九成五|都在免费用",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@Ope",
+   "fx": "stomp",
+   "words": [
+    "OpenAI",
+    "押的是",
+    "到二零三",
+    "零年",
+    "付费用户",
+    "涨到",
+    "两亿两",
+    "千万"
+   ],
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "t": "@生成变",
+   "fx": "lower3",
+   "text": "生成变便宜了，判断就变贵了",
+   "sub": "关注 · 一起练判断",
+   "tr": "hard"
+  }
+ ]
+}

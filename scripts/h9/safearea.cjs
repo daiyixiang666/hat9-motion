@@ -8,7 +8,7 @@ const path = require("path");
 const puppeteer = require(process.env.H9_PUPPETEER || "puppeteer-core");
 
 (async () => {
-  const [file, times, W, H, exempt] = process.argv.slice(2);
+  const [file, times, W, H, exempt, zonesJson] = process.argv.slice(2);   // zonesJson: optional [{n,x0,y0,x1,y1,tx,ty}] replacing the default zones (platform watermarks)
   const browser = await puppeteer.launch({ executablePath: process.env.H9_CHROME, headless: true, args: ["--allow-file-access-from-files", "--no-sandbox"] });
   const page = await browser.newPage();
   await page.setViewport({ width: +W, height: +H });
@@ -17,14 +17,14 @@ const puppeteer = require(process.env.H9_PUPPETEER || "puppeteer-core");
   await page.evaluate(() => (document.fonts ? document.fonts.ready : null));
   const out = [];
   for (const t of times.split(",").map(Number)) {
-    const r = await page.evaluate((t, W, H, exempt) => {
+    const r = await page.evaluate((t, W, H, exempt, zonesJson) => {
       window.__timelines.main.seek(t, false);
       // the HyperFrames runtime shows/hides timed clips; a raw page has to do it itself
       document.querySelectorAll("#root [data-start]").forEach((el) => {
         const s = +el.dataset.start, d = +el.dataset.duration;
         el.style.visibility = t >= s - 1e-3 && t < s + d ? "" : "hidden";
       });
-      const zones = [
+      const zones = zonesJson ? JSON.parse(zonesJson) : [
         { n: "top", x0: 0, y0: 0, x1: W, y1: 200, tx: 4, ty: 20 },          // tolerances: a line box grazing the edge is not covered ink
         { n: "bottom", x0: 0, y0: H - 400, x1: W, y1: H, tx: 4, ty: 16 },
         { n: "right", x0: W - 120, y0: H / 2, x1: W, y1: H, tx: 30, ty: 4 },
@@ -82,7 +82,7 @@ const puppeteer = require(process.env.H9_PUPPETEER || "puppeteer-core");
         }
       }
       return res;
-    }, t, +W, +H, exempt || "");
+    }, t, +W, +H, exempt || "", zonesJson || "");
     out.push(...r);
   }
   console.log(JSON.stringify(out));

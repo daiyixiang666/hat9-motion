@@ -1,0 +1,301 @@
+{
+ "meta": {
+  "title": "图片与文档 · 在真实口播里",
+  "aspect": "16:9",
+  "duration": 59.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "fx": "logo_wall",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "做内容",
+   "logos": [
+    "press",
+    "screen",
+    "atlas",
+    "doc",
+    "poster",
+    "reel",
+    "hud",
+    "studio",
+    "clay"
+   ],
+   "hl": "atlas",
+   "title": "九种风格，一个仓库",
+   "sub": "atlas · 地图纪录",
+   "line": "九种风格放在一个仓库里，换一种就是*一种气质*。",
+   "src": "hat9-motion 风格目录",
+   "label": "Logo 墙 · Logo Wall",
+   "ref": "VideoHive Multi Video & Multi Text Logo Formation 3.8K · Mosaic Photo Reveal 16K",
+   "scene": "fx",
+   "t": 0.0
+  },
+  {
+   "fx": "halftone",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "做内容",
+   "image": "assets/lowres_1957.jpg",
+   "mode": "halftone",
+   "kicker": "1957 年 · 公有领域档案片",
+   "title": "200 像素，也能好看",
+   "line": "这张截图只有 *200 像素*宽，做成网点就不嫌糊了。",
+   "src": "Working Dollars（1957），Prelinger Archives，公有领域",
+   "label": "低清图做成风格 · Halftone / Duotone",
+   "ref": "Ben Marriott「Make ANYTHING Retro」99.6 万 ·「Instant Dither」30.6 万",
+   "scene": "fx",
+   "t": 4.6
+  },
+  {
+   "fx": "meme_stage",
+   "d": 4.8,
+   "theme": "lemon",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "assets/meme_lemon.jpg",
+     "caption": "4 块钱"
+    },
+    {
+     "src": "assets/meme_turn.jpg",
+     "caption": "不是卖奶茶"
+    },
+    {
+     "src": "assets/meme_1997.jpg",
+     "caption": "学会说不"
+    }
+   ],
+   "line": "同一条片子，*一句话换一张图*，节奏就出来了。",
+   "src": "画面取自本仓库的示例成片",
+   "label": "梗图舞台 · Meme Stage",
+   "ref": "Fakeplastictree「Collage」203.5 万 · Ben Marriott Paper Cutout 30.7 万",
+   "scene": "fx",
+   "t": 9.2
+  },
+  {
+   "fx": "gif_clip",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "做内容",
+   "gif": "assets/stomp.gif",
+   "frame": "sticker",
+   "caption": "stomp.gif · 360 像素",
+   "title": "GIF 直接拖进来",
+   "line": "GIF 动图拖进来，构建时自动*转成视频*。",
+   "src": "GIF 由本仓库的动效预览生成",
+   "label": "GIF 动图 · GIF Clip",
+   "ref": "VideoHive Photo Frames Slideshow 3.6K（Openers 第 3）· Mixkit Polaroid Slideshow",
+   "scene": "fx",
+   "t": 14.0
+  },
+  {
+   "fx": "svg_art",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "做内容",
+   "svg": "assets/cup.svg",
+   "swap": "ink",
+   "title": "矢量插画|永远清晰",
+   "caption": "颜色跟着主题走：同一张 SVG，换成深色主题",
+   "line": "矢量插画不会糊，*颜色跟着主题走*。",
+   "src": "插画为本仓库自绘矢量图",
+   "label": "SVG 矢量插画 · SVG Draw-on",
+   "ref": "「Stroke Logo Animation」128.5 万 · SonduckFilm Stroke Logo Reveal 66.7 万",
+   "scene": "fx",
+   "t": 18.4
+  },
+  {
+   "fx": "doc_photo",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "assets/photo_ruling.jpg",
+   "corners": [
+    [
+     20.62,
+     10.0
+    ],
+    [
+     77.5,
+     15.83
+    ],
+    [
+     81.25,
+     92.5
+    ],
+    [
+     15.62,
+     88.33
+    ]
+   ],
+   "hl": [
+    [
+     42.5,
+     12.9,
+     46.56,
+     2.42
+    ],
+    [
+     11.44,
+     16.39,
+     10.97,
+     2.42
+    ]
+   ],
+   "title": "拍歪了也没关系",
+   "caption": "自动找角、摆正、提亮，再划重点",
+   "line": "手机拍的判决书歪了，*自动摆正*再划重点。",
+   "src": "拍摄效果为示意；原文：US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域",
+   "label": "拍照文档摆正 · Document Scan",
+   "ref": "Flat Pack FX「Vox Highlighter Effect」31.3 万 · Motion Street「Motion Graphics Like Vox」83.8 万",
+   "scene": "fx",
+   "t": 23.2
+  },
+  {
+   "fx": "slides",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "做内容",
+   "slides": [
+    "../../assets/previews/mixue_16x9.jpg",
+    "../../assets/previews/screen_16x9.jpg",
+    "../../assets/previews/atlas_16x9.jpg",
+    "../../assets/previews/doc_16x9.jpg",
+    "../../assets/previews/poster_16x9.jpg"
+   ],
+   "focus": 3,
+   "title": "五条示例成片",
+   "line": "五条成片的封面，*一页页*翻过去。",
+   "src": "hat9-motion 示例成片",
+   "label": "幻灯片翻页 · Slide Deck",
+   "ref": "VideoHive Cinematic Parallax Slideshow 5.4K（Openers 第 1）· Photo Slideshow 3D II 2.2K",
+   "scene": "fx",
+   "t": 28.2
+  },
+  {
+   "fx": "doc_flip",
+   "d": 5.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly",
+   "title": "286 页里的一句话",
+   "caption": "美国诉谷歌案判决书，2024 年 8 月 5 日",
+   "line": "286 页的判决书，关键那句在*第 8 页*。",
+   "src": "US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域；片中翻阅前 24 页",
+   "label": "多页文档翻阅 · Document Flip",
+   "ref": "Motion Array「Edit A Documentary Like Johnny Harris」53.9 万",
+   "scene": "fx",
+   "t": 33.0,
+   "of": 286
+  },
+  {
+   "fx": "doc_pick",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "pdf": "assets/us_v_google_2024_p1-24.pdf",
+   "range": [
+    1,
+    10
+   ],
+   "pick": 8,
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly",
+   "title": "一叠材料，只看这一页",
+   "line": "一叠材料里，真正要看的是*这一页*。",
+   "src": "US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域",
+   "label": "抽出一页 · Pick a Page",
+   "ref": "Premiere Gal「3D Paper Highlighter」19.8 万 · Documentary Style Pack（Envato Elements 热门）",
+   "scene": "fx",
+   "t": 38.6,
+   "tag": "第 8 页"
+  },
+  {
+   "fx": "handwrite",
+   "d": 5.0,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "title": "4 块钱的底气",
+   "lines": [
+    "一、*自有工厂*：原料自己做",
+    "二、*自建仓配*：直送到店",
+    "三、*规模采购*：4.6 万家店一起买"
+   ],
+   "host": true,
+   "line": "笔记写下三件事：*工厂、仓配、采购*。",
+   "src": "蜜雪集团招股书 · 2024 年度业绩公告",
+   "label": "手写笔记 · Handwriting",
+   "ref": "SonduckFilm「Handwriting Effect」123.7 万 · VideoHive Whiteboard Write 2.1K",
+   "scene": "fx",
+   "t": 43.6
+  },
+  {
+   "fx": "email_card",
+   "d": 5.0,
+   "theme": "paper",
+   "topic": "做内容",
+   "sender": "第九顶帽子 <hello@example.com>",
+   "to": "你",
+   "date": "2026-11-01 09:30",
+   "subject": "来一起做一条口播视频？",
+   "body": [
+    "你好，看了你的选题，我们觉得很适合做成一条 30 秒的口播。",
+    "*文案你来写，动效和配音交给九帽动效*，横屏竖屏各出一版。",
+    "附件里是这一期的分镜草稿，有空看看。"
+   ],
+   "attachments": [
+    "分镜草稿.pdf",
+    "参考片.mp4"
+   ],
+   "stamp": "示意",
+   "inbox": [
+    {
+     "sender": "第九顶帽子",
+     "subject": "来一起做一条口播视频？",
+     "time": "09:30"
+    },
+    {
+     "sender": "剪辑组",
+     "subject": "第 12 期 · 粗剪已上传",
+     "time": "昨天"
+    },
+    {
+     "sender": "字幕校对",
+     "subject": "错别字两处，已标黄",
+     "time": "周四"
+    }
+   ],
+   "line": "邮件截图也能动起来，*重点一句*会被划出来。",
+   "src": "邮件内容为示意",
+   "label": "邮件截图 · Email Card",
+   "ref": "Envato Elements「Elements」分类热门：手机通知、搜索框打字等界面元素",
+   "scene": "fx",
+   "t": 48.6
+  },
+  {
+   "fx": "notice_card",
+   "d": 5.4,
+   "theme": "red",
+   "topic": "商业拆解",
+   "org": "第九顶帽子 · 资料卡",
+   "kind": "备忘",
+   "no": "H9-2026-001",
+   "title": "蜜雪集团上市信息",
+   "date": "2026-11-01",
+   "signer": "第九顶帽子",
+   "body": [
+    "上市地点：香港联合交易所主板。",
+    "*上市日期：2025 年 3 月 3 日。*",
+    "股份代号：2097。"
+   ],
+   "line": "2025 年 3 月 3 日，蜜雪集团在港交所*挂牌上市*。",
+   "src": "港交所披露 · 公司公告（版式示意，非官方文件）",
+   "label": "公告文件 · Notice Card",
+   "ref": "Johnny Harris / Vox 式报纸文件动画 19.6 万（2024）",
+   "scene": "fx",
+   "t": 53.6
+  }
+ ]
+}

@@ -128,6 +128,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("design_md"); ap.add_argument("--name", required=True); ap.add_argument("--base", default="press", choices=["press", "reel"])
     ap.add_argument("--tokens", help="tokens.css (default: next to DESIGN.md if present)")
+    ap.add_argument("--brand-json", help="also write a style-independent brand.json (use with meta.brand on ANY style)")
     a = ap.parse_args()
     src = Path(a.design_md); md = src.read_text(encoding="utf-8")
     tk = Path(a.tokens) if a.tokens else src.with_name("tokens.css")
@@ -163,6 +164,15 @@ STYLE = {{**_b.STYLE, "name": {json.dumps((d["name"] or a.name) + "（品牌）"
 SCENES = getattr(_b, "SCENES", {{}})
 if hasattr(_b, "WORLD"): WORLD = _b.WORLD
 ''', encoding="utf-8")
+    if a.brand_json:
+        c = d["colors"]
+        brand = {"name": d["name"] or a.name, "source": src.as_posix(),
+                 "colors": {k: v for k, v in {"bg": c.get("bg") or c.get("neutral"), "fg": c.get("fg"), "muted": c.get("muted"), "line": c.get("line"),
+                                             "card": c.get("card"), "accent": c.get("accent"), "accent2": c.get("accent2"), "alert": c.get("alert")}.items() if v},
+                 "fonts": {k: fonts[k] for k in ("display", "body", "mono") if k in fonts and fonts[k] != base.STYLE["fonts"].get(k)},
+                 "tokens": {k: v for k, v in (("radius", d["radius"]), ("cap-radius", d["radius"])) if v}}
+        Path(a.brand_json).write_text(json.dumps(brand, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"{a.brand_json}  (brand.json for meta.brand)")
     print(f"{out}  ({len(tokens)} tokens from DESIGN.md, base {a.base})")
     for k, v in tokens.items(): print(f"  --{k}: {v}")
     print("  fonts:", json.dumps({k: fonts[k] for k in ("display", "body", "mono") if k in fonts}, ensure_ascii=False))

@@ -732,6 +732,528 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 - 参数：`focus`, `held`, `image`, `kicker`, `lift`, `meter`, `mood`, `sub`, `text`, `video`
 - 人气：金句后停 2.6 秒
 
+### `pip` — 
+
+<img src="../assets/previews/fx/pip.webp" width="480" alt="pip">
+
+
+
+- 参数：`back_at`, `corner`, `focus`, `host_fit`, `host_focus`, `kicker`, `main`, `main_start`, `name`, `role`, `shape`, `size`, `title`
+- 人气：小Lin说、林亦、毕导常用
+
+### `freeze_frame` — 
+
+<img src="../assets/previews/fx/freeze_frame.webp" width="480" alt="freeze_frame">
+
+
+
+- 参数：`hold`, `image`, `mode`, `pin`, `pins`, `resume`, `stamp`, `start`, `video`
+- 人气：B站科普常用：关键瞬间定格
+
+### `speed_ramp` — 
+
+<img src="../assets/previews/fx/speed_ramp.webp" width="480" alt="speed_ramp">
+
+
+
+- 参数：`badge`, `drama`, `focus`, `graph`, `ramp`, `smooth`, `start`, `video`
+- 人气：B站「AE 变速卡点」173.4 万播放
+
+### `footage` — 
+
+<img src="../assets/previews/fx/footage.webp" width="480" alt="footage">
+
+
+
+- 参数：`band_label`, `focus`, `image`, `name`, `role`, `show_band`, `start`, `subs`, `video`, `zoom`
+- 人气：采访切片、素材自带字幕
+
+### `audio_quote` — 
+
+<img src="../assets/previews/fx/audio_quote.webp" width="480" alt="audio_quote">
+
+
+
+- 参数：`a`, `audio`, `avatar`, `b`, `bars`, `date`, `kicker`, `quote`, `role`, `source`, `vol`, `who`, `words`
+- 人气：Envato「Audio Visualizer」热门
+
+### `podcast` — 
+
+<img src="../assets/previews/fx/podcast.webp" width="480" alt="podcast">
+
+
+
+- 参数：`a`, `art`, `audio`, `b`, `ep`, `episode`, `hosts`, `show`, `speaker`, `turns`, `vol`, `words`
+- 人气：Envato「Audio Visualizer」热门
+
+### `talking_head` — 
+
+<img src="../assets/previews/fx/talking_head.webp" width="480" alt="talking_head">
+
+
+
+- 参数：`broll`, `host_fit`, `name`, `stickers`
+- 人气：毕导式口播：跳切 + 贴纸
+
+### `host_point` — 
+
+<img src="../assets/previews/fx/host_point.webp" width="480" alt="host_point">
+
+
+
+- 参数：`card`, `host_fit`, `say`, `side`
+- 人气：Vox「Look at this」指哪说哪
+
+### `text_pages` — 
+
+<img src="../assets/previews/fx/text_pages.webp" width="480" alt="text_pages">
+
+
+
+- 参数：`at`, `dir`, `pages`, `paragraph`, `text`, `title`, `trans`, `translation`
+- 人气：Envato Elements「Hook & Captions」Titles Popular 第 12 · B 站动态歌词排版 898 万
+
+### `question_card` — 
+
+<img src="../assets/previews/fx/question_card.webp" width="480" alt="question_card">
+
+
+
+- 参数：`answer`, `at_reveal`, `host`, `kicker`, `options`, `q`, `question`, `reveal`, `text`
+- 人气：知识区设问手法（小Lin说 / 回形针的问号卡）· Kinetic Typography Pack 4.2K
+
+### `vertical_title` — 
+
+<img src="../assets/previews/fx/vertical_title.webp" width="480" alt="vertical_title">
+
+
+
+- 参数：`font`, `mode`, `seal`, `sub`, `text`
+- 人气：国风纪录片 / 片头常用的竖排版式
+
+### `flying_words` — 
+
+<img src="../assets/previews/fx/flying_words.webp" width="480" alt="flying_words">
+
+
+
+- 参数：`at`, `final`, `items`, `sub`, `words`
+- 人气：B 站「PV 中的文字穿梭效果」23 万 · VideoHive Flying Through Words 2.2K
+
+### `number_pages` — 
+
+<img src="../assets/previews/fx/number_pages.webp" width="480" alt="number_pages">
+
+
+
+- 参数：`at`, `items`, `per_page`, `text`
+- 人气：Number Counter：YouTube 162.6 万 · Envato Popular「Number Counter」
+
+### `combo` — 
+
+<img src="../assets/previews/fx/combo.webp" width="480" alt="combo">
+
+
+
+- 参数：`at`, `count`, `final`, `hits`, `tag`, `unit`
+- 人气：Number Counter 162.6 万 · Shape Elements burst（Graphics Pack 26.2K）
+
+### `black_slam` — 
+
+<img src="../assets/previews/fx/black_slam.webp" width="480" alt="black_slam">
+
+
+
+- 参数：`at`, `hits`, `sub`, `text`, `theme`
+- 人气：Camera Move + Impact Shake：Bricks 106.8 万（2025）
+
+### `scribble` — 
+
+<img src="../assets/previews/fx/scribble.webp" width="480" alt="scribble">
+
+
+
+- 参数：`at`, `image`, `ink`, `scribbles`, `text`, `theme`
+- 人气：B 站「白菜和杜比 手绘科普」69.9 万（2026）· Ben Marriott Hand Drawn 45.4 万
+
+### `scanline` — 
+
+<img src="../assets/previews/fx/scanline.webp" width="480" alt="scanline">
+
+
+
+- 参数：`at`, `blocks`, `dir`, `image`, `text`
+- 人气：HUD 扫描界面（Quantum HUD Infographic 5.9K）
+
+### `icon_unit` — 
+
+<img src="../assets/previews/fx/icon_unit.webp" width="480" alt="icon_unit">
+
+
+
+- 参数：`big`, `big_unit`, `groups`, `icon`, `legend`, `per`, `share`, `sub`, `text`, `total`, `unit`, `value`
+- 人气：VideoHive「555 Animated Icons」6.4K · Pictogram Infographic Kit 759
+
+### `scatter` — 
+
+<img src="../assets/previews/fx/scatter.webp" width="480" alt="scatter">
+
+
+
+- 参数：`hl`, `hl_note`, `labels`, `log`, `points`, `quad`, `size_lab`, `xlab`, `xunit`, `ylab`, `yunit`
+- 人气：VideoHive「Infographic Maker」2.6K · 「Infographics」2.2K
+
+### `funnel` — 
+
+<img src="../assets/previews/fx/funnel.webp" width="480" alt="funnel">
+
+
+
+- 参数：`dec`, `floor`, `hl`, `mode`, `pct_label`, `stages`, `unit`
+- 人气：VideoHive「Simple Infographics」1.9K · 「Infographic Maker」2.6K
+
+### `radar` — 
+
+<img src="../assets/previews/fx/radar.webp" width="480" alt="radar">
+
+
+
+- 参数：`axes`, `fmt`, `hl`, `max`, `series`
+- 人气：VideoHive「Infographics」2.2K · 「Quantum HUD」5.9K
+
+### `then_now` — 
+
+<img src="../assets/previews/fx/then_now.webp" width="480" alt="then_now">
+
+
+
+- 参数：`change`, `dec`, `now`, `then`
+- 人气：Envato Popular「Vertical Split Screen」· SonduckFilm 分屏教程 23.2 万
+
+### `choose_one` — 
+
+<img src="../assets/previews/fx/choose_one.webp" width="480" alt="choose_one">
+
+
+
+- 参数：`dec`, `hops`, `options`, `pick`, `q`, `unit`
+- 人气：知识区「先猜再揭晓」开场 · 选项卡逐个跳动后落定
+
+### `converge` — 
+
+<img src="../assets/previews/fx/converge.webp" width="480" alt="converge">
+
+
+
+- 参数：`dec`, `sources`, `target`, `total`, `unit`
+- 人气：VideoHive「3D Earth Connections」3.4K · 「Infographic Maker」2.6K
+
+### `gantt` — 
+
+<img src="../assets/previews/fx/gantt.webp" width="480" alt="gantt">
+
+
+
+- 参数：`hi`, `hl`, `lo`, `milestones`, `now`, `tasks`, `unit`
+- 人气：VideoHive「Company Timeline」3.2K · Envato「Infographics 6 Roadmaps」
+
+### `decision_tree` — 
+
+<img src="../assets/previews/fx/decision_tree.webp" width="480" alt="decision_tree">
+
+
+
+- 参数：`path`, `tree`
+- 人气：Envato「Infographics 6 Roadmaps」· VideoHive「Infographic Maker」2.6K
+
+### `area_overlay` — 
+
+<img src="../assets/previews/fx/area_overlay.webp" width="480" alt="area_overlay">
+
+
+
+- 参数：`a`, `b`, `ratio_text`, `unit`
+- 人气：VideoHive「Infographics 3D Map Kit」3.2K · 「Map Kit」1.4K · Vox 式地图
+
+### `map_timeline` — 
+
+<img src="../assets/previews/fx/map_timeline.webp" width="480" alt="map_timeline">
+
+
+
+- 参数：`from`, `labels`, `points`, `to`, `unit`
+- 人气：VideoHive「Map Route Generator」3.5K · 「World Map Animation」2.8K
+
+### `street_map` — 
+
+<img src="../assets/previews/fx/street_map.webp" width="480" alt="street_map">
+
+
+
+- 参数：`geojson`, `hl`, `route`, `route_label`
+- 人气：VideoHive「Map Kit」1.4K · 「3D Map Generator」1.2K
+
+### `logo_wall` — 
+
+<img src="../assets/previews/fx/logo_wall.webp" width="480" alt="logo_wall">
+
+
+
+- 参数：`hl`, `kicker`, `logos`, `names`, `sub`, `t_hl`, `title`
+- 人气：VideoHive Multi Video & Multi Text Logo Formation 3.8K · Mosaic Photo Reveal 16K
+
+### `halftone` — 
+
+<img src="../assets/previews/fx/halftone.webp" width="480" alt="halftone">
+
+
+
+- 参数：`cell`, `focus`, `image`, `ink`, `ink2`, `kicker`, `mode`, `paper`, `src`, `title`
+- 人气：Ben Marriott「Make ANYTHING Retro」99.6 万 ·「Instant Dither」30.6 万
+
+### `meme_stage` — 
+
+<img src="../assets/previews/fx/meme_stage.webp" width="480" alt="meme_stage">
+
+
+
+- 参数：`at`, `captions`, `images`, `items`, `mode`, `title`
+- 人气：Fakeplastictree「Collage」203.5 万 · Ben Marriott Paper Cutout 30.7 万
+
+### `gif_clip` — 
+
+<img src="../assets/previews/fx/gif_clip.webp" width="480" alt="gif_clip">
+
+
+
+- 参数：`caption`, `fit`, `focus`, `frame`, `gif`, `speed`, `src`, `title`
+- 人气：VideoHive Photo Frames Slideshow 3.6K（Openers 第 3）· Mixkit Polaroid Slideshow
+
+### `svg_art` — 
+
+<img src="../assets/previews/fx/svg_art.webp" width="480" alt="svg_art">
+
+
+
+- 参数：`accent`, `bg`, `caption`, `draw`, `fg`, `recolor`, `src`, `svg`, `swap`, `title`
+- 人气：「Stroke Logo Animation」128.5 万 · SonduckFilm Stroke Logo Reveal 66.7 万
+
+### `doc_photo` — 
+
+<img src="../assets/previews/fx/doc_photo.webp" width="480" alt="doc_photo">
+
+
+
+- 参数：`caption`, `corners`, `hl`, `image`, `kicker`, `ratio`, `src`, `title`
+- 人气：Flat Pack FX「Vox Highlighter Effect」31.3 万 · Motion Street「Motion Graphics Like Vox」83.8 万
+
+### `slides` — 
+
+<img src="../assets/previews/fx/slides.webp" width="480" alt="slides">
+
+
+
+- 参数：`counter`, `focus`, `pdf`, `slides`, `title`, `zoom`
+- 人气：VideoHive Cinematic Parallax Slideshow 5.4K（Openers 第 1）· Photo Slideshow 3D II 2.2K
+
+### `doc_flip` — 
+
+<img src="../assets/previews/fx/doc_flip.webp" width="480" alt="doc_flip">
+
+
+
+- 参数：`caption`, `dpi`, `flips`, `hl`, `of`, `pdf`, `quote`, `range`, `target`, `title`
+- 人气：Motion Array「Edit A Documentary Like Johnny Harris」53.9 万
+
+### `doc_pick` — 
+
+<img src="../assets/previews/fx/doc_pick.webp" width="480" alt="doc_pick">
+
+
+
+- 参数：`caption`, `hl`, `pdf`, `pick`, `quote`, `tag`, `title`
+- 人气：Premiere Gal「3D Paper Highlighter」19.8 万 · Documentary Style Pack（Envato Elements 热门）
+
+### `handwrite` — 
+
+<img src="../assets/previews/fx/handwrite.webp" width="480" alt="handwrite">
+
+
+
+- 参数：`font`, `ink`, `lines`, `mark`, `paper`, `text`, `tilt`, `title`
+- 人气：SonduckFilm「Handwriting Effect」123.7 万 · VideoHive Whiteboard Write 2.1K
+
+### `email_card` — 
+
+<img src="../assets/previews/fx/email_card.webp" width="480" alt="email_card">
+
+
+
+- 参数：`attachments`, `body`, `date`, `from`, `inbox`, `sender`, `stamp`, `subject`, `to`
+- 人气：Envato Elements「Elements」分类热门：手机通知、搜索框打字等界面元素
+
+### `notice_card` — 
+
+<img src="../assets/previews/fx/notice_card.webp" width="480" alt="notice_card">
+
+
+
+- 参数：`body`, `date`, `kind`, `no`, `numbered`, `org`, `signer`, `title`, `watermark`
+- 人气：Johnny Harris / Vox 式报纸文件动画 19.6 万（2024）
+
+### `app_flow` — 
+
+<img src="../assets/previews/fx/app_flow.webp" width="480" alt="app_flow">
+
+
+
+- 参数：`dark_chrome`, `flow`, `steps`
+- 人气：VideoHive Phone 7 App & Gestures 2.6K
+
+### `cursor` — 
+
+<img src="../assets/previews/fx/cursor.webp" width="480" alt="cursor">
+
+
+
+- 参数：`dark_chrome`, `frame`, `image`, `path`, `start`, `steps`, `tab`, `theme`, `trail`, `url`, `video`, `zoom`
+- 人气：VideoHive Phone 7 App & Gestures 2.6K
+
+### `form_fill` — 
+
+<img src="../assets/previews/fx/form_fill.webp" width="480" alt="form_fill">
+
+
+
+- 参数：`cursor`, `done`, `fields`, `sub`, `submit`, `title`
+- 人气：Envato Elements「Elements」Popular「Checklist Pack」
+
+### `turntable` — 
+
+<img src="../assets/previews/fx/turntable.webp" width="480" alt="turntable">
+
+
+
+- 参数：`at`, `image`, `kicker`, `name`, `price`, `specs`, `sway`, `text`, `turns`, `views`
+- 人气：VideoHive Product Promo 分类销量榜
+
+### `search_box` — 
+
+<img src="../assets/previews/fx/search_box.webp" width="480" alt="search_box">
+
+
+
+- 参数：`button`, `count`, `engine`, `hl`, `mock`, `pick`, `query`, `results`, `suggest`
+- 人气：Envato「Search Screen Pro」Popular 第 7
+
+### `relation_graph` — 
+
+<img src="../assets/previews/fx/relation_graph.webp" width="480" alt="relation_graph">
+
+
+
+- 参数：`hl`, `layout`, `t_hl`
+- 人气：VideoHive Infographic Maker 2.6K · Envato Infographics「AI Workflow」
+
+### `dialogue` — 
+
+<img src="../assets/previews/fx/dialogue.webp" width="480" alt="dialogue">
+
+
+
+- 参数：—
+- 人气：VideoHive Text Messages 3.8K · Lower Thirds 第 1 名 6.3K
+
+### `interview` — 
+
+<img src="../assets/previews/fx/interview.webp" width="480" alt="interview">
+
+
+
+- 参数：`a`, `at_a`, `at_q`, `ep`, `focus`, `host`, `image`, `name`, `org`, `q`, `role`, `start`, `tc`, `topic`, `video`
+- 人气：VideoHive Lower Thirds 第 1 名 6.3K
+
+### `opener` — 
+
+<img src="../assets/previews/fx/opener.webp" width="480" alt="opener">
+
+
+
+- 参数：`channel`, `en`, `ep`, `show`, `sub`, `text`, `title`
+- 人气：VideoHive Openers 31,965 个 · Corporate Typography Pack 2.8K · Fast Intro 2.6K
+
+### `news_flash` — 
+
+<img src="../assets/previews/fx/news_flash.webp" width="480" alt="news_flash">
+
+
+
+- 参数：`at`, `headline`, `image`, `image_label`, `items`, `kicker`, `live`, `source`, `text`, `theme`, `ticker`, `ticker_label`, `time`
+- 人气：talkcraft news-card-desk · 速报类口播
+
+### `deal_card` — 
+
+<img src="../assets/previews/fx/deal_card.webp" width="480" alt="deal_card">
+
+
+
+- 参数：`at`, `countdown`, `countdown_label`, `coupon`, `cur`, `image`, `note`, `price`, `product`, `stock`, `sub`, `tags`, `title`, `unit`, `was`
+- 人气：Envato Infographics「Modern Price Tags & Counters」
+
+### `clip_style` — 
+
+<img src="../assets/previews/fx/clip_style.webp" width="480" alt="clip_style">
+
+
+
+- 参数：`comments`, `hearts`, `image`, `line`, `live_text`, `name`, `note`, `quote`, `role`, `time`, `title`, `video`, `viewers`
+- 人气：直播 / 访谈切片号通用包装 · talkcraft danmu-bubble-praise
+
+### `review_card` — 
+
+<img src="../assets/previews/fx/review_card.webp" width="480" alt="review_card">
+
+
+
+- 参数：`at`, `cons`, `image`, `labels`, `max`, `note`, `overall`, `product`, `pros`, `scores`, `stars`, `sub`, `text`, `title`, `verdict`, `verdict_kind`
+- 人气：数码 / 工具测评号常用版式：评分条 + 星级 + 结论徽章
+
+### `sponsor_card` — 
+
+<img src="../assets/previews/fx/sponsor_card.webp" width="480" alt="sponsor_card">
+
+
+
+- 参数：`ad_tag`, `code`, `code_label`, `cta`, `host`, `image`, `lead`, `logo`, `note`, `points`, `sponsor`, `title`
+- 人气：口播恰饭段落「本期视频由……支持」
+
+### `poll_card` — 
+
+<img src="../assets/previews/fx/poll_card.webp" width="480" alt="poll_card">
+
+
+
+- 参数：`cta`, `hl`, `host`, `kicker`, `letters`, `mode`, `note`, `options`, `question`, `text`, `total`
+- 人气：Envato Elements Popular「YouTube Subscribe」「Checklist Pack」
+
+### `share_card` — 
+
+<img src="../assets/previews/fx/share_card.webp" width="480" alt="share_card">
+
+
+
+- 参数：`by`, `date`, `export`, `handle`, `hint`, `host`, `kicker`, `quote`, `text`
+- 人气：小红书 / 朋友圈金句图 · scripts/share_card.py 导出单张
+
+### `next_teaser` — 
+
+<img src="../assets/previews/fx/next_teaser.webp" width="480" alt="next_teaser">
+
+
+
+- 参数：`ep`, `hints`, `image`, `kicker`, `note`, `text`, `title`, `video`, `when`
+- 人气：系列号片尾常用「下期拆 XX」
+
 ## 转场
 
 写在下一个 beat 上：`"tr": "zoomin"`。

@@ -1,0 +1,474 @@
+{
+ "base": "examples/genre",
+ "note": "W6 genre & narrative effects (review_card · news_flash · deal_card · next_teaser · opener · sponsor_card · share_card · poll_card · clip_style); media paths relative to base; ~4.5 s per beat.",
+ "beat": 4.5,
+ "beats": [
+  {
+   "fx": "review_card",
+   "theme": "ink",
+   "line": "两项评分、没有优缺点。",
+   "product": "耳机 A",
+   "scores": [
+    [
+     "音质",
+     9
+    ],
+    [
+     "续航",
+     7
+    ]
+   ],
+   "verdict": "推荐",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "review_card",
+   "theme": "paper",
+   "line": "八项长标签、五分制、配图、四条优缺点。",
+   "product": "一款名字非常非常长的降噪耳机旗舰版（第三代）",
+   "sub": "¥1,299 · 蓝牙 5.3 · 40 小时续航 · 主动降噪 · 多设备连接",
+   "image": "../doc/assets/variant/portrait_still.jpg",
+   "max": 5,
+   "scores": [
+    [
+     "第一项比较长的评分维度",
+     1.0
+    ],
+    [
+     "第二项比较长的评分维度",
+     1.55
+    ],
+    [
+     "第三项比较长的评分维度",
+     2.1
+    ],
+    [
+     "第四项比较长的评分维度",
+     2.6500000000000004
+    ],
+    [
+     "第五项比较长的评分维度",
+     3.2
+    ],
+    [
+     "第六项比较长的评分维度",
+     3.75
+    ],
+    [
+     "第七项比较长的评分维度",
+     4.300000000000001
+    ],
+    [
+     "第八项比较长的评分维度",
+     4.8500000000000005
+    ]
+   ],
+   "pros": [
+    "降噪效果在同价位里很明显",
+    "佩戴一整天也不压耳朵",
+    "多设备切换很顺",
+    "App 功能齐全"
+   ],
+   "cons": [
+    "通话收音一般，户外风噪大",
+    "触控容易误触",
+    "盒子偏大",
+    "价格不便宜"
+   ],
+   "verdict": "不推荐",
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "review_card",
+   "theme": "lemon",
+   "line": "字典评分、百分制、手写总分。",
+   "product": "某 App",
+   "scores": {
+    "好用": 92,
+    "稳定": 64,
+    "便宜": 30
+   },
+   "max": 100,
+   "overall": 71,
+   "stars": false,
+   "verdict": "看需求",
+   "verdict_kind": "mixed",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "news_flash",
+   "theme": "red",
+   "line": "只有标题。",
+   "headline": "刚刚，一家公司宣布上市",
+   "live": false,
+   "kicker": "快讯",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "news_flash",
+   "theme": "paper",
+   "line": "五条长更新、十条滚动、配图。",
+   "kicker": "直播",
+   "time": "2025-03-03 09:30",
+   "source": "示意来源",
+   "image": "../doc/assets/variant/towers.jpg",
+   "image_label": "资料图 · 示意",
+   "headline": "一条写得比较长的新闻标题，测试两行之内放下",
+   "items": [
+    "09:30：第一条更新的内容写得比较长，用来测试换行与截断",
+    "09:31：第二条更新的内容写得比较长，用来测试换行与截断",
+    "09:32：第三条更新的内容写得比较长，用来测试换行与截断",
+    "09:33：第四条更新的内容写得比较长，用来测试换行与截断",
+    "09:34：第五条更新的内容写得比较长，用来测试换行与截断"
+   ],
+   "ticker": [
+    "第一条滚动消息",
+    "第二条滚动消息",
+    "第三条滚动消息",
+    "第四条滚动消息",
+    "第五条滚动消息",
+    "第六条滚动消息",
+    "第七条滚动消息",
+    "第八条滚动消息",
+    "第九条滚动消息",
+    "第十条滚动消息"
+   ],
+   "topic": "压力测试"
+  },
+  {
+   "fx": "news_flash",
+   "theme": "ink",
+   "line": "英文标题、一条滚动。",
+   "kicker": "BREAKING",
+   "time": "21:05",
+   "source": "Example Wire",
+   "headline": "Company X files for an IPO in Hong Kong",
+   "items": [
+    [
+     "Price",
+     "HK$202.5"
+    ]
+   ],
+   "ticker": [
+    "Demo only"
+   ],
+   "topic": "压力测试"
+  },
+  {
+   "fx": "deal_card",
+   "theme": "lemon",
+   "line": "只有现价。",
+   "product": "柠檬水",
+   "price": "4",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "deal_card",
+   "theme": "paper",
+   "line": "全部字段、竖图、四个标签、秒数倒计时。",
+   "product": "一个名字故意写得非常非常长的商品，用来测试两行之内能不能放下",
+   "sub": "示意商品 · 下单后 48 小时发货",
+   "image": "../doc/assets/variant/portrait_still.jpg",
+   "price": "49",
+   "was": "99",
+   "unit": "/件",
+   "tags": [
+    "限时",
+    "包邮",
+    "第二件半价",
+    "七天无理由"
+   ],
+   "coupon": [
+    "满 99 减 20",
+    "领券"
+   ],
+   "countdown": 90,
+   "stock": "仅剩 3 件",
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "deal_card",
+   "theme": "ink",
+   "line": "五位数价格、美元、一小时倒计时。",
+   "product": "笔记本电脑",
+   "image": "../doc/assets/variant/crossing.jpg",
+   "price": "12999.99",
+   "was": "15999",
+   "cur": "$",
+   "unit": "/台",
+   "countdown": "01:00:00",
+   "stock": [
+    80,
+    100
+   ],
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "next_teaser",
+   "theme": "ink",
+   "line": "配图、三个提示、长标题。",
+   "image": "../doc/assets/variant/crossing.jpg",
+   "kicker": "下期预告",
+   "ep": "EP.12",
+   "title": "一个故意写得很长很长的下期标题：港口、航线和一整个产业链到底怎么连起来",
+   "hints": [
+    "航线",
+    "运价",
+    "谁在赚钱"
+   ],
+   "when": "下周二见",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "next_teaser",
+   "theme": "red",
+   "line": "一个字、没有提示。",
+   "title": "？",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "next_teaser",
+   "theme": "paper",
+   "line": "竖视频封面。",
+   "video": "../cite/assets/harbor_vertical.mp4",
+   "ep": "第 08 期",
+   "title": "港口的一天",
+   "hints": [
+    "凌晨四点"
+   ],
+   "when": "周五见",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "opener",
+   "theme": "paper",
+   "line": "一位期数、一个字标题。",
+   "show": "拆解",
+   "ep": "EP.1",
+   "title": "钱",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "opener",
+   "theme": "ink",
+   "line": "四位期数、十二字栏目、长标题。",
+   "show": "一个非常长的栏目名字测试",
+   "ep": "第 1024 期",
+   "title": "一个特别长的本期标题，用来测试两行之内能不能放得下，三十多个字",
+   "sub": "副标题也写得长一点点",
+   "channel": "第九顶帽子",
+   "en": "a very long english subtitle",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "opener",
+   "theme": "red",
+   "line": "英文标题、短代号。",
+   "show": "WEEKLY",
+   "ep": "Vol.3",
+   "title": "Why lemonade?",
+   "en": "season two",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "sponsor_card",
+   "theme": "paper",
+   "line": "只有赞助商名字。",
+   "sponsor": "示例品牌",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "sponsor_card",
+   "theme": "ink",
+   "line": "四条长卖点、长专属码、配图。",
+   "sponsor": "一个名字很长的示例研究所",
+   "image": "../doc/assets/variant/towers.jpg",
+   "logo": "../doc/assets/variant/portrait_still.jpg",
+   "points": [
+    "第一条卖点写得特别特别长，测试换行",
+    "第二条卖点",
+    "第三条卖点也写长一点",
+    "第四条"
+   ],
+   "code": "HAT9-2025-SPRING",
+   "cta": "点评论区第一条链接领取",
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "sponsor_card",
+   "theme": "lemon",
+   "line": "自定义引导语、没有码。",
+   "sponsor": "示例 App",
+   "lead": "感谢 示例 App 对本期的支持",
+   "ad_tag": "推广",
+   "points": [
+    "免费试用 7 天"
+   ],
+   "cta": "搜索「示例 App」下载",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "share_card",
+   "theme": "paper",
+   "line": "一个字。",
+   "quote": "*钱*。",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "share_card",
+   "theme": "ink",
+   "line": "九十字长句、署名、日期。",
+   "quote": "真正的护城河不是价格，而是供应链：从柠檬、糖浆到杯子，每一样都自己做，每一样都便宜一点点，加起来就是别人追不上的成本，这才是*四块钱*背后的生意。",
+   "by": "第九顶帽子",
+   "handle": "@hat9",
+   "date": "2025.03.03",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "share_card",
+   "theme": "red",
+   "line": "英文金句、没有提示。",
+   "quote": "Price is what you pay; *value* is what you get.",
+   "by": "Warren Buffett, 2008 letter",
+   "kicker": "QUOTE",
+   "hint": "",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "poll_card",
+   "theme": "paper",
+   "line": "两个选项、结果。",
+   "question": "选 A 还是 B？",
+   "options": [
+    [
+     "A 方案",
+     62
+    ],
+    [
+     "B 方案",
+     38
+    ]
+   ],
+   "total": "示意 · 1,024 票",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "poll_card",
+   "theme": "ink",
+   "line": "六个长选项、提问。",
+   "question": "一个写得很长很长的问题：如果只能选一个，你最想看哪一期的拆解？",
+   "options": [
+    "第一个选项写得比较长一点用来测试",
+    "第二个选项写得比较长一点用来测试",
+    "第三个选项写得比较长一点用来测试",
+    "第四个选项写得比较长一点用来测试",
+    "第五个选项写得比较长一点用来测试",
+    "第六个选项写得比较长一点用来测试"
+   ],
+   "mode": "ask",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "poll_card",
+   "theme": "lemon",
+   "line": "四个选项、指定高亮、不显示字母。",
+   "question": "你会为 AI 工具付费吗？",
+   "options": [
+    [
+     "会",
+     41
+    ],
+    [
+     "不会",
+     22
+    ],
+    [
+     "看价格",
+     30
+    ],
+    [
+     "已经在付",
+     7
+    ]
+   ],
+   "hl": 2,
+   "letters": false,
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "clip_style",
+   "theme": "ink",
+   "line": "横图、没有评论、没有爱心、长标题。",
+   "image": "../doc/assets/variant/crossing.jpg",
+   "title": "一个特别长的切片标题，测试两行能不能放下，以及丝带会不会跟着变",
+   "hearts": false,
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "clip_style",
+   "theme": "ink",
+   "line": "竖视频、八条评论、观看人数。",
+   "video": "../doc/assets/variant/portrait_clip.mp4",
+   "title": "竖屏素材",
+   "name": "嘉宾",
+   "role": "示意",
+   "viewers": "1.2 万人看过",
+   "time": "00:41",
+   "comments": [
+    [
+     "用户1",
+     "第一条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户2",
+     "第二条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户3",
+     "第三条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户4",
+     "第四条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户5",
+     "第五条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户6",
+     "第六条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户7",
+     "第七条评论写长一点看看会不会截断"
+    ],
+    [
+     "用户8",
+     "第八条评论写长一点看看会不会截断"
+    ]
+   ],
+   "note": "示意",
+   "topic": "压力测试"
+  },
+  {
+   "fx": "clip_style",
+   "theme": "paper",
+   "line": "超宽视频、没有标题、自定义字幕。",
+   "video": "../doc/assets/variant/ultrawide.mp4",
+   "quote": "这一段我们*慢放*看看。",
+   "live_text": "回放",
+   "comments": [
+    "没有用户名的一条评论"
+   ],
+   "note": "示意",
+   "topic": "压力测试"
+  }
+ ]
+}

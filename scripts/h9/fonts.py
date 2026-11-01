@@ -30,8 +30,13 @@ def build(X, text):
     out = X.out / "assets" / "fonts"; out.mkdir(parents=True, exist_ok=True)
     chars = "".join(sorted(set(text))) + "".join(chr(c) for c in range(32, 127)) + "，。、：；！？“”‘’（）《》·—…「」"
     done = {}
+    # other scripts: the language's font joins every role's stack (optional fonts; the system font covers a missing file)
+    lang = X.v.get("meta", {}).get("lang", "zh")
+    extra = {"ja": "noto-sans-jp", "ko": "noto-sans-kr", "zh-TW": "noto-sans-tc", "zh-HK": "noto-sans-tc",
+             "ar": "noto-sans-arabic", "fa": "noto-sans-arabic", "ur": "noto-sans-arabic", "he": "noto-sans-hebrew"}.get(lang)
     for role, ids in X.S.get("fonts", {}).items():
         ids = ids if isinstance(ids, list) else [ids]
+        if extra and extra not in ids: ids = ids + [extra]
         stack = []
         for fid in ids:
             meta = REG.get(fid)
@@ -40,7 +45,8 @@ def build(X, text):
             if fid not in done:
                 src = find(meta["file"])
                 if not src:
-                    print(f"  ! font {fid} ({meta['file']}) not found — falls back to {meta.get('fallback', 'sans-serif')}. Get it: {meta.get('url', '')}")
+                    if not meta.get("optional") or fid == extra:
+                        print(f"  ! font {fid} ({meta['file']}) not found — falls back to {meta.get('fallback', 'sans-serif')}. Get it: {meta.get('url', '')}")
                     done[fid] = None
                 else:
                     dst = out / f"{fid}.ttf"
@@ -57,7 +63,7 @@ def build(X, text):
                     faces.append(f"@font-face {{ font-family:'{fam}'; src:url('assets/fonts/{fid}.ttf'); font-weight:{w}; font-style:{st}; }}")
                     done[fid] = fam
             if done[fid]: stack.append(f"'{done[fid]}'")
-        stack.append(REG.get(ids[-1], {}).get("fallback", "sans-serif"))
+        stack.append(REG.get(ids[-1], {}).get("fallback", "sans-serif") if not extra else REG.get(extra, {}).get("fallback", "sans-serif") + ", " + REG.get(ids[0], {}).get("fallback", "sans-serif"))
         roles[role] = ", ".join(stack)
     css = "\n".join(faces) + "\n:root { " + " ".join(f"--f-{k}:{v};" for k, v in roles.items()) + " }"
     return css

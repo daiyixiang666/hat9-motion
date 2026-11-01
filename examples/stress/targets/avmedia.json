@@ -1,0 +1,425 @@
+{
+ "note": "W1 video & audio effects: the deliberately different inputs of examples/avmedia/variants.json, at a 3 s and a 6 s beat. Paths relative to examples/avmedia.",
+ "base": "examples/avmedia",
+ "durations": [
+  3,
+  6
+ ],
+ "targets": {
+  "pip": [
+   {
+    "host": false,
+    "main": "../cite/assets/harbor_vertical.mp4",
+    "main_start": 0.5,
+    "corner": "bl",
+    "shape": "round",
+    "name": "第九顶帽子",
+    "role": "旁白",
+    "kicker": "竖屏素材",
+    "title": "Manhattan Waterfront",
+    "src": "Manhattan Waterfront (c.1930s) · Prelinger Archives（公有领域）"
+   },
+   {
+    "main": "../pacing/assets/stills/kitchen.jpg",
+    "at": 1.2,
+    "back_at": 4.4,
+    "corner": "tl",
+    "name": "柴犬",
+    "role": "主持人",
+    "src": "American Look (1958) · Prelinger Archives（公有领域）",
+    "host": "../mixue/assets/video/shiba.webm"
+   },
+   {
+    "main": "../../assets/previews/screen_16x9.mp4",
+    "main_start": 3.0,
+    "at": 0.5,
+    "kicker": "成片",
+    "title": "一条屏幕录制",
+    "host": "../mixue/assets/video/shiba.webm"
+   }
+  ],
+  "freeze_frame": [
+   {
+    "video": "../pacing/assets/clips/factory.mp4",
+    "start": 0.3,
+    "at": 1.4,
+    "hold": 2.6,
+    "mode": "drama",
+    "stamp": "定格",
+    "src": "Henry Ford's Mirror of America (1962) · Prelinger Archives（公有领域）"
+   },
+   {
+    "video": "../pacing/assets/clips/gas.mp4",
+    "start": 0.0,
+    "at": 1.5,
+    "hold": 3.4,
+    "pins": [
+     {
+      "box": [
+       0,
+       18,
+       36,
+       16
+      ],
+      "label": "STANDARD SERVICE",
+      "sub": "招牌"
+     },
+     {
+      "box": [
+       51,
+       42,
+       10,
+       48
+      ],
+      "label": "油泵",
+      "sub": "pump"
+     },
+     {
+      "box": [
+       6,
+       58,
+       42,
+       30
+      ],
+      "shape": "circle",
+      "label": "汽车",
+      "sub": "正在加油"
+     }
+    ],
+    "src": "The Inside Story of Modern Gasoline (1946) · Prelinger Archives（公有领域）"
+   },
+   {
+    "image": "../pacing/assets/stills/harbor.jpg",
+    "at": 0.6,
+    "hold": 4.0,
+    "resume": false,
+    "pins": [
+     {
+      "box": [
+       0,
+       30,
+       25,
+       40
+      ],
+      "label": "散货船",
+      "sub": "1955"
+     }
+    ],
+    "src": "Miracle on the Delaware (1955) · Prelinger Archives（公有领域）"
+   }
+  ],
+  "speed_ramp": [
+   {
+    "video": "../cite/assets/working_dollars_1957.mp4",
+    "ramp": [
+     [
+      0,
+      7.0,
+      2
+     ]
+    ],
+    "badge": "快进",
+    "src": "Working Dollars (1957) · Prelinger Archives（公有领域）"
+   },
+   {
+    "video": "../pacing/assets/clips/gas.mp4",
+    "ramp": [
+     [
+      0,
+      0.5,
+      1
+     ],
+     [
+      0.5,
+      1.0,
+      0.1
+     ],
+     [
+      1.0,
+      1.6,
+      8
+     ],
+     [
+      1.6,
+      2.2,
+      0.5
+     ],
+     [
+      2.2,
+      3.4,
+      16
+     ],
+     [
+      3.4,
+      4.0,
+      1
+     ]
+    ],
+    "src": "The Inside Story of Modern Gasoline (1946) · Prelinger Archives（公有领域）"
+   },
+   {
+    "video": "../cite/assets/harbor_vertical.mp4",
+    "start": 1.0,
+    "ramp": [
+     [
+      1.0,
+      2.0,
+      1
+     ],
+     [
+      2.0,
+      3.0,
+      0.2
+     ]
+    ],
+    "drama": true,
+    "graph": false,
+    "src": "Manhattan Waterfront (c.1930s) · Prelinger Archives（公有领域）"
+   }
+  ],
+  "footage": [
+   {
+    "video": "../pacing/assets/clips/kitchen.mp4",
+    "subs": "none",
+    "name": "American Look",
+    "role": "1958 · 宣传片",
+    "src": "American Look (1958) · Prelinger Archives（公有领域）"
+   },
+   {
+    "video": "../../assets/previews/doc_9x16.mp4",
+    "start": 6.0,
+    "subs": "auto",
+    "show_band": true
+   },
+   {
+    "image": "../pacing/assets/stills/taxis.jpg",
+    "subs": "top",
+    "show_band": true,
+    "band_label": "顶部字幕带",
+    "src": "Dynamic American City (1956) · Prelinger Archives（公有领域）"
+   }
+  ],
+  "audio_quote": [
+   {
+    "audio": "../doc/assets/audio/voice.mp3",
+    "a": 24.41,
+    "b": 28.33,
+    "quote": "改变世界的，往往不是新发明，而是把成本打下来的人。",
+    "who": "第九顶帽子",
+    "role": "旁白",
+    "source": "《一个铁箱子》",
+    "date": "00:24–00:28"
+   },
+   {
+    "audio": "../atlas/assets/audio/voice.mp3",
+    "words": "../atlas/assets/audio/words.json",
+    "a": 0.0,
+    "b": 8.57,
+    "who": "第九顶帽子",
+    "role": "旁白",
+    "source": "《一条航线》",
+    "date": "00:00–00:08"
+   },
+   {
+    "audio": "../mixue/assets/audio/voice.mp3",
+    "words": "../mixue/assets/audio/words.json",
+    "a": 14.72,
+    "b": 16.77,
+    "bars": 24,
+    "vol": 0.9,
+    "who": "第九顶帽子",
+    "role": "旁白",
+    "source": "《一杯 4 块钱的柠檬水》",
+    "kicker": "原声"
+   }
+  ],
+  "podcast": [
+   {
+    "audio": "../doc/assets/audio/voice.mp3",
+    "words": "../doc/assets/audio/words.json",
+    "a": 0.0,
+    "b": 8.02,
+    "show": "第九顶帽子",
+    "episode": "一个铁箱子",
+    "ep": "02",
+    "hosts": [
+     {
+      "name": "柴犬"
+     },
+     {
+      "name": "嘉宾 A"
+     },
+     {
+      "name": "嘉宾 B"
+     }
+    ],
+    "turns": [
+     [
+      0,
+      0
+     ],
+     [
+      4.5,
+      1
+     ]
+    ]
+   },
+   {
+    "audio": "../atlas/assets/audio/voice.mp3",
+    "a": 16.67,
+    "b": 23.59,
+    "art": "../pacing/assets/stills/harbor.jpg",
+    "ep": "03",
+    "show": "第九顶帽子 · 航线与价格",
+    "episode": "绕道好望角之后：苏伊士运河一年的收入，从一百零二亿美元跌到不到四十亿",
+    "hosts": [
+     {
+      "name": "柴犬"
+     }
+    ]
+   },
+   {
+    "audio": "../mixue/assets/audio/voice.mp3",
+    "words": "../mixue/assets/audio/words.json",
+    "a": 21.49,
+    "b": 24.39,
+    "show": "第九顶帽子",
+    "episode": "一杯 4 块钱的柠檬水",
+    "ep": "01",
+    "hosts": [
+     {
+      "name": "柴犬"
+     },
+     {
+      "name": "A"
+     },
+     {
+      "name": "B"
+     },
+     {
+      "name": "C"
+     }
+    ],
+    "speaker": 0
+   }
+  ],
+  "talking_head": [
+   {
+    "kicker": "口播",
+    "host": "../mixue/assets/video/shiba.webm"
+   },
+   {
+    "stickers": [
+     {
+      "text": "4 块钱",
+      "at": 0.6
+     },
+     {
+      "text": "44 亿",
+      "at": 1.4,
+      "kind": "bubble"
+     },
+     {
+      "text": "4.6 万家店",
+      "at": 2.2
+     },
+     {
+      "text": "比麦当劳还多",
+      "at": 3.0,
+      "kind": "note"
+     },
+     {
+      "text": "不是卖奶茶",
+      "at": 3.8,
+      "kind": "bubble"
+     },
+     {
+      "text": "原料",
+      "at": 4.6
+     },
+     {
+      "text": "包材",
+      "at": 5.4
+     },
+     {
+      "text": "设备，以及一整条供应链",
+      "at": 6.2,
+      "kind": "note"
+     }
+    ],
+    "src": "蜜雪集团 2024 年度业绩公告",
+    "host": "../mixue/assets/video/shiba.webm"
+   },
+   {
+    "host": false,
+    "stickers": [
+     "码头",
+     {
+      "text": "1955",
+      "kind": "bubble"
+     }
+    ],
+    "broll": [
+     {
+      "src": "../pacing/assets/stills/shoppers_tall.jpg",
+      "at": 1.6,
+      "dur": 2.0,
+      "caption": "1955 · 购物街"
+     },
+     {
+      "src": "../cite/assets/harbor_vertical.mp4",
+      "at": 4.0,
+      "dur": 2.4,
+      "caption": "1930s · 曼哈顿天际线",
+      "start": 0.5
+     }
+    ],
+    "src": "Miracle on the Delaware (1955) · Prelinger Archives（公有领域）"
+   }
+  ],
+  "host_point": [
+   {
+    "side": "right",
+    "at": 1.4,
+    "card": {
+     "kind": "text",
+     "value": "全球大约八成的货物贸易，走的是*海运*。",
+     "label": "按货量计",
+     "sub": "UNCTAD《海运述评》"
+    },
+    "say": "记住这个",
+    "src": "UNCTAD Review of Maritime Transport",
+    "host": "../mixue/assets/video/shiba.webm"
+   },
+   {
+    "at": 1.6,
+    "card": {
+     "kind": "image",
+     "image": "../pacing/assets/stills/taxis.jpg",
+     "box": [
+      62,
+      86,
+      30,
+      14
+     ],
+     "label": "1956 年的美国街头"
+    },
+    "say": "看右下角！",
+    "src": "Dynamic American City (1956) · Prelinger Archives（公有领域）",
+    "host": "../mixue/assets/video/shiba.webm"
+   },
+   {
+    "host": false,
+    "at": 1.0,
+    "card": {
+     "kind": "number",
+     "value": 102.5,
+     "unit": "亿美元",
+     "label": "苏伊士运河 · 2023 年收入",
+     "sub": "2024 年跌到约 40 亿"
+    },
+    "src": "苏伊士运河管理局（2024 年 1 月公布）"
+   }
+  ]
+ }
+}

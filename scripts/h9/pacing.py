@@ -6,6 +6,12 @@
   meta.lead    = 1.8      the narration starts 1.8 s in, so a silent cold open plays first; all cues move with it.
   meta.duck    = true | 10 (dB)   the music bed dips while someone speaks: a sidechain-style envelope built from the
                  word timestamps (0.15 s attack, 0.4 s release), rendered into a ducked copy of the music file.
+  breath       = true      in the narrator's breaths and short pauses (0.25–1.4 s gaps between words) the page takes a
+                 small breath: the scene's stage eases in ~1% and back, so a pause never reads as a frozen frame.
+  rate_adapt   = true      per beat, the speaking rate sets the tempo: fast talk (> 6 syllables/s, a CJK glyph = 1, a Latin
+                 letter ≈ 1/3) plays the entrance up to 1.6× faster; slow talk (< 3.5 syllables/s) gets a wider camera creep and a slow ambient light.
+  per beat "sfx": [{"at": "@词" | seconds into the beat, "name": "hit" | style role, "vol": 0.6, "hit": "flash" | "dark" |
+                 "shake" | "punch"}]   sound-led moments: the sound and a visual hit land on the same frame.
   elastic      every fx beat stays alive for its whole length. Long beats get a slow camera creep plus a little drift
                  once the entrance has landed; short beats whose entrance would not finish play the whole entrance
                  faster (nested timeline with timeScale). "hold": "static" on a beat opts out; meta.elastic = false
@@ -103,14 +109,89 @@ def entrance_end(lines, t, d):
     return E
 
 
+def _speech_in(X, t0, t1):
+    """(syllables spoken, seconds of speech) inside [t0, t1); a CJK glyph = 1, a Latin letter or digit ≈ 1/3."""
+    n, secs = 0, 0.0
+    for c, s, e in X.chars:
+        if t0 <= s < t1 and c.strip() and c not in "，。、！？；：,.!?;:":
+            n += 1 if ord(c[0]) >= 0x2E80 else 1 / 3; secs += max(0.0, min(e, t1) - s)
+    return n, secs
+
+
+def _wrap(X, n_tw, n_audio, t, s):
+    """play the beat's tween lines s× faster (nested timeline); SFX move with them."""
+    lines = X.tws[n_tw:]
+    P = t * (1 - 1 / s)
+    X.tws[n_tw:] = ["{ const __m = tl; { const tl = gsap[\"timeline\"]();\n" + "\n".join(lines)
+                    + f"\ntl.timeScale({s:.4f}); __m.add(tl, {P:.4f}); }} }}"]
+    X.audio[n_audio:] = [(t + (ta - t) / s, u, v) for ta, u, v in X.audio[n_audio:]]
+
+
+def rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els):
+    """meta.rate_adapt: the speaking rate inside this beat sets its tempo (see module doc)."""
+    if not X.v.get("meta", {}).get("rate_adapt") or b.get("hold") == "static" or not X.chars: return
+    n, secs = _speech_in(X, t, t + d)
+    if n < 4 or secs < 0.6: return
+    cps = n / secs
+    if cps > 6.0 and X.tws[n_tw:]:
+        _wrap(X, n_tw, n_audio, t, min(1.6, cps / 5.0))
+        b["_rate"] = "fast"
+    elif cps < 3.5 and d >= 2.0:
+        b["_rate"] = "slow"
+        X.css("rate-amb", ".rt-amb { pointer-events:none; background:radial-gradient(ellipse 60% 50% at 30% 40%, rgba(255,240,210,.16), rgba(255,240,210,0) 70%); mix-blend-mode:soft-light; }")
+        X.clip(f"{cid}amb", t, d, "", "rt-amb", 3, track=24)
+        X.tw(f'tl.fromTo("#{cid}amb", {{opacity:0, xPercent:-6}}, {{opacity:1, xPercent:6, duration:{d:.2f}, ease:"sine.inOut"}}, {t:.3f});')
+
+
+HITS = {
+    "flash": ("#fff", 0.0, 0.85, 0.12), "dark": ("#000", 0.0, 0.9, 0.14),
+}
+
+
+def sound_moments(X, b, t, d, cid):
+    """per-beat "sfx": sounds bound to visual hits on the same frame."""
+    for k, m in enumerate(b.get("sfx") or []):
+        at = m.get("at", 0)
+        ta = float(X.T(at, t)) if isinstance(at, str) else t + float(at)
+        if not (t - 0.01 <= ta <= t + d): continue
+        X.sfx(ta, m.get("name", "hit"), m.get("vol"))
+        hit = m.get("hit")
+        if hit in HITS:
+            col, a0, a1, dur = HITS[hit]
+            hid = f"{cid}hit{k}"
+            X.clip(hid, ta, dur + 0.02, "", "ov-hit", 44, track=25, sty=f"background:{col};opacity:0;pointer-events:none")
+            X.tw(f'tl.fromTo("#{hid}", {{opacity:{a1}}}, {{opacity:0, duration:{dur:.2f}, ease:"power2.out", immediateRender:false}}, {ta:.3f});')
+        elif hit == "shake":
+            X.tw(f'tl.to("#{cid}", {{keyframes:[{{y:-14, duration:0.04}}, {{y:11, duration:0.04}}, {{y:-6, duration:0.04}}, {{y:0, duration:0.06}}]}}, {ta:.3f});')
+        elif hit == "punch":
+            X.tw(f'tl.to("#{cid} > .stage", {{keyframes:[{{scale:1.045, duration:0.06, ease:"power2.out"}}, {{scale:1, duration:0.22, ease:"power3.out"}}]}}, {ta:.3f});')
+
+
+def breaths(X, spans, D):
+    """meta.breath: a small inhale on the active scene in each short pause of the narration."""
+    if not X.v.get("meta", {}).get("breath") or not X._words: return
+    sp = speech_spans(X._words, join=0.12)
+    for (a0, a1), (b0, b1) in zip(sp, sp[1:]):
+        g0, g1 = a1, b0
+        gap = g1 - g0
+        if not (0.25 <= gap <= 1.4): continue
+        hit = next(((cid, t, d) for cid, t, d, hold in spans if t + 0.4 <= g0 and g1 <= t + d - 0.05 and not hold), None)
+        if not hit: continue
+        cid = hit[0]
+        half = max(0.12, gap / 2)
+        X.tw(f'tl.to("#{cid} > .stage", {{scale:1.011, y:-3, duration:{half:.3f}, ease:"sine.inOut", yoyo:true, repeat:1, immediateRender:false}}, {g0:.3f});')
+
+
 def elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i):
     meta = X.v.get("meta", {})
     if meta.get("elastic") is False or b.get("hold") == "static": return
     if b.get("scene") != "fx" and not X.S.get("elastic"): return
     lines = X.tws[n_tw:]
     if not lines: return
+    wrapped = b.get("_rate") == "fast"
     E = entrance_end(lines, t, d)
     ent = E - t
+    if wrapped and d < 2.0: return
     if ent > 0.85 * d and d < 2.0:                    # short beat: the whole entrance plays faster
         s = min(3.0, ent / (0.8 * d))
         if s < 1.05: return
@@ -125,5 +206,6 @@ def elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i):
     h0 = min(max(E, t + 0.5), t + d - 0.8)
     dur = t + d - h0
     if dur < 0.6: return
-    px = (1 if i % 2 == 0 else -1) * 0.6 * min(X.W, X.H) / 100
-    X.tw(f'tl.fromTo("#{cid}", {{scale:1, x:0}}, {{scale:1.022, x:{px:.1f}, duration:{dur:.2f}, ease:"sine.inOut", immediateRender:false}}, {h0:.3f});')
+    slow = b.get("_rate") == "slow"
+    px = (1 if i % 2 == 0 else -1) * (1.1 if slow else 0.6) * min(X.W, X.H) / 100
+    X.tw(f'tl.fromTo("#{cid}", {{scale:1, x:0}}, {{scale:{1.045 if slow else 1.022}, x:{px:.1f}, duration:{dur:.2f}, ease:"sine.inOut", immediateRender:false}}, {h0:.3f});')

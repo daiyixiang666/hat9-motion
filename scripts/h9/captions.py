@@ -72,10 +72,34 @@ def pages(words, maxlen, minlen=1, spk_out=None):
     return out
 
 
+# meta.caption_preset: house caption looks per platform (applied on top of the style's caption tokens).
+# douyin / shipinhao: big punchy page above the bottom chrome; xiaohongshu: quieter, smaller, soft plate;
+# bilibili / youtube: classic outlined reading line at the bottom of 16:9.
+PRESETS = {
+    "douyin":      {"mode": "punch",   "v": {"punch-top": "70%", "punch-size": "78px", "punch-stroke": "6px #000", "cap-bg": "none", "cap-fg": "#fff", "cap-em": "#ffd84a"}},
+    "shipinhao":   {"mode": "punch",   "v": {"punch-top": "69%", "punch-size": "70px", "punch-stroke": "5px #000", "cap-bg": "none", "cap-fg": "#fff", "cap-em": "#ffd84a"}},
+    "xiaohongshu": {"mode": "reading", "v": {"cap-size": "40px", "cap-bg": "rgba(255,255,255,.88)", "cap-fg": "#222", "cap-pad": "8px 18px 10px", "cap-radius": "10px",
+                                            "cap-shadow": "none", "cap-em": "#ff2442", "cap-bottom": "120px"}},
+    "bilibili":    {"mode": "reading", "v": {"cap-size": "44px", "cap-bg": "none", "cap-fg": "#fff", "cap-shadow": "0 0 3px #000, 0 0 3px #000, 0 2px 6px rgba(0,0,0,.8)",
+                                            "cap-em": "#00a1d6", "cap-bottom": "48px"}},
+    "youtube":     {"mode": "reading", "v": {"cap-size": "42px", "cap-bg": "rgba(8,8,8,.75)", "cap-fg": "#fff", "cap-pad": "4px 12px 6px", "cap-radius": "4px",
+                                            "cap-shadow": "none", "cap-em": "#fff", "cap-bottom": "56px"}},
+}
+
+
 def build(X, D, fix=None, maxlen=None):
     if not X.chars or X.S.get("captions") is False: return
     meta = X.v.get("meta", {})
-    mode = meta.get("caption_mode") or X.S.get("caption_mode") or ("punch" if X.portrait else "reading")
+    pre = PRESETS.get(meta.get("caption_preset") or "")
+    if pre:
+        v = dict(pre["v"])
+        pmode = pre["mode"] if X.portrait or pre["mode"] != "punch" else "reading"      # punch pages are a 9:16 look; 16:9 reads
+        if pmode == "reading" and X.portrait: v["cap-bottom"] = "516px"   # 9:16: the same band the punch pages use, above the chrome
+        if pmode == "reading" and pre["mode"] == "punch":                  # 16:9 version of a punch preset: outlined reading line
+            v.update({"cap-shadow": "0 0 4px #000, 0 0 4px #000, 0 3px 8px rgba(0,0,0,.8)", "cap-size": "46px"})
+        X.css("cap-preset", "#root { " + " ".join(f"--{k}:{val};" for k, val in v.items()) + " }")
+        pre = dict(pre, mode=pmode)
+    mode = meta.get("caption_mode") or (pre or {}).get("mode") or X.S.get("caption_mode") or ("punch" if X.portrait else "reading")
     fix = fix or {}
     hl = meta.get("caption_hl", [])
     f = 1 / X.fps

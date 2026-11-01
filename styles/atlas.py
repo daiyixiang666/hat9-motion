@@ -519,8 +519,7 @@ class Atlas:
                        "var L=document.getElementById('locland');if(L){var s=L.getAttribute('data-s')*1,p2=d3.geoNaturalEarth1().rotate([" + str(-L0) + ",0]).scale(" + str(K) + "*s).translate([" + str(TX) + "*s," + str(TY) + "*s]);"
                        "L.setAttribute('d',d3.geoPath(p2)(topojson.merge(T,T.objects.countries.geometries)));}"
                        "})();</script>")
-        X.extra_head = ('<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>'
-                        '<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>')
+        X.extra_head = X.geo_scripts()     # vendored d3-geo + topojson-client when present, else the CDN
 
     # ---------------------------------------------------- map events per beat
     def build_events(self):

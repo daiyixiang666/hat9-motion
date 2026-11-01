@@ -77,7 +77,7 @@ CUP = """<svg class="cupsvg" viewBox="0 0 320 580" xmlns="http://www.w3.org/2000
 <defs><clipPath id="cupclip"><path d="M46 138 L86 522 Q160 540 234 522 L274 138 Z"/></clipPath>
 <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c9"/><stop offset="1" stop-color="#f7d95a"/></linearGradient></defs>
 <ellipse cx="160" cy="556" rx="118" ry="14" fill="#111" opacity=".16"/>
-<g class="straw"><path d="M178 -6 L206 -2 L184 330 L160 328 Z" fill="#e2321f" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+<g class="straw"><path d="M178 -6 L206 -2 L184 330 L160 328 Z" style="fill:var(--red)" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
 <path d="M175 40 L203 44 M171 100 L199 104 M167 160 L195 164" stroke="#fbfaf6" stroke-width="9"/></g>
 <path d="M46 138 L86 522 Q160 540 234 522 L274 138 Z" fill="url(#water)"/>
 <g clip-path="url(#cupclip)">
@@ -106,7 +106,7 @@ def burst(n=14, r1=50, r2=40):
         a = math.pi * k / n - math.pi / 2
         r = r1 if k % 2 == 0 else r2
         pts.append(f"{50 + r * math.cos(a):.2f},{50 + r * math.sin(a):.2f}")
-    return f'<svg viewBox="0 0 100 100"><polygon points="{" ".join(pts)}" fill="#e2321f" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+    return f'<svg viewBox="0 0 100 100"><polygon points="{" ".join(pts)}" style="fill:var(--red)" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>'
 
 
 # ---------------------------------------------------------------- helpers
@@ -360,7 +360,7 @@ def stores(b, X, t, d, cid):
     lift(X, f"{s} .hl .ln > span", tb - 0.1)
     X.sfx(tb, "enter")
     tx = tb + 0.3
-    X.tw(f'tl.to("{s} .dots i.x", {{backgroundColor:"#f6ce3a", boxShadow:"0 0 0 2.5px #111", duration:0.25, stagger:{{each:0.006, from:"start"}}}}, {tx:.3f});')
+    X.tw(f'tl.to("{s} .dots i.x", {{backgroundColor:"{X.S['tokens'].get('lemon', '#f6ce3a')}", boxShadow:"0 0 0 2.5px {X.S['tokens'].get('ink', '#111')}", duration:0.25, stagger:{{each:0.006, from:"start"}}}}, {tx:.3f});')
     X.tw(f'tl.fromTo("{s} .dots i.x", {{scale:1}}, {{keyframes:[{{scale:1.6, duration:0.12}}, {{scale:1, duration:0.3, ease:"back.out(3)"}}], stagger:{{each:0.006, from:"start"}}, immediateRender:false}}, {tx:.3f});')
     X.tw(f'tl.from("{s} .diff .br", {{scaleY:0, opacity:0, duration:0.3}}, {tx + 0.2:.3f});')
     X.tw(f'tl.from("{s} .diff b", {{y:-14, opacity:0, duration:0.4, ease:"back.out(2)"}}, {tx + 0.3:.3f});')
@@ -644,7 +644,7 @@ def chain(b, X, t, d, cid):
     X.tw(f'tl.to("{s} .c1", {{opacity:0, duration:0.15}}, {ty + 1.2:.3f});')
     X.sfx(ty, "click")
     # the franchisee buys the chain: node goes red, hot rail floods along the goods side, boxes run it
-    X.tw(f'tl.to("{s} .nd[data-k=\'{hk}\'] .o", {{backgroundColor:"#e2321f", color:"#fbfaf6", scale:1.12, duration:0.35, ease:"back.out(2)"}}, {tst:.3f});')
+    X.tw(f'tl.to("{s} .nd[data-k=\'{hk}\'] .o", {{backgroundColor:"{X.S['tokens'].get('red', '#e2321f')}", color:"{X.S['tokens'].get('white', '#fbfaf6')}", scale:1.12, duration:0.35, ease:"back.out(2)"}}, {tst:.3f});')
     X.sfx(tst, "pop")
     X.tw(f'tl.from("{s} .hotrail", {{{sc}:0, duration:0.9, ease:"power2.inOut"}}, {tst + 0.15:.3f});')
     (bx0, by0), (bx1, by1) = at(0, "g"), at(hk, "g")
@@ -653,7 +653,7 @@ def chain(b, X, t, d, cid):
         X.tw(f'tl.fromTo("{s} .{cls}", {{x:{bx0}, y:{by0}, opacity:1}}, {{x:{bx1}, y:{by1}, duration:1.6, ease:"none", repeat:2}}, {st0:.3f});')
     X.tw(f'tl.fromTo("{s} .c2", {{x:{nx}, y:{ny}, opacity:1}}, {{x:{at(1, "m")[0]}, y:{at(1, "m")[1]}, duration:1.4, ease:"none", repeat:2}}, {tst + 0.5:.3f});')
     for k in range(hk + 1):
-        X.tw(f'tl.to("{s} .nd[data-k=\'{k}\'] .o", {{borderColor:"#e2321f", duration:0.2}}, {tst + 0.15 + k * 0.2:.3f});')
+        X.tw(f'tl.to("{s} .nd[data-k=\'{k}\'] .o", {{borderColor:"{X.S['tokens'].get('red', '#e2321f')}", duration:0.2}}, {tst + 0.15 + k * 0.2:.3f});')
     # the bracket
     X.tw(f'tl.from("{s} .brk", {{{"scaleX" if P else "scaleY"}:0, opacity:0, duration:0.4, ease:"expo.out"}}, {tc - 0.2:.3f});')
     X.tw(f'tl.from("{s} .brl", {{{ax}:{-20 if not P else -20}, opacity:0, duration:0.5, ease:"expo.out"}}, {tc:.3f});')

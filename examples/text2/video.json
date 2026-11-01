@@ -1,0 +1,256 @@
+{
+ "meta": {
+  "title": "文字与强调 · 在真实口播里",
+  "aspect": "16:9",
+  "duration": 56.6,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "text_pages",
+   "d": 6.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "蜜雪冰城 · 二十八年",
+   "text": "蜜雪冰城 1997 年从郑州的一个刨冰摊起家。到 2024 年底，全球门店 46,479 家，比麦当劳还多。2024 年收入 248.3 亿元，净利润 44.5 亿元。收入里 97.5% 来自卖给加盟店的原料、包材和设备，加盟费只占 2.5%。",
+   "line": "蜜雪冰城的二十八年，*一段话*讲完。",
+   "src": "蜜雪集团招股书；2024 年度业绩公告；McDonald's 2024 10-K",
+   "label": "分屏读完 · Text Pages",
+   "ref": "Envato Elements「Hook & Captions」Titles Popular 第 12 · B 站动态歌词排版 898 万",
+   "t": 0.0
+  },
+  {
+   "scene": "fx",
+   "fx": "question_card",
+   "d": 5.2,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "host": true,
+   "kicker": "先猜一下",
+   "q": "4 块钱一杯的柠檬水，蜜雪靠什么赚钱？",
+   "options": [
+    "🥤 卖饮品",
+    "📝 收加盟费",
+    "📦 卖原料和设备"
+   ],
+   "answer": 2,
+   "reveal": "97.5% 的收入，来自卖给加盟店的商品和设备。",
+   "line": "先猜一下：*蜜雪靠什么赚钱*？",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "设问卡 · Question Card",
+   "ref": "知识区设问手法（小Lin说 / 回形针的问号卡）· Kinetic Typography Pack 4.2K",
+   "t": 6.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "vertical_title",
+   "d": 5.6,
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "mode": "classical",
+   "text": "學而時習之|不亦說乎|有朋自遠方來|不亦樂乎|人不知而不慍|不亦君子乎",
+   "sub": "《論語 · 學而》",
+   "seal": "論語",
+   "line": "《论语》开篇第一句，讲的就是*学习*。",
+   "src": "《论语 · 学而》（繁体竖排）",
+   "label": "竖排古文 · Vertical Classical",
+   "ref": "国风纪录片 / 片头常用的竖排版式",
+   "t": 11.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "vertical_title",
+   "d": 3.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "mode": "title",
+   "text": "看懂|谁在赚钱",
+   "sub": "第九顶帽子 · 商业拆解",
+   "seal": "九帽",
+   "line": "这个账号只做一件事：*看懂谁在赚钱*。",
+   "src": "第九顶帽子",
+   "label": "竖排标题 · Vertical Title",
+   "ref": "国风竖排片名（B 站纪录片 / 国风片头）",
+   "t": 17.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "flying_words",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "words": [
+    "原料",
+    "包材",
+    "设备",
+    "仓储",
+    "物流",
+    "供应链"
+   ],
+   "sub": "蜜雪的生意 = 卖给加盟店的一整条供应链",
+   "line": "原料、包材、设备……最后都汇成一条*供应链*。",
+   "src": "蜜雪集团招股书（业务模式）",
+   "label": "关键词飞过镜头 · Flying Words",
+   "ref": "B 站「PV 中的文字穿梭效果」23 万 · VideoHive Flying Through Words 2.2K",
+   "t": 21.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "number_pages",
+   "d": 7.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "text": "2024 年蜜雪收入 248.3 亿元，毛利 80.6 亿元，净利润 44.5 亿元，门店 46,479 家，其中海外 4,895 家，三线及以下城市占 57.4%，卖出约 90 亿杯，加盟业务收入 6.2 亿元，占 2.5%，净利润同比增长 39.8%。",
+   "line": "2024 年的蜜雪，一句话里有*十个数字*。",
+   "src": "蜜雪集团 2024 年度业绩公告；售出杯数为媒体报道约数",
+   "label": "数字拆页 · Number Pages",
+   "ref": "Number Counter：YouTube 162.6 万 · Envato Popular「Number Counter」",
+   "t": 25.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "combo",
+   "d": 4.8,
+   "theme": "red",
+   "topic": "商业拆解",
+   "count": 24,
+   "label": "计数连击 · Combo",
+   "unit": "家",
+   "hits": [
+    "新店开业"
+   ],
+   "final": "2024 年净增 8,914 家|平均每天约 24 家",
+   "line": "平均每天新开*约 24 家*店。",
+   "src": "蜜雪集团 2024 年度业绩公告（全年净增 8,914 家）",
+   "ref": "Number Counter 162.6 万 · Shape Elements burst（Graphics Pack 26.2K）",
+   "t": 33.0,
+   "tr": "hard",
+   "tag": "COMBO"
+  },
+  {
+   "scene": "fx",
+   "fx": "black_slam",
+   "d": 3.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "hits": [
+    "4 块钱",
+    "一杯"
+   ],
+   "text": "一年净赚 *44.5 亿*",
+   "sub": "一杯柠檬水，只卖 4 块钱",
+   "line": "4 块钱一杯，一年*净赚 44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "黑屏重击 · Black Slam",
+   "ref": "Camera Move + Impact Shake：Bricks 106.8 万（2025）",
+   "t": 37.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scribble",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "text": "蜜雪主要靠|收加盟费赚钱",
+   "line": "很多人以为蜜雪靠*加盟费*赚钱，其实错了。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "潦草涂鸦标注 · Scribble",
+   "ref": "B 站「白菜和杜比 手绘科普」69.9 万（2026）· Ben Marriott Hand Drawn 45.4 万",
+   "t": 41.6,
+   "tr": "hard",
+   "scribbles": [
+    {
+     "type": "cross",
+     "target": "收加盟费",
+     "note": "加盟费只占 2.5%"
+    },
+    {
+     "type": "underline",
+     "target": "蜜雪主要靠",
+     "note": "卖原料和设备才是 97.5%"
+    }
+   ]
+  },
+  {
+   "scene": "fx",
+   "fx": "scanline",
+   "d": 5.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "assets/us_v_google_p8.png",
+   "blocks": [
+    {
+     "box": [
+      11.2,
+      12.6,
+      78.2,
+      6.0
+     ],
+     "label": "结论：谷歌是垄断者",
+     "value": "Sec. 2"
+    },
+    {
+     "box": [
+      47.4,
+      23.0,
+      41.0,
+      3.0
+     ],
+     "label": "在搜索市场有垄断力",
+     "value": "(2)"
+    },
+    {
+     "box": [
+      66.8,
+      33.5,
+      22.0,
+      3.0
+     ],
+     "label": "广告收取超竞争价格",
+     "value": "p.4"
+    },
+    {
+     "box": [
+      32.8,
+      44.0,
+      37.0,
+      3.0
+     ],
+     "label": "搜索广告市场：不构成垄断",
+     "value": "(1)"
+    }
+   ],
+   "line": "美国法院 2024 年判谷歌垄断，*关键句*都在这一页。",
+   "src": "United States v. Google LLC（D.D.C. 2024）判决书 PDF 第 8 页，公有领域",
+   "label": "扫描线逐块标注 · Scanline",
+   "ref": "HUD 扫描界面（Quantum HUD Infographic 5.9K）",
+   "t": 46.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "text_pages",
+   "d": 4.4,
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "title": "阿拉伯谚语",
+   "text": "الصبر مفتاح الفرج. العلم نور.",
+   "tr": "hard",
+   "line": "阿拉伯谚语说：忍耐是*解脱的钥匙*。",
+   "src": "阿拉伯谚语（从右往左排版）",
+   "label": "分屏读完 · 从右往左",
+   "ref": "Envato Elements「Hook & Captions」Titles Popular 第 12",
+   "t": 52.2,
+   "translation": [
+    "忍耐是解脱的钥匙。知识是光。"
+   ]
+  }
+ ]
+}

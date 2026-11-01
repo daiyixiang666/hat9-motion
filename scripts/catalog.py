@@ -89,7 +89,8 @@ PIT = {
 }
 
 
-REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing")]   # every demo reel that feeds the gallery
+REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing",
+                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2")]   # every demo reel that feeds the gallery
 
 
 def beats():
@@ -137,6 +138,151 @@ PIT.update({
     "profile_card": "单人的一句话简介用 bio，line 是口播字幕。", "cold_open": "配音要整体后移（meta.lead），否则会压在开场上。",
     "beat_cut": "要有 meta.bpm 或 beats，否则按 0.5 秒切。", "suspense": "揭晓用 at: \"@词\"，否则在 62% 处。", "think_loop": "圈数参数叫 orbits（marks 是保留字）。",
 })
+
+# ---- second wave (0.7)
+CAT["音视频"] = ["pip", "freeze_frame", "speed_ramp", "footage", "audio_quote", "podcast", "talking_head", "host_point"]
+SUIT.update({
+    "pip": "图形 / 素材占满屏时主持人缩进角落", "freeze_frame": "「停一下，看这里」、关键瞬间标注", "speed_ramp": "慢放看细节、快进跳过",
+    "footage": "采访切片、自带字幕的素材", "audio_quote": "引用一段原声、某人在节目里说的话", "podcast": "播客切片、对谈节目",
+    "talking_head": "口播段落、Vlog、关键词贴纸", "host_point": "主持人指着数字 / 结论 / 图里的细节",
+})
+DUR.update({
+    "pip": "4–8 秒（缩窗在前 30%）", "freeze_frame": "5–7 秒（定格 2.4–3.4 秒）", "speed_ramp": "按变速后的长度，常见 4–6 秒",
+    "footage": "跟素材一样长", "audio_quote": "跟引用的原声一样长 + 0.8 秒", "podcast": "跟切片一样长 + 0.8 秒",
+    "talking_head": "每个贴纸 ≥ 0.8 秒，每个插入 2–2.5 秒", "host_point": "5–6 秒",
+})
+PIT.update({
+    "pip": "主画面是自带页眉的成片时，kicker 标签会叠在原片标题上，别加 kicker。",
+    "freeze_frame": "box 是原片画面的百分比；先截一帧看准再写，别猜。",
+    "speed_ramp": "ramp 用原片秒数；慢放要素材本身有动作，静止镜头慢放看不出来。",
+    "footage": "subs:auto 是启发式；原片自带页眉 / 大标题时直接写 subs，并用 zoom 推掉页眉。",
+    "audio_quote": "words.json 必须是这段音频自己的时间戳；没有就写 quote（原话，一字不改）。",
+    "podcast": "多人 turns 需要真实多人音频；拿单人旁白做多人只能标「示意」。",
+    "talking_head": "贴纸每分钟别超过 2–3 个（bench_cn）；8 个只用于压力测试。",
+    "host_point": "图片卡的 box 写原图百分比，裁切会自动朝框的方向。",
+})
+CAT["字效"] += ["text_pages", "vertical_title", "flying_words", "black_slam", "scribble"]
+CAT["数据"] += ["number_pages", "combo"]
+CAT["结构"] += ["question_card"]
+CAT["引用"] += ["scanline"]
+SUIT.update({
+    "text_pages": "一段话要完整读完（背景介绍、原文、长引用、外文原句）", "question_card": "先抛问题再揭晓（选择题 / 翻面答案）",
+    "vertical_title": "国风片名、古文原句、竖排标题", "flying_words": "一串关键词汇成一个结论、开场关键词",
+    "number_pages": "一句话里很多数字（财报、快讯）", "combo": "连续累加的次数 / 门店数 / 点赞数",
+    "black_slam": "最重的一句结论、反转、冲击金句", "scribble": "推翻一个常见误解、在原文 / 截图上圈重点",
+    "scanline": "在文件 / 截图里逐条找出关键句",
+})
+DUR.update({
+    "text_pages": "每句 1.2–2 秒（80–200 字约 6–12 秒，按口播）", "question_card": "4.5–6 秒（揭晓前留 ≥ 1.5 秒）",
+    "vertical_title": "title 3–4 秒；classical 5–6 秒", "flying_words": "4–5 秒（每词 0.4–0.6 秒）",
+    "number_pages": "每个数字 0.5–0.8 秒（十个数字约 7–8 秒）", "combo": "4–5 秒",
+    "black_slam": "3–4 秒（有 hits 时每词 0.3–0.4 秒）", "scribble": "4–5 秒", "scanline": "5–6 秒（每块约 0.6 秒）",
+})
+PIT.update({
+    "text_pages": "长段落用 at 和口播逐句对齐；阿拉伯文 / 希伯来文目前用系统字体。",
+    "question_card": "答案要可查；选项 ≤ 5 字才横排。",
+    "vertical_title": "古文用通行版本，繁体原文里不要混简体字。",
+    "number_pages": "数字口径一致、可查；约数在 src 里注明。",
+    "combo": "count 写真实总数；超过逐次显示的上限时计数器按步跳。",
+    "black_slam": "一条片子用一两次，多了就不重了。",
+    "scribble": "target 要是原文里真实存在的词；图片模式的 box 用百分比。",
+    "scanline": "box 要对准原图里的真实位置；标签只是摘要，原文才是证据。",
+})
+CAT["数据"] += ["icon_unit", "scatter", "funnel", "radar", "then_now", "gantt"]
+CAT["地图"] += ["area_overlay", "map_timeline", "street_map"]
+CAT["结构"] += ["decision_tree", "converge", "choose_one"]
+SUIT.update({
+    "icon_unit": "普及率、占比（每 100 人里有几个）", "scatter": "两个指标的关系（店数对收入、价格对销量）",
+    "funnel": "转化漏斗、层层筛选", "radar": "多维能力对比（两三家）", "then_now": "今昔对比、前后变化",
+    "choose_one": "选择题、先猜再揭晓", "converge": "多个来源汇成一个总数", "gantt": "排期、阶段、并行任务",
+    "decision_tree": "如果……就……、判断流程", "area_overlay": "面积有多大（把 A 叠到 B 上）",
+    "map_timeline": "逐年扩张、城市名单按年份", "street_map": "街区、门店位置、步行路线（示意或自带数据）",
+})
+DUR.update({
+    "icon_unit": "4–5 秒", "scatter": "4.5–6 秒（点多就更长）", "funnel": "4–5 秒", "radar": "4–5 秒", "then_now": "4–5 秒",
+    "choose_one": "4.5–6 秒", "converge": "4.5–6 秒", "gantt": "4.5–6 秒", "decision_tree": "5–6 秒",
+    "area_overlay": "5–6 秒", "map_timeline": "6–8 秒（年份多就更长）", "street_map": "5–6 秒",
+})
+PIT.update({
+    "funnel": "mode=share 用于互相包含的人群（不是严格的转化）；conv 才是逐层转化。",
+    "radar": "每根轴各自归一，图形只看相对强弱；具体数值看标注。",
+    "area_overlay": "面积写官方数字（area）；轮廓只是图。小国家用自带 10m GeoJSON 更准。",
+    "map_timeline": "年份和坐标要真实可查；始终带南海诸岛附图。",
+    "street_map": "不抓取街道数据：只用你给的 GeoJSON；示意图要加 mock。",
+    "then_now": "两个数字口径要一致（同一指标、同一单位）。",
+})
+CAT["界面"] += ["app_flow", "form_fill", "search_box"]
+CAT["屏幕"] += ["cursor"]
+CAT["照片"] += ["turntable"]
+CAT["人物"] += ["relation_graph", "dialogue", "interview"]
+SUIT.update({
+    "app_flow": "App 教程、「三步做出……」、新手引导", "cursor": "在截图 / 录屏上指给观众看：点哪里、拖什么、输入什么",
+    "form_fill": "「发布前要勾选什么」「这个设置一定要打开」", "turntable": "产品亮相、单品拆解、参数卖点",
+    "search_box": "「我搜了一下」、查一手来源", "relation_graph": "谁投资谁、背后都是谁、阵营关系",
+    "dialogue": "采访、对谈、两个人的观点交锋", "interview": "访谈 / 播客切片、嘉宾金句",
+})
+DUR.update({
+    "app_flow": "每屏 1.2–1.8 秒（3 屏约 5 秒）", "cursor": "每个动作 0.8–1.2 秒 + 1 秒", "form_fill": "每个字段 0.6–1 秒 + 按钮 1.4 秒",
+    "turntable": "4–6 秒", "search_box": "4.5–6 秒（有结果时）", "relation_graph": "每条边 0.5–0.7 秒 + 高亮 1.5 秒",
+    "dialogue": "每句 1–1.5 秒", "interview": "4–8 秒（跟片段一样长）",
+})
+PIT.update({
+    "app_flow": "截图和生成页可以混用；tap 是 0–1 的相对坐标；生成页别写真实 App 名字和 logo。",
+    "cursor": "path 的坐标是相对原图的（0–1 或原图像素）；静态截图点了不会变，要变化请换成录屏或几张截图。",
+    "form_fill": "字段超过 6 个请给 6 秒以上；AI 声明这类开关用 toggle + note 写明平台要求。",
+    "turntable": "单张图是伪 3D 摇摆，不是真转；要真转请给多视角 views。抠图（透明底）效果最好。",
+    "search_box": "结果写真实标题和网址；示意页面请加 mock；hl 默认取查询里的词。",
+    "relation_graph": "金额写清口径和截止时间（src）；不确定的关系用「示意」，别编。",
+    "dialogue": "台词要么是真实原话（写 src），要么标 mock「示意对话」；超过 6 句请把时长放到 6 秒以上。",
+    "interview": "q / a 要是嘉宾真实说过的话，或标 mock；竖版素材用 focus 选人脸位置。",
+})
+CAT["类型"] = ["review_card", "news_flash", "deal_card", "next_teaser", "opener", "sponsor_card", "share_card", "poll_card", "clip_style"]
+SUIT.update({
+    "review_card": "测评、打分、该不该买", "news_flash": "刚刚 / 快讯 / 某公司宣布", "deal_card": "带货、价格对比、限时优惠",
+    "next_teaser": "片尾预告下一期", "opener": "系列栏目每期开头 3 秒", "sponsor_card": "口播广告位、恰饭段落",
+    "share_card": "结尾金句、可截图转发的结论", "poll_card": "引导评论、你会选哪个", "clip_style": "直播 / 访谈切片包装",
+})
+DUR.update({
+    "review_card": "4.5–6 秒", "news_flash": "4.5–6 秒（滚动条越长越好看）", "deal_card": "4.5–6 秒", "next_teaser": "3.5–5 秒",
+    "opener": "3–4.5 秒", "sponsor_card": "4–6 秒（圆环按拍长倒数）", "share_card": "4–5 秒（快门在拍末前 1.1 秒）",
+    "poll_card": "4–5 秒", "clip_style": "跟素材一样长（3–8 秒）",
+})
+PIT.update({
+    "review_card": "分数要有出处，没有就写 note: 示意数据；stars: false 关掉星级。",
+    "news_flash": "items / ticker 必须是可查的事实并写 src；time 写发布日期，不写就只显示来源。",
+    "deal_card": "原价、券、库存如果不是真的就写 note: 示意；countdown 是演示倒计时，不代表真实活动。",
+    "next_teaser": "video 封面时页面底色由独立的底色层画出（paint_bg）。",
+    "opener": "ep 里第一个数字串会滚动，前后文字照常显示；竖屏不显示 ep 前缀（如「第」）。",
+    "sponsor_card": "引导语参数叫 lead（label 是画廊页脚）；广告角标始终显示，不能关。",
+    "share_card": "导出单张图用 scripts/share_card.py（3:4 / 4:5 / 1:1 / 9:16）。",
+    "poll_card": "result 模式的百分比要真实（写 total 和来源），否则用 ask 模式。",
+    "clip_style": "有 line 时本拍的页面字幕被隐藏；不要模仿任何平台的直播界面。",
+})
+CAT["照片"] += ["logo_wall", "halftone", "meme_stage", "gif_clip", "svg_art"]
+CAT["文档"] = ["doc_photo", "slides", "doc_flip", "doc_pick", "handwrite", "email_card", "notice_card"]
+SUIT.update({"logo_wall":"这些公司都在用、合作方、投资组合",
+"halftone":"老照片、低清截图、档案图",
+"meme_stage":"吐槽、一句一张反应图",
+"gif_clip":"动图、表情包、短循环",
+"svg_art":"图标、插画、品牌色切换",
+"doc_photo":"手机拍的文件 / 白板 / 截图证据",
+"slides":"PPT、财报会、发布会页",
+"doc_flip":"判决书、财报、长文档翻到某页",
+"doc_pick":"一叠材料里的关键一页",
+"handwrite":"学习笔记、拆解笔记",
+"email_card":"邮件证据、offer、通知邮件",
+"notice_card":"公告、通知、说明（版式示意）"})
+DUR.update({"logo_wall":"4–5 秒","halftone":"3.5–5 秒","meme_stage":"每张 ≥0.6 秒","gif_clip":"3–5 秒",
+"svg_art":"4–5 秒（带 swap）","doc_photo":"4.5–5.5 秒","slides":"≤8 页每页 ≥0.6 秒；快翻 4–5 秒",
+"doc_flip":"5–6 秒","doc_pick":"4.5–5.5 秒","handwrite":"每行 ≥0.4 秒","email_card":"4.5–5.5 秒","notice_card":"5–6 秒"})
+PIT.update({"logo_wall":"只用自己的或虚构的 logo，绝不用真实品牌的标。",
+"gif_clip":"转码在构建时做（ffmpeg），GIF 很大时第一次构建慢。",
+"svg_art":"自动换色按最深色 → 字色、最饱和色 → 强调色；颜色写在 CSS class 里的 SVG 不会被换色。",
+"doc_photo":"自动找角点是启发式（Otsu / Canny 找最大四边形）；背景杂乱时请手动给 corners。",
+"doc_flip":"PDF 是节选时用 `of` 写全文页数，否则计数器显示节选的页数。",
+"handwrite":"手写字体来自 assets/fonts.json，构建机要能找到字体（设置 H9_MEDIA）。",
+"email_card":"示例或虚构邮件必须带「示意」章；界面是中性的，不模仿任何真实邮箱产品。",
+"notice_card":"刻意做成普通版式：不要红头、不要公章，保留「版式示意」水印，除非是你自己的文件。"})
 
 
 def main():

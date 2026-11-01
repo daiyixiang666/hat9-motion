@@ -79,14 +79,18 @@ def main():
     sid = a.style or meta.get("style", "press")
     style = B.load_style(sid)
     title = a.title or meta.get("title", "")
-    kicker = a.kicker if a.kicker is not None else meta.get("section", "")
+    ser = meta.get("series") or {}
+    dflt = meta.get("section", "")
+    if ser.get("name"):        # series template: 「商业拆解 · 第 12 期」 on every cover of the series
+        dflt = ser["name"] + (f" · 第 {ser['ep']} 期" if ser.get("ep") is not None else "")
+    kicker = a.kicker if a.kicker is not None else dflt
     r16, r9 = ex / "renders" / f"{sid}_16x9.mp4", ex / "renders" / f"{sid}_9x16.mp4"
     if not r16.exists(): raise SystemExit(f"render first: {r16}")
     outd = Path(a.out).resolve() if a.out else ex / "covers"; outd.mkdir(parents=True, exist_ok=True)
     for asp, (W, H) in SIZES.items():
         with tempfile.TemporaryDirectory() as td:
             td = Path(td)
-            X = core.Ctx(video, style, td, ex, asp)
+            X = core.Ctx({**video, "meta": {**meta, "canvas": False}}, style, td, ex, asp)    # covers lay out at their real size
             (td / "assets").mkdir(exist_ok=True)
             frame(r9 if asp == "3:4" and r9.exists() else r16, a.at, td / "assets" / "frame.jpg")
             (td / "index.html").write_text(page(X, style, "assets/frame.jpg", title, kicker, a.focus))

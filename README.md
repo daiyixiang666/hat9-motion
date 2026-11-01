@@ -5,9 +5,9 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看成片](#成片示例) · [🎛 在线看全部 100 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看成片](#成片示例) · [🎛 在线看全部 158 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.6.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.7.0-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -22,7 +22,8 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | | |
 |---|---|
 | **9 种风格** | `press` 财经刊 · `screen` AI 工具台 · `atlas` 地图纪录 · `doc` 实拍纪录 · `poster` 瑞士海报 · `reel` 动效库 · `hud` 暗场 · `studio` / `clay` 三维 |
-| **100 个动效** | 88 个效果 + 12 种转场：字效、数据表格、地图、引用、截图录屏、社交人物、结构、不说话的时刻……[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) |
+| **158 个动效** | 146 个效果 + 12 种转场：字效、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) |
+| **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
 | **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
 | **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
@@ -82,6 +83,23 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 |---|---|---|
 | <img src="assets/previews/fx/breather.webp" width="260" alt="留白"><br>**留白**<br><sub>金句后停住、画面还在呼吸</sub> | <img src="assets/previews/fx/suspense.webp" width="260" alt="揭晓前悬停"><br>**揭晓前悬停**<br><sub>鼓点渐强，数字落在那个词上</sub> | <img src="assets/previews/fx/interlude.webp" width="260" alt="空镜过场"><br>**空镜过场**<br><sub>按时长自动挑空镜</sub> |
 
+**视频和声音**
+
+| | | |
+|---|---|---|
+| <img src="assets/previews/fx/freeze_frame.webp" width="260" alt="视频定格"><br>**视频定格**<br><sub>停住、压暗、框出细节再继续</sub> | <img src="assets/previews/fx/audio_quote.webp" width="260" alt="引用一段原声"><br>**引用一段原声**<br><sub>波形跟着声音跳，字一个个亮</sub> | <img src="assets/previews/fx/pip.webp" width="260" alt="主持人画中画"><br>**主持人画中画**<br><sub>全屏和角落小窗之间切换</sub> |
+
+**文档和图片**
+
+| | | |
+|---|---|---|
+| <img src="assets/previews/fx/doc_flip.webp" width="260" alt="几百页的文档"><br>**几百页的文档**<br><sub>快速翻到要引用的那一页</sub> | <img src="assets/previews/fx/doc_photo.webp" width="260" alt="手机拍的文件"><br>**手机拍的文件**<br><sub>自动摆正、划重点</sub> | <img src="assets/previews/fx/logo_wall.webp" width="260" alt="Logo 墙"><br>**Logo 墙**<br><sub>逐个点亮，一个放大</sub> |
+
+**片子类型**
+
+| | | |
+|---|---|---|
+| <img src="assets/previews/fx/news_flash.webp" width="260" alt="新闻快讯"><br>**新闻快讯**<br><sub>快讯横幅 + 滚动条</sub> | <img src="assets/previews/fx/review_card.webp" width="260" alt="测评"><br>**测评**<br><sub>评分条、优缺点、结论章</sub> | <img src="assets/previews/fx/deal_card.webp" width="260" alt="带货"><br>**带货**<br><sub>原价划掉、现价砸下</sub> |
 全部动效在 [在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)，可以按类别筛选、横竖屏切换。
 
 ## 你说 → 会发生什么
@@ -149,7 +167,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
 | 配音 | 系统语音 / 本地 TTS / 静音按字数估时 | 你自己的录音（推荐） |
-| 画面 | 100 个代码动效（88 效果 + 12 转场）+ 你的图片、视频、PDF、截图、表格 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
+| 画面 | 158 个代码动效（146 效果 + 12 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
 | 字体 | 思源黑体 / 宋体、得意黑、霞鹜文楷等 OFL 字体 | — |
@@ -215,6 +233,7 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
+- **0.7.0** 再补 58 个效果：视频定格和变速、播客引用、文档翻页、拍照文档、Logo 墙、漏斗、雷达、面积叠加、逐年扩张、测评卡、带货卡、新闻快讯、片头、预告……；交付支持多画幅、平台字幕预设、AI 标识、品牌包、多语言、剪辑软件导出、长片分章渲染。
 - **0.6.0** 新增 50 个效果：按数量换编排、引用、结构、数据表格、截图录屏、社交人物、中国地图、不说话的时刻；动效随句长伸缩、多人字幕、录音对齐、封面、插件安装。
 - **0.5.0** 新增 `screen` / `atlas` / `doc` / `poster` 四种风格和 10 个动效；素材自适应。
 - **0.4.0** 示例重做，新增 `press` 风格和合成配乐。

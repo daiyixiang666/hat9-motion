@@ -8,7 +8,14 @@ from pathlib import Path
 
 SKILL = Path(__file__).resolve().parents[2]
 
-ASPECTS = {"16:9": (1920, 1080), "9:16": (1080, 1920), "1:1": (1080, 1080), "4:3": (1440, 1080), "3:4": (1080, 1440)}
+ASPECTS = {"16:9": (1920, 1080), "9:16": (1080, 1920), "1:1": (1080, 1080), "4:3": (1440, 1080), "3:4": (1080, 1440), "4:5": (1080, 1350)}
+# aspects without layouts of their own are laid out as a base aspect and shown through a window (scale, top of the
+# window in base px): every style keeps working. 9:16 content lives in y 170–1520 (clear of the platform chrome), so
+# 4:5 and 3:4 show that band at full size and 1:1 shows it at 0.8 with the ground colour at the sides; 4:3 letterboxes 16:9.
+# meta.canvas = false lays the page out at the real size instead (only for styles that handle it themselves).
+CANVAS = {"1:1": ("9:16", 0.8, 170), "4:5": ("9:16", 1.0, 170), "3:4": ("9:16", 1.0, 140), "4:3": ("16:9", 0.75, None)}
+RTL_RX = re.compile(r"[\u0590-\u08ff\ufb1d-\ufdff\ufe70-\ufeff]")    # Hebrew / Arabic: animated as whole runs, never glyph by glyph
+VENDOR = SKILL / "assets" / "vendor"   # optional local copies of render-time JS (d3, topojson) for offline builds
 
 # entrance verbs: GSAP "from" vars (+ default ease).  manim-style names where they exist.
 VERBS = {
@@ -62,7 +69,17 @@ class Ctx:
         self.v, self.S, self.out, self.src = video, style, Path(out), Path(src_dir)
         meta = video.get("meta", {})
         self.aspect = aspect or meta.get("aspect", "16:9")
-        self.W, self.H = ASPECTS[self.aspect]
+        if self.aspect not in ASPECTS: raise SystemExit(f"unknown aspect {self.aspect!r}; have: {', '.join(ASPECTS)}")
+        self.target = ASPECTS[self.aspect]          # the size of the video file
+        self.canvas = None                          # (scale, tx, ty) when laid out as a base aspect behind a window
+        base = self.aspect
+        if self.aspect in CANVAS and meta.get("canvas", True) is not False:
+            base, sc, y0 = CANVAS[self.aspect]
+            bw, bh = ASPECTS[base]; tw, th = self.target
+            ty = (th - bh * sc) / 2 if y0 is None else -y0 * sc
+            self.canvas = (sc, (tw - bw * sc) / 2, ty)
+        self.layout = base
+        self.W, self.H = ASPECTS[base]
         self.portrait = self.H > self.W
         self.fps = meta.get("fps", 30)
         self.M = {"ease": "expo.out", "dur": 0.6, "stagger": 0.06, "text": "rise", "heading": "rise",
@@ -127,6 +144,22 @@ class Ctx:
 
     def tw(self, line): self.tws.append(line)
 
+    def geo_scripts(self):
+        """<script> tags for d3-geo + topojson-client: the vendored copies (offline-safe) or the CDN."""
+        if all((VENDOR / f).exists() for f in ("d3-array.min.js", "d3-geo.min.js", "topojson-client.min.js")):
+            return "".join(f'<script src="{self.asset(VENDOR / f, "vendor")}"></script>' for f in ("d3-array.min.js", "d3-geo.min.js", "topojson-client.min.js"))
+        if self.v.get("meta", {}).get("offline"): raise SystemExit("offline build: assets/vendor/{d3-array,d3-geo,topojson-client}.min.js missing")
+        return ('<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>'
+                '<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>')
+
+    def vendor_js(self, file, cdn):
+        """a render-time library: the local copy under assets/vendor/<file> when present (copied into the build), else
+        the CDN url. meta.offline = true makes a missing local copy an error instead of a silent CDN fallback."""
+        p = VENDOR / file
+        if p.exists(): return self.asset(p, "vendor")
+        if self.v.get("meta", {}).get("offline"): raise SystemExit(f"offline build: assets/vendor/{file} missing (run: python3 scripts/hat9.py vendor)")
+        return cdn
+
     def css(self, key, text):
         if key not in self.css_parts: self.css_parts[key] = text
 
@@ -156,13 +189,20 @@ class Ctx:
     def rich(self, s, split=None):
         """escape, *强调* -> <em>, | -> line break; split='chars' wraps every glyph in <i class="c"> for staggers."""
         s = str(s)
-        self.used_text.update(s)
+        self.used_text.update(re.sub(r"[\^_]\{|\}", "", s))
+        if split in ("chars", "words") and RTL_RX.search(s): split = "runs"     # Arabic / Hebrew: split glyphs would lose their joins and order
         out, em = [], False
-        for part in re.split(r"(\*|\|)", s):
+        for part in re.split(r"(\*|\||\^\{[^}]*\}|_\{[^}]*\})", s):
             if part == "*": out.append("<em class=\"em\"><span class=\"emt\">" if not em else "</span><i class=\"emb\"></i></em>"); em = not em; continue
             if part == "|": out.append("<br>"); continue
+            if part[:2] in ("^{", "_{") and part.endswith("}"):     # x^{2} · H_{2}O · CO_{2}: superscript / subscript
+                tag = "sup" if part[0] == "^" else "sub"
+                inner = f'<{tag} class="ss">{esc(part[2:-1])}</{tag}>'
+                out.append(f'<i class="c">{inner}</i>' if split in ("chars", "words", "runs") else inner); continue
             if split == "chars":
                 out.append("".join(f'<i class="c">{esc(ch)}</i>' if ch.strip() else " " for ch in part))
+            elif split == "runs":
+                out.append(f'<i class="c">{esc(part)}</i>' if part.strip() else esc(part))
             elif split == "words":
                 out.append("".join(f'<i class="c">{esc(w)}</i>' if w.strip() else " " for w in words(part)))
             else:

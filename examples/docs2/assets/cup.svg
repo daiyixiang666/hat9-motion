@@ -1,0 +1,24 @@
+<svg class="cupsvg" viewBox="0 0 320 580" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="cupclip"><path d="M46 138 L86 522 Q160 540 234 522 L274 138 Z"/></clipPath>
+<linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff6c9"/><stop offset="1" stop-color="#f7d95a"/></linearGradient></defs>
+<ellipse cx="160" cy="556" rx="118" ry="14" fill="#111" opacity=".16"/>
+<g class="straw"><path d="M178 -6 L206 -2 L184 330 L160 328 Z" fill="#e2321f" stroke="#111" stroke-width="5" stroke-linejoin="round"/>
+<path d="M175 40 L203 44 M171 100 L199 104 M167 160 L195 164" stroke="#fbfaf6" stroke-width="9"/></g>
+<path d="M46 138 L86 522 Q160 540 234 522 L274 138 Z" fill="url(#water)"/>
+<g clip-path="url(#cupclip)">
+ <g class="ice" fill="#ffffff" fill-opacity=".62" stroke="#111" stroke-opacity=".35" stroke-width="3">
+  <rect x="70" y="150" width="70" height="62" rx="12" transform="rotate(-14 105 181)"/><rect x="170" y="160" width="74" height="64" rx="12" transform="rotate(12 207 192)"/>
+  <rect x="122" y="214" width="64" height="58" rx="11" transform="rotate(6 154 243)"/></g>
+ <g class="lem" stroke="#111" stroke-width="4">
+  <g transform="translate(118 318) rotate(-12)"><circle r="64" fill="#f2bf12"/><circle r="55" fill="#ffe27a"/>
+   <path d="M0 -51V51M-44 -25.5L44 25.5M44 -25.5L-44 25.5" stroke="#fff6c9" stroke-width="5"/><circle r="9" fill="#fff6c9" stroke="none"/></g>
+  <g transform="translate(214 430) rotate(20)"><circle r="56" fill="#f2bf12"/><circle r="48" fill="#ffe27a"/>
+   <path d="M0 -44V44M-38 -22L38 22M38 -22L-38 22" stroke="#fff6c9" stroke-width="5"/><circle r="8" fill="#fff6c9" stroke="none"/></g></g>
+ <path d="M66 150 L98 512" stroke="#ffffff" stroke-opacity=".7" stroke-width="16" stroke-linecap="round"/>
+ <g fill="#ffffff" opacity=".9"><circle cx="252" cy="250" r="5"/><circle cx="240" cy="300" r="3.5"/><circle cx="256" cy="352" r="4.5"/><circle cx="92" cy="420" r="4"/><circle cx="230" cy="500" r="3.5"/><circle cx="110" cy="250" r="3"/></g>
+</g>
+<path d="M46 138 L86 522 Q160 540 234 522 L274 138 Z" fill="none" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+<path d="M38 132 Q160 38 282 132 Z" fill="#fbfaf6" stroke="#111" stroke-width="6" stroke-linejoin="round"/>
+<rect x="30" y="122" width="260" height="24" rx="11" fill="#fbfaf6" stroke="#111" stroke-width="6"/>
+<path d="M92 92 Q160 62 228 92" fill="none" stroke="#111" stroke-opacity=".25" stroke-width="5" stroke-linecap="round"/>
+</svg>

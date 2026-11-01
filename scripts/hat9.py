@@ -46,6 +46,12 @@ def doctor(_):
         try: __import__(mod); print(f"  ✓ {mod}（可选）")
         except ImportError: print(f"  · {mod} 未安装（可选：pip install {pkg}，{why}）")
     print("  · 没装对齐模型也行：scripts/align.py --backend silence 按停顿切分（也可用 --transcript 导入已有逐字时间）")
+    opt = [k for k in ("noto-sans-jp", "noto-sans-kr", "noto-sans-tc") if k in fonts.REG and not fonts.find(fonts.REG[k]["file"])]
+    if opt: print(f"  · 可选字体未装：{', '.join(opt)}（做日文 / 韩文 / 繁体版时用，地址见 assets/fonts.json；不装也能显示，用系统字体）")
+    ven = Path(__file__).resolve().parent.parent / "assets" / "vendor"
+    have = all((ven / f).exists() for f in ("d3-array.min.js", "d3-geo.min.js", "topojson-client.min.js"))
+    print(f"  {'✓' if have else '·'} 地图库本地副本（assets/vendor，离线也能渲染地图）" + ("" if have else "：没有时从 jsdelivr 加载"))
+    print("  · GSAP 始终从 jsdelivr 加载（许可不允许随仓库分发）：完全离线渲染需要本机浏览器缓存过它")
     print("全部就绪 ✓" if ok else "有缺项，按提示补齐后再试")
 
 

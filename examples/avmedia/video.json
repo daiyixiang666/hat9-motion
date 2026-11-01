@@ -1,0 +1,207 @@
+{
+ "meta": {
+  "title": "视频与声音 · 动效演示",
+  "aspect": "16:9",
+  "duration": 50.5,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "pip",
+   "t": 0,
+   "d": 6.0,
+   "theme": "paper",
+   "topic": "做内容",
+   "main": "../../assets/previews/mixue_16x9.mp4",
+   "main_start": 2.0,
+   "at": 1.8,
+   "name": "柴犬",
+   "role": "主持人",
+   "line": "图形一铺满，主持人就缩进角落*小窗*。",
+   "label": "画中画 · Talking-head PiP",
+   "ref": "小Lin说、林亦、毕导常用"
+  },
+  {
+   "scene": "fx",
+   "fx": "freeze_frame",
+   "t": 6.0,
+   "d": 6.0,
+   "tr": "hard",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../cite/assets/working_dollars_1957.mp4",
+   "start": 0.4,
+   "at": 1.6,
+   "hold": 2.8,
+   "pins": [
+    {
+     "box": [
+      11,
+      3,
+      16,
+      50
+     ],
+     "label": "SALES",
+     "sub": "销售额"
+    }
+   ],
+   "line": "定格这一帧：1957 年的理财动画里，账本上写着 *SALES*。",
+   "src": "Working Dollars (1957) · Prelinger Archives（公有领域）",
+   "label": "视频定格 + 标注 · Freeze & Annotate",
+   "ref": "B站科普常用：关键瞬间定格"
+  },
+  {
+   "scene": "fx",
+   "fx": "speed_ramp",
+   "t": 12.0,
+   "d": 6.0,
+   "tr": "hard",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../pacing/assets/clips/factory.mp4",
+   "ramp": [
+    [
+     0,
+     1.2,
+     1
+    ],
+    [
+     1.2,
+     2.2,
+     0.25
+    ],
+    [
+     2.2,
+     4.0,
+     2
+    ]
+   ],
+   "drama": true,
+   "line": "放慢四倍：福特早年的流水线上，工人正在装*木制车轮*。",
+   "src": "Henry Ford's Mirror of America (1962) · Prelinger Archives（公有领域）",
+   "label": "变速 · Speed Ramp",
+   "ref": "B站「AE 变速卡点」173.4 万播放"
+  },
+  {
+   "scene": "fx",
+   "fx": "footage",
+   "t": 18.0,
+   "d": 5.0,
+   "tr": "hard",
+   "theme": "ink",
+   "topic": "做内容",
+   "video": "../../assets/previews/doc_16x9.mp4",
+   "start": 5.0,
+   "subs": "auto",
+   "show_band": true,
+   "line": "原片自带字幕时，我们的字幕*自动让开*。",
+   "label": "字幕避让 · Burned-in Subtitles",
+   "ref": "采访切片、素材自带字幕",
+   "src": "成片《一个铁箱子》· 原片字幕在底部",
+   "zoom": 1.12
+  },
+  {
+   "scene": "fx",
+   "fx": "audio_quote",
+   "t": 23.0,
+   "d": 7.0,
+   "tr": "hard",
+   "theme": "ink",
+   "topic": "做内容",
+   "audio": "../mixue/assets/audio/voice.mp3",
+   "words": "../mixue/assets/audio/words.json",
+   "a": 9.25,
+   "b": 14.45,
+   "who": "第九顶帽子",
+   "role": "旁白 · 原声",
+   "source": "《一杯 4 块钱的柠檬水》",
+   "date": "00:09–00:14",
+   "line": "引用一段原声：波形跟着声音走，字一个个*亮起来*。",
+   "label": "音频引用 · Audio Quote",
+   "ref": "Envato「Audio Visualizer」热门"
+  },
+  {
+   "scene": "fx",
+   "fx": "podcast",
+   "t": 30.0,
+   "d": 7.5,
+   "tr": "hard",
+   "theme": "paper",
+   "topic": "做内容",
+   "audio": "../mixue/assets/audio/voice.mp3",
+   "words": "../mixue/assets/audio/words.json",
+   "a": 0,
+   "b": 6.6,
+   "show": "第九顶帽子 · 商业拆解",
+   "episode": "一杯 4 块钱的柠檬水，一年净赚 44 亿多",
+   "ep": "01",
+   "hosts": [
+    {
+     "name": "柴犬"
+    }
+   ],
+   "line": "做成播客切片也行：头像跟着*音量*跳。",
+   "label": "播客切片 · Podcast Clip",
+   "ref": "Envato「Audio Visualizer」热门"
+  },
+  {
+   "scene": "fx",
+   "fx": "talking_head",
+   "t": 37.5,
+   "d": 7.0,
+   "tr": "hard",
+   "theme": "lemon",
+   "topic": "做内容",
+   "stickers": [
+    {
+     "text": "写稿",
+     "at": 1.3
+    },
+    {
+     "text": "配音",
+     "at": 2.4
+    },
+    {
+     "text": "渲染",
+     "at": 3.5,
+     "kind": "bubble"
+    }
+   ],
+   "broll": [
+    {
+     "src": "../../assets/previews/poster_16x9.mp4",
+     "at": 4.3,
+     "dur": 2.4,
+     "caption": "成片 · 瑞士海报",
+     "start": 6.0
+    }
+   ],
+   "line": "做一条口播，三步：*写稿*、配音、渲染。",
+   "label": "Vlog 口播 · Talking Head",
+   "ref": "毕导式口播：跳切 + 贴纸"
+  },
+  {
+   "scene": "fx",
+   "fx": "host_point",
+   "t": 44.5,
+   "d": 6.0,
+   "tr": "hard",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "card": {
+    "kind": "number",
+    "value": 44.5,
+    "unit": "亿元",
+    "label": "蜜雪集团 · 2024 年净利润",
+    "sub": "同比 +39.8%"
+   },
+   "say": "看这里！",
+   "at": 1.6,
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "line": "看这里：蜜雪 2024 年净利润 *44.5 亿*。",
+   "label": "主持人指向 · Host Points",
+   "ref": "Vox「Look at this」指哪说哪"
+  }
+ ]
+}

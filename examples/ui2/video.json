@@ -1,0 +1,329 @@
+{
+ "meta": {
+  "title": "界面、产品与人物",
+  "aspect": "16:9",
+  "style": "reel",
+  "duration": 42.4,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "app_flow",
+   "theme": "paper",
+   "topic": "做内容",
+   "line": "一个 App 的新手引导，最好*三步以内*走完。",
+   "mock": true,
+   "screens": [
+    {
+     "title": "选一个模板",
+     "rows": [
+      "商业拆解｜数据 + 色块",
+      "AI 工具台｜深色产品界面",
+      "地图纪录｜航线和镜头推拉",
+      "瑞士海报｜网格动态字"
+     ],
+     "label": "选模板",
+     "tap_row": 0
+    },
+    {
+     "title": "粘贴文案",
+     "hero": "一杯 4 块钱的柠檬水，一年净赚 44 亿。",
+     "rows": [
+      "自动分句｜9 句",
+      "配音｜本地 TTS"
+     ],
+     "cta": "生成分镜",
+     "label": "粘贴文案"
+    },
+    {
+     "title": "预览",
+     "rows": [
+      "横屏 16:9｜1920×1080",
+      "竖屏 9:16｜1080×1920"
+     ],
+     "cta": "导出",
+     "label": "预览导出"
+    }
+   ],
+   "t": 0.0,
+   "d": 5.2,
+   "label": "C3 · App 操作流程 · App Flow",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K"
+  },
+  {
+   "scene": "fx",
+   "fx": "cursor",
+   "theme": "ink",
+   "topic": "做内容",
+   "line": "在画廊里点一下，就能*切到另一条成片*。",
+   "image": "../screens/assets/gallery_top.jpg",
+   "frame": "browser",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "zoom": 1.5,
+   "path": [
+    {
+     "act": "hover",
+     "x": 113,
+     "y": 252,
+     "label": "5 条成片"
+    },
+    {
+     "act": "click",
+     "x": 569,
+     "y": 252,
+     "label": "切到地图纪录"
+    },
+    {
+     "act": "click",
+     "x": 40,
+     "y": 752,
+     "label": "播放"
+    }
+   ],
+   "t": 5.2,
+   "d": 5.0,
+   "label": "C3 · 光标演示 · Cursor Demo",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "form_fill",
+   "theme": "paper",
+   "topic": "做内容",
+   "line": "发视频之前，记得打开*AI 生成内容声明*。",
+   "title": "发布设置",
+   "sub": "发布前检查一遍",
+   "fields": [
+    {
+     "label": "标题",
+     "value": "一杯 4 块钱的柠檬水",
+     "kind": "text"
+    },
+    {
+     "label": "内容由 AI 生成",
+     "kind": "toggle",
+     "on": true,
+     "note": "平台要求标注"
+    },
+    {
+     "label": "封面比例",
+     "kind": "select",
+     "value": "3:4",
+     "options": [
+      "16:9",
+      "4:3",
+      "3:4"
+     ]
+    },
+    {
+     "label": "同步到小红书",
+     "kind": "check",
+     "on": true
+    }
+   ],
+   "submit": "发布",
+   "done": "已提交审核",
+   "mock": true,
+   "t": 10.2,
+   "d": 5.6,
+   "label": "C3 · 表单与开关 · Form Fill",
+   "ref": "Envato Elements「Elements」Popular「Checklist Pack」",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "turntable",
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "line": "一杯 4 块钱的柠檬水，转一圈看看它*卖的是什么*。",
+   "image": "assets/cup.svg",
+   "kicker": "蜜雪冰城 · 招牌",
+   "name": "冰鲜柠檬水",
+   "price": "¥4",
+   "specs": [
+    "整片柠檬",
+    "冰块 + 糖浆 + 茶底",
+    "原料和包材都由总部供应",
+    "常见门店价 4 元"
+   ],
+   "src": "蜜雪集团招股书（原料与包材由总部销售给加盟店）；门店价为常见价格",
+   "t": 15.8,
+   "d": 5.0,
+   "label": "C3 · 产品转台 · Product Turntable",
+   "ref": "VideoHive Product Promo 分类销量榜",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "search_box",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "line": "查一个数字，先找*一手来源*，别只看转述。",
+   "engine": "搜索",
+   "query": "蜜雪冰城 门店数",
+   "suggest": [
+    "蜜雪冰城 门店数 2024",
+    "蜜雪冰城 门店数 麦当劳",
+    "蜜雪冰城 门店数 海外"
+   ],
+   "results": [
+    {
+     "title": "蜜雪集团 2024 年度业绩公告",
+     "url": "hkexnews.hk · 02097",
+     "snippet": "截至 2024 年 12 月 31 日，门店网络共 46,479 家"
+    },
+    {
+     "title": "McDonald's Corporation 2024 Form 10-K",
+     "url": "sec.gov",
+     "snippet": "Systemwide restaurants at year end: 43,477"
+    },
+    {
+     "title": "某自媒体：蜜雪门店已超 5 万家？",
+     "url": "转述 · 未注明来源",
+     "snippet": "转了三手的数字，和公告对不上"
+    }
+   ],
+   "hl": [
+    "门店",
+    "46,479",
+    "43,477"
+   ],
+   "pick": 0,
+   "mock": "示意页面",
+   "src": "蜜雪集团 2024 年报；麦当劳 2024 年 10-K",
+   "t": 20.8,
+   "d": 5.2,
+   "label": "T5 · 搜索框打字 · Search Typing",
+   "ref": "Envato「Search Screen Pro」Popular 第 7",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "relation_graph",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "line": "大模型公司背后，站的都是*云厂商*。",
+   "nodes": [
+    {
+     "id": "微软",
+     "sub": "Microsoft"
+    },
+    {
+     "id": "亚马逊",
+     "sub": "Amazon"
+    },
+    {
+     "id": "谷歌",
+     "sub": "Google"
+    },
+    {
+     "id": "OpenAI",
+     "sub": "ChatGPT"
+    },
+    {
+     "id": "Anthropic",
+     "sub": "Claude"
+    }
+   ],
+   "edges": [
+    {
+     "from": "微软",
+     "to": "OpenAI",
+     "label": "约 130 亿美元",
+     "value": 13
+    },
+    {
+     "from": "亚马逊",
+     "to": "Anthropic",
+     "label": "80 亿美元",
+     "value": 8
+    },
+    {
+     "from": "谷歌",
+     "to": "Anthropic",
+     "label": "约 30 亿美元",
+     "value": 3
+    },
+    {
+     "from": "OpenAI",
+     "to": "Anthropic",
+     "label": "竞争",
+     "kind": "compete"
+    }
+   ],
+   "hl": "Anthropic",
+   "t_hl": 3.8,
+   "src": "Reuters、CNBC、FT 公开报道，截至 2025 年 1 月",
+   "t": 26.0,
+   "d": 5.4,
+   "label": "G · 关系图 · Relation Graph",
+   "ref": "VideoHive Infographic Maker 2.6K · Envato Infographics「AI Workflow」",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "dialogue",
+   "theme": "paper",
+   "topic": "做内容",
+   "line": "采访类片子，谁在说话要*一眼看出来*。",
+   "mock": "示意对话",
+   "host": false,
+   "speakers": [
+    {
+     "name": "主持人",
+     "role": "第九顶帽子"
+    },
+    {
+     "name": "加盟店老板",
+     "role": "示意人物"
+    }
+   ],
+   "lines": [
+    [
+     "主持人",
+     "4 块钱一杯，你还能赚到钱吗？"
+    ],
+    [
+     "加盟店老板",
+     "靠的是量，一天要卖几百杯才行。"
+    ],
+    [
+     "主持人",
+     "那原料从哪进？"
+    ],
+    [
+     "加盟店老板",
+     "全部从总部进，自己不能乱买。"
+    ]
+   ],
+   "t": 31.4,
+   "d": 5.6,
+   "label": "C3 · 对话卡 · Dialogue",
+   "ref": "VideoHive Text Messages 3.8K · Lower Thirds 第 1 名 6.3K",
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "interview",
+   "theme": "ink",
+   "topic": "做内容",
+   "line": "访谈切片：问题放卡片，*回答*放大字。",
+   "video": "../mixue/assets/video/shiba.webm",
+   "name": "第九顶帽子",
+   "role": "频道主持人",
+   "org": "商业拆解",
+   "q": "做一条口播，最花时间的是哪一步？",
+   "a": "不是剪辑，是*想清楚每句话配什么画面*。",
+   "ep": "第 1 段",
+   "tc": "12:04",
+   "mock": "示意",
+   "t": 37.0,
+   "d": 5.4,
+   "label": "C1 · 访谈切片 · Interview",
+   "ref": "VideoHive Lower Thirds 第 1 名 6.3K",
+   "tr": "hard"
+  }
+ ]
+}

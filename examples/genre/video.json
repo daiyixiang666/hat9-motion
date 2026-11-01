@@ -1,0 +1,256 @@
+{
+ "meta": {
+  "title": "片子类型与叙事 · 在真实口播里",
+  "aspect": "16:9",
+  "style": "reel",
+  "duration": 46.2,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "opener",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "show": "商业拆解",
+   "ep": "第 07 期",
+   "title": "一杯 4 块钱的柠檬水",
+   "sub": "蜜雪冰城怎么一年净赚 44 亿",
+   "channel": "第九顶帽子",
+   "en": "business breakdown",
+   "line": "欢迎来到*商业拆解*第七期。",
+   "src": "第九顶帽子",
+   "label": "L11 · 栏目片头 · Series Opener",
+   "ref": "VideoHive Openers 31,965 个 · Corporate Typography Pack 2.8K · Fast Intro 2.6K",
+   "t": 0.0,
+   "d": 4.6
+  },
+  {
+   "scene": "fx",
+   "fx": "news_flash",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "kicker": "快讯",
+   "time": "2025-03-03",
+   "source": "新华网 · 澎湃新闻",
+   "headline": "蜜雪集团今日在港交所挂牌上市",
+   "items": [
+    [
+     "开盘",
+     "262 港元，较发行价涨 29.4%"
+    ],
+    [
+     "收盘",
+     "290 港元，首日涨 43.2%"
+    ],
+    [
+     "市值",
+     "收盘约 1093 亿港元"
+    ]
+   ],
+   "ticker": [
+    "发行价 202.5 港元",
+    "股票代码 02097",
+    "2025 年开年港股最大 IPO",
+    "全球门店 46,479 家（截至 2024 年底）"
+   ],
+   "line": "2025 年 3 月 3 日，蜜雪上市*首日涨了四成多*。",
+   "src": "新华网 2025-03-03 · 澎湃新闻",
+   "label": "U05 · 新闻快讯 · News Flash",
+   "ref": "talkcraft news-card-desk · 速报类口播",
+   "t": 4.6,
+   "d": 5.4
+  },
+  {
+   "scene": "fx",
+   "fx": "deal_card",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "product": "冰鲜柠檬水 · 大杯",
+   "sub": "下单后 15 分钟可取",
+   "price": "4",
+   "was": "6",
+   "unit": "/杯",
+   "tags": [
+    "限时",
+    "第二杯半价"
+   ],
+   "coupon": [
+    "满 20 减 3",
+    "立即领"
+   ],
+   "countdown": "00:59:59",
+   "stock": [
+    23,
+    100
+   ],
+   "note": "示意",
+   "line": "门店里一杯柠檬水，*只要 4 块*。",
+   "src": "示意：原价、券与库存为演示数据",
+   "label": "U08 · 带货价签 · Deal Card",
+   "ref": "Envato Infographics「Modern Price Tags & Counters」",
+   "t": 10.0,
+   "d": 5.4
+  },
+  {
+   "scene": "fx",
+   "fx": "clip_style",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../mixue/assets/video/shiba.webm",
+   "title": "4 块钱的柠檬水凭什么赚 44 亿",
+   "name": "柴犬主播",
+   "role": "第九顶帽子",
+   "time": "12:08",
+   "comments": [
+    [
+     "阿杰",
+     "真的假的"
+    ],
+    [
+     "小雨",
+     "原来是卖原料"
+    ],
+    [
+     "Tom",
+     "学到了"
+    ],
+    [
+     "橙子",
+     "下期讲瑞幸"
+    ]
+   ],
+   "note": "画面示意",
+   "line": "一杯四块钱的柠檬水，*一年净赚四十四亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告 · 画面示意",
+   "label": "M09 · 直播切片 · Clip Style",
+   "ref": "直播 / 访谈切片号通用包装 · talkcraft danmu-bubble-praise",
+   "t": 15.4,
+   "d": 5.4
+  },
+  {
+   "scene": "fx",
+   "fx": "review_card",
+   "theme": "paper",
+   "topic": "AI 工具",
+   "product": "某款 AI 配音工具",
+   "sub": "月付 ¥39 · 中文 / 英文 · 网页版",
+   "scores": [
+    [
+     "音色自然",
+     8.5
+    ],
+    [
+     "生成速度",
+     9
+    ],
+    [
+     "中文多音字",
+     6.5
+    ],
+    [
+     "价格",
+     6
+    ],
+    [
+     "可控性",
+     7.5
+    ]
+   ],
+   "pros": [
+    "音色接近真人",
+    "一分钟出一条",
+    "支持情绪标签"
+   ],
+   "cons": [
+    "多音字常读错",
+    "长文本要分段"
+   ],
+   "verdict": "看需求",
+   "note": "示意数据",
+   "line": "这款配音工具音色很真，但*多音字常读错*。",
+   "src": "示意：评分为演示数据",
+   "label": "U03 · 测评打分卡 · Review Card",
+   "ref": "数码 / 工具测评号常用版式：评分条 + 星级 + 结论徽章",
+   "t": 20.8,
+   "d": 5.4
+  },
+  {
+   "scene": "fx",
+   "fx": "sponsor_card",
+   "theme": "paper",
+   "topic": "广告",
+   "sponsor": "青舟研究所",
+   "points": [
+    "一周一份行业研报",
+    "数据全部可溯源",
+    "新用户首月免费"
+   ],
+   "code": "HAT9",
+   "cta": "链接在评论区第一条",
+   "note": "虚构品牌 · 示意",
+   "host": true,
+   "line": "本期内容由*青舟研究所*支持。",
+   "src": "示意：虚构品牌",
+   "label": "L12 · 口播广告位 · Sponsor Slot",
+   "ref": "口播恰饭段落「本期视频由……支持」",
+   "t": 26.2,
+   "d": 5.0
+  },
+  {
+   "scene": "fx",
+   "fx": "poll_card",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "question": "你最常点蜜雪的哪一杯？",
+   "options": [
+    "柠檬水",
+    "冰淇淋",
+    "珍珠奶茶",
+    "都不喝"
+   ],
+   "line": "你最常点哪一杯？*评论区*告诉我。",
+   "src": "第九顶帽子",
+   "label": "T10 · 评论投票 · Poll Card",
+   "ref": "Envato Elements Popular「YouTube Subscribe」「Checklist Pack」",
+   "t": 31.2,
+   "d": 5.0
+  },
+  {
+   "scene": "fx",
+   "fx": "share_card",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "quote": "看懂谁在*赚钱*，比看懂谁在卖货更重要。",
+   "by": "第九顶帽子 · 商业拆解第 07 期",
+   "handle": "@第九顶帽子",
+   "date": "2025.03",
+   "line": "这句话，*截图*收好。",
+   "src": "第九顶帽子",
+   "label": "T09 · 金句分享卡 · Share Card",
+   "ref": "小红书 / 朋友圈金句图 · scripts/share_card.py 导出单张",
+   "t": 36.2,
+   "d": 5.0
+  },
+  {
+   "scene": "fx",
+   "fx": "next_teaser",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "kicker": "下期预告",
+   "ep": "EP.08",
+   "title": "瑞幸 9.9 元一杯，靠什么赚钱？",
+   "hints": [
+    "门店模型",
+    "补贴还能撑多久"
+   ],
+   "when": "周五见",
+   "line": "下期，我们拆*瑞幸*。",
+   "src": "第九顶帽子",
+   "label": "L08 · 下期预告 · Next Teaser",
+   "ref": "系列号片尾常用「下期拆 XX」",
+   "t": 41.2,
+   "d": 5.0
+  }
+ ]
+}

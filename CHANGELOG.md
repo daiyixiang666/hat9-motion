@@ -1,5 +1,10 @@
 # 更新记录
 
+## 0.7.0 · 2026-11-01
+- 新效果 58 个：音视频（`pip` `freeze_frame` `speed_ramp` `footage` `audio_quote` `podcast` `talking_head` `host_point`）、文字（`text_pages` `question_card` `vertical_title` `flying_words` `number_pages` `combo` `black_slam` `scribble` `scanline`）、图表与地图（`icon_unit` `scatter` `funnel` `radar` `then_now` `choose_one` `converge` `gantt` `decision_tree` `area_overlay` `map_timeline` `street_map`）、图片与文档（`logo_wall` `halftone` `meme_stage` `gif_clip` `svg_art` `doc_photo` `slides` `doc_flip` `doc_pick` `handwrite` `email_card` `notice_card`）、界面与人物（`app_flow` `cursor` `form_fill` `turntable` `search_box` `relation_graph` `dialogue` `interview`）、片子类型（`review_card` `news_flash` `deal_card` `next_teaser` `opener` `sponsor_card` `share_card` `poll_card` `clip_style`）。
+- 交付：1:1 / 4:5 / 3:4、`meta.ai_label`、`caption_preset`、`brand`、`series`、多语言、`breath`、`rate_adapt`、音效冲击、情绪切换；`cut_list.py`、`ref_pacing.py`、`export_edit.py`（FCPXML）、`longform.py`、`share_card.py`、`audio_tools.py`。
+- 日文、韩文、阿拉伯文、希伯来文字体（可选）；上下标。
+
 ## 0.6.0 · 2026-10-31
 - 新效果 50 个（`scripts/h9/fx/`）：`media`（按张数换编排，1–2000 张，可混视频）；引用 `cite_pdf` `cite_paper` `cite_article` `cite_quote` `cite_post` `cite_video` `cite_stack`；结构 `list_stack` `steps` `ranking` `term_card` `word_swap` `pros_cons` `quadrant` `countdown` `chapter_bar`；数据 `table` `statement_table` `waterfall` `scale_compare` `bar_race` `stacked_bars` `formula` `bars_csv` `line_csv`；屏幕 `scroll_shot` `screencast` `spotlight` `code`；社交人物 `comment_thread` `im_chat` `profile_card` `equity_tree` `china_map` `danmaku` `receipt`；节奏 `breather` `interlude` `suspense` `cold_open` `beat_cut` `reaction` `loading` `think_loop` `chapter_breather`。
 - 流水线：弹性时长；`meta.lead` / `gaps` / `duck` / `speakers` / `caption_tr`；卡拉 OK 字幕；`scripts/align.py`（录音对齐）、`scripts/cover.py`（三比例封面）、`scripts/url_brief.py`（网址出片）、`scripts/h9/data.py`（CSV / Excel）。
