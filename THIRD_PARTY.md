@@ -22,14 +22,14 @@
 
 ## 示例素材
 
-`examples/demo/assets/img/*` 为本账号用 GPT Image 2 自行生成；配音为本地 VoxCPM2 合成；柴犬主持人为本账号 IP。
+`examples/demo/assets/img/*` 为作者用 GPT Image 2 生成；示例配音为 TTS 合成；柴犬主持人为作者的频道形象。
 
 `examples/aefx/assets/broll/*`：截自 Mixkit 免费视频（Mixkit Stock Video Free License），只用于渲染示例，素材文件不随仓库再分发（已写入 .gitignore），清单见该目录的 CREDITS.md。
 `examples/mixue/`：画面为代码矢量绘制；背景音乐由 `scripts/music.py` 合成（MIT）；数据来自蜜雪集团 2024 年度业绩公告、McDonald's 2024 Form 10-K。
 
 
 ## 0.5.0 新增
-- `examples/atlas/assets/map/`：Natural Earth 中国视角世界地图（公有领域，来自本机素材库）；searoute 海运网络（Apache-2.0，许可原文见同目录 `searoute-py.LICENSE.txt`）；ambientCG Paper006 纸纹（CC0）。南海断续线用 Natural Earth 的 9 段，台湾以东第 10 段按 2013 年版标准地图补画。
+- `examples/atlas/assets/map/`：Natural Earth 中国视角世界地图（公有领域）；searoute 海运网络（Apache-2.0，许可原文见同目录 `searoute-py.LICENSE.txt`）；ambientCG Paper006 纸纹（CC0）。南海断续线用 Natural Earth 的 9 段，台湾以东第 10 段按 2013 年版标准地图补画。
 - `examples/doc/`：Prelinger Archives 档案片（公有领域）和 Mixkit 免费视频（Mixkit Stock Video Free License，素材不随仓库再分发，见 `examples/doc/assets/broll/CREDITS.md`，用 `prep_clips.py` 重建）。
 - 地图类动效在渲染时从 jsdelivr 加载 d3-geo 和 topojson-client（ISC），与 GSAP 相同。
 - 各示例的背景音乐由 `scripts/music.py` 合成（MIT）。

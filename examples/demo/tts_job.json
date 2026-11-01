@@ -1,5 +1,0 @@
-{"out_dir": "assets/audio/tts",
- "engine": "voxcpm2", "model": "mlx-community/VoxCPM2-4bit",
- "instruct": "沉稳、有质感的年轻男声，像纪录片旁白，语速稍快，咬字清楚",
- "cfg": 2.0, "steps": 10, "takes": 2, "gap": 0.28, "tempo": 1.05,
- "scenes": [{"id": "demo", "sentences": ["大家都在用 AI。", "同一个模型，同样的提示词，", "有人做出来像杂志，有人做出来像地摊海报。", "差别不在工具，在判断。", "百分之九十的人，只会多生成几张，再挑一张。", "真正拉开差距的，是你知道哪一张不能要。", "这里是第九顶帽子。"]}]}

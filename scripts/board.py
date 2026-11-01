@@ -4,7 +4,7 @@
   python3 scripts/board.py -> dist/board/<dir>_<n>.png  (+ jpg previews)
 Stills are plain HTML screenshotted with the Chrome HyperFrames installed (toolkit/webshot.mjs).
 """
-import subprocess, sys
+import os, subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -14,7 +14,7 @@ from h9 import fonts  # noqa: E402
 
 OUT = SKILL / "dist" / "board"
 IMG = SKILL / "examples" / "demo" / "assets" / "img"
-WEBSHOT = Path.home() / "Desktop/test/video/toolkit/webshot.mjs"
+WEBSHOT = Path(os.environ.get("H9_WEBSHOT", "webshot.mjs"))   # any "url → png" screenshot script
 
 
 def ff(fid):

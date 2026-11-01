@@ -14,9 +14,9 @@ or overlaps other text — except findings allow-listed below as intentional. Co
 per variant) land in examples/stress/sheets/. A summary is written to examples/stress/report.md.
 
 Test pictures: examples/aefx/assets/broll/*.jpg when present (Mixkit stills, never committed) plus placeholders
-drawn here in every aspect. Test video: ~/Desktop/test/video/library/broll clips, referenced by path.
+drawn here in every aspect. Test video: clips under $H9_MEDIA/broll (your own media library), referenced by path; skipped when unset.
 """
-import argparse, json, re, subprocess, sys
+import os, argparse, json, re, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -80,7 +80,7 @@ def pictures():
     out["land"] = land or [str(IMG / "square.png")]
     out["fg"] = str(broll / "silhou_fg.png") if (broll / "silhou_fg.png").exists() else None
     out["plate"] = str(broll / "silhou_plate.jpg") if (broll / "silhou_plate.jpg").exists() else out["land"][0]
-    vids = sorted((Path.home() / "Desktop/test/video/library/broll").glob("*/*.mp4"))
+    vids = sorted((Path(os.environ["H9_MEDIA"]) / "broll").glob("*/*.mp4")) if os.environ.get("H9_MEDIA") else []
     pick = [v for v in vids if "traffic-light" in v.name or "tokyo" in v.name] or vids
     out["video"] = str(pick[0]) if pick else None
     return out

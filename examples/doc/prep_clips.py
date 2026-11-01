@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """Pre-grade every shot of video.json into assets/clips/<id>.mp4 (starts at 0, covers the shot).
 
-  python3 prep_clips.py [--broll ~/Desktop/test/video/library/broll] [--luts ~/Desktop/test/video/library/luts]
+  python3 prep_clips.py --broll <Mixkit 原片目录> [--luts <LUT 目录>]（也可设 H9_MEDIA，读取其下的 broll/ 和 luts/）
 
 Per shot: trim from `in`, optional speed ramp `ramp: [[source_seconds, speed], ...]` (the rest plays at 1×),
 scale/crop to 1920×1080 at 30 fps, LUT `lut`, H.264 with a keyframe every 6 frames (frame-accurate seeking).
 Shot length comes from the narration cues, resolved with the engine itself.
 """
-import argparse, json, subprocess, sys
+import os, argparse, json, subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -18,8 +18,8 @@ from h9 import core  # noqa: E402
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--broll", default=str(Path.home() / "Desktop/test/video/library/broll"))
-    ap.add_argument("--luts", default=str(Path.home() / "Desktop/test/video/library/luts"))
+    ap.add_argument("--broll", default=str(Path(os.environ.get("H9_MEDIA", ".")) / "broll"))
+    ap.add_argument("--luts", default=str(Path(os.environ.get("H9_MEDIA", ".")) / "luts"))
     ap.add_argument("--only", default="")
     a = ap.parse_args()
     v = json.loads((HERE / "video.json").read_text())

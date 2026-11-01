@@ -11,14 +11,14 @@
         card(stat | bars | line | list | images | text) · title · thesis · outro · src
 底图：Natural Earth 中国视角（world-chn-50m，公有领域）+ 南海断续线（10 段）；航线网络：searoute（Apache-2.0）。
 """
-import json, math
+import os, json, math
 from pathlib import Path
 
 SKILL = Path(__file__).resolve().parent.parent
 _ROOTS = [Path(p) for p in __import__("os").environ.get("H9_MAP_DIR", "").split(__import__("os").pathsep) if p] + [
-    SKILL / "assets" / "maps", SKILL / "examples" / "atlas" / "assets" / "map", Path.home() / "Desktop/test/video/library/maps/vector"]
+    SKILL / "assets" / "maps", SKILL / "examples" / "atlas" / "assets" / "map", *([Path(os.environ["H9_MEDIA"]) / "maps/vector"] if os.environ.get("H9_MEDIA") else [])]
 _TEX = [SKILL / "examples" / "atlas" / "assets" / "map" / "paper-ambientcg-paper006.jpg",
-        Path.home() / "Desktop/test/video/library/textures/paper/paper-beige-fibrous_ambientcg-paper006.jpg"]
+        *([Path(os.environ["H9_MEDIA"]) / "textures/paper/paper-beige-fibrous_ambientcg-paper006.jpg"] if os.environ.get("H9_MEDIA") else [])]
 
 
 def _lib(rel, required=True):

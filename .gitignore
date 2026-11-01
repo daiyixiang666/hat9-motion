@@ -14,3 +14,8 @@ dist/
 examples/*/assets/audio/tts/
 *.f32
 .DS_Store
+
+# author-side narration / image scripts (tied to the author's machines)
+examples/*/tts_win.py
+examples/*/tts_job.json
+examples/demo/gen_images.mjs

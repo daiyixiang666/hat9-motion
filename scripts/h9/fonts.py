@@ -10,7 +10,7 @@ REG = json.loads((SKILL / "assets" / "fonts.json").read_text())
 def roots():
     r = [SKILL / "assets" / "fonts"]
     r += [Path(p) for p in os.environ.get("H9_FONT_DIRS", "").split(os.pathsep) if p]
-    r += [Path.home() / "Desktop/test/video/library/fonts", Path.home() / "Library/Fonts", Path("/Library/Fonts"),
+    r += [*([Path(os.environ["H9_MEDIA"]) / "fonts"] if os.environ.get("H9_MEDIA") else []), Path.home() / "Library/Fonts", Path("/Library/Fonts"),
           Path.home() / ".fonts", Path("/usr/share/fonts"), Path("C:/Windows/Fonts")]
     return [p for p in r if p.exists()]
 

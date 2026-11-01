@@ -1,6 +1,6 @@
 # 镜头来源（examples/doc）
 
-成片里的镜头全部来自本机素材库 `~/Desktop/test/video/library/broll/`（每条的条目页见该目录 CREDITS.json）。
+成片里的镜头来自 Mixkit（可在 mixkit.co 按下表编号找到）和 Prelinger Archives（archive.org）。
 调色、变速后的文件在 `assets/clips/`，由 `prep_clips.py` 生成，**不随仓库发布**（见 .gitignore）。
 
 ## Mixkit（Mixkit Stock Video Free License：可商用，不可单独再分发或转售素材本身）

@@ -57,7 +57,7 @@
 **值得拿的**：直接**以它为渲染器**（Apache-2.0，确定性逐帧、快）。我们的产物就是合法的 HyperFrames 工程，所以用户也能在 HyperFrames 桌面版里继续改。块库里的颗粒、CRT、转场可按需 `hyperframes add` 后改皮肤。
 **不拿的**：它的风格是通用英文产品片；中文排版、字幕、柴犬、审美判断都要我们自己做。
 
-## 4. 本地已有：Explainer Toolkit v2（~/Desktop/test/video/toolkit）
+## 4. 作者本地的 Explainer Toolkit v2（未开源）
 
 - 自家代码。21 个风格包（magazine / riso / darkroom / collage / shanshui / swiss / vhs …）、192 个组件、`verify.mjs`（实测字形重叠、遮挡、对比度、响度）。
 - **值得拿的**：风格包字段设计（13 色主题 + 字体角色 + LUT + 招牌转场 + 常驻层 + 组件皮肤）；`verify.mjs` 作为可选的最后一关。

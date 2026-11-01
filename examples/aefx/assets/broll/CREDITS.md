@@ -1,8 +1,8 @@
 # 空镜来源
 
 本目录的静帧全部截自 Mixkit 免费视频（Mixkit Stock Video Free License，可商用，不可单独再分发或转售素材本身）。
-原片在本机素材库 `~/Desktop/test/video/library/broll/`，每条的条目页见该目录的 CREDITS.json。
-公开仓库只放渲染后的成片和预览；这些静帧和抠图 **不随仓库发布**（见仓库根目录 .gitignore），需要重渲染时从 Mixkit 重新下载。
+原片可在 mixkit.co 按下表编号找到。
+公开仓库只放渲染后的成片和预览；这些静帧和抠图 **不随仓库发布**（见仓库根目录 .gitignore），需要重渲染时从 Mixkit 下载原片。
 
 | 文件 | Mixkit 编号 | 内容 |
 |---|---|---|

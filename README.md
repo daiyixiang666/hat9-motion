@@ -5,7 +5,7 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看 5 条成片](#成片示例同一套工具5-种完全不同的片子) · [🎛 在线看全部 50 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看成片](#成片示例) · [🎛 在线看全部 50 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
 ![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.5.0-blue)
 
@@ -17,9 +17,20 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 ---
 
-## 成片示例：同一套工具，5 种完全不同的片子
+## 装上就有
 
-每条都是真实题材、核对过的数据（来源印在画面上）、横竖屏各自排版、有镜头调度和合成配乐。点图看成片。
+| | |
+|---|---|
+| **9 种风格** | `press` 财经刊 · `screen` AI 工具台 · `atlas` 地图纪录 · `doc` 实拍纪录 · `poster` 瑞士海报 · `reel` 动效库 · `hud` 暗场 · `studio` / `clay` 三维 |
+| **50 个动效** | 38 个效果 + 12 种转场，按 AE 模板销量和播放量复刻，[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) |
+| **素材自适应** | 长短文字、多条列表、任意张数和比例的图片、视频都能放，范围见 [`references/inputs.md`](references/inputs.md) |
+| **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
+| **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
+| **5 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
+
+## 成片示例
+
+点图看成片。每条都横竖屏各排一版，数据来源印在画面上。
 
 | 横屏 16:9 | 竖屏 9:16 | 题材 · 风格 |
 |---|---|---|
@@ -29,9 +40,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" width="420" alt="一个铁箱子 横屏"></a> | <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" width="120" alt="一个铁箱子 竖屏"></a> | **《一个铁箱子》**<br>`doc` 实拍纪录：2.39 遮幅 + 调色 + 颗粒，1956 档案片接现代港口实拍，年份计数器、数据卡贴在画面上。<br><sub>Levinson《The Box》· 上港集团 2024 快报 · UNCTAD</sub> |
 | <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" width="420" alt="专注，就是学会说不 横屏"></a> | <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" width="120" alt="专注，就是学会说不 竖屏"></a> | **《专注，就是学会说不》**<br>`poster` 瑞士海报：12 栏网格随每句话重排，黑白 + 一个信号蓝，100 格答案矩阵、24 张图扔到只剩 1 张。<br><sub>Steve Jobs，WWDC 1997 收尾问答</sub> |
 
-- **怎么做出来的**：文案 → 配音（VoxCPM2，逐字时间戳，画面卡在字上）→ 一份 `video.json`（每句一个场景）→ HyperFrames 逐帧渲染。分镜写好后，在 Apple M5 上渲染一条 30 秒的成片约 25 秒。
-- **素材适配**：每个场景和动效都吃得下长短不一的文字、不同条数的列表、任意张数和比例的图片，部分还支持视频。各参数的范围见 [`references/inputs.md`](references/inputs.md)，压力测试脚本是 `scripts/stress.py`。
-- **源文件**：[`examples/`](examples/)，每个文件夹一条片子。
+每条片子就是一份 `video.json`（每句一个场景）加配音，源文件在 [`examples/`](examples/)。
 
 ## 你说 → 会发生什么
 
@@ -67,7 +76,7 @@ python3 scripts/hat9.py doctor
 python3 scripts/hat9.py quick "大家都在用 AI。差别不在工具，在判断。百分之九十的人只会多生成几张，再挑一张。" --aspect 9:16
 ```
 
-实测：3 句文案 → 竖屏 mp4，**约 20 秒**（Apple M5，系统语音配音）。想精修就先出分镜再改：
+3 句文案大约 20 秒出一条竖屏 mp4。想精修就先出分镜再改：
 
 ```bash
 python3 scripts/hat9.py plan "你的文案" --out work/      # 生成 work/video.json，一句一个 beat
@@ -96,7 +105,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
-| 配音 | macOS 系统语音 / 本地 VoxCPM2 / 静音按字数估时 | 你自己的录音（推荐） |
+| 配音 | 系统语音 / 本地 TTS / 静音按字数估时 | 你自己的录音（推荐） |
 | 画面 | 50 个代码动效（38 效果 + 12 转场）+ 你的图片和视频 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
@@ -152,7 +161,7 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 ## 许可
 
 - 代码：MIT（[`LICENSE`](LICENSE)）。
-- 完整示例的画面全部是代码矢量绘制；动效库里的实拍空镜截自 Mixkit 免费视频（可商用，但素材本身不随仓库再分发，见 `examples/aefx/assets/broll/CREDITS.md`）；配音由本地 VoxCPM2 合成，背景音乐由 `scripts/music.py` 合成。
+- 示例里的实拍空镜来自 Mixkit 免费视频和公有领域档案片，Mixkit 原素材不随仓库分发（见各示例的 `CREDITS.md`）；示例配音为 TTS 合成，背景音乐由 `scripts/music.py` 合成。
 - 字体：OFL 1.1 / Apache 2.0；音效：`scripts/sfx.py` 合成，MIT。
 - 第三方说明：[`THIRD_PARTY.md`](THIRD_PARTY.md)。对标的创作者和模板只学手法，**不含他们的任何素材、工程文件或预览画面**。
 - 本项目免费，谨防倒卖。
@@ -163,11 +172,13 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
-- 🆕 **2026-10-31 · 0.5.0** 新增 4 个风格和各自的成片：`screen` AI 工具台、`atlas` 地图纪录、`doc` 实拍纪录、`poster` 瑞士海报。新增 10 个动效：地球推近、地图航线、柱状图、折线、环形图、时间轴、AI 对话、HUD 锁定、液态玻璃、镂空字视频。素材适配层支持任意长度的文字、任意张数和比例的图片、部分支持视频，并配压力测试。
-- **2026-10-31 · 0.4.0** 例子全部重做：完整示例《一杯 4 块钱的柠檬水》（`press` 财经刊风格，横竖屏各自排版，带镜头调度）；动效库的每个效果都换成真实口播里的一页；合成背景音乐。
-- **2026-10-31 · 0.3.0** 按人气复刻的 AE 动效库（28 效果 + 12 转场），横竖屏同一套代码；`hat9` 命令行，`quick` 一条命令出片；在线画廊与配方卡；SRT 字幕导出。
-- **2026-10-31 · 0.2.0** 三维引擎：从字体轮廓挤出真正的立体中文字；陶土影棚、暗场 HUD 风格；美学方向板。
-- **2026-10-31 · 0.1.0** 引擎：video.json → HyperFrames；"@关键词" 对口播；手绘标注；字幕；柴犬主持人。
+- **0.5.0** 新增 `screen` / `atlas` / `doc` / `poster` 四种风格和 10 个动效；素材自适应。
+- **0.4.0** 示例重做，新增 `press` 风格和合成配乐。
+- **0.3.0** AE 动效库、命令行、在线画廊。
+- **0.2.0** 三维引擎。
+- **0.1.0** 首个版本。
+
+详见 [`CHANGELOG.md`](CHANGELOG.md)。
 
 ---
 
