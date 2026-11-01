@@ -33,7 +33,9 @@
    "status": "handled",
    "covered_by": "pop · impact · stomp · mask_up",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "A02",
@@ -43,7 +45,9 @@
    "status": "handled",
    "covered_by": "fit.py 自动缩字号 + 按词换行（mask_up、apple_blur 等）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "A03",
@@ -53,7 +57,9 @@
    "status": "partial",
    "covered_by": "fit.py 缩到 3–4 行后加省略号；没有自动分页",
    "priority": "P1",
-   "proposal": "text_pages：按句分页，逐句高亮推进"
+   "proposal": "text_pages：按句分页，逐句高亮推进",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "A04",
@@ -63,7 +69,9 @@
    "status": "handled",
    "covered_by": "rich() 的 *强调* + marks 标注",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "A05",
@@ -73,7 +81,9 @@
    "status": "partial",
    "covered_by": "press turn 能划掉再替换；没有老虎机式滚动换词",
    "priority": "P0",
-   "proposal": "word_swap：句中一个槽位滚动换词，宽度跟着词变"
+   "proposal": "word_swap：句中一个槽位滚动换词，宽度跟着词变",
+   "now": "done06",
+   "now_by": "word_swap"
   },
   {
    "id": "A06",
@@ -83,7 +93,9 @@
    "status": "partial",
    "covered_by": "poster problem、press turn 是专用场景；没有通用问题卡",
    "priority": "P1",
-   "proposal": "question_card：问号卡（小Lin说式）"
+   "proposal": "question_card：问号卡（小Lin说式）",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "A07",
@@ -93,7 +105,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P0",
-   "proposal": "term_card：术语 + 英文/拼音 + 一句释义，像词典条目"
+   "proposal": "term_card：术语 + 英文/拼音 + 一句释义，像词典条目",
+   "now": "done06",
+   "now_by": "term_card"
   },
   {
    "id": "A08",
@@ -103,7 +117,9 @@
    "status": "partial",
    "covered_by": "hud 编号栈只有 2 项设计；doc list 2–8 条只在 doc 里",
    "priority": "P0",
-   "proposal": "list_stack：通用编号列表，当前条放大、其余压暗"
+   "proposal": "list_stack：通用编号列表，当前条放大、其余压暗",
+   "now": "done06",
+   "now_by": "list_stack"
   },
   {
    "id": "A09",
@@ -113,7 +129,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "title_demote：标题降级动画"
+   "proposal": "title_demote：标题降级动画",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "A10",
@@ -123,7 +141,9 @@
    "status": "missing",
    "covered_by": "typewriter 只会正向打字",
    "priority": "P2",
-   "proposal": "typewriter 加 retype 参数"
+   "proposal": "typewriter 加 retype 参数",
+   "now": "done06",
+   "now_by": "typewriter"
   },
   {
    "id": "A11",
@@ -133,7 +153,9 @@
    "status": "partial",
    "covered_by": "lockup 有中英锁定；字幕没有双语模式",
    "priority": "P1",
-   "proposal": "captions 增加 bilingual 模式"
+   "proposal": "captions 增加 bilingual 模式",
+   "now": "done06",
+   "now_by": "lockup"
   },
   {
    "id": "A12",
@@ -143,7 +165,9 @@
    "status": "partial",
    "covered_by": "只有 press 竖屏链条的括号用了竖排",
    "priority": "P2",
-   "proposal": "vertical_title"
+   "proposal": "vertical_title",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "A13",
@@ -153,7 +177,9 @@
    "status": "handled",
    "covered_by": "write_on（马善政字体）",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "A14",
@@ -163,7 +189,9 @@
    "status": "handled",
    "covered_by": "hud quote · poster quote · cite_quote（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "A15",
@@ -173,7 +201,9 @@
    "status": "partial",
    "covered_by": "punch 字幕只放大关键词；没有逐字填色",
    "priority": "P1",
-   "proposal": "captions 增加 karaoke 模式"
+   "proposal": "captions 增加 karaoke 模式",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "A16",
@@ -183,7 +213,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "flying_words"
+   "proposal": "flying_words",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "B01",
@@ -193,7 +225,9 @@
    "status": "handled",
    "covered_by": "odometer · press hook · 各风格 counter",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B02",
@@ -203,7 +237,9 @@
    "status": "handled",
    "covered_by": "fit.py 自动换算万/亿；odometer zh",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B03",
@@ -213,7 +249,9 @@
    "status": "handled",
    "covered_by": "donut · press split · poster hundred · screen 100 格",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B04",
@@ -223,7 +261,9 @@
    "status": "handled",
    "covered_by": "press stores 点阵 · bars",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B05",
@@ -233,7 +273,9 @@
    "status": "handled",
    "covered_by": "line_draw · screen dash",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B06",
@@ -243,7 +285,9 @@
    "status": "handled",
    "covered_by": "bars（超过 8 根自动转横向）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B07",
@@ -253,7 +297,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "bar_race：逐年重排的赛跑图"
+   "proposal": "bar_race：逐年重排的赛跑图",
+   "now": "done06",
+   "now_by": "bar_race"
   },
   {
    "id": "B08",
@@ -263,7 +309,9 @@
    "status": "partial",
    "covered_by": "press split 只做两段",
    "priority": "P1",
-   "proposal": "stack_bar：1–8 段，逐段点亮"
+   "proposal": "stack_bar：1–8 段，逐段点亮",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "B09",
@@ -273,7 +321,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "waterfall：逐级扣减、正负着色"
+   "proposal": "waterfall：逐级扣减、正负着色",
+   "now": "done06",
+   "now_by": "waterfall"
   },
   {
    "id": "B10",
@@ -283,7 +333,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P0",
-   "proposal": "scale_compare：参照物图标堆叠或等比放大"
+   "proposal": "scale_compare：参照物图标堆叠或等比放大",
+   "now": "done06",
+   "now_by": "scale_compare"
   },
   {
    "id": "B11",
@@ -293,7 +345,9 @@
    "status": "partial",
    "covered_by": "press stores 用圆点；没有图标单位",
    "priority": "P1",
-   "proposal": "icon_unit：图标阵列，可换任意图标"
+   "proposal": "icon_unit：图标阵列，可换任意图标",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "B12",
@@ -303,7 +357,9 @@
    "status": "missing",
    "covered_by": "screen pricing 是卡片，不是表格",
    "priority": "P0",
-   "proposal": "table：逐格出现、行列聚焦、数字滚动"
+   "proposal": "table：逐格出现、行列聚焦、数字滚动",
+   "now": "done06",
+   "now_by": "table"
   },
   {
    "id": "B13",
@@ -313,7 +369,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "formula_card：算式逐项代入数字"
+   "proposal": "formula_card：算式逐项代入数字",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "B14",
@@ -323,7 +381,9 @@
    "status": "handled",
    "covered_by": "screen dash",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B15",
@@ -333,7 +393,9 @@
    "status": "handled",
    "covered_by": "screen forecast",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B16",
@@ -343,7 +405,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 H04"
+   "proposal": "见 H04",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "B17",
@@ -353,7 +417,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "scatter"
+   "proposal": "scatter",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "B18",
@@ -363,7 +429,9 @@
    "status": "handled",
    "covered_by": "bars、line_draw 支持负值区间",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "B19",
@@ -373,7 +441,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "funnel"
+   "proposal": "funnel",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "B20",
@@ -383,7 +453,9 @@
    "status": "handled",
    "covered_by": "press hook 爆炸贴 · screen pricing",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C01",
@@ -393,7 +465,9 @@
    "status": "handled",
    "covered_by": "plate · media 1 张档（G 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C02",
@@ -403,7 +477,9 @@
    "status": "handled",
    "covered_by": "media 2 张档：分屏加擦除滑块（G 在做）· dual",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C03",
@@ -413,7 +489,9 @@
    "status": "handled",
    "covered_by": "media 3 张档：发牌扇形（G 在做）· collage",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C04",
@@ -423,7 +501,9 @@
    "status": "handled",
    "covered_by": "media 便当格（G 在做）· collage",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C05",
@@ -433,7 +513,9 @@
    "status": "handled",
    "covered_by": "media 网格墙（G 在做）· mosaic",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C06",
@@ -443,7 +525,9 @@
    "status": "handled",
    "covered_by": "media 密集马赛克（G 在做）",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C07",
@@ -453,7 +537,9 @@
    "status": "handled",
    "covered_by": "media 洪流加计数器（G 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C08",
@@ -463,7 +549,9 @@
    "status": "handled",
    "covered_by": "fit.py 按比例摆放、焦点裁切、模糊铺底",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C09",
@@ -473,7 +561,9 @@
    "status": "missing",
    "covered_by": "现在会被模糊铺底缩成一条",
    "priority": "P0",
-   "proposal": "scroll_shot：设备框里匀速滚动，在目标处减速停住并高亮"
+   "proposal": "scroll_shot：设备框里匀速滚动，在目标处减速停住并高亮",
+   "now": "done06",
+   "now_by": "scroll_shot"
   },
   {
    "id": "C10",
@@ -483,7 +573,9 @@
    "status": "partial",
    "covered_by": "parallax 支持前景抠图；没有通用的悬浮产品展示",
    "priority": "P1",
-   "proposal": "cutout_float：投影、轻微转动、标签引线"
+   "proposal": "cutout_float：投影、轻微转动、标签引线",
+   "now": "done06",
+   "now_by": "parallax"
   },
   {
    "id": "C11",
@@ -493,7 +585,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "logo_wall：逐个点亮，一个放大"
+   "proposal": "logo_wall：逐个点亮，一个放大",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "C12",
@@ -503,7 +597,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "halftone / duotone 处理，把糊变成风格"
+   "proposal": "halftone / duotone 处理，把糊变成风格",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "C13",
@@ -513,7 +609,9 @@
    "status": "partial",
    "covered_by": "plate 能放；没有连续换图的节奏模板",
    "priority": "P1",
-   "proposal": "meme_stage：按口播逐句切图，带轻微抖动"
+   "proposal": "meme_stage：按口播逐句切图，带轻微抖动",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "C14",
@@ -523,7 +621,9 @@
    "status": "missing",
    "covered_by": "callout 只有引线",
    "priority": "P1",
-   "proposal": "magnifier：放大镜跟随移动"
+   "proposal": "magnifier：放大镜跟随移动",
+   "now": "done06",
+   "now_by": "callout"
   },
   {
    "id": "C15",
@@ -533,7 +633,9 @@
    "status": "partial",
    "covered_by": "timeline 有年份节点但不能放照片",
    "priority": "P1",
-   "proposal": "photo_strip：胶片条随年份推进"
+   "proposal": "photo_strip：胶片条随年份推进",
+   "now": "done06",
+   "now_by": "timeline"
   },
   {
    "id": "C16",
@@ -543,7 +645,9 @@
    "status": "missing",
    "covered_by": "img 标签里的 GIF 不随时间轴 seek，渲染结果不确定",
    "priority": "P1",
-   "proposal": "构建时把 GIF 转成 mp4，按视频处理"
+   "proposal": "构建时把 GIF 转成 mp4，按视频处理",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "C17",
@@ -553,7 +657,9 @@
    "status": "handled",
    "covered_by": "fit.py 骨架卡、占位卡",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "C18",
@@ -563,7 +669,9 @@
    "status": "partial",
    "covered_by": "可以当图片放；没测试过缩放和着色",
    "priority": "P2",
-   "proposal": "svg 输入：保留矢量、可改主题色"
+   "proposal": "svg 输入：保留矢量、可改主题色",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "C19",
@@ -573,7 +681,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "doc_photo：纠偏 + 纸张阴影 + 高亮"
+   "proposal": "doc_photo：纠偏 + 纸张阴影 + 高亮",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "D01",
@@ -583,7 +693,9 @@
    "status": "handled",
    "covered_by": "doc shot · plate video",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D02",
@@ -593,7 +705,9 @@
    "status": "handled",
    "covered_by": "doc：模糊铺底 + 按焦点构图",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D03",
@@ -603,7 +717,9 @@
    "status": "handled",
    "covered_by": "doc 竖屏重新构图",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D04",
@@ -613,7 +729,9 @@
    "status": "missing",
    "covered_by": "screen 风格是代码仿的界面，不吃真实录屏",
    "priority": "P0",
-   "proposal": "screencast：设备框 + 跟随光标推近 + 点击涟漪 + 关键区高亮"
+   "proposal": "screencast：设备框 + 跟随光标推近 + 点击涟漪 + 关键区高亮",
+   "now": "done06",
+   "now_by": "screencast"
   },
   {
    "id": "D05",
@@ -623,7 +741,9 @@
    "status": "partial",
    "covered_by": "柴犬可以在角落；真人口播视频没有画中画",
    "priority": "P1",
-   "proposal": "pip：圆角或圆形小窗，可在全屏和小窗之间切换"
+   "proposal": "pip：圆角或圆形小窗，可在全屏和小窗之间切换",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "D06",
@@ -633,7 +753,9 @@
    "status": "partial",
    "covered_by": "media 网格能放视频，但限制同时播放数（G 在做）",
    "priority": "P2",
-   "proposal": "quad_split"
+   "proposal": "quad_split",
+   "now": "done06",
+   "now_by": "media"
   },
   {
    "id": "D07",
@@ -643,7 +765,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "freeze_annotate：定格、压暗、标注、继续播放"
+   "proposal": "freeze_annotate：定格、压暗、标注、继续播放",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "D08",
@@ -653,7 +777,9 @@
    "status": "missing",
    "covered_by": "只能指定起点",
    "priority": "P2",
-   "proposal": "video 参数 speed"
+   "proposal": "video 参数 speed",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "D09",
@@ -663,7 +789,9 @@
    "status": "handled",
    "covered_by": "cite_video（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D10",
@@ -673,7 +801,9 @@
    "status": "partial",
    "covered_by": "data-media-start 能给起点；没有 in/out 参数",
    "priority": "P1",
-   "proposal": "video 参数 in / out"
+   "proposal": "video 参数 in / out",
+   "now": "done06",
+   "now_by": "media"
   },
   {
    "id": "D11",
@@ -683,7 +813,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "safe_box：自动把我们的字幕挪到不重叠的位置"
+   "proposal": "safe_box：自动把我们的字幕挪到不重叠的位置",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "D12",
@@ -693,7 +825,9 @@
    "status": "handled",
    "covered_by": "doc 用 LUT 预调色",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D13",
@@ -703,7 +837,9 @@
    "status": "handled",
    "covered_by": "text_mask",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "D14",
@@ -713,7 +849,9 @@
    "status": "handled",
    "covered_by": "glass",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "E01",
@@ -723,7 +861,9 @@
    "status": "handled",
    "covered_by": "cite_pdf（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "E02",
@@ -733,7 +873,9 @@
    "status": "handled",
    "covered_by": "cite_pdf（H 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "E03",
@@ -743,7 +885,9 @@
    "status": "handled",
    "covered_by": "cite_paper（H 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "E04",
@@ -753,7 +897,9 @@
    "status": "partial",
    "covered_by": "cite_paper 可以放图，但不会从 PDF 页面里自动裁",
    "priority": "P1",
-   "proposal": "cite_pdf 增加 region 裁切放大"
+   "proposal": "cite_pdf 增加 region 裁切放大",
+   "now": "done06",
+   "now_by": "cite_paper · cite_pdf"
   },
   {
    "id": "E05",
@@ -763,7 +909,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "slides：一页页翻，可聚焦某页"
+   "proposal": "slides：一页页翻，可聚焦某页",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "E06",
@@ -773,7 +921,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 B12 table（支持 CSV 输入）"
+   "proposal": "见 B12 table（支持 CSV 输入）",
+   "now": "done06",
+   "now_by": "table"
   },
   {
    "id": "E07",
@@ -783,7 +933,9 @@
    "status": "partial",
    "covered_by": "cite_pdf 能高亮原文，但不能把表格变成动态表",
    "priority": "P0",
-   "proposal": "statement_table：从 CSV 或 PDF 表格生成可动画的财务表"
+   "proposal": "statement_table：从 CSV 或 PDF 表格生成可动画的财务表",
+   "now": "done06",
+   "now_by": "cite_pdf · statement_table"
   },
   {
    "id": "E08",
@@ -793,7 +945,9 @@
    "status": "partial",
    "covered_by": "cite_pdf（H 在做）",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "done06",
+   "now_by": "cite_pdf"
   },
   {
    "id": "E09",
@@ -803,7 +957,9 @@
    "status": "partial",
    "covered_by": "callout 能在图上做 1–4 个标注",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "done06",
+   "now_by": "callout"
   },
   {
    "id": "E10",
@@ -813,7 +969,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "doc_flip：翻页或纸页堆叠滚动，停在目标页"
+   "proposal": "doc_flip：翻页或纸页堆叠滚动，停在目标页",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "E11",
@@ -823,7 +981,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "doc_stack_pick"
+   "proposal": "doc_stack_pick",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "E12",
@@ -833,7 +993,9 @@
    "status": "partial",
    "covered_by": "plate 能放",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "F01",
@@ -843,7 +1005,9 @@
    "status": "handled",
    "covered_by": "cite_article（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F02",
@@ -853,7 +1017,9 @@
    "status": "partial",
    "covered_by": "cite_stack 只做 2–5 条（H 在做）",
    "priority": "P1",
-   "proposal": "headline_wall：标题瀑布，最后一条停住"
+   "proposal": "headline_wall：标题瀑布，最后一条停住",
+   "now": "done06",
+   "now_by": "cite_stack"
   },
   {
    "id": "F03",
@@ -863,7 +1029,9 @@
    "status": "handled",
    "covered_by": "cite_quote（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F04",
@@ -873,7 +1041,9 @@
    "status": "handled",
    "covered_by": "cite_post（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F05",
@@ -883,7 +1053,9 @@
    "status": "missing",
    "covered_by": "cite_post 只有单条帖子",
    "priority": "P0",
-   "proposal": "comment_thread：楼层逐条弹出，高亮热评"
+   "proposal": "comment_thread：楼层逐条弹出，高亮热评",
+   "now": "done06",
+   "now_by": "cite_post · comment_thread"
   },
   {
    "id": "F06",
@@ -893,7 +1065,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "danmu：多轨弹幕，可设关键词高亮"
+   "proposal": "danmu：多轨弹幕，可设关键词高亮",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "F07",
@@ -903,7 +1077,9 @@
    "status": "partial",
    "covered_by": "chat 是 AI 问答；没有双人 IM 气泡、头像、时间",
    "priority": "P0",
-   "proposal": "im_chat：双人气泡逐条出现，可设已读、撤回、语音条"
+   "proposal": "im_chat：双人气泡逐条出现，可设已读、撤回、语音条",
+   "now": "done06",
+   "now_by": "chat · im_chat"
   },
   {
    "id": "F08",
@@ -913,7 +1089,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "email_card"
+   "proposal": "email_card",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "F09",
@@ -923,7 +1101,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "receipt：小票打印出纸，金额逐行累加"
+   "proposal": "receipt：小票打印出纸，金额逐行累加",
+   "now": "done06",
+   "now_by": "receipt"
   },
   {
    "id": "F10",
@@ -933,7 +1113,9 @@
    "status": "handled",
    "covered_by": "cite_video（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F11",
@@ -943,7 +1125,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "audio_quote：波形 + 字幕 + 出处"
+   "proposal": "audio_quote：波形 + 字幕 + 出处",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "F12",
@@ -953,7 +1137,9 @@
    "status": "handled",
    "covered_by": "cite_paper（H 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F13",
@@ -963,7 +1149,9 @@
    "status": "handled",
    "covered_by": "cite_pdf（H 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F14",
@@ -973,7 +1161,9 @@
    "status": "handled",
    "covered_by": "cite_stack（H 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F15",
@@ -983,7 +1173,9 @@
    "status": "handled",
    "covered_by": "press / screen 页脚 · 动效页面 ctx 页脚",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "F16",
@@ -993,7 +1185,9 @@
    "status": "partial",
    "covered_by": "glitch 能做故障感；没有判定印章",
    "priority": "P2",
-   "proposal": "verdict_stamp"
+   "proposal": "verdict_stamp",
+   "now": "done06",
+   "now_by": "glitch"
   },
   {
    "id": "F17",
@@ -1003,7 +1197,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "notice_card：中性公文版式（不得仿冒真实红头）"
+   "proposal": "notice_card：中性公文版式（不得仿冒真实红头）",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "F18",
@@ -1013,7 +1209,9 @@
    "status": "partial",
    "covered_by": "cite_article 能用截图（H 在做）；没有通用浏览器框",
    "priority": "P1",
-   "proposal": "browser_frame：地址栏 + 滚动 + 高亮"
+   "proposal": "browser_frame：地址栏 + 滚动 + 高亮",
+   "now": "done06",
+   "now_by": "cite_article"
   },
   {
    "id": "G01",
@@ -1023,7 +1221,9 @@
    "status": "handled",
    "covered_by": "chat · screen palette",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "G02",
@@ -1033,7 +1233,9 @@
    "status": "partial",
    "covered_by": "screen 是专用界面；没有手机框加多屏流程的通用效果",
    "priority": "P1",
-   "proposal": "app_flow：手机框里一屏屏切，光标点击推动"
+   "proposal": "app_flow：手机框里一屏屏切，光标点击推动",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "G03",
@@ -1043,7 +1245,9 @@
    "status": "handled",
    "covered_by": "notify 1–6 条",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "G04",
@@ -1053,7 +1257,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 C09 scroll_shot"
+   "proposal": "见 C09 scroll_shot",
+   "now": "done06",
+   "now_by": "scroll_shot"
   },
   {
    "id": "G05",
@@ -1063,7 +1269,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "code：语法高亮、逐行打出、增删行着色"
+   "proposal": "code：语法高亮、逐行打出、增删行着色",
+   "now": "done06",
+   "now_by": "code"
   },
   {
    "id": "G06",
@@ -1073,7 +1281,9 @@
    "status": "partial",
    "covered_by": "screen api 日志 · typewriter；没有终端窗口",
    "priority": "P1",
-   "proposal": "terminal：命令 + 滚动输出 + 进度条"
+   "proposal": "terminal：命令 + 滚动输出 + 进度条",
+   "now": "done06",
+   "now_by": "typewriter"
   },
   {
    "id": "G07",
@@ -1083,7 +1293,9 @@
    "status": "partial",
    "covered_by": "光标只在 screen 风格内部",
    "priority": "P1",
-   "proposal": "cursor：可叠在任何截图或录屏上"
+   "proposal": "cursor：可叠在任何截图或录屏上",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "G08",
@@ -1093,7 +1305,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "form_fill"
+   "proposal": "form_fill",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "G09",
@@ -1103,7 +1317,9 @@
    "status": "partial",
    "covered_by": "studio 只有立体字",
    "priority": "P2",
-   "proposal": "turntable：用抠图或 3D 模型"
+   "proposal": "turntable：用抠图或 3D 模型",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "G10",
@@ -1113,7 +1329,9 @@
    "status": "partial",
    "covered_by": "dual 有简易框",
    "priority": "P1",
-   "proposal": "device：真实比例的设备框，可横可竖"
+   "proposal": "device：真实比例的设备框，可横可竖",
+   "now": "done06",
+   "now_by": "dual"
   },
   {
    "id": "G11",
@@ -1123,7 +1341,9 @@
    "status": "partial",
    "covered_by": "screen palette",
    "priority": "P1",
-   "proposal": "search_box"
+   "proposal": "search_box",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "G12",
@@ -1133,7 +1353,9 @@
    "status": "handled",
    "covered_by": "screen pricing 1–8 张卡",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "H01",
@@ -1143,7 +1365,9 @@
    "status": "handled",
    "covered_by": "earth_zoom · atlas pins",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "H02",
@@ -1153,7 +1377,9 @@
    "status": "handled",
    "covered_by": "map_route · atlas routes",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "H03",
@@ -1163,7 +1389,9 @@
    "status": "missing",
    "covered_by": "atlas 是世界尺度；earth_zoom 只画陆地",
    "priority": "P0",
-   "proposal": "china_map：Natural Earth 中国省级（公有领域）+ 合规南海诸岛"
+   "proposal": "china_map：Natural Earth 中国省级（公有领域）+ 合规南海诸岛",
+   "now": "done06",
+   "now_by": "china_map · earth_zoom"
   },
   {
    "id": "H04",
@@ -1173,7 +1401,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "china_map 增加 choropleth"
+   "proposal": "china_map 增加 choropleth",
+   "now": "done06",
+   "now_by": "china_map"
   },
   {
    "id": "H05",
@@ -1183,7 +1413,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "dot_density：按经纬度撒点，逐片点亮"
+   "proposal": "dot_density：按经纬度撒点，逐片点亮",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "H06",
@@ -1193,7 +1425,9 @@
    "status": "handled",
    "covered_by": "atlas highlight",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "H07",
@@ -1203,7 +1437,9 @@
    "status": "handled",
    "covered_by": "atlas cards",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "H08",
@@ -1213,7 +1449,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "area_overlay"
+   "proposal": "area_overlay",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "H09",
@@ -1223,7 +1461,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "见 H05，按时间逐年撒点"
+   "proposal": "见 H05，按时间逐年撒点",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "H10",
@@ -1233,7 +1473,9 @@
    "status": "missing",
    "covered_by": "需要街道数据",
    "priority": "P2",
-   "proposal": "street_map（数据来源另议）"
+   "proposal": "street_map（数据来源另议）",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "H11",
@@ -1243,7 +1485,9 @@
    "status": "handled",
    "covered_by": "atlas 用中国视角数据；earth_zoom 不画国界",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "I01",
@@ -1253,7 +1497,9 @@
    "status": "partial",
    "covered_by": "lower3 没有头像",
    "priority": "P0",
-   "proposal": "profile_card：头像或首字母 + 名字 + 身份 + 一句话"
+   "proposal": "profile_card：头像或首字母 + 名字 + 身份 + 一句话",
+   "now": "done06",
+   "now_by": "profile_card"
   },
   {
    "id": "I02",
@@ -1263,7 +1509,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "people_row：人物卡一排，逐个点亮"
+   "proposal": "people_row：人物卡一排，逐个点亮",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "I03",
@@ -1273,7 +1521,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "org_chart：树形逐层展开"
+   "proposal": "org_chart：树形逐层展开",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "I04",
@@ -1283,7 +1533,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "relation_graph：节点 + 连线 + 标签"
+   "proposal": "relation_graph：节点 + 连线 + 标签",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "I05",
@@ -1293,7 +1545,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P0",
-   "proposal": "equity_tree：股权层层穿透，比例滚动"
+   "proposal": "equity_tree：股权层层穿透，比例滚动",
+   "now": "done06",
+   "now_by": "equity_tree"
   },
   {
    "id": "I06",
@@ -1303,7 +1557,9 @@
    "status": "partial",
    "covered_by": "timeline 有年份节点，不能放照片",
    "priority": "P1",
-   "proposal": "见 C15 photo_strip"
+   "proposal": "见 C15 photo_strip",
+   "now": "done06",
+   "now_by": "timeline"
   },
   {
    "id": "I07",
@@ -1313,7 +1569,9 @@
    "status": "partial",
    "covered_by": "lockup 只有文字",
    "priority": "P1",
-   "proposal": "logo_reveal：logo 图片入场"
+   "proposal": "logo_reveal：logo 图片入场",
+   "now": "done06",
+   "now_by": "lockup"
   },
   {
    "id": "I08",
@@ -1323,7 +1581,9 @@
    "status": "partial",
    "covered_by": "柴犬只能在角落或客串",
    "priority": "P1",
-   "proposal": "host_point / host_chip"
+   "proposal": "host_point / host_chip",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "I09",
@@ -1333,7 +1593,9 @@
    "status": "partial",
    "covered_by": "media 网格可以放（G 在做）",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "done06",
+   "now_by": "media"
   },
   {
    "id": "I10",
@@ -1343,7 +1605,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "dialogue：两个人物卡轮流说话"
+   "proposal": "dialogue：两个人物卡轮流说话",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "J01",
@@ -1353,7 +1617,9 @@
    "status": "handled",
    "covered_by": "hud compare · poster price · media 2 张档（G 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "J02",
@@ -1363,7 +1629,9 @@
    "status": "handled",
    "covered_by": "media 2 张档滑块（G 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "J03",
@@ -1373,7 +1641,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "pros_cons"
+   "proposal": "pros_cons",
+   "now": "done06",
+   "now_by": "pros_cons"
   },
   {
    "id": "J04",
@@ -1383,7 +1653,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P0",
-   "proposal": "ranking：倒数逐个揭晓，第一名特写"
+   "proposal": "ranking：倒数逐个揭晓，第一名特写",
+   "now": "done06",
+   "now_by": "ranking"
   },
   {
    "id": "J05",
@@ -1393,7 +1665,9 @@
    "status": "partial",
    "covered_by": "poster keep · screen palette",
    "priority": "P2",
-   "proposal": "chip_select"
+   "proposal": "chip_select",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "J06",
@@ -1403,7 +1677,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "radar"
+   "proposal": "radar",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "J07",
@@ -1413,7 +1689,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 B12 table"
+   "proposal": "见 B12 table",
+   "now": "done06",
+   "now_by": "table"
   },
   {
    "id": "J08",
@@ -1423,7 +1701,9 @@
    "status": "partial",
    "covered_by": "doc 有年份计数器；没有今昔分屏",
    "priority": "P2",
-   "proposal": "then_now"
+   "proposal": "then_now",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "J09",
@@ -1433,7 +1713,9 @@
    "status": "partial",
    "covered_by": "donut · bars",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "done06",
+   "now_by": "bars · donut"
   },
   {
    "id": "J10",
@@ -1443,7 +1725,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "quadrant：象限逐个点亮，点位落入"
+   "proposal": "quadrant：象限逐个点亮，点位落入",
+   "now": "done06",
+   "now_by": "quadrant"
   },
   {
    "id": "K01",
@@ -1453,7 +1737,9 @@
    "status": "partial",
    "covered_by": "press chain 是供应链样式；没有通用步骤图",
    "priority": "P0",
-   "proposal": "steps：横竖两种排法，当前步高亮"
+   "proposal": "steps：横竖两种排法，当前步高亮",
+   "now": "done06",
+   "now_by": "steps"
   },
   {
    "id": "K02",
@@ -1463,7 +1749,9 @@
    "status": "handled",
    "covered_by": "press wheel 3–6 站",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "K03",
@@ -1473,7 +1761,9 @@
    "status": "handled",
    "covered_by": "press chain",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "K04",
@@ -1483,7 +1773,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "decision_tree"
+   "proposal": "decision_tree",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "K05",
@@ -1493,7 +1785,9 @@
    "status": "partial",
    "covered_by": "press chain · hud 编号栈",
    "priority": "P1",
-   "proposal": "见 A08 list_stack"
+   "proposal": "见 A08 list_stack",
+   "now": "done06",
+   "now_by": "list_stack"
   },
   {
    "id": "K06",
@@ -1503,7 +1797,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "converge：曲线汇聚动画"
+   "proposal": "converge：曲线汇聚动画",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "K07",
@@ -1513,7 +1809,9 @@
    "status": "handled",
    "covered_by": "timeline",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "K08",
@@ -1523,7 +1821,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "gantt"
+   "proposal": "gantt",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "K09",
@@ -1533,7 +1833,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "checklist"
+   "proposal": "checklist",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "L01",
@@ -1543,7 +1845,9 @@
    "status": "handled",
    "covered_by": "press hook · impact · stomp",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "L02",
@@ -1553,7 +1857,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "countdown：数字弧形掠过后停住"
+   "proposal": "countdown：数字弧形掠过后停住",
+   "now": "done06",
+   "now_by": "countdown"
   },
   {
    "id": "L03",
@@ -1563,7 +1869,9 @@
    "status": "handled",
    "covered_by": "flip3d · doc card · poster 章节号",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "L04",
@@ -1573,7 +1881,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "chapter_bar：整片目录，当前节点亮"
+   "proposal": "chapter_bar：整片目录，当前节点亮",
+   "now": "done06",
+   "now_by": "chapter_bar"
   },
   {
    "id": "L05",
@@ -1583,7 +1893,9 @@
    "status": "partial",
    "covered_by": "缺通用列表（见 A08）",
    "priority": "P1",
-   "proposal": "见 A08 list_stack"
+   "proposal": "见 A08 list_stack",
+   "now": "done06",
+   "now_by": "list_stack"
   },
   {
    "id": "L06",
@@ -1593,7 +1905,9 @@
    "status": "handled",
    "covered_by": "press turn · slice_text",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "L07",
@@ -1603,7 +1917,9 @@
    "status": "handled",
    "covered_by": "triple · outro · lower3",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "L08",
@@ -1613,7 +1929,9 @@
    "status": "partial",
    "covered_by": "outro 只能放文字",
    "priority": "P2",
-   "proposal": "next_teaser：下期封面一闪"
+   "proposal": "next_teaser：下期封面一闪",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "L09",
@@ -1623,7 +1941,9 @@
    "status": "partial",
    "covered_by": "没有成套的问答节奏",
    "priority": "P1",
-   "proposal": "reveal：问号卡 + 悬停 + 揭晓"
+   "proposal": "reveal：问号卡 + 悬停 + 揭晓",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "L10",
@@ -1633,7 +1953,9 @@
    "status": "handled",
    "covered_by": "atlas · studio WORLD",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "L11",
@@ -1643,7 +1965,9 @@
    "status": "partial",
    "covered_by": "press 有页眉页脚；没有片头",
    "priority": "P1",
-   "proposal": "opener：栏目片头，可换期数和标题"
+   "proposal": "opener：栏目片头，可换期数和标题",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "L12",
@@ -1653,7 +1977,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "sponsor_card"
+   "proposal": "sponsor_card",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "M01",
@@ -1663,7 +1989,9 @@
    "status": "partial",
    "covered_by": "各风格竖屏手动避让；压力测试不检查安全区",
    "priority": "P0",
-   "proposal": "stress.py 增加安全区规则，越界即失败"
+   "proposal": "stress.py 增加安全区规则，越界即失败",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "M02",
@@ -1673,7 +2001,9 @@
    "status": "handled",
    "covered_by": "triple",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "M03",
@@ -1683,7 +2013,9 @@
    "status": "partial",
    "covered_by": "triple 只有图标",
    "priority": "P1",
-   "proposal": "follow_card：头像 + 账号 + 关注按钮按下"
+   "proposal": "follow_card：头像 + 账号 + 关注按钮按下",
+   "now": "done06",
+   "now_by": "triple"
   },
   {
    "id": "M04",
@@ -1693,7 +2025,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P0",
-   "proposal": "cover.py：从成片关键帧和标题生成三比例封面"
+   "proposal": "cover.py：从成片关键帧和标题生成三比例封面",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "M05",
@@ -1703,7 +2037,9 @@
    "status": "partial",
    "covered_by": "引擎支持这些比例，但场景只为横竖屏排过版",
    "priority": "P1",
-   "proposal": "各风格补 1:1 和 3:4 排版"
+   "proposal": "各风格补 1:1 和 3:4 排版",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "M06",
@@ -1713,7 +2049,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "meta.ai_label：自动加角标"
+   "proposal": "meta.ai_label：自动加角标",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "M07",
@@ -1723,7 +2061,9 @@
    "status": "partial",
    "covered_by": "只有 reading 和 punch 两种",
    "priority": "P2",
-   "proposal": "caption presets"
+   "proposal": "caption presets",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "M08",
@@ -1733,7 +2073,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "watermark_safe"
+   "proposal": "watermark_safe",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "M09",
@@ -1743,7 +2085,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "clip_style"
+   "proposal": "clip_style",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "N01",
@@ -1753,7 +2097,9 @@
    "status": "handled",
    "covered_by": "fit.py 区分中文和拉丁字宽",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "N02",
@@ -1763,7 +2109,9 @@
    "status": "partial",
    "covered_by": "思源黑体本身支持繁体；没测试过",
    "priority": "P2",
-   "proposal": "压力测试加繁体样例"
+   "proposal": "压力测试加繁体样例",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "N03",
@@ -1773,7 +2121,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "formula：构建时用 KaTeX 渲染成 SVG"
+   "proposal": "formula：构建时用 KaTeX 渲染成 SVG",
+   "now": "done06",
+   "now_by": "formula"
   },
   {
    "id": "N04",
@@ -1783,7 +2133,9 @@
    "status": "partial",
    "covered_by": "Unicode 下标能显示；没有上下标语法",
    "priority": "P2",
-   "proposal": "rich() 支持 ^上标^ 和 _下标_"
+   "proposal": "rich() 支持 ^上标^ 和 _下标_",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "N05",
@@ -1793,7 +2145,9 @@
    "status": "partial",
    "covered_by": "Chrome 用系统 emoji 字体；没测试过",
    "priority": "P2",
-   "proposal": "压力测试加 emoji"
+   "proposal": "压力测试加 emoji",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "N06",
@@ -1803,7 +2157,9 @@
    "status": "missing",
    "covered_by": "字体注册表没有日文和韩文字体",
    "priority": "P2",
-   "proposal": "fonts.json 加 Noto Sans JP/KR"
+   "proposal": "fonts.json 加 Noto Sans JP/KR",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "N07",
@@ -1813,7 +2169,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "见 A12"
+   "proposal": "见 A12",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "N08",
@@ -1823,7 +2181,9 @@
    "status": "handled",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "N09",
@@ -1833,7 +2193,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "rtl"
+   "proposal": "rtl",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "O01",
@@ -1843,7 +2205,9 @@
    "status": "handled",
    "covered_by": "words.json 和 \"@关键词\" 对时",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "O02",
@@ -1853,7 +2217,9 @@
    "status": "partial",
    "covered_by": "需要外部对齐工具，没有内置",
    "priority": "P0",
-   "proposal": "align 步骤：可选接入 Whisper 类对齐器，doctor 给出安装指引"
+   "proposal": "align 步骤：可选接入 Whisper 类对齐器，doctor 给出安装指引",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "O03",
@@ -1863,7 +2229,9 @@
    "status": "handled",
    "covered_by": "静音按字数估时",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "O04",
@@ -1873,7 +2241,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "可选降噪步骤（DeepFilterNet 等）"
+   "proposal": "可选降噪步骤（DeepFilterNet 等）",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "O05",
@@ -1883,7 +2253,9 @@
    "status": "partial",
    "covered_by": "music.py 有 bpm；不能从现成音乐里提节拍",
    "priority": "P1",
-   "proposal": "接入 hyperframes beats，镜头切换对齐节拍"
+   "proposal": "接入 hyperframes beats，镜头切换对齐节拍",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "O06",
@@ -1893,7 +2265,9 @@
    "status": "missing",
    "covered_by": "现在是固定音量",
    "priority": "P1",
-   "proposal": "ducking：按 words.json 自动压低音乐"
+   "proposal": "ducking：按 words.json 自动压低音乐",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "O07",
@@ -1903,7 +2277,9 @@
    "status": "handled",
    "covered_by": "sfx 角色，19 种合成音效",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "O08",
@@ -1913,7 +2289,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "takes 拼接"
+   "proposal": "takes 拼接",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "P01",
@@ -1923,7 +2301,9 @@
    "status": "handled",
    "covered_by": "fit.py 骨架、占位",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P02",
@@ -1933,7 +2313,9 @@
    "status": "handled",
    "covered_by": "media 洪流用纹理图集（G 在做）",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P03",
@@ -1943,7 +2325,9 @@
    "status": "handled",
    "covered_by": "fit.py 缩字号，最后才加省略号",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P04",
@@ -1953,7 +2337,9 @@
    "status": "handled",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P05",
@@ -1963,7 +2349,9 @@
    "status": "partial",
    "covered_by": "没测过；一个页面上几百个片段可能变慢",
    "priority": "P1",
-   "proposal": "按章节分段构建、分段渲染再拼接"
+   "proposal": "按章节分段构建、分段渲染再拼接",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "P06",
@@ -1973,7 +2361,9 @@
    "status": "partial",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "数字自动拆成多页"
+   "proposal": "数字自动拆成多页",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "P07",
@@ -1983,7 +2373,9 @@
    "status": "handled",
    "covered_by": "X.asset 报错并给出路径",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P08",
@@ -1993,7 +2385,9 @@
    "status": "handled",
    "covered_by": "fonts.py 回退并给出下载地址",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P09",
@@ -2003,7 +2397,9 @@
    "status": "handled",
    "covered_by": "mascot webm",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "P10",
@@ -2013,7 +2409,9 @@
    "status": "partial",
    "covered_by": "GSAP、d3 依赖 jsdelivr",
    "priority": "P1",
-   "proposal": "可选本地缓存（d3/topojson 可随包；GSAP 不入库）"
+   "proposal": "可选本地缓存（d3/topojson 可随包；GSAP 不入库）",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "Q01",
@@ -2023,7 +2421,9 @@
    "status": "handled",
    "covered_by": "marks circle",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "Q02",
@@ -2033,7 +2433,9 @@
    "status": "handled",
    "covered_by": "marks underline / highlight",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "Q03",
@@ -2043,7 +2445,9 @@
    "status": "handled",
    "covered_by": "marks arrow",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "Q04",
@@ -2053,7 +2457,9 @@
    "status": "partial",
    "covered_by": "hud 的 dim 只在 hud 里",
    "priority": "P0",
-   "proposal": "spotlight：任意元素或坐标的聚光灯标记"
+   "proposal": "spotlight：任意元素或坐标的聚光灯标记",
+   "now": "done06",
+   "now_by": "spotlight"
   },
   {
    "id": "Q05",
@@ -2063,7 +2469,9 @@
    "status": "handled",
    "covered_by": "hud_lock · hud 取景框",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "Q06",
@@ -2073,7 +2481,9 @@
    "status": "handled",
    "covered_by": "marks strike · press turn",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "Q07",
@@ -2083,7 +2493,9 @@
    "status": "partial",
    "covered_by": "portal、zoomin 能做；没有推到任意坐标的通用镜头",
    "priority": "P1",
-   "proposal": "zoom_to：按坐标或元素急推，带回弹"
+   "proposal": "zoom_to：按坐标或元素急推，带回弹",
+   "now": "done06",
+   "now_by": "portal"
   },
   {
    "id": "Q08",
@@ -2093,7 +2505,9 @@
    "status": "partial",
    "covered_by": "marks 是规整线条",
    "priority": "P2",
-   "proposal": "scribble"
+   "proposal": "scribble",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "Q09",
@@ -2103,7 +2517,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "scanline"
+   "proposal": "scanline",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "R01",
@@ -2113,7 +2529,9 @@
    "status": "partial",
    "covered_by": "cartoon · burst",
    "priority": "P1",
-   "proposal": "reaction_sticker 贴纸库"
+   "proposal": "reaction_sticker 贴纸库",
+   "now": "done06",
+   "now_by": "burst · cartoon"
   },
   {
    "id": "R02",
@@ -2123,7 +2541,9 @@
    "status": "partial",
    "covered_by": "flash、dip 转场",
    "priority": "P2",
-   "proposal": ""
+   "proposal": "",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "R03",
@@ -2133,7 +2553,9 @@
    "status": "handled",
    "covered_by": "press turn · impact",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "R04",
@@ -2143,7 +2565,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "combo"
+   "proposal": "combo",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "R05",
@@ -2153,7 +2577,9 @@
    "status": "handled",
    "covered_by": "impact",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "S01",
@@ -2163,7 +2589,9 @@
    "status": "partial",
    "covered_by": "press 的 shots() 在停顿时缓慢推进；aefx 效果入场后就静止",
    "priority": "P0",
-   "proposal": "idle 层：每个效果入场后自带呼吸动作（缓推、漂浮、光斑）"
+   "proposal": "idle 层：每个效果入场后自带呼吸动作（缓推、漂浮、光斑）",
+   "now": "done06",
+   "now_by": "弹性时长（pacing.py）"
   },
   {
    "id": "S02",
@@ -2173,7 +2601,9 @@
    "status": "partial",
    "covered_by": "字幕在超过 0.45 秒的空白处断页；画面没有对应",
    "priority": "P1",
-   "proposal": "按 words.json 的空白自动加微动作（镜头轻推、元素轻弹）"
+   "proposal": "按 words.json 的空白自动加微动作（镜头轻推、元素轻弹）",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S03",
@@ -2183,7 +2613,9 @@
    "status": "partial",
    "covered_by": "thesis、outro 会停住；没有专门的留白页",
    "priority": "P0",
-   "proposal": "breather：留白呼吸页（大字停住 + 环境微动 + 音乐抬起）"
+   "proposal": "breather：留白呼吸页（大字停住 + 环境微动 + 音乐抬起）",
+   "now": "done06",
+   "now_by": "breather"
   },
   {
    "id": "S04",
@@ -2193,7 +2625,9 @@
    "status": "partial",
    "covered_by": "doc shot、plate 能放；不会自动从素材里挑一段塞进空白",
    "priority": "P0",
-   "proposal": "interlude：按时长自动挑空镜、配音乐重音和章节小字"
+   "proposal": "interlude：按时长自动挑空镜、配音乐重音和章节小字",
+   "now": "done06",
+   "now_by": "interlude"
   },
   {
    "id": "S05",
@@ -2203,7 +2637,9 @@
    "status": "partial",
    "covered_by": "music.py 生成配乐；画面不知道这段没有人声",
    "priority": "P1",
-   "proposal": "music_only beat：画面按音乐节拍走"
+   "proposal": "music_only beat：画面按音乐节拍走",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S06",
@@ -2213,7 +2649,9 @@
    "status": "partial",
    "covered_by": "music.py 能在指定时间加重音；画面切换不会自动对齐节拍",
    "priority": "P0",
-   "proposal": "beat_cut：读节拍（hyperframes beats），在重拍上切画面或冲击"
+   "proposal": "beat_cut：读节拍（hyperframes beats），在重拍上切画面或冲击",
+   "now": "done06",
+   "now_by": "beat_cut"
   },
   {
    "id": "S07",
@@ -2223,7 +2661,9 @@
    "status": "partial",
    "covered_by": "章节标记会用风格的招牌转场；没有 2–3 秒的喘息页",
    "priority": "P1",
-   "proposal": "chapter_breather：章节小结 + 下一章标题 + 进度"
+   "proposal": "chapter_breather：章节小结 + 下一章标题 + 进度",
+   "now": "done06",
+   "now_by": "chapter_breather"
   },
   {
    "id": "S08",
@@ -2233,7 +2673,9 @@
    "status": "missing",
    "covered_by": "配音总从第 0 秒开始",
    "priority": "P0",
-   "proposal": "meta.lead：配音整体后移，开场画面独立编排"
+   "proposal": "meta.lead：配音整体后移，开场画面独立编排",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "S09",
@@ -2243,7 +2685,9 @@
    "status": "handled",
    "covered_by": "meta.tail 控制尾长，outro 停住",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "S10",
@@ -2253,7 +2697,9 @@
    "status": "partial",
    "covered_by": "可以用 \"@关键词\" 控制揭晓时刻；没有悬停的动画",
    "priority": "P0",
-   "proposal": "suspense：鼓点渐强 + 镜头慢推 + 遮挡物，然后揭晓"
+   "proposal": "suspense：鼓点渐强 + 镜头慢推 + 遮挡物，然后揭晓",
+   "now": "done06",
+   "now_by": "suspense"
   },
   {
    "id": "S11",
@@ -2263,7 +2709,9 @@
    "status": "partial",
    "covered_by": "cartoon、burst",
    "priority": "P1",
-   "proposal": "reaction 好笑款：问号、汗、静止 + 音效"
+   "proposal": "reaction 好笑款：问号、汗、静止 + 音效",
+   "now": "done06",
+   "now_by": "burst · cartoon · reaction"
   },
   {
    "id": "S12",
@@ -2273,7 +2721,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "reaction 沉重款：去色、慢推、留白、低音"
+   "proposal": "reaction 沉重款：去色、慢推、留白、低音",
+   "now": "done06",
+   "now_by": "reaction"
   },
   {
    "id": "S13",
@@ -2283,7 +2733,9 @@
    "status": "handled",
    "covered_by": "impact 震动、press hook",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "S14",
@@ -2293,7 +2745,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "loading：进度条、转圈、打字点，时长可伸缩"
+   "proposal": "loading：进度条、转圈、打字点，时长可伸缩",
+   "now": "done06",
+   "now_by": "loading"
   },
   {
    "id": "S15",
@@ -2303,7 +2757,9 @@
    "status": "partial",
    "covered_by": "有颗粒和缓推；没有可循环的思考画面",
    "priority": "P2",
-   "proposal": "think_loop：问号漂浮、光点循环"
+   "proposal": "think_loop：问号漂浮、光点循环",
+   "now": "done06",
+   "now_by": "think_loop"
   },
   {
    "id": "S16",
@@ -2313,7 +2769,9 @@
    "status": "partial",
    "covered_by": "press 的镜头会继续推进；aefx 效果做完就静止",
    "priority": "P0",
-   "proposal": "弹性时长：效果动画按拍长伸缩，太长时自动加第二段动作"
+   "proposal": "弹性时长：效果动画按拍长伸缩，太长时自动加第二段动作",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "S17",
@@ -2323,7 +2781,9 @@
    "status": "partial",
    "covered_by": "入场还没做完就切了",
    "priority": "P0",
-   "proposal": "弹性时长：拍太短时自动换成快速版入场"
+   "proposal": "弹性时长：拍太短时自动换成快速版入场",
+   "now": "done06",
+   "now_by": "弹性时长（短拍加快）"
   },
   {
    "id": "S18",
@@ -2333,7 +2793,9 @@
    "status": "partial",
    "covered_by": "动效节奏固定",
    "priority": "P1",
-   "proposal": "按语速自动调 stagger 和入场时长"
+   "proposal": "按语速自动调 stagger 和入场时长",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S19",
@@ -2343,7 +2805,9 @@
    "status": "partial",
    "covered_by": "画面会显得空",
    "priority": "P1",
-   "proposal": "慢速时增加镜头运动和氛围层"
+   "proposal": "慢速时增加镜头运动和氛围层",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S20",
@@ -2353,7 +2817,9 @@
    "status": "partial",
    "covered_by": "字幕会断开；画面不会在停顿处做文章",
    "priority": "P1",
-   "proposal": "停顿处插悬停或遮挡，下半句再落"
+   "proposal": "停顿处插悬停或遮挡，下半句再落",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S21",
@@ -2363,7 +2829,9 @@
    "status": "partial",
    "covered_by": "拍长跟口播走；画面内容不会补",
    "priority": "P1",
-   "proposal": "补足层：自动给长拍补数据回顾或关键词卡"
+   "proposal": "补足层：自动给长拍补数据回顾或关键词卡",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S22",
@@ -2373,7 +2841,9 @@
    "status": "missing",
    "covered_by": "只有一条配音轨，字幕一种样式",
    "priority": "P1",
-   "proposal": "speakers：每个说话人一种字幕颜色和名字条，对话画面自动左右分"
+   "proposal": "speakers：每个说话人一种字幕颜色和名字条，对话画面自动左右分",
+   "now": "done06",
+   "now_by": "0.6 任务包"
   },
   {
    "id": "S23",
@@ -2383,7 +2853,9 @@
    "status": "partial",
    "covered_by": "marks strike 能划掉；字幕会把两句都显示",
    "priority": "P2",
-   "proposal": "correction：错的划掉、对的落下，字幕同步"
+   "proposal": "correction：错的划掉、对的落下，字幕同步",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S24",
@@ -2393,7 +2865,9 @@
    "status": "partial",
    "covered_by": "sfx 角色可以在指定时间放",
    "priority": "P2",
-   "proposal": "sound_moment：音效和画面冲击绑定"
+   "proposal": "sound_moment：音效和画面冲击绑定",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S25",
@@ -2403,7 +2877,9 @@
    "status": "partial",
    "covered_by": "aefx 每拍可换 theme；风格级别的情绪不会变",
    "priority": "P1",
-   "proposal": "mood 参数：同一风格的明暗两套色板和音乐切换"
+   "proposal": "mood 参数：同一风格的明暗两套色板和音乐切换",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "S26",
@@ -2413,7 +2889,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "见 D07、D08"
+   "proposal": "见 D07、D08",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "S27",
@@ -2423,7 +2901,9 @@
    "status": "handled",
    "covered_by": "impact、press turn、poster thesis",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "T01",
@@ -2433,7 +2913,9 @@
    "status": "partial",
    "covered_by": "缺通用步骤图（见 K01）",
    "priority": "P0",
-   "proposal": "见 WP1 steps"
+   "proposal": "见 WP1 steps",
+   "now": "done06",
+   "now_by": "steps"
   },
   {
    "id": "T02",
@@ -2443,7 +2925,9 @@
    "status": "partial",
    "covered_by": "左右对比有；参数表和优缺点没有",
    "priority": "P1",
-   "proposal": "见 B12 table、J03 pros_cons"
+   "proposal": "见 B12 table、J03 pros_cons",
+   "now": "done06",
+   "now_by": "pros_cons · table"
   },
   {
    "id": "T03",
@@ -2453,7 +2937,9 @@
    "status": "handled",
    "covered_by": "cite_*（H 在做）· 数据效果 · 页脚来源",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "T04",
@@ -2463,7 +2949,9 @@
    "status": "partial",
    "covered_by": "cartoon、burst；没有梗图舞台",
    "priority": "P1",
-   "proposal": "见 C13 meme_stage、S11 reaction"
+   "proposal": "见 C13 meme_stage、S11 reaction",
+   "now": "done06",
+   "now_by": "burst · cartoon · reaction"
   },
   {
    "id": "T05",
@@ -2473,7 +2961,9 @@
    "status": "missing",
    "covered_by": "没有慢节奏、去色、留白的情绪模板",
    "priority": "P1",
-   "proposal": "见 S12、S03"
+   "proposal": "见 S12、S03",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "T06",
@@ -2483,7 +2973,9 @@
    "status": "handled",
    "covered_by": "页脚来源 · cite_stack（H 在做）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "T07",
@@ -2493,7 +2985,9 @@
    "status": "handled",
    "covered_by": "thesis、poster thesis",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "T08",
@@ -2503,7 +2997,9 @@
    "status": "partial",
    "covered_by": "triple、outro；没有购物车和优惠券",
    "priority": "P1",
-   "proposal": "见 U08 带货"
+   "proposal": "见 U08 带货",
+   "now": "done06",
+   "now_by": "triple"
   },
   {
    "id": "T09",
@@ -2513,7 +3009,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "share_card：导出单帧金句图"
+   "proposal": "share_card：导出单帧金句图",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "T10",
@@ -2523,7 +3021,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "poll_card：投票选项卡"
+   "proposal": "poll_card：投票选项卡",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U01",
@@ -2533,7 +3033,9 @@
    "status": "handled",
    "covered_by": "press · atlas · poster · 各种数据效果",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "U02",
@@ -2543,7 +3045,9 @@
    "status": "handled",
    "covered_by": "press（示例 mixue）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "U03",
@@ -2553,7 +3057,9 @@
    "status": "missing",
    "covered_by": "没有评分卡、星级、参数表",
    "priority": "P1",
-   "proposal": "review_card：评分条、星级、优缺点、结论徽章"
+   "proposal": "review_card：评分条、星级、优缺点、结论徽章",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U04",
@@ -2563,7 +3069,9 @@
    "status": "partial",
    "covered_by": "screen 仿界面；缺步骤图和真实录屏",
    "priority": "P0",
-   "proposal": "见 WP1 steps、WP3 screencast"
+   "proposal": "见 WP1 steps、WP3 screencast",
+   "now": "done06",
+   "now_by": "screencast · steps"
   },
   {
    "id": "U05",
@@ -2573,7 +3081,9 @@
    "status": "missing",
    "covered_by": "没有快讯条、滚动字幕、时间戳",
    "priority": "P1",
-   "proposal": "news_flash：快讯横幅、滚动字幕、发布时间"
+   "proposal": "news_flash：快讯横幅、滚动字幕、发布时间",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U06",
@@ -2583,7 +3093,9 @@
    "status": "handled",
    "covered_by": "poster（示例 poster）",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "U07",
@@ -2593,7 +3105,9 @@
    "status": "partial",
    "covered_by": "doc 实拍纪录；缺人物卡和情绪段落",
    "priority": "P1",
-   "proposal": "见 I01、S12"
+   "proposal": "见 I01、S12",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "U08",
@@ -2603,7 +3117,9 @@
    "status": "missing",
    "covered_by": "没有划价、优惠券、倒计时、购物车",
    "priority": "P1",
-   "proposal": "deal_card：原价划掉、现价砸下、优惠券、限时倒计时"
+   "proposal": "deal_card：原价划掉、现价砸下、优惠券、限时倒计时",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U09",
@@ -2613,7 +3129,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 S22 speakers、I10"
+   "proposal": "见 S22 speakers、I10",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U10",
@@ -2623,7 +3141,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 F11 audio_quote"
+   "proposal": "见 F11 audio_quote",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "U11",
@@ -2633,7 +3153,9 @@
    "status": "partial",
    "covered_by": "能放视频，但没有真人口播的字幕和贴纸包装",
    "priority": "P1",
-   "proposal": "talking_head：人像视频 + 关键词贴纸 + 画中画切换"
+   "proposal": "talking_head：人像视频 + 关键词贴纸 + 画中画切换",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "U12",
@@ -2643,7 +3165,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "见 J04 ranking"
+   "proposal": "见 J04 ranking",
+   "now": "done06",
+   "now_by": "ranking"
   },
   {
    "id": "U13",
@@ -2653,7 +3177,9 @@
    "status": "handled",
    "covered_by": "atlas（示例 atlas）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "V01",
@@ -2663,7 +3189,9 @@
    "status": "handled",
    "covered_by": "quick 一键出片；press / poster 全矢量",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "V02",
@@ -2673,7 +3201,9 @@
    "status": "handled",
    "covered_by": "media 按数量编排（G 在做）",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "V03",
@@ -2683,7 +3213,9 @@
    "status": "partial",
    "covered_by": "需要外部转写和对齐（见 O02）",
    "priority": "P0",
-   "proposal": "见 WP6 align"
+   "proposal": "见 WP6 align",
+   "now": "done06",
+   "now_by": "scripts/align.py"
   },
   {
    "id": "V04",
@@ -2693,7 +3225,9 @@
    "status": "partial",
    "covered_by": "cite_pdf 能引用某一页（H 在做）；不会从 PDF 自动出分镜",
    "priority": "P1",
-   "proposal": "pdf_brief：抽取要点、页码和表格，生成初版 video.json"
+   "proposal": "pdf_brief：抽取要点、页码和表格，生成初版 video.json",
+   "now": "done06",
+   "now_by": "cite_pdf"
   },
   {
    "id": "V05",
@@ -2703,7 +3237,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P1",
-   "proposal": "url_brief：构建时截网页长图 + 抽要点，生成 scroll_shot 和 cite_article"
+   "proposal": "url_brief：构建时截网页长图 + 抽要点，生成 scroll_shot 和 cite_article",
+   "now": "done06",
+   "now_by": "cite_article · scroll_shot"
   },
   {
    "id": "V06",
@@ -2713,7 +3249,9 @@
    "status": "missing",
    "covered_by": "数据效果要手写 JSON",
    "priority": "P0",
-   "proposal": "csv 输入：bars、line、table、bar_race 直接读 CSV 列"
+   "proposal": "csv 输入：bars、line、table、bar_race 直接读 CSV 列",
+   "now": "done06",
+   "now_by": "bar_race · bars · table"
   },
   {
    "id": "V07",
@@ -2723,7 +3261,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "cut_list：按逐字稿挑金句段落，生成精剪 video.json"
+   "proposal": "cut_list：按逐字稿挑金句段落，生成精剪 video.json",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "V08",
@@ -2733,7 +3273,9 @@
    "status": "partial",
    "covered_by": "风格和页眉页脚统一；没有期数、片头和系列封面",
    "priority": "P1",
-   "proposal": "series 元数据：期数、片头、封面模板"
+   "proposal": "series 元数据：期数、片头、封面模板",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "V09",
@@ -2743,7 +3285,9 @@
    "status": "partial",
    "covered_by": "可以改风格 tokens；没有一键品牌套件",
    "priority": "P1",
-   "proposal": "brand.json：颜色、字体、logo 一次替换所有风格"
+   "proposal": "brand.json：颜色、字体、logo 一次替换所有风格",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "V10",
@@ -2753,7 +3297,9 @@
    "status": "handled",
    "covered_by": "两个画幅各自排版，一条命令出两版",
    "priority": "P0",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   },
   {
    "id": "V11",
@@ -2763,7 +3309,9 @@
    "status": "partial",
    "covered_by": "有 SRT 字幕和 HyperFrames 工程；没有剪映草稿",
    "priority": "P2",
-   "proposal": "导出剪映草稿或 FCPXML"
+   "proposal": "导出剪映草稿或 FCPXML",
+   "now": "partial",
+   "now_by": ""
   },
   {
    "id": "V12",
@@ -2773,7 +3321,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "ref_pacing：测参考片的剪辑密度，映射成拍长"
+   "proposal": "ref_pacing：测参考片的剪辑密度，映射成拍长",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "V13",
@@ -2783,7 +3333,9 @@
    "status": "missing",
    "covered_by": "—",
    "priority": "P2",
-   "proposal": "同一份 video.json 多语言字段"
+   "proposal": "同一份 video.json 多语言字段",
+   "now": "missing",
+   "now_by": ""
   },
   {
    "id": "V14",
@@ -2793,7 +3345,9 @@
    "status": "handled",
    "covered_by": "只改 video.json 对应 beat，重新渲染",
    "priority": "P1",
-   "proposal": ""
+   "proposal": "",
+   "now": "handled",
+   "now_by": ""
   }
  ]
 }
