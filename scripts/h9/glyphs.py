@@ -8,7 +8,7 @@ from pathlib import Path
 
 def outlines(font_path, text, axes=None):
     from fontTools.ttLib import TTFont
-    from fontTools.pens.recordingPen import RecordingPen
+    from fontTools.pens.recordingPen import DecomposingRecordingPen
     f = TTFont(str(font_path))
     if axes and "fvar" in f:
         from fontTools.varLib import instancer
@@ -20,7 +20,7 @@ def outlines(font_path, text, axes=None):
     for ch in sorted(set(text)):
         if ch.isspace() or ord(ch) not in cmap: continue
         name = cmap[ord(ch)]
-        pen = RecordingPen()
+        pen = DecomposingRecordingPen(gs)   # composite glyphs (common in calligraphy fonts) become plain contours
         gs[name].draw(pen)
         cmds = []
         for op, pts in pen.value:

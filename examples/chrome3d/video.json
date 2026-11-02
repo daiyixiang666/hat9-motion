@@ -1,0 +1,41 @@
+{
+ "meta": {
+  "title": "英伟达：卖铲子的人",
+  "aspect": "16:9",
+  "style": "chrome3d",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.18,
+  "mascot": "../mixue/assets/video/shiba.webm",
+  "tail": 1.6,
+  "tag": "NVDA · 数据中心",
+  "ticker": ["NVDA", "数据中心 FY26 $193.7B", "同比 +68%", "GAAP 毛利率 75.0%", "市值首破 $5T", "CUDA 开发者 ≈ 600 万"]
+ },
+ "beats": [
+  {"scene": "hero", "t": 0, "value": "$15.0B", "at": "@一百五十亿", "deco": "ring",
+   "k": "FY2023 · DATA CENTER REVENUE", "kz": "四年前 · 数据中心年收入", "chip": "150 亿美元",
+   "src": "NVIDIA Q4 FY2023 财报（8-K）：FY2023 数据中心收入 150.1 亿美元"},
+  {"scene": "bars", "t": "@去年", "at": "@这个数字", "at_v": "@一千九百",
+   "items": [["FY23", 15.0], ["FY24", 47.5], ["FY25", 115.2], ["FY26", 193.7]], "pre": "$", "suf": "B",
+   "k": "DATA CENTER · FY23 → FY26 · $B", "kz": "去年 · 1937 亿美元", "pill": "FY26 +68%",
+   "src": "NVIDIA 历年第四季度财报（8-K）：数据中心全年收入，单位十亿美元"},
+  {"scene": "multiple", "t": "@四年，涨", "value": "12.9×", "at": "@十三倍",
+   "k": "FY23 → FY26", "kz": "四年 · 将近 13 倍", "eq": "193.7 ÷ 15.0 = 12.9"},
+  {"scene": "coins", "t": "@最近一个季度", "n": 100, "hit": 75, "value": "75%", "at_show": "@每卖", "at_hit": "@七十五",
+   "k": "Q2 FY27 · GAAP GROSS MARGIN", "kz": "最近一季 · 毛利率 75.0%", "legend": ["毛利 75", "成本 25"],
+   "src": "NVIDIA Q2 FY2027 财报（2026-08-26，8-K）：GAAP 毛利率 75.0%"},
+  {"scene": "hero", "t": "@二零二五", "value": "$5T", "at": "@五万亿", "at_enter": "@它成了", "deco": "blob",
+   "sticker": ["全球第一", "FIRST EVER"], "at_sticker": "@第一家", "date": "2025.10.29",
+   "k": "MARKET CAP · 2025.10.29", "kz": "全球第一家 · 市值 5 万亿美元",
+   "src": "Reuters / Fox Business：2025-10-29 英伟达收盘市值首破 5 万亿美元"},
+  {"scene": "moat", "t": "@但它", "chip": "GPU", "word": "CUDA", "at_moat": "@护城河", "at_chip": "@不是芯片", "at_word": "@是CUDA",
+   "k": "THE MOAT", "kz": "护城河 · 不是芯片"},
+  {"scene": "swarm", "t": "@大约", "value": "600万", "count": 6000000, "at": "@六百万", "at_code": "@写代码", "label": "CUDA DEVELOPERS",
+   "k": "CUDA DEVELOPERS", "kz": "约 600 万开发者",
+   "src": "NVIDIA GTC 2025 主题演讲：CUDA 开发者约 600 万"},
+  {"scene": "shovel", "t": "@淘金热", "lines": ["卖铲子的人", "先发财"], "at_rain": "@淘金热", "at_title": "@卖铲子", "at_line2": "@先发财",
+   "k": "PICKS & SHOVELS", "kz": "淘金热法则"},
+  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子"}
+ ]
+}

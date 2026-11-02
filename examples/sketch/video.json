@@ -1,0 +1,102 @@
+{
+  "meta": {
+    "title": "Costco 真正卖的是什么",
+    "aspect": "16:9",
+    "style": "sketch",
+    "voice": "assets/audio/voice.mp3",
+    "words": "assets/audio/words.json",
+    "music": "assets/audio/music.mp3",
+    "music_volume": 0.18,
+    "mascot": "../mixue/assets/video/shiba.webm",
+    "tail": 1.8,
+    "section": "白板课",
+    "src": "Costco 2024 财年年报（Form 10-K，截至 2024.9.1）"
+  },
+  "beats": [
+    {
+      "scene": "hook",
+      "t": 0,
+      "at_num": "@两千",
+      "kicker": "Costco · 2024 财年 净销售额",
+      "value": "$2,496",
+      "unit": "亿美元",
+      "note": "= 249,625 百万美元",
+      "icon": "cart"
+    },
+    {
+      "scene": "bar",
+      "t": "@可它",
+      "at_pct": "@百分之十一",
+      "title": "每卖 100 美元的货",
+      "pct": 10.9,
+      "big": "10.9%",
+      "labels": [
+        "商品成本 89.1",
+        "毛利"
+      ],
+      "note": "毛利率 ≈（2,496.3 − 2,223.6）÷ 2,496.3"
+    },
+    {
+      "scene": "question",
+      "t": "@一年",
+      "at_q": "@钱主要",
+      "head": "一年净利润 73.7 亿美元",
+      "options": "卖货？|会员费？"
+    },
+    {
+      "scene": "ratio",
+      "t": "@答案",
+      "at_part": "@四十八",
+      "at_frac": "@三分之二",
+      "total": 73.67,
+      "part": 48.28,
+      "total_label": "净利润 73.7 亿美元",
+      "part_label": "会员费收入 48.3 亿美元",
+      "frac_label": "65.5%",
+      "frac_note": "≈ 三分之二",
+      "icon": "card"
+    },
+    {
+      "scene": "tag",
+      "t": "@二零二四年",
+      "at_new": "@六十五",
+      "old": "$60",
+      "new": "$65",
+      "date": "2024.9.1 起",
+      "card_text": "MEMBER",
+      "sub": "美国 · 加拿大 基础会员年费；高级会员 $120 → $130",
+      "src": "Costco 会员年费调整公告（2024 年 9 月 1 日生效）"
+    },
+    {
+      "scene": "dots",
+      "t": "@美国",
+      "at_pct": "@九十二",
+      "pct": 92.9,
+      "big": "92.9%",
+      "label": "美国 + 加拿大 续费率 · 2024 财年末"
+    },
+    {
+      "scene": "loop",
+      "t": "@东西",
+      "title": "越便宜，越留得住",
+      "stations": "东西更便宜|会员舍不得走|会员费稳定进账|敢把毛利压低",
+      "hl": "1"
+    },
+    {
+      "scene": "thesis",
+      "t": "@所以",
+      "at_no": "@商品",
+      "at_yes": "@会员卡",
+      "pre": "所以 Costco 真正卖的",
+      "no": "商品",
+      "yes": "会员卡",
+      "host": true
+    },
+    {
+      "scene": "outro",
+      "t": "@这里",
+      "title": "第九顶帽子",
+      "sub": "商业拆解 · 白板课"
+    }
+  ]
+}

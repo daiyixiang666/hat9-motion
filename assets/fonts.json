@@ -4,126 +4,284 @@
   "weight": "100 900",
   "fallback": "'PingFang SC','Microsoft YaHei',sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/notosanssc"
+  "url": "https://github.com/google/fonts/tree/main/ofl/notosanssc",
+  "cat": "黑体",
+  "role": "正文 / 标题黑体（思源黑体，可变 100–900）",
+  "mood": [
+   "财经",
+   "科技",
+   "通用"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "noto-serif-sc": {
   "file": "NotoSerifSC-VF.ttf",
   "weight": "200 900",
   "fallback": "'Songti SC','SimSun',serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/notoserifsc"
+  "url": "https://github.com/google/fonts/tree/main/ofl/notoserifsc",
+  "cat": "宋体",
+  "role": "标题 / 引语宋体（思源宋体，可变 200–900）",
+  "mood": [
+   "杂志",
+   "电影",
+   "国风",
+   "财经"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "lxgw-wenkai": {
   "file": "LXGWWenKai-Medium.ttf",
   "weight": "500",
   "fallback": "'Kaiti SC',serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/lxgw/LxgwWenKai"
+  "url": "https://github.com/lxgw/LxgwWenKai",
+  "cat": "楷体与手写",
+  "role": "文楷（楷书骨架的正文字体）",
+  "mood": [
+   "温暖",
+   "国风",
+   "笔记"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "smiley-sans": {
   "file": "SmileySans-Oblique.ttf",
   "weight": "400",
   "fallback": "sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/atelier-anchor/smiley-sans"
+  "url": "https://github.com/atelier-anchor/smiley-sans",
+  "cat": "标题展示",
+  "role": "得意黑（斜体标题）",
+  "mood": [
+   "潮流",
+   "科技",
+   "年轻"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "zcool-kuaile": {
   "file": "ZCOOLKuaiLe-Regular.ttf",
   "weight": "400",
   "fallback": "sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolkuaile"
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolkuaile",
+  "cat": "圆体与可爱",
+  "role": "站酷快乐体（圆润可爱）",
+  "mood": [
+   "可爱",
+   "童趣",
+   "轻松"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "zcool-xiaowei": {
   "file": "ZCOOLXiaoWei-Regular.ttf",
   "weight": "400",
   "fallback": "serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolxiaowei"
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolxiaowei",
+  "cat": "宋体",
+  "role": "站酷小薇（文艺宋体标题）",
+  "mood": [
+   "文艺",
+   "杂志",
+   "复古"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "zcool-qingke": {
   "file": "ZCOOLQingKeHuangYou-Regular.ttf",
   "weight": "400",
   "fallback": "sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolqingkehuangyou"
+  "url": "https://github.com/google/fonts/tree/main/ofl/zcoolqingkehuangyou",
+  "cat": "圆体与可爱",
+  "role": "站酷庆科黄油体（粗圆标题）",
+  "mood": [
+   "可爱",
+   "潮流",
+   "游戏"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "ma-shan-zheng": {
   "file": "MaShanZheng-Regular.ttf",
   "weight": "400",
   "fallback": "'Kaiti SC',serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/mashanzheng"
+  "url": "https://github.com/google/fonts/tree/main/ofl/mashanzheng",
+  "cat": "毛笔",
+  "role": "马善政楷书（毛笔楷）",
+  "mood": [
+   "国风",
+   "书法"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "long-cang": {
   "file": "LongCang-Regular.ttf",
   "weight": "400",
   "fallback": "cursive",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/longcang"
+  "url": "https://github.com/google/fonts/tree/main/ofl/longcang",
+  "cat": "楷体与手写",
+  "role": "龙藏体（行楷手写）",
+  "mood": [
+   "手写",
+   "笔记",
+   "温暖"
+  ],
+  "script": "sc",
+  "redistribute": true
  },
  "inter": {
   "file": "Inter[opsz,wght].ttf",
   "weight": "100 900",
   "fallback": "'Helvetica Neue',Arial,sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/rsms/inter"
+  "url": "https://github.com/rsms/inter",
+  "cat": "英文无衬线",
+  "role": "Inter（界面无衬线，可变）",
+  "mood": [
+   "科技",
+   "通用",
+   "财经"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "space-grotesk": {
   "file": "SpaceGrotesk[wght].ttf",
   "weight": "300 700",
   "fallback": "sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/floriankarsten/space-grotesk"
+  "url": "https://github.com/floriankarsten/space-grotesk",
+  "cat": "英文无衬线",
+  "role": "Space Grotesk（几何怪趣无衬线）",
+  "mood": [
+   "科技",
+   "潮流"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "archivo": {
   "file": "Archivo[wdth,wght].ttf",
   "weight": "100 900",
   "fallback": "sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/archivo"
+  "url": "https://github.com/google/fonts/tree/main/ofl/archivo",
+  "cat": "英文无衬线",
+  "role": "Archivo（可变宽度，窄体数字很好用）",
+  "mood": [
+   "财经",
+   "杂志",
+   "数据"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "barlow-cond": {
   "file": "BarlowCondensed-Bold.ttf",
   "weight": "700",
   "fallback": "'Arial Narrow',sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"
+  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed",
+  "cat": "英文无衬线",
+  "role": "Barlow Condensed Bold（窄体数字）",
+  "mood": [
+   "数据",
+   "运动",
+   "科技"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "barlow-cond-black": {
   "file": "BarlowCondensed-Black.ttf",
   "weight": "900",
   "fallback": "'Arial Narrow',sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed"
+  "url": "https://github.com/google/fonts/tree/main/ofl/barlowcondensed",
+  "cat": "英文无衬线",
+  "role": "Barlow Condensed Black（特粗窄体）",
+  "mood": [
+   "数据",
+   "冲击"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "oswald": {
   "file": "Oswald[wght].ttf",
   "weight": "200 700",
   "fallback": "'Arial Narrow',sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/oswald"
+  "url": "https://github.com/google/fonts/tree/main/ofl/oswald",
+  "cat": "英文展示",
+  "role": "Oswald（窄体标题）",
+  "mood": [
+   "新闻",
+   "冲击"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "anton": {
   "file": "Anton-Regular.ttf",
   "weight": "400",
   "fallback": "Impact,sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/anton"
+  "url": "https://github.com/google/fonts/tree/main/ofl/anton",
+  "cat": "英文展示",
+  "role": "Anton（特粗窄体海报字）",
+  "mood": [
+   "冲击",
+   "海报",
+   "运动"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "bebas": {
   "file": "BebasNeue-Regular.ttf",
   "weight": "400",
   "fallback": "Impact,sans-serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/bebasneue"
+  "url": "https://github.com/google/fonts/tree/main/ofl/bebasneue",
+  "cat": "英文展示",
+  "role": "Bebas Neue（全大写海报字）",
+  "mood": [
+   "电影",
+   "海报"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "playfair": {
   "file": "PlayfairDisplay[wght].ttf",
   "weight": "400 900",
   "fallback": "Georgia,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"
+  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay",
+  "cat": "英文衬线",
+  "role": "Playfair Display（高反差衬线）",
+  "mood": [
+   "杂志",
+   "奢华",
+   "电影"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "playfair-italic": {
   "file": "PlayfairDisplay-Italic[wght].ttf",
@@ -131,21 +289,47 @@
   "style": "italic",
   "fallback": "Georgia,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay"
+  "url": "https://github.com/google/fonts/tree/main/ofl/playfairdisplay",
+  "cat": "英文衬线",
+  "role": "Playfair Display Italic",
+  "mood": [
+   "杂志",
+   "奢华"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "fraunces": {
   "file": "Fraunces[SOFT,WONK,opsz,wght].ttf",
   "weight": "100 900",
   "fallback": "Georgia,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/undercasetype/Fraunces"
+  "url": "https://github.com/undercasetype/Fraunces",
+  "cat": "英文衬线",
+  "role": "Fraunces（软衬线，可变 SOFT/WONK）",
+  "mood": [
+   "温暖",
+   "复古",
+   "杂志"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "eb-garamond": {
   "file": "EBGaramond[wght].ttf",
   "weight": "400 800",
   "fallback": "Garamond,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"
+  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond",
+  "cat": "英文衬线",
+  "role": "EB Garamond（古典书籍衬线）",
+  "mood": [
+   "书卷",
+   "复古",
+   "国风"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "eb-garamond-italic": {
   "file": "EBGaramond-Italic[wght].ttf",
@@ -153,77 +337,169 @@
   "style": "italic",
   "fallback": "Garamond,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond"
+  "url": "https://github.com/google/fonts/tree/main/ofl/ebgaramond",
+  "cat": "英文衬线",
+  "role": "EB Garamond Italic",
+  "mood": [
+   "书卷",
+   "复古"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "dm-serif": {
   "file": "DMSerifDisplay-Regular.ttf",
   "weight": "400",
   "fallback": "Georgia,serif",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/dmserifdisplay"
+  "url": "https://github.com/google/fonts/tree/main/ofl/dmserifdisplay",
+  "cat": "英文衬线",
+  "role": "DM Serif Display（粗衬线标题）",
+  "mood": [
+   "杂志",
+   "电影"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "jetbrains-mono": {
   "file": "JetBrainsMono[wght].ttf",
   "weight": "100 800",
   "fallback": "Menlo,Consolas,monospace",
   "license": "OFL-1.1",
-  "url": "https://github.com/JetBrains/JetBrainsMono"
+  "url": "https://github.com/JetBrains/JetBrainsMono",
+  "cat": "等宽与像素",
+  "role": "JetBrains Mono（代码等宽，可变）",
+  "mood": [
+   "科技",
+   "代码",
+   "数据"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "ibm-plex-mono": {
   "file": "IBMPlexMono-Medium.ttf",
   "weight": "500",
   "fallback": "Menlo,monospace",
   "license": "OFL-1.1",
-  "url": "https://github.com/IBM/plex"
+  "url": "https://github.com/IBM/plex",
+  "cat": "等宽与像素",
+  "role": "IBM Plex Mono（等宽）",
+  "mood": [
+   "科技",
+   "报告"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "space-mono": {
   "file": "SpaceMono-Regular.ttf",
   "weight": "400",
   "fallback": "monospace",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/spacemono"
+  "url": "https://github.com/google/fonts/tree/main/ofl/spacemono",
+  "cat": "等宽与像素",
+  "role": "Space Mono（复古等宽）",
+  "mood": [
+   "复古",
+   "科技"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "special-elite": {
   "file": "SpecialElite-Regular.ttf",
   "weight": "400",
   "fallback": "'Courier New',monospace",
   "license": "Apache-2.0",
-  "url": "https://github.com/google/fonts/tree/main/apache/specialelite"
+  "url": "https://github.com/google/fonts/tree/main/apache/specialelite",
+  "cat": "等宽与像素",
+  "role": "Special Elite（打字机）",
+  "mood": [
+   "复古",
+   "档案",
+   "调查"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "courier-prime": {
   "file": "CourierPrime-Regular.ttf",
   "weight": "400",
   "fallback": "'Courier New',monospace",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/courierprime"
+  "url": "https://github.com/google/fonts/tree/main/ofl/courierprime",
+  "cat": "等宽与像素",
+  "role": "Courier Prime（打字机等宽）",
+  "mood": [
+   "档案",
+   "剧本"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "vt323": {
   "file": "VT323-Regular.ttf",
   "weight": "400",
   "fallback": "monospace",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/vt323"
+  "url": "https://github.com/google/fonts/tree/main/ofl/vt323",
+  "cat": "等宽与像素",
+  "role": "VT323（终端点阵）",
+  "mood": [
+   "复古",
+   "游戏",
+   "终端"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "permanent-marker": {
   "file": "PermanentMarker-Regular.ttf",
   "weight": "400",
   "fallback": "cursive",
   "license": "Apache-2.0",
-  "url": "https://github.com/google/fonts/tree/main/apache/permanentmarker"
+  "url": "https://github.com/google/fonts/tree/main/apache/permanentmarker",
+  "cat": "英文展示",
+  "role": "Permanent Marker（马克笔手写）",
+  "mood": [
+   "手绘",
+   "街头",
+   "拼贴"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "caveat": {
   "file": "Caveat[wght].ttf",
   "weight": "400 700",
   "fallback": "cursive",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/caveat"
+  "url": "https://github.com/google/fonts/tree/main/ofl/caveat",
+  "cat": "英文展示",
+  "role": "Caveat（自然手写，可变）",
+  "mood": [
+   "手绘",
+   "笔记"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "kalam": {
   "file": "Kalam-Bold.ttf",
   "weight": "700",
   "fallback": "cursive",
   "license": "OFL-1.1",
-  "url": "https://github.com/google/fonts/tree/main/ofl/kalam"
+  "url": "https://github.com/google/fonts/tree/main/ofl/kalam",
+  "cat": "英文展示",
+  "role": "Kalam Bold（圆珠笔手写）",
+  "mood": [
+   "手绘",
+   "笔记"
+  ],
+  "script": "latin",
+  "redistribute": true
  },
  "noto-sans-jp": {
   "file": "NotoSansJP[wght].ttf",
@@ -232,7 +508,14 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notosansjp",
   "optional": true,
-  "note": "日文；没装时回退到系统日文字体"
+  "note": "日文；没装时回退到系统日文字体",
+  "cat": "其他文字",
+  "role": "日文黑体（思源黑体 JP，可选）",
+  "mood": [
+   "通用"
+  ],
+  "script": "jp",
+  "redistribute": true
  },
  "noto-sans-kr": {
   "file": "NotoSansKR[wght].ttf",
@@ -241,7 +524,14 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notosanskr",
   "optional": true,
-  "note": "韩文；没装时回退到系统韩文字体"
+  "note": "韩文；没装时回退到系统韩文字体",
+  "cat": "其他文字",
+  "role": "韩文黑体（思源黑体 KR，可选）",
+  "mood": [
+   "通用"
+  ],
+  "script": "kr",
+  "redistribute": true
  },
  "noto-sans-tc": {
   "file": "NotoSansTC[wght].ttf",
@@ -250,7 +540,14 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notosanstc",
   "optional": true,
-  "note": "繁体中文字形；没装时用思源黑体 SC（字都能显示，字形是简体习惯）"
+  "note": "繁体中文字形；没装时用思源黑体 SC（字都能显示，字形是简体习惯）",
+  "cat": "其他文字",
+  "role": "繁体黑体（思源黑体 TC，可选）",
+  "mood": [
+   "通用"
+  ],
+  "script": "tc",
+  "redistribute": true
  },
  "noto-serif-jp": {
   "file": "NotoSerifJP[wght].ttf",
@@ -259,7 +556,15 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notoserifjp",
   "optional": true,
-  "note": "日文衬线；没装时回退到系统明朝体"
+  "note": "日文衬线；没装时回退到系统明朝体",
+  "cat": "其他文字",
+  "role": "日文宋体（思源宋体 JP，可选）",
+  "mood": [
+   "杂志",
+   "电影"
+  ],
+  "script": "jp",
+  "redistribute": true
  },
  "noto-serif-kr": {
   "file": "NotoSerifKR[wght].ttf",
@@ -268,7 +573,15 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notoserifkr",
   "optional": true,
-  "note": "韩文衬线；没装时回退到系统明朝体"
+  "note": "韩文衬线；没装时回退到系统明朝体",
+  "cat": "其他文字",
+  "role": "韩文宋体（思源宋体 KR，可选）",
+  "mood": [
+   "杂志",
+   "电影"
+  ],
+  "script": "kr",
+  "redistribute": true
  },
  "noto-sans-arabic": {
   "file": "NotoSansArabic[wdth,wght].ttf",
@@ -277,7 +590,14 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notosansarabic",
   "optional": true,
-  "note": "阿拉伯文（无衬线）；没装时回退到系统字体"
+  "note": "阿拉伯文（无衬线）；没装时回退到系统字体",
+  "cat": "其他文字",
+  "role": "阿拉伯文无衬线（可选）",
+  "mood": [
+   "通用"
+  ],
+  "script": "arabic",
+  "redistribute": true
  },
  "noto-naskh-arabic": {
   "file": "NotoNaskhArabic[wght].ttf",
@@ -286,7 +606,15 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notonaskharabic",
   "optional": true,
-  "note": "阿拉伯文（誊抄体，正文 / 引文）；没装时回退到系统字体"
+  "note": "阿拉伯文（誊抄体，正文 / 引文）；没装时回退到系统字体",
+  "cat": "其他文字",
+  "role": "阿拉伯文誊抄体 Naskh（可选）",
+  "mood": [
+   "书卷",
+   "引语"
+  ],
+  "script": "arabic",
+  "redistribute": true
  },
  "noto-sans-hebrew": {
   "file": "NotoSansHebrew[wdth,wght].ttf",
@@ -295,6 +623,296 @@
   "license": "OFL-1.1",
   "url": "https://github.com/google/fonts/tree/main/ofl/notosanshebrew",
   "optional": true,
-  "note": "希伯来文；没装时回退到系统字体"
+  "note": "希伯来文；没装时回退到系统字体",
+  "cat": "其他文字",
+  "role": "希伯来文无衬线（可选）",
+  "mood": [
+   "通用"
+  ],
+  "script": "hebrew",
+  "redistribute": true
+ },
+ "zhi-mang-xing": {
+  "file": "ZhiMangXing-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Kaiti SC',cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/zhimangxing",
+  "role": "毛笔行书",
+  "cat": "毛笔",
+  "mood": [
+   "国风",
+   "书法",
+   "手写"
+  ],
+  "script": "sc",
+  "redistribute": true
+ },
+ "liu-jian-mao-cao": {
+  "file": "LiuJianMaoCao-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Kaiti SC',cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/liujianmaocao",
+  "role": "毛笔草书",
+  "cat": "毛笔",
+  "mood": [
+   "国风",
+   "书法",
+   "狂放"
+  ],
+  "script": "sc",
+  "redistribute": true
+ },
+ "lxgw-neo-xihei": {
+  "file": "LXGWNeoXiHei.ttf",
+  "weight": "400",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "IPA-1.0",
+  "url": "https://github.com/lxgw/LxgwNeoXiHei",
+  "role": "新晰黑（清爽黑体）",
+  "cat": "黑体",
+  "mood": [
+   "清新",
+   "通用",
+   "科技"
+  ],
+  "script": "sc",
+  "redistribute": true
+ },
+ "zcool-gaoduanhei": {
+  "file": "ZCOOL-GaoDuanHei.ttf",
+  "weight": "400",
+  "fallback": "sans-serif",
+  "license": "站酷高端黑使用声明（免费商用，非 OFL）",
+  "url": "https://www.zcool.com.cn/special/zcoolfonts/",
+  "role": "标题黑体",
+  "redistribute": false,
+  "cat": "标题展示",
+  "mood": [
+   "高级",
+   "杂志",
+   "科技"
+  ],
+  "script": "sc"
+ },
+ "zcool-kuhei": {
+  "file": "ZCOOL-KuHei.ttf",
+  "weight": "400",
+  "fallback": "sans-serif",
+  "license": "站酷酷黑体使用声明（免费商用，非 OFL）",
+  "url": "https://www.zcool.com.cn/special/zcoolfonts/",
+  "role": "粗标题黑体",
+  "redistribute": false,
+  "cat": "标题展示",
+  "mood": [
+   "冲击",
+   "潮流",
+   "游戏"
+  ],
+  "script": "sc"
+ },
+ "alibaba-puhuiti": {
+  "file": "AlibabaPuHuiTi-3-85-Bold.ttf",
+  "weight": "700",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "阿里巴巴普惠体 3.0 法律声明（免费商用，非 OFL）",
+  "url": "https://www.alibabafonts.com/",
+  "role": "正文/标题黑体",
+  "redistribute": false,
+  "cat": "黑体",
+  "mood": [
+   "电商",
+   "通用",
+   "科技"
+  ],
+  "script": "sc"
+ },
+ "alibaba-puhuiti-heavy": {
+  "file": "AlibabaPuHuiTi-3-105-Heavy.ttf",
+  "weight": "900",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "阿里巴巴普惠体 3.0 法律声明（免费商用，非 OFL）",
+  "url": "https://www.alibabafonts.com/",
+  "role": "特粗标题",
+  "redistribute": false,
+  "cat": "标题展示",
+  "mood": [
+   "电商",
+   "冲击"
+  ],
+  "script": "sc"
+ },
+ "harmonyos-sans": {
+  "file": "HarmonyOS_Sans_SC_Bold.ttf",
+  "weight": "700",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "HarmonyOS Sans Fonts License（免费商用，非 OFL）",
+  "url": "https://developer.huawei.com/consumer/cn/design/resource/",
+  "role": "界面黑体",
+  "redistribute": false,
+  "cat": "黑体",
+  "mood": [
+   "科技",
+   "界面"
+  ],
+  "script": "sc"
+ },
+ "harmonyos-sans-black": {
+  "file": "HarmonyOS_Sans_SC_Black.ttf",
+  "weight": "900",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "HarmonyOS Sans Fonts License（免费商用，非 OFL）",
+  "url": "https://developer.huawei.com/consumer/cn/design/resource/",
+  "role": "界面特粗",
+  "redistribute": false,
+  "cat": "标题展示",
+  "mood": [
+   "科技",
+   "冲击"
+  ],
+  "script": "sc"
+ },
+ "misans": {
+  "file": "MiSansVF.ttf",
+  "weight": "100 900",
+  "fallback": "'PingFang SC',sans-serif",
+  "license": "MiSans 字体知识产权许可协议（免费商用，非 OFL）",
+  "url": "https://hyperos.mi.com/font/",
+  "role": "可变黑体",
+  "redistribute": false,
+  "cat": "黑体",
+  "mood": [
+   "科技",
+   "界面",
+   "通用"
+  ],
+  "script": "sc"
+ },
+ "archivo-black": {
+  "file": "ArchivoBlack-Regular.ttf",
+  "weight": "900",
+  "fallback": "'Arial Black',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/archivoblack",
+  "role": "英文特粗",
+  "cat": "英文展示",
+  "mood": [
+   "冲击",
+   "海报",
+   "拼贴"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "abril-fatface": {
+  "file": "AbrilFatface-Regular.ttf",
+  "weight": "400",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/abrilfatface",
+  "role": "英文杂志粗衬线",
+  "cat": "英文展示",
+  "mood": [
+   "杂志",
+   "复古",
+   "拼贴"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "unifraktur": {
+  "file": "UnifrakturMaguntia-Book.ttf",
+  "weight": "400",
+  "fallback": "serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/unifrakturmaguntia",
+  "role": "哥特黑字体",
+  "cat": "英文展示",
+  "mood": [
+   "复古",
+   "报头",
+   "暗黑"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "patrick-hand": {
+  "file": "PatrickHand-Regular.ttf",
+  "weight": "400",
+  "fallback": "cursive",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/patrickhand",
+  "role": "英文手写",
+  "cat": "英文展示",
+  "mood": [
+   "手绘",
+   "童趣",
+   "白板"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "roboto-cond": {
+  "file": "RobotoCondensed[wght].ttf",
+  "weight": "100 900",
+  "fallback": "'Arial Narrow',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/robotocondensed",
+  "role": "英文窄体",
+  "cat": "英文无衬线",
+  "mood": [
+   "新闻",
+   "数据"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "libre-caslon": {
+  "file": "LibreCaslonText[wght].ttf",
+  "weight": "400 700",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/librecaslontext",
+  "role": "英文书籍衬线",
+  "cat": "英文衬线",
+  "mood": [
+   "书卷",
+   "报纸"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "old-standard": {
+  "file": "OldStandard-Regular.ttf",
+  "weight": "400",
+  "fallback": "Georgia,serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/oldstandardtt",
+  "role": "英文古典衬线",
+  "cat": "英文衬线",
+  "mood": [
+   "复古",
+   "报纸",
+   "档案"
+  ],
+  "script": "latin",
+  "redistribute": true
+ },
+ "press-start-2p": {
+  "file": "PressStart2P-Regular.ttf",
+  "weight": "400",
+  "fallback": "monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/google/fonts/tree/main/ofl/pressstart2p",
+  "role": "像素字体",
+  "cat": "等宽与像素",
+  "mood": [
+   "游戏",
+   "像素",
+   "复古"
+  ],
+  "script": "latin",
+  "redistribute": true
  }
 }

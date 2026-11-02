@@ -7,7 +7,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 [▶ 看成片](#成片示例) · [🎛 在线看全部 158 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.7.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.8.0-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -21,13 +21,14 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 | | |
 |---|---|
-| **9 种风格** | `press` 财经刊 · `screen` AI 工具台 · `atlas` 地图纪录 · `doc` 实拍纪录 · `poster` 瑞士海报 · `reel` 动效库 · `hud` 暗场 · `studio` / `clay` 三维 |
+| **17 种风格** | `press` 财经刊 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `studio` / `clay` 三维影棚 · `reel` 动效库 |
+| **58 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
 | **158 个动效** | 146 个效果 + 12 种转场：字效、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) |
 | **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
 | **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
 | **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
-| **5 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
+| **13 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
 
 ## 成片示例
 
@@ -40,6 +41,14 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | <a href="assets/previews/atlas_16x9.mp4"><img src="assets/previews/atlas_16x9.jpg" width="420" alt="货船为什么不走苏伊士了 横屏"></a> | <a href="assets/previews/atlas_9x16.mp4"><img src="assets/previews/atlas_9x16.jpg" width="120" alt="货船为什么不走苏伊士了 竖屏"></a> | **《货船为什么不走苏伊士了》**<br>`atlas` 地图纪录：一张连续的世界地图，镜头推拉，航线实时绘制、船在走，危险区、运河、运价折线叠在地图上。<br><sub>苏伊士运河管理局 · 世界银行 · Drewry WCI · WEF</sub> |
 | <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" width="420" alt="一个铁箱子 横屏"></a> | <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" width="120" alt="一个铁箱子 竖屏"></a> | **《一个铁箱子》**<br>`doc` 实拍纪录：2.39 遮幅 + 调色 + 颗粒，1956 档案片接现代港口实拍，年份计数器、数据卡贴在画面上。<br><sub>Levinson《The Box》· 上港集团 2024 快报 · UNCTAD</sub> |
 | <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" width="420" alt="专注，就是学会说不 横屏"></a> | <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" width="120" alt="专注，就是学会说不 竖屏"></a> | **《专注，就是学会说不》**<br>`poster` 瑞士海报：12 栏网格随每句话重排，黑白 + 一个信号蓝，100 格答案矩阵、24 张图扔到只剩 1 张。<br><sub>Steve Jobs，WWDC 1997 收尾问答</sub> |
+| <a href="assets/previews/papercut_16x9.mp4"><img src="assets/previews/papercut_16x9.jpg" width="420" alt="过年看电影，钱押给最好的那一部 横屏"></a> | <a href="assets/previews/papercut_9x16.mp4"><img src="assets/previews/papercut_9x16.jpg" width="120" alt="过年看电影，钱押给最好的那一部 竖屏"></a> | **《过年看电影，钱押给最好的那一部》**<br>`papercut` 剪纸：中国红纸张层层叠，电影票、日历、窗花、灯笼，纸页翻折推入，镜头带纵深视差。<br><sub>国家电影局（新华网 2025-02-05）</sub> |
+| <a href="assets/previews/sketch_16x9.mp4"><img src="assets/previews/sketch_16x9.jpg" width="420" alt="Costco 真正卖的是什么 横屏"></a> | <a href="assets/previews/sketch_9x16.mp4"><img src="assets/previews/sketch_9x16.jpg" width="120" alt="Costco 真正卖的是什么 竖屏"></a> | **《Costco 真正卖的是什么》**<br>`sketch` 手绘白板：方格纸上马克笔一笔一笔画出购物车、会员卡、箭头和圈，红笔跟着笔画走，镜头跟笔。<br><sub>Costco 2024 财年年报（Form 10-K）</sub> |
+| <a href="assets/previews/ink_16x9.mp4"><img src="assets/previews/ink_16x9.jpg" width="420" alt="一只猴子，三天卖出一千万套 横屏"></a> | <a href="assets/previews/ink_9x16.mp4"><img src="assets/previews/ink_9x16.jpg" width="120" alt="一只猴子，三天卖出一千万套 竖屏"></a> | **《一只猴子，三天卖出一千万套》**<br>`ink` 水墨国风：宣纸远山，书法字一笔一笔写出来，墨点人群、挂轴、手卷、对联和印章，墨滴晕开转场。<br><sub>游戏科学官方公告 · VG Insights 估算 · 澎湃新闻 · 界面新闻</sub> |
+| <a href="assets/previews/zine_16x9.mp4"><img src="assets/previews/zine_16x9.jpg" width="420" alt="一只怪兽，一年卖了一百四十多亿 横屏"></a> | <a href="assets/previews/zine_9x16.mp4"><img src="assets/previews/zine_9x16.jpg" width="120" alt="一只怪兽，一年卖了一百四十多亿 竖屏"></a> | **《一只怪兽，一年卖了一百四十多亿》**<br>`zine` 拼贴杂志：每个字是一块剪报，粉青黑孔版印刷，胶带、邮票、邮戳、马克笔，逐两帧定格，撕纸换页。<br><sub>泡泡玛特 2024 / 2025 年度业绩公告 · 观察者网</sub> |
+| <a href="assets/previews/flat_16x9.mp4"><img src="assets/previews/flat_16x9.jpg" width="420" alt="一份外卖背后的城市网络 横屏"></a> | <a href="assets/previews/flat_9x16.mp4"><img src="assets/previews/flat_9x16.jpg" width="120" alt="一份外卖背后的城市网络 竖屏"></a> | **《一份外卖背后的城市网络》**<br>`flat` 扁平插画：夜色城市、骑手人群、跑道、硬币和钱包，挤压回弹、分层视差、色盘转场。<br><sub>商务部研究院《即时零售行业发展报告（2025）》· 美团 2024 社会责任报告 · 王兴内部信</sub> |
+| <a href="assets/previews/pixel_16x9.mp4"><img src="assets/previews/pixel_16x9.jpg" width="420" alt="三千二百亿的游戏账本 横屏"></a> | <a href="assets/previews/pixel_9x16.mp4"><img src="assets/previews/pixel_9x16.jpg" width="120" alt="三千二百亿的游戏账本 竖屏"></a> | **《三千二百亿的游戏账本》**<br>`pixel` 像素复古：? 砖块顶出 HI-SCORE、宝箱、像素世界地图、像素人群、经验条 LEVEL UP、RPG 对话框，方块溶解转场、芯片音效。<br><sub>《2024年中国游戏产业报告》· 国家统计局</sub> |
+| <a href="assets/previews/iso3d_16x9.mp4"><img src="assets/previews/iso3d_16x9.jpg" width="420" alt="快递的规模账 横屏"></a> | <a href="assets/previews/iso3d_9x16.mp4"><img src="assets/previews/iso3d_9x16.jpg" width="120" alt="快递的规模账 竖屏"></a> | **《快递的规模账》**<br>`iso3d` 等距微缩：一个连续的三维微缩世界，包裹堆成山、城市长出来、柱子升起，镜头跟着包裹走完五站。<br><sub>国家邮政局 2014、2015、2020—2024 年邮政行业发展统计公报</sub> |
+| <a href="assets/previews/chrome3d_16x9.mp4"><img src="assets/previews/chrome3d_16x9.jpg" width="420" alt="英伟达：卖铲子的人 横屏"></a> | <a href="assets/previews/chrome3d_9x16.mp4"><img src="assets/previews/chrome3d_9x16.jpg" width="120" alt="英伟达：卖铲子的人 竖屏"></a> | **《英伟达：卖铲子的人》**<br>`chrome3d` Y2K 镀铬：镀铬立体数字和芯片、霓虹粉光环，在环形门隧道里穿梭换场，$5T、CUDA 上才闪一下。<br><sub>NVIDIA 历年财报（8-K）· Reuters · GTC 2025</sub> |
 
 每条片子就是一份 `video.json`（每句一个场景）加配音，源文件在 [`examples/`](examples/)。
 
@@ -233,6 +242,7 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
+- **0.8.0** 新增 8 种风格：剪纸、手绘白板、水墨国风、拼贴杂志、扁平插画、像素复古、等距微缩、Y2K 镀铬，各带一条示例成片；字体扩到 58 款，附字体样张。
 - **0.7.0** 再补 58 个效果：视频定格和变速、播客引用、文档翻页、拍照文档、Logo 墙、漏斗、雷达、面积叠加、逐年扩张、测评卡、带货卡、新闻快讯、片头、预告……；交付支持多画幅、平台字幕预设、AI 标识、品牌包、多语言、剪辑软件导出、长片分章渲染。
 - **0.6.0** 新增 50 个效果：按数量换编排、引用、结构、数据表格、截图录屏、社交人物、中国地图、不说话的时刻；动效随句长伸缩、多人字幕、录音对齐、封面、插件安装。
 - **0.5.0** 新增 `screen` / `atlas` / `doc` / `poster` 四种风格和 10 个动效；素材自适应。

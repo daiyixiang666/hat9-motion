@@ -1,0 +1,158 @@
+{
+ "meta": {
+  "title": "chrome3d · 输入适配变体（测试数据，不进画廊）",
+  "aspect": "16:9",
+  "style": "chrome3d",
+  "duration": 28.0,
+  "note": "Stress inputs for the chrome3d style (test data, not facts): long/short values, 6 bars over three orders of magnitude, 50 coins, CJK moat word, long two-line title. Build: python3 scripts/build.py examples/chrome3d/variants.json --out examples/chrome3d/build/variants_16x9 [--aspect 9:16]",
+  "tag": "VARIANTS",
+  "ticker": [
+   "长数字",
+   "六根柱",
+   "五十枚",
+   "中文护城河",
+   "两行长标题"
+  ]
+ },
+ "beats": [
+  {
+   "scene": "hero",
+   "value": "$1,234.5B",
+   "at": 1.3,
+   "deco": "ring",
+   "k": "VARIANT · LONG NUMBER + LONG CHIP",
+   "kz": "一个很长的数字也要放得下，而且不能挤到边上",
+   "chip": "一万二千三百四十五亿美元（测试用长标签）",
+   "src": "测试数据，不是事实",
+   "t": 0.0
+  },
+  {
+   "scene": "bars",
+   "at": 3.5,
+   "at_v": 4.6,
+   "items": [
+    [
+     "2019",
+     0.4
+    ],
+    [
+     "2020",
+     3.1
+    ],
+    [
+     "2021",
+     27.0
+    ],
+    [
+     "2022",
+     88.8
+    ],
+    [
+     "2023",
+     410.2
+    ],
+    [
+     "2024",
+     1234.5
+    ]
+   ],
+   "pre": "",
+   "suf": "亿",
+   "k": "SIX BARS · HUGE RANGE",
+   "kz": "六根柱子 · 数值跨三个数量级",
+   "pill": "+201%",
+   "t": 3.2
+  },
+  {
+   "scene": "multiple",
+   "value": "3×",
+   "at": 7.4,
+   "k": "SHORT",
+   "kz": "很短的倍数",
+   "eq": "3 = 3",
+   "t": 6.4
+  },
+  {
+   "scene": "coins",
+   "n": 50,
+   "hit": 9,
+   "value": "18%",
+   "at_show": 9.3,
+   "at_hit": 10.2,
+   "k": "50 COINS · 9 HIT",
+   "kz": "五十枚里翻九枚",
+   "legend": [
+    "命中 9",
+    "其余 41"
+   ],
+   "t": 8.8
+  },
+  {
+   "scene": "hero",
+   "value": "No.1",
+   "at": 13.2,
+   "at_enter": 12.2,
+   "deco": "blob",
+   "sticker": [
+    "第一"
+   ],
+   "date": "2026.01",
+   "k": "BLOB + ONE-LINE STICKER",
+   "kz": "短词 + 单行贴纸",
+   "t": 12.0
+  },
+  {
+   "scene": "moat",
+   "chip": "ASIC",
+   "word": "生态系统",
+   "at_moat": 15.5,
+   "at_chip": 16.3,
+   "at_word": 17.1,
+   "k": "CJK WORD",
+   "kz": "中文词也要能升起来",
+   "t": 15.2
+  },
+  {
+   "scene": "swarm",
+   "value": "1.2亿",
+   "count": 120000000,
+   "at": 19.6,
+   "label": "USERS",
+   "k": "BIG COUNT",
+   "kz": "一亿两千万用户",
+   "code": [
+    [
+     "c",
+     "# app.py"
+    ],
+    [
+     "k",
+     "users = load('all')"
+    ],
+    [
+     "",
+     "print(len(users))"
+    ]
+   ],
+   "t": 18.8
+  },
+  {
+   "scene": "shovel",
+   "lines": [
+    "在每一次泡沫里",
+    "先赚钱的是基础设施"
+   ],
+   "at_rain": 22.1,
+   "at_title": 22.6,
+   "at_line2": 23.4,
+   "k": "TWO LONG LINES",
+   "kz": "两行都很长",
+   "t": 22.0
+  },
+  {
+   "scene": "outro",
+   "title": "九帽",
+   "t": 25.4
+  }
+ ]
+}

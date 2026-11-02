@@ -64,7 +64,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 </head><body>
 
 <div class="wrap">
-  <div class="kick">hat9-motion · 第九顶帽子</div>
+  <div class="kick">hat9-motion · 第九顶帽子 <a href="fonts.html" style="color:var(--dim);text-decoration:none;margin-left:12px;letter-spacing:.06em;text-transform:none">字体样张 →</a></div>
   <h1>一条口播，变成 AE 级动效成片</h1>
   <p class="lede">按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效库，横屏竖屏同一套代码。每个效果都放在一句真实口播里演示。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
@@ -98,7 +98,11 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   const FILMS = [
     ["mixue", "press", "一杯 4 块钱的柠檬水", "财经刊 · 商业拆解"], ["screen", "screen", "8 亿人在用，5% 在付钱", "AI 工具台 · 产品界面"],
     ["atlas", "atlas", "货船为什么不走苏伊士了", "地图纪录 · 连续世界地图"], ["doc", "doc", "一个铁箱子", "实拍纪录 · 档案片 + 现代实拍"],
-    ["poster", "poster", "专注，就是学会说不", "瑞士海报 · 网格动态字"]];
+    ["poster", "poster", "专注，就是学会说不", "瑞士海报 · 网格动态字"],
+    ["papercut", "papercut", "过年看电影，钱押给最好的那一部", "剪纸 · 纸张层叠"], ["sketch", "sketch", "Costco 真正卖的是什么", "手绘白板 · 一笔一笔画"],
+    ["ink", "ink", "一只猴子，三天卖出一千万套", "水墨国风 · 书法写字"], ["zine", "zine", "一只怪兽，一年卖了一百四十多亿", "拼贴杂志 · 剪报定格"],
+    ["flat", "flat", "一份外卖背后的城市网络", "扁平插画 · 矢量人群"], ["pixel", "pixel", "三千二百亿的游戏账本", "像素复古 · 横版关卡"],
+    ["iso3d", "iso3d", "快递的规模账", "等距微缩 · 三维小世界"], ["chrome3d", "chrome3d", "英伟达：卖铲子的人", "Y2K 镀铬 · 三维隧道"]];
   const filmsEl = document.getElementById("films");
   const showFilm = (k) => { const f = FILMS[k];
     for (const [id, tag] of [["sh-h", "16x9"], ["sh-v", "9x16"]]) { const v = document.getElementById(id); v.pause(); v.poster = ROOT + f[0] + "_" + tag + ".jpg"; v.src = ROOT + f[0] + "_" + tag + ".mp4"; }

@@ -7,7 +7,7 @@
 | `assets/map/marnet_searoute-py.geojson` | searoute-py 的海运航线网络（Eurostat searoute / ORNL Global Shipping Lane Network） | Apache-2.0（见 `searoute-py.LICENSE.txt`） |
 | `assets/map/paper-ambientcg-paper006.jpg` | ambientCG Paper 006（缩小到 1024） | CC0 |
 | 近景 10 m 海岸线 | Natural Earth `ne_10m_admin_0_countries_chn.geojson`（13 MB，不随仓库；找不到时近景退回 50 m） | 公有领域 |
-| 配音 | 本账号旁白音色，Windows 上的 VoxCPM2 服务合成（`tts_win.py`），未做语音识别核对 | 自有 |
+| 配音 | 本账号旁白音色（AI 合成） | 自有 |
 | 背景音乐 | `scripts/music.py` 合成（tense，92 bpm） | MIT |
 | 柴犬主持人 | 本账号 IP（引用 `../mixue/assets/video/shiba.webm`） | 自有 |
 

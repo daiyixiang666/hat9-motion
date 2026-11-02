@@ -16,6 +16,25 @@ PUN = "，,。.!！?？、；;：:"
 SOFT = "，,、；;：:"          # 。！？ always end a page, even after a single glyph
 
 
+def _decimal(words, i):
+    """True when token i is the point in a number like 4.8 (a digit on both sides), not a full stop."""
+    if str(words[i]["w"]).strip() not in ".．" or i == 0 or i + 1 >= len(words): return False
+    return str(words[i - 1]["w"]).strip()[-1:].isdigit() and str(words[i + 1]["w"]).strip()[:1].isdigit()
+
+
+def _join_decimals(words):
+    """merge "4" "." "8亿" into one token so a page never breaks inside a number."""
+    out, i = [], 0
+    while i < len(words):
+        if out and _decimal(words, i):
+            a, b = out[-1], words[i + 1]
+            out[-1] = {**a, "w": str(a["w"]).strip() + str(words[i]["w"]).strip() + str(b["w"]).strip(), "e": b["e"]}
+            i += 2
+        else:
+            out.append(words[i]); i += 1
+    return out
+
+
 def regroup(words):
     """per-character timestamps (common from aligners/TTS) -> word tokens via jieba, so lines never break mid-word."""
     if not words or max(len(str(w["w"]).strip()) for w in words) > 1: return words
@@ -33,8 +52,8 @@ def regroup(words):
             if seg[0].get("spk"): w["spk"] = seg[0]["spk"]
             out.append(w)
         run.clear()
-    for w in words:
-        if w["w"] in PUN: flush(); out.append(w)
+    for i, w in enumerate(words):
+        if w["w"] in PUN and not _decimal(words, i): flush(); out.append(w)
         else: run.append(w)
     flush()
     return out
@@ -42,6 +61,7 @@ def regroup(words):
 
 def pages(words, maxlen, minlen=1, spk_out=None):
     """[[start, end, text], ...]; with spk_out=[] it also collects each page's speaker (pages never mix speakers)."""
+    words = _join_decimals(words)
     lines, cur, cs, ce, sp = [], "", None, None, None
     spks = []
     def push():
@@ -165,9 +185,9 @@ def _karaoke(X, page, txt):
     a, b, raw = page
     cs = [(c, s0) for c, s0, e0 in X.chars if a - 0.02 <= s0 <= b + 0.02 and c not in PUN and c.strip()]
     glyphs = [c for c in txt if c not in "*|"]
-    if "".join(c for c, _ in cs) == "".join(c for c in glyphs if c.strip()) and cs:
+    if "".join(c for c, _ in cs) == "".join(c for c in glyphs if c.strip() and c not in PUN) and cs:
         it = iter(s0 for _, s0 in cs)
-        times = [next(it) if c.strip() else None for c in glyphs]
+        times = [next(it) if c.strip() and c not in PUN else None for c in glyphs]
         last = a
         times = [last := (x if x is not None else last) for x in times]
     else:

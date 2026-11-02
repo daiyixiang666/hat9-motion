@@ -1,5 +1,10 @@
 # 更新记录
 
+## 0.8.0 · 2026-11-02
+- 新风格 8 种，各带一条横竖屏示例成片：`papercut` 剪纸、`sketch` 手绘白板、`ink` 水墨国风、`zine` 拼贴杂志、`flat` 扁平插画、`pixel` 像素复古、`iso3d` 等距微缩（Three.js）、`chrome3d` Y2K 镀铬（Three.js）。
+- 字体扩到 58 款，按类别、用途、气质打标签；`references/fonts.md` 和在线字体样张。
+- 字幕：数字里的小数点不再断页（4.8、14.6）；书法字体的字形轮廓可以直接读取。
+
 ## 0.7.0 · 2026-11-01
 - 新效果 58 个：音视频（`pip` `freeze_frame` `speed_ramp` `footage` `audio_quote` `podcast` `talking_head` `host_point`）、文字（`text_pages` `question_card` `vertical_title` `flying_words` `number_pages` `combo` `black_slam` `scribble` `scanline`）、图表与地图（`icon_unit` `scatter` `funnel` `radar` `then_now` `choose_one` `converge` `gantt` `decision_tree` `area_overlay` `map_timeline` `street_map`）、图片与文档（`logo_wall` `halftone` `meme_stage` `gif_clip` `svg_art` `doc_photo` `slides` `doc_flip` `doc_pick` `handwrite` `email_card` `notice_card`）、界面与人物（`app_flow` `cursor` `form_fill` `turntable` `search_box` `relation_graph` `dialogue` `interview`）、片子类型（`review_card` `news_flash` `deal_card` `next_teaser` `opener` `sponsor_card` `share_card` `poll_card` `clip_style`）。
 - 交付：1:1 / 4:5 / 3:4、`meta.ai_label`、`caption_preset`、`brand`、`series`、多语言、`breath`、`rate_adapt`、音效冲击、情绪切换；`cut_list.py`、`ref_pacing.py`、`export_edit.py`（FCPXML）、`longform.py`、`share_card.py`、`audio_tools.py`。

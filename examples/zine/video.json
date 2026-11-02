@@ -1,0 +1,38 @@
+{
+ "meta": {
+  "title": "一只怪兽，一年卖了一百四十多亿",
+  "aspect": "16:9",
+  "style": "zine",
+  "voice": "assets/audio/voice.mp3",
+  "words": "assets/audio/words.json",
+  "music": "assets/audio/music.mp3",
+  "music_volume": 0.18,
+  "mascot": "../mixue/assets/video/shiba.webm",
+  "tail": 2.0,
+  "mast": "HAT9 ZINE",
+  "issue": 9,
+  "section": "商业拆解",
+  "src": "泡泡玛特 2025 年度业绩公告"
+ },
+ "beats": [
+  {"scene": "cover", "t": 0, "at_num": "@一百四十", "kicker": "POP MART · 2025", "title": "一只小怪兽|一年卖了", "num": "*141.6*亿",
+   "sticker": "THE MONSTERS 系列", "src": "泡泡玛特 2025 年度业绩公告 · THE MONSTERS 收入 141.6 亿元"},
+  {"scene": "versus", "t": "@泡泡玛特", "at_a": "@泡泡玛特", "at_b": "@三百七十", "at_pct": "@涨了将近",
+   "a": {"label": "2024 年收入", "v": "130.4亿"}, "b": {"label": "2025 年收入", "v": "371.2亿"},
+   "stamp": "+184.7%", "stamp_sub": "同比", "src": "泡泡玛特 2024 / 2025 年度业绩公告"},
+  {"scene": "pie", "t": "@其中", "at_pct": "@三成八", "at_ip": "@怪兽系列", "pct": 38.1, "big": "38.1%",
+   "label": "THE MONSTERS|怪兽系列", "note": "141.6 亿 ÷ 371.2 亿", "rest": "其他 IP", "src": "泡泡玛特 2025 年度业绩公告 · 按 IP 收入"},
+  {"scene": "bars", "t": "@一年前", "at_mul": "@三十亿$-0.15", "title": "怪兽系列 · 年收入",
+   "items": [{"year": "2024", "v": 30.4, "label_v": "30.4亿", "at": "@才三十"}, {"year": "2025", "v": 141.6, "label_v": "141.6亿", "hot": true}],
+   "stamp": "×4.7", "stamp_sub": "一年", "src": "泡泡玛特 2024 / 2025 年度业绩公告"},
+  {"scene": "stamps", "t": "@美洲", "at_hot": "@七倍", "title": "2025 分地区收入 · 同比",
+   "items": [{"name": "中国", "sub": "208.5 亿", "v": "+134.6%"}, {"name": "亚太", "sub": "80.1 亿", "v": "+157.6%"},
+             {"name": "美洲", "sub": "68.1 亿", "v": "+748.4%", "hot": true}, {"name": "欧洲及其他", "sub": "14.5 亿", "v": "+506.3%"}],
+   "postmark": "七倍多", "postmark_sub": "AMERICAS", "src": "泡泡玛特 2025 年度业绩公告 · 分地区收入"},
+  {"scene": "clip", "t": "@可财报", "at_drop": "@跌了", "date": "2026.03.25 · 港股", "headline": "业绩日股价|~*-22.5%*~",
+   "dek": "年度业绩发布当天，收报 168.30 港元", "src": "观察者网 2026-03-26"},
+  {"scene": "note", "t": "@市场在", "at_bet": "@押在", "text": "一家公司，|押在一只|怪兽身上。", "label": "单一 IP 依赖", "left": "公司", "src": ""},
+  {"scene": "thesis", "t": "@潮玩", "at_strike": "@塑料", "at_em": "@情绪", "a": "卖的不是~塑料~", "b": "是情绪", "src": ""},
+  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子", "sub": "商业拆解 · ISSUE 09", "stamp": "下期见", "src": ""}
+ ]
+}
