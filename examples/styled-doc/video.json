@@ -1,0 +1,564 @@
+{
+ "meta": {
+  "title": "动效 · doc 风格",
+  "aspect": "16:9",
+  "style": "doc",
+  "duration": 65.6,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "parallax",
+   "d": 2.6,
+   "label": "#2 2.5D 照片视差 · Photo Parallax",
+   "ref": "VoluMax 2.64万份 · MDMZ 教程 1171万播放",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "text": "成交",
+   "plate": "../aefx/assets/broll/silhou_plate.jpg",
+   "fg": "../aefx/assets/broll/silhou_fg.png",
+   "line": "流量再大，最后都要落到*成交*。",
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "portal",
+   "d": 2.6,
+   "label": "#10 瞳孔穿梭 · Zoom-Through Portal",
+   "ref": "B站 364.5万播放（2025）",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../aefx/assets/broll/meeting.jpg",
+   "image2": "../aefx/assets/broll/charts.jpg",
+   "x": 41,
+   "y": 53,
+   "line": "钻进这张报表，看看*钱从哪来*。",
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "callout",
+   "d": 2.6,
+   "label": "#18 引线标注 · Line Callout",
+   "ref": "Call-Out Titles 4.5K份",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../aefx/assets/broll/charts.jpg",
+   "x": 24,
+   "y": 36,
+   "text": "增长 ≠ 利润",
+   "sub": "GROWTH IS NOT PROFIT",
+   "line": "注意这里：*增长*，不等于赚钱。",
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "match_cut",
+   "d": 2.6,
+   "label": "#23 文字匹配剪辑 · Text Match Cut",
+   "ref": "Envato Elements 标题热门第1、2名",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "text": "生意",
+   "images": [
+    "../aefx/assets/broll/towers.jpg",
+    "../aefx/assets/broll/factory.jpg",
+    "../aefx/assets/broll/port.jpg",
+    "../aefx/assets/broll/crossing.jpg"
+   ],
+   "line": "写字楼、工厂、港口、街头，说到底都是*生意*。",
+   "t": 7.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "earth_zoom",
+   "d": 3.6,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "lon": 121.5,
+   "lat": 31.2,
+   "text": "上海",
+   "sub": "2024 · 5150.6 万标箱",
+   "line": "全球最忙的集装箱港口，在*上海*。",
+   "src": "上港集团 2024 年度业绩快报",
+   "label": "#8 地球推近 · Earth Zoom",
+   "ref": "Ultimate Earth Zoom Toolkit 9.5K · Google Earth Studio 缩放教程 207万播放",
+   "t": 10.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "map_route",
+   "d": 3.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "points": [
+    [
+     106.55,
+     29.56
+    ],
+    [
+     108.94,
+     34.34
+    ],
+    [
+     103.83,
+     36.06
+    ],
+    [
+     87.62,
+     43.83
+    ],
+    [
+     82.57,
+     45.17
+    ],
+    [
+     73.1,
+     49.8
+    ],
+    [
+     69.15,
+     54.87
+    ],
+    [
+     37.62,
+     55.75
+    ],
+    [
+     27.56,
+     53.9
+    ],
+    [
+     23.69,
+     52.09
+    ],
+    [
+     21.01,
+     52.23
+    ],
+    [
+     6.76,
+     51.43
+    ]
+   ],
+   "from": "重庆",
+   "to": "杜伊斯堡",
+   "from_sub": "2011.3.19 首发",
+   "to_sub": "德国 · 路线示意",
+   "chips": [
+    "1 万多公里",
+    "约 *16* 天"
+   ],
+   "line": "2011 年，第一列中欧班列从*重庆*开往德国杜伊斯堡。",
+   "src": "重庆日报；中新网",
+   "label": "#19 地图路线 · Map Route",
+   "ref": "Map Route Generator 3.5K · Ignace Aleya 动画旅行地图 169.5万播放",
+   "t": 14.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "timeline",
+   "d": 3.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "items": [
+    [
+     "1997",
+     "郑州街头的刨冰摊"
+    ],
+    [
+     "1999",
+     "启用「蜜雪冰城」"
+    ],
+    [
+     "2007",
+     "开放加盟"
+    ],
+    [
+     "2018",
+     "雪王诞生 · 首家海外店"
+    ],
+    [
+     "2020",
+     "门店破万"
+    ],
+    [
+     "2025",
+     "港交所上市"
+    ]
+   ],
+   "line": "从一个刨冰摊到*港股上市*，用了 28 年。",
+   "src": "蜜雪集团招股书（港交所披露）",
+   "label": "D4 时间轴 · Timeline",
+   "ref": "Company Timeline 3.2K（Titles 第 9）· Smertimba 23.9万播放",
+   "t": 17.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 3.6,
+   "theme": "ink",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "../media/assets/frames/atlas_h_25.jpg",
+     "caption": "货船为什么不走苏伊士了"
+    }
+   ],
+   "line": "只有一张图，就把*整个画面*给它。",
+   "label": "单图推进 · Cinematic Parallax Slideshow",
+   "ref": "5.4K 份（Openers 第 1）",
+   "preview": "1",
+   "band_label": "1 张",
+   "t": 21.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.6,
+   "fx": "cite_video",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../cite/assets/working_dollars_1957.mp4",
+   "start": 0,
+   "title": "Working Dollars (1957)",
+   "source": "Prelinger Archives · archive.org",
+   "year": "1957",
+   "license": "公有领域",
+   "caption": "书架上的四本书：*SALES · EARNINGS · DIVIDENDS · GROWTH*",
+   "kicker": "档案影像",
+   "line": "1957 年的一部动画片，就在教普通人看*销售、盈利和增长*。",
+   "label": "引用视频 · Embedded Clip",
+   "ref": "片段真实播放 · 进度条 · 时间码",
+   "src": "Prelinger Archives（公有领域）",
+   "t": 25.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "freeze_frame",
+   "d": 6.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../cite/assets/working_dollars_1957.mp4",
+   "start": 0.4,
+   "at": 1.6,
+   "hold": 2.8,
+   "pins": [
+    {
+     "box": [
+      11,
+      3,
+      16,
+      50
+     ],
+     "label": "SALES",
+     "sub": "销售额"
+    }
+   ],
+   "line": "定格这一帧：1957 年的理财动画里，账本上写着 *SALES*。",
+   "src": "Working Dollars (1957) · Prelinger Archives（公有领域）",
+   "label": "视频定格 + 标注 · Freeze & Annotate",
+   "ref": "B站科普常用：关键瞬间定格",
+   "t": 29.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "speed_ramp",
+   "d": 6.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../pacing/assets/clips/factory.mp4",
+   "ramp": [
+    [
+     0,
+     1.2,
+     1
+    ],
+    [
+     1.2,
+     2.2,
+     0.25
+    ],
+    [
+     2.2,
+     4.0,
+     2
+    ]
+   ],
+   "drama": true,
+   "line": "放慢四倍：福特早年的流水线上，工人正在装*木制车轮*。",
+   "src": "Henry Ford's Mirror of America (1962) · Prelinger Archives（公有领域）",
+   "label": "变速 · Speed Ramp",
+   "ref": "B站「AE 变速卡点」173.4 万播放",
+   "t": 35.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "footage",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "做内容",
+   "video": "../../assets/previews/doc_16x9.mp4",
+   "start": 5.0,
+   "subs": "auto",
+   "show_band": true,
+   "line": "原片自带字幕时，我们的字幕*自动让开*。",
+   "label": "字幕避让 · Burned-in Subtitles",
+   "ref": "采访切片、素材自带字幕",
+   "src": "成片《一个铁箱子》· 原片字幕在底部",
+   "zoom": 1.12,
+   "t": 41.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "area_overlay",
+   "d": 6.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "新加坡有多大？放进上海看看",
+   "note": "等积投影 · 同一比例尺",
+   "a": {
+    "name": "新加坡",
+    "geojson": "../charts2/assets/singapore_ne10m.geojson",
+    "area": 735.7
+   },
+   "b": {
+    "name": "上海",
+    "region": "上海",
+    "area": 6340.5
+   },
+   "unit": "km²",
+   "line": "上海的面积，能装下 *8 个多*新加坡。",
+   "src": "上海市统计局；新加坡统计局；Natural Earth",
+   "label": "面积对比 · Area Overlay",
+   "ref": "VideoHive「Infographics 3D Map Kit」3.2K · 「Map Kit」1.4K · Vox 式地图",
+   "t": 46.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "map_timeline",
+   "d": 7.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "GDP 破万亿的城市，越来越多",
+   "unit": "座万亿城市",
+   "points": [
+    [
+     "上海",
+     121.47,
+     31.23,
+     2006
+    ],
+    [
+     "北京",
+     116.4,
+     39.9,
+     2008
+    ],
+    [
+     "广州",
+     113.26,
+     23.13,
+     2010
+    ],
+    [
+     "深圳",
+     114.06,
+     22.54,
+     2011
+    ],
+    [
+     "重庆",
+     106.55,
+     29.56,
+     2011
+    ],
+    [
+     "天津",
+     117.2,
+     39.13,
+     2011
+    ],
+    [
+     "苏州",
+     120.58,
+     31.3,
+     2011
+    ],
+    [
+     "成都",
+     104.07,
+     30.67,
+     2014
+    ],
+    [
+     "武汉",
+     114.31,
+     30.59,
+     2014
+    ],
+    [
+     "杭州",
+     120.16,
+     30.27,
+     2015
+    ],
+    [
+     "南京",
+     118.8,
+     32.06,
+     2016
+    ],
+    [
+     "青岛",
+     120.38,
+     36.07,
+     2016
+    ],
+    [
+     "无锡",
+     120.31,
+     31.49,
+     2017
+    ],
+    [
+     "长沙",
+     112.94,
+     28.23,
+     2017
+    ],
+    [
+     "宁波",
+     121.55,
+     29.87,
+     2018
+    ],
+    [
+     "郑州",
+     113.63,
+     34.75,
+     2018
+    ],
+    [
+     "佛山",
+     113.12,
+     23.02,
+     2019
+    ],
+    [
+     "泉州",
+     118.68,
+     24.87,
+     2020
+    ],
+    [
+     "济南",
+     117.12,
+     36.65,
+     2020
+    ],
+    [
+     "合肥",
+     117.23,
+     31.82,
+     2020
+    ],
+    [
+     "南通",
+     120.86,
+     32.01,
+     2020
+    ],
+    [
+     "西安",
+     108.94,
+     34.34,
+     2020
+    ],
+    [
+     "福州",
+     119.3,
+     26.08,
+     2020
+    ],
+    [
+     "东莞",
+     113.75,
+     23.02,
+     2021
+    ],
+    [
+     "常州",
+     119.97,
+     31.81,
+     2023
+    ],
+    [
+     "烟台",
+     121.45,
+     37.46,
+     2023
+    ]
+   ],
+   "line": "2006 年只有上海一座，到 2023 年已经有 *26 座*。",
+   "src": "各市统计公报；人民日报海外版整理 · 底图 Natural Earth",
+   "label": "逐年撒点 · Map Timeline",
+   "ref": "VideoHive「Map Route Generator」3.5K · 「World Map Animation」2.8K",
+   "t": 52.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "street_map",
+   "d": 6.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "一个路口，三家奶茶店",
+   "note": "示意地图 · 自绘 GeoJSON",
+   "geojson": "../charts2/assets/street_demo.geojson",
+   "route": [
+    [
+     120.0031,
+     30.00125
+    ],
+    [
+     120.0031,
+     30.0018
+    ],
+    [
+     120.005,
+     30.0018
+    ],
+    [
+     120.005,
+     30.0027
+    ],
+    [
+     120.00485,
+     30.0027
+    ]
+   ],
+   "hl": "奶茶店 C",
+   "mock": "示意",
+   "line": "出了地铁口，*不到 400 米*就路过三家奶茶店。",
+   "src": "示意地图（自绘）",
+   "label": "街区地图 · Street Map",
+   "ref": "VideoHive「Map Kit」1.4K · 「3D Map Generator」1.2K",
+   "t": 59.6,
+   "tr": "hard"
+  }
+ ]
+}

@@ -24,7 +24,43 @@ STYLE = {
 .st-poster .cap { text-align:left; left:80px; right:80px; }
 #root.v.st-poster .cap { left:56px; right:56px; bottom:540px; }
 .st-poster .cap .cp { letter-spacing:.01em; }
+/* effect internals, poster-cut: flush-left type on the grid margin, rules instead of boxes, square corners, condensed numerals */
+.st-poster .fx > .stage > .col { width:100%; box-sizing:border-box; padding:0 80px; align-items:flex-start; }
+.st-poster .fx > .stage > .col .big, .st-poster .fx > .stage > .col .sub { text-align:left; }
+.st-poster .fx > .stage > .f3 { width:100%; box-sizing:border-box; padding:0 80px; text-align:left; }
+#root.v.st-poster .fx > .stage > .col, #root.v.st-poster .fx > .stage > .f3 { padding:0 120px 0 56px; }
+.st-poster .fx .big { letter-spacing:-.035em; line-height:1; }
+.st-poster .fx .sub { align-self:stretch; font-family:var(--f-latin); font-weight:700; font-size:2.3vmin; letter-spacing:.04em; color:var(--accent);
+  border-top:3px solid var(--fg); padding-top:1.3vmin; margin-top:2.4vmin; max-width:none; }
+.st-poster .fx .sw { justify-content:flex-start; padding:0 80px; text-align:left; letter-spacing:-.04em; }
+#root.v.st-poster .fx .sw { padding:0 120px 0 56px; }
+.st-poster .fx .sw.s2 { color:#fff; -webkit-text-stroke:0; }
+.st-poster .fx .an { font-family:var(--f-mono); color:var(--fg); } .st-poster .fx .an i { height:2px; background:var(--fg); }
+.st-poster .fx .w3k, .st-poster .fx .dtc-eq b, .st-poster .fx .cov { font-family:var(--f-num); font-variation-settings:"wdth" 72, "wght" 900; letter-spacing:-.03em; }
+.st-poster .fx .w3t, .st-poster .fx .coq, .st-poster .fx .dtc-h { letter-spacing:-.025em; }
+.st-poster .fx .ws .ws-slot .ws-bg { border-radius:0; inset:.02em -.06em; background:var(--fg); } .st-poster .fx .ws .ws-u { height:.1em; }
+.st-poster .fx .ws .ws-reel span, .st-poster .fx .ws .ws-reel span.last { color:var(--bg); } .st-poster .fx .ws .ws-x { background:var(--accent); }
+.st-poster .fx .qd .qd-d i, .st-poster .fx .qd .qd-d .rg { border-radius:0; } .st-poster .fx .qd .qd-q.hot { background:color-mix(in srgb, var(--accent) 22%, transparent); }
+.st-poster .fx .dtc .sp { stroke-linecap:butt; } .st-poster .fx .dtc .glb { stroke-width:.5; }
+.st-poster .fx .bs .bs-t .em .emb { background:var(--accent); } .st-poster .fx .bs .bs-vig { display:none; } .st-poster .fx .bs .bs-s { font-family:var(--f-latin); letter-spacing:.02em; }
+.st-poster .fx .co .coc { border-radius:0; border:0; border-top:6px solid var(--card-fg); } .st-poster .fx .co .coc.pk { border-top-color:var(--accent); }
+.st-poster .fx .co .cok { font-family:var(--f-num); font-variation-settings:"wdth" 72, "wght" 900; font-size:26px; color:var(--card-fg); }
+.st-poster .fx .co .coy { border-radius:0; } .st-poster .fx .co .cosel { border-radius:0; box-shadow:none; border-width:4px; }
+.st-poster .fx .cv .cvs { border-radius:0; box-shadow:inset 0 4px 0 var(--card-fg); } .st-poster .fx .cv .cvt { border-radius:0; box-shadow:inset 0 0 0 4px var(--accent); }
+.st-poster .fx .cv .cvd { border-radius:0; box-shadow:none; } .st-poster .fx .cv .cvp { stroke-linecap:butt; }
+.st-poster .fx .sl-scr { border-radius:0; box-shadow:0 0 0 3px var(--fg); } .st-poster .fx .sl-t, .st-poster .fx .sl-cur { border-radius:0; }
 """,
+    # the four effect grounds: cool white, ink, signal blue, concrete grey. pc-* = the effect caption block, ix = its index cell
+    "fx_themes": {
+        "paper": {"bg": "#f2f2ef", "fg": "#0a0a0a", "muted": "#6b6b66", "accent": "#1f3bff", "card": "#ffffff", "card-fg": "#0a0a0a", "line": "#d6d6d1",
+                  "pc-bg": "#0a0a0a", "pc-fg": "#f2f2ef", "pc-em": "#8da0ff", "ix-fg": "#ffffff"},
+        "ink":   {"bg": "#0a0a0a", "fg": "#f2f2ef", "muted": "#8d8d88", "accent": "#6a80ff", "card": "#161616", "card-fg": "#f2f2ef", "line": "#2a2a2a",
+                  "pc-bg": "#f2f2ef", "pc-fg": "#0a0a0a", "pc-em": "#1f3bff", "ix-fg": "#0a0a0a"},
+        "red":   {"bg": "#1f3bff", "fg": "#ffffff", "muted": "rgba(255,255,255,.78)", "accent": "#0a0a0a", "card": "#ffffff", "card-fg": "#0a0a0a", "line": "rgba(255,255,255,.35)",
+                  "pc-bg": "#ffffff", "pc-fg": "#0a0a0a", "pc-em": "#1f3bff", "ix-fg": "#ffffff"},
+        "lemon": {"bg": "#d3d5d8", "fg": "#0a0a0a", "muted": "#45474a", "accent": "#1f3bff", "card": "#f2f2ef", "card-fg": "#0a0a0a", "line": "rgba(10,10,10,.18)",
+                  "pc-bg": "#0a0a0a", "pc-fg": "#ffffff", "pc-em": "#8da0ff", "ix-fg": "#ffffff"},
+    },
 }
 
 CSS = r"""
@@ -449,6 +485,87 @@ def outro(b, X, t, d, cid):
     X.tw(f'tl.from("{s} .zh:not(.m) .c", {{yPercent:70, opacity:0, duration:0.5, ease:"expo.out", stagger:0.05}}, {t + 0.35:.3f});')
     X.tw(f'tl.from("{s} .zh.m, {s} .mo", {{opacity:0, y:16, duration:0.45, stagger:0.12}}, {t + 0.7:.3f});')
     X.sfx(t + 0.35, "hit")
+
+
+# ---------------------------------------------------------------- the page around a library effect
+FX_CSS = r"""
+.pf .pf-grid i { position:absolute; width:1px; background:var(--fg); opacity:.07; transform-origin:50% 0; }
+.pf .pf-hd { position:absolute; display:flex; align-items:center; justify-content:space-between; color:var(--fg); }
+.pf .pf-hd .l { display:flex; align-items:center; gap:16px; }
+.pf .pf-hd .n { font-family:var(--f-num); font-variation-settings:"wdth" 72, "wght" 900; font-size:60px; line-height:.78; letter-spacing:-.03em; color:var(--accent); }
+.pf .pf-hd .t b { display:block; font-family:var(--f-display); font-weight:900; font-size:20px; line-height:1.25; }
+.pf .pf-hd .t span { display:block; font-family:var(--f-latin); font-weight:600; font-size:15px; line-height:1.3; opacity:.6; letter-spacing:.02em; }
+.pf .pf-hd .r { display:flex; align-items:center; gap:18px; font-family:var(--f-mono); font-size:15px; letter-spacing:.06em; }
+.pf .pf-hd .r .id { border:2px solid var(--fg); padding:3px 10px 2px; text-transform:uppercase; }
+.pf .pf-hd.one .n { font-size:42px; } .pf .pf-hd.one .l { gap:12px; } .pf .pf-hd.one .t b, .pf .pf-hd.one .t span { display:inline; font-size:20px; margin-right:12px; }
+.pf .pf-hd .sq { display:flex; gap:5px; } .pf .pf-hd .sq i { width:10px; height:10px; box-shadow:inset 0 0 0 1.5px var(--fg); opacity:.45; }
+.pf .pf-hd .sq i.on { background:var(--accent); box-shadow:none; opacity:1; }
+.pf .pf-hr, .pf .pf-pg { position:absolute; height:3px; transform-origin:0 50%; } .pf .pf-hr { background:var(--fg); } .pf .pf-pg { background:var(--accent); }
+.pf .pf-cap { position:absolute; display:flex; align-items:stretch; }
+.pf .pf-cap .ix { flex:none; display:flex; align-items:center; justify-content:center; background:var(--accent); color:var(--ix-fg, #fff);
+  font-family:var(--f-num); font-variation-settings:"wdth" 72, "wght" 900; letter-spacing:-.02em; }
+.pf .pf-cap .tx { display:block; background:var(--pc-bg, var(--fg)); color:var(--pc-fg, var(--bg)); font-family:var(--f-body); font-weight:700; line-height:1.3; text-align:left; padding:8px 24px 10px 20px; }
+.pf .pf-cap .em .emt { color:var(--pc-em, var(--accent)); font-weight:900; } .pf .pf-cap .em .emb { display:none; }
+.pf .pf-ft { position:absolute; display:flex; justify-content:space-between; gap:32px; font-family:var(--f-mono); font-size:15px; letter-spacing:.04em; color:var(--fg); }
+.pf .pf-ft > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; opacity:.62; } .pf .pf-ft > div:last-child { text-align:right; }
+.pf .pf-ft::before { content:""; position:absolute; left:0; right:0; top:-10px; height:1px; background:var(--fg); opacity:.3; }
+.pf .pf-wipe i { position:absolute; top:0; bottom:0; transform-origin:50% 0; }
+.pf.photo .pf-hd, .pf.photo .pf-ft { color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.55); } .pf.photo .pf-hd .r .id { border-color:#fff; }
+.pf.photo .pf-hr, .pf.photo .pf-ft::before { background:#fff; } .pf.photo .pf-grid { display:none; }
+.pf.photo .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 18%, rgba(0,0,0,0) 72%, rgba(0,0,0,.6)); }
+"""
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """a library effect set as a poster page: the 12-column hairlines draw in, a header with the page number in condensed
+    Archivo, the reel index as squares and the effect id boxed; a timer rule; the spoken line as a flush-left ink block
+    with an index cell; mono footnote under a hairline. Each page opens with the column wipe in the previous page's ground."""
+    from h9 import aefx
+    X.css("po-fx", FX_CSS)
+    g = G(X)
+    i, n = X.beat["i"], X.beat["n"]
+    v, photo = g.v, parts["photo"]
+    top = 202 if v else 28                     # header band; 9:16 keeps the platform's top 200 clear and ends by 244 (effects start there)
+    rule = top + (40 if v else 70)
+    ftop = 1478 if v else g.H - 38
+    cols = "".join(f'<i style="left:{g.x(c) - g.g // 2 if 0 < c < 12 else (g.m if c == 0 else g.W - g.m)}px; top:{rule}px; height:{ftop - 12 - rule}px"></i>' for c in range(13))
+    sq = ("".join(f'<i class="{"on" if k == i else ""}"></i>' for k in range(n))) if n <= 24 else ""
+    X.used_text.update(f"{i + 1:02d}{n:02d}/")
+    hd = (f'<div class="pf-hd{" one" if v else ""}" style="left:{g.m}px; right:{g.m}px; top:{top}px; height:{34 if v else 60}px">'
+          f'<div class="l"><div class="n">{i + 1:02d}</div><div class="t"><b>第九顶帽子</b><span>HAT 9 — {parts["topic"]}</span></div></div>'
+          f'<div class="r">{f"<div class=sq>{sq}</div>" if sq and not (v and p.get("host")) else ""}<div class="id">{parts["fxid"]}</div></div></div>'
+          f'<i class="pf-hr" style="left:{g.m}px; right:{g.m}px; top:{rule}px"></i><i class="pf-pg" style="left:{g.m}px; width:{g.W - 2 * g.m}px; top:{rule}px"></i>')
+    # caption: index cell + ink block, flush to the left margin; in 9:16 the right 120 px stay clear for the platform buttons
+    px = parts["cap_px"]
+    cw = round(px * 1.45)
+    maxw = (g.W - g.m - 120 - cw) if v else (g.W - 2 * g.m - cw - (430 if p.get("host") else 0))
+    pos = f"left:{g.m}px; top:1330px" if v else f"left:{g.m}px; bottom:66px"
+    cap = (f'<div class="pf-cap" style="{pos}"><div class="ix" style="width:{cw}px; font-size:{round(px * 0.9)}px">{i + 1:02d}</div>'
+           f'<div class="tx" style="font-size:{px}px; max-width:{maxw}px">{parts["cap"]}</div></div>')
+    ft = (f'<div class="pf-ft" style="left:{g.m}px; right:{g.m}px; top:{ftop}px"><div>{parts["foot"]}</div><div>{parts["src"]}</div></div>'
+          if parts["foot"] or parts["src"] else "")
+    # wipe: 12 strips in the previous page's ground retract upward, column by column (same ground → signal blue)
+    th = aefx.THEMES.get(p.get("theme")) or {}
+    bg = th.get("bg", X.S["tokens"]["bg"])
+    prev = getattr(X, "_pf_prev", None)
+    wipe = ""
+    if prev and abs(prev[1] - t) < 0.05:
+        col = "#1f3bff" if prev[0] == bg else prev[0]
+        if col == "#1f3bff" and bg == "#1f3bff": col = "#0a0a0a"
+        wipe = '<div class="pf-wipe">' + "".join(f'<i style="left:{g.x(c) - g.g // 2 - 1 if c else 0}px; width:{round(g.cw + g.g) + 2 + (g.m if c in (0, 11) else 0)}px; background:{col}"></i>' for c in range(12)) + "</div>"
+    X._pf_prev = (bg, t + d)
+    inner = ('<div class="scrim"></div>' if photo else "") + f'<div class="pf-grid">{cols}</div>{wipe}{hd}{cap}{ft}'
+    X.clip(f"{cid}c", t, d, inner, f"ctx pf{' photo' if photo else ''}", 30, track=20, sty=parts["sty"])
+    s = f"#{cid}c"
+    if wipe:
+        X.tw(f'tl.to("{s} .pf-wipe i", {{scaleY:0, duration:0.3, ease:"power4.inOut", stagger:0.018}}, {t:.3f});')
+    X.tw(f'tl.fromTo("{s} .pf-grid i", {{scaleY:0, opacity:0.22}}, {{scaleY:1, duration:0.55, ease:"expo.out", stagger:0.02}}, {t:.3f});')
+    X.tw(f'tl.to("{s} .pf-grid i", {{opacity:0.07, duration:0.6, ease:"power2.out"}}, {t + 0.7:.3f});')
+    X.tw(f'tl.from("{s} .pf-hr", {{scaleX:0, duration:0.5, ease:"expo.inOut"}}, {t:.3f});')
+    X.tw(f'tl.fromTo("{s} .pf-pg", {{scaleX:0}}, {{scaleX:1, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+    X.tw(f'tl.from("{s} .pf-hd .n", {{yPercent:60, opacity:0, duration:0.4, ease:"expo.out"}}, {t + 0.1:.3f});')
+    X.tw(f'tl.from("{s} .pf-cap .ix", {{scaleX:0, transformOrigin:"0 50%", duration:0.3, ease:"expo.out"}}, {t + 0.08:.3f});')
+    X.tw(f'tl.fromTo("{s} .pf-cap .tx", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:0.4, ease:"power3.out"}}, {t + 0.16:.3f});')
 
 
 SCENES = {"hundred": hundred, "problem": problem, "quote": quote, "price": price, "keep": keep, "thesis": thesis, "outro": outro}

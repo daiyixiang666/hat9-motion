@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -90,6 +90,7 @@ def main():
     sid = a.style or meta.get("style", "ledger")
     style = load_style(sid)
     brand = delivery.apply_brand(style, meta, vpath.parent)
+    aefx.apply_style(style)                                               # effects' page themes follow the style's palette
     series = meta.get("series") or {}
     if series.get("opener") and not meta.get("lead"):
         meta["lead"] = float(series.get("opener_dur", 1.8))     # the narration starts after the series card

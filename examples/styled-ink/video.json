@@ -1,0 +1,317 @@
+{
+ "meta": {
+  "title": "动效 · ink 风格",
+  "aspect": "16:9",
+  "style": "ink",
+  "duration": 60.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "apple_blur",
+   "d": 2.6,
+   "label": "#9 苹果式逐字模糊 · Blur Fade",
+   "ref": "206.8万播放（2025）",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "text": "看懂谁在赚钱",
+   "sub": "follow the money",
+   "line": "*看懂谁在赚钱*，比看懂谁在卖货更重要。",
+   "host": true,
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "shine",
+   "d": 2.6,
+   "label": "#11 光泽扫过 · Shine Sweep",
+   "ref": "Gold Simple Titles 1.1万份",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "高级感",
+   "line": "这种干净的光，就是大家说的*高级感*。",
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "typewriter",
+   "d": 2.6,
+   "label": "打字机 · Typewriter",
+   "ref": "T5 · 科技 / 教程类必备",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "prompt: 杂志感，柔光",
+   "line": "提示词里加上*杂志感*三个字，画面就变了。",
+   "host": true,
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "diffuse",
+   "d": 2.6,
+   "label": "弥散光 · Gradient Blobs",
+   "ref": "B站「碰撞吧！」107万播放",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "先想清楚",
+   "sub": "think before you generate",
+   "line": "先别急着生成，*先想清楚*要什么。",
+   "t": 7.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.6,
+   "fx": "cite_pdf",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "pdf": "../cite/assets/us_v_google_2024_p8.pdf",
+   "file": "us_v_google_mem_op_2024.pdf",
+   "page_label": "p. 8 / 286",
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly.",
+   "zh": "谷歌是*垄断者*，而且为了维持垄断，它的所作所为也像一个垄断者。",
+   "cite": {
+    "title": "United States v. Google LLC",
+    "meta": "D.D.C. · No. 20-cv-3010 (APM) · 2024-08-05",
+    "page": "Mem. Op. p. 4 · Judge Amit P. Mehta"
+   },
+   "line": "美国法院 2024 年的判决书里写得很直白：*谷歌是垄断者*。",
+   "label": "引用 PDF 原文 · Document Zoom",
+   "ref": "判决书 / 财报 / 研报原文高亮",
+   "src": "美国联邦地区法院判决书（公有领域）",
+   "t": 10.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.6,
+   "fx": "cite_paper",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "title": "Attention Is All You Need",
+   "authors": [
+    "Ashish Vaswani",
+    "Noam Shazeer",
+    "Niki Parmar",
+    "Jakob Uszkoreit",
+    "Llion Jones",
+    "Aidan N. Gomez",
+    "Łukasz Kaiser",
+    "Illia Polosukhin"
+   ],
+   "max_authors": 8,
+   "venue": "NeurIPS 2017",
+   "arxiv": "arXiv:1706.03762",
+   "year": 2017,
+   "abstract": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms …",
+   "hl": "based solely on attention mechanisms",
+   "takeaway": "提出 *Transformer*：只靠注意力机制，不再用循环和卷积",
+   "line": "今天的大语言模型，大多建在 2017 年这篇论文提出的 *Transformer* 上。",
+   "label": "引用论文 · Paper Card",
+   "ref": "论文标题页 + 摘要高亮",
+   "src": "NeurIPS 2017 · arXiv:1706.03762",
+   "t": 15.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.0,
+   "fx": "cite_quote",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "Focusing is about saying no.",
+   "zh": "专注，就是学会说不。",
+   "hl": "saying no",
+   "name": "Steve Jobs",
+   "role": "Apple 联合创始人",
+   "source": "WWDC 1997 收尾问答",
+   "date": "1997-05-13",
+   "line": "乔布斯在 1997 年说过：*专注，就是学会说不*。",
+   "label": "引用原话 · Quote Card",
+   "ref": "名人原话 + 出处 + 译文",
+   "src": "Apple WWDC 1997 closing Q&A",
+   "t": 19.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.8,
+   "fx": "cite_stack",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "claim": "ChatGPT 是增长最快的消费级应用",
+   "sources": [
+    {
+     "kind": "帖子",
+     "name": "Sam Altman",
+     "date": "2022-12-05",
+     "text": "上线 5 天，用户破 100 万",
+     "verdict": "ok"
+    },
+    {
+     "kind": "新闻",
+     "name": "Reuters · UBS",
+     "date": "2023-02-01",
+     "text": "上线约 2 个月，月活约 1 亿",
+     "verdict": "ok"
+    },
+    {
+     "kind": "发布会",
+     "name": "OpenAI DevDay",
+     "date": "2025-10-06",
+     "text": "每周活跃用户 8 亿",
+     "verdict": "ok"
+    }
+   ],
+   "line": "三个来源对得上：*五天一百万，两个月一亿*，现在每周八亿。",
+   "label": "多方信源 · Source Stack",
+   "ref": "交叉验证：每条来源打勾，连线汇到结论",
+   "src": "@sama · Reuters · TechCrunch（DevDay 2025）",
+   "t": 23.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "chapter_bar",
+   "d": 4.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "这期分三部分",
+   "chapters": [
+    "门店有多少",
+    "钱从哪来",
+    "为什么不怕便宜"
+   ],
+   "hl": 1,
+   "line": "接下来第二部分：*钱从哪来*。",
+   "label": "章节进度条 · Chapter Progress",
+   "ref": "talkcraft chapter-progress-list · B 站分 P 目录",
+   "t": 28.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "text_pages",
+   "d": 6.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "蜜雪冰城 · 二十八年",
+   "text": "蜜雪冰城 1997 年从郑州的一个刨冰摊起家。到 2024 年底，全球门店 46,479 家，比麦当劳还多。2024 年收入 248.3 亿元，净利润 44.5 亿元。收入里 97.5% 来自卖给加盟店的原料、包材和设备，加盟费只占 2.5%。",
+   "line": "蜜雪冰城的二十八年，*一段话*讲完。",
+   "src": "蜜雪集团招股书；2024 年度业绩公告；McDonald's 2024 10-K",
+   "label": "分屏读完 · Text Pages",
+   "ref": "Envato Elements「Hook & Captions」Titles Popular 第 12 · B 站动态歌词排版 898 万",
+   "t": 32.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "vertical_title",
+   "d": 5.6,
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "mode": "classical",
+   "text": "學而時習之|不亦說乎|有朋自遠方來|不亦樂乎|人不知而不慍|不亦君子乎",
+   "sub": "《論語 · 學而》",
+   "seal": "論語",
+   "line": "《论语》开篇第一句，讲的就是*学习*。",
+   "src": "《论语 · 学而》（繁体竖排）",
+   "label": "竖排古文 · Vertical Classical",
+   "ref": "国风纪录片 / 片头常用的竖排版式",
+   "t": 38.8,
+   "tr": "hard"
+  },
+  {
+   "fx": "doc_photo",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../docs2/assets/photo_ruling.jpg",
+   "corners": [
+    [
+     20.62,
+     10.0
+    ],
+    [
+     77.5,
+     15.83
+    ],
+    [
+     81.25,
+     92.5
+    ],
+    [
+     15.62,
+     88.33
+    ]
+   ],
+   "hl": [
+    [
+     42.5,
+     12.9,
+     46.56,
+     2.42
+    ],
+    [
+     11.44,
+     16.39,
+     10.97,
+     2.42
+    ]
+   ],
+   "title": "拍歪了也没关系",
+   "caption": "自动找角、摆正、提亮，再划重点",
+   "line": "手机拍的判决书歪了，*自动摆正*再划重点。",
+   "src": "拍摄效果为示意；原文：US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域",
+   "label": "拍照文档摆正 · Document Scan",
+   "ref": "Flat Pack FX「Vox Highlighter Effect」31.3 万 · Motion Street「Motion Graphics Like Vox」83.8 万",
+   "scene": "fx",
+   "t": 44.4,
+   "tr": "hard"
+  },
+  {
+   "fx": "doc_flip",
+   "d": 5.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "pdf": "../docs2/assets/us_v_google_2024_p1-24.pdf",
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly",
+   "title": "286 页里的一句话",
+   "caption": "美国诉谷歌案判决书，2024 年 8 月 5 日",
+   "line": "286 页的判决书，关键那句在*第 8 页*。",
+   "src": "US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域；片中翻阅前 24 页",
+   "label": "多页文档翻阅 · Document Flip",
+   "ref": "Motion Array「Edit A Documentary Like Johnny Harris」53.9 万",
+   "scene": "fx",
+   "of": 286,
+   "t": 49.4,
+   "tr": "hard"
+  },
+  {
+   "fx": "doc_pick",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "pdf": "../docs2/assets/us_v_google_2024_p1-24.pdf",
+   "range": [
+    1,
+    10
+   ],
+   "pick": 8,
+   "quote": "Google is a monopolist, and it has acted as one to maintain its monopoly",
+   "title": "一叠材料，只看这一页",
+   "line": "一叠材料里，真正要看的是*这一页*。",
+   "src": "US v. Google LLC（D.D.C. 2024），美国联邦法院文书，公有领域",
+   "label": "抽出一页 · Pick a Page",
+   "ref": "Premiere Gal「3D Paper Highlighter」19.8 万 · Documentary Style Pack（Envato Elements 热门）",
+   "scene": "fx",
+   "tag": "第 8 页",
+   "t": 55.0,
+   "tr": "hard"
+  }
+ ]
+}

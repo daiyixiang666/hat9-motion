@@ -33,7 +33,21 @@ STYLE = {
     "css": """
 .st-pixel .cap .cp { font-family:var(--f-display); letter-spacing:.04em; }
 #root.v.st-pixel .cap { padding:0 140px 0 60px; }
+/* effects drawn in this style: square corners, no blur, hard stepped type shadows, a 6-px dither on the ground,
+   photos and video mosaicked + posterised through the #pxmo filter that FX_FRAME puts on the page */
+.st-pixel .fx { background-image:repeating-conic-gradient(rgba(26,28,44,.07) 0 25%, transparent 0 50%) !important; background-size:12px 12px !important; }
+.st-pixel .fx * { border-radius:0 !important; }
+.st-pixel .fx .big { text-shadow:.07em .07em 0 var(--line); }
+.st-pixel .fx .c, .st-pixel .fx .w, .st-pixel .fx .ln, .st-pixel .fx .big, .st-pixel .fx .fw-w { filter:none !important; }
+.st-pixel .fx img:not(.mx-cov), .st-pixel .fx video:not(.mx-cov) { filter:url(#pxmo) !important; image-rendering:pixelated; }
 """,
+    # the four page themes an effect can ask for, all from Sweetie 16: menu grey, night, boss red, desert sand
+    "fx_themes": {
+        "paper": {"bg": "#f4f4f4", "fg": "#1a1c2c", "muted": "#333c57", "accent": "#b13e53", "card": "#94b0c2", "card-fg": "#1a1c2c", "line": "#94b0c2"},
+        "ink":   {"bg": "#1a1c2c", "fg": "#f4f4f4", "muted": "#94b0c2", "accent": "#ffcd75", "card": "#29366f", "card-fg": "#f4f4f4", "line": "#333c57"},
+        "red":   {"bg": "#b13e53", "fg": "#f4f4f4", "muted": "#f4f4f4", "accent": "#ffcd75", "card": "#1a1c2c", "card-fg": "#f4f4f4", "line": "#5d275d"},
+        "lemon": {"bg": "#ffcd75", "fg": "#1a1c2c", "muted": "#5d275d", "accent": "#b13e53", "card": "#f4f4f4", "card-fg": "#1a1c2c", "line": "#ef7d57"},
+    },
 }
 
 # ------------------------------------------------------------------ palette: Sweetie 16 (GrafxKid)
@@ -1578,6 +1592,133 @@ def outro(b, X, t, d, cid):
     toggle(X, f"{s} .s2", t, d, 0.25, 0, 1)
     chip(X, t_in(X, t), "start", 0.35)
     page(X, b, t, d, cid, h)
+
+
+# ------------------------------------------------------------------ effects in this style: the game screen around any effect
+FX_CSS = r"""
+.pxf { pointer-events:none; }
+.pxf .bz { position:absolute; inset:12px; box-shadow:0 0 0 6px var(--fg), 0 0 0 60px var(--bg); }
+.pxf .bz b, .pxf .bz i { position:absolute; width:6px; height:6px; display:block; }
+.pxf .bz b { background:var(--bg); } .pxf .bz i { background:var(--fg); }
+.pxf .bar { position:absolute; left:18px; right:18px; background:#1a1c2c; box-shadow:0 6px 0 #333c57; }
+.pxf .bar .hud { top:50%; transform:translateY(-50%); }
+.pxf .plate { position:absolute; left:0; right:0; display:flex; justify-content:center; }
+.pxf .plate .in { position:relative; display:flex; flex-direction:column; gap:6px; background:#1a1c2c; padding:18px 30px 18px;
+  box-shadow:0 0 0 6px #f4f4f4, 0 0 0 12px #1a1c2c, 12px 12px 0 12px rgba(26,28,44,.45); }
+.pxf .plate .row { position:relative; display:flex; align-items:flex-end; }
+.pxf .plate .row > img { position:relative; image-rendering:pixelated; display:block; }
+.pxf .plate .nt { position:absolute; left:24px; top:-18px; background:#1a1c2c; box-shadow:0 0 0 3px #f4f4f4, 0 0 0 6px #1a1c2c; padding:6px 9px 3px;
+  font-family:var(--f-pixel); font-size:24px; color:#ffcd75; line-height:1; white-space:nowrap; }
+.pxf .plate .cur { position:absolute; right:12px; bottom:6px; font-family:var(--f-pixel); font-size:24px; color:#ffcd75; line-height:1; }
+.pxf .stat { position:absolute; display:flex; justify-content:space-between; gap:36px; background:#1a1c2c; padding:3px 12px 0;
+  font-family:var(--f-body); font-size:24px; line-height:30px; color:#94b0c2; white-space:nowrap; }
+.pxf .stat b { font-weight:400; color:#f4f4f4; }
+.pxf .scan { position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(10,10,20,.10) 0 1px, transparent 1px 3px); }
+"""
+
+
+def _cut(text, max_px, size=24):
+    """fit a line of 12-px pixel type drawn at `size` px into max_px, with an ellipsis."""
+    f = _font(12); k = size / 12
+    if f.getlength(text) * k <= max_px: return text
+    while text and f.getlength(text + "…") * k > max_px: text = text[:-1]
+    return text + "…"
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the page around an effect drawn as a game screen: a bezel in the theme's ink, a status bar with the HUD (hearts,
+    topic, world, coin, countdown), the spoken line in an RPG text box (Fusion Pixel, the keyword in gold, typed on, a
+    name tag with the effect id, a ▼ cursor) and a status line with label and source. The effect keeps the middle."""
+    from h9 import core
+    X.css("pixel", CSS); X.css("pixel-fx", FX_CSS)
+    V = X.portrait; W, H = X.W, X.H
+    s = f"#{cid}c"
+    i = X.beat["i"]
+    # bezel with stepped (one-pixel-rounded) corners
+    e = 12
+    cn = (f'<b style="left:-6px;top:-6px"></b><b style="right:-6px;top:-6px"></b><b style="left:-6px;bottom:-6px"></b><b style="right:-6px;bottom:-6px"></b>'
+          f'<i style="left:0;top:0"></i><i style="right:0;top:0"></i><i style="left:0;bottom:0"></i><i style="right:0;bottom:0"></i>')
+    h = f'<div class="bz">{cn}</div>'
+    # status bar + HUD
+    bt, bh = (202, 48) if V else (18, 54)
+    hu = asset_png(X, "heart", heart); cu, cw, ch = sheet(X, "coin", coin, 4)
+    hearts = "".join(f'<img src="{hu}" alt="" style="width:{9 * UK}px;height:{8 * UK}px">' for _ in range(3))
+    topic = fit.plain(p.get("topic", ""))
+    th = ""
+    if topic:
+        url, tw, thh = btext(X, topic, 12, "w", "k", None)
+        th = f'<img src="{url}" alt="" style="width:{tw * UK}px;height:{thh * UK}px;margin-left:12px">'
+    world = f"WORLD {i // 4 + 1}-{i % 4 + 1}"
+    X.used_text.update(world + " HAT9 TIME 0123456789×")
+    hud_l = f'<div class="hud" style="left:18px">{hearts}<span style="margin-left:6px;color:#f4f4f4">HAT9</span>{th}</div>'
+    hud_c = "" if V else f'<div class="hud" style="left:0;right:0;justify-content:center;color:#73eff7">{world}</div>'
+    hud_r = (f'<div class="hud" style="right:18px;color:#f4f4f4"><span class="spr coinic" style="width:{cw * UK}px;height:{ch * UK}px;display:block;'
+             f'background-image:url({cu});background-size:{cw * UK * 4}px {ch * UK}px"></span><span>×{(i + 1) * 7:02d}</span>'
+             f'<span style="margin-left:18px;color:#94b0c2">TIME</span><span class="tm">{math.ceil(d):03d}</span></div>')
+    h += f'<div class="bar" style="top:{bt}px;height:{bh}px">{hud_l}{hud_c}{hud_r}</div>'
+    run_frames(X, f"{s} .coinic", cw, 4, t, d, fps=8, k=UK)
+    ticker(X, f"{s} .tm", t, d, f"String(Math.max(0, Math.ceil({t + d:.3f} - T))).padStart(3, '0')")
+    # the spoken line in a text box: keyword (between *) in gold, 24-px pixel type, wrapped, never shrunk below 12
+    line = str(p.get("line", "")).replace("|", "")
+    plain, gold = "", set()
+    for j, seg in enumerate(line.split("*")):
+        if j % 2: gold.update(range(len(plain), len(plain) + len(seg)))
+        plain += seg
+    k = 2                                  # 24-px type at 2× = 48-px glyphs: fits the band effects leave for a caption
+    inner_w = (W - 2 * 120 - 60) if V else 1800 - 60
+    fpx = 24
+    lines = wrap(plain, inner_w / k, fpx)
+    if len(lines) > 2: fpx = 12; lines = wrap(plain, inner_w / k, fpx)
+    rows, pos, n_all = "", 0, 0
+    for j, ln in enumerate(lines):
+        runs = []
+        for ch_ in ln:
+            while pos < len(plain) and plain[pos] != ch_: pos += 1
+            col = "y" if pos in gold else "w"
+            if runs and runs[-1][1] == col: runs[-1][0] += ch_
+            else: runs.append([ch_, col])
+            pos += 1
+        imgs = ""
+        for txt, col in runs:
+            url, w_, hh = btext(X, txt, fpx, col, "k", "b")
+            imgs += f'<img src="{url}" alt="" style="width:{w_ * k}px;height:{hh * k}px">'
+        rows += f'<div class="row r{j}">{imgs}</div>'
+        n = len(ln.strip())
+        X.tw(f'tl.fromTo("{s} .r{j}", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:{max(0.1, n * 0.035):.3f}, ease:"steps({max(n, 1)})"}}, {t + 0.2 + n_all * 0.035:.3f});')
+        n_all += n
+    fxid = str(p.get("fxid") or p.get("fx", "")).upper()
+    X.used_text.update(fxid + "▼")
+    plate_pos = "top:1326px" if V else "bottom:54px"
+    h += (f'<div class="plate" style="{plate_pos}"><div class="in"><div class="nt">{core_esc(fxid)}</div>{rows}'
+          f'<div class="cur">▼</div></div></div>')
+    X.tw(f'tl.from("{s} .plate .in", {{y:30, opacity:0, duration:0.16, ease:"steps(4)"}}, {t + 0.04:.3f});')
+    tend = t + 0.2 + n_all * 0.035
+    X.tw(f'tl.set("{s} .cur", {{opacity:0}}, {t:.3f});')
+    blink(X, f"{s} .cur", tend, max(0.4, t + d - tend - 0.1), 2)
+    chip(X, t + 0.04, "select", 0.22)
+    # status line: label (effect name) and source, 24-px pixel type on the ink strip
+    lab = fit.plain(p.get("label", "")); src = fit.plain(p.get("src", ""))
+    if lab or src:
+        if V:
+            ft = f'<b>{core_esc(_cut("SOURCE · " + src if src else lab, W - 2 * 56 - 24))}</b>'
+            sty = f"left:56px;right:56px;top:1494px;line-height:24px;padding:0 12px"
+        else:
+            half = (W - 36 - 24 - 36) / 2
+            ft = f'<span>{core_esc(_cut(lab, half))}</span><b>{core_esc(_cut("SOURCE · " + src, half) if src else "")}</b>'
+            sty = "left:18px;right:18px;bottom:18px"
+        X.used_text.update(lab + src + "SOURCE ·…")
+        h += f'<div class="stat" style="{sty}">{ft}</div>'
+    # the photo mosaic filter for this page: average (pre-blur), sample one pixel per 12-px cell, grow it to the cell,
+    # posterise to eight levels a channel
+    lv = " ".join(f"{v / 7:.3f}" for v in range(8))
+    h += ('<svg width="0" height="0" style="position:absolute"><filter id="pxmo" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">'
+          '<feGaussianBlur in="SourceGraphic" stdDeviation="4" edgeMode="duplicate" result="s"/>'
+          '<feFlood x="5" y="5" width="2" height="2"/><feComposite width="12" height="12"/><feTile result="a"/>'
+          '<feComposite in="s" in2="a" operator="in"/><feMorphology operator="dilate" radius="6"/>'
+          f'<feComponentTransfer><feFuncR type="discrete" tableValues="{lv}"/><feFuncG type="discrete" tableValues="{lv}"/><feFuncB type="discrete" tableValues="{lv}"/></feComponentTransfer>'
+          '</filter></svg>')
+    if X.v.get("meta", {}).get("crt", True): h += '<div class="scan"></div>'
+    X.clip(f"{cid}c", t, d, f'<div class="pxs pxo pxf" style="position:absolute;inset:0;background:transparent">{h}</div>', "ctx", 30, track=20, sty=parts["sty"])
 
 
 SCENES = {"stage": stage, "online": online, "treasure": treasure, "crowd": crowd, "world": world, "levelup": levelup, "dialog": dialog, "outro": outro}

@@ -103,10 +103,11 @@ def place_labels(cands, obstacles, W, H):
     def ov(a, b):
         return max(0, min(a[0] + a[2], b[0] + b[2]) - max(a[0], b[0])) * max(0, min(a[1] + a[3], b[1] + b[3]) - max(a[1], b[1]))
     placed, out = list(obstacles), []
+    m = W * 0.04                                  # labels keep a margin from the left / right edge of the frame
     for opts in cands:
         best, bi = None, 0
         for i, r in enumerate(opts):
-            inside = r[0] >= 0 and r[1] >= 0 and r[0] + r[2] <= W and r[1] + r[3] <= H
+            inside = r[0] >= m and r[1] >= 0 and r[0] + r[2] <= W - m and r[1] + r[3] <= H
             cost = sum(ov(r, q) for q in placed) + (0 if inside else 1e9)
             if best is None or cost < best: best, bi = cost, i
             if cost == 0: break

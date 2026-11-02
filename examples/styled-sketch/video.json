@@ -1,0 +1,318 @@
+{
+ "meta": {
+  "title": "动效 · sketch 风格",
+  "aspect": "16:9",
+  "style": "sketch",
+  "duration": 44.7,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "write_on",
+   "d": 2.6,
+   "label": "#22 描边书写 · Write-on",
+   "ref": "YouTube 128.5万 / 123.7万播放",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "text": "判断",
+   "line": "这一期只讲两个字：*判断*。",
+   "host": true,
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "line_draw",
+   "d": 3.4,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "points": [
+    [
+     "2021",
+     352.1
+    ],
+    [
+     "2022",
+     688.7
+    ],
+    [
+     "2023",
+     949.5
+    ],
+    [
+     "2024",
+     1286.6
+    ]
+   ],
+   "unit": " 万辆",
+   "dec": 1,
+   "title": "中国新能源汽车 · 年销量",
+   "note": "单位：万辆",
+   "line": "三年，新能源车销量从 352 万辆涨到 *1287 万辆*。",
+   "src": "中国汽车工业协会；工信部",
+   "label": "D2 折线描绘 · Line Chart",
+   "ref": "Envato Popular「Line Chart Infographic」· SonduckFilm 23.2万播放",
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "list_stack",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "4 块钱的三个底气",
+   "items": [
+    [
+     "自有工厂",
+     "原料和包材自己生产"
+    ],
+    [
+     "自建仓配",
+     "从仓库直接送到门店"
+    ],
+    [
+     "规模采购",
+     "4.6 万家店一起下单"
+    ]
+   ],
+   "line": "蜜雪能卖 4 块钱，靠的是*三件事*。",
+   "src": "蜜雪集团招股书 · 2024 年度业绩公告",
+   "label": "要点列表 · List Stack",
+   "ref": "Envato Elements「Checklist Pack」热门 · talkcraft numbered-step-stack",
+   "t": 6.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "steps",
+   "d": 4.4,
+   "theme": "ink",
+   "topic": "做内容",
+   "title": "一条口播，四步做完",
+   "items": [
+    [
+     "写稿",
+     "冲突放在第一句"
+    ],
+    [
+     "配音",
+     "逐字时间戳"
+    ],
+    [
+     "分镜",
+     "一句一个画面"
+    ],
+    [
+     "渲染",
+     "横竖屏各一版"
+    ]
+   ],
+   "line": "用九帽动效做一条口播，只要*四步*。",
+   "src": "hat9-motion 工作流",
+   "label": "步骤流程 · Process Steps",
+   "ref": "talkcraft step-timeline-vertical · 教程类「三步做出……」",
+   "t": 10.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "term_card",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "host": true,
+   "term": "飞轮效应",
+   "reading": "Flywheel Effect",
+   "pos": "商业概念",
+   "definition": "推动一个沉重的飞轮，每一圈都在积累动能，越转越快，*最终不再需要额外用力*。",
+   "example": "价格越低 → 卖得越多 → 采购越便宜 → 价格还能更低",
+   "source": "出处：Jim Collins《从优秀到卓越》（Good to Great，2001）",
+   "line": "这就是吉姆·柯林斯说的*飞轮效应*。",
+   "src": "Jim Collins, Good to Great (2001)",
+   "label": "名词解释 · Term Card",
+   "ref": "talkcraft info-term-card · 回形针 / 所长林超的概念卡",
+   "t": 14.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "pros_cons",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "labels": [
+    "加盟的好处",
+    "加盟的代价"
+   ],
+   "pros": [
+    "开店快",
+    "总部不出店租和人力",
+    "4.6 万家店一起采购更便宜"
+   ],
+   "cons": [
+    "品控难统一",
+    "加盟店之间互相抢客",
+    "一家出事，全网受影响"
+   ],
+   "verdict": "规模越大，管住质量越难",
+   "line": "加盟模式的*好处和代价*，要一起看。",
+   "src": "第九顶帽子分析",
+   "label": "优缺点两栏 · Pros & Cons",
+   "ref": "测评类口播标配 · Envato Elements Checklist Pack",
+   "t": 19.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "question_card",
+   "d": 5.2,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "host": true,
+   "kicker": "先猜一下",
+   "q": "4 块钱一杯的柠檬水，蜜雪靠什么赚钱？",
+   "options": [
+    "🥤 卖饮品",
+    "📝 收加盟费",
+    "📦 卖原料和设备"
+   ],
+   "answer": 2,
+   "reveal": "97.5% 的收入，来自卖给加盟店的商品和设备。",
+   "line": "先猜一下：*蜜雪靠什么赚钱*？",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "设问卡 · Question Card",
+   "ref": "知识区设问手法（小Lin说 / 回形针的问号卡）· Kinetic Typography Pack 4.2K",
+   "t": 24.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "gantt",
+   "d": 5.0,
+   "theme": "paper",
+   "topic": "做内容",
+   "title": "一条 30 秒口播的排期",
+   "note": "示意 · 单位：小时",
+   "tasks": [
+    [
+     "选题与查证",
+     0,
+     2
+    ],
+    [
+     "写稿",
+     1.5,
+     3
+    ],
+    [
+     "配音",
+     3,
+     3.5
+    ],
+    [
+     "分镜",
+     3,
+     4.5
+    ],
+    [
+     "渲染与检查",
+     4.5,
+     5
+    ],
+    [
+     "发布",
+     5,
+     5.2
+    ]
+   ],
+   "unit": "h",
+   "milestones": [
+    [
+     "定稿",
+     3
+    ],
+    [
+     "交付",
+     5.2
+    ]
+   ],
+   "now": 3.8,
+   "hl": 3,
+   "mock": "示意",
+   "line": "写稿和查证可以*并行*，分镜要等配音出来。",
+   "src": "示意排期",
+   "label": "阶段进度 / 甘特图 · Gantt",
+   "ref": "VideoHive「Company Timeline」3.2K · Envato「Infographics 6 Roadmaps」",
+   "t": 29.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "decision_tree",
+   "d": 5.5,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "要不要开一家奶茶加盟店？",
+   "note": "示意 · 一个思路，不是建议",
+   "tree": {
+    "q": "选好了人流稳定的位置？",
+    "yes": {
+     "q": "能接受两年以上回本？",
+     "yes": {
+      "q": "总部主要靠卖原料赚钱？",
+      "yes": {
+       "a": "算清原料成本再签",
+       "good": true
+      },
+      "no": {
+       "a": "问清加盟费用途",
+       "good": true
+      }
+     },
+     "no": {
+      "a": "先别开",
+      "good": false
+     }
+    },
+    "no": {
+     "a": "先别开",
+     "good": false
+    }
+   },
+   "path": [
+    "是",
+    "是",
+    "是"
+   ],
+   "mock": "示意",
+   "line": "先看位置，再看回本，最后看*总部怎么赚钱*。",
+   "src": "第九顶帽子 · 观点（示意）",
+   "label": "决策树 · Decision Tree",
+   "ref": "Envato「Infographics 6 Roadmaps」· VideoHive「Infographic Maker」2.6K",
+   "t": 34.2,
+   "tr": "hard"
+  },
+  {
+   "fx": "handwrite",
+   "d": 5.0,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "title": "4 块钱的底气",
+   "lines": [
+    "一、*自有工厂*：原料自己做",
+    "二、*自建仓配*：直送到店",
+    "三、*规模采购*：4.6 万家店一起买"
+   ],
+   "host": true,
+   "line": "笔记写下三件事：*工厂、仓配、采购*。",
+   "src": "蜜雪集团招股书 · 2024 年度业绩公告",
+   "label": "手写笔记 · Handwriting",
+   "ref": "SonduckFilm「Handwriting Effect」123.7 万 · VideoHive Whiteboard Write 2.1K",
+   "scene": "fx",
+   "t": 39.7,
+   "tr": "hard"
+  }
+ ]
+}

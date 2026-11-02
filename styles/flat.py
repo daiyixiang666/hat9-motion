@@ -821,3 +821,179 @@ SCENES = {
     "network": _wrap(network, lambda X: (.5, .5)),
     "outro": _wrap(outro, lambda X: (.5, .4)),
 }
+
+
+# ---------------------------------------------------------------- effects in this style (aefx beats: "scene": "fx")
+# Four page themes, each a different illustrated world drawn behind the effect by FX_FRAME:
+#   paper = dusk city · ink = night city · lemon = sunny park · red = coral sunset
+STYLE["fx_themes"] = {
+    "paper": {"bg": "#2b2c6b", "fg": "#fff6ea", "muted": "#c9c3e6", "accent": "#ff7a59", "card": "#fff6ea", "card-fg": "#24255a", "line": "rgba(255,246,234,.22)"},
+    "ink":   {"bg": "#15173f", "fg": "#fff6ea", "muted": "#a3a7dc", "accent": "#48d1b2", "card": "#262a63", "card-fg": "#fff6ea", "line": "rgba(255,246,234,.16)"},
+    "lemon": {"bg": "#ffe9b0", "fg": "#24255a", "muted": "#6b5a3a", "accent": "#e2553a", "card": "#ffffff", "card-fg": "#24255a", "line": "rgba(36,37,90,.18)"},
+    "red":   {"bg": "#ff7a59", "fg": "#24255a", "muted": "rgba(36,37,90,.72)", "accent": "#24255a", "card": "#fff6ea", "card-fg": "#24255a", "line": "rgba(36,37,90,.25)"},
+}
+FX_WORLD = {"paper": ("#a68bfa", "dusk"), "ink": ("#2b2c6b", "night"), "lemon": ("#ffc58f", "park"), "red": ("#ffc94a", "sunset")}
+
+STYLE["css"] = r"""
+/* ---- effects (aefx) in flat: grounds come from FX_FRAME; the effect's own page paint goes transparent over them */
+.st-flat .fx, .st-flat .ctx, .st-flat .flg { --f-mono: var(--f-num); }
+.st-flat .flg { overflow:hidden; background:linear-gradient(180deg, var(--bg) 0%, var(--bg) 30%, color-mix(in srgb, var(--bg) 62%, var(--g2)) 100%); }
+.st-flat .flg svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+.st-flat .flg .s1 { fill:color-mix(in srgb, var(--fg) 6%, transparent); }
+.st-flat .flg .s2 { fill:color-mix(in srgb, var(--fg) 11%, transparent); }
+.st-flat .flg .wn { fill:color-mix(in srgb, #ffc94a 60%, transparent); }
+.st-flat .flg .sun { fill:color-mix(in srgb, var(--g2) 70%, var(--bg)); }
+.st-flat .flg .sun2 { fill:none; stroke:color-mix(in srgb, var(--g2) 60%, transparent); stroke-width:8; stroke-dasharray:4 30; stroke-linecap:round; }
+.st-flat .flg .cl { fill:color-mix(in srgb, #ffffff 72%, transparent); }
+.st-flat .flg .h1 { fill:color-mix(in srgb, #48d1b2 30%, var(--bg)); } .st-flat .flg .h2 { fill:color-mix(in srgb, #48d1b2 55%, var(--bg)); }
+.st-flat .flg .h3 { fill:color-mix(in srgb, #24255a 16%, var(--bg)); } .st-flat .flg .h4 { fill:color-mix(in srgb, #24255a 30%, var(--bg)); }
+.st-flat .flg .tr { fill:color-mix(in srgb, #2fb39a 70%, var(--bg)); } .st-flat .flg .tk { fill:color-mix(in srgb, #7a4b3a 70%, var(--bg)); }
+.st-flat .flg .st { fill:var(--fg); }
+.st-flat .flg .pt { fill:none; stroke:var(--fg); stroke-width:3.5; stroke-linecap:round; opacity:.35; }
+.st-flat .flg .bd { fill:none; stroke:color-mix(in srgb, var(--fg) 60%, transparent); stroke-width:5; stroke-linecap:round; stroke-linejoin:round; }
+/* ---- the page around an effect */
+.st-flat .ctx .flh { position:absolute; left:80px; right:80px; top:40px; height:48px; display:flex; align-items:center; justify-content:space-between; color:var(--fg); }
+.st-flat .ctx .flh .l { display:flex; align-items:center; gap:12px; font:900 24px var(--f-display); }
+.st-flat .ctx .flh .l i { width:30px; height:30px; border-radius:50%; background:#ffc94a; box-shadow:inset -6px -6px 0 rgba(0,0,0,.14); }
+.st-flat .ctx .flh .tp { font:700 20px var(--f-body); padding:5px 16px 7px; border-radius:999px; background:color-mix(in srgb, var(--fg) 12%, transparent); }
+.st-flat .ctx .flh .id { font:700 18px var(--f-num); color:#24255a; background:#ffc94a; padding:5px 16px 7px; border-radius:999px; box-shadow:0 4px 0 rgba(36,37,90,.3); }
+.st-flat .ctx .cap { position:absolute; left:0; right:0; bottom:66px; text-align:center; }
+.st-flat .ctx .cap > span { display:inline-block; font-family:var(--f-body); font-weight:700; line-height:1.3; color:#24255a; background:#fff6ea; padding:9px 30px 11px;
+  border-radius:999px; box-shadow:0 6px 0 rgba(36,37,90,.32); max-width:80%; }
+.st-flat .ctx .cap .em .emt { color:#24255a; padding:0 .12em; background:linear-gradient(#ffc94a, #ffc94a) no-repeat 0 82% / 100% 46%; }
+.st-flat .ctx .cap .em .emb { display:none; }
+.st-flat .ctx .flf { position:absolute; left:80px; right:80px; bottom:22px; display:flex; justify-content:space-between; gap:32px; font:500 16px var(--f-body); color:var(--fg); opacity:.72; }
+.st-flat .ctx .flf > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:60%; }
+.st-flat .ctx.photo .flh, .st-flat .ctx.photo .flf { color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.6); opacity:1; }
+.st-flat .ctx.photo .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,20,60,.55), rgba(0,0,0,0) 18%, rgba(0,0,0,0) 72%, rgba(20,20,60,.6)); }
+#root.v.st-flat .ctx .flh { left:56px; right:56px; top:206px; } #root.v.st-flat .ctx .flf { left:56px; right:56px; bottom:auto; top:1478px; font-size:17px; }
+#root.v.st-flat .ctx .cap { bottom:auto; top:1330px; padding:0 120px; } #root.v.st-flat .ctx .cap > span { max-width:100%; }
+/* ---- effect internals, flat: rounder corners, flat offset shadows instead of blurred ones, palette blocks */
+.st-flat .fx .cw, .st-flat .fx .wpi, .st-flat .fx .wpp-cd, .st-flat .fx .aq-card, .st-flat .fx .hp-card, .st-flat .fx .dl-c, .st-flat .fx .iv-q {
+  border-radius:3.4vmin !important; box-shadow:0 1.3vmin 0 rgba(20,20,60,.26) !important; }
+.st-flat .fx .pc-art, .st-flat .fx .th-pol, .st-flat .fx .iv-f, .st-flat .fx .iv-nb, .st-flat .fx .mx-card, .st-flat .fx .mx-c { border-radius:2.4vmin !important; box-shadow:0 1.3vmin 0 rgba(20,20,60,.28) !important; }
+.st-flat .fx .mx-card img, .st-flat .fx .mx-c img, .st-flat .fx .iv-f video, .st-flat .fx .th-pol img { border-radius:inherit; }
+.st-flat .fx .mx-hl { border-radius:2.4vmin !important; box-shadow:0 0 0 .8vmin #ffc94a, 0 1.6vmin 0 rgba(20,20,60,.3) !important; }
+.st-flat .fx .pc-disc { box-shadow:0 1.3vmin 0 rgba(20,20,60,.3) !important; }
+.st-flat .fx .wpr-pp { box-shadow:0 1.3vmin 0 rgba(20,20,60,.22) !important; border-radius:1.6vmin 1.6vmin 0 0; }
+.st-flat .fx .wpr-slot { border-radius:2.4vmin !important; box-shadow:0 1vmin 0 rgba(20,20,60,.3) !important; }
+.st-flat .fx .hp-bub b, .st-flat .fx .th-st.bubble b { border-radius:999px !important; box-shadow:0 .6vmin 0 rgba(20,20,60,.3) !important; }
+.st-flat .fx .cw .bar i:nth-child(1) { background:#ff7a59; } .st-flat .fx .cw .bar i:nth-child(2) { background:#ffc94a; } .st-flat .fx .cw .bar i:nth-child(3) { background:#48d1b2; }
+.st-flat .fx .cw .u { border-radius:3vmin 3vmin .8vmin 3vmin; } .st-flat .fx .cw .in { border:none; background:color-mix(in srgb, var(--card-fg) 7%, transparent); }
+.st-flat .fx .cw .ab .hlm::before { background:#ffc94a; height:.5em; border-radius:.12em; }
+.st-flat .fx .wpi-bb { border-radius:2.2vmin !important; } .st-flat .fx .wpi-av { border-radius:50% !important; }
+.st-flat .fx .wpp-tg { border-radius:999px !important; padding-left:1.2vmin; padding-right:1.2vmin; }
+.st-flat .fx .l3 .bar { width:1.4vmin; border-radius:1vmin; background:#ffc94a; }
+.st-flat .fx .l3 .nm span { text-shadow:0 .6vmin 0 rgba(20,20,60,.25); }
+.st-flat .fx .l3 .rl span { font-family:var(--f-body); font-weight:600; letter-spacing:.06em; }
+.st-flat .fx .ti svg { fill:color-mix(in srgb, var(--fg) 14%, transparent); stroke-width:1.9; padding:1.4vmin; border-radius:50%; background:color-mix(in srgb, var(--fg) 9%, transparent); box-sizing:content-box; }
+.st-flat .fx .ti .rg { border-color:#ffc94a; }
+.st-flat .fx .aq-kick, .st-flat .fx .ct-kick { border-radius:999px !important; }
+.st-flat .fx .th-set { background:radial-gradient(ellipse 50% 60% at var(--hx, 32%) 58%, color-mix(in srgb, #ffc94a 45%, transparent), transparent 70%) !important; }
+.st-flat .fx .th-set::before { display:none; }
+.st-flat .fx .th-st.tag b { color:#24255a; background:#ffc94a; border-radius:999px; box-shadow:0 .14em 0 rgba(36,37,90,.35); padding:.2em .7em; }
+.st-flat .fx .th-pol { border-radius:1.6vmin; }
+.st-flat .fx .dl-ring, .st-flat .fx .hp-ring { border-radius:3.4vmin !important; }
+"""
+
+
+def _sil(W, base, r, cls, hmin, hmax, win=False, x0=-80):
+    """flat skyline silhouette for the effect grounds: rects (+ gables) in one CSS class, optional lit windows."""
+    s, x = [], x0
+    while x < W + 160:
+        w = r.randint(80, 160); h = r.randint(hmin, hmax)
+        s.append(f'<rect class="{cls}" x="{x}" y="{base - h:.0f}" width="{w}" height="{h + 6:.0f}" rx="6"/>')
+        if r.random() < .3: s.append(f'<path class="{cls}" d="M{x} {base - h + 1:.0f} L{x + w / 2:.0f} {base - h - w * .3:.0f} L{x + w} {base - h + 1:.0f} Z"/>')
+        if win:
+            for i in range(max(1, (h - 40) // 44)):
+                for j in range(max(1, w // 40)):
+                    if r.random() < .35: s.append(f'<rect class="wn" x="{x + 14 + j * 38}" y="{base - h + 22 + i * 44:.0f}" width="14" height="18" rx="3"/>')
+        x += w + r.randint(4, 20)
+    return "".join(s)
+
+
+def _fx_world(X, kind, r):
+    """the illustrated ground of one effect card: four worlds, each laid out from a seed so no two cards match."""
+    W, H, P = X.W, X.H, X.portrait
+    base = H * (.97 if not P else .82)       # 9:16: the skyline stands just under the caption band, the rest is the platform's
+    stars = "".join(f'<circle class="st tw" cx="{r.uniform(0, W):.0f}" cy="{r.uniform(H * .02, H * .45):.0f}" r="{r.uniform(1.5, 4):.1f}" opacity="{r.uniform(.25, .7):.2f}"/>' for _ in range(34))
+    pts = "".join((f'<circle class="pt" cx="{x:.0f}" cy="{y:.0f}" r="{r.uniform(6, 12):.0f}"/>' if r.random() < .5 else
+                   f'<path class="pt" d="M{x - 9:.0f} {y:.0f} H{x + 9:.0f} M{x:.0f} {y - 9:.0f} V{y + 9:.0f}"/>')
+                  for x, y in ((r.uniform(0, W), r.uniform(H * .1, H * .8)) for _ in range(10)))
+    sx = r.choice([.1, .9]) * W              # sun / moon keep to the upper corners, away from the effect in the middle
+    sy = H * (.17 if not P else .2)
+    ground = ""
+    if P:                        # 9:16: the band under the skyline is a street (the platform UI sits over it)
+        ground = (f'<rect class="s2" x="0" y="{base + 4:.0f}" width="{W}" height="{H - base:.0f}"/><g class="fw-ln">'
+                  + "".join(f'<rect class="s2" x="{x}" y="{base + (H - base) * .45:.0f}" width="80" height="10" rx="5"/>' for x in range(-180, W + 360, 180)) + "</g>"
+                  + f'<g transform="translate(0,{base + (H - base) * .38:.0f})"><g class="fw-r">{rider(.72)}</g></g>')
+    if kind == "dusk":
+        sun = f'<circle class="sun fw-sun" cx="{sx:.0f}" cy="{sy:.0f}" r="{min(W, H) * .07:.0f}"/>'
+        body = (stars + sun + f'<g class="fw-1">{_sil(W, base - 30, r, "s1", 160, 360)}</g><g class="fw-2">{_sil(W, base + 10, r, "s2", 70, 210, win=True)}</g>' + ground)
+    elif kind == "night":
+        mr = min(W, H) * .06
+        mx = W * .9
+        moon = (f'<g class="fw-sun"><circle class="sun" cx="{mx:.0f}" cy="{sy:.0f}" r="{mr:.0f}" style="fill:#ffc94a"/>'
+                f'<circle cx="{mx + mr * .42:.0f}" cy="{sy - mr * .26:.0f}" r="{mr * .86:.0f}" style="fill:var(--bg)"/></g>')
+        body = (stars + moon + f'<g class="fw-1">{_sil(W, base - 10, r, "s1", 120, 300, win=True)}</g>'
+                f'<g class="fw-2">{_sil(W, base + 20, r, "s2", 50, 150)}</g>' + ground)
+    elif kind == "park":
+        sun = (f'<g class="fw-sun"><circle class="sun" cx="{sx:.0f}" cy="{H * .16:.0f}" r="{min(W, H) * .09:.0f}" style="fill:#ffc94a"/>'
+               f'<circle class="sun2 rays" cx="{sx:.0f}" cy="{H * .16:.0f}" r="{min(W, H) * .13:.0f}"/></g>')
+        clouds = ""
+        for _ in range(4):
+            cx, cy, k = r.uniform(0, W), r.uniform(H * .08, H * .34), r.uniform(.7, 1.3)
+            clouds += (f'<g class="cl"><ellipse cx="{cx:.0f}" cy="{cy:.0f}" rx="{70 * k:.0f}" ry="{26 * k:.0f}"/><circle cx="{cx - 24 * k:.0f}" cy="{cy - 14 * k:.0f}" r="{28 * k:.0f}"/>'
+                       f'<circle cx="{cx + 22 * k:.0f}" cy="{cy - 20 * k:.0f}" r="{34 * k:.0f}"/></g>')
+        hills = (f'<path class="h1" d="M-40 {base - 60:.0f} Q{W * .25:.0f} {base - 230:.0f} {W * .52:.0f} {base - 70:.0f} T{W + 40} {base - 110:.0f} V{H + 10} H-40 Z"/>'
+                 f'<path class="h2" d="M-40 {base:.0f} Q{W * .3:.0f} {base - 130:.0f} {W * .62:.0f} {base - 20:.0f} T{W + 40} {base - 40:.0f} V{H + 10} H-40 Z"/>')
+        trees = "".join(f'<g transform="translate({x:.0f},{base - 40 + r.uniform(-20, 20):.0f}) scale({r.uniform(.7, 1.2):.2f})"><rect class="tk" x="-6" y="-46" width="12" height="46" rx="4"/>'
+                        f'<circle class="tr" cx="0" cy="-70" r="34"/><circle class="tr" cx="-18" cy="-56" r="22"/></g>' for x in (r.uniform(.03, .2) * W, r.uniform(.8, .97) * W))
+        body = sun + f'<g class="fw-cl">{clouds}</g><g class="fw-1">{hills}</g><g class="fw-2">{trees}</g>'
+    else:   # sunset
+        sun = f'<circle class="sun fw-sun" cx="{sx:.0f}" cy="{base - H * .14:.0f}" r="{min(W, H) * .2:.0f}" style="fill:#ffc94a; opacity:.75"/>'
+        hills = (f'<path class="h3" d="M-40 {base - 80:.0f} Q{W * .2:.0f} {base - 200:.0f} {W * .45:.0f} {base - 90:.0f} T{W + 40} {base - 120:.0f} V{H + 10} H-40 Z"/>'
+                 f'<path class="h4" d="M-40 {base - 10:.0f} Q{W * .35:.0f} {base - 110:.0f} {W * .7:.0f} {base - 30:.0f} T{W + 40} {base - 50:.0f} V{H + 10} H-40 Z"/>')
+        birds = "".join(f'<path class="bd" d="M{x - 18:.0f} {y:.0f} q9 -10 18 0 q9 -10 18 0"/>' for x, y in ((r.uniform(.2, .8) * W, r.uniform(.1, .3) * H) for _ in range(4)))
+        far, near = hills.split("/>", 1)
+        body = sun + f'<g class="fw-cl">{birds}</g><g class="fw-1">{far}/></g><g class="fw-2">{near}</g>'
+    return f'<svg viewBox="0 0 {W} {H}" preserveAspectRatio="none">{body}<g class="fw-pt">{pts}</g></svg>'
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the page around an effect in flat: an illustrated ground behind it (city / night / park / sunset by theme),
+    a pill header, the spoken line as a cream pill caption with a highlighter keyword, and a soft footer."""
+    th = p.get("theme") if p.get("theme") in FX_WORLD else "paper"
+    g2, kind = FX_WORLD[th]
+    r = rnd(sum(map(ord, cid)) * 7 + X.beat.get("i", 0))
+    if not parts["photo"]:
+        X.css(f"flg-{cid}", f"#{cid} {{ background:transparent !important; }}")
+        X.clip(f"{cid}g", t, d, _fx_world(X, kind, r), "flg", 2, track=19, sty=parts["sty"] + f";--g2:{g2}")
+        g = f"#{cid}g"
+        X.tw(f'tl.from("{g} .fw-1, {g} .fw-2", {{y:90, duration:0.8, ease:"expo.out", stagger:0.08}}, {t:.3f});')
+        X.tw(f'tl.fromTo("{g} .fw-1", {{x:0}}, {{x:-36, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        X.tw(f'tl.fromTo("{g} .fw-2", {{x:0}}, {{x:-80, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        X.tw(f'tl.fromTo("{g} .fw-pt", {{y:0}}, {{y:-90, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        X.tw(f'tl.from("{g} .fw-sun", {{scale:0, transformOrigin:"50% 50%", duration:0.7, ease:"back.out(2)"}}, {t + .1:.3f});')
+        if kind in ("park", "sunset"):
+            X.tw(f'tl.fromTo("{g} .fw-cl", {{x:0}}, {{x:70, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        if kind == "park":
+            X.tw(f'tl.fromTo("{g} .rays", {{rotation:0, transformOrigin:"50% 50%"}}, {{rotation:60, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        if kind in ("dusk", "night"):
+            X.tw(f'tl.to("{g} .tw", {{opacity:.1, duration:0.6, yoyo:true, repeat:{max(1, int(d / .6)) | 1}, stagger:{{each:0.05, from:"center"}}}}, {t:.3f});')
+            if X.portrait:      # the street band under the caption: dashes slide, a courier crosses
+                X.tw(f'tl.fromTo("{g} .fw-ln", {{x:0}}, {{x:-180, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+                X.tw(f'tl.fromTo("{g} .fw-r", {{x:-200}}, {{x:{X.W + 200}, duration:{max(2.4, d):.2f}, ease:"none"}}, {t:.3f});')
+                spin(X, f"{g} .fw-r .wh", t, d, 2.0)
+                bob(X, f"{g} .fw-r .pp", t, d, 4, .32)
+    topic = f'<span class="tp">{parts["topic"]}</span>' if parts["topic"] else ""
+    inner = (('<div class="scrim"></div>' if parts["photo"] else "")
+             + f'<div class="flh"><div class="l"><i></i><b>{X.rich("第九顶帽子")}</b>{topic}</div>'
+             f'<div class="id">{parts["fxid"]}</div></div>'
+             + f'<div class="cap"><span style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></div>'
+             + f'<div class="flf"><div>{parts["foot"]}</div><div>{parts["src"]}</div></div>')
+    X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if parts['photo'] else ''}", 30, track=20, sty=parts["sty"])
+    c = f"#{cid}c"
+    X.tw(f'tl.from("{c} .flh > div", {{y:-24, opacity:0, duration:0.45, ease:"back.out(2)", stagger:0.1}}, {t + .05:.3f});')
+    X.tw(f'tl.from("{c} .cap > span", {{y:24, scale:.86, opacity:0, duration:0.45, ease:"back.out(2.2)"}}, {t + 0.08:.3f});')
+    X.tw(f'tl.fromTo("{c} .cap .em .emt", {{backgroundSize:"0% 46%"}}, {{backgroundSize:"100% 46%", duration:0.4, ease:"power2.out"}}, {t + 0.5:.3f});')

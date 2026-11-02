@@ -1,0 +1,417 @@
+{
+ "meta": {
+  "title": "动效 · screen 风格",
+  "aspect": "16:9",
+  "style": "screen",
+  "duration": 68.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "notify",
+   "d": 2.6,
+   "label": "#13 手机通知 · UI Mockup",
+   "ref": "Envato Elements「Elements」热门第1",
+   "theme": "paper",
+   "topic": "做内容",
+   "items": [
+    [
+     "抖音",
+     "你的视频播放量破 10 万"
+    ],
+    [
+     "小红书",
+     "有 326 人收藏了你的笔记"
+    ],
+    [
+     "B站",
+     "新增 128 个粉丝"
+    ]
+   ],
+   "line": "发出去十分钟，*三个平台*同时来消息。",
+   "host": true,
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scramble",
+   "d": 2.6,
+   "label": "乱码解码 · Decoder",
+   "ref": "科技类标题高频",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "JUDGMENT",
+   "line": "AI 时代最贵的能力，叫*判断力*。",
+   "host": true,
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "ghost_type",
+   "d": 2.6,
+   "label": "巨型虚影背景字 · Ghost Type",
+   "ref": "B站「碰撞吧！」107万播放",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "ghost": "对比",
+   "text": "同一个模型",
+   "sub": "same model · same prompt",
+   "line": "同一个模型，同样的提示词，*结果完全不同*。",
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "glass",
+   "d": 3.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../aefx/assets/broll/trails.jpg",
+   "kicker": "MCDONALD'S · 2024",
+   "tag": "10-K",
+   "value": 95,
+   "unit": "%",
+   "text": "的麦当劳餐厅是加盟店",
+   "line": "麦当劳全球的餐厅，*95%* 是加盟店。",
+   "src": "McDonald's 2024 Form 10-K",
+   "label": "液态玻璃 · Liquid Glass",
+   "ref": "Bricks「Animate Like Apple」76万播放（2025）· Envato「Real Glass FX」Popular 第 4",
+   "t": 7.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "做内容",
+   "items": [
+    {
+     "video": "../../assets/previews/mixue_16x9.mp4",
+     "caption": "成片 · 视频",
+     "start": 3
+    },
+    {
+     "src": "../media/assets/frames/poster_h_20.jpg",
+     "caption": "截图"
+    },
+    {
+     "video": "../../assets/previews/atlas_16x9.mp4",
+     "caption": "成片 · 视频",
+     "start": 6
+    },
+    {
+     "src": "../media/assets/frames/screen_v_03.jpg",
+     "caption": "竖屏截图"
+    }
+   ],
+   "line": "视频和截图混在一起，*视频照样在动*。",
+   "label": "多视频拼合 · Multi Video & Multi Text Logo Formation",
+   "ref": "3.8K 份",
+   "preview": "video",
+   "band_label": "视频混排",
+   "t": 10.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scroll_shot",
+   "d": 5.2,
+   "theme": "paper",
+   "topic": "怎么用",
+   "image": "../screens/assets/readme.jpg",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "README",
+   "stops": [
+    {
+     "heading": "装上就有",
+     "label": "装上就有"
+    },
+    {
+     "heading": "成片示例",
+     "label": "成片示例"
+    },
+    {
+     "heading": "安装",
+     "label": "安装"
+    }
+   ],
+   "line": "README 一屏装不下，我们滚到*装上就有*这一节。",
+   "label": "长截图滚动 · Website Scroll",
+   "ref": "VideoHive Minimal Website Presentation 1.9K",
+   "src": "github.com/daiyixiang666/hat9-motion",
+   "t": 15.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "screencast",
+   "d": 8.6,
+   "theme": "ink",
+   "topic": "怎么用",
+   "video": "../screens/assets/gallery_rec.mp4",
+   "clicks_json": "../screens/assets/gallery_rec.json",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "tab": "九帽动效画廊",
+   "steps": [
+    "选「数据」分类",
+    "点搜索框",
+    "搜「增长」，点名字复制 id"
+   ],
+   "line": "在画廊里选*数据*，再搜增长，点名字就复制好了。",
+   "label": "真实录屏推近 · Screencast",
+   "ref": "VideoHive iTouch 2 App Promo 2.1K",
+   "t": 20.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "spotlight",
+   "d": 5.6,
+   "theme": "ink",
+   "topic": "怎么用",
+   "image": "../screens/assets/gallery_top.jpg",
+   "frame": "browser",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "boxes": [
+    {
+     "box": [
+      16,
+      236,
+      1016,
+      34
+     ],
+     "label": "五条成片，一键切换"
+    },
+    {
+     "box": [
+      954,
+      284,
+      310,
+      552
+     ],
+     "label": "同一条的竖屏版"
+    },
+    {
+     "box": [
+      446,
+      430,
+      420,
+      160
+     ],
+     "label": "画面里的数据"
+    }
+   ],
+   "line": "看这里：五条成片能切换，*横竖屏*各排一版。",
+   "label": "聚光灯 · Spotlight",
+   "ref": "VideoHive Explainer Video Toolkit 4 2.5K",
+   "t": 29.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "code",
+   "d": 6.4,
+   "theme": "paper",
+   "topic": "怎么做的",
+   "file": "scripts/h9/fit.py#L153-L187",
+   "hl": "170-183",
+   "line": "放不下时先缩字号、再换行，*实在不行*才加省略号。",
+   "label": "代码逐行打出 · Code",
+   "ref": "Askiko Typewriter Text Effect 113.3 万播放",
+   "src": "scripts/h9/fit.py",
+   "t": 34.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "pip",
+   "d": 6.0,
+   "theme": "paper",
+   "topic": "做内容",
+   "main": "../../assets/previews/mixue_16x9.mp4",
+   "main_start": 2.0,
+   "at": 1.8,
+   "name": "柴犬",
+   "role": "主持人",
+   "line": "图形一铺满，主持人就缩进角落*小窗*。",
+   "label": "画中画 · Talking-head PiP",
+   "ref": "小Lin说、林亦、毕导常用",
+   "t": 41.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "app_flow",
+   "theme": "paper",
+   "topic": "做内容",
+   "line": "一个 App 的新手引导，最好*三步以内*走完。",
+   "mock": true,
+   "screens": [
+    {
+     "title": "选一个模板",
+     "rows": [
+      "商业拆解｜数据 + 色块",
+      "AI 工具台｜深色产品界面",
+      "地图纪录｜航线和镜头推拉",
+      "瑞士海报｜网格动态字"
+     ],
+     "label": "选模板",
+     "tap_row": 0
+    },
+    {
+     "title": "粘贴文案",
+     "hero": "一杯 4 块钱的柠檬水，一年净赚 44 亿。",
+     "rows": [
+      "自动分句｜9 句",
+      "配音｜本地 TTS"
+     ],
+     "cta": "生成分镜",
+     "label": "粘贴文案"
+    },
+    {
+     "title": "预览",
+     "rows": [
+      "横屏 16:9｜1920×1080",
+      "竖屏 9:16｜1080×1920"
+     ],
+     "cta": "导出",
+     "label": "预览导出"
+    }
+   ],
+   "d": 5.2,
+   "label": "C3 · App 操作流程 · App Flow",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K",
+   "t": 47.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "cursor",
+   "theme": "ink",
+   "topic": "做内容",
+   "line": "在画廊里点一下，就能*切到另一条成片*。",
+   "image": "../screens/assets/gallery_top.jpg",
+   "frame": "browser",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery/",
+   "zoom": 1.5,
+   "path": [
+    {
+     "act": "hover",
+     "x": 113,
+     "y": 252,
+     "label": "5 条成片"
+    },
+    {
+     "act": "click",
+     "x": 569,
+     "y": 252,
+     "label": "切到地图纪录"
+    },
+    {
+     "act": "click",
+     "x": 40,
+     "y": 752,
+     "label": "播放"
+    }
+   ],
+   "d": 5.0,
+   "label": "C3 · 光标演示 · Cursor Demo",
+   "ref": "VideoHive Phone 7 App & Gestures 2.6K",
+   "t": 52.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "form_fill",
+   "theme": "paper",
+   "topic": "做内容",
+   "line": "发视频之前，记得打开*AI 生成内容声明*。",
+   "title": "发布设置",
+   "sub": "发布前检查一遍",
+   "fields": [
+    {
+     "label": "标题",
+     "value": "一杯 4 块钱的柠檬水",
+     "kind": "text"
+    },
+    {
+     "label": "内容由 AI 生成",
+     "kind": "toggle",
+     "on": true,
+     "note": "平台要求标注"
+    },
+    {
+     "label": "封面比例",
+     "kind": "select",
+     "value": "3:4",
+     "options": [
+      "16:9",
+      "4:3",
+      "3:4"
+     ]
+    },
+    {
+     "label": "同步到小红书",
+     "kind": "check",
+     "on": true
+    }
+   ],
+   "submit": "发布",
+   "done": "已提交审核",
+   "mock": true,
+   "d": 5.6,
+   "label": "C3 · 表单与开关 · Form Fill",
+   "ref": "Envato Elements「Elements」Popular「Checklist Pack」",
+   "t": 57.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "search_box",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "line": "查一个数字，先找*一手来源*，别只看转述。",
+   "engine": "搜索",
+   "query": "蜜雪冰城 门店数",
+   "suggest": [
+    "蜜雪冰城 门店数 2024",
+    "蜜雪冰城 门店数 麦当劳",
+    "蜜雪冰城 门店数 海外"
+   ],
+   "results": [
+    {
+     "title": "蜜雪集团 2024 年度业绩公告",
+     "url": "hkexnews.hk · 02097",
+     "snippet": "截至 2024 年 12 月 31 日，门店网络共 46,479 家"
+    },
+    {
+     "title": "McDonald's Corporation 2024 Form 10-K",
+     "url": "sec.gov",
+     "snippet": "Systemwide restaurants at year end: 43,477"
+    },
+    {
+     "title": "某自媒体：蜜雪门店已超 5 万家？",
+     "url": "转述 · 未注明来源",
+     "snippet": "转了三手的数字，和公告对不上"
+    }
+   ],
+   "hl": [
+    "门店",
+    "46,479",
+    "43,477"
+   ],
+   "pick": 0,
+   "mock": "示意页面",
+   "src": "蜜雪集团 2024 年报；麦当劳 2024 年 10-K",
+   "d": 5.2,
+   "label": "T5 · 搜索框打字 · Search Typing",
+   "ref": "Envato「Search Screen Pro」Popular 第 7",
+   "t": 62.8,
+   "tr": "hard"
+  }
+ ]
+}

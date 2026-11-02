@@ -8,6 +8,12 @@ chain 钱和货两条线 · wheel 飞轮 · thesis 判断句 · outro 账号落�
 """
 
 STYLE = {
+    "fx_themes": {
+        "paper": {"bg": "#f0ece3", "fg": "#111111", "muted": "#625d56", "accent": "#e2321f", "card": "#fbfaf6", "card-fg": "#111111", "line": "#d3ccbf"},
+        "ink":   {"bg": "#121212", "fg": "#f3efe6", "muted": "#958f85", "accent": "#f6ce3a", "card": "#1d1c1a", "card-fg": "#f3efe6", "line": "#2c2a27"},
+        "red":   {"bg": "#e2321f", "fg": "#fbfaf6", "muted": "rgba(255,255,255,.78)", "accent": "#111111", "card": "#fbfaf6", "card-fg": "#111111", "line": "rgba(255,255,255,.3)"},
+        "lemon": {"bg": "#f6ce3a", "fg": "#111111", "muted": "#5b4a12", "accent": "#e2321f", "card": "#fbfaf6", "card-fg": "#111111", "line": "rgba(0,0,0,.2)"},
+    },
     "name": "财经刊", "en": "Press", "benchmarks": ["Bloomberg Businessweek", "FT / The Economist 图表", "小Lin说", "所长林超"],
     "tokens": {
         "bg": "#f0ece3", "fg": "#111111", "muted": "#625d56", "accent": "#e2321f", "accent2": "#f6ce3a", "alert": "#e2321f",

@@ -76,7 +76,7 @@ def chapter_bar(X, cid, t, d, p):
     ppx = S.vm(X, 2.8)
     now = fit.as_text(p.get("now") or "现在")
     if not P: pin = f'<div class="cb-pin" style="left:{sx:.0f}px; top:{sy + sh_ + S.vm(X, 1.6):.0f}px; font-size:{ppx:.0f}px; padding:{ppx * 0.2:.0f}px {ppx * 0.7:.0f}px">▲ {X.rich(now)}</div>'
-    else: pin = f'<div class="cb-pin" style="left:{x + w - fit.width(now) * ppx - ppx * 2.6:.0f}px; top:{sy + sh_ / 2 - ppx * 0.8:.0f}px; font-size:{ppx:.0f}px; padding:{ppx * 0.2:.0f}px {ppx * 0.7:.0f}px">◀ {X.rich(now)}</div>'
+    else: pin = f'<div class="cb-pin" style="left:{min(x + w, X.W - 120 - ppx * 0.4) - fit.width(now) * ppx - ppx * 2.6:.0f}px; top:{sy + sh_ / 2 - ppx * 0.8:.0f}px; font-size:{ppx:.0f}px; padding:{ppx * 0.2:.0f}px {ppx * 0.7:.0f}px">◀ {X.rich(now)}</div>'
     html.append(pin)
     head = f'<div class="cb-k" style="left:{x:.0f}px; top:{y:.0f}px; font-size:{kf.px}px">{S.lines(X, kf)}</div>' if title else ""
     _clip(X, cid, t, d, f'<div class="cb">{head}{"".join(html)}</div>', p)

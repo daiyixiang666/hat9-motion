@@ -9,7 +9,9 @@
    "cat": "照片",
    "ref": "VoluMax 2.64万份 · MDMZ 教程 1171万播放",
    "label": "#2 2.5D 照片视差 · Photo Parallax",
-   "suit": "开场大图、人物故事"
+   "suit": "开场大图、人物故事",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "burst",
@@ -20,7 +22,9 @@
    "cat": "图形",
    "ref": "Graphics Pack 2.62万份 · SonduckFilm 321万播放",
    "label": "#3 放射爆发 · Shape Burst",
-   "suit": "爆款、数字揭晓、强调"
+   "suit": "爆款、数字揭晓、强调",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "stomp",
@@ -31,7 +35,9 @@
    "cat": "字效",
    "ref": "TypoKing 1.34万份 · B站动态歌词排版 898万播放",
    "label": "#4 重拍排版 · Stomp",
-   "suit": "节奏快的一句话、金句拆字"
+   "suit": "节奏快的一句话、金句拆字",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "mask_up",
@@ -42,7 +48,9 @@
    "cat": "字效",
    "ref": "YouTube 153万 / 145万播放",
    "label": "#5 遮罩上滑 · Mask Reveal",
-   "suit": "任何标题、两行观点"
+   "suit": "任何标题、两行观点",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "mosaic",
@@ -53,7 +61,9 @@
    "cat": "照片",
    "ref": "Mosaic Photo Reveal 1.6万份",
    "label": "#6 照片墙拼合 · Mosaic Reveal",
-   "suit": "大量案例、作品合集"
+   "suit": "大量案例、作品合集",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "cartoon",
@@ -64,7 +74,9 @@
    "cat": "图形",
    "ref": "140 Flash FX 1.47万份",
    "label": "#7 卡通冲击特效 · Flash FX",
-   "suit": "搞笑、吐槽、意外"
+   "suit": "搞笑、吐槽、意外",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "apple_blur",
@@ -75,7 +87,9 @@
    "cat": "字效",
    "ref": "206.8万播放（2025）",
    "label": "#9 苹果式逐字模糊 · Blur Fade",
-   "suit": "结论、产品口吻的判断句"
+   "suit": "结论、产品口吻的判断句",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "portal",
@@ -86,7 +100,9 @@
    "cat": "照片",
    "ref": "B站 364.5万播放（2025）",
    "label": "#10 瞳孔穿梭 · Zoom-Through Portal",
-   "suit": "从一个画面进入另一个话题"
+   "suit": "从一个画面进入另一个话题",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "shine",
@@ -97,7 +113,9 @@
    "cat": "字效",
    "ref": "Gold Simple Titles 1.1万份",
    "label": "#11 光泽扫过 · Shine Sweep",
-   "suit": "收尾、品牌"
+   "suit": "收尾、品牌",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "neon",
@@ -108,7 +126,9 @@
    "cat": "字效",
    "ref": "Neon Sign Kit 1万份",
    "label": "#12 霓虹点亮 · Neon Flicker",
-   "suit": "夜景、潮流、店招"
+   "suit": "夜景、潮流、店招",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "notify",
@@ -119,7 +139,9 @@
    "cat": "界面",
    "ref": "Envato Elements「Elements」热门第1",
    "label": "#13 手机通知 · UI Mockup",
-   "suit": "平台反馈、增长、消息"
+   "suit": "平台反馈、增长、消息",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "lower3",
@@ -130,7 +152,9 @@
    "cat": "界面",
    "ref": "Lower Thirds 第1名 6.3K份",
    "label": "#14 下三分之一字条 · Lower Third",
-   "suit": "人物 / 账号介绍、结尾"
+   "suit": "人物 / 账号介绍、结尾",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "glitch",
@@ -141,7 +165,9 @@
    "cat": "字效",
    "ref": "Video Copilot 198万播放",
    "label": "#15 故障分离 · Glitch",
-   "suit": "出错、警告、反转"
+   "suit": "出错、警告、反转",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "triple",
@@ -152,7 +178,9 @@
    "cat": "界面",
    "ref": "555 Animated Icons 6.4K份 · B站三连 157万",
    "label": "#16 动态图标 · Animated Icons",
-   "suit": "片尾求三连 / 关注"
+   "suit": "片尾求三连 / 关注",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "callout",
@@ -163,7 +191,9 @@
    "cat": "照片",
    "ref": "Call-Out Titles 4.5K份",
    "label": "#18 引线标注 · Line Callout",
-   "suit": "指出图里的细节"
+   "suit": "指出图里的细节",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "odometer",
@@ -174,7 +204,9 @@
    "cat": "数据",
    "ref": "YouTube 162.6万播放",
    "label": "#20 数字滚动 · Counter",
-   "suit": "任何数字、比例"
+   "suit": "任何数字、比例",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "collage",
@@ -185,7 +217,9 @@
    "cat": "照片",
    "ref": "Fakeplastictree 203.5万播放",
    "label": "#21 拼贴剪纸 · Collage",
-   "suit": "资料拼贴、证据"
+   "suit": "资料拼贴、证据",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "write_on",
@@ -196,7 +230,9 @@
    "cat": "字效",
    "ref": "YouTube 128.5万 / 123.7万播放",
    "label": "#22 描边书写 · Write-on",
-   "suit": "关键词、签名、毛笔字"
+   "suit": "关键词、签名、毛笔字",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "match_cut",
@@ -207,7 +243,9 @@
    "cat": "字效",
    "ref": "Envato Elements 标题热门第1、2名",
    "label": "#23 文字匹配剪辑 · Text Match Cut",
-   "suit": "一个词贯穿多个场景"
+   "suit": "一个词贯穿多个场景",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "impact",
@@ -218,7 +256,9 @@
    "cat": "字效",
    "ref": "Bricks 106.8万播放（2025）",
    "label": "#24 冲击抖动 · Impact Shake",
-   "suit": "重点结论、冲击句"
+   "suit": "重点结论、冲击句",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "typewriter",
@@ -229,7 +269,9 @@
    "cat": "字效",
    "ref": "T5 · 科技 / 教程类必备",
    "label": "打字机 · Typewriter",
-   "suit": "提示词、命令、搜索"
+   "suit": "提示词、命令、搜索",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "scramble",
@@ -240,7 +282,9 @@
    "cat": "字效",
    "ref": "科技类标题高频",
    "label": "乱码解码 · Decoder",
-   "suit": "技术名词、英文代号"
+   "suit": "技术名词、英文代号",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "tracking",
@@ -251,7 +295,9 @@
    "cat": "字效",
    "ref": "电影片头经典",
    "label": "字距收拢 · Tracking In",
-   "suit": "电影感标题、一个词"
+   "suit": "电影感标题、一个词",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "flip3d",
@@ -262,7 +308,9 @@
    "cat": "字效",
    "ref": "文字动效合集高频",
    "label": "逐字三维翻转 · 3D Flip",
-   "suit": "账号名、章节名"
+   "suit": "账号名、章节名",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "ghost_type",
@@ -273,7 +321,9 @@
    "cat": "字效",
    "ref": "B站「碰撞吧！」107万播放",
    "label": "巨型虚影背景字 · Ghost Type",
-   "suit": "章节标题 + 小字说明"
+   "suit": "章节标题 + 小字说明",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "lockup",
@@ -284,7 +334,9 @@
    "cat": "字效",
    "ref": "B站「碰撞吧！」107万播放",
    "label": "双语锁定 · Type Lockup",
-   "suit": "中英双语标题、字体展示"
+   "suit": "中英双语标题、字体展示",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "diffuse",
@@ -295,7 +347,9 @@
    "cat": "图形",
    "ref": "B站「碰撞吧！」107万播放",
    "label": "弥散光 · Gradient Blobs",
-   "suit": "安静的过渡、情绪句"
+   "suit": "安静的过渡、情绪句",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "gooey",
@@ -306,7 +360,9 @@
    "cat": "图形",
    "ref": "S5 · B站「碰撞吧！」107万播放",
    "label": "粘性融球 · Goo Blobs",
-   "suit": "合并、碰撞、两者关系"
+   "suit": "合并、碰撞、两者关系",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "earth_zoom",
@@ -317,7 +373,9 @@
    "cat": "地图",
    "ref": "Ultimate Earth Zoom Toolkit 9.5K · Google Earth Studio 缩放教程 207万播放",
    "label": "#8 地球推近 · Earth Zoom",
-   "suit": "地点揭晓、「在哪里」、开场定位"
+   "suit": "地点揭晓、「在哪里」、开场定位",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "map_route",
@@ -328,7 +386,9 @@
    "cat": "地图",
    "ref": "Map Route Generator 3.5K · Ignace Aleya 动画旅行地图 169.5万播放",
    "label": "#19 地图路线 · Map Route",
-   "suit": "路线、物流、扩张、从 A 到 B"
+   "suit": "路线、物流、扩张、从 A 到 B",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "bars",
@@ -339,7 +399,9 @@
    "cat": "数据",
    "ref": "Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
    "label": "D2 柱状图生长 · Bar Chart",
-   "suit": "逐年对比、排行、增长 / 下滑"
+   "suit": "逐年对比、排行、增长 / 下滑",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "line_draw",
@@ -350,7 +412,9 @@
    "cat": "数据",
    "ref": "Envato Popular「Line Chart Infographic」· SonduckFilm 23.2万播放",
    "label": "D2 折线描绘 · Line Chart",
-   "suit": "趋势、增长曲线、穿过零线的变化"
+   "suit": "趋势、增长曲线、穿过零线的变化",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "donut",
@@ -361,7 +425,9 @@
    "cat": "数据",
    "ref": "Envato Popular「Infographic Pie Chart 250+」· Move Shapes 17.6万播放",
    "label": "D3 环形占比 · Donut",
-   "suit": "占比、构成、「一半以上」"
+   "suit": "占比、构成、「一半以上」",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "timeline",
@@ -372,7 +438,9 @@
    "cat": "数据",
    "ref": "Company Timeline 3.2K（Titles 第 9）· Smertimba 23.9万播放",
    "label": "D4 时间轴 · Timeline",
-   "suit": "发展历程、关键年份、复盘"
+   "suit": "发展历程、关键年份、复盘",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "chat",
@@ -383,7 +451,9 @@
    "cat": "界面",
    "ref": "Envato Elements「Elements」Popular 第 1 · Text Messages 3.8K",
    "label": "#13 UI 界面 · Chat Mockup",
-   "suit": "问 AI、对话、提示词演示"
+   "suit": "问 AI、对话、提示词演示",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "hud_lock",
@@ -394,7 +464,9 @@
    "cat": "界面",
    "ref": "Quantum HUD Infographic 5.9K（Infographics 第 1）",
    "label": "#17 HUD 科技界面 · HUD Lock-on",
-   "suit": "锁定目标、指出关键人 / 物、选址"
+   "suit": "锁定目标、指出关键人 / 物、选址",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "glass",
@@ -405,7 +477,9 @@
    "cat": "界面",
    "ref": "Bricks「Animate Like Apple」76万播放（2025）· Envato「Real Glass FX」Popular 第 4",
    "label": "液态玻璃 · Liquid Glass",
-   "suit": "一个核心数字浮在实拍上"
+   "suit": "一个核心数字浮在实拍上",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "text_mask",
@@ -416,7 +490,9 @@
    "cat": "照片",
    "ref": "SonduckFilm「5 Quick Text Effects」76.7万播放 · Mixkit Video Mask Title",
    "label": "文字镂空透视频 · Video Inside Text",
-   "suit": "一个关键词 + 实拍，转场进入画面"
+   "suit": "一个关键词 + 实拍，转场进入画面",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "media",
@@ -427,7 +503,9 @@
    "cat": "素材",
    "ref": "5.4K 份（Openers 第 1）",
    "label": "单图推进 · Cinematic Parallax Slideshow",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "media",
@@ -438,7 +516,9 @@
    "cat": "素材",
    "ref": "Envato Popular「Vertical Split Screen」· SonduckFilm 23.2 万",
    "label": "分屏对比 · Split Screen",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "media",
@@ -449,7 +529,9 @@
    "cat": "素材",
    "ref": "8K 份（AE 全站第 14）",
    "label": "发牌展示 · Photo Gallery on a Sunny Afternoon",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "media",
@@ -460,7 +542,9 @@
    "cat": "素材",
    "ref": "3.6K 份（Openers 第 3）· Mixkit Grid Photo Slideshow",
    "label": "拼贴网格 · Photo Frames Slideshow",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "media",
@@ -471,7 +555,9 @@
    "cat": "素材",
    "ref": "B 站「滚动照片墙」21.5 万 · Photo Gallery 8K",
    "label": "照片墙 · Photo Wall",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "media",
@@ -482,7 +568,9 @@
    "cat": "素材",
    "ref": "16K 份（AE 全站第 5）",
    "label": "#6 马赛克拼图 · Mosaic Photo Reveal",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "media",
@@ -493,7 +581,9 @@
    "cat": "素材",
    "ref": "Mosaic Photo Reveal 16K · B 站照片墙汇聚 LOGO 16.5 万",
    "label": "拉远成海 · Mosaic Reveal（几十到几百张小图，镜头从局部拉远）",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "media",
@@ -504,7 +594,9 @@
    "cat": "素材",
    "ref": "3.8K 份",
    "label": "多视频拼合 · Multi Video & Multi Text Logo Formation",
-   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排"
+   "suit": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "cite_pdf",
@@ -515,7 +607,9 @@
    "cat": "引用",
    "ref": "判决书 / 财报 / 研报原文高亮",
    "label": "引用 PDF 原文 · Document Zoom",
-   "suit": "引用判决书、报告、财报原文"
+   "suit": "引用判决书、报告、财报原文",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "cite_paper",
@@ -526,7 +620,9 @@
    "cat": "引用",
    "ref": "论文标题页 + 摘要高亮",
    "label": "引用论文 · Paper Card",
-   "suit": "引用论文"
+   "suit": "引用论文",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "cite_article",
@@ -537,7 +633,9 @@
    "cat": "引用",
    "ref": "「据某某报道」：标题 + 原文摘录 + 要点",
    "label": "引用新闻 · Article Card",
-   "suit": "引用新闻报道"
+   "suit": "引用新闻报道",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "cite_quote",
@@ -548,7 +646,9 @@
    "cat": "引用",
    "ref": "名人原话 + 出处 + 译文",
    "label": "引用原话 · Quote Card",
-   "suit": "引用某人说过的话"
+   "suit": "引用某人说过的话",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "cite_post",
@@ -559,7 +659,9 @@
    "cat": "引用",
    "ref": "平台中立的帖子卡：不用任何平台界面和标志",
    "label": "引用帖子 · Post Card",
-   "suit": "引用一条社交帖子"
+   "suit": "引用一条社交帖子",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "cite_video",
@@ -570,7 +672,9 @@
    "cat": "引用",
    "ref": "片段真实播放 · 进度条 · 时间码",
    "label": "引用视频 · Embedded Clip",
-   "suit": "引用别人的视频片段"
+   "suit": "引用别人的视频片段",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "cite_stack",
@@ -581,7 +685,9 @@
    "cat": "引用",
    "ref": "交叉验证：每条来源打勾，连线汇到结论",
    "label": "多方信源 · Source Stack",
-   "suit": "多个信源交叉验证"
+   "suit": "多个信源交叉验证",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "list_stack",
@@ -592,7 +698,9 @@
    "cat": "结构",
    "ref": "Envato Elements「Checklist Pack」热门 · talkcraft numbered-step-stack",
    "label": "要点列表 · List Stack",
-   "suit": "「三个原因」「四个要点」、清单、结尾总结"
+   "suit": "「三个原因」「四个要点」、清单、结尾总结",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "steps",
@@ -603,7 +711,9 @@
    "cat": "结构",
    "ref": "talkcraft step-timeline-vertical · 教程类「三步做出……」",
    "label": "步骤流程 · Process Steps",
-   "suit": "教程、流程、「三步做出……」"
+   "suit": "教程、流程、「三步做出……」",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "ranking",
@@ -614,7 +724,9 @@
    "cat": "结构",
    "ref": "盘点类「年度十大」格式 · talkcraft number-slab-pop",
    "label": "排行榜倒数 · Countdown Ranking",
-   "suit": "盘点、年度十大、门店 / 销量排行"
+   "suit": "盘点、年度十大、门店 / 销量排行",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "term_card",
@@ -625,7 +737,9 @@
    "cat": "字效",
    "ref": "talkcraft info-term-card · 回形针 / 所长林超的概念卡",
    "label": "名词解释 · Term Card",
-   "suit": "名词解释、概念、术语"
+   "suit": "名词解释、概念、术语",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "word_swap",
@@ -636,7 +750,9 @@
    "cat": "字效",
    "ref": "talkcraft word-slot-cycle · Rotating Words 标题模板",
    "label": "句中换词 · Word Slot",
-   "suit": "「不是 A，是 B」「它能做 X / Y / Z」"
+   "suit": "「不是 A，是 B」「它能做 X / Y / Z」",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "pros_cons",
@@ -647,7 +763,9 @@
    "cat": "结构",
    "ref": "测评类口播标配 · Envato Elements Checklist Pack",
    "label": "优缺点两栏 · Pros & Cons",
-   "suit": "测评、优缺点、该不该"
+   "suit": "测评、优缺点、该不该",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "quadrant",
@@ -658,7 +776,9 @@
    "cat": "结构",
    "ref": "咨询式 2×2 定位图（BCG 矩阵式）",
    "label": "象限图 · 2×2 Matrix",
-   "suit": "定位、谁在哪个位置、2×2 矩阵"
+   "suit": "定位、谁在哪个位置、2×2 矩阵",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "countdown",
@@ -669,7 +789,9 @@
    "cat": "结构",
    "ref": "VideoHive Elements countdown 大类 · talkcraft countdown-arc-scatter",
    "label": "倒计时 · Countdown",
-   "suit": "「给你 5 秒」、悬念、倒数"
+   "suit": "「给你 5 秒」、悬念、倒数",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "chapter_bar",
@@ -680,7 +802,9 @@
    "cat": "结构",
    "ref": "talkcraft chapter-progress-list · B 站分 P 目录",
    "label": "章节进度条 · Chapter Progress",
-   "suit": "目录、第几部分、章节过渡"
+   "suit": "目录、第几部分、章节过渡",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "table",
@@ -691,7 +815,9 @@
    "cat": "数据",
    "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
    "label": "表格聚焦 · Table Focus",
-   "suit": "多年财务、对比清单、参数表"
+   "suit": "多年财务、对比清单、参数表",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "statement_table",
@@ -702,7 +828,9 @@
    "cat": "数据",
    "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
    "label": "财报表 · Statement",
-   "suit": "利润表 / 资产负债表里的一行"
+   "suit": "利润表 / 资产负债表里的一行",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "waterfall",
@@ -713,7 +841,9 @@
    "cat": "数据",
    "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
    "label": "瀑布图 · Waterfall",
-   "suit": "从收入一路扣到净利"
+   "suit": "从收入一路扣到净利",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "scale_compare",
@@ -724,7 +854,9 @@
    "cat": "数据",
    "ref": "Envato Popular Infographic · Mapal VOX 式信息图 34.6万播放",
    "label": "尺度换算 · Scale Compare",
-   "suit": "「相当于 N 个…」「绕赤道 N 圈」"
+   "suit": "「相当于 N 个…」「绕赤道 N 圈」",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "bar_race",
@@ -735,7 +867,9 @@
    "cat": "数据",
    "ref": "Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放",
    "label": "柱状图赛跑 · Bar Race",
-   "suit": "排名随时间变化、超车"
+   "suit": "排名随时间变化、超车",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "stacked_bars",
@@ -746,7 +880,9 @@
    "cat": "数据",
    "ref": "SonduckFilm Bar Infographics 23.2万播放 · Infographic Maker 2.6K",
    "label": "堆叠柱状图 · Stacked Bars",
-   "suit": "构成变化、占比"
+   "suit": "构成变化、占比",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "formula",
@@ -757,7 +893,9 @@
    "cat": "数据",
    "ref": "YouTube 数字滚动教程 162.6万播放 · Envato Popular Number Counter",
    "label": "公式卡 · Formula",
-   "suit": "一个比率怎么算出来"
+   "suit": "一个比率怎么算出来",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "bars_csv",
@@ -768,7 +906,9 @@
    "cat": "数据",
    "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
    "label": "表格直读 · CSV → 柱状图",
-   "suit": "手上只有一张表格"
+   "suit": "手上只有一张表格",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "scroll_shot",
@@ -779,7 +919,9 @@
    "cat": "屏幕",
    "ref": "VideoHive Minimal Website Presentation 1.9K",
    "label": "长截图滚动 · Website Scroll",
-   "suit": "长截图、网页、长聊天记录"
+   "suit": "长截图、网页、长聊天记录",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "screencast",
@@ -790,7 +932,9 @@
    "cat": "屏幕",
    "ref": "VideoHive iTouch 2 App Promo 2.1K",
    "label": "真实录屏推近 · Screencast",
-   "suit": "真实录屏、教程、产品演示"
+   "suit": "真实录屏、教程、产品演示",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "spotlight",
@@ -801,7 +945,9 @@
    "cat": "屏幕",
    "ref": "VideoHive Explainer Video Toolkit 4 2.5K",
    "label": "聚光灯 · Spotlight",
-   "suit": "「看这里」「只看这一行」"
+   "suit": "「看这里」「只看这一行」",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "code",
@@ -812,7 +958,9 @@
    "cat": "屏幕",
    "ref": "Askiko Typewriter Text Effect 113.3 万播放",
    "label": "代码逐行打出 · Code",
-   "suit": "代码、命令行、改动前后"
+   "suit": "代码、命令行、改动前后",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "comment_thread",
@@ -823,7 +971,9 @@
    "cat": "界面",
    "ref": "Envato「Social Media Comments」评论截图包常年在社交类前列",
    "label": "评论楼层 · Comment Thread",
-   "suit": "评论区截图、热评"
+   "suit": "评论区截图、热评",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "im_chat",
@@ -834,7 +984,9 @@
    "cat": "界面",
    "ref": "Envato「Text Messages」3.8K 份",
    "label": "聊天记录 · IM Chat",
-   "suit": "聊天记录、对话证据"
+   "suit": "聊天记录、对话证据",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "profile_card",
@@ -845,7 +997,9 @@
    "cat": "人物",
    "ref": "Envato「Lower Thirds」6.3K 份 · 社交名片模板",
    "label": "人物名片 · Profile Card",
-   "suit": "人物介绍、创始人、管理层"
+   "suit": "人物介绍、创始人、管理层",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "profile_card",
@@ -856,7 +1010,9 @@
    "cat": "人物",
    "ref": "Envato「Team / Org」信息图包",
    "label": "多人并列 · People Row",
-   "suit": "人物介绍、创始人、管理层"
+   "suit": "人物介绍、创始人、管理层",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "equity_tree",
@@ -867,7 +1023,9 @@
    "cat": "人物",
    "ref": "企查查 / 天眼查式股权图 · Envato「Organizational Chart」",
    "label": "股权穿透 · Ownership Tree",
-   "suit": "股权穿透、组织架构"
+   "suit": "股权穿透、组织架构",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "china_map",
@@ -878,7 +1036,9 @@
    "cat": "地图",
    "ref": "Envato「China Map」地图信息图包",
    "label": "中国地图 · 省份高亮",
-   "suit": "省份对比、分级设色、门店撒点"
+   "suit": "省份对比、分级设色、门店撒点",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "china_map",
@@ -889,7 +1049,9 @@
    "cat": "地图",
    "ref": "Envato「China Map」地图信息图包",
    "label": "中国地图 · 门店撒点",
-   "suit": "省份对比、分级设色、门店撒点"
+   "suit": "省份对比、分级设色、门店撒点",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "danmaku",
@@ -900,7 +1062,9 @@
    "cat": "界面",
    "ref": "B站弹幕刷屏 · 二创与口播常用",
    "label": "弹幕 · Danmaku",
-   "suit": "弹幕刷屏、高能时刻"
+   "suit": "弹幕刷屏、高能时刻",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "receipt",
@@ -911,7 +1075,9 @@
    "cat": "界面",
    "ref": "Envato「Receipt」mockup",
    "label": "小票 · Receipt",
-   "suit": "小票、账单、客单价"
+   "suit": "小票、账单、客单价",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "cold_open",
@@ -922,7 +1088,9 @@
    "cat": "节奏",
    "ref": "电影预告 / 纪录片冷开场",
    "label": "S08 无声开场 · Cold Open",
-   "suit": "片头先画面后说话"
+   "suit": "片头先画面后说话",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "suspense",
@@ -933,7 +1101,9 @@
    "cat": "节奏",
    "ref": "句中停 1.15 秒，再落数字",
    "label": "S10 揭晓前悬停 · Suspense",
-   "suit": "「答案是……」揭晓数字"
+   "suit": "「答案是……」揭晓数字",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "interlude",
@@ -944,7 +1114,9 @@
    "cat": "节奏",
    "ref": "不说话的 2.8 秒",
    "label": "S04 空镜过场 · Interlude",
-   "suit": "章节之间的空镜、纯音乐段"
+   "suit": "章节之间的空镜、纯音乐段",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "beat_cut",
@@ -955,7 +1127,9 @@
    "cat": "节奏",
    "ref": "纯音乐 3.6 秒，100 bpm，每拍一切",
    "label": "S06 音乐卡点 · Beat Cut",
-   "suit": "音乐卡点、快节奏蒙太奇"
+   "suit": "音乐卡点、快节奏蒙太奇",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "breather",
@@ -966,7 +1140,9 @@
    "cat": "节奏",
    "ref": "金句后停 2.6 秒",
    "label": "S03 留白呼吸页 · Breather",
-   "suit": "金句后的停顿、留白"
+   "suit": "金句后的停顿、留白",
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "pip",
@@ -977,7 +1153,9 @@
    "cat": "音视频",
    "ref": "小Lin说、林亦、毕导常用",
    "label": "画中画 · Talking-head PiP",
-   "suit": "图形 / 素材占满屏时主持人缩进角落"
+   "suit": "图形 / 素材占满屏时主持人缩进角落",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "freeze_frame",
@@ -988,7 +1166,9 @@
    "cat": "音视频",
    "ref": "B站科普常用：关键瞬间定格",
    "label": "视频定格 + 标注 · Freeze & Annotate",
-   "suit": "「停一下，看这里」、关键瞬间标注"
+   "suit": "「停一下，看这里」、关键瞬间标注",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "speed_ramp",
@@ -999,7 +1179,9 @@
    "cat": "音视频",
    "ref": "B站「AE 变速卡点」173.4 万播放",
    "label": "变速 · Speed Ramp",
-   "suit": "慢放看细节、快进跳过"
+   "suit": "慢放看细节、快进跳过",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "footage",
@@ -1010,7 +1192,9 @@
    "cat": "音视频",
    "ref": "采访切片、素材自带字幕",
    "label": "字幕避让 · Burned-in Subtitles",
-   "suit": "采访切片、自带字幕的素材"
+   "suit": "采访切片、自带字幕的素材",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "audio_quote",
@@ -1021,7 +1205,9 @@
    "cat": "音视频",
    "ref": "Envato「Audio Visualizer」热门",
    "label": "音频引用 · Audio Quote",
-   "suit": "引用一段原声、某人在节目里说的话"
+   "suit": "引用一段原声、某人在节目里说的话",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "podcast",
@@ -1032,7 +1218,9 @@
    "cat": "音视频",
    "ref": "Envato「Audio Visualizer」热门",
    "label": "播客切片 · Podcast Clip",
-   "suit": "播客切片、对谈节目"
+   "suit": "播客切片、对谈节目",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "talking_head",
@@ -1043,7 +1231,9 @@
    "cat": "音视频",
    "ref": "毕导式口播：跳切 + 贴纸",
    "label": "Vlog 口播 · Talking Head",
-   "suit": "口播段落、Vlog、关键词贴纸"
+   "suit": "口播段落、Vlog、关键词贴纸",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "host_point",
@@ -1054,7 +1244,9 @@
    "cat": "音视频",
    "ref": "Vox「Look at this」指哪说哪",
    "label": "主持人指向 · Host Points",
-   "suit": "主持人指着数字 / 结论 / 图里的细节"
+   "suit": "主持人指着数字 / 结论 / 图里的细节",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "text_pages",
@@ -1065,7 +1257,9 @@
    "cat": "字效",
    "ref": "Envato Elements「Hook & Captions」Titles Popular 第 12 · B 站动态歌词排版 898 万",
    "label": "分屏读完 · Text Pages",
-   "suit": "一段话要完整读完（背景介绍、原文、长引用、外文原句）"
+   "suit": "一段话要完整读完（背景介绍、原文、长引用、外文原句）",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "question_card",
@@ -1076,7 +1270,9 @@
    "cat": "结构",
    "ref": "知识区设问手法（小Lin说 / 回形针的问号卡）· Kinetic Typography Pack 4.2K",
    "label": "设问卡 · Question Card",
-   "suit": "先抛问题再揭晓（选择题 / 翻面答案）"
+   "suit": "先抛问题再揭晓（选择题 / 翻面答案）",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "vertical_title",
@@ -1087,7 +1283,9 @@
    "cat": "字效",
    "ref": "国风纪录片 / 片头常用的竖排版式",
    "label": "竖排古文 · Vertical Classical",
-   "suit": "国风片名、古文原句、竖排标题"
+   "suit": "国风片名、古文原句、竖排标题",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "flying_words",
@@ -1098,7 +1296,9 @@
    "cat": "字效",
    "ref": "B 站「PV 中的文字穿梭效果」23 万 · VideoHive Flying Through Words 2.2K",
    "label": "关键词飞过镜头 · Flying Words",
-   "suit": "一串关键词汇成一个结论、开场关键词"
+   "suit": "一串关键词汇成一个结论、开场关键词",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "number_pages",
@@ -1109,7 +1309,9 @@
    "cat": "数据",
    "ref": "Number Counter：YouTube 162.6 万 · Envato Popular「Number Counter」",
    "label": "数字拆页 · Number Pages",
-   "suit": "一句话里很多数字（财报、快讯）"
+   "suit": "一句话里很多数字（财报、快讯）",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "combo",
@@ -1120,7 +1322,9 @@
    "cat": "数据",
    "ref": "Number Counter 162.6 万 · Shape Elements burst（Graphics Pack 26.2K）",
    "label": "计数连击 · Combo",
-   "suit": "连续累加的次数 / 门店数 / 点赞数"
+   "suit": "连续累加的次数 / 门店数 / 点赞数",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "black_slam",
@@ -1131,7 +1335,9 @@
    "cat": "字效",
    "ref": "Camera Move + Impact Shake：Bricks 106.8 万（2025）",
    "label": "黑屏重击 · Black Slam",
-   "suit": "最重的一句结论、反转、冲击金句"
+   "suit": "最重的一句结论、反转、冲击金句",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "scribble",
@@ -1142,7 +1348,9 @@
    "cat": "字效",
    "ref": "B 站「白菜和杜比 手绘科普」69.9 万（2026）· Ben Marriott Hand Drawn 45.4 万",
    "label": "潦草涂鸦标注 · Scribble",
-   "suit": "推翻一个常见误解、在原文 / 截图上圈重点"
+   "suit": "推翻一个常见误解、在原文 / 截图上圈重点",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "scanline",
@@ -1153,7 +1361,9 @@
    "cat": "引用",
    "ref": "HUD 扫描界面（Quantum HUD Infographic 5.9K）",
    "label": "扫描线逐块标注 · Scanline",
-   "suit": "在文件 / 截图里逐条找出关键句"
+   "suit": "在文件 / 截图里逐条找出关键句",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "icon_unit",
@@ -1164,7 +1374,9 @@
    "cat": "数据",
    "ref": "VideoHive「555 Animated Icons」6.4K · Pictogram Infographic Kit 759",
    "label": "象形单位图 · Icon Unit",
-   "suit": "普及率、占比（每 100 人里有几个）"
+   "suit": "普及率、占比（每 100 人里有几个）",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "scatter",
@@ -1175,7 +1387,9 @@
    "cat": "数据",
    "ref": "VideoHive「Infographic Maker」2.6K · 「Infographics」2.2K",
    "label": "散点 / 气泡图 · Scatter",
-   "suit": "两个指标的关系（店数对收入、价格对销量）"
+   "suit": "两个指标的关系（店数对收入、价格对销量）",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "funnel",
@@ -1186,7 +1400,9 @@
    "cat": "数据",
    "ref": "VideoHive「Simple Infographics」1.9K · 「Infographic Maker」2.6K",
    "label": "转化漏斗 · Funnel",
-   "suit": "转化漏斗、层层筛选"
+   "suit": "转化漏斗、层层筛选",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "radar",
@@ -1197,7 +1413,9 @@
    "cat": "数据",
    "ref": "VideoHive「Infographics」2.2K · 「Quantum HUD」5.9K",
    "label": "雷达图 · Radar",
-   "suit": "多维能力对比（两三家）"
+   "suit": "多维能力对比（两三家）",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "then_now",
@@ -1208,7 +1426,9 @@
    "cat": "数据",
    "ref": "Envato Popular「Vertical Split Screen」· SonduckFilm 分屏教程 23.2 万",
    "label": "今昔对比 · Then vs Now",
-   "suit": "今昔对比、前后变化"
+   "suit": "今昔对比、前后变化",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "choose_one",
@@ -1219,7 +1439,9 @@
    "cat": "结构",
    "ref": "知识区「先猜再揭晓」开场 · 选项卡逐个跳动后落定",
    "label": "多选一 · Choose One",
-   "suit": "选择题、先猜再揭晓"
+   "suit": "选择题、先猜再揭晓",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "converge",
@@ -1230,7 +1452,9 @@
    "cat": "结构",
    "ref": "VideoHive「3D Earth Connections」3.4K · 「Infographic Maker」2.6K",
    "label": "多源汇聚 · Converge",
-   "suit": "多个来源汇成一个总数"
+   "suit": "多个来源汇成一个总数",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "gantt",
@@ -1241,7 +1465,9 @@
    "cat": "数据",
    "ref": "VideoHive「Company Timeline」3.2K · Envato「Infographics 6 Roadmaps」",
    "label": "阶段进度 / 甘特图 · Gantt",
-   "suit": "排期、阶段、并行任务"
+   "suit": "排期、阶段、并行任务",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "decision_tree",
@@ -1252,7 +1478,9 @@
    "cat": "结构",
    "ref": "Envato「Infographics 6 Roadmaps」· VideoHive「Infographic Maker」2.6K",
    "label": "决策树 · Decision Tree",
-   "suit": "如果……就……、判断流程"
+   "suit": "如果……就……、判断流程",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "area_overlay",
@@ -1263,7 +1491,9 @@
    "cat": "地图",
    "ref": "VideoHive「Infographics 3D Map Kit」3.2K · 「Map Kit」1.4K · Vox 式地图",
    "label": "面积对比 · Area Overlay",
-   "suit": "面积有多大（把 A 叠到 B 上）"
+   "suit": "面积有多大（把 A 叠到 B 上）",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "map_timeline",
@@ -1274,7 +1504,9 @@
    "cat": "地图",
    "ref": "VideoHive「Map Route Generator」3.5K · 「World Map Animation」2.8K",
    "label": "逐年撒点 · Map Timeline",
-   "suit": "逐年扩张、城市名单按年份"
+   "suit": "逐年扩张、城市名单按年份",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "street_map",
@@ -1285,7 +1517,9 @@
    "cat": "地图",
    "ref": "VideoHive「Map Kit」1.4K · 「3D Map Generator」1.2K",
    "label": "街区地图 · Street Map",
-   "suit": "街区、门店位置、步行路线（示意或自带数据）"
+   "suit": "街区、门店位置、步行路线（示意或自带数据）",
+   "style": "doc",
+   "style_name": "实拍纪录"
   },
   {
    "id": "logo_wall",
@@ -1296,7 +1530,9 @@
    "cat": "照片",
    "ref": "VideoHive Multi Video & Multi Text Logo Formation 3.8K · Mosaic Photo Reveal 16K",
    "label": "Logo 墙 · Logo Wall",
-   "suit": "这些公司都在用、合作方、投资组合"
+   "suit": "这些公司都在用、合作方、投资组合",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "halftone",
@@ -1307,7 +1543,9 @@
    "cat": "照片",
    "ref": "Ben Marriott「Make ANYTHING Retro」99.6 万 ·「Instant Dither」30.6 万",
    "label": "低清图做成风格 · Halftone / Duotone",
-   "suit": "老照片、低清截图、档案图"
+   "suit": "老照片、低清截图、档案图",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "meme_stage",
@@ -1318,7 +1556,9 @@
    "cat": "照片",
    "ref": "Fakeplastictree「Collage」203.5 万 · Ben Marriott Paper Cutout 30.7 万",
    "label": "梗图舞台 · Meme Stage",
-   "suit": "吐槽、一句一张反应图"
+   "suit": "吐槽、一句一张反应图",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "gif_clip",
@@ -1329,7 +1569,9 @@
    "cat": "照片",
    "ref": "VideoHive Photo Frames Slideshow 3.6K（Openers 第 3）· Mixkit Polaroid Slideshow",
    "label": "GIF 动图 · GIF Clip",
-   "suit": "动图、表情包、短循环"
+   "suit": "动图、表情包、短循环",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "svg_art",
@@ -1340,7 +1582,9 @@
    "cat": "照片",
    "ref": "「Stroke Logo Animation」128.5 万 · SonduckFilm Stroke Logo Reveal 66.7 万",
    "label": "SVG 矢量插画 · SVG Draw-on",
-   "suit": "图标、插画、品牌色切换"
+   "suit": "图标、插画、品牌色切换",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "doc_photo",
@@ -1351,7 +1595,9 @@
    "cat": "文档",
    "ref": "Flat Pack FX「Vox Highlighter Effect」31.3 万 · Motion Street「Motion Graphics Like Vox」83.8 万",
    "label": "拍照文档摆正 · Document Scan",
-   "suit": "手机拍的文件 / 白板 / 截图证据"
+   "suit": "手机拍的文件 / 白板 / 截图证据",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "slides",
@@ -1362,7 +1608,9 @@
    "cat": "文档",
    "ref": "VideoHive Cinematic Parallax Slideshow 5.4K（Openers 第 1）· Photo Slideshow 3D II 2.2K",
    "label": "幻灯片翻页 · Slide Deck",
-   "suit": "PPT、财报会、发布会页"
+   "suit": "PPT、财报会、发布会页",
+   "style": "poster",
+   "style_name": "瑞士海报"
   },
   {
    "id": "doc_flip",
@@ -1373,7 +1621,9 @@
    "cat": "文档",
    "ref": "Motion Array「Edit A Documentary Like Johnny Harris」53.9 万",
    "label": "多页文档翻阅 · Document Flip",
-   "suit": "判决书、财报、长文档翻到某页"
+   "suit": "判决书、财报、长文档翻到某页",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "doc_pick",
@@ -1384,7 +1634,9 @@
    "cat": "文档",
    "ref": "Premiere Gal「3D Paper Highlighter」19.8 万 · Documentary Style Pack（Envato Elements 热门）",
    "label": "抽出一页 · Pick a Page",
-   "suit": "一叠材料里的关键一页"
+   "suit": "一叠材料里的关键一页",
+   "style": "ink",
+   "style_name": "水墨国风"
   },
   {
    "id": "handwrite",
@@ -1395,7 +1647,9 @@
    "cat": "文档",
    "ref": "SonduckFilm「Handwriting Effect」123.7 万 · VideoHive Whiteboard Write 2.1K",
    "label": "手写笔记 · Handwriting",
-   "suit": "学习笔记、拆解笔记"
+   "suit": "学习笔记、拆解笔记",
+   "style": "sketch",
+   "style_name": "手绘白板"
   },
   {
    "id": "email_card",
@@ -1406,7 +1660,9 @@
    "cat": "文档",
    "ref": "Envato Elements「Elements」分类热门：手机通知、搜索框打字等界面元素",
    "label": "邮件截图 · Email Card",
-   "suit": "邮件证据、offer、通知邮件"
+   "suit": "邮件证据、offer、通知邮件",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "notice_card",
@@ -1417,7 +1673,9 @@
    "cat": "文档",
    "ref": "Johnny Harris / Vox 式报纸文件动画 19.6 万（2024）",
    "label": "公告文件 · Notice Card",
-   "suit": "公告、通知、说明（版式示意）"
+   "suit": "公告、通知、说明（版式示意）",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "app_flow",
@@ -1428,7 +1686,9 @@
    "cat": "界面",
    "ref": "VideoHive Phone 7 App & Gestures 2.6K",
    "label": "C3 · App 操作流程 · App Flow",
-   "suit": "App 教程、「三步做出……」、新手引导"
+   "suit": "App 教程、「三步做出……」、新手引导",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "cursor",
@@ -1439,7 +1699,9 @@
    "cat": "屏幕",
    "ref": "VideoHive Phone 7 App & Gestures 2.6K",
    "label": "C3 · 光标演示 · Cursor Demo",
-   "suit": "在截图 / 录屏上指给观众看：点哪里、拖什么、输入什么"
+   "suit": "在截图 / 录屏上指给观众看：点哪里、拖什么、输入什么",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "form_fill",
@@ -1450,7 +1712,9 @@
    "cat": "界面",
    "ref": "Envato Elements「Elements」Popular「Checklist Pack」",
    "label": "C3 · 表单与开关 · Form Fill",
-   "suit": "「发布前要勾选什么」「这个设置一定要打开」"
+   "suit": "「发布前要勾选什么」「这个设置一定要打开」",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "turntable",
@@ -1461,7 +1725,9 @@
    "cat": "照片",
    "ref": "VideoHive Product Promo 分类销量榜",
    "label": "C3 · 产品转台 · Product Turntable",
-   "suit": "产品亮相、单品拆解、参数卖点"
+   "suit": "产品亮相、单品拆解、参数卖点",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "search_box",
@@ -1472,7 +1738,9 @@
    "cat": "界面",
    "ref": "Envato「Search Screen Pro」Popular 第 7",
    "label": "T5 · 搜索框打字 · Search Typing",
-   "suit": "「我搜了一下」、查一手来源"
+   "suit": "「我搜了一下」、查一手来源",
+   "style": "screen",
+   "style_name": "AI 工具台"
   },
   {
    "id": "relation_graph",
@@ -1483,7 +1751,9 @@
    "cat": "人物",
    "ref": "VideoHive Infographic Maker 2.6K · Envato Infographics「AI Workflow」",
    "label": "G · 关系图 · Relation Graph",
-   "suit": "谁投资谁、背后都是谁、阵营关系"
+   "suit": "谁投资谁、背后都是谁、阵营关系",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "dialogue",
@@ -1494,7 +1764,9 @@
    "cat": "人物",
    "ref": "VideoHive Text Messages 3.8K · Lower Thirds 第 1 名 6.3K",
    "label": "C3 · 对话卡 · Dialogue",
-   "suit": "采访、对谈、两个人的观点交锋"
+   "suit": "采访、对谈、两个人的观点交锋",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "interview",
@@ -1505,7 +1777,9 @@
    "cat": "人物",
    "ref": "VideoHive Lower Thirds 第 1 名 6.3K",
    "label": "C1 · 访谈切片 · Interview",
-   "suit": "访谈 / 播客切片、嘉宾金句"
+   "suit": "访谈 / 播客切片、嘉宾金句",
+   "style": "flat",
+   "style_name": "扁平插画"
   },
   {
    "id": "opener",
@@ -1516,7 +1790,9 @@
    "cat": "类型",
    "ref": "VideoHive Openers 31,965 个 · Corporate Typography Pack 2.8K · Fast Intro 2.6K",
    "label": "L11 · 栏目片头 · Series Opener",
-   "suit": "系列栏目每期开头 3 秒"
+   "suit": "系列栏目每期开头 3 秒",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "news_flash",
@@ -1527,7 +1803,9 @@
    "cat": "类型",
    "ref": "talkcraft news-card-desk · 速报类口播",
    "label": "U05 · 新闻快讯 · News Flash",
-   "suit": "刚刚 / 快讯 / 某公司宣布"
+   "suit": "刚刚 / 快讯 / 某公司宣布",
+   "style": "hud",
+   "style_name": "暗场"
   },
   {
    "id": "deal_card",
@@ -1538,7 +1816,9 @@
    "cat": "类型",
    "ref": "Envato Infographics「Modern Price Tags & Counters」",
    "label": "U08 · 带货价签 · Deal Card",
-   "suit": "带货、价格对比、限时优惠"
+   "suit": "带货、价格对比、限时优惠",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "clip_style",
@@ -1549,7 +1829,9 @@
    "cat": "类型",
    "ref": "直播 / 访谈切片号通用包装 · talkcraft danmu-bubble-praise",
    "label": "M09 · 直播切片 · Clip Style",
-   "suit": "直播 / 访谈切片包装"
+   "suit": "直播 / 访谈切片包装",
+   "style": "pixel",
+   "style_name": "像素复古"
   },
   {
    "id": "review_card",
@@ -1560,7 +1842,9 @@
    "cat": "类型",
    "ref": "数码 / 工具测评号常用版式：评分条 + 星级 + 结论徽章",
    "label": "U03 · 测评打分卡 · Review Card",
-   "suit": "测评、打分、该不该买"
+   "suit": "测评、打分、该不该买",
+   "style": "press",
+   "style_name": "财经刊"
   },
   {
    "id": "sponsor_card",
@@ -1571,7 +1855,9 @@
    "cat": "类型",
    "ref": "口播恰饭段落「本期视频由……支持」",
    "label": "L12 · 口播广告位 · Sponsor Slot",
-   "suit": "口播广告位、恰饭段落"
+   "suit": "口播广告位、恰饭段落",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "poll_card",
@@ -1582,7 +1868,9 @@
    "cat": "类型",
    "ref": "Envato Elements Popular「YouTube Subscribe」「Checklist Pack」",
    "label": "T10 · 评论投票 · Poll Card",
-   "suit": "引导评论、你会选哪个"
+   "suit": "引导评论、你会选哪个",
+   "style": "zine",
+   "style_name": "拼贴杂志"
   },
   {
    "id": "share_card",
@@ -1593,7 +1881,9 @@
    "cat": "类型",
    "ref": "小红书 / 朋友圈金句图 · scripts/share_card.py 导出单张",
    "label": "T09 · 金句分享卡 · Share Card",
-   "suit": "结尾金句、可截图转发的结论"
+   "suit": "结尾金句、可截图转发的结论",
+   "style": "papercut",
+   "style_name": "剪纸"
   },
   {
    "id": "next_teaser",
@@ -1604,7 +1894,9 @@
    "cat": "类型",
    "ref": "系列号片尾常用「下期拆 XX」",
    "label": "L08 · 下期预告 · Next Teaser",
-   "suit": "片尾预告下一期"
+   "suit": "片尾预告下一期",
+   "style": "papercut",
+   "style_name": "剪纸"
   }
  ],
  "transitions": [

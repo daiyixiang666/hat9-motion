@@ -24,6 +24,13 @@ STYLE = {
     "outro": {"move": False},
     "sfx": {"transition": ("whoosh_soft", 0.3), "title": ("hit", 0.35), "line": ("click", 0.45), "enter": ("whoosh_soft", 0.3), "pop": ("tick", 0.5),
             "hit": ("hit", 0.4), "count": ("type", 0.35), "mark": ("tick", 0.4), "mascot": ("whoosh_soft", 0.3), "hud": ("beep", 0.12)},
+    # effect cards (aefx): four console modes, all on a dark field — standard · night-ops slate · brass · alert
+    "fx_themes": {
+        "ink":   {"bg": "#090b0e", "fg": "#f2efe6", "muted": "#8a9497", "accent": "#e9c46a", "card": "#12171b", "card-fg": "#f2efe6", "line": "#232a2f"},
+        "paper": {"bg": "#0a141a", "fg": "#eef3f2", "muted": "#86999e", "accent": "#e9c46a", "card": "#10202a", "card-fg": "#eef3f2", "line": "#1f3440"},
+        "lemon": {"bg": "#15110a", "fg": "#f6e7b0", "muted": "#a8946a", "accent": "#f3d98b", "card": "#221b0f", "card-fg": "#f6e7b0", "line": "#3a2f19"},
+        "red":   {"bg": "#170909", "fg": "#f6e7d8", "muted": "#b58f86", "accent": "#ff6a55", "card": "#241110", "card-fg": "#f6e7d8", "line": "#3e1b18"},
+    },
 }
 
 # ---------------------------------------------------------------- shared HUD furniture (this style only)
@@ -325,3 +332,108 @@ def outro(b, X, t, d, cid):
 
 SCENES = {"title": title, "compare": compare, "statement": statement, "number": number, "quote": quote, "outro": outro}
 STYLE["css"] = ""
+
+
+# ---------------------------------------------------------------- effect cards (aefx FX_FRAME)
+# Every gallery effect in this style is framed as one console readout: brass viewfinder corners, a numbered capsule
+# (card index · topic · effect id in italic caps), a REC timecode that ticks, side tick rulers, a slow scan line,
+# the spoken line on a notched ticket with a double brass rule, and a tick-mark ruler carrying label and source.
+# The effect gets a crosshair grid + vignette ground; nodes, ranking slabs and cards inside effects turn into brass-ruled
+# console pieces. Injected only here (the hud scenes keep their own CSS).
+HF_CSS = r"""
+.st-hud .fx[style*="background:var(--bg)"]::before { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:
+  radial-gradient(ellipse 78% 72% at 50% 46%, transparent 52%, rgba(0,0,0,.55)),
+  url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><path d='M60 53v14M53 60h14' stroke='%23f2efe6' stroke-opacity='.16' stroke-width='1.4'/></svg>") 0 0/120px 120px,
+  linear-gradient(color-mix(in srgb, var(--fg) 3.5%, transparent) 1px, transparent 1px) 0 0/120px 120px,
+  linear-gradient(90deg, color-mix(in srgb, var(--fg) 3.5%, transparent) 1px, transparent 1px) 0 0/120px 120px; }
+.hf { pointer-events:none; }
+.hf .hf-vf { position:absolute; left:36px; right:36px; top:30px; bottom:30px; }
+.hf .hf-vf i { position:absolute; width:52px; height:52px; border:2.5px solid var(--accent); opacity:.85; }
+.hf .hf-vf i:nth-child(1) { left:0; top:0; border-right:0; border-bottom:0; transform-origin:0 0; } .hf .hf-vf i:nth-child(2) { right:0; top:0; border-left:0; border-bottom:0; transform-origin:100% 0; }
+.hf .hf-vf i:nth-child(3) { left:0; bottom:0; border-right:0; border-top:0; transform-origin:0 100%; } .hf .hf-vf i:nth-child(4) { right:0; bottom:0; border-left:0; border-top:0; transform-origin:100% 100%; }
+.hf .hf-cps { position:absolute; left:74px; top:40px; display:flex; align-items:center; gap:14px; height:56px; padding:0 22px 0 8px; border-radius:14px;
+  background:linear-gradient(180deg, rgba(216,178,85,.32), rgba(110,84,32,.30)); border:1.5px solid rgba(233,196,106,.6);
+  box-shadow:inset 0 1px 0 rgba(255,240,200,.25), 0 10px 30px rgba(0,0,0,.45); }
+.hf .hf-no { width:42px; height:42px; border-radius:10px; background:rgba(242,239,230,.94); color:#15110a; display:grid; place-items:center;
+  font-family:var(--f-num); font-weight:700; font-size:32px; line-height:1; letter-spacing:.02em; }
+.hf .hf-tx { display:flex; flex-direction:column; gap:3px; }
+.hf .hf-tx b { font-family:var(--f-display); font-weight:900; font-size:22px; line-height:1; color:#f2efe6; letter-spacing:.06em; white-space:nowrap; }
+.hf .hf-tx em { font-family:var(--f-latin); font-style:italic; font-weight:700; font-size:13px; letter-spacing:.24em; color:rgba(246,231,176,.85); text-transform:uppercase; white-space:nowrap; }
+.hf .hf-rd { position:absolute; right:74px; top:44px; text-align:right; font-family:var(--f-mono); font-size:15px; line-height:1.6; letter-spacing:.16em; color:var(--muted); text-transform:uppercase; white-space:nowrap; }
+.hf .hf-rd { color:color-mix(in srgb, var(--fg) 62%, transparent); } .hf .hf-rd b { color:var(--fg); font-weight:500; } .hf .hf-rd .rec { display:inline-block; width:9px; height:9px; border-radius:50%; background:#e2574c; margin-right:8px; box-shadow:0 0 10px rgba(226,87,76,.8); }
+.hf .hf-tk { position:absolute; top:50%; width:12px; height:220px; margin-top:-110px; opacity:.55;
+  background:repeating-linear-gradient(180deg, var(--muted) 0 1px, transparent 1px 22px) 0 0/12px 100% no-repeat, linear-gradient(var(--muted), var(--muted)) 0 0/1px 100% no-repeat; }
+.hf .hf-tk.l { left:44px; } .hf .hf-tk.r { right:44px; transform:scaleX(-1); }
+.hf .hf-scan { position:absolute; left:36px; right:36px; top:0; height:2px; opacity:.2;
+  background:linear-gradient(90deg, transparent, var(--accent) 18%, var(--accent) 82%, transparent); box-shadow:0 0 14px var(--accent); }
+.hf .hf-cap { position:absolute; left:0; right:0; bottom:72px; display:flex; justify-content:center; }
+.hf .hf-tkt { position:relative; max-width:calc(80% + 110px); padding:16px 44px 18px; border-radius:6px; text-align:center;
+  background:linear-gradient(180deg, rgba(24,29,33,.95), rgba(12,15,18,.95)); box-shadow:0 24px 60px rgba(0,0,0,.55);
+  -webkit-mask:radial-gradient(circle 11px at 0 50%, transparent 97%, #000) left/51% 100% no-repeat, radial-gradient(circle 11px at 100% 50%, transparent 97%, #000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 50%, transparent 97%, #000) left/51% 100% no-repeat, radial-gradient(circle 11px at 100% 50%, transparent 97%, #000) right/51% 100% no-repeat; }
+.hf .hf-tkt::before, .hf .hf-tkt::after { content:''; position:absolute; border-radius:4px; pointer-events:none; }
+.hf .hf-tkt::before { inset:6px; border:1.5px solid color-mix(in srgb, var(--accent) 72%, transparent); }
+.hf .hf-tkt::after { inset:11px; border:1px solid color-mix(in srgb, var(--accent) 30%, transparent); }
+.hf .hf-line { position:relative; font-family:var(--f-body); font-weight:700; line-height:1.3; color:#f2efe6; letter-spacing:.02em; text-shadow:0 2px 0 rgba(0,0,0,.6); white-space:nowrap; }
+.hf .hf-line .em .emt { background:linear-gradient(180deg, #f3d98b, #c99d3d); color:#1a1408; text-shadow:none; padding:0 .22em; border-radius:4px;
+  box-shadow:0 3px 0 rgba(0,0,0,.4); box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.hf .hf-line .em .emb { display:none; }
+.hf .hf-ft { position:absolute; left:74px; right:74px; bottom:28px; height:40px; }
+.hf .hf-ft .hf-rule { position:absolute; left:0; right:0; bottom:0; height:12px; opacity:.7; background:
+  repeating-linear-gradient(90deg, var(--muted) 0 1px, transparent 1px 24px) left bottom/100% 6px no-repeat,
+  repeating-linear-gradient(90deg, var(--muted) 0 2px, transparent 2px 120px) left bottom/100% 12px no-repeat,
+  linear-gradient(var(--muted), var(--muted)) left bottom/100% 1px no-repeat; }
+.hf .hf-ft .hf-fr { position:absolute; left:0; right:0; bottom:18px; display:flex; justify-content:space-between; gap:30px;
+  font-family:var(--f-mono); font-size:14px; letter-spacing:.1em; color:var(--muted); white-space:nowrap; }
+.hf .hf-ft .hf-fr > span { overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.hf .hf-ft .hf-fr > span:first-child::before { content:'▸ '; color:var(--accent); }
+#root.v .hf .hf-vf { left:28px; right:28px; top:186px; bottom:392px; }
+#root.v .hf .hf-cps { left:58px; top:202px; height:42px; gap:10px; padding:0 16px 0 6px; border-radius:11px; }
+#root.v .hf .hf-no { width:31px; height:31px; border-radius:8px; font-size:22px; }
+#root.v .hf .hf-tx { flex-direction:row; align-items:baseline; gap:10px; } #root.v .hf .hf-tx b { font-size:18px; } #root.v .hf .hf-tx em { font-size:11px; }
+#root.v .hf .hf-rd { right:58px; top:200px; font-size:14px; line-height:1.5; }
+#root.v .hf .hf-tk { top:700px; } #root.v .hf .hf-tk.l { left:36px; } #root.v .hf .hf-tk.r { right:36px; }
+#root.v .hf .hf-scan { left:28px; right:28px; }
+#root.v .hf .hf-cap { bottom:458px; padding:0 120px; } #root.v .hf .hf-tkt { max-width:100%; padding:16px 22px 18px; }
+#root.v .hf .hf-ft { left:58px; right:130px; bottom:auto; top:1470px; height:46px; }
+/* effect internals */
+.st-hud .fx .rk .rk-in { background:linear-gradient(180deg, rgba(24,30,34,.94), rgba(13,17,20,.94)); box-shadow:inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 34%, transparent); border-radius:10px; }
+.st-hud .fx .rk .rk-r.top .rk-in { background:linear-gradient(180deg, #ebc866, #a8802f); box-shadow:inset 0 1px 0 rgba(255,244,210,.6), 0 0 0 2px rgba(243,217,139,.35), 0 0 46px rgba(233,196,106,.45); }
+.st-hud .fx .rk .rk-r.top .rk-no, .st-hud .fx .rk .rk-r.top .rk-nm, .st-hud .fx .rk .rk-r.top .rk-v, .st-hud .fx .rk .rk-r.top .rk-sb { color:#15110a; }
+.st-hud .fx .wpe-n, .st-hud .rg-n { background:linear-gradient(180deg, rgba(26,33,38,.96), rgba(14,18,22,.96)); color:var(--fg); border-radius:8px;
+  box-shadow:inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 45%, transparent), 0 16px 40px rgba(0,0,0,.45); }
+.st-hud .fx .wpe-n.person { border-radius:99vmin; }
+.st-hud .fx .wpe-n.root { background:linear-gradient(180deg, #ebc866, #a8802f); color:#15110a; box-shadow:inset 0 1px 0 rgba(255,244,210,.6), 0 0 40px rgba(233,196,106,.35); }
+.st-hud .rg-n em { color:color-mix(in srgb, var(--fg) 55%, transparent); }
+.st-hud .fx .dtr .dtr-b { border-radius:0 3px 3px 0; box-shadow:inset 0 1px 0 rgba(255,255,255,.22); }
+.st-hud .fx .nf .nf-band, .st-hud .fx .nf .nf-tk { border-radius:3px; }
+"""
+
+
+def FX_FRAME(X, cid, t, d, p, k):
+    X.css("hud-fx", HF_CSS)
+    P = X.portrait
+    i, n = X.beat["i"] + 1, X.beat["n"]
+    host = bool(p.get("host"))
+    rd_pos = ' style="right:330px"' if (host and P) else ""                     # 9:16: the presenter sits top-right
+    ft_pad = ' style="padding-right:330px"' if (host and not P) else ""         # 16:9: the presenter sits bottom-right
+    X.used_text.update(f"{i:02d}第九顶帽子 · CH09RECT+0123456789.▸ ")
+    inner = ('<div class="hf-vf"><i></i><i></i><i></i><i></i></div><i class="hf-tk l"></i><i class="hf-tk r"></i><i class="hf-scan"></i>'
+             f'<div class="hf-cps"><span class="hf-no">{i:02d}</span><span class="hf-tx"><b>{k["topic"]}</b><em>{k["fxid"]}</em></span></div>'
+             f'<div class="hf-rd"{rd_pos}>第九顶帽子 · <b>CH09</b><br><i class="rec"></i>REC <b class="hf-tc">T+00.0</b></div>'
+             f'<div class="hf-cap"><div class="hf-tkt"><div class="hf-line" style="font-size:{k["cap_px"]}px">{k["cap"]}</div></div></div>'
+             f'<div class="hf-ft"><div class="hf-fr"{ft_pad}><span>{k["foot"]}</span><span>{k["src"]}</span></div><i class="hf-rule"></i></div>')
+    X.clip(f"{cid}c", t, d, inner, f"ctx hf{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
+    s = f"#{cid}c"
+    X.tw(f'tl.from("{s} .hf-vf i", {{scale:1.45, opacity:0, duration:0.4, ease:"expo.out", stagger:0.04}}, {t:.3f});')
+    X.tw(f'tl.from("{s} .hf-cps", {{x:-30, opacity:0, duration:0.4, ease:"expo.out"}}, {t + 0.04:.3f});')
+    X.tw(f'tl.from("{s} .hf-rd, {s} .hf-tk, {s} .hf-ft", {{opacity:0, duration:0.3, stagger:0.05}}, {t + 0.08:.3f});')
+    X.tw(f'tl.fromTo("{s} .hf-tkt", {{scaleY:0.15, opacity:0}}, {{scaleY:1, opacity:1, duration:0.32, ease:"expo.out", immediateRender:true}}, {t + 0.05:.3f});')
+    X.tw(f'tl.from("{s} .hf-line", {{y:12, opacity:0, duration:0.3, ease:"power3.out"}}, {t + 0.16:.3f});')
+    y0, y1 = (250, 1440) if P else (96, X.H - 150)
+    X.tw(f'tl.fromTo("{s} .hf-scan", {{y:{y0}}}, {{y:{y1}, duration:{d:.2f}, ease:"none", immediateRender:true}}, {t:.3f});')
+    X.tw(f'(()=>{{const o={{v:0}}, el=document.querySelector("{s} .hf-tc"); tl.to(o, {{v:{d:.2f}, duration:{d:.2f}, ease:"none", '
+         f'onUpdate:()=>{{el.textContent="T+"+o.v.toFixed(1).padStart(4,"0");}}}}, {t:.3f});}})();')
+    blinks = max(0, int((d - 0.2) / 0.5))
+    if blinks:
+        X.tw(f'tl.to("{s} .rec", {{opacity:0.15, duration:0.01, repeat:{blinks}, yoyo:true, repeatDelay:0.49, ease:"none"}}, {t + 0.2:.3f});')

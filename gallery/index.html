@@ -49,16 +49,24 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   font: 600 14px var(--f-body); padding: 8px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
 .toast.on { opacity: 1; }
 .empty { color: var(--dim); padding: 40px 0; }
-.films { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
-.films button { font: 500 14px var(--f-body); color: var(--dim); background: var(--card); border: 1px solid var(--rule); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
-.films button[aria-selected="true"] { color: var(--ink); border-color: var(--hot); }
-.films button b { font: 600 12px var(--f-mono); color: var(--hot); margin-right: 6px; }
 .show { margin-top: 14px; display: grid; grid-template-columns: minmax(0, 16fr) minmax(0, 5.4fr); gap: 18px; align-items: start; }
 .show figure { margin: 0; background: var(--card); border-radius: 10px; overflow: hidden; }
 .show video { display: block; width: 100%; height: auto; background: #000; }
 .show figcaption { padding: 10px 14px 12px; font-size: 13px; color: var(--dim); }
 .show figcaption b { color: var(--ink); font-weight: 700; }
 @media (max-width: 640px) { .show { grid-template-columns: 1fr; } .show figure:last-child { max-width: 300px; } }
+.wall { margin-top: 26px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); }
+.tile { position: relative; display: block; text-align: left; background: var(--card); border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; padding: 0; color: var(--ink); cursor: pointer; font: inherit; }
+.tile[aria-pressed="true"] { border-color: var(--hot); box-shadow: 0 0 0 1px var(--hot); }
+.tile .tv { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #000; }
+.tile .tvv { position: absolute; left: 0; top: 0; pointer-events: none; background: transparent; }
+.tile .tm { padding: 8px 10px 10px; display: grid; gap: 1px; }
+.tile .tn { font: 700 15px var(--f-body); } .tile .tn code { font: 600 11px var(--f-mono); color: var(--hot); margin-left: 6px; }
+.tile .ts { font-size: 12px; color: var(--dim); }
+.wall-note { margin: 10px 0 0; font-size: 13px; color: var(--dim); }
+.card { position: relative; }
+.card .sty { position: absolute; left: 8px; top: 8px; font: 600 11px var(--f-body); color: #fff; background: rgba(0,0,0,.62); border-radius: 999px; padding: 2px 9px; letter-spacing: .02em; pointer-events: none; }
+.sel { font: 500 14px var(--f-body); color: var(--ink); background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 7px 10px; }
 @media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
 </style>
 </head><body>
@@ -66,9 +74,10 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 <div class="wrap">
   <div class="kick">hat9-motion · 第九顶帽子 <a href="fonts.html" style="color:var(--dim);text-decoration:none;margin-left:12px;letter-spacing:.06em;text-transform:none">字体样张 →</a></div>
   <h1>一条口播，变成 AE 级动效成片</h1>
-  <p class="lede">按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效库，横屏竖屏同一套代码。每个效果都放在一句真实口播里演示。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
+  <p class="lede">15 种风格、146 个按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
-  <div class="films" role="tablist" aria-label="成片示例" id="films"></div>
+  <div class="wall" role="group" aria-label="风格" id="wall"></div>
+  <p class="wall-note">点一种风格：上面播它的示例成片，下面的动效卡只看这个风格。另有 <code>studio</code> / <code>clay</code> 三维影棚（整片布景，示例在做）。</p>
   <section class="show" aria-label="成片示例">
     <figure><video id="sh-h" controls playsinline preload="metadata"></video><figcaption id="cap-h"></figcaption></figure>
     <figure><video id="sh-v" controls playsinline preload="metadata"></video><figcaption>同一条 · 竖屏 9:16，各自排版</figcaption></figure>
@@ -78,6 +87,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
     <div class="seg" role="group" aria-label="画幅">
       <button type="button" id="o-h" aria-pressed="true">横屏 16:9</button><button type="button" id="o-v" aria-pressed="false">竖屏 9:16</button>
     </div>
+    <select class="sel" id="sty" aria-label="风格"></select>
     <div id="cats" role="group" aria-label="类别"></div>
     <input class="search" id="q" type="search" placeholder="搜索：标题、照片、数字、转场……" aria-label="搜索效果">
     <span class="count" id="count"></span>
@@ -95,26 +105,47 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 (async function () {
   const ROOT = (location.pathname.includes("/gallery/") ? "../" : "") + "assets/previews/";
   const PV = ROOT + "fx/";
-  const FILMS = [
-    ["mixue", "press", "一杯 4 块钱的柠檬水", "财经刊 · 商业拆解"], ["screen", "screen", "8 亿人在用，5% 在付钱", "AI 工具台 · 产品界面"],
-    ["atlas", "atlas", "货船为什么不走苏伊士了", "地图纪录 · 连续世界地图"], ["doc", "doc", "一个铁箱子", "实拍纪录 · 档案片 + 现代实拍"],
-    ["poster", "poster", "专注，就是学会说不", "瑞士海报 · 网格动态字"],
-    ["papercut", "papercut", "过年看电影，钱押给最好的那一部", "剪纸 · 纸张层叠"], ["sketch", "sketch", "Costco 真正卖的是什么", "手绘白板 · 一笔一笔画"],
-    ["ink", "ink", "一只猴子，三天卖出一千万套", "水墨国风 · 书法写字"], ["zine", "zine", "一只怪兽，一年卖了一百四十多亿", "拼贴杂志 · 剪报定格"],
-    ["flat", "flat", "一份外卖背后的城市网络", "扁平插画 · 矢量人群"], ["pixel", "pixel", "三千二百亿的游戏账本", "像素复古 · 横版关卡"],
-    ["iso3d", "iso3d", "快递的规模账", "等距微缩 · 三维小世界"], ["chrome3d", "chrome3d", "英伟达：卖铲子的人", "Y2K 镀铬 · 三维隧道"]];
-  const filmsEl = document.getElementById("films");
-  const showFilm = (k) => { const f = FILMS[k];
-    for (const [id, tag] of [["sh-h", "16x9"], ["sh-v", "9x16"]]) { const v = document.getElementById(id); v.pause(); v.poster = ROOT + f[0] + "_" + tag + ".jpg"; v.src = ROOT + f[0] + "_" + tag + ".mp4"; }
-    document.getElementById("cap-h").innerHTML = `<b>《${f[2]}》</b> · 横屏 16:9 · ${f[3]} · 风格 <code>${f[1]}</code>`;
-    filmsEl.querySelectorAll("button").forEach((b, i) => b.setAttribute("aria-selected", i === k)); };
-  FILMS.forEach((f, i) => { const b = document.createElement("button"); b.type = "button"; b.setAttribute("role", "tab"); b.innerHTML = `<b>${f[1]}</b>${f[2]}`; b.onclick = () => showFilm(i); filmsEl.appendChild(b); });
+  // [style id, 中文名, 适合, film preview prefix (assets/previews/<prefix>_16x9.mp4) or "" , film title]
+  const STYLES = [
+    ["press", "财经刊", "商业拆解、数据口播", "mixue", "一杯 4 块钱的柠檬水"], ["poster", "瑞士海报", "观点、金句", "poster", "专注，就是学会说不"],
+    ["zine", "拼贴杂志", "潮玩、年轻消费", "zine", "一只怪兽，一年卖了一百四十多亿"], ["screen", "AI 工具台", "AI 工具、产品", "screen", "8 亿人在用，5% 在付钱"],
+    ["hud", "暗场 HUD", "拆解、排序", "", ""], ["atlas", "地图纪录", "贸易、航线、地缘", "atlas", "货船为什么不走苏伊士了"],
+    ["doc", "实拍纪录", "历史、行业", "doc", "一个铁箱子"], ["papercut", "剪纸", "节日、民俗", "papercut", "过年看电影，钱押给最好的那一部"],
+    ["sketch", "手绘白板", "讲原理、商业模式", "sketch", "Costco 真正卖的是什么"], ["ink", "水墨国风", "国风、文化", "ink", "一只猴子，三天卖出一千万套"],
+    ["flat", "扁平插画", "本地生活、城市", "flat", "一份外卖背后的城市网络"], ["pixel", "像素复古", "游戏、互联网", "pixel", "三千二百亿的游戏账本"],
+    ["iso3d", "等距微缩", "物流、产业链", "iso3d", "快递的规模账"], ["chrome3d", "Y2K 镀铬", "科技、芯片", "chrome3d", "英伟达：卖铲子的人"],
+    ["reel", "动效库", "快节奏口播", "", ""]];
+  const NAME = Object.fromEntries(STYLES.map((s) => [s[0], s[1]]));
+  const wallEl = document.getElementById("wall");
+  let sty = "全部", filmAt = -1, styIds = [];   // styIds filled once effects.json is in
+  const showFilm = (k) => { const f = STYLES[k]; if (!f[3]) return; filmAt = k;
+    for (const [id, tag] of [["sh-h", "16x9"], ["sh-v", "9x16"]]) { const v = document.getElementById(id); v.pause(); v.poster = ROOT + f[3] + "_" + tag + ".jpg"; v.src = ROOT + f[3] + "_" + tag + ".mp4"; }
+    document.getElementById("cap-h").innerHTML = `<b>《${f[4]}》</b> · 横屏 16:9 · 风格 <code>${f[0]}</code> ${f[1]}`; };
+  STYLES.forEach((f, i) => { const b = document.createElement("button"); b.type = "button"; b.className = "tile"; b.dataset.sty = f[0]; b.setAttribute("aria-pressed", "false");
+    const poster = ROOT + (f[3] ? f[3] + "_16x9.jpg" : "style_" + f[0] + ".jpg");
+    b.innerHTML = `<img class="tv" src="${poster}" alt="${f[1]} 风格" loading="lazy"><span class="tm"><span class="tn">${f[1]}<code>${f[0]}</code></span><span class="ts">${f[2]}</span></span>`;
+    if (f[3]) { b.addEventListener("pointerenter", (ev) => { if (ev.pointerType !== "mouse" || b.querySelector("video")) return; const v = document.createElement("video");
+      v.className = "tv tvv"; v.muted = true; v.loop = true; v.playsInline = true; v.src = ROOT + f[3] + "_16x9.mp4"; v.poster = poster;
+      b.appendChild(v); v.play().catch(() => {}); });   // laid over the poster (never replacing the element being clicked)
+      b.addEventListener("pointerleave", () => { const v = b.querySelector("video"); if (v) v.pause(); }); }
+    b.onclick = () => { const on = b.getAttribute("aria-pressed") === "true";
+      wallEl.querySelectorAll(".tile").forEach((x) => x.setAttribute("aria-pressed", "false"));
+      if (on) { setSty("全部"); return; }
+      b.setAttribute("aria-pressed", "true"); if (f[3]) showFilm(i);
+      setSty(f[0]); };
+    wallEl.appendChild(b); });
   showFilm(0);
   let data = { effects: [], transitions: [] };
   try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
   let orient = "h", cat = "全部", q = "";
   try { orient = localStorage.getItem("h9-orient") || "h"; } catch (e) {}
   const grid = document.getElementById("grid"), tgrid = document.getElementById("tgrid");
+  const styEl = document.getElementById("sty");
+  styIds = [...new Set(data.effects.map((e) => e.style || "reel"))];
+  styEl.innerHTML = `<option value="全部">全部风格</option>` + STYLES.filter((f) => styIds.includes(f[0])).map((f) => `<option value="${f[0]}">${f[1]} · ${f[0]}</option>`).join("");
+  styEl.onchange = () => setSty(styEl.value);
+  function setSty(v) { sty = styIds.includes(v) ? v : "全部"; styEl.value = sty;
+    wallEl.querySelectorAll(".tile").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.sty === v && v !== "全部"))); render(); }
   const cats = ["全部", ...new Set(data.effects.map((e) => e.cat))];
   const catsEl = document.getElementById("cats");
   cats.forEach((c) => { const b = document.createElement("button"); b.type = "button"; b.className = "chip"; b.textContent = c; b.setAttribute("aria-pressed", c === cat);
@@ -124,13 +155,15 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   const esc = (s) => String(s || "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   function card(e) {
     const f = e.file || e.id, src = PV + f + (orient === "v" ? "_v" : "") + ".webp";
-    return `<article class="card" id="${f}"><img class="pv" src="${src}" alt="${esc(e.title)} 预览" loading="lazy">
+    const sn = NAME[e.style || "reel"] || e.style_name || "";
+    return `<article class="card" id="${f}"><img class="pv" src="${src}" alt="${esc(e.title)} 预览" loading="lazy"><span class="sty">${esc(sn)}</span>
       <div class="meta"><div class="row"><button class="id" type="button" data-id="${e.id}" title="复制效果 id">${e.id}</button><span class="cat">${esc(e.band || e.cat)}</span></div>
       <h3>${esc(e.title.replace(/\s*\(.*$/, ""))}</h3><p>${esc(e.suit)}</p><p class="ref">${esc(e.ref)}</p></div></article>`;
   }
   function render() {
     const k = q.trim().toLowerCase();
-    const list = data.effects.filter((e) => (cat === "全部" || e.cat === cat) && (!k || [e.id, e.title, e.suit, e.cat, e.how].join(" ").toLowerCase().includes(k)));
+    const list = data.effects.filter((e) => (cat === "全部" || e.cat === cat) && (sty === "全部" || (e.style || "reel") === sty)
+      && (!k || [e.id, e.title, e.suit, e.cat, e.how, NAME[e.style || "reel"] || ""].join(" ").toLowerCase().includes(k)));
     grid.className = "grid" + (orient === "v" ? " v" : "");
     grid.innerHTML = list.map(card).join("");
     document.getElementById("empty").hidden = list.length > 0;

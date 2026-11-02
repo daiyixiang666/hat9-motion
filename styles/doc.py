@@ -17,6 +17,13 @@ beat = 一个镜头（scene "shot"）或一张卡（scene "card"）。
 import functools, math, re, subprocess
 
 STYLE = {
+    # page themes an effect beat can ask for: night print (ink) · Atlas map paper (paper) · darkroom oxblood (red) · tungsten amber (lemon)
+    "fx_themes": {
+        "ink":   {"bg": "#0b0b0a", "fg": "#f4efe6", "muted": "#a39b8f", "accent": "#f0a640", "card": "#171614", "card-fg": "#f4efe6", "line": "#34302a"},
+        "paper": {"bg": "#e6dece", "fg": "#18140e", "muted": "#5e5547", "accent": "#b4501c", "card": "#f3ede1", "card-fg": "#18140e", "line": "#c8baa0"},
+        "red":   {"bg": "#3d110d", "fg": "#f6ece0", "muted": "#cfb0a2", "accent": "#f0a640", "card": "#521a14", "card-fg": "#f6ece0", "line": "#6e2b22"},
+        "lemon": {"bg": "#e8a240", "fg": "#16100a", "muted": "#4f3414", "accent": "#6a1a0f", "card": "#fbf3e3", "card-fg": "#16100a", "line": "rgba(22,16,10,.28)"},
+    },
     "name": "实拍纪录", "en": "Documentary", "benchmarks": ["Bloomberg Originals", "Netflix 商业纪录片", "Vox Atlas", "小Lin说 实拍段落"],
     "tokens": {
         "bg": "#050505", "fg": "#f4efe6", "muted": "rgba(244,239,230,.62)", "accent": "#f0a640", "accent2": "#f0a640", "alert": "#f0a640",
@@ -485,6 +492,165 @@ def card(b, X, t, d, cid):
     X.tw(f'tl.from("{s} .hr", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t + 0.25:.3f});')
     X.tw(f'tl.from("{s} .s, {s} .m", {{opacity:0, y:12, duration:0.5, stagger:0.1}}, {t + 0.35:.3f});')
     X.sfx(t + 0.05, "title")
+
+
+# ---------------------------------------------------------------- effects in this style
+# Every gallery effect rendered in doc sits in the same frame as the film: the letterbox bars carry the furniture
+# (16:9: top bar = FX counter + effect name + show mark, a hairline and a mono metadata row; bottom bar = the spoken line
+# as a film subtitle). In 9:16 the same pieces sit at the platform-safe positions (header 206, caption 1330, foot 1478).
+FX_CSS = r"""
+.ctx.dfx { pointer-events:none; }
+.dfx .dfx-hd { position:absolute; left:96px; right:96px; top:30px; height:48px; display:flex; align-items:center; justify-content:space-between; gap:28px; color:#f4efe6; }
+.dfx .dfx-l { display:flex; align-items:center; gap:18px; min-width:0; }
+.dfx .dfx-id { display:flex; align-items:baseline; gap:12px; flex:none; }
+.dfx .dfx-id small { font:500 16px var(--f-mono); letter-spacing:.32em; color:rgba(244,239,230,.62); }
+.dfx .dfx-id .dg { display:inline-flex; font-family:var(--f-num); font-weight:700; font-size:42px; line-height:1; color:#f0a640; font-variant-numeric:lining-nums tabular-nums; }
+.dfx .dfx-id .col { display:inline-block; height:1em; overflow:hidden; } .dfx .dfx-id .col span { display:block; height:1em; }
+.dfx .dfx-dv { width:1px; height:30px; background:rgba(244,239,230,.35); flex:none; }
+.dfx .dfx-nm { white-space:nowrap; overflow:hidden; color:#f4efe6; }
+.dfx .dfx-nm b { font-family:var(--f-serif); font-weight:600; letter-spacing:.06em; }
+.dfx .dfx-nm em { font-family:var(--f-numi); font-style:italic; opacity:.66; margin-left:.7em; }
+.dfx .dfx-mk { flex:none; font:500 16px var(--f-mono); letter-spacing:.3em; color:rgba(244,239,230,.62); white-space:nowrap; }
+.dfx .dfx-mk b { font:500 17px var(--f-body); letter-spacing:.12em; color:#f4efe6; margin-right:14px; }
+.dfx .dfx-rl { position:absolute; left:96px; right:96px; top:88px; height:1px; background:rgba(244,239,230,.16); }
+.dfx .dfx-ft { position:absolute; left:96px; right:96px; top:98px; display:flex; justify-content:space-between; gap:40px; font:400 16px/1.45 var(--f-mono); color:rgba(244,239,230,.58); letter-spacing:.04em; }
+.dfx .dfx-ft > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.dfx .dfx-ft .tg { display:inline-block; border:1px solid rgba(244,239,230,.42); padding:0 8px; margin-right:12px; color:rgba(244,239,230,.85); letter-spacing:.1em; }
+.dfx .dfx-capw { position:absolute; left:0; right:0; top:942px; height:138px; display:flex; align-items:center; justify-content:center; }
+.ctx.dfx .cap { position:static; padding:0 120px; text-align:center; }
+.ctx.dfx .cap > span { display:inline-block; background:none; padding:0; border-radius:0; max-width:none; font-family:var(--f-body); font-weight:500; line-height:1.3;
+  color:#f4efe6; letter-spacing:.02em; text-shadow:0 1px 2px rgba(0,0,0,.6); }
+.ctx.dfx .cap .em .emt { background:none; color:#f0a640; padding:0; } .ctx.dfx .cap .em .emb { display:none; }
+.dfx .dfx-tg, .dfx .dfx-bg { display:none; }
+/* 9:16: platform-safe positions; dark grounds get soft scrims, light grounds (paper / lemon) take the theme ink with a paper halo */
+#root.v .dfx .dfx-hd { left:56px; right:56px; top:206px; }
+#root.v .dfx .dfx-rl { display:none; }
+#root.v .dfx .dfx-ft { top:1478px; left:56px; right:136px; flex-direction:column; gap:2px; font-size:17px; }
+#root.v .dfx .dfx-capw { position:static; }
+#root.v .ctx.dfx .cap { position:absolute; left:0; right:0; top:1330px; padding:0 120px; }
+#root.v .ctx.dfx .cap > span { font-weight:600; text-shadow:0 2px 14px rgba(0,0,0,.85), 0 1px 2px #000; }
+#root.v .dfx.dk .dfx-tg { display:block; position:absolute; left:0; right:0; top:0; height:520px; background:linear-gradient(180deg, rgba(0,0,0,.66), rgba(0,0,0,.58) 52%, rgba(0,0,0,0)); }
+#root.v .dfx.dk .dfx-hd { text-shadow:0 1px 3px rgba(0,0,0,.8), 0 0 14px rgba(0,0,0,.6); }
+#root.v .dfx.dk .dfx-bg { display:block; position:absolute; left:0; right:0; top:1230px; height:420px; background:linear-gradient(180deg, rgba(0,0,0,0), rgba(0,0,0,.5) 35%, rgba(0,0,0,.5) 65%, rgba(0,0,0,0)); }
+#root.v .dfx.lt .dfx-hd, #root.v .dfx.lt .dfx-nm, #root.v .dfx.lt .dfx-mk b { color:var(--fg); }
+#root.v .dfx.lt .dfx-id small, #root.v .dfx.lt .dfx-mk, #root.v .dfx.lt .dfx-ft { color:var(--fg); }
+#root.v .dfx.lt .dfx-hd { left:0; right:0; top:204px; height:64px; padding:0 56px; background:color-mix(in srgb, var(--bg) 94%, transparent); border-bottom:1px solid var(--line); }
+#root.v .dfx.lt .dfx-id .dg { color:var(--accent); } #root.v .dfx.lt .dfx-nm em { opacity:1; color:var(--fg); } #root.v .dfx.lt .dfx-dv { background:var(--line); }
+#root.v .dfx.lt .dfx-ft .tg { color:var(--fg); border-color:var(--muted); }
+#root.v .ctx.dfx.lt .cap > span { color:var(--fg); text-shadow:0 0 3px var(--bg), 0 0 10px var(--bg), 0 0 20px var(--bg); }
+#root.v .ctx.dfx.lt .cap .em .emt { color:var(--accent); }
+
+/* ---- effect internals in the doc language: serif heads, mono tags, square corners, hairlines, one amber, graded pictures */
+.fx .big { letter-spacing:.04em; }
+.fx .sub { font-family:var(--f-mono); letter-spacing:.32em; }
+.fx img:not(.mb), .fxv video:not([src*="shiba"]) { filter:saturate(.8) contrast(1.06) sepia(.07); }
+/* tags & chips -> amber mono labels (the film's tracking label) */
+.fx .mx-lab .mx-pill, .fx .pp-tag i, .fx .ff-lab b, .fx .sr-badge span, .fx .fg-band span, .fx .fg-l3 span, .fx .cv-tb em, .fx .ezlab em, .fx .sm .smrl, .fx .w3 .w3tag, .fx .w3 .w3mock {
+  font-family:var(--f-mono); font-weight:600; letter-spacing:.08em; background:#f0a640; color:#14110c; border-radius:0; text-shadow:none; }
+.fx .ff-lab b { font-size:28px; padding:4px 12px; }
+/* boxes -> square, hairline-edged prints */
+.fx .mx-card, .fx .mx-c, .fx .mx-t, .fx .mx-hl, .fx .cv-bz, .fx .cv-sbox, .fx .cv-ov, .fx .ff-box.card, .fx .ff-hole, .fx .sr-graph { border-radius:2px; }
+.fx .mx-card, .fx .mx-c { box-shadow:0 0 0 1px rgba(244,239,230,.16), 0 3vmin 7vmin rgba(0,0,0,.55); }
+.fx .mx-c .mx-tag, .fx .mx-idx { font-family:var(--f-mono); letter-spacing:.06em; font-weight:500; }
+.fx .sr-graph { background:rgba(8,8,8,.72); box-shadow:inset 0 0 0 1px rgba(244,239,230,.18); }
+.fx .sr-graph polyline, .fx .ff-mk rect, .fx .ff-mk ellipse { stroke:#f0a640; }
+.fx .ff-mk rect, .fx .ff-mk ellipse { stroke-width:3; stroke-linecap:square; }
+.fx .sr-head, .fx .sr-head::before, .fx .ff-lead, .fx .cv-prog { background:#f0a640; }
+.fx .sr-head { width:1.5px; }
+.fx .sr-badge b { -webkit-text-stroke:0; font-weight:800; text-shadow:0 4px 34px rgba(0,0,0,.65); }
+.fx .sr-badge.fast b { color:#f0a640; }
+.fx .ff-stamp { border-radius:0; background:rgba(8,8,8,.78); box-shadow:inset 0 0 0 1px rgba(244,239,230,.2); }
+.fx .ff-stamp i, .fx .cv-tb i { color:#f0a640; }
+.fx .fg-band { border:1.5px dashed rgba(240,166,64,.9); border-radius:0; }
+/* lower thirds -> the film's: amber rule, serif name, no box */
+.fx .fg-l3 b, .fx .pp-tag { background:none; border-radius:0; border-top:3px solid #f0a640; padding:10px 0 0; font-family:var(--f-serif); text-shadow:0 2px 14px rgba(0,0,0,.75), 0 1px 2px rgba(0,0,0,.6); }
+.fx .pp-chip { font-family:var(--f-mono); font-weight:600; border-radius:0; }
+.fx .pp-ring { border-width:3px; box-shadow:0 18px 40px rgba(0,0,0,.4); }
+/* callout -> reticle + hairline leader + serif label on an amber rule */
+.fx .dt { background:transparent; border:2px solid #f0a640; box-shadow:0 0 0 1px rgba(0,0,0,.35); width:3vmin; height:3vmin; margin:-1.5vmin; }
+.fx .ld { height:1.5px; }
+.fx .lb b { background:rgba(8,8,8,.62); font-family:var(--f-serif); font-weight:700; border-top:3px solid #f0a640; padding:.7vmin 1.4vmin .8vmin; color:#f4efe6; }
+.fx .lb span { text-shadow:0 1px 6px rgba(0,0,0,.9), 0 0 2px #000; color:#f4efe6; }
+/* 16:9: keep effect headlines that sit near the top edge out from under the 2.39 bar */
+#root:not(.v) .fx .pxt { top:15.5%; }
+#root:not(.v) .fx .mx-cap1 { margin-top:40px; }
+/* cite: archive card */
+.fx .ct-root .em .emb { background:#f0a640; border-radius:0; }
+.fx .ct-kick { background:none; color:var(--fg); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--fg) 45%, transparent); font-family:var(--f-mono); font-weight:500; letter-spacing:.2em; }
+.fx .cv-cap { border-left-width:3px; } .fx .cv-range { border-radius:0; font-weight:500; }
+.fx .cv-t { font-family:var(--f-serif); }
+/* maps & timelines -> Atlas: dotted full route under the drawn one, rule-topped figures, tick marks, a chapter bar on titles */
+.fx .mr .rt0 { stroke:color-mix(in srgb, var(--fg) 45%, transparent); stroke-width:2; stroke-dasharray:1 9; }
+.fx .mr .rt { stroke-width:3.5; }
+.fx .mrc div { background:transparent; border:0; border-top:3px solid var(--accent); box-shadow:none; padding:1.1vmin .2vmin 0; font-family:var(--f-serif); color:var(--fg);
+  text-shadow:0 0 .8vmin var(--bg), 0 0 1.6vmin var(--bg); }
+.fx .tlw .tlr { height:.2vmin; margin-top:-.1vmin; } .fx .tlw .tlf { height:.3vmin; margin-top:-.15vmin; }
+.fx .tlw .tlm i { border-radius:0; border:0; width:.45vmin; height:3.6vmin; left:-.22vmin; top:-1.8vmin; background:var(--fg); }
+.fx .tlw .tlm.last i { background:var(--accent); width:.7vmin; left:-.35vmin; }
+.fx .tlw .tlm .tlc { font-family:var(--f-serif); font-weight:600; }
+.fx .w3 .w3t::before { content:''; position:absolute; left:-24px; top:.16em; bottom:.16em; width:4px; background:var(--accent); }
+.fx .w3 .w3n { letter-spacing:.12em; }
+.fx .ao .aol i { border-radius:0; }
+.fx .ao .aob, .fx .ao .aoa { stroke-width:2; }
+.fx .sm .smp b { font-family:var(--f-serif); }
+.fx .ezlab strong { letter-spacing:.04em; }
+"""
+
+STYLE["css"] = STYLE.get("css", "") + FX_CSS     # style css lands after every effect's own css, so these win ties
+
+
+def _fx_name(p):
+    """'#2 2.5D 照片视差 · Photo Parallax' -> ('2.5D 照片视差', 'Photo Parallax')."""
+    lab = re.sub(r"^(#\d+|[A-Z]\d+)\s+", "", str(p.get("label") or "").strip())
+    if not lab: return str(p.get("fxid") or p.get("fx", "")), ""
+    zh, _, en = lab.partition(" · ")
+    return zh.strip(), en.strip()
+
+
+def _bg_light(sty):
+    m = re.search(r"--bg:(#[0-9a-fA-F]{6})", sty or "")
+    if not m: return False
+    r, g, b = (int(m.group(1)[i:i + 2], 16) / 255 for i in (1, 3, 5))
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.5
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the doc frame around a gallery effect (see FX_CSS). Called by aefx for every effect beat with a spoken line."""
+    P = X.portrait
+    i = X.beat["i"]
+    a, z = f"{i:02d}", f"{i + 1:02d}"
+    cols = "".join(f'<span class="col"><span>{x}</span><span>{y}</span></span>' for x, y in zip(a, z))
+    zh, en = _fx_name(p)
+    mark_w = 140 if P else 380
+    room = (X.W - 112 - 130 - 40 - mark_w - 28) if P else (X.W - 192 - 150 - 40 - mark_w - 28)
+    # effect name: Chinese serif + English italic on one line; the English goes first when it does not fit
+    zpx = 26.0
+    if em(zh) * zpx + (em(en) * 0.62 * zpx + 0.7 * zpx if en else 0) > room * 0.94:
+        en = ""
+        zpx = max(16.0, min(26.0, room * 0.94 / max(em(zh), 1)))
+    name = f'<b style="font-size:{zpx:.0f}px">{X.rich(zh)}</b>' + (f'<em style="font-size:{zpx * 0.86:.0f}px">{X.rich(en)}</em>' if en else "")
+    topic = "" if P else parts["topic"]
+    mark = f'<div class="dfx-mk"><b>第九顶帽子</b>{topic}</div>'
+    fxid = X.rich(p.get("fxid") or p.get("fx", ""))
+    ref = X.rich(p.get("ref", ""))
+    src = f'来源：{parts["src"]}' if parts["src"] else ""
+    foot = f'<div><span class="tg">{fxid}</span>{ref}</div><div>{src}</div>'
+    # caption: the film's subtitle. 16:9 sits in the bottom bar (one line 34 px, two lines 30 px); 9:16 keeps aefx's fit
+    n = len(parts["cap_lines"])
+    cpx = parts["cap_px"] if P else (min(34.0, parts["cap_px"]) if n == 1 else min(30.0, parts["cap_px"] * 1.07))
+    light = _bg_light(parts["sty"]) and not parts["photo"]
+    X.used_text.update(f"FX{a}{z}第九顶帽子来源：" + zh + en)
+    inner = (f'<div class="dfx-tg"></div><div class="dfx-bg"></div>'
+             f'<div class="dfx-hd"><div class="dfx-l"><div class="dfx-id"><small>FX</small><span class="dg">{cols}</span></div><i class="dfx-dv"></i>'
+             f'<div class="dfx-nm">{name}</div></div>{mark}</div><i class="dfx-rl"></i><div class="dfx-ft">{foot}</div>'
+             f'<div class="dfx-capw"><div class="cap"><span style="font-size:{cpx:.0f}px">{parts["cap"]}</span></div></div>')
+    X.clip(f"{cid}c", t, d, inner, f"ctx dfx {'lt' if light else 'dk'}", 45, track=20, sty=parts["sty"])
+    q = f"#{cid}c"
+    X.tw(f'tl.to("{q} .dfx-id .col span", {{yPercent:-100, duration:0.5, ease:"expo.inOut", stagger:0.06}}, {t + 0.05:.3f});')
+    X.tw(f'tl.set("{q} .dfx-id .col span:first-child", {{visibility:"hidden"}}, {t + 0.7:.3f});')   # the rolled-out digit is gone, not just masked
+    X.tw(f'tl.from("{q} .dfx-nm", {{clipPath:"inset(0 100% 0 0)", duration:0.5, ease:"power3.out"}}, {t + 0.1:.3f});')
+    X.tw(f'tl.from("{q} .dfx-ft", {{opacity:0, duration:0.4}}, {t + 0.3:.3f});')
+    X.tw(f'tl.from("{q} .cap > span", {{opacity:0, duration:0.16, ease:"none"}}, {t + 0.08:.3f});')
 
 
 SCENES = {"shot": shot, "card": card}

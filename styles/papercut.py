@@ -612,3 +612,150 @@ def outro(b, X, t, d, cid):
 
 
 SCENES = {"hook": hook, "tickets": tickets, "calendar": calendar, "share": share, "banner": banner, "stacks": stacks, "thesis": thesis, "outro": outro}
+
+
+# ---------------------------------------------------------------- effects in this style (gallery cards / fx beats)
+# four paper stocks for the effect themes: rice paper, festive red, indigo-dyed (蓝印) and gold foil (金纸)
+STYLE["fx_themes"] = {
+    "paper": {"bg": "#f3ede1", "fg": "#1e1b18", "muted": "#6c635a", "accent": "#c62a1f", "card": "#fbf7ee", "card-fg": "#1e1b18", "line": "#e2d6c2"},
+    "red":   {"bg": "#c62a1f", "fg": "#fbf7ee", "muted": "rgba(251,247,238,.82)", "accent": "#f2c14e", "card": "#fbf7ee", "card-fg": "#1e1b18", "line": "rgba(251,247,238,.3)"},
+    "ink":   {"bg": "#1d2940", "fg": "#f3ede1", "muted": "#a9b3c6", "accent": "#e8543f", "card": "#26324d", "card-fg": "#f3ede1", "line": "#34405c"},
+    "lemon": {"bg": "#e9b949", "fg": "#2a1a0e", "muted": "#5e3f10", "accent": "#b3221a", "card": "#fbf7ee", "card-fg": "#1e1b18", "line": "rgba(42,26,14,.2)"},
+}
+# the cut-paper frame around a card, per stock: frame band, corner flowers (角花), header tag, caption strip, keyword marker, effect-id stub
+FRAME = {
+    "paper": {"frame": "#c62a1f", "corner": "#d6a23c", "tag": "#c62a1f", "tag-fg": "#fbf7ee", "tag-b": "#ffd77a", "cap": "#fbf7ee", "cap-fg": "#1e1b18",
+              "em": "#c62a1f", "em-fg": "#fbf7ee", "stub": "#1e1b18", "stub-fg": "#fbf7ee"},
+    "red":   {"frame": "#fbf7ee", "corner": "#f2c14e", "tag": "#fbf7ee", "tag-fg": "#1e1b18", "tag-b": "#c62a1f", "cap": "#fbf7ee", "cap-fg": "#1e1b18",
+              "em": "#c62a1f", "em-fg": "#fbf7ee", "stub": "#1e1b18", "stub-fg": "#fbf7ee"},
+    "ink":   {"frame": "#d6a23c", "corner": "#e8543f", "tag": "#d6a23c", "tag-fg": "#1d2940", "tag-b": "#8d1711", "cap": "#f3ede1", "cap-fg": "#1d2940",
+              "em": "#e8543f", "em-fg": "#fbf7ee", "stub": "#f3ede1", "stub-fg": "#1d2940"},
+    "lemon": {"frame": "#b3221a", "corner": "#fbf7ee", "tag": "#b3221a", "tag-fg": "#fbf7ee", "tag-b": "#ffd77a", "cap": "#fbf7ee", "cap-fg": "#1e1b18",
+              "em": "#b3221a", "em-fg": "#fbf7ee", "stub": "#2a1a0e", "stub-fg": "#fbf7ee"},
+}
+
+
+def _b64svg(svg):
+    import base64
+    return 'url("data:image/svg+xml;base64,' + base64.b64encode(svg.encode()).decode() + '")'
+
+
+_WM = _b64svg(flower("wm", "#000", 12).replace("<svg ", "<svg xmlns='http://www.w3.org/2000/svg' ", 1))
+_LACE = _b64svg("<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path fill='#000' fill-rule='evenodd' "
+                "d='M0 0H40V40H0Z M10 4.5a5.5 5.5 0 1 0 .01 0Z M30 24.5a5.5 5.5 0 1 0 .01 0Z M30 9l3 3-3 3-3-3Z M10 29l3 3-3 3-3-3Z'/></svg>")
+_SHADE = "color-mix(in srgb, var(--bg) 58%, #2a0a06)"      # the paper's own drop: a darker shade of whatever stock it sits on
+
+FX_CSS = r"""
+/* the effect's ground is a sheet of paper: fibre texture + a large faint 窗花 cut into the corner */
+.fx { background-image:__NOISE__ !important; background-size:340px !important; }
+.fx::before { content:""; position:absolute; width:86vmin; height:86vmin; right:-22vmin; bottom:-30vmin; background:var(--fg); opacity:.06;
+  -webkit-mask:__WM__ center/contain no-repeat; mask:__WM__ center/contain no-repeat; pointer-events:none; }
+#root.v .fx::before { right:-30vmin; bottom:auto; top:13%; }
+/* type is cut from paper: every headline casts a solid paper drop plus a soft shadow */
+.fx .big, .fx .op .op-ep, .fx .op .op-t, .fx .dn .dnc b, .fx .iu .iub, .fx .nt-t, .fx .dn .dnt strong, .fx .iu .iutx {
+  text-shadow:0 .05em 0 __SHADE__, 0 .12em .2em rgba(40,10,5,.24); }
+.fx .big { letter-spacing:.01em; }
+.fx .col > .sub { background:var(--card); color:var(--card-fg); padding:.7vmin 2vmin .8vmin; letter-spacing:.24em; transform:rotate(-1deg);
+  box-shadow:0 .5vmin 0 __SHADE__, 0 1.4vmin 2vmin rgba(40,10,5,.2); font-family:var(--f-body); font-weight:700; }
+/* burst: rays become cut paper strips, the ring a punched lace circle, the dots little paper diamonds */
+.fx .ray b { border-radius:0; width:1.3vmin; left:-.65vmin; box-shadow:0 .5vmin 0 __SHADE__; }
+.fx .ray:nth-child(even) b { background:var(--fg); height:5vmin; }
+.fx .bu .ring { border:1.5vmin dotted var(--accent); }
+.fx .bu .dot { border-radius:.2vmin; background:var(--accent); width:2.4vmin; height:2.4vmin; transform:rotate(var(--a)) translateY(-22vmin) rotate(45deg); box-shadow:0 .4vmin 0 __SHADE__; }
+/* gooey: two paper discs with hollow-cut lace, the merged neck stays paper */
+.fx .gw { filter:drop-shadow(0 .7vmin 0 __SHADE__) drop-shadow(0 1.8vmin 1.6vmin rgba(40,10,5,.25)); }
+.fx .go { -webkit-mask:__LACE__ 0 0/4.2vmin 4.2vmin repeat; mask:__LACE__ 0 0/4.2vmin 4.2vmin repeat; }
+/* donut: the ring is a paper band with a scalloped lace border around it */
+.fx .dn .dnr svg { filter:drop-shadow(0 .6vmin 0 __SHADE__) drop-shadow(0 1.6vmin 1.6vmin rgba(40,10,5,.22)); }
+.fx .dn .dnr::before { content:""; position:absolute; inset:-5%; border-radius:50%; border:1.2vmin dotted var(--accent); opacity:.55; }
+.fx .dn .dntr { stroke:color-mix(in srgb, var(--fg) 14%, var(--bg)); }
+.fx .dn .dnlg div i, .fx .dn .dnt i.sw { border-radius:0; transform:rotate(45deg) scale(.86); }
+/* maps: the country is a cut-out laid on the page; labels are paper tags; pins are diamonds */
+.fx .wpm svg { filter:drop-shadow(0 .45vmin 0 color-mix(in srgb, __SHADE__ 55%, transparent)); }
+.fx .wpm-p { fill:color-mix(in srgb, var(--card) 70%, var(--bg)); }
+.fx .wpm-lb { border-radius:0; background:var(--card); color:var(--card-fg); box-shadow:0 .35vmin 0 __SHADE__; }
+.fx .wpm-pin i { border-radius:.2vmin; transform:rotate(45deg); }
+.fx .wpm-r i { border-radius:0; }
+.fx .wp-mock { border-radius:0 !important; }
+/* icon units: the lit share is stamped on a paper slip */
+.fx .iu .iuper { background:var(--card); color:var(--card-fg); padding:.4em .8em; box-shadow:0 .4vmin 0 __SHADE__; }
+.fx .iu .iulg i { border-radius:0; transform:rotate(45deg) scale(.8); }
+/* opener: no glossy sweep on paper; bars cast paper drops */
+.fx .op .op-sweep { display:none; }
+.fx .op .op-bar { box-shadow:0 .5vmin 0 __SHADE__; }
+/* share card: a paper card with a printed red border line, no screen scanlines */
+.fx .sc .sc-c { border-radius:0; box-shadow:0 .7vmin 0 __SHADE__, 0 3vmin 5vmin rgba(40,10,5,.25); outline:.45vmin solid var(--accent); outline-offset:-2.2vmin; }
+.fx .sc .sc-c::before { background:__NOISE__; background-size:340px; }
+/* next teaser: the cover is a mounted print with a paper border; the RGB glitch and scanline stay off */
+.fx .nt .nt-cv { border-radius:0; border:1.1vmin solid #fbf7ee; box-shadow:0 .7vmin 0 __SHADE__, 0 3vmin 5vmin rgba(0,0,0,.3); }
+.fx .nt .nt-cv .rgb, .fx .nt .nt-cv .scan { display:none; }
+.fx .nt .nt-cv .ph { background:var(--accent); background-image:__NOISE__; }
+.fx .nt .nt-cv .ph b { color:rgba(40,10,5,.16); }
+.fx .nt .nt-cv .ph i { color:#fbf7ee; -webkit-text-stroke:0; text-shadow:0 .05em 0 rgba(60,10,5,.45), 0 .12em .2em rgba(40,10,5,.3); }
+.fx .nt .nt-tape { opacity:.94; }
+.fx .nt .nt-k { border-radius:0; box-shadow:0 .4vmin 0 __SHADE__; }
+.fx .nt .nt-h span { border-radius:0; border-style:dashed; }
+.fx .nt .nt-w { border-radius:0; transform:rotate(-2deg); box-shadow:0 .5vmin 0 __SHADE__; }
+.fx .sc .sc-hint { border-radius:0; transform:rotate(2deg); box-shadow:0 .4vmin 0 __SHADE__; }
+.fx .sc .sc-flash { border-radius:0; }
+
+/* the card frame (FX_FRAME): scalloped paper border, 角花 corners, paper header tag, caption strip, footer slip */
+.ctx.pcx .frm { position:absolute; inset:0; width:100%; height:100%; filter:drop-shadow(0 6px 0 rgba(40,10,5,.22)) drop-shadow(0 10px 12px rgba(40,10,5,.2)); }
+.ctx.pcx .cf { position:absolute; filter:drop-shadow(0 4px 0 rgba(40,10,5,.25)); }
+.ctx.pcx .hd { left:128px; right:128px; top:40px; height:auto; border:none; display:flex; justify-content:space-between; align-items:center; }
+.ctx.pcx .hd .tag { background:var(--pc-tag); color:var(--pc-tag-fg); font-family:var(--f-display); font-weight:400; font-size:24px; padding:7px 16px 9px;
+  box-shadow:0 4px 0 rgba(40,10,5,.25); transform:rotate(-1.2deg); white-space:nowrap; }
+.ctx.pcx .hd .tag b { color:var(--pc-tag-b); font-weight:400; margin-right:10px; letter-spacing:0; }
+.ctx.pcx .hd .tag span { opacity:1; margin-left:0; }
+.ctx.pcx .hd .fxid { background:var(--pc-stub); color:var(--pc-stub-fg); font-family:var(--f-mono); font-size:17px; padding:4px 12px; transform:rotate(2deg);
+  box-shadow:0 3px 0 rgba(40,10,5,.25); }
+.ctx.pcx .cap { bottom:76px; }
+.ctx.pcx .cap > span { background:var(--pc-cap); color:var(--pc-cap-fg); border-radius:2px; font-family:var(--f-body); font-weight:800; transform:rotate(-.8deg);
+  box-shadow:0 5px 0 var(--pc-frame), 0 14px 20px rgba(40,10,5,.25); }
+.ctx.pcx .cap .em .emt { background:var(--pc-em); color:var(--pc-em-fg); padding:0 .16em; box-shadow:0 3px 0 rgba(40,10,5,.25); }
+.ctx.pcx .ft { left:128px; right:128px; bottom:38px; opacity:1; color:var(--fg); font-size:15px; }
+.ctx.pcx .ft > div { background:color-mix(in srgb, var(--bg) 82%, transparent); box-shadow:0 0 0 5px color-mix(in srgb, var(--bg) 82%, transparent); }
+#root.v .ctx.pcx .hd { left:56px; right:56px; top:206px; } #root.v .ctx.pcx .ft { left:56px; right:56px; top:1478px; bottom:auto; font-size:17px; }
+#root.v .ctx.pcx .cap { top:1330px; bottom:auto; padding:0 120px; }
+"""
+STYLE["css"] = (FX_CSS.replace("__NOISE__", noise_bg(0.13, 9)).replace("__WM__", _WM).replace("__LACE__", _LACE)
+                .replace("__SHADE__", _SHADE))
+
+
+def frame_path(W, H, m, r):
+    """a full-page band with a scalloped inner edge (evenodd): the paper border a 窗花 card is mounted in."""
+    def edge(L):
+        n = max(1, round(L / (2 * r)))
+        return n, L / (2 * n)
+    d = f"M0 0H{W}V{H}H0Z M{m} {m}"
+    n, rr = edge(W - 2 * m); d += "".join(f"a{rr:.2f} {rr:.2f} 0 0 0 {2 * rr:.2f} 0" for _ in range(n))
+    n, rr = edge(H - 2 * m); d += "".join(f"a{rr:.2f} {rr:.2f} 0 0 0 0 {2 * rr:.2f}" for _ in range(n))
+    n, rr = edge(W - 2 * m); d += "".join(f"a{rr:.2f} {rr:.2f} 0 0 0 {-2 * rr:.2f} 0" for _ in range(n))
+    n, rr = edge(H - 2 * m); d += "".join(f"a{rr:.2f} {rr:.2f} 0 0 0 0 {-2 * rr:.2f}" for _ in range(n))
+    return d + "Z"
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the page around an effect card in papercut: the effect is mounted in a red (cream / gold) paper border with
+    scalloped edges and four 角花 corner flowers; the header is a paper tag, the spoken line a tilted paper strip with
+    the keyword cut from red paper, the footnote a small slip."""
+    P, W, H = X.portrait, X.W, X.H
+    th = p.get("theme") if p.get("theme") in FRAME else "paper"
+    fr = FRAME[th]
+    m, r, R = (20, 12, 78) if P else (18, 12, 86)
+    sty = parts["sty"] + ";" + ";".join(f"--pc-{k}:{v}" for k, v in fr.items())
+    corners = "".join(f'<div class="cf" data-k="{k}" style="left:{x - R}px;top:{y - R}px;width:{2 * R}px;height:{2 * R}px">{flower(f"{cid}k{k}", fr["corner"], 8)}</div>'
+                      for k, (x, y) in enumerate([(m, m), (W - m, m), (W - m, H - m), (m, H - m)]))
+    src = f'<div>{parts["src"]}</div>' if parts["src"] else ""
+    inner = (('<div class="scrim"></div>' if parts["photo"] else "")
+             + f'<svg class="frm" viewBox="0 0 {W} {H}" preserveAspectRatio="none"><path d="{frame_path(W, H, m, r)}" fill="{fr["frame"]}" fill-rule="evenodd"/></svg>{corners}'
+             + f'<div class="hd"><div class="tag"><b>第九顶帽子</b><span>{parts["topic"]}</span></div><div class="fxid">{parts["fxid"]}</div></div>'
+             + f'<div class="cap"><span style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></div>'
+             + f'<div class="ft"><div>{parts["foot"]}</div>{src}</div>')
+    X.used_text.update("第九顶帽子")
+    X.clip(f"{cid}c", t, d, inner, f"ctx pcx{' photo' if parts['photo'] else ''}", 30, track=20, sty=sty)
+    s = f"#{cid}c"
+    X.tw(f'tl.from("{s} .cap > span", {{y:28, rotation:-5, opacity:0, duration:0.42, ease:"back.out(1.8)"}}, {t + 0.08:.3f});')
+    X.tw(f'tl.from("{s} .hd .tag", {{y:-90, rotation:-8, duration:0.45, ease:"back.out(1.8)"}}, {t + 0.02:.3f});')
+    X.tw(f'tl.from("{s} .hd .fxid", {{y:-90, rotation:10, duration:0.45, ease:"back.out(1.8)"}}, {t + 0.1:.3f});')
+    X.tw(f'tl.fromTo("{s} .cf", {{rotation:0}}, {{rotation:20, duration:{d:.2f}, ease:"none"}}, {t:.3f});')

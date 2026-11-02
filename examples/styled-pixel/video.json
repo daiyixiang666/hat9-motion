@@ -1,0 +1,198 @@
+{
+ "meta": {
+  "title": "动效 · pixel 风格",
+  "aspect": "16:9",
+  "style": "pixel",
+  "duration": 38.0,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "bars",
+   "d": 3.2,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "items": [
+    [
+     "2022",
+     135.8
+    ],
+    [
+     "2023",
+     203.0
+    ],
+    [
+     "2024",
+     248.3
+    ]
+   ],
+   "unit": "亿",
+   "dec": 1,
+   "title": "蜜雪集团 · 年收入",
+   "note": "单位：亿元",
+   "growth": "+83%",
+   "line": "两年，收入从 136 亿涨到 *248 亿*。",
+   "src": "蜜雪集团招股书；2024 年度业绩公告",
+   "label": "D2 柱状图生长 · Bar Chart",
+   "ref": "Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "text_mask",
+   "d": 3.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "image": "../aefx/assets/broll/crossing.jpg",
+   "text": "人流",
+   "sub": "foot traffic",
+   "line": "开店的生意，最后都回到两个字：*人流*。",
+   "label": "文字镂空透视频 · Video Inside Text",
+   "ref": "SonduckFilm「5 Quick Text Effects」76.7万播放 · Mixkit Video Mask Title",
+   "t": 3.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "../media/assets/frames/screen_h_20.jpg",
+     "caption": "横屏 16:9"
+    },
+    {
+     "src": "../media/assets/frames/screen_v_06.jpg",
+     "caption": "竖屏 9:16"
+    }
+   ],
+   "line": "同一句话，*横屏和竖屏*各排一版。",
+   "label": "分屏对比 · Split Screen",
+   "ref": "Envato Popular「Vertical Split Screen」· SonduckFilm 23.2 万",
+   "preview": "2",
+   "band_label": "2 张",
+   "t": 6.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "flying_words",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "words": [
+    "原料",
+    "包材",
+    "设备",
+    "仓储",
+    "物流",
+    "供应链"
+   ],
+   "sub": "蜜雪的生意 = 卖给加盟店的一整条供应链",
+   "line": "原料、包材、设备……最后都汇成一条*供应链*。",
+   "src": "蜜雪集团招股书（业务模式）",
+   "label": "关键词飞过镜头 · Flying Words",
+   "ref": "B 站「PV 中的文字穿梭效果」23 万 · VideoHive Flying Through Words 2.2K",
+   "t": 10.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "number_pages",
+   "d": 7.4,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "text": "2024 年蜜雪收入 248.3 亿元，毛利 80.6 亿元，净利润 44.5 亿元，门店 46,479 家，其中海外 4,895 家，三线及以下城市占 57.4%，卖出约 90 亿杯，加盟业务收入 6.2 亿元，占 2.5%，净利润同比增长 39.8%。",
+   "line": "2024 年的蜜雪，一句话里有*十个数字*。",
+   "src": "蜜雪集团 2024 年度业绩公告；售出杯数为媒体报道约数",
+   "label": "数字拆页 · Number Pages",
+   "ref": "Number Counter：YouTube 162.6 万 · Envato Popular「Number Counter」",
+   "t": 15.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "combo",
+   "d": 4.8,
+   "theme": "red",
+   "topic": "商业拆解",
+   "count": 24,
+   "label": "计数连击 · Combo",
+   "unit": "家",
+   "hits": [
+    "新店开业"
+   ],
+   "final": "2024 年净增 8,914 家|平均每天约 24 家",
+   "line": "平均每天新开*约 24 家*店。",
+   "src": "蜜雪集团 2024 年度业绩公告（全年净增 8,914 家）",
+   "ref": "Number Counter 162.6 万 · Shape Elements burst（Graphics Pack 26.2K）",
+   "tag": "COMBO",
+   "t": 22.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "turntable",
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "line": "一杯 4 块钱的柠檬水，转一圈看看它*卖的是什么*。",
+   "image": "../ui2/assets/cup.svg",
+   "kicker": "蜜雪冰城 · 招牌",
+   "name": "冰鲜柠檬水",
+   "price": "¥4",
+   "specs": [
+    "整片柠檬",
+    "冰块 + 糖浆 + 茶底",
+    "原料和包材都由总部供应",
+    "常见门店价 4 元"
+   ],
+   "src": "蜜雪集团招股书（原料与包材由总部销售给加盟店）；门店价为常见价格",
+   "d": 5.0,
+   "label": "C3 · 产品转台 · Product Turntable",
+   "ref": "VideoHive Product Promo 分类销量榜",
+   "t": 27.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "clip_style",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "video": "../mixue/assets/video/shiba.webm",
+   "title": "4 块钱的柠檬水凭什么赚 44 亿",
+   "name": "柴犬主播",
+   "role": "第九顶帽子",
+   "time": "12:08",
+   "comments": [
+    [
+     "阿杰",
+     "真的假的"
+    ],
+    [
+     "小雨",
+     "原来是卖原料"
+    ],
+    [
+     "Tom",
+     "学到了"
+    ],
+    [
+     "橙子",
+     "下期讲瑞幸"
+    ]
+   ],
+   "note": "画面示意",
+   "line": "一杯四块钱的柠檬水，*一年净赚四十四亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告 · 画面示意",
+   "label": "M09 · 直播切片 · Clip Style",
+   "ref": "直播 / 访谈切片号通用包装 · talkcraft danmu-bubble-praise",
+   "d": 5.4,
+   "t": 32.6,
+   "tr": "hard"
+  }
+ ]
+}

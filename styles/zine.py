@@ -35,6 +35,17 @@ STYLE = {
     "layers": [("grain", {"opacity": 0.09})],
     "mascot": {"mode": "cameo", "frame": "sticker", "landscape": {"right": 110, "bottom": 40, "h": 400}, "portrait": {"left": 390, "bottom": 600, "h": 310}},
     "outro": {"move": False},
+    # effect pages as riso prints: photocopy paper, black toner, fluorescent pink, teal. hl = highlighter under keywords, zsh = hard print shadow
+    "fx_themes": {
+        "paper": {"bg": "#ece7dc", "fg": "#141414", "muted": "#5e5950", "accent": "#e0007a", "card": "#fbf8f0", "card-fg": "#141414", "line": "#cfc8ba",
+                  "hl": "#ff3fa0", "zsh": "rgba(20,20,20,.85)"},
+        "ink":   {"bg": "#1b1a19", "fg": "#f4efe4", "muted": "#a39b8d", "accent": "#ff3fa0", "card": "#fbf8f0", "card-fg": "#141414", "line": "#3a3734",
+                  "hl": "#e8158a", "zsh": "#ff3fa0"},
+        "red":   {"bg": "#ff3fa0", "fg": "#141414", "muted": "#5a1636", "accent": "#141414", "card": "#fbf8f0", "card-fg": "#141414", "line": "rgba(20,20,20,.25)",
+                  "hl": "#ffe14a", "zsh": "#141414"},
+        "lemon": {"bg": "#00857f", "fg": "#fbf8f0", "muted": "#f0f7f5", "accent": "#ffe14a", "card": "#fbf8f0", "card-fg": "#141414", "line": "rgba(251,248,240,.3)",
+                  "hl": "#e8158a", "zsh": "#141414"},
+    },
     "sfx": {"transition": ("paper", 0.4), "enter": ("paper", 0.45), "pop": ("pop", 0.4), "hit": ("slam", 0.45), "slam": ("slam", 0.5),
             "count": ("type", 0.3), "click": ("click", 0.35), "mascot": ("pop", 0.35), "tear": ("paper", 0.55), "stamp": ("hit", 0.55),
             "type": ("type", 0.35), "tape": ("tape", 0.4)},
@@ -222,10 +233,12 @@ def thud(X, sel, t):
     X.tw(f'tl.from("{sel}", {{scale:2.6, opacity:0, duration:0.134, ease:"steps(2)"}}, {t:.3f});')
 
 
-def boil(X, sel, t, d):
-    """everything stuck down still trembles a little, two frames at a time (the stop-motion 'boil')."""
+def boil(X, sel, t, d, rot=True):
+    """everything stuck down still trembles a little, two frames at a time (the stop-motion 'boil').
+    rot=False for pieces tilted with the CSS rotate property (GSAP folds it into its rotation, so a boil would flatten them)."""
     n = max(1, int(d / 0.134))
-    X.tw(f'tl.fromTo("{sel}", {{x:-1.3, y:0.8, rotation:-0.35}}, {{x:1.3, y:-0.8, rotation:0.35, duration:0.134, ease:"steps(1)", repeat:{n}, yoyo:true, immediateRender:false, stagger:{{each:0.067}}}}, {t:.3f});')
+    r0, r1 = (", rotation:-0.35", ", rotation:0.35") if rot else ("", "")
+    X.tw(f'tl.fromTo("{sel}", {{x:-1.3, y:0.8{r0}}}, {{x:1.3, y:-0.8{r1}, duration:0.134, ease:"steps(1)", repeat:{n}, yoyo:true, immediateRender:false, stagger:{{each:0.067}}}}, {t:.3f});')
 
 
 def cam(X, sel, t, d, keys):
@@ -674,6 +687,137 @@ def outro(b, X, t, d, cid):
         thud(X, f"{s} .stamp", t + 0.85)
         X.sfx(t + 0.85, "stamp")
     cam(X, f"{s} .cam", t, d, [(t, 1.0, 0.5, 0.5)])
+
+
+# ---------------------------------------------------------------- effects drawn as zine pages
+FX_CSS = r"""
+#root.st-zine { --f-quote:var(--f-playfair); --f-num:var(--f-archivo); --f-latin:var(--f-type); }
+.zf .zf-tex { position:absolute; inset:-60px; background-image:url("__NOISE__"); background-size:240px; opacity:.3; mix-blend-mode:multiply; }
+.zf.dk .zf-tex { opacity:.45; mix-blend-mode:screen; filter:invert(1); }
+.zf .zf-xer { position:absolute; inset:0; box-shadow:inset 0 0 140px rgba(0,0,0,.26), inset 0 0 18px rgba(0,0,0,.32); }
+.zf .zf-streak { position:absolute; left:0; right:0; height:2px; background:rgba(0,0,0,.08); }
+.zf.dk .zf-streak { background:rgba(255,255,255,.07); }
+.zf .zf-mast { position:absolute; background:#141414; color:#fbf8f0; font-family:var(--f-type); letter-spacing:.06em; white-space:nowrap; padding:6px 16px 7px; rotate:-1.4deg; }
+.zf.dk .zf-mast { box-shadow:4px 5px 0 #ff3fa0; }
+.zf .zf-mast b { color:#ff3fa0; font-weight:400; }
+.zf .zf-fx { position:absolute; background:rgba(238,228,188,.95); color:#141414; font-family:var(--f-type); white-space:nowrap; padding:6px 18px 7px; rotate:2.2deg;
+  box-shadow:0 1px 2px rgba(0,0,0,.25); }
+.zf .zf-fx i { font-style:normal; color:#a30d58; margin-right:8px; }
+.zf .zf-tape { position:absolute; height:30px; background:rgba(238,228,188,.8); box-shadow:0 1px 2px rgba(0,0,0,.18); }
+.zf .zf-tape.pk { background:rgba(255,63,160,.6); }
+.zf .zf-staple { position:absolute; width:46px; height:7px; border-radius:3px; background:linear-gradient(180deg,#d9d9d9,#8c8c8c); box-shadow:0 1px 1px rgba(0,0,0,.4); }
+.zf .zf-cap { position:absolute; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.zf .zf-cl { display:inline-block; background:#141414; color:#fbf8f0; font-family:var(--f-display); font-weight:800; line-height:1.22; padding:3px 20px 5px;
+  box-shadow:5px 6px 0 #ff3fa0; white-space:nowrap; }
+.zf .zf-cl .em .emt { background:#ff3fa0; color:#141414; padding:0 .12em; } .zf .zf-cl .em .emb { display:none; }
+.zf .zf-ft { position:absolute; display:flex; justify-content:space-between; align-items:flex-end; gap:24px; }
+.zf .zf-ft > div { background:#fbf8f0; color:#141414; font-family:var(--f-type); white-space:nowrap; padding:4px 12px 5px; box-shadow:2px 3px 0 rgba(0,0,0,.2); }
+.zf .zf-ft .zf-src { rotate:.8deg; } .zf .zf-ft .zf-src i { font-style:normal; color:#c4126b; margin-right:8px; }
+.zf .zf-ft .zf-lb { background:rgba(238,228,188,.95); rotate:-1deg; margin-left:auto; }
+.zf .zf-peel { position:absolute; inset:-4% -14% -4% -4%; }
+/* inside the effects: every card is a pasted scrap (square cut, hard print shadow, a tilt, tape), photos are photocopies,
+   highlighter and accents come from the riso inks, and big type gets a pink misregistration */
+#root.st-zine .fx :is(.ca-win, .cs-card, .cs-ghost, .cs-media, .wpc, .wpc-r, .wpc-hi, .wpc-rp, .wpc-in, .wpd-pl, .lw-t, .lw-ring, .ht-f, .ms-pic, .ms-pic img,
+  .gf-st, .gf-win, .gf-ph, .sp-c, .sp-img, .sp-mk, .sp-code, .pl-c, .pl-o, .pl-o .hi, .pl-o .lt, .sc-img, .d2-sheet, .ca-box, .ca-bar span) { border-radius:0 !important; }
+#root.st-zine .fx :is(.ca-win, .cs-card, .wpc, .lw-t, .ht-f, .ms-pic, .gf-st, .gf-win, .gf-ph, .sp-c, .sp-img, .pl-c, .sc-img, .d2-sheet, .cp .ph) { box-shadow:8px 10px 0 var(--zsh, rgba(20,20,20,.85)) !important; }
+#root.st-zine .fx .cs-ghost { box-shadow:6px 7px 0 var(--zsh, rgba(20,20,20,.85)) !important; }
+#root.st-zine .fx :is(.ca-win, .wpc, .pl-c, .ht-f) { rotate:-1.2deg; }
+#root.st-zine .fx :is(.cs-card, .sp-c, .gf-fr) { rotate:1deg; }
+#root.st-zine .fx .lw-t:nth-child(odd) { rotate:-2deg; } #root.st-zine .fx .lw-t:nth-child(even) { rotate:1.6deg; }
+#root.st-zine .fx :is(.cs-card, .pl-c, .sp-c, .gf-fr, .ms-pic)::before { content:""; position:absolute; left:50%; top:-15px; width:130px; height:30px; margin-left:-65px;
+  background:rgba(238,228,188,.85); rotate:-3deg; box-shadow:0 1px 2px rgba(0,0,0,.2); z-index:5; pointer-events:none; }
+#root.st-zine .fx :is(.cp img, .cs-mimg, .sc-img, .ms-pic img, .sp-img img, .ca-shot img, .gf-fr img, .wpd-bg) { filter:grayscale(1) contrast(1.28) brightness(1.04); }
+#root.st-zine .fx :is(.d2 .em .emb, .ct-root .em .emb, .d2-mk) { background:var(--hl, #ff3fa0) !important; border-radius:0 !important; }
+#root.st-zine .fx :is(.d2-ttl, .lw-sub, .gf-cap, .pl-q, .sp-n, .sc .sc-t, .ca-h, .cs-stat b, .cs-zh) { text-shadow:3px 3px 0 rgba(255,63,160,.5); }
+#root.st-zine .fx .d2-kick { border-radius:0; background:#141414; color:#fbf8f0; font-family:var(--f-type); rotate:-2deg; box-shadow:4px 5px 0 #ff3fa0; }
+#root.st-zine .fx .d2-tag { border-radius:0; background:#fbf8f0; color:#141414; font-family:var(--f-type); box-shadow:2px 3px 0 rgba(0,0,0,.2); }
+#root.st-zine .fx .ct-kick { border-radius:0; font-family:var(--f-type); rotate:-1.5deg; box-shadow:4px 5px 0 #ff3fa0; }
+/* collage: torn photocopies on the zine ground, marker in riso pink */
+#root.st-zine .fx .cbg { background:transparent; } #root.st-zine .fx .arw path { stroke:#e0007a; }
+#root.st-zine .fx .cnote { color:#e0007a; font-family:var(--f-hand); }
+/* article / post as clippings */
+#root.st-zine .fx .ca-win { background:#fbf8f0; } #root.st-zine .fx .ca-bar { background:#e2dccd; border-bottom:2px solid #141414; }
+#root.st-zine .fx .ca-bar i { background:#141414; } #root.st-zine .fx .ca-bar i:first-child { background:#ff3fa0; }
+#root.st-zine .fx .ca-bar span { font-family:var(--f-type); background:#fbf8f0; }
+#root.st-zine .fx .ca-top span { color:#b0105f; } #root.st-zine .fx .ca-ex { border-left-color:#ff3fa0; } #root.st-zine .fx .ca-box { border-color:#ff3fa0; }
+#root.st-zine .fx .cs-ver circle { fill:#00857f; }
+/* comments, danmaku, logos, polls, sponsor: plates, stickers, coupons */
+#root.st-zine .fx .wpc-hd { background:#141414; color:#fbf8f0; font-family:var(--f-type); }
+#root.st-zine .fx .wpc-hot { border-radius:0; background:#ff3fa0; color:#141414; }
+#root.st-zine .fx .wpd-hn { border-radius:0; background:#ff3fa0; color:#141414; box-shadow:8px 10px 0 #141414; rotate:-2deg; }
+#root.st-zine .fx .wpd-i.hl { color:#ff7cc0; }
+#root.st-zine .fx .lw-t b { color:var(--card-fg); opacity:.6; }
+#root.st-zine .fx .sp-ad { border-radius:0; background:#ff3fa0; color:#141414; rotate:-2deg; }
+#root.st-zine .fx .sp-code { border-color:#141414; rotate:-1.5deg; background:#fbf8f0; }
+#root.st-zine .fx :is(.sp-cta, .pl-cta) { border-radius:0; background:#141414; color:#fbf8f0; box-shadow:5px 6px 0 #ff3fa0; rotate:-1.5deg; }
+#root.st-zine .fx .pl-o { border:3px solid var(--card-fg); }
+#root.st-zine .fx .pl-o.win .fill { background:repeating-linear-gradient(45deg, #ff3fa0 0 10px, #ff70b9 10px 20px); }
+#root.st-zine .fx .pl-k { font-family:var(--f-type); }
+"""
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the page around an effect, as a zine spread: photocopy grain over everything, the masthead strip, the effect id on
+    masking tape, the spoken line as black cut-out plates with a pink offset, the source and label as typed scraps, tape and
+    staples, and the torn riso sheet that opens the page."""
+    from h9 import aefx
+    X.css("zine-fx", FX_CSS.replace("__NOISE__", NOISE))
+    r = R(X, f"{cid}-fx")
+    v = X.portrait; W, H = X.W, X.H
+    th = aefx.THEMES.get(p.get("theme")) or {}
+    dark = (aefx._lum(th.get("bg", "#ece7dc")) or 1) < 0.2 or parts["photo"]
+    host = bool(p.get("host"))
+    # caption: 16:9 keeps the fitted lines; 9:16 refits so up to three plates end above the platform's bottom bar
+    if v:
+        line = fit.as_text(p.get("line", ""), " ")
+        f = fit.fit_text(line, W - 2 * 120 - 48, 3 * 44 * 1.22, 44, 28, lh=1.22, max_lines=3)
+        if len(f.lines) == 3: f = fit.fit_text(line, W - 2 * 120 - 48, 3 * 36 * 1.22, 36, 26, lh=1.22, max_lines=3)
+        cap_lines, cpx = [X.rich(l) for l in f.lines], f.px
+    else:
+        cap_lines, cpx = parts["cap_lines"], parts["cap_px"]
+    plates = "".join(f'<span class="zf-cl zf-b" style="font-size:{cpx}px; rotate:{(-0.9 if k % 2 == 0 else 0.8):.1f}deg'
+                     + ("" if v else f'; margin-left:{(-14 if k % 2 == 0 else 18)}px') + f'">{l}</span>' for k, l in enumerate(cap_lines))
+    cap_h = len(cap_lines) * (cpx * 1.22 + 8) + 4 * max(0, len(cap_lines) - 1)
+    if v:
+        cap = f'<div class="zf-cap" style="top:1318px; padding:0 120px">{plates}</div>'
+        ft_pos = f"left:56px; right:120px; top:{1318 + cap_h + 12:.0f}px; font-size:17px"
+        mast_pos, fx_pos = "left:56px; top:206px; font-size:20px", f"right:{340 if host else 56}px; top:208px; font-size:18px"
+    else:
+        cap = f'<div class="zf-cap" style="bottom:60px">{plates}</div>'
+        ft_pos = "left:80px; right:80px; bottom:18px; font-size:16px"
+        mast_pos, fx_pos = "left:80px; top:32px; font-size:20px", "right:80px; top:30px; font-size:18px"
+    src_h, foot_h = parts["src"], parts["foot"]
+    if v:     # 9:16: the row ends 120 px from the right edge (platform buttons), so source and label are refitted to share it
+        mw = lambda s_: fit.width(s_, mono=True) * 17 * 1.04
+        avail = W - 56 - 120 - 24
+        src_s = fit.plain(p.get("src", ""))
+        sw = min(mw(src_s), avail * 0.5) if src_s else 0
+        if src_s: src_h = X.rich(fit.fit_text(src_s, sw, 24, 17, 17, max_lines=1, mono=True, ls=0.04).lines[0])
+        lab_s = (fit.plain(p["label"]) + ("　" + fit.plain(p["ref"]) if p.get("ref") else "")) if p.get("label") else ""
+        lw = avail - (sw + 24 + 44 if src_s else 0) - 24
+        foot_h = X.rich(fit.fit_text(lab_s, lw, 24, 17, 17, max_lines=1, mono=True, ls=0.04).lines[0]) if lab_s else ""
+    foot = (f'<div class="zf-src zf-b"><i>SRC</i>{src_h}</div>' if src_h else "") + (f'<div class="zf-lb zf-b">{foot_h}</div>' if foot_h else "")
+    X.used_text.update("第九顶帽子ZINE·FXSRC")
+    tapes = (f'<i class="zf-tape zf-b" style="{st(left=-34, top=118 if not v else 300, width=150)}; rotate:-38deg"></i>'
+             f'<i class="zf-tape pk zf-b" style="{st(left=W - 120, top=(H - 230) if not v else 1180, width=150)}; rotate:-32deg"></i>')
+    staples = "" if v else (f'<i class="zf-staple" style="{st(left=24, top=330)}; transform:rotate(-84deg)"></i>'
+                            f'<i class="zf-staple" style="{st(left=24, top=760)}; transform:rotate(-96deg)"></i>')
+    streaks = "".join(f'<i class="zf-streak" style="top:{r.randint(0, H)}px; opacity:{r.uniform(.3, 1):.2f}"></i>' for _ in range(3))
+    col = [PINK, TEAL, INK][X.beat["i"] % 3]
+    peel = f'<div class="zf-peel" style="background:{col}; clip-path:{torn(r, 2.2, 14)}"></div>' if X.beat["i"] > 0 else ""
+    inner = (f'<div class="zf-tex"></div>{streaks}<div class="zf-xer"></div>{tapes}{staples}'
+             f'<div class="zf-mast zf-b" data-layout-allow-overlap style="{mast_pos}">第九顶帽子 <b>·</b> ZINE <b>·</b> {parts["topic"]}</div>'
+             f'<div class="zf-fx zf-b" data-layout-allow-overlap style="{fx_pos}"><i>FX</i>{parts["fxid"]}</div>'
+             f'{cap}<div class="zf-ft" style="{ft_pos}">{foot}</div>{peel}')
+    X.clip(f"{cid}c", t, d, inner, f"ctx zf{' dk' if dark else ''}", 30, track=20, sty=parts["sty"])
+    s = f"#{cid}c"
+    if peel:
+        X.tw(f'tl.to("{s} .zf-peel", {{xPercent:-118, rotation:-4, duration:0.3, ease:"steps(5)"}}, {t:.3f});')
+        X.sfx(t, "tear")
+    X.tw(f'tl.from("{s} .zf-mast, {s} .zf-fx, {s} .zf-ft > div", {{scale:1.3, opacity:0, duration:0.2, ease:"steps(3)", stagger:0.07}}, {t + 0.08:.3f});')
+    X.tw(f'tl.from("{s} .zf-tape", {{scaleX:0, duration:0.134, ease:"steps(2)", stagger:0.1}}, {t + 0.2:.3f});')
+    X.tw(f'tl.from("{s} .zf-cl", {{scale:1.25, opacity:0, rotation:(i)=>i % 2 ? 7 : -7, duration:0.2, ease:"steps(3)", stagger:0.08}}, {t + 0.05:.3f});')
+    boil(X, f"{s} .zf-b", t, d, rot=False)
 
 
 SCENES = {"cover": cover, "versus": versus, "pie": pie, "bars": bars, "stamps": stamps, "clip": clip, "note": note, "thesis": thesis, "outro": outro}

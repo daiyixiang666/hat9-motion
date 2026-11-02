@@ -24,7 +24,8 @@ STYLE = {
         "cap-shadow": "none", "cap-bottom": "58px", "cap-em": "#e2483b", "punch-top": "71%", "punch-size": "70px", "punch-stroke": "0",
     },
     "fonts": {"display": "lxgw-marker", "body": "lxgw-marker", "hand": ["caveat", "lxgw-marker"], "num": ["kalam", "lxgw-marker"],
-              "latin": ["patrick-hand", "lxgw-marker"], "punch": "lxgw-marker", "cap": "lxgw-marker", "quiet": "lxgw-wenkai"},
+              "latin": ["patrick-hand", "lxgw-marker"], "punch": "lxgw-marker", "cap": "lxgw-marker", "quiet": "lxgw-wenkai",
+              "mono": ["patrick-hand", "lxgw-marker"], "quote": ["caveat", "lxgw-marker"]},
     "motion": {"ease": "power2.out", "dur": 0.5, "stagger": 0.03, "cut": "hard", "transition": "flash", "em": "static", "camera": "none"},
     "layers": [("grain", {"opacity": 0.05})],
     "mascot": {"mode": "cameo", "frame": "sticker", "landscape": {"right": 70, "bottom": 0, "h": 380}, "portrait": {"left": 390, "bottom": 600, "h": 300}},
@@ -60,6 +61,110 @@ CSS = r"""
 #root.v .sk { --mx:34px; } #root.v .sk .hd { left:60px; right:60px; top:206px; } #root.v .sk .hd .l { font-size:30px; }
 #root.v .sk .ft { left:60px; right:60px; bottom:auto; top:1470px; font-size:28px; white-space:normal; }
 """
+
+# ---------------------------------------------------------------- effect cards (gallery effects drawn on the board)
+# four grounds, one per page theme: graph-paper notebook · chalkboard · pink sticky-note dot grid · yellow legal pad.
+# The extra keys (tex / tex-size / capbg / capfg / tape) ride along as CSS variables on each effect clip and its frame.
+_GRID = "linear-gradient({a} 1.5px, transparent 1.5px), linear-gradient(90deg, {a} 1.5px, transparent 1.5px), linear-gradient({b} 1px, transparent 1px), linear-gradient(90deg, {b} 1px, transparent 1px)"
+STYLE["fx_themes"] = {
+    "paper": {"bg": "#f7f6f1", "fg": "#1f1f22", "muted": "#64625d", "accent": "#e2483b", "card": "#fffdf6", "card-fg": "#1f1f22", "line": "#cfd6df",
+              "tex": "linear-gradient(90deg, transparent 34px, rgba(226,72,59,.32) 34px, rgba(226,72,59,.32) 36px, transparent 36px), "
+                     + _GRID.format(a="rgba(66,118,190,.22)", b="rgba(66,118,190,.12)"),
+              "tex-size": "100% 100%, 200px 200px, 200px 200px, 40px 40px, 40px 40px", "capbg": "#ffd84a", "capfg": "#1f1f22", "tape": "rgba(214,206,186,.85)"},
+    "ink":   {"bg": "#24312c", "fg": "#f1eee4", "muted": "#a9b4ac", "accent": "#ffd84a", "card": "#2d3b35", "card-fg": "#f1eee4", "line": "rgba(241,238,228,.2)",
+              "tex": "radial-gradient(ellipse 40% 30% at 22% 30%, rgba(255,255,255,.07), transparent 70%), radial-gradient(ellipse 35% 28% at 78% 72%, rgba(255,255,255,.05), transparent 70%), "
+                     + _GRID.format(a="rgba(241,238,228,.09)", b="rgba(241,238,228,.045)"),
+              "tex-size": "100% 100%, 100% 100%, 200px 200px, 200px 200px, 40px 40px, 40px 40px", "capbg": "#ffd84a", "capfg": "#1f1f22", "tape": "rgba(241,238,228,.22)"},
+    "red":   {"bg": "#ffd9d2", "fg": "#2a1714", "muted": "#7a4a43", "accent": "#c8261b", "card": "#fff6f3", "card-fg": "#2a1714", "line": "rgba(200,38,27,.25)",
+              "tex": "radial-gradient(circle, rgba(200,38,27,.28) 1.8px, transparent 2.4px)", "tex-size": "32px 32px",
+              "capbg": "#fff6f3", "capfg": "#2a1714", "tape": "rgba(255,255,255,.6)"},
+    "lemon": {"bg": "#fff3b0", "fg": "#1f1f22", "muted": "#66592a", "accent": "#e2483b", "card": "#fffdf2", "card-fg": "#1f1f22", "line": "rgba(43,103,209,.25)",
+              "tex": "linear-gradient(90deg, transparent 26px, rgba(226,72,59,.45) 26px, rgba(226,72,59,.45) 28px, transparent 28px, transparent 34px, rgba(226,72,59,.45) 34px, rgba(226,72,59,.45) 36px, transparent 36px), "
+                     "linear-gradient(transparent 43px, rgba(43,103,209,.28) 43px, rgba(43,103,209,.28) 45px, transparent 45px)",
+              "tex-size": "100% 100%, 100% 45px", "capbg": "#a8dcff", "capfg": "#1f1f22", "tape": "rgba(214,206,186,.85)"},
+}
+for _k, _v in STYLE["fx_themes"]["paper"].items():          # an effect beat without a theme sits on the notebook
+    if _k in ("tex", "tex-size", "capbg", "capfg", "tape"): STYLE["tokens"].setdefault(_k, _v)
+
+_W1 = "10px 22px 9px 26px / 20px 9px 24px 11px"             # wobbly radii: boxes that were drawn, not set
+_W2 = "47% 53% 50% 46% / 53% 46% 54% 47%"
+_HATCH = "repeating-linear-gradient(-52deg, transparent 0 7px, rgba(255,255,255,.26) 7px 9px)"
+STYLE["css"] = r"""
+/* every effect sits on its theme's paper; marker faces stay single-weight (no faux bold) */
+#root .fx { background-image:var(--tex) !important; background-size:var(--tex-size) !important; background-position:0 0 !important; }
+#root .fx, #root .fx *, #root .ctx, #root .ctx * { font-synthesis:none; }
+/* hand-drawn internals: wobbly radii, ink outlines, flat offset shadows, pencil hatching on filled shapes */
+#root .fx .qc .qc-face { border-radius:""" + _W1 + """; box-shadow:8px 10px 0 color-mix(in srgb, var(--fg) 16%, transparent), inset 0 0 0 3.5px var(--fg); }
+#root .fx .qc .qc-o { border-radius:""" + _W1 + """; box-shadow:inset 0 0 0 2.5px color-mix(in srgb, var(--fg) 60%, transparent); }
+#root .fx .qc .qc-o b, #root .fx .pc .pc-h i, #root .fx .sp .sp-n, #root .fx .sp .sp-n .ring, #root .fx .sp .sp-n .fill, #root .fx .sp .sp-n .done,
+#root .fx .ls .ls-n, #root .fx .dt .dtdot, #root .fx .sp .sp-tok { border-radius:""" + _W2 + """; }
+#root .fx .dt .dtn { border-radius:""" + _W1 + """; box-shadow:inset 0 0 0 3px var(--fg), 5px 6px 0 color-mix(in srgb, var(--fg) 14%, transparent); }
+#root .fx .dt .dtn.on { box-shadow:inset 0 0 0 5px var(--accent), 5px 6px 0 color-mix(in srgb, var(--fg) 14%, transparent); }
+#root .fx .dt .dtn.lf.on { box-shadow:5px 6px 0 color-mix(in srgb, var(--fg) 18%, transparent); background-image:""" + _HATCH + """; }
+#root .fx .dt .dte { stroke-linecap:round; stroke-dasharray:none; }
+#root .fx .gt .gtb { border-radius:4px 11px 5px 12px / 9px 4px 11px 5px; background-image:""" + _HATCH + """ !important; }
+#root .fx .ls .ls-hi { border-radius:""" + _W1 + """; background-image:""" + _HATCH + """; }
+#root .fx .pc .pc-v { border-radius:""" + _W1 + """; background-image:""" + _HATCH + """; }
+#root .fx .tc .tc-p { border-radius:""" + _W1 + """; }
+#root .fx .lc .lcl { stroke-width:6; }
+#root .fx .lc .lca { opacity:.22; }
+/* the frame around an effect */
+.ctx.skx .hd { position:absolute; left:96px; right:96px; top:30px; height:auto; border:0; display:flex; align-items:flex-end; justify-content:space-between; }
+.ctx.skx .hd .l { font-family:var(--f-display); font-size:32px; color:var(--fg); line-height:1.1; white-space:nowrap; }
+.ctx.skx .hd .l small { font-family:var(--f-quiet); font-size:26px; color:var(--muted); margin-left:14px; }
+.ctx.skx .hd .tag { font-family:var(--f-latin); font-size:24px; color:var(--fg); background:var(--tape); padding:2px 16px 4px; transform:rotate(2.5deg); }
+.ctx.skx svg.rule { position:absolute; left:0; top:0; overflow:visible; }
+.ctx.skx svg.rule path { fill:none; stroke-linecap:round; }
+.ctx.skx .cap { position:absolute; left:0; right:0; bottom:62px; text-align:center; }
+.ctx.skx .cap > span.cs { position:relative; display:inline-block; max-width:80%; padding:6px 22px 10px; transform:rotate(-.7deg); background:none; border-radius:0;
+  color:var(--capfg); font-weight:400; }
+.ctx.skx .cs .hlb { position:absolute; inset:2px -4px 0 -2px; background:var(--capbg); transform-origin:0 50%; transform:skewX(-6deg);
+  border-radius:3px 16px 4px 22px / 14px 4px 18px 5px; }
+.ctx.skx .cs .ct { position:relative; display:inline-block; font-family:var(--f-cap); line-height:1.3; color:var(--capfg); }
+.ctx.skx .cs .em .emt { background:none; padding:0; color:#d13a2c; text-decoration:underline wavy #d13a2c; text-decoration-thickness:3px; text-underline-offset:.2em; }
+.ctx.skx .cs .em .emb { display:none; }
+.ctx.skx .ft { position:absolute; left:96px; right:96px; bottom:16px; display:flex; justify-content:space-between; gap:40px; font-family:var(--f-quiet); font-size:22px; color:var(--muted); opacity:1; }
+.ctx.skx .ft > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:58%; }
+.ctx.skx .tp { position:absolute; width:170px; height:42px; background:var(--tape); }
+#root.h .ctx.skx.host .ft { right:440px; }
+#root.v .ctx.skx.host .hd .tag { margin-right:250px; }      /* 9:16: the host sits top-right, the effect label steps left of it */
+#root.v .ctx.skx .hd { left:56px; right:56px; top:206px; } #root.v .ctx.skx .hd .l { font-size:30px; }
+#root.v .ctx.skx .cap { bottom:auto; top:1330px; padding:0 120px; } #root.v .ctx.skx .cap > span.cs { max-width:100%; }
+#root.v .ctx.skx .ft { left:56px; right:56px; bottom:auto; top:1478px; font-size:22px; }
+"""
+
+
+def FX_FRAME(X, cid, t, d, p, parts):
+    """the page around a gallery effect, drawn the board's way: marker header with a taped effect label and a hand-drawn
+    rule, the spoken line on a torn highlighter strip (keyword in red with a wavy underline), a quiet source line,
+    tape on the top corners (16:9). The effect itself gets a light marker wobble through an SVG displacement filter."""
+    W, P = X.W, X.portrait
+    h = Hand(sum(map(ord, cid)) * 13 + 5)
+    ry = 252 if P else 80
+    x0, x1 = (56, W - 56) if P else (96, W - 96)
+    rd, _ = h.line(x0, ry, x1, ry, over=4)
+    rid = f"{cid}rl"
+    rule = f'<svg class="rule" width="{W}" height="{X.H}"><path id="{rid}" d="{rd}" pathLength="1" stroke-dasharray="1 2" stroke-dashoffset="1.05" style="stroke:var(--fg);stroke-width:3px;opacity:.75"/></svg>'
+    fid = f"{cid}rough"
+    defs = (f'<svg width="0" height="0" style="position:absolute"><filter id="{fid}" x="-2%" y="-2%" width="104%" height="104%">'
+            f'<feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="{sum(map(ord, cid)) % 97}"/>'
+            f'<feDisplacementMap in="SourceGraphic" scale="3.2" xChannelSelector="R" yChannelSelector="G"/></filter></svg>')
+    if not parts["photo"]: X.css(f"skr-{cid}", f"#{cid} > .stage {{ filter:url(#{fid}); }}")
+    tapes = "" if P else ('<i class="tp" style="left:-34px; top:22px; transform:rotate(-38deg)"></i>'
+                          f'<i class="tp" style="left:{W - 136}px; top:22px; transform:rotate(38deg)"></i>')
+    hd = (f'<div class="hd"><div class="l">第九顶帽子<small>{parts["topic"]}</small></div>'
+          f'<div class="tag">{parts["fxid"]}</div></div>')
+    cap = f'<div class="cap"><span class="cs"><i class="hlb"></i><span class="ct" style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></span></div>'
+    ft = f'<div class="ft"><div>{parts["foot"]}</div><div>{parts["src"]}</div></div>'
+    X.used_text.update("第九顶帽子")
+    host = " host" if p.get("host") else ""
+    X.clip(f"{cid}c", t, d, defs + tapes + rule + hd + cap + ft, "ctx skx" + host, 30, track=20, sty=parts["sty"])
+    X.tw(f'tl.fromTo("#{rid}", {{strokeDashoffset:1.05}}, {{strokeDashoffset:0, duration:0.5, ease:"power1.inOut"}}, {t + 0.05:.3f});')
+    X.tw(f'tl.from("#{cid}c .hd .tag", {{scale:0.6, rotation:-8, opacity:0, duration:0.3, ease:"back.out(2)"}}, {t + 0.25:.3f});')
+    X.tw(f'tl.from("#{cid}c .cs .hlb", {{scaleX:0, duration:0.3, ease:"power2.out"}}, {t + 0.08:.3f});')
+    X.tw(f'tl.from("#{cid}c .cs .ct", {{x:-14, opacity:0, duration:0.35, ease:"power2.out"}}, {t + 0.2:.3f});')
+    if tapes: X.tw(f'tl.from("#{cid}c .tp", {{scaleX:0, opacity:0, duration:0.25, ease:"power2.out", stagger:0.08}}, {t + 0.1:.3f});')
+
 
 PEN = """<svg viewBox="0 0 120 160"><g transform="rotate(28 6 148)">
 <path d="M6 148 L0 128 L12 128 Z" fill="#1f1f22"/>

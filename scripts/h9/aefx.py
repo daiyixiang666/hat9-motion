@@ -52,7 +52,7 @@ CTX_CSS = r"""
 .ctx .hd .fxid { font-family:var(--f-mono); font-size:18px; letter-spacing:.06em; background:var(--fg); color:var(--bg); padding:2px 10px; }
 .ctx .cap { position:absolute; left:0; right:0; bottom:66px; text-align:center; }
 .ctx .cap > span { display:inline-block; font-family:var(--f-body); font-weight:700; font-size:40px; line-height:1.3; color:var(--bg); background:var(--fg); padding:8px 24px 10px; border-radius:8px; max-width:80%; }
-.ctx .cap .em .emt { background:#f6ce3a; color:#111; padding:0 .12em; } .ctx .cap .em .emb { display:none; }
+.ctx .cap .em .emt { background:var(--cap-em-bg, #f6ce3a); color:var(--cap-em-fg, #111); padding:0 .12em; } .ctx .cap .em .emb { display:none; }
 .ctx .ft { position:absolute; left:96px; right:96px; bottom:22px; display:flex; justify-content:space-between; font-family:var(--f-mono); font-size:16px; color:var(--fg); opacity:.6; letter-spacing:.04em; }
 .ctx .ft > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:60%; }
 .ctx.photo .hd, .ctx.photo .ft { color:#fff; border-color:rgba(255,255,255,.7); text-shadow:0 1px 8px rgba(0,0,0,.6); opacity:1; }
@@ -62,6 +62,46 @@ CTX_CSS = r"""
 #root.v .ctx .cap { bottom:auto; top:1330px; padding:0 120px; } #root.v .ctx .cap > span { font-size:44px; max-width:100%; }
 """
 PHOTO = {"parallax", "portal", "mosaic", "callout", "match_cut", "plate"}
+BASE_THEMES = {k: dict(v) for k, v in THEMES.items()}
+_DARK = {"bg": "#121212", "fg": "#efeae1", "muted": "#8f897f", "line": "#2c2a27", "card": "#1c1b19", "card-fg": "#efeae1"}
+
+
+def _lum(c):
+    c = str(c).strip()
+    if not (c.startswith("#") and len(c) in (4, 7)): return None
+    if len(c) == 4: c = "#" + "".join(ch * 2 for ch in c[1:])
+    rgb = [int(c[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    lin = [v / 12.92 if v <= 0.03928 else ((v + 0.055) / 1.055) ** 2.4 for v in rgb]
+    return 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+
+
+def _contrast(a, b):
+    la, lb = _lum(a), _lum(b)
+    if la is None or lb is None: return 21.0     # rgba() / named colours: trust the style
+    hi, lo = max(la, lb), min(la, lb)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def apply_style(S):
+    """point the four page themes (paper / ink / red / lemon) at the active style, in place, so every effect and every
+    plugin that imported THEMES follows the style's palette. reel keeps the classic set. Derived from the style tokens
+    (falling back to the card colour when text would not read on the ground); STYLE["fx_themes"] overrides any of them."""
+    sid = getattr(S.get("_mod"), "__name__", "").rsplit(".", 1)[-1]
+    THEMES.clear(); THEMES.update({k: dict(v) for k, v in BASE_THEMES.items()})
+    if sid in ("", "reel"): return
+    tok = S.get("tokens", {})
+    paper = {k: tok.get(k, v) for k, v in BASE_THEMES["paper"].items()}
+    if _contrast(paper["fg"], paper["bg"]) < 4.5:
+        paper.update(bg=paper["card"], fg=paper["card-fg"])
+    ink = {**paper, **_DARK, **((S.get("moods") or {}).get("heavy") or {})}
+    ink = {k: ink[k] for k in paper}
+    red = dict(paper)
+    if _contrast(paper["card"], paper["accent"]) >= 3:
+        red.update(bg=paper["accent"], fg=paper["card"], muted=paper["card"], accent=paper["fg"], line=paper["card"])
+    lemon = {**paper, "bg": paper["card"], "fg": paper["card-fg"]}
+    THEMES.update(paper=paper, ink=ink, red=red, lemon=lemon)
+    for k, v in (S.get("fx_themes") or {}).items():
+        THEMES[k] = {**THEMES.get(k, paper), **v}
 
 
 def _theme_style(p, paint=True):
@@ -69,11 +109,9 @@ def _theme_style(p, paint=True):
     return (";".join(f"--{k}:{v}" for k, v in th.items()) + (";background:var(--bg)" if paint else "")) if th else ""
 
 
-def _context(X, cid, t, d, p):
-    """the page around an effect, so a preview reads like a frame of a real 口播: header (show · topic · effect id),
-    the spoken line as a caption with its keyword marked, and the effect's popularity as the footnote."""
-    if not p.get("line"): return
-    X.css("aefx-ctx", CTX_CSS)
+def ctx_parts(X, p):
+    """the pieces of the page around an effect, already fitted: topic, effect id, caption (html lines + px), footnote,
+    source, whether it sits over a photo, and the theme variables. A style's FX_FRAME lays these out its own way."""
     photo = p.get("fx") in PHOTO and not p.get("theme_over_photo")
     th = THEMES.get(p.get("theme"))
     sty = ";".join(f"--{k}:{v}" for k, v in th.items()) if th else ""
@@ -97,10 +135,27 @@ def _context(X, cid, t, d, p):
     ml = 3 if X.portrait else 2
     cf = fit.fit_text(fit.as_text(p["line"], " "), cw, mx * 1.3 * ml, mx, 28, lh=1.3, max_lines=ml)
     cap = "<br>".join(X.rich(l) for l in cf.lines)
-    inner = (('<div class="scrim"></div>' if photo else "")
-             + f'<div class="hd"><div><b>第九顶帽子</b><span>{X.rich(p.get("topic", ""))}</span></div><div class="fxid">{X.rich(fxid)}</div></div>'
-             + f'<div class="cap"><span style="font-size:{cf.px}px">{cap}</span></div><div class="ft"><div>{foot}</div><div>{src}</div></div>')
-    X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if photo else ''}", 30, track=20, sty=sty)
+    return {"topic": X.rich(p.get("topic", "")), "fxid": X.rich(fxid), "cap": cap, "cap_lines": [X.rich(l) for l in cf.lines],
+            "cap_px": cf.px, "foot": foot, "src": src, "photo": photo, "sty": sty}
+
+
+def _context(X, cid, t, d, p):
+    """the page around an effect, so a preview reads like a frame of a real 口播: header (show · topic · effect id),
+    the spoken line as a caption with its keyword marked, and the effect's popularity as the footnote.
+    A style can draw its own page with FX_FRAME(X, cid, t, d, p, parts) (parts = ctx_parts); it then owns the clip
+    "<cid>c" and its caption entrance. Styles that only restyle the default page override .ctx rules in their css."""
+    if not p.get("line"): return
+    X.css("aefx-ctx", CTX_CSS)
+    k = ctx_parts(X, p)
+    frame = getattr(X.S.get("_mod"), "FX_FRAME", None)
+    if frame:
+        frame(X, cid, t, d, p, k)
+    else:
+        inner = (('<div class="scrim"></div>' if k["photo"] else "")
+                 + f'<div class="hd"><div><b>第九顶帽子</b><span>{k["topic"]}</span></div><div class="fxid">{k["fxid"]}</div></div>'
+                 + f'<div class="cap"><span style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div><div class="ft"><div>{k["foot"]}</div><div>{k["src"]}</div></div>')
+        X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
+        X.tw(f'tl.from("#{cid}c .cap > span", {{y:16, opacity:0, duration:0.3, ease:"power3.out"}}, {t + 0.05:.3f});')
     if p.get("host"):    # the faceless host (talking shiba) in the corner, as a presenter would be
         src = X.v.get("meta", {}).get("host_video")
         if src:
@@ -109,7 +164,6 @@ def _context(X, cid, t, d, p):
             X.clip(f"{cid}m", t, d, "", "mascot mf-sticker", 31, track=21, tag="video",
                    attrs=f'src="{url}" muted playsinline data-media-start="{(t * 1.7) % 12:.3f}"', sty=f"left:auto; bottom:auto; {pos}")
             X.tw(f'tl.from("#{cid}m", {{scale:0.7, yPercent:12, opacity:0, transformOrigin:"50% 100%", duration:0.4, ease:"back.out(1.7)"}}, {t + 0.15:.3f});')
-    X.tw(f'tl.from("#{cid}c .cap > span", {{y:16, opacity:0, duration:0.3, ease:"power3.out"}}, {t + 0.05:.3f});')
 
 
 def _cap_clear(X, p):
@@ -709,6 +763,13 @@ def collage(X, cid, t, d, p):
         pos = [(14, 18, 34, -6), (46, 12, 30, 5), (30, 52, 36, -2)]   # the designed three-piece layout
     else:
         pos = fit.scatter(len(srcs) or 1, X.portrait, r, ars)
+    if X.portrait and pos:     # 9:16: the pieces live between the header and the note, never under the caption
+        hs = [w / (ars[i] if i < len(ars) else 1.5) * X.W / X.H for i, (x, y, w, rot) in enumerate(pos)]
+        top, bot = min(y for _, y, _, _ in pos), max(y + h for (_, y, _, _), h in zip(pos, hs))
+        lo, hi = 12.0, 58.0
+        if bot > hi or top < lo:
+            s = min(1.0, (hi - lo) / max(bot - top, 1e-6))
+            pos = [(x + w * (1 - s) / 2, lo + (y - top) * s, w * s, rot) for x, y, w, rot in pos]
     clips = ["polygon(2% 4%,30% 0,62% 3%,98% 1%,100% 30%,97% 64%,99% 98%,64% 100%,32% 96%,1% 99%,3% 62%,0 28%)",
              "polygon(0 2%,40% 4%,100% 0,98% 40%,100% 100%,55% 97%,0 100%,2% 50%)",
              "polygon(3% 0,100% 3%,96% 52%,100% 97%,48% 100%,1% 96%,4% 45%)"]

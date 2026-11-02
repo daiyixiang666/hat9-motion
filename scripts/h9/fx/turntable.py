@@ -51,6 +51,12 @@ def turntable(X, cid, t, d, p):
     ph = min(bh, bw / ar); pw = ph * ar
     px_, py_ = bcx - pw / 2, btop + (bh - ph) * 0.4
     disc_w = max(pw * 1.7, min(aw * 0.5, 620) if not P else aw * 0.78)
+    if P and specs:      # 9:16: the spec rows sit under the disc; shrink the product until the last row ends inside the area
+        over = py_ + ph + disc_w * 0.18 + 40 + spec_h - y1
+        if over > 0:
+            ph = max(ph - over, ph * 0.55); pw = ph * ar
+            px_, py_ = bcx - pw / 2, btop + max(0.0, (bh - over - ph) * 0.4)
+            disc_w = max(pw * 1.7, aw * 0.78)
     disc_y = py_ + ph - disc_w * 0.06
     if views:
         imgs = "".join(f'<img class="tt-v" data-k="{k}" src="{X.asset(v)}" alt="">' for k, v in enumerate(views))

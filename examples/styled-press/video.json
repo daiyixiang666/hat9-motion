@@ -1,0 +1,505 @@
+{
+ "meta": {
+  "title": "动效 · press 风格",
+  "aspect": "16:9",
+  "style": "press",
+  "duration": 69.8,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "odometer",
+   "d": 2.6,
+   "label": "#20 数字滚动 · Counter",
+   "ref": "YouTube 162.6万播放",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "value": "46479",
+   "unit": "家",
+   "sub": "蜜雪冰城全球门店 · 截至 2024 年底",
+   "line": "蜜雪冰城，*四万六千多家店*，比麦当劳还多。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "host": true,
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "../media/assets/frames/screen_h_10.jpg",
+     "caption": "AI 工具台"
+    },
+    {
+     "src": "../media/assets/frames/atlas_h_25.jpg",
+     "caption": "地图纪录"
+    },
+    {
+     "src": "../media/assets/frames/poster_h_30.jpg",
+     "caption": "瑞士海报"
+    }
+   ],
+   "hl": 1,
+   "line": "同一套工具，*三种*完全不同的画风。",
+   "label": "发牌展示 · Photo Gallery on a Sunny Afternoon",
+   "ref": "8K 份（AE 全站第 14）",
+   "preview": "3",
+   "band_label": "3 张",
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "../media/assets/frames/mixue_h_40.jpg",
+     "caption": "财经刊"
+    },
+    {
+     "src": "../media/assets/frames/screen_h_30.jpg",
+     "caption": "AI 工具台"
+    },
+    {
+     "src": "../media/assets/frames/atlas_h_12.jpg",
+     "caption": "地图纪录"
+    },
+    {
+     "src": "../media/assets/frames/poster_h_08.jpg",
+     "caption": "瑞士海报"
+    },
+    {
+     "src": "../media/assets/frames/screen_v_07.jpg",
+     "caption": "竖屏版"
+    }
+   ],
+   "line": "4 种风格，横屏竖屏，*都在一套代码里*。",
+   "label": "拼贴网格 · Photo Frames Slideshow",
+   "ref": "3.6K 份（Openers 第 3）· Mixkit Grid Photo Slideshow",
+   "preview": "5",
+   "band_label": "5 张",
+   "t": 7.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "media",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "做内容",
+   "items": [
+    "../media/assets/frames/mixue_h_00.jpg",
+    "../media/assets/frames/mixue_h_05.jpg",
+    "../media/assets/frames/mixue_h_10.jpg",
+    "../media/assets/frames/mixue_h_15.jpg",
+    "../media/assets/frames/mixue_h_20.jpg",
+    "../media/assets/frames/mixue_h_25.jpg",
+    "../media/assets/frames/mixue_h_30.jpg",
+    "../media/assets/frames/mixue_h_35.jpg",
+    "../media/assets/frames/mixue_h_40.jpg",
+    "../media/assets/frames/mixue_h_45.jpg",
+    "../media/assets/frames/mixue_h_50.jpg",
+    "../media/assets/frames/mixue_h_55.jpg"
+   ],
+   "line": "一条 31 秒的片子，拆开是 *930 帧*。",
+   "label": "照片墙 · Photo Wall",
+   "ref": "B 站「滚动照片墙」21.5 万 · Photo Gallery 8K",
+   "preview": "12",
+   "band_label": "12 张",
+   "t": 11.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "table",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "蜜雪集团 · 三年财务",
+   "note": "单位：亿元 · 净利率 = 净利润 ÷ 收入",
+   "rows": [
+    [
+     "年份",
+     "收入",
+     "净利润",
+     "净利率"
+    ],
+    [
+     "2022",
+     "135.8",
+     "20.1",
+     "14.8%"
+    ],
+    [
+     "2023",
+     "203.0",
+     "31.9",
+     "15.7%"
+    ],
+    [
+     "2024",
+     "248.3",
+     "44.5",
+     "17.9%"
+    ]
+   ],
+   "hl_row": "2024",
+   "line": "三年里，蜜雪的净利率从 14.8% 涨到了 *17.9%*。",
+   "src": "蜜雪集团招股书；2024 年度业绩公告",
+   "label": "表格聚焦 · Table Focus",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 16.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "statement_table",
+   "d": 4.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "蜜雪集团 · 利润表（摘要）",
+   "period": "截至 2024 年 12 月 31 日止年度",
+   "unit": "人民币亿元",
+   "cols": [
+    "2024"
+   ],
+   "items": [
+    {
+     "label": "营业收入",
+     "value": 248.3,
+     "yoy": "+22.3%"
+    },
+    {
+     "label": "销售成本",
+     "value": -167.7,
+     "indent": 1
+    },
+    {
+     "label": "毛利",
+     "value": 80.6,
+     "kind": "sub",
+     "yoy": "+34.4%"
+    },
+    {
+     "label": "费用、税项及其他",
+     "value": -36.1,
+     "indent": 1
+    },
+    {
+     "label": "净利润",
+     "value": 44.5,
+     "kind": "total",
+     "yoy": "+39.8%"
+    }
+   ],
+   "hl": "净利润",
+   "hl_note": "净利率 17.9%",
+   "line": "一张利润表看下来，最后剩下的是 *44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告；成本、费用由公告数字推算",
+   "label": "财报表 · Statement",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 20.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "waterfall",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "248.3 亿收入，最后剩多少",
+   "note": "蜜雪集团 2024 · 单位：亿元",
+   "unit": "亿",
+   "dec": 1,
+   "readout": "剩下",
+   "steps": [
+    [
+     "营业收入",
+     248.3,
+     "start"
+    ],
+    [
+     "销售成本",
+     -167.7
+    ],
+    [
+     "毛利",
+     null,
+     "sub"
+    ],
+    [
+     "费用、税项及其他",
+     -36.1
+    ],
+    [
+     "净利润",
+     null,
+     "end"
+    ]
+   ],
+   "line": "248 亿收入，扣掉成本和费用，落到口袋里的是 *44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告；成本、费用由公告数字推算",
+   "label": "瀑布图 · Waterfall",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 25.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "stacked_bars",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "csv": "../data/assets/nev_sales.csv",
+   "x": "年份",
+   "series_cols": [
+    "纯电动",
+    "插电混动"
+   ],
+   "hl": "插电混动",
+   "unit": "万辆",
+   "dec": 1,
+   "title": "中国新能源车 · 年销量",
+   "note": "单位：万辆 · 读自 nev_sales.csv",
+   "line": "四年里，插混从 60 万辆涨到了 *514 万辆*。",
+   "src": "中国汽车工业协会；2024 年拆分按占比推算",
+   "label": "堆叠柱状图 · Stacked Bars",
+   "ref": "SonduckFilm Bar Infographics 23.2万播放 · Infographic Maker 2.6K",
+   "total_col": "合计",
+   "t": 30.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "formula",
+   "d": 4.4,
+   "theme": "red",
+   "topic": "商业拆解",
+   "lhs": "净利率",
+   "terms": [
+    [
+     "净利润",
+     "44.5 亿"
+    ],
+    [
+     "营业收入",
+     "248.3 亿"
+    ]
+   ],
+   "ops": [
+    "÷"
+   ],
+   "result": "17.9%",
+   "note": "蜜雪集团 2024 年",
+   "line": "净利率怎么算？*44.5 除以 248.3*。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "公式卡 · Formula",
+   "ref": "YouTube 数字滚动教程 162.6万播放 · Envato Popular Number Counter",
+   "t": 35.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "bars_csv",
+   "d": 4.2,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "csv": "../data/assets/nev_sales.csv",
+   "x": "年份",
+   "y": "合计",
+   "unit": "万辆",
+   "dec": 1,
+   "title": "中国新能源车 · 年销量",
+   "note": "读自 nev_sales.csv",
+   "growth": "×3.65",
+   "line": "四年涨到 3.6 倍，*1286.6 万辆*。",
+   "src": "中国汽车工业协会",
+   "label": "表格直读 · CSV → 柱状图",
+   "ref": "VideoHive Infographic Maker 2.6K · Mapal VOX 式信息图 34.6万播放",
+   "t": 39.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "then_now",
+   "d": 5.0,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "title": "新能源车渗透率，四年涨到 7.6 倍",
+   "then": {
+    "label": "2020",
+    "value": 5.4,
+    "unit": "%",
+    "caption": "新车里每 20 辆有 1 辆"
+   },
+   "now": {
+    "label": "2024",
+    "value": 40.9,
+    "unit": "%",
+    "caption": "新车里每 5 辆有 2 辆"
+   },
+   "line": "四年时间，新能源车的渗透率从 5.4% 涨到了 *40.9%*。",
+   "src": "中国汽车工业协会；工信部《中国汽车产业发展年报 2021》",
+   "label": "今昔对比 · Then vs Now",
+   "ref": "Envato Popular「Vertical Split Screen」· SonduckFilm 分屏教程 23.2 万",
+   "t": 43.6,
+   "tr": "hard"
+  },
+  {
+   "fx": "email_card",
+   "d": 5.0,
+   "theme": "paper",
+   "topic": "做内容",
+   "sender": "第九顶帽子 <hello@example.com>",
+   "to": "你",
+   "date": "2026-11-01 09:30",
+   "subject": "来一起做一条口播视频？",
+   "body": [
+    "你好，看了你的选题，我们觉得很适合做成一条 30 秒的口播。",
+    "*文案你来写，动效和配音交给九帽动效*，横屏竖屏各出一版。",
+    "附件里是这一期的分镜草稿，有空看看。"
+   ],
+   "attachments": [
+    "分镜草稿.pdf",
+    "参考片.mp4"
+   ],
+   "stamp": "示意",
+   "inbox": [
+    {
+     "sender": "第九顶帽子",
+     "subject": "来一起做一条口播视频？",
+     "time": "09:30"
+    },
+    {
+     "sender": "剪辑组",
+     "subject": "第 12 期 · 粗剪已上传",
+     "time": "昨天"
+    },
+    {
+     "sender": "字幕校对",
+     "subject": "错别字两处，已标黄",
+     "time": "周四"
+    }
+   ],
+   "line": "邮件截图也能动起来，*重点一句*会被划出来。",
+   "src": "邮件内容为示意",
+   "label": "邮件截图 · Email Card",
+   "ref": "Envato Elements「Elements」分类热门：手机通知、搜索框打字等界面元素",
+   "scene": "fx",
+   "t": 48.6,
+   "tr": "hard"
+  },
+  {
+   "fx": "notice_card",
+   "d": 5.4,
+   "theme": "red",
+   "topic": "商业拆解",
+   "org": "第九顶帽子 · 资料卡",
+   "kind": "备忘",
+   "no": "H9-2026-001",
+   "title": "蜜雪集团上市信息",
+   "date": "2026-11-01",
+   "signer": "第九顶帽子",
+   "body": [
+    "上市地点：香港联合交易所主板。",
+    "*上市日期：2025 年 3 月 3 日。*",
+    "股份代号：2097。"
+   ],
+   "line": "2025 年 3 月 3 日，蜜雪集团在港交所*挂牌上市*。",
+   "src": "港交所披露 · 公司公告（版式示意，非官方文件）",
+   "label": "公告文件 · Notice Card",
+   "ref": "Johnny Harris / Vox 式报纸文件动画 19.6 万（2024）",
+   "scene": "fx",
+   "t": 53.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "deal_card",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "product": "冰鲜柠檬水 · 大杯",
+   "sub": "下单后 15 分钟可取",
+   "price": "4",
+   "was": "6",
+   "unit": "/杯",
+   "tags": [
+    "限时",
+    "第二杯半价"
+   ],
+   "coupon": [
+    "满 20 减 3",
+    "立即领"
+   ],
+   "countdown": "00:59:59",
+   "stock": [
+    23,
+    100
+   ],
+   "note": "示意",
+   "line": "门店里一杯柠檬水，*只要 4 块*。",
+   "src": "示意：原价、券与库存为演示数据",
+   "label": "U08 · 带货价签 · Deal Card",
+   "ref": "Envato Infographics「Modern Price Tags & Counters」",
+   "d": 5.4,
+   "t": 59.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "review_card",
+   "theme": "paper",
+   "topic": "AI 工具",
+   "product": "某款 AI 配音工具",
+   "sub": "月付 ¥39 · 中文 / 英文 · 网页版",
+   "scores": [
+    [
+     "音色自然",
+     8.5
+    ],
+    [
+     "生成速度",
+     9
+    ],
+    [
+     "中文多音字",
+     6.5
+    ],
+    [
+     "价格",
+     6
+    ],
+    [
+     "可控性",
+     7.5
+    ]
+   ],
+   "pros": [
+    "音色接近真人",
+    "一分钟出一条",
+    "支持情绪标签"
+   ],
+   "cons": [
+    "多音字常读错",
+    "长文本要分段"
+   ],
+   "verdict": "看需求",
+   "note": "示意数据",
+   "line": "这款配音工具音色很真，但*多音字常读错*。",
+   "src": "示意：评分为演示数据",
+   "label": "U03 · 测评打分卡 · Review Card",
+   "ref": "数码 / 工具测评号常用版式：评分条 + 星级 + 结论徽章",
+   "d": 5.4,
+   "t": 64.4,
+   "tr": "hard"
+  }
+ ]
+}

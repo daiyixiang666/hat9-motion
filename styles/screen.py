@@ -37,6 +37,13 @@ STYLE = {
 .st-screen .cap .cp { border:1px solid rgba(255,255,255,.1); box-shadow:0 12px 40px rgba(0,0,0,.45); }
 .st-screen .cap-punch .cp { font-weight:800; }
 """,
+    # effect cards (aefx): dark mode · light mode · indigo · lime ground — four "app themes" of the same product UI
+    "fx_themes": {
+        "ink":   {"bg": "#0a0c10", "fg": "#edf0f5", "muted": "#8a93a3", "accent": "#c6f45a", "card": "#151a21", "card-fg": "#edf0f5", "line": "#232a33"},
+        "paper": {"bg": "#f3f4f6", "fg": "#0d1117", "muted": "#5f6876", "accent": "#4d7c0f", "card": "#ffffff", "card-fg": "#0d1117", "line": "#d9dde3"},
+        "red":   {"bg": "#16112c", "fg": "#f2efff", "muted": "#a9a1d6", "accent": "#c6f45a", "card": "#221a44", "card-fg": "#f2efff", "line": "#34295f"},
+        "lemon": {"bg": "#c6f45a", "fg": "#0a0c10", "muted": "#3c4a17", "accent": "#5a3fd6", "card": "#0a0c10", "card-fg": "#edf0f5", "line": "rgba(10,12,16,.2)"},
+    },
 }
 
 CSS = r"""
@@ -917,3 +924,101 @@ def outro(b, X, t, d, cid):
 
 
 SCENES = {"dash": dash, "api": api, "pricing": pricing, "forecast": forecast, "shots": shots_wall, "palette": palette, "outro": outro}
+
+
+# ---------------------------------------------------------------- effect cards (aefx FX_FRAME)
+# Every gallery effect in this style sits inside the same product window: a translucent title bar (window dots ·
+# channel breadcrumb · effect id chip), the spoken line as a prompt box (AI spark · typed text · lime keyword chip ·
+# caret · return key) and a status bar (label · source). The effect itself gets the dot-grid ground with the two
+# glows, and the UI pieces inside effects (toasts, tags, highlight boxes, code colours) are reskinned to match.
+# All of it is injected here, so builds without effects (the showcase film) are untouched.
+FX_CSS = r"""
+.st-screen .fx[style*="background:var(--bg)"]::before { content:''; position:absolute; inset:0; z-index:-1; pointer-events:none; background:
+  radial-gradient(36% 46% at 10% 6%, color-mix(in srgb, #9c8cff 16%, transparent), transparent 70%),
+  radial-gradient(34% 44% at 94% 96%, color-mix(in srgb, #c6f45a 12%, transparent), transparent 70%),
+  radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--fg) 11%, transparent) 1.2px, transparent 1.7px) 0 0/28px 28px; }
+.sf { pointer-events:none; font-family:var(--f-body); }
+.sf .sf-win { position:absolute; left:14px; right:14px; top:14px; bottom:14px; border-radius:22px; border:1px solid var(--line);
+  box-shadow:inset 0 1px 0 color-mix(in srgb, var(--fg) 6%, transparent); }
+.sf .sf-bar { position:absolute; left:14px; right:14px; top:14px; height:58px; border-radius:22px 22px 0 0; display:flex; align-items:center; padding:0 22px;
+  background:color-mix(in srgb, var(--bg) 64%, transparent); backdrop-filter:blur(16px) saturate(1.2); border:1px solid var(--line); border-bottom-color:var(--line); }
+.sf .sf-dots { display:flex; gap:8px; flex:none; } .sf .sf-dots i { width:12px; height:12px; border-radius:50%; background:color-mix(in srgb, var(--fg) 22%, transparent); }
+.sf .sf-crumb { position:absolute; left:50%; top:12px; height:34px; transform:translateX(-50%); display:flex; align-items:center; gap:10px; padding:0 16px; border-radius:10px;
+  background:color-mix(in srgb, var(--fg) 6%, transparent); border:1px solid var(--line); font-size:17px; color:var(--muted); white-space:nowrap; }
+.sf .sf-crumb b { color:var(--fg); font-weight:700; } .sf .sf-crumb em { font-style:normal; opacity:.5; }
+.sf .sf-mark { width:12px; height:12px; border-radius:4px; background:#c6f45a; box-shadow:0 0 12px rgba(198,244,90,.7); flex:none; }
+.sf .sf-id { margin-left:auto; display:flex; align-items:center; gap:8px; height:30px; padding:0 12px; border-radius:8px; font:500 15px var(--f-mono); color:var(--fg);
+  background:color-mix(in srgb, var(--fg) 7%, transparent); border:1px solid var(--line); white-space:nowrap; }
+.sf .sf-id i { color:var(--muted); }
+.sf .sf-st { position:absolute; left:14px; right:14px; bottom:14px; height:40px; border-radius:0 0 22px 22px; display:flex; align-items:center; justify-content:space-between; gap:24px;
+  padding:0 24px; font:500 15px var(--f-mono); color:var(--muted); background:color-mix(in srgb, var(--bg) 64%, transparent); backdrop-filter:blur(16px); border:1px solid var(--line); }
+.sf .sf-st > span { display:flex; align-items:center; gap:10px; white-space:nowrap; overflow:hidden; min-width:0; }
+.sf .sf-st > span:last-child { justify-content:flex-end; }
+.sf .sf-ok { width:8px; height:8px; border-radius:50%; background:#c6f45a; box-shadow:0 0 10px rgba(198,244,90,.8); flex:none; }
+.sf .sf-cap { position:absolute; left:0; right:0; bottom:66px; display:flex; justify-content:center; }
+.sf .sf-box { position:relative; display:flex; align-items:center; gap:16px; max-width:calc(80% + 130px); padding:12px 16px 12px 14px; border-radius:18px;
+  background:color-mix(in srgb, var(--card) 90%, transparent); backdrop-filter:blur(18px); border:1px solid color-mix(in srgb, var(--fg) 14%, transparent);
+  box-shadow:0 18px 50px rgba(0,0,0,.32), inset 0 1px 0 color-mix(in srgb, #fff 8%, transparent); color:var(--card-fg); }
+.sf .sf-ai { flex:none; width:38px; height:38px; border-radius:11px; background:#c6f45a; display:grid; place-items:center; box-shadow:0 0 18px rgba(198,244,90,.45); }
+.sf .sf-ai svg { width:22px; height:22px; }
+.sf .sf-tx { font-weight:650; line-height:1.3; letter-spacing:.005em; text-align:left; white-space:nowrap; }   /* lines arrive pre-broken and fitted */
+.sf .sf-tx .em .emt { background:#c6f45a; color:#0a0c10; padding:0 .2em; border-radius:.22em; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
+.sf .sf-tx .em .emb { display:none; }
+.sf .sf-caret { display:inline-block; width:3px; height:1.02em; margin-left:4px; vertical-align:-.14em; background:#c6f45a; border-radius:1px; }
+.sf .sf-key { flex:none; width:40px; height:34px; border-radius:8px; display:grid; place-items:center; border:1px solid color-mix(in srgb, var(--card-fg) 18%, transparent);
+  box-shadow:0 2px 0 color-mix(in srgb, var(--card-fg) 14%, transparent); }
+.sf .sf-key svg { width:18px; height:18px; }
+#root.v .sf .sf-win { left:20px; right:20px; top:186px; bottom:400px; }
+#root.v .sf .sf-bar { left:20px; right:20px; top:186px; height:54px; padding:0 26px; }
+#root.v .sf .sf-crumb { top:9px; font-size:18px; }
+#root.v .sf .sf-st { left:20px; right:20px; bottom:400px; height:44px; padding:0 130px 0 30px; font-size:16px; }
+#root.v .sf .sf-cap { bottom:auto; top:auto; bottom:458px; padding:0 120px; }
+#root.v .sf .sf-box { max-width:100%; padding:14px 22px; }
+#root.v .sf .sf-ai { position:absolute; left:-14px; top:-16px; width:34px; height:34px; border-radius:10px; }
+#root.v .sf .sf-ai svg { width:20px; height:20px; }
+/* effect internals */
+.st-screen .fx .nt { background:color-mix(in srgb, var(--card) 88%, transparent); color:var(--card-fg); border:1px solid color-mix(in srgb, var(--fg) 12%, transparent);
+  border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,.28), inset 0 1px 0 color-mix(in srgb, #fff 7%, transparent); }
+.st-screen .fx .nt .ic { background:#c6f45a; color:#0a0c10; border-radius:12px; }
+.st-screen .fx .nt span { color:color-mix(in srgb, var(--card-fg) 72%, transparent); } .st-screen .fx .nt em { color:var(--muted); font-family:var(--f-mono); }
+.st-screen .fx .gh { color:transparent; -webkit-text-stroke:2px color-mix(in srgb, var(--accent) 38%, transparent); }
+.st-screen .fx .sc .g { color:#c6f45a; text-shadow:0 0 22px rgba(198,244,90,.45); }
+.st-screen .scr-frame.browser, .st-screen .scr-frame.none { border-radius:16px; }
+.st-screen .scr-tag { background:#c6f45a; color:#0a0c10; font-family:var(--f-body); font-weight:750; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+.st-screen .scr-hl { border-width:3px; border-radius:12px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 22%, transparent), 0 0 40px color-mix(in srgb, var(--accent) 35%, transparent); }
+.st-screen .scr-rip { border-color:#c6f45a; background:rgba(198,244,90,.2); }
+.st-screen .cd-win { background:#0d1015; border-radius:16px; box-shadow:0 0 0 1px rgba(255,255,255,.09), 0 30px 80px rgba(0,0,0,.4); }
+.st-screen .cd-win.term { background:#07090c; }
+.st-screen .cd-win .k { color:#b4a8ff; } .st-screen .cd-win .s { color:#c6f45a; } .st-screen .cd-win .n { color:#ffb37a; } .st-screen .cd-win .f { color:#7cc4ff; }
+.st-screen .cd-caret { background:#c6f45a; } .st-screen .cd-pr { color:#c6f45a; }
+.st-screen .cd-l.hl { filter:hue-rotate(32deg) saturate(1.15); }      /* the engine tints the highlight yellow inline: turn it lime */
+.st-screen .sp-out { stroke:#c6f45a; }
+"""
+SPARK = '<svg viewBox="0 0 24 24"><path d="M12 2.5c.7 4.7 2.6 7 7.2 8.1-4.6 1.1-6.5 3.4-7.2 8.1-.7-4.7-2.6-7-7.2-8.1 4.6-1.1 6.5-3.4 7.2-8.1z" fill="#0a0c10"/><path d="M19 15.5c.25 1.6.9 2.4 2.5 2.8-1.6.4-2.25 1.2-2.5 2.8-.25-1.6-.9-2.4-2.5-2.8 1.6-.4 2.25-1.2 2.5-2.8z" fill="#0a0c10"/></svg>'
+RETURN = '<svg viewBox="0 0 24 24"><path d="M19 5v7a3 3 0 0 1-3 3H6m0 0 4-4m-4 4 4 4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+
+
+def FX_FRAME(X, cid, t, d, p, k):
+    X.css("screen-fx", FX_CSS)
+    P = X.portrait
+    key = "" if P else f'<b class="sf-key">{RETURN}</b>'
+    right_pad = ' style="padding-right:380px"' if (p.get("host") and not P) else ""   # the presenter sits bottom-right in 16:9
+    X.used_text.update("第九顶帽子/")
+    inner = (f'<div class="sf-win"></div>'
+             f'<div class="sf-bar"><span class="sf-dots"><i></i><i></i><i></i></span>'
+             f'<span class="sf-crumb"><i class="sf-mark"></i><b>第九顶帽子</b><em>/</em>{k["topic"]}</span>'
+             f'<span class="sf-id"><i>fx</i>{k["fxid"]}</span></div>'
+             f'<div class="sf-cap"><div class="sf-box"><i class="sf-ai">{SPARK}</i>'
+             f'<span class="sf-tx" style="font-size:{k["cap_px"]}px">{k["cap"]}<i class="sf-caret"></i></span>{key}</div></div>'
+             f'<div class="sf-st"{right_pad}><span><i class="sf-ok"></i>{k["foot"]}</span><span>{k["src"]}</span></div>')
+    X.used_text.update("fx")
+    X.clip(f"{cid}c", t, d, inner, f"ctx sf{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
+    s = f"#{cid}c"
+    X.tw(f'tl.from("{s} .sf-bar, {s} .sf-st", {{opacity:0, duration:0.25, ease:"power2.out"}}, {t:.3f});')
+    X.tw(f'tl.from("{s} .sf-box", {{y:22, opacity:0, scale:0.97, duration:0.38, ease:"expo.out"}}, {t + 0.05:.3f});')
+    ty = min(0.7, max(0.35, d * 0.18))     # the line "types" in left to right, then the caret blinks
+    X.tw(f'tl.fromTo("{s} .sf-tx", {{clipPath:"inset(-20% 100% -20% 0)"}}, {{clipPath:"inset(-20% 0% -20% 0)", duration:{ty:.2f}, ease:"steps({max(6, int(ty * 30))})", immediateRender:true}}, {t + 0.12:.3f});')
+    blinks = max(0, int((d - 0.3 - ty) / 0.5))
+    if blinks:
+        X.tw(f'tl.to("{s} .sf-caret", {{opacity:0, duration:0.01, repeat:{blinks}, yoyo:true, repeatDelay:0.49, ease:"none"}}, {t + 0.2 + ty:.3f});')
+    X.tw(f'tl.from("{s} .sf-ai", {{scale:0.4, rotation:-30, duration:0.45, ease:"back.out(2.2)"}}, {t + 0.08:.3f});')

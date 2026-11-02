@@ -16,7 +16,7 @@ import math, re, subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
-CLOSE = set("，。、；：！？）》」』”’,.;:!?)]}%…—")      # never starts a line
+CLOSE = set("，。、；：！？）》」』”’,.;:!?)]}%…—·・")      # never starts a line
 OPEN = set("（《「『“‘([{")                               # never ends a line
 VIDEO = {".mp4", ".mov", ".webm", ".m4v"}
 
@@ -98,7 +98,9 @@ def tokens(s):
     out = []
     for tk in raw:
         if not tk: continue
-        if out and (tk[0] in CLOSE or out[-1][-1:] in OPEN):
+        if tk[0] in CLOSE and len(out) > 1 and out[-1].isspace():
+            sp = out.pop(); out[-1] += sp + tk            # "第二章 · 供应链": the dot stays with the word before it
+        elif out and (tk[0] in CLOSE or out[-1][-1:] in OPEN):
             out[-1] += tk
         else:
             out.append(tk)

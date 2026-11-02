@@ -35,3 +35,11 @@ python3 scripts/hat9.py render examples/demo/video.json --style 新id --preview
 ```
 
 先排 2–3 张静帧和标杆并排对比（`scripts/board.py`），过关再做动画。**不能只换底色就叫新风格。**
+
+### 让动效跟着风格换皮
+
+`scenes/fx` 的动效在逐句出场的风格里都能用（`atlas` `iso3d` `chrome3d` `studio` `clay` 是整片一个布景，不接动效）。换风格时：
+
+- 动效页面的四种底色（`"theme": "paper" | "ink" | "red" | "lemon"`）自动从风格的 `tokens` 推出来；想自己定，在 `STYLE["fx_themes"]` 里写四组颜色（`bg fg muted accent card card-fg line`）。
+- 动效周围的页面（页眉、口播字幕、脚注）默认是通用版式。风格可以写 `FX_FRAME(X, cid, t, d, p, parts)` 画自己的版本（`parts` 来自 `aefx.ctx_parts`：已经排好的字幕、话题、效果 id、脚注、来源），也可以只在风格 css 里改 `.ctx .hd` / `.ctx .cap > span` / `.ctx .ft`。
+- 画廊里每个动效用哪个风格演示，写在 `scripts/style_reels.py` 的 `STYLE_OF`；改完跑它生成 `examples/styled-<风格>/`，再渲染、跑 `scripts/catalog.py`。

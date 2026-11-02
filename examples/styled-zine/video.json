@@ -1,0 +1,342 @@
+{
+ "meta": {
+  "title": "动效 · zine 风格",
+  "aspect": "16:9",
+  "style": "zine",
+  "duration": 55.6,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "cartoon",
+   "d": 2.6,
+   "label": "#7 卡通冲击特效 · Flash FX",
+   "ref": "140 Flash FX 1.47万份",
+   "theme": "lemon",
+   "topic": "做内容",
+   "text": "翻车！",
+   "line": "照着教程做，结果一发出去就*翻车*了。",
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "collage",
+   "d": 2.6,
+   "label": "#21 拼贴剪纸 · Collage",
+   "ref": "Fakeplastictree 203.5万播放",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "images": [
+    "../aefx/assets/broll/factory.jpg",
+    "../aefx/assets/broll/port.jpg",
+    "../aefx/assets/broll/crossing.jpg"
+   ],
+   "text": "一条供应链",
+   "line": "工厂、港口、人流，拼在一起才是*完整的生意*。",
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.6,
+   "fx": "cite_article",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "outlet": "Reuters",
+   "section": "Technology",
+   "headline": "ChatGPT sets record for fastest-growing user base - analyst note",
+   "byline": "Krystal Hu",
+   "date": "2023-02-01",
+   "excerpt": "just two months after launch, making it the fastest-growing consumer application in history",
+   "hl": "the fastest-growing consumer application in history",
+   "url": "reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/",
+   "points": [
+    "上线约 2 个月，月活约 1 亿（UBS 估算）",
+    "TikTok 用了约 9 个月",
+    "Instagram 用了约 2 年半"
+   ],
+   "line": "路透社报道：ChatGPT 两个月月活破亿，是*史上增长最快*的消费级应用。",
+   "label": "引用新闻 · Article Card",
+   "ref": "「据某某报道」：标题 + 原文摘录 + 要点",
+   "src": "Reuters 2023-02-01（援引 UBS）",
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "d": 4.4,
+   "fx": "cite_post",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "name": "Sam Altman",
+   "handle": "@sama",
+   "text": "ChatGPT launched on wednesday. today it crossed 1 million users!",
+   "hl": "crossed 1 million users",
+   "time": "2022-12-05",
+   "zh": "ChatGPT 周三上线，今天用户突破 *100 万*！",
+   "stat": {
+    "value": 5,
+    "unit": "天",
+    "label": "从上线到 100 万用户"
+   },
+   "line": "上线第五天，奥特曼发了一条推：*用户破了一百万*。",
+   "label": "引用帖子 · Post Card",
+   "ref": "平台中立的帖子卡：不用任何平台界面和标志",
+   "src": "Sam Altman 的帖子，2022-12-05",
+   "t": 9.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "comment_thread",
+   "d": 4.2,
+   "theme": "paper",
+   "topic": "做内容",
+   "mock": true,
+   "line": "评论区里，真正有用的信息往往在*热评*里。",
+   "label": "评论楼层 · Comment Thread",
+   "ref": "Envato「Social Media Comments」评论截图包常年在社交类前列",
+   "total": 2316,
+   "items": [
+    {
+     "name": "观众A",
+     "text": "所以加盟商才是它真正的客户？",
+     "likes": 3200,
+     "time": "2 小时前"
+    },
+    {
+     "name": "开过店的小王",
+     "text": "开过一家，原料都得从总部进，算下来毛利没想象中高。",
+     "likes": 12800,
+     "hot": true,
+     "time": "1 小时前",
+     "replies": [
+      {
+       "name": "作者",
+       "text": "这条说到点子上了"
+      }
+     ]
+    },
+    {
+     "name": "路过",
+     "text": "4 块钱的柠檬水一年 44 亿，离谱",
+     "likes": 860,
+     "time": "40 分钟前"
+    },
+    {
+     "name": "数据控",
+     "text": "求出一期咖啡品牌的对比",
+     "likes": 452,
+     "time": "12 分钟前"
+    }
+   ],
+   "t": 14.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "danmaku",
+   "d": 4.0,
+   "theme": "ink",
+   "topic": "做内容",
+   "mock": true,
+   "line": "弹幕刷屏的那一秒，就是这条视频的*高能*时刻。",
+   "label": "弹幕 · Danmaku",
+   "ref": "B站弹幕刷屏 · 二创与口播常用",
+   "count": 34,
+   "t_hl": 20.7,
+   "items": [
+    "来了来了",
+    "前排",
+    "4 块钱的柠檬水",
+    "原来加盟商才是客户",
+    "学到了",
+    "关注了",
+    {
+     "text": "高能预警",
+     "hl": true
+    },
+    "这期干货",
+    "哈哈哈哈哈",
+    "求更新",
+    {
+     "text": "终于有人讲透了",
+     "hl": true
+    },
+    "收藏=学会",
+    "所以它不怕便宜",
+    "66666",
+    "下期拆咖啡"
+   ],
+   "t": 18.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scribble",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "text": "蜜雪主要靠|收加盟费赚钱",
+   "line": "很多人以为蜜雪靠*加盟费*赚钱，其实错了。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "潦草涂鸦标注 · Scribble",
+   "ref": "B 站「白菜和杜比 手绘科普」69.9 万（2026）· Ben Marriott Hand Drawn 45.4 万",
+   "scribbles": [
+    {
+     "type": "cross",
+     "target": "收加盟费",
+     "note": "加盟费只占 2.5%"
+    },
+    {
+     "type": "underline",
+     "target": "蜜雪主要靠",
+     "note": "卖原料和设备才是 97.5%"
+    }
+   ],
+   "t": 22.4,
+   "tr": "hard"
+  },
+  {
+   "fx": "logo_wall",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "做内容",
+   "logos": [
+    "press",
+    "poster",
+    "zine",
+    "screen",
+    "hud",
+    "atlas",
+    "doc",
+    "papercut",
+    "sketch",
+    "ink",
+    "flat",
+    "pixel",
+    "iso3d",
+    "chrome3d",
+    "studio",
+    "clay",
+    "reel"
+   ],
+   "hl": "ink",
+   "title": "十七种风格，一个仓库",
+   "sub": "ink · 水墨国风",
+   "line": "十七种风格放在一个仓库里，换一种就是*一种气质*。",
+   "src": "hat9-motion 风格目录",
+   "label": "Logo 墙 · Logo Wall",
+   "ref": "VideoHive Multi Video & Multi Text Logo Formation 3.8K · Mosaic Photo Reveal 16K",
+   "scene": "fx",
+   "t": 27.2,
+   "tr": "hard"
+  },
+  {
+   "fx": "halftone",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "做内容",
+   "image": "../docs2/assets/lowres_1957.jpg",
+   "mode": "halftone",
+   "kicker": "1957 年 · 公有领域档案片",
+   "title": "200 像素，也能好看",
+   "line": "这张截图只有 *200 像素*宽，做成网点就不嫌糊了。",
+   "src": "Working Dollars（1957），Prelinger Archives，公有领域",
+   "label": "低清图做成风格 · Halftone / Duotone",
+   "ref": "Ben Marriott「Make ANYTHING Retro」99.6 万 ·「Instant Dither」30.6 万",
+   "scene": "fx",
+   "t": 31.8,
+   "tr": "hard"
+  },
+  {
+   "fx": "meme_stage",
+   "d": 4.8,
+   "theme": "lemon",
+   "topic": "做内容",
+   "items": [
+    {
+     "src": "../docs2/assets/meme_lemon.jpg",
+     "caption": "4 块钱"
+    },
+    {
+     "src": "../docs2/assets/meme_turn.jpg",
+     "caption": "不是卖奶茶"
+    },
+    {
+     "src": "../docs2/assets/meme_1997.jpg",
+     "caption": "学会说不"
+    }
+   ],
+   "line": "同一条片子，*一句话换一张图*，节奏就出来了。",
+   "src": "画面取自本仓库的示例成片",
+   "label": "梗图舞台 · Meme Stage",
+   "ref": "Fakeplastictree「Collage」203.5 万 · Ben Marriott Paper Cutout 30.7 万",
+   "scene": "fx",
+   "t": 36.4,
+   "tr": "hard"
+  },
+  {
+   "fx": "gif_clip",
+   "d": 4.4,
+   "theme": "paper",
+   "topic": "做内容",
+   "gif": "../docs2/assets/stomp.gif",
+   "frame": "sticker",
+   "caption": "stomp.gif · 360 像素",
+   "title": "GIF 直接拖进来",
+   "line": "GIF 动图拖进来，构建时自动*转成视频*。",
+   "src": "GIF 由本仓库的动效预览生成",
+   "label": "GIF 动图 · GIF Clip",
+   "ref": "VideoHive Photo Frames Slideshow 3.6K（Openers 第 3）· Mixkit Polaroid Slideshow",
+   "scene": "fx",
+   "t": 41.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "sponsor_card",
+   "theme": "paper",
+   "topic": "广告",
+   "sponsor": "青舟研究所",
+   "points": [
+    "一周一份行业研报",
+    "数据全部可溯源",
+    "新用户首月免费"
+   ],
+   "code": "HAT9",
+   "cta": "链接在评论区第一条",
+   "note": "虚构品牌 · 示意",
+   "host": true,
+   "line": "本期内容由*青舟研究所*支持。",
+   "src": "示意：虚构品牌",
+   "label": "L12 · 口播广告位 · Sponsor Slot",
+   "ref": "口播恰饭段落「本期视频由……支持」",
+   "d": 5.0,
+   "t": 45.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "poll_card",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "question": "你最常点蜜雪的哪一杯？",
+   "options": [
+    "柠檬水",
+    "冰淇淋",
+    "珍珠奶茶",
+    "都不喝"
+   ],
+   "line": "你最常点哪一杯？*评论区*告诉我。",
+   "src": "第九顶帽子",
+   "label": "T10 · 评论投票 · Poll Card",
+   "ref": "Envato Elements Popular「YouTube Subscribe」「Checklist Pack」",
+   "d": 5.0,
+   "t": 50.6,
+   "tr": "hard"
+  }
+ ]
+}

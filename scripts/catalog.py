@@ -37,6 +37,8 @@ CAT["字效"] += ["term_card", "word_swap"]
 CAT["数据"] += ["table", "statement_table", "waterfall", "scale_compare", "bar_race", "stacked_bars", "formula", "bars_csv", "line_csv"]
 CAT["地图"] += ["china_map"]
 def cat_of(fx): return next((k for k, v in CAT.items() if fx in v), "其他")
+STYLE_NAMES = {"reel": "动效库", "press": "财经刊", "poster": "瑞士海报", "zine": "拼贴杂志", "screen": "AI 工具台", "hud": "暗场",
+               "doc": "实拍纪录", "papercut": "剪纸", "sketch": "手绘白板", "ink": "水墨国风", "flat": "扁平插画", "pixel": "像素复古"}
 
 
 def cut(src, t, d, dst, w=480, fps=15):
@@ -94,12 +96,20 @@ REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "
 
 
 def beats():
-    """(beat, reel_16x9, reel_9x16) across all demo reels that have been rendered."""
+    """(beat, reel_16x9, reel_9x16, style) across every rendered demo reel. The per-style reels (scripts/style_reels.py,
+    examples/styled-<style>/) come first, so a card is cut from the style it is meant to be shown in; effects without
+    a styled render fall back to the original reels (the default `reel` look)."""
+    for ex in sorted((SKILL / "examples").glob("styled-*")):
+        sid = ex.name[len("styled-"):]
+        vj, r = ex / "video.json", ex / "renders" / f"{sid}_16x9.mp4"
+        if not (vj.exists() and r.exists()): continue
+        for b in json.loads(vj.read_text())["beats"]:
+            yield b, r, ex / "renders" / f"{sid}_9x16.mp4", sid
     for ex in REELS:
         vj, r = ex / "video.json", ex / "renders" / "reel_16x9.mp4"
         if not (vj.exists() and r.exists()): continue
         for b in json.loads(vj.read_text())["beats"]:
-            yield b, r, ex / "renders" / "reel_9x16.mp4"
+            yield b, r, ex / "renders" / "reel_9x16.mp4", "reel"
 
 SUIT.update({
     "media": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
@@ -290,7 +300,14 @@ def main():
     CARDS.mkdir(parents=True, exist_ok=True); GALLERY.mkdir(parents=True, exist_ok=True)
     rows, trans = [], []
     seen, carded = set(), set()
-    for b, reel, reel_v in beats():
+    ORIG = {}
+    for ex_dir in REELS:
+        vj = ex_dir / "video.json"
+        if not vj.exists(): continue
+        for ob in json.loads(vj.read_text())["beats"]:
+            if ob.get("scene") == "fx":
+                ORIG.setdefault(f"{ob['fx']}-{ob['preview']}" if ob.get("preview") else ob["fx"], ob)
+    for b, reel, reel_v, sid in beats():
         fx = b["fx"]
         if fx == "plate":
             if b.get("tr") and b["tr"] != "hard":
@@ -310,10 +327,11 @@ def main():
         import inspect
         params = sorted(set(re.findall(r'p\[["\'](\w+)["\']\]|p\.get\(["\'](\w+)["\']', inspect.getsource(aefx.FX[fx]))))
         keys = sorted({a or b_ for a, b_ in params} - {"label", "ref"})
-        rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", ""), key, b.get("band_label", "")))
+        rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", ""), key, b.get("band_label", ""), sid))
         if fx in carded: continue
         carded.add(fx)
-        ex = {k: v for k, v in b.items() if k not in ("t", "d", "tr", "label", "ref")}
+        src_b = ORIG.get(key, b)               # the example shows the beat as written in its demo reel (original asset paths)
+        ex = {k: v for k, v in src_b.items() if k not in ("t", "d", "tr", "label", "ref")}
         ex = {"scene": "fx", **{k: v for k, v in ex.items() if k != "scene"}, "t": "@关键词"}
         (CARDS / f"{fx}.md").write_text(f"""# `{fx}` · {title.strip()}
 
@@ -336,10 +354,12 @@ def main():
 
 **已知坑**：{PIT.get(fx, '无')}
 """)
+    order = {k: i for i, k in enumerate(ORIG)}          # list cards in demo-reel order, so neighbours come in different styles
+    rows.sort(key=lambda r: order.get(r[6], len(order)))
     md = ["# 效果目录 · Effects", "", "每个效果都是 `scripts/h9/aefx.py` 里的一个函数，在 `video.json` 里写成一个 beat：", "",
           '```json\n{"scene": "fx", "fx": "stomp", "words": ["大家", "都在用", "AI"], "t": "@大家"}\n```', "",
           "排名和人气依据见 [`research/ae_popular.md`](../research/ae_popular.md)。横屏、竖屏同一套参数。", "", "## 效果", ""]
-    for fx, title, how, keys, label, ref, key, band in rows:
+    for fx, title, how, keys, label, ref, key, band, sid in rows:
         if key != fx:      # band variants: one extra preview line under the effect
             md += [f'<img src="../assets/previews/fx/{key}.webp" width="320" alt="{fx} {band}"> {band}', ""]
             continue
@@ -355,8 +375,9 @@ def main():
     idx += ["", "## 转场"] + [f"- {k}: {label}" for k, label, _ in trans]
     (GALLERY / "llms.txt").write_text("\n".join(idx) + "\n")
     (GALLERY / "effects.json").write_text(json.dumps(
-        {"effects": [{"id": fx, "file": key, "band": band, "title": title, "how": how, "cat": cat_of(fx), "ref": ref, "label": label, "suit": SUIT.get(fx, "")}
-                     for fx, title, how, keys, label, ref, key, band in rows],
+        {"effects": [{"id": fx, "file": key, "band": band, "title": title, "how": how, "cat": cat_of(fx), "ref": ref, "label": label, "suit": SUIT.get(fx, ""),
+                      "style": sid, "style_name": STYLE_NAMES.get(sid, sid)}
+                     for fx, title, how, keys, label, ref, key, band, sid in rows],
          "transitions": [{"id": k, "label": label, "file": name} for k, label, name in trans]}, ensure_ascii=False, indent=1))
     print(DOC, len({r[0] for r in rows}), "effects,", len(rows), "cards,", len(trans), "transitions")
 

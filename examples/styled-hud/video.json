@@ -1,0 +1,459 @@
+{
+ "meta": {
+  "title": "动效 · hud 风格",
+  "aspect": "16:9",
+  "style": "hud",
+  "duration": 54.1,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "neon",
+   "d": 2.6,
+   "label": "#12 霓虹点亮 · Neon Flicker",
+   "ref": "Neon Sign Kit 1万份",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "text": "OPEN 24H",
+   "line": "很多小店真正赚钱的时段，在*晚上十点以后*。",
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "glitch",
+   "d": 2.6,
+   "label": "#15 故障分离 · Glitch",
+   "ref": "Video Copilot 198万播放",
+   "theme": "ink",
+   "topic": "AI 与判断",
+   "text": "数据有误",
+   "line": "AI 一本正经地，*编了一个数据*。",
+   "host": true,
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "hud_lock",
+   "d": 3.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../aefx/assets/broll/meeting.jpg",
+   "x": 61,
+   "y": 46,
+   "w": 22,
+   "h": 40,
+   "text": "拍板的人",
+   "readouts": [
+    "TARGET · 决策人",
+    "ROLE · 最后拍板",
+    "STATUS · 观望中"
+   ],
+   "line": "谈判桌上，先*盯住拍板的人*。",
+   "label": "#17 HUD 科技界面 · HUD Lock-on",
+   "ref": "Quantum HUD Infographic 5.9K（Infographics 第 1）",
+   "v": {
+    "x": 30,
+    "y": 44,
+    "w": 62,
+    "h": 34,
+    "ox": 75
+   },
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "ranking",
+   "d": 4.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "门店数 · 2024",
+   "unit": "家",
+   "items": [
+    [
+     "蜜雪冰城",
+     46479,
+     "截至 2024-12-31"
+    ],
+    [
+     "麦当劳",
+     43477,
+     "截至 2024-12-31"
+    ],
+    [
+     "星巴克",
+     40199,
+     "截至 2024-09-29"
+    ],
+    [
+     "瑞幸咖啡",
+     22340,
+     "截至 2024-12-31"
+    ]
+   ],
+   "line": "四家连锁比门店数，第一名是*蜜雪冰城*。",
+   "src": "蜜雪 2024 业绩公告 · McDonald's 10-K · Starbucks FY24 · 瑞幸 FY24",
+   "label": "排行榜倒数 · Countdown Ranking",
+   "ref": "盘点类「年度十大」格式 · talkcraft number-slab-pop",
+   "t": 8.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "countdown",
+   "d": 4.4,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "host": true,
+   "question": "蜜雪一年卖出多少杯？",
+   "reveal": "约 90 亿杯",
+   "line": "给你 *5 秒*：蜜雪一年卖出多少杯？",
+   "src": "2024 年全年约数（媒体报道）",
+   "label": "倒计时 · Countdown",
+   "ref": "VideoHive Elements countdown 大类 · talkcraft countdown-arc-scatter",
+   "from": 5,
+   "to": 1,
+   "t": 13.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "bar_race",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "csv": "../data/assets/stores.csv",
+   "x": "时间",
+   "hl": "蜜雪冰城",
+   "title": "全球门店数",
+   "note": "星巴克为财年末（9 月底）",
+   "line": "一年时间，蜜雪冰城从第三冲到了*第一*。",
+   "src": "McDonald's、Starbucks 10-K；蜜雪集团 2024 年度业绩公告",
+   "label": "柱状图赛跑 · Bar Race",
+   "ref": "Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放",
+   "t": 17.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "equity_tree",
+   "d": 4.6,
+   "theme": "paper",
+   "topic": "商业拆解",
+   "line": "上市前，张氏兄弟直接持股合计 *85.56%*。",
+   "label": "股权穿透 · Ownership Tree",
+   "ref": "企查查 / 天眼查式股权图 · Envato「Organizational Chart」",
+   "src": "证券时报（虎嗅转引）· 赢商网；投资方比例为约数",
+   "root": {
+    "name": "蜜雪集团",
+    "note": "上市前"
+   },
+   "holders": [
+    {
+     "name": "张红超",
+     "pct": "42.78",
+     "kind": "person"
+    },
+    {
+     "name": "张红甫",
+     "pct": "42.78",
+     "kind": "person"
+    },
+    {
+     "name": "美团龙珠",
+     "pct": "4",
+     "kind": "org"
+    },
+    {
+     "name": "高瓴",
+     "pct": "4",
+     "kind": "org"
+    },
+    {
+     "name": "CPE 源峰",
+     "pct": "2",
+     "kind": "org"
+    }
+   ],
+   "subs": [
+    {
+     "name": "蜜雪冰城",
+     "note": "茶饮品牌",
+     "kind": "org"
+    },
+    {
+     "name": "幸运咖",
+     "note": "咖啡品牌",
+     "kind": "org"
+    },
+    {
+     "name": "五大生产基地",
+     "note": "自有供应链",
+     "kind": "org"
+    }
+   ],
+   "hl": [
+    "张红超",
+    "张红甫"
+   ],
+   "summary": "兄弟合计 85.56%",
+   "t": 22.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scanline",
+   "d": 5.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "image": "../text2/assets/us_v_google_p8.png",
+   "blocks": [
+    {
+     "box": [
+      11.2,
+      12.6,
+      78.2,
+      6.0
+     ],
+     "label": "结论：谷歌是垄断者",
+     "value": "Sec. 2"
+    },
+    {
+     "box": [
+      47.4,
+      23.0,
+      41.0,
+      3.0
+     ],
+     "label": "在搜索市场有垄断力",
+     "value": "(2)"
+    },
+    {
+     "box": [
+      66.8,
+      33.5,
+      22.0,
+      3.0
+     ],
+     "label": "广告收取超竞争价格",
+     "value": "p.4"
+    },
+    {
+     "box": [
+      32.8,
+      44.0,
+      37.0,
+      3.0
+     ],
+     "label": "搜索广告市场：不构成垄断",
+     "value": "(1)"
+    }
+   ],
+   "line": "美国法院 2024 年判谷歌垄断，*关键句*都在这一页。",
+   "src": "United States v. Google LLC（D.D.C. 2024）判决书 PDF 第 8 页，公有领域",
+   "label": "扫描线逐块标注 · Scanline",
+   "ref": "HUD 扫描界面（Quantum HUD Infographic 5.9K）",
+   "t": 27.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scatter",
+   "d": 5.5,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "店多，不等于每家店赚得多",
+   "note": "2024 年 · 气泡 = 单店年收入",
+   "points": [
+    [
+     "蜜雪冰城",
+     46479,
+     248.3,
+     53.4
+    ],
+    [
+     "瑞幸咖啡",
+     22340,
+     344.75,
+     154.3
+    ],
+    [
+     "古茗",
+     9914,
+     87.91,
+     88.7
+    ],
+    [
+     "霸王茶姬",
+     6440,
+     124.05,
+     192.6
+    ]
+   ],
+   "xlab": "门店数",
+   "xunit": "家",
+   "ylab": "全年收入",
+   "yunit": "亿元",
+   "size_lab": "单店收入（万元）",
+   "hl": "蜜雪冰城",
+   "hl_note": "4.6 万家店，单店收入约 53 万",
+   "line": "店最多的蜜雪，*单店收入*却是四家里最低的。",
+   "src": "各公司 2024 年年报 / 招股书（单店收入 = 收入 ÷ 年末门店数）",
+   "label": "散点 / 气泡图 · Scatter",
+   "ref": "VideoHive「Infographic Maker」2.6K · 「Infographics」2.2K",
+   "t": 32.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "radar",
+   "d": 5.0,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "蜜雪和瑞幸，强在不同地方",
+   "note": "2024 年 · 每根轴按两家中较大值归一",
+   "axes": [
+    "门店数",
+    "全年收入",
+    "单店收入",
+    "门店增速"
+   ],
+   "series": [
+    {
+     "name": "蜜雪冰城",
+     "values": [
+      46479,
+      248.3,
+      53.4,
+      23.7
+     ]
+    },
+    {
+     "name": "瑞幸咖啡",
+     "values": [
+      22340,
+      344.75,
+      154.3,
+      37.5
+     ]
+    }
+   ],
+   "fmt": [
+    "家",
+    "亿",
+    "万",
+    "%"
+   ],
+   "hl": 2,
+   "line": "蜜雪赢在*店多*，瑞幸赢在每家店卖得多。",
+   "src": "蜜雪集团、瑞幸咖啡 2024 年年报",
+   "label": "雷达图 · Radar",
+   "ref": "VideoHive「Infographics」2.2K · 「Quantum HUD」5.9K",
+   "t": 38.3,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "relation_graph",
+   "theme": "ink",
+   "topic": "商业拆解",
+   "line": "大模型公司背后，站的都是*云厂商*。",
+   "nodes": [
+    {
+     "id": "微软",
+     "sub": "Microsoft"
+    },
+    {
+     "id": "亚马逊",
+     "sub": "Amazon"
+    },
+    {
+     "id": "谷歌",
+     "sub": "Google"
+    },
+    {
+     "id": "OpenAI",
+     "sub": "ChatGPT"
+    },
+    {
+     "id": "Anthropic",
+     "sub": "Claude"
+    }
+   ],
+   "edges": [
+    {
+     "from": "微软",
+     "to": "OpenAI",
+     "label": "约 130 亿美元",
+     "value": 13
+    },
+    {
+     "from": "亚马逊",
+     "to": "Anthropic",
+     "label": "80 亿美元",
+     "value": 8
+    },
+    {
+     "from": "谷歌",
+     "to": "Anthropic",
+     "label": "约 30 亿美元",
+     "value": 3
+    },
+    {
+     "from": "OpenAI",
+     "to": "Anthropic",
+     "label": "竞争",
+     "kind": "compete"
+    }
+   ],
+   "hl": "Anthropic",
+   "t_hl": 3.8,
+   "src": "Reuters、CNBC、FT 公开报道，截至 2025 年 1 月",
+   "d": 5.4,
+   "label": "G · 关系图 · Relation Graph",
+   "ref": "VideoHive Infographic Maker 2.6K · Envato Infographics「AI Workflow」",
+   "t": 43.3,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "news_flash",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "kicker": "快讯",
+   "time": "2025-03-03",
+   "source": "新华网 · 澎湃新闻",
+   "headline": "蜜雪集团今日在港交所挂牌上市",
+   "items": [
+    [
+     "开盘",
+     "262 港元，较发行价涨 29.4%"
+    ],
+    [
+     "收盘",
+     "290 港元，首日涨 43.2%"
+    ],
+    [
+     "市值",
+     "收盘约 1093 亿港元"
+    ]
+   ],
+   "ticker": [
+    "发行价 202.5 港元",
+    "股票代码 02097",
+    "2025 年开年港股最大 IPO",
+    "全球门店 46,479 家（截至 2024 年底）"
+   ],
+   "line": "2025 年 3 月 3 日，蜜雪上市*首日涨了四成多*。",
+   "src": "新华网 2025-03-03 · 澎湃新闻",
+   "label": "U05 · 新闻快讯 · News Flash",
+   "ref": "talkcraft news-card-desk · 速报类口播",
+   "d": 5.4,
+   "t": 48.7,
+   "tr": "hard"
+  }
+ ]
+}

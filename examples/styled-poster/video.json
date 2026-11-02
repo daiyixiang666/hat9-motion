@@ -1,0 +1,289 @@
+{
+ "meta": {
+  "title": "动效 · poster 风格",
+  "aspect": "16:9",
+  "style": "poster",
+  "duration": 46.4,
+  "host_video": "../mixue/assets/video/shiba.webm"
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "stomp",
+   "d": 2.6,
+   "label": "#4 重拍排版 · Stomp",
+   "ref": "TypoKing 1.34万份 · B站动态歌词排版 898万播放",
+   "theme": "paper",
+   "topic": "商业拆解",
+   "words": [
+    "一杯",
+    "4 块钱",
+    "柠檬水",
+    "一年净赚",
+    "44 亿"
+   ],
+   "line": "一杯 4 块钱的柠檬水，一年净赚 *44 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "t": 0.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "d": 2.6,
+   "label": "#5 遮罩上滑 · Mask Reveal",
+   "ref": "YouTube 153万 / 145万播放",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "text": "差别不在工具|在判断",
+   "sub": "the tool is not the point",
+   "line": "大家用的都是同一个 AI，差别不在工具，*在判断*。",
+   "host": true,
+   "t": 2.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "tracking",
+   "d": 2.6,
+   "label": "字距收拢 · Tracking In",
+   "ref": "电影片头经典",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "text": "审 美",
+   "sub": "TASTE",
+   "line": "工具人人都有，最后拼的是*审美*。",
+   "host": true,
+   "t": 5.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "flip3d",
+   "d": 2.6,
+   "label": "逐字三维翻转 · 3D Flip",
+   "ref": "文字动效合集高频",
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "text": "第二章 · 供应链",
+   "line": "第二部分，我们看它的*供应链*。",
+   "t": 7.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "lockup",
+   "d": 2.6,
+   "label": "双语锁定 · Type Lockup",
+   "ref": "B站「碰撞吧！」107万播放",
+   "theme": "paper",
+   "topic": "AI 与判断",
+   "text": "判断力",
+   "sub": "JUDGMENT",
+   "notes": [
+    "思源黑体 Heavy",
+    "Archivo Black"
+   ],
+   "line": "这期的关键词：*判断力*。",
+   "host": true,
+   "t": 10.4,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "word_swap",
+   "d": 4.2,
+   "theme": "red",
+   "topic": "AI 与判断",
+   "host": true,
+   "pre": "AI 能帮你",
+   "words": [
+    "写稿",
+    "配音",
+    "做图",
+    "剪辑"
+   ],
+   "line": "AI 能帮你写稿、配音、做图、*剪辑*。",
+   "label": "句中换词 · Word Slot",
+   "ref": "talkcraft word-slot-cycle · Rotating Words 标题模板",
+   "t": 13.0,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "quadrant",
+   "d": 4.6,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "x_axis": [
+    "便宜",
+    "贵"
+   ],
+   "y_axis": [
+    "店少",
+    "店多"
+   ],
+   "quads": [
+    "便宜又多",
+    "贵还很多",
+    "便宜但少",
+    "贵而少"
+   ],
+   "items": [
+    {
+     "text": "蜜雪冰城",
+     "x": 10,
+     "y": 93
+    },
+    {
+     "text": "瑞幸咖啡",
+     "x": 42,
+     "y": 45
+    },
+    {
+     "text": "星巴克",
+     "x": 86,
+     "y": 80
+    }
+   ],
+   "hl": 0,
+   "note": "横轴：大致客单价 · 纵轴：全球门店数（2024）",
+   "line": "又便宜、店又多，蜜雪站在*左上角*。",
+   "src": "各公司 2024 年报（门店数）· 客单价为示意",
+   "label": "象限图 · 2×2 Matrix",
+   "ref": "咨询式 2×2 定位图（BCG 矩阵式）",
+   "t": 17.2,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "scale_compare",
+   "d": 5.0,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "mode": "laps",
+   "ratio": 7.835,
+   "dec": 1,
+   "head": "上海港一年|5150 万个标准箱，首尾相连",
+   "ratio_label": "圈",
+   "ref": "Envato Popular Infographic · Mapal VOX 式信息图 34.6万播放",
+   "method": "按 20 英尺箱长 6.096 米、赤道周长 40,075 公里计算",
+   "line": "上海港一年的集装箱首尾相连，能绕赤道 *7.8 圈*。",
+   "src": "上港集团 2024 年业务快报",
+   "label": "尺度换算 · Scale Compare",
+   "basis": "绕地球赤道",
+   "t": 21.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "black_slam",
+   "d": 3.8,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "hits": [
+    "4 块钱",
+    "一杯"
+   ],
+   "text": "一年净赚 *44.5 亿*",
+   "sub": "一杯柠檬水，只卖 4 块钱",
+   "line": "4 块钱一杯，一年*净赚 44.5 亿*。",
+   "src": "蜜雪集团 2024 年度业绩公告",
+   "label": "黑屏重击 · Black Slam",
+   "ref": "Camera Move + Impact Shake：Bricks 106.8 万（2025）",
+   "t": 26.8,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "choose_one",
+   "d": 5.5,
+   "theme": "lemon",
+   "topic": "商业拆解",
+   "q": "全球门店最多的餐饮品牌是谁？",
+   "options": [
+    [
+     "麦当劳",
+     43477
+    ],
+    [
+     "星巴克",
+     40199
+    ],
+    [
+     "蜜雪冰城",
+     46479
+    ],
+    [
+     "瑞幸咖啡",
+     22340
+    ]
+   ],
+   "pick": "蜜雪冰城",
+   "unit": "家",
+   "line": "答案是*蜜雪冰城*，比麦当劳还多 3,000 家。",
+   "src": "各公司 2024 年年报（星巴克为 2024 财年末）",
+   "label": "多选一 · Choose One",
+   "ref": "知识区「先猜再揭晓」开场 · 选项卡逐个跳动后落定",
+   "t": 30.6,
+   "tr": "hard"
+  },
+  {
+   "scene": "fx",
+   "fx": "converge",
+   "d": 5.5,
+   "theme": "ink",
+   "topic": "商业拆解",
+   "title": "四家加起来，8.5 万家店",
+   "note": "截至 2024 年底",
+   "sources": [
+    [
+     "蜜雪冰城",
+     46479
+    ],
+    [
+     "瑞幸咖啡",
+     22340
+    ],
+    [
+     "古茗",
+     9914
+    ],
+    [
+     "霸王茶姬",
+     6440
+    ]
+   ],
+   "target": "四家合计门店",
+   "unit": "家",
+   "line": "四家新茶饮和咖啡，*加起来 8.5 万家店*。",
+   "src": "各公司 2024 年年报 / 招股书",
+   "label": "多源汇聚 · Converge",
+   "ref": "VideoHive「3D Earth Connections」3.4K · 「Infographic Maker」2.6K",
+   "t": 36.1,
+   "tr": "hard"
+  },
+  {
+   "fx": "slides",
+   "d": 4.8,
+   "theme": "paper",
+   "topic": "做内容",
+   "slides": [
+    "../../assets/previews/mixue_16x9.jpg",
+    "../../assets/previews/screen_16x9.jpg",
+    "../../assets/previews/atlas_16x9.jpg",
+    "../../assets/previews/doc_16x9.jpg",
+    "../../assets/previews/poster_16x9.jpg"
+   ],
+   "focus": 3,
+   "title": "五条示例成片",
+   "line": "五条成片的封面，*一页页*翻过去。",
+   "src": "hat9-motion 示例成片",
+   "label": "幻灯片翻页 · Slide Deck",
+   "ref": "VideoHive Cinematic Parallax Slideshow 5.4K（Openers 第 1）· Photo Slideshow 3D II 2.2K",
+   "scene": "fx",
+   "t": 41.6,
+   "tr": "hard"
+  }
+ ]
+}

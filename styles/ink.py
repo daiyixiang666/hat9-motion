@@ -20,7 +20,15 @@ STYLE = {
         "punch-top": "70%", "punch-size": "60px", "punch-stroke": "0",
     },
     "fonts": {"display": "ma-shan-zheng", "body": "noto-serif-sc", "cap": "noto-serif-sc", "serif": "noto-serif-sc",
-              "xing": "zhi-mang-xing", "cao": "liu-jian-mao-cao", "kai": "long-cang", "num": "eb-garamond", "latin": "eb-garamond"},
+              "xing": "zhi-mang-xing", "cao": "liu-jian-mao-cao", "kai": "long-cang", "num": "eb-garamond", "latin": "eb-garamond",
+              "quote": "eb-garamond", "mono": "eb-garamond"},
+    # the four grounds an effect beat can ask for: 宣纸 xuan paper, 墨 ink wash, 朱砂 vermilion, 天青 celadon
+    "fx_themes": {
+        "paper": {"bg": "#ebe3d1", "fg": "#171612", "muted": "#5a544a", "accent": "#b03a2e", "card": "#f4efe2", "card-fg": "#171612", "line": "#cfc5ae"},
+        "ink":   {"bg": "#1d1b17", "fg": "#ece4d2", "muted": "#a89f8c", "accent": "#d9614f", "card": "#2a2721", "card-fg": "#ece4d2", "line": "#3d3a32"},
+        "red":   {"bg": "#9e3327", "fg": "#f4ecd9", "muted": "#ead8c4", "accent": "#171612", "card": "#f4ecd9", "card-fg": "#171612", "line": "rgba(244,236,217,.35)"},
+        "lemon": {"bg": "#cfd9d0", "fg": "#13201c", "muted": "#44564f", "accent": "#b03a2e", "card": "#edf1ec", "card-fg": "#13201c", "line": "#a7b8ae"},
+    },
     "motion": {"ease": "power3.out", "dur": 0.8, "stagger": 0.05, "cut": "hard", "transition": "flash", "em": "static", "camera": "none"},
     "layers": [],
     "mascot": {"mode": "cameo", "frame": "sticker", "landscape": {"right": 110, "bottom": 70, "h": 300}, "portrait": {"left": 400, "bottom": 640, "h": 260}},
@@ -171,7 +179,7 @@ def paper(X):
             f'<rect width="{W}" height="{H}" filter="url(#pgrain)" opacity=".55"/>{fib}</svg></div><div class="vig"></div>')
 
 
-def mountains(cid, X, seed, layers=3, top=0.45, amp=0.12, dark=0.85, width=None):
+def mountains(cid, X, seed, layers=3, top=0.45, amp=0.12, dark=0.85, width=None, color="#171612"):
     """layered far mountains: noisy ridges filled with a wash that fades downward; each layer is a parallax group."""
     W, H = (width or X.W), X.H
     r = random.Random(seed)
@@ -192,8 +200,8 @@ def mountains(cid, X, seed, layers=3, top=0.45, amp=0.12, dark=0.85, width=None)
         op = dark * (0.35 + 0.65 * (k + 1) / layers)
         gid = f"{cid}g{k}"
         out.append(f'<g class="mt mt{k}"><defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1">'
-                   f'<stop offset="0" stop-color="#171612" stop-opacity="{op:.2f}"/><stop offset="0.28" stop-color="#171612" stop-opacity="{op * 0.45:.2f}"/>'
-                   f'<stop offset="0.7" stop-color="#171612" stop-opacity="0"/></linearGradient></defs>'
+                   f'<stop offset="0" stop-color="{color}" stop-opacity="{op:.2f}"/><stop offset="0.28" stop-color="{color}" stop-opacity="{op * 0.45:.2f}"/>'
+                   f'<stop offset="0.7" stop-color="{color}" stop-opacity="0"/></linearGradient></defs>'
                    f'<path d="M0,{H} L{" L".join(pts)} L{W},{H} Z" fill="url(#{gid})" filter="url(#{cid}b)"/></g>')
     return f'<svg class="svgl" viewBox="0 0 {W} {H}" preserveAspectRatio="none" style="width:{W}px">{"".join(out)}</svg>'
 
@@ -683,6 +691,124 @@ def seal_outro(b, X, t, d, cid):
     X.tw(f'tl.from("{s} .sb, {s} .ct", {{opacity:0, y:12, duration:0.7, stagger:0.2}}, {t + 1.1:.3f});')
     X.tw(f'tl.fromTo("{s} .mist", {{x:-50}}, {{x:70, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
     drift(X, f"{s} .cam", t, d, 1.03)
+
+
+# ---------------------------------------------------------------- effects drawn in ink (aefx.FX_FRAME + .fx overrides)
+FX_CSS = r"""
+.ikg { overflow:hidden; }
+.ikg .paper, .ikg svg { position:absolute; inset:0; width:100%; height:100%; }
+.ikg .vig { position:absolute; inset:0; }
+.ikg .mist { position:absolute; border-radius:50%; }
+.st-ink .fx.ik-under { background:transparent !important; }
+.ctx.ikf .ikh { position:absolute; display:flex; align-items:center; gap:14px; font-family:var(--f-serif); color:var(--fg);
+  background:color-mix(in srgb, var(--bg) 86%, transparent); padding:3px 14px 3px 3px; border-radius:3px; }
+.ctx.ikf .ikh b { font-weight:700; letter-spacing:.24em; } .ctx.ikf .ikh span { opacity:.62; letter-spacing:.2em; }
+.ctx.ikf .ikh i { display:block; width:38px; height:2px; background:currentColor; opacity:.55; }
+.ctx.ikf .ikh .sl { width:40px; height:40px; display:grid; place-items:center; background:var(--accent); color:#f4ecd9; border-radius:4px; font-weight:900; font-size:15px;
+  line-height:1.05; writing-mode:vertical-rl; letter-spacing:.02em; transform:rotate(-3deg); }
+.ctx.ikf .ikx { position:absolute; font-family:var(--f-latin); font-size:17px; letter-spacing:.12em; color:var(--accent); border:2px solid var(--accent);
+  padding:3px 12px 4px; border-radius:3px; font-variant:small-caps; background:color-mix(in srgb, var(--bg) 86%, transparent); }
+.ctx.ikf .ikc { position:absolute; left:0; right:0; text-align:center; }
+.ctx.ikf .ikc .slip { display:inline-block; font-family:var(--f-cap); font-weight:600; line-height:1.3; color:#171612; white-space:nowrap;
+  background:rgba(240,233,217,.95); padding:6px 22px 9px 28px; border-top:1.5px solid rgba(23,22,18,.6); border-bottom:1.5px solid rgba(23,22,18,.6);
+  box-shadow:inset 7px 0 0 #b03a2e, 0 10px 28px rgba(30,20,10,.18); }
+.ctx.ikf .ikc .em .emt { color:#a32f24; background-image:linear-gradient(transparent 80%, rgba(176,58,46,.38) 80%, rgba(176,58,46,.38) 94%, transparent 94%); }
+.ctx.ikf .ikc .em .emb { display:none; }
+.ctx.ikf .ikft { position:absolute; display:flex; justify-content:space-between; gap:24px; font-family:var(--f-serif); font-size:16px; color:var(--muted); letter-spacing:.06em; }
+.ctx.ikf .ikft > div { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:60%; }
+.ctx.ikf.photo .ikh, .ctx.ikf.photo .ikft { color:#f4ecd9; text-shadow:0 1px 8px rgba(0,0,0,.6); }
+#root.v .ctx.ikf .ikc { padding:0 112px; } #root.v .ctx.ikf .ikc .slip { padding:6px 18px 9px 24px; }
+/* effect internals, in ink */
+.st-ink .fx .sub { font-family:var(--f-latin); font-style:italic; text-transform:none; letter-spacing:.26em; }
+.st-ink .fx .sh { background-image:linear-gradient(110deg, var(--fg) 0%, var(--fg) 40%, var(--accent) 50%, var(--fg) 60%, var(--fg) 100%); }
+.st-ink .fx .tw { font-family:var(--f-display) !important; }
+.st-ink .fx .caret { color:var(--accent); }
+.st-ink .fx .dfw { filter:blur(6vmin); }
+.st-ink .fx .bl { opacity:.5; border-radius:46% 54% 41% 59% / 52% 44% 56% 48%; }
+.st-ink .fx .bl:nth-child(3n+1) { background:color-mix(in srgb, var(--fg) 60%, transparent) !important; }
+.st-ink .fx .bl:nth-child(3n+2) { background:color-mix(in srgb, var(--accent) 70%, transparent) !important; }
+.st-ink .fx .bl:nth-child(3n) { background:color-mix(in srgb, var(--fg) 30%, transparent) !important; }
+.st-ink .ct-root .em .emb, .st-ink .d2 .em .emb { display:block; background:color-mix(in srgb, var(--accent) 42%, transparent); border-radius:0; box-shadow:inset 0 -.1em 0 var(--accent); }
+.st-ink .ct-root .em .emt, .st-ink .d2 .em .emt { color:var(--fg) !important; }
+.st-ink .cp-sheet .em .emb { background:#ecc0b2; box-shadow:inset 0 -.1em 0 #b03a2e; } .st-ink .cp-sheet .em .emt { color:#111 !important; }
+.st-ink .ct-mk, .st-ink .d2-mk { background:rgba(205,72,56,.45); border-radius:0; }
+.st-ink .ct-view { border-radius:2px; background:color-mix(in srgb, var(--fg) 5%, var(--bg)); box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--fg) 28%, transparent); }
+.st-ink .ct-vbar b, .st-ink .ct-kick, .st-ink .d2-kick { background:#b03a2e; color:#f4ecd9; border-radius:2px; }
+.st-ink .ct-sheet, .st-ink .cp-sheet, .st-ink .d2-sheet.dp-flat, .st-ink .dp-ph { border-radius:0;
+  box-shadow:0 0 0 12px #d9ccae, 0 0 0 13px rgba(70,50,25,.35), 0 26px 54px rgba(25,15,5,.35); }
+.st-ink .d2-sheet, .st-ink .df-p { border-radius:0; }
+.st-ink .cp-ghost { border-radius:0; background:#d9ccae; }
+.st-ink .cp-chip { border-radius:2px; border-color:#b03a2e; color:#b03a2e; font-family:var(--f-latin); }
+.st-ink .ct-mono { border-radius:5px !important; background:#b03a2e !important; color:#f4ecd9 !important; font-family:var(--f-serif) !important; transform:rotate(-2deg); }
+.st-ink .cp-year, .st-ink .cq-year { font-family:var(--f-display); font-weight:400; -webkit-text-stroke:0; color:color-mix(in srgb, var(--fg) 13%, transparent); }
+.st-ink .cq-mark { font-family:var(--f-display); font-weight:400; }
+.st-ink .ck-card { border-radius:2px; box-shadow:0 0 0 7px #d9ccae, 0 0 0 8px rgba(70,50,25,.3), 0 18px 40px rgba(25,15,5,.28); }
+.st-ink .ck-hd i { border-radius:2px; }
+.st-ink .ck-v { border-radius:4px; font-family:var(--f-serif); }
+.st-ink .ck-v[style*="1f8a5b"] { --vc:#b03a2e !important; }
+.st-ink .ck-tally b { color:var(--accent); font-family:var(--f-display); font-weight:400; }
+.st-ink .fx .cb .cb-s { border-radius:1.4vmin .3vmin 1.4vmin .3vmin; }
+.st-ink .fx .cb .cb-pin { border-radius:3px; font-family:var(--f-serif); }
+.st-ink .fx .tp .tp-k { font-family:var(--f-serif); text-transform:none; letter-spacing:.2em; }
+.st-ink .fx .tp .tp-pg { font-family:var(--f-serif); font-weight:600; }
+.st-ink .fx .vt .vt-rule { background:color-mix(in srgb, var(--accent) 60%, transparent); }
+.st-ink .fx .vt .vt-seal { background:#b03a2e; }
+.st-ink .dp-q polygon { fill:rgba(176,58,46,.1); stroke:#c8463a; }
+.st-ink .dp-cn { background:#c8463a; box-shadow:0 0 0 5px rgba(200,70,58,.3); }
+.st-ink .dp-scan { background:linear-gradient(180deg, rgba(200,70,58,0), rgba(200,70,58,.28) 85%, #c8463a); }
+.st-ink .d2-tag { font-family:var(--f-serif); border-radius:2px; }
+.st-ink .d2-ttl, .st-ink .ck-ct, .st-ink .fx .cb .cb-k, .st-ink .fx .cb .cb-t { font-weight:400; }
+"""
+
+
+def _ground(X, cid, dark):
+    """the paper under an effect: grain + fibres, layered mountains in the ground's own ink colour, mist, a vignette."""
+    W, H, P = X.W, X.H, X.portrait
+    r = random.Random(41)
+    tint = "0 0 0 0 .92  0 0 0 0 .86  0 0 0 0 .74  0 0 0 .09 0" if dark else "0 0 0 0 .35  0 0 0 0 .28  0 0 0 0 .18  0 0 0 .22 0"
+    fib_c = "rgba(236,228,210,.06)" if dark else "rgba(120,100,70,.09)"
+    fib = "".join(f'<path d="M{r.uniform(0, W):.0f} {r.uniform(0, H):.0f} q {r.uniform(-60, 60):.0f} {r.uniform(-30, 30):.0f} {r.uniform(-160, 160):.0f} {r.uniform(-50, 50):.0f}" '
+                  f'stroke="{fib_c}" stroke-width="{r.uniform(.6, 1.4):.1f}" fill="none"/>' for _ in range(50))
+    grain = (f'<div class="paper"><svg viewBox="0 0 {W} {H}" preserveAspectRatio="none"><defs><filter id="{cid}gp"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="5"/>'
+             f'<feColorMatrix type="matrix" values="{tint}"/></filter></defs><rect width="{W}" height="{H}" filter="url(#{cid}gp)" opacity=".6"/>{fib}</svg></div>')
+    mts = (f'<div class="mtl" style="position:absolute; inset:0; color:var(--fg); opacity:{.5 if dark else .42}">'
+           f'{mountains(cid + "g", X, 7 + X.beat["i"], layers=2, top=0.78 if P else 0.74, amp=0.11, dark=0.5, color="currentColor")}</div>')
+    mc = "rgba(236,228,210,.07)" if dark else "rgba(250,246,236,.85)"
+    m = random.Random(9 + X.beat["i"])
+    mist_html = "".join(f'<i class="mist m{k}" style="left:{m.uniform(-.2, .6) * W:.0f}px; top:{m.uniform(.3, .75) * H:.0f}px; width:{m.uniform(.5, .8) * W:.0f}px; '
+                        f'height:{m.uniform(.12, .2) * H:.0f}px; background:radial-gradient(closest-side, {mc}, rgba(0,0,0,0))"></i>' for k in range(2))
+    vig = ("radial-gradient(ellipse 80% 75% at 50% 45%, rgba(255,240,210,.05), rgba(0,0,0,.42) 100%)" if dark
+           else "radial-gradient(ellipse 75% 70% at 50% 46%, rgba(0,0,0,0) 55%, rgba(60,45,20,.16) 100%)")
+    return f'{filters(cid + "g")}{grain}{mts}{mist_html}<div class="vig" style="background:{vig}"></div>'
+
+
+def FX_FRAME(X, cid, t, d, p, k):
+    """an effect card in ink: the effect sits on xuan paper (or an ink / vermilion / celadon wash) with mountains and mist
+    under it, a seal + serif header, the spoken line on a paper slip with a vermilion edge, and a serif footnote.
+    Calligraphic titles inside the effect pick up the ink-bleed edge."""
+    X.css("ink", CSS); X.css("ink-fx", FX_CSS)
+    P, W, H = X.portrait, X.W, X.H
+    dark = p.get("theme") in ("ink", "red")
+    eff = next((e for e in reversed(X.els) if e.startswith(f'<div id="{cid}"')), "")
+    if "background:var(--bg)" in eff and not k["photo"]:      # the effect paints a flat ground: draw ours under it instead
+        X.els[X.els.index(eff)] = eff.replace('class="clip scene fx', 'class="clip scene fx ik-under', 1)
+        X.clip(f"{cid}g", t, d, _ground(X, cid, dark), "ikg", 2, track=19, sty=k["sty"] + ";background:var(--bg)")
+        X.css(f"ink-fx-{cid}", f"#{cid} .big, #{cid} .d2-ttl, #{cid} .ck-ct, #{cid} .cb-k, #{cid} .vt-col {{ filter:url(#{cid}gk); }} "
+                               f"#{cid} .cb-s i {{ filter:url(#{cid}gd); }}")
+        X.tw(f'tl.fromTo("#{cid}g .mt0", {{x:0}}, {{x:-40, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        X.tw(f'tl.fromTo("#{cid}g .mt1", {{x:0}}, {{x:-90, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        X.tw(f'tl.fromTo("#{cid}g .mist", {{x:-50}}, {{x:70, duration:{d:.2f}, ease:"sine.inOut"}}, {t:.3f});')
+    hx, hy = (56, 206) if P else (80, 40)
+    X.used_text.update("第九顶帽子九帽")
+    hd = (f'<div class="ikh" style="left:{hx}px; top:{hy}px; font-size:{22 if P else 20}px"><span class="sl">九帽</span><b>第九顶帽子</b><i></i><span>{k["topic"]}</span></div>'
+          f'<div class="ikx" style="right:{hx}px; top:{hy + 5}px">{k["fxid"]}</div>')
+    cap_pos = "top:1330px" if P else "bottom:62px"
+    cap = f'<div class="ikc" style="{cap_pos}"><span class="slip" style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div>'
+    ft_pos = f"left:{hx}px; right:{hx}px; top:1478px" if P else "left:80px; right:80px; bottom:20px"
+    ft = f'<div class="ikft" style="{ft_pos}; font-size:{17 if P else 16}px"><div>{k["foot"]}</div><div>{k["src"]}</div></div>' if (k["foot"] or k["src"]) else ""
+    X.clip(f"{cid}c", t, d, hd + cap + ft, f"ctx ikf{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
+    X.tw(f'tl.fromTo("#{cid}c .slip", {{clipPath:"inset(0% 100% 0% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:0.5, ease:"power2.inOut"}}, {t + 0.05:.3f});')
+    X.tw(f'tl.from("#{cid}c .ikh .sl", {{scale:1.4, opacity:0, duration:0.3, ease:"back.out(2.4)"}}, {t + 0.1:.3f});')
 
 
 SCENES = {"brush": brush_scene, "column": column, "drops": drops, "scrolls": scrolls, "wash": wash,
