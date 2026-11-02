@@ -1,6 +1,7 @@
 """pixel · 像素复古游戏风 —— 8/16-bit 游戏的视觉语言做口播：Celeste / Stardew 式的克制像素美术，不是糊成一片的马赛克。
 一个 16 色调色板（Sweetie 16），逻辑分辨率 320×180（竖屏 180×320）、每个像素放大 6 倍；所有精灵都在构建时用 Pillow 无抗锯齿画出、
-自动描边、最近邻放大；中文是构建时栅格化的 1-bit 位图字，英文和数字用 Press Start 2P / VT323。
+自动描边、最近邻放大；中文用缝合像素 Fusion Pixel 12 栅格成 1-bit 位图（只用 12 / 24 px，放不下就换行，不缩小），
+英文和数字用 Press Start 2P / VT323。
 动作一律走「整像素、整帧」：步进缓动、精灵帧动画、镜头按像素格平移；HUD（金币、计时、关卡）每页常驻。
 
 场景（SCENES，全部自写）：stage 横版关卡开场（视差山脉 + 奔跑角色 + 销量计数）· online 在线人数（像素人潮 + 血条式仪表）·
@@ -22,7 +23,7 @@ STYLE = {
         "cap-shadow": "0 0 0 6px #f4f4f4, 0 0 0 12px #1a1c2c", "cap-bottom": "60px", "cap-em": "#ffcd75",
         "punch-top": "70%", "punch-size": "64px",
     },
-    "fonts": {"display": "noto-sans-sc", "body": "noto-sans-sc", "pixel": "press-start-2p", "vt": "vt323", "mono": "vt323"},
+    "fonts": {"display": "fusion-pixel", "body": "fusion-pixel", "pixel": "press-start-2p", "vt": "vt323", "mono": "vt323"},
     "motion": {"ease": "steps(6)", "dur": 0.4, "stagger": 0.05, "cut": "hard", "transition": "cut", "em": "static", "camera": "none"},
     "layers": [],
     "captions": False,          # the style draws its own bitmap captions (see captions()); beats with "cap": false skip them
@@ -199,24 +200,43 @@ def scaled(im, k=P):
 
 
 # ------------------------------------------------------------------ bitmap text (CJK and Latin, 1-bit, outlined)
+# Chinese is set in 缝合像素 Fusion Pixel 12 (a real 12-px pixel font, OFL) at 12 or 24 px only — the sizes where its grid
+# lands on whole pixels; text that does not fit wraps onto more lines instead of shrinking. Without the font installed it
+# falls back to Noto Sans SC rasterised 1-bit at any size.
 _FONT = {}
+SIZES = (24, 12)
 
 
-def _font(px, fid="noto-sans-sc", bold=True):
+def cjk_font():
+    if "cjk" not in _FONT:
+        meta = fonts.REG.get("fusion-pixel")
+        _FONT["cjk"] = "fusion-pixel" if meta and fonts.find(meta["file"]) else "noto-sans-sc"
+    return _FONT["cjk"]
+
+
+def snap(px):
+    """the size actually drawn: 24 or 12 with the pixel font, anything with the fallback."""
+    if cjk_font() != "fusion-pixel": return px
+    return 24 if px >= 18 else 12
+
+
+def _font(px, fid=None):
     from PIL import ImageFont
-    key = (px, fid, bold)
+    fid = fid or cjk_font()
+    px = snap(px) if fid == cjk_font() else px
+    key = (px, fid)
     if key not in _FONT:
-        meta = fonts.REG[fid]; path = fonts.find(meta["file"])
-        f = ImageFont.truetype(str(path), px)
-        if bold:
+        f = ImageFont.truetype(str(fonts.find(fonts.REG[fid]["file"])), px)
+        if fid == "noto-sans-sc":                 # the variable fallback is set heavy; the pixel font is static
             try: f.set_variation_by_axes([900 if px <= 14 else 800])
             except Exception: pass
         _FONT[key] = f
     return _FONT[key]
 
 
-def bitmap_text(text, px=16, col="w", edge="k", shadow="b", fid="noto-sans-sc"):
-    """render a string as crisp 1-bit art pixels with a 1px outline and a 1px drop shadow. returns RGBA at art scale."""
+def bitmap_text(text, px=12, col="w", edge="k", shadow="b", fid=None):
+    """a string as crisp 1-bit art pixels: a 1-px outline (4-neighbour, so 1-px counters stay open) and a 1-px drop
+    shadow 2 px down-right. returns RGBA at art scale."""
     from PIL import Image, ImageDraw
     f = _font(px, fid)
     l, t, r, b = f.getbbox(text)
@@ -228,27 +248,24 @@ def bitmap_text(text, px=16, col="w", edge="k", shadow="b", fid="noto-sans-sc"):
     im = Image.new("RGBA", (W + 3, H + 3), (0, 0, 0, 0))
     m = mask.load(); o = im.load()
     ce, cf, cs = rgb(edge) if edge else None, rgb(col), rgb(shadow) if shadow else None
-    on = {(x, y) for y in range(H) for x in range(W) if m[x, y]}
+    on = [(x, y) for y in range(H) for x in range(W) if m[x, y]]
     if cs:
-        for x, y in on:
-            for dx, dy in ((2, 2), (1, 2), (2, 1)): o[x + 1 + dx, y + 1 + dy] = cs
+        for x, y in on: o[x + 3, y + 3] = cs
     if ce:
         for x, y in on:
-            for dx in (-1, 0, 1):
-                for dy in (-1, 0, 1): o[x + 1 + dx, y + 1 + dy] = ce
+            for dx, dy in ((0, 0), (1, 0), (-1, 0), (0, 1), (0, -1)): o[x + 1 + dx, y + 1 + dy] = ce
     for x, y in on: o[x + 1, y + 1] = cf
     return im
 
 
-def bitmap_lines(text, max_w_art, px_max=24, px_min=10, max_lines=3, **kw):
-    """fit a (possibly long) Chinese line into a width in art pixels: try sizes from big to small, balanced jieba breaks."""
-    for px in range(px_max, px_min - 1, -1):
-        f = _font(px)
-        ft = fit.fit_text(text, max_w_art * 1.0, px * 1.3 * max_lines, px, min_px=px, lh=1.25, max_lines=max_lines)
-        lines = [fit.plain(x) for x in ft.lines] if ft.lines else [text]
-        ok = all((f.getbbox(x)[2] - f.getbbox(x)[0]) <= max_w_art - 4 for x in lines) and len(lines) <= max_lines
-        if ok: return [bitmap_text(x, px, **kw) for x in lines], px
-    return [bitmap_text(text, px_min, **kw)], px_min
+def bitmap_lines(text, max_w_art, px_max=24, max_lines=3, **kw):
+    """a (possibly long) line in a width of art px: the biggest of 24 / 12 whose word-wrapped lines fit max_lines,
+    else 12 px on as many lines as it takes. returns ([RGBA lines], px)."""
+    for px in SIZES:
+        if px > max(px_max, 12): continue
+        lines = wrap(text, max_w_art, px)
+        if len(lines) <= max_lines: return [bitmap_text(x, px, **kw) for x in lines], px
+    return [bitmap_text(x, 12, **kw) for x in wrap(text, max_w_art, 12)], 12
 
 
 # ------------------------------------------------------------------ world map raster (Natural Earth, Chinese view, public domain)
@@ -632,13 +649,13 @@ CSS = r"""
 .pxs .s32 { font-size:32px; text-shadow:4px 4px 0 var(--ink); }
 .pxs .s48 { font-size:48px; text-shadow:6px 6px 0 var(--ink); }
 .pxs .s72 { font-size:72px; text-shadow:6px 6px 0 var(--ink); }
-.pxs .vt { position:absolute; font-family:var(--f-vt), var(--f-body); color:var(--muted); white-space:nowrap; line-height:1; font-size:40px; text-shadow:3px 3px 0 var(--ink); }
+.pxs .vt { position:absolute; font-family:var(--f-body); color:var(--muted); white-space:nowrap; line-height:1; font-size:36px; text-shadow:3px 3px 0 var(--ink); }
 .pxs .row { position:absolute; display:flex; align-items:flex-end; white-space:nowrap; }
 .pxs .row > * { position:relative !important; left:auto !important; top:auto !important; flex:none; }
 .pxs .hud { position:absolute; z-index:20; display:flex; align-items:center; gap:15px; font-family:var(--f-pixel); font-size:24px; color:var(--fg);
   text-shadow:3px 3px 0 var(--ink); white-space:nowrap; line-height:1; }
 .pxs .hud > * { position:relative !important; flex:none; }
-.pxs .ft { position:absolute; z-index:20; font-family:var(--f-vt), var(--f-body); font-size:32px; color:var(--muted); white-space:nowrap; text-shadow:3px 3px 0 var(--ink); line-height:1; }
+.pxs .ft { position:absolute; z-index:20; font-family:var(--f-body); font-size:36px; color:var(--muted); white-space:nowrap; text-shadow:3px 3px 0 var(--ink); line-height:1; }
 .pxs .box { position:absolute; background:var(--ink); box-shadow:0 0 0 6px var(--fg), 0 0 0 12px var(--ink); }
 .pxs .box.blue { background:#29366f; }
 .pxs .box > *, .pxs .tag > * { position:relative !important; left:auto !important; top:auto !important; flex:none; }
@@ -690,11 +707,13 @@ def btext(X, text, px=16, col="w", edge="k", shadow="b"):
     return url, w, h
 
 
-def fitpx(text, max_w, px_max, px_min=9):
-    """largest bitmap font size whose rendered line fits max_w (bitmap px)."""
-    for px in range(px_max, px_min - 1, -1):
+def fitpx(text, max_w, px_max, px_min=12):
+    """the biggest drawable size (24 / 12 with the pixel font) whose line fits max_w bitmap px; never below 12 — callers
+    wrap instead."""
+    sizes = [z for z in SIZES if z <= max(px_max, 12)] if cjk_font() == "fusion-pixel" else range(px_max, px_min - 1, -1)
+    for px in sizes:
         if _font(px).getlength(text) + 5 <= max_w: return px
-    return px_min
+    return 12 if cjk_font() == "fusion-pixel" else px_min
 
 
 def bimg(X, text, x, y, px=16, col="w", k=P, cls="", anchor="l", edge="k", shadow="b", sty=""):
@@ -709,7 +728,7 @@ def wrap(text, max_w, px):
     """break a line at word boundaries (jieba) to max_w bitmap px, evenly (no orphan last line), never truncating;
     punctuation never starts a line."""
     from h9 import core
-    f = _font(px)
+    f = _font(snap(px))
     def greedy(W):
         toks = []
         for w in core.words(text): toks += list(w) if f.getlength(w) + 5 > W else [w]
@@ -727,12 +746,11 @@ def btitle(X, text, x, y, max_w, px_max=16, px_min=9, k=P, col="w", cls="tt", an
     """a title of any length: one line when it fits, else up to max_lines even lines (two big lines beat one tiny one),
     each a bitmap. returns (html, bottom_y art)."""
     W = max_w * P / k
-    px = fitpx(text, W, px_max, px_min); lines = [text]
-    if max_lines > 1 and px < px_max * 0.8:
-        for p2 in range(px_max, px - 1, -1):
-            ls = wrap(text, W, p2)
-            if len(ls) <= max_lines:
-                px, lines = p2, ls; break
+    sizes = [z for z in SIZES if z <= max(px_max, 12)] if cjk_font() == "fusion-pixel" else [fitpx(text, W, px_max, px_min)]
+    px, lines = sizes[-1], wrap(text, W, sizes[-1])
+    for z in sizes:                        # biggest size whose (wrapped) lines stay within max_lines
+        ls = [text] if _font(z).getlength(text) + 5 <= W else wrap(text, W, z)
+        if len(ls) <= max_lines: px, lines = z, ls; break
     h, yy = "", y
     for j, ln in enumerate(lines):
         hh, w, hgt = bimg(X, ln, x, yy, px, col, k, f"{cls} {cls}{j}", anchor, edge, shadow)
@@ -878,8 +896,12 @@ def hud(X, b, t, d, cid):
     src = b.get("src")
     if src:
         X.used_text.update(src)
-        y = 249 if X.portrait else 172
-        h += f'<div class="ft" style="left:{8 * P}px;top:{y * P}px">SOURCE · {core_esc(src)}</div>'
+        txt = f"SOURCE · {src}"
+        AW = art(X)[0]
+        W = (AW - 16) * P / 3                           # the footer is 36 px pixel type (12-px font, 3×)
+        lines = [txt] if _font(12).getlength(txt) <= W else wrap(txt, W, 12)
+        y = (249 if X.portrait else 172) - 6 * (len(lines) - 1)
+        h += f'<div class="ft" style="left:{8 * P}px;top:{y * P}px">{"<br>".join(core_esc(x) for x in lines)}</div>'
     return h
 
 
@@ -926,7 +948,7 @@ def captions(X):
     from h9 import captions as C
     meta = X.v.get("meta", {})
     fr = 1 / X.fps
-    mx = int(meta.get("caption_len") or (8 if X.portrait else 15))
+    mx = int(meta.get("caption_len") or (8 if X.portrait else 12))
     ws = []
     for w in C.regroup(X._words):        # 六亿 + 七千 + 四百万 → one token, so a page never breaks inside a spoken number
         tok = str(w["w"]).strip()
@@ -948,7 +970,7 @@ def captions(X):
             a = X.T(b.get("t", 0)); z = X.T(beats[k + 1]["t"]) if k + 1 < len(beats) else X.duration + 99
             off.append((a, z))
     hl = meta.get("caption_hl") or []
-    cpx = 20 if X.portrait else 16
+    cpx = 24                     # pixel font at 24 px, 3 screen px per art px: 72-px glyphs
     for i, (a, z, txt) in enumerate(pg):
         mid = (a + z) / 2
         if any(o0 - 0.05 <= mid < o1 for o0, o1 in off): continue
@@ -1108,7 +1130,7 @@ def online(b, X, t, d, cid):
     h += lh + bar(X, cid, "hp", lx, ys["bar"], bw, 7, "l")
     final = f"{val:,.{dec}f}" if not dec else f"{val:.{dec}f}"
     X.used_text.update(final)
-    uh, uw, _ = bimg(X, unit, 0, 0, 20, "y", UK, "un") if unit else ("", 0, 0)
+    uh, uw, _ = bimg(X, unit, 0, 0, 12, "y", UK, "un") if unit else ("", 0, 0)
     h += (f'<div class="row nm" style="left:{lx * P}px;top:{ys["num"] * P}px;gap:12px"><div class="pf s48 num" style="width:{len(final) * 48}px;'
           f'text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     tag = b.get("peak_tag", "MAX")
@@ -1186,7 +1208,7 @@ def treasure(b, X, t, d, cid):
     lh, lb_ = btitle(X, b.get("label", ""), ix, yl, (AW - 16) if V else AW - ix - 8, px_max=16, k=UK, anchor=anc, cls="lb", max_lines=2, gap=1)
     h += lh
     if lb_ + 1 > yn: yt += round(lb_ + 1 - yn); yn = round(lb_ + 1)
-    uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 20, "y", UK, "un") if b.get("unit") else ("", 0, 0)
+    uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 12, "y", UK, "un") if b.get("unit") else ("", 0, 0)
     size = 48 if len(final) * 48 + uw + 12 <= ((AW - 12) if V else AW - ix - 6) * P else 24
     tot = len(final) * size + uw + 12
     L = (AW * P - tot) / 2 if V else ix * P
@@ -1241,7 +1263,7 @@ def crowd(b, X, t, d, cid):
             ppl += "</div>"
     h += ppl
     val = float(b.get("value", 0)); dec = int(b.get("dec", 2 if val != int(val) else 0)); final = f"{val:.{dec}f}"
-    uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 20, "y", UK, "un") if b.get("unit") else ("", 0, 0)
+    uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 12, "y", UK, "un") if b.get("unit") else ("", 0, 0)
     if V: lx, anc, yl, yn, yr, yno = AW / 2, "c", 56, 68, 88, 102
     else: lx, anc, yl, yn, yr, yno = 14, "l", 26, 38, 32, 50
     lh, _ = btitle(X, b.get("label", ""), lx, yl, AW - 20 if V else 150, px_max=16, k=UK, anchor=anc, cls="lb", max_lines=1)
@@ -1349,7 +1371,7 @@ def world(b, X, t, d, cid):
     rowc = (f'<div class="row" style="gap:12px"><div class="pf s48 num" style="width:{len(final) * 48}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     note = b.get("note", "")
     X.used_text.update(note)
-    nt = f'<div class="vt" style="font-size:32px">{core_esc(note)}</div>' if note else ""
+    nt = f'<div class="vt">{core_esc(note)}</div>' if note else ""
     if V: L, top = 8 * P, 54 * P
     else: L, top = 10 * P, 20 * P
     h += (f'<div class="box tot" style="left:{L}px;top:{top}px;padding:15px 18px;display:flex;flex-direction:column;gap:12px;align-items:flex-start">'
@@ -1483,9 +1505,8 @@ def dialog(b, X, t, d, cid):
     # dialogue box + typewriter on the spoken glyph times
     bxx, bw = (6, AW - 12) if V else (10, AW - 20)
     text = b.get("text", "")
-    for px in range(16, 10, -1):        # biggest size whose wrapped lines fit the box
-        lines = [w_ for ln in text.split("|") for w_ in wrap(ln, bw - 14, px)]
-        if len(lines) * (px + 9) <= boxh - 6: break
+    px = 12                              # 12-px pixel font at world scale (72-px glyphs); long text wraps
+    lines = [w_ for ln in text.split("|") for w_ in wrap(ln, bw - 14, px)]
     need = len(lines) * (px + 9) + 6
     if need > boxh: boxy -= need - boxh; boxh = need        # more text: the box grows upward over the field
     h += f'<div class="box db" style="left:{bxx * P}px;top:{boxy * P}px;width:{bw * P}px;height:{boxh * P}px"></div>'

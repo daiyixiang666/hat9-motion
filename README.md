@@ -7,7 +7,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 [▶ 看成片](#成片示例) · [🎛 在线看全部 158 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.8.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.8.1-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -22,7 +22,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | | |
 |---|---|
 | **17 种风格** | `press` 财经刊 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `studio` / `clay` 三维影棚 · `reel` 动效库 |
-| **58 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
+| **60 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
 | **158 个动效** | 146 个效果 + 12 种转场：字效、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) |
 | **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
@@ -242,6 +242,7 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
+- **0.8.1** 新增两款字体：缝合像素（`pixel` 的中文）和霞鹜漫黑（`sketch`、`zine` 的手写）。
 - **0.8.0** 新增 8 种风格：剪纸、手绘白板、水墨国风、拼贴杂志、扁平插画、像素复古、等距微缩、Y2K 镀铬，各带一条示例成片；字体扩到 58 款，附字体样张。
 - **0.7.0** 再补 58 个效果：视频定格和变速、播客引用、文档翻页、拍照文档、Logo 墙、漏斗、雷达、面积叠加、逐年扩张、测评卡、带货卡、新闻快讯、片头、预告……；交付支持多画幅、平台字幕预设、AI 标识、品牌包、多语言、剪辑软件导出、长片分章渲染。
 - **0.6.0** 新增 50 个效果：按数量换编排、引用、结构、数据表格、截图录屏、社交人物、中国地图、不说话的时刻；动效随句长伸缩、多人字幕、录音对齐、封面、插件安装。

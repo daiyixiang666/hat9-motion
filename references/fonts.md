@@ -33,6 +33,7 @@
 |---|---|---|---|
 | `lxgw-wenkai` | 文楷（楷书骨架的正文字体） | 温暖、国风、笔记 | OFL |
 | `long-cang` | 龙藏体（行楷手写） | 手写、笔记、温暖 | OFL |
+| `lxgw-marker` | 霞鹜漫黑（马克笔手写黑体） | 白板、便签、拼贴标签 | OFL |
 
 ### 毛笔
 
@@ -109,6 +110,7 @@
 | `courier-prime` | Courier Prime（打字机等宽） | 档案、剧本 | OFL |
 | `vt323` | VT323（终端点阵） | 复古、游戏、终端 | OFL |
 | `press-start-2p` | 像素字体 | 游戏、像素、复古 | OFL |
+| `fusion-pixel` | 缝合像素 12px（中文像素字，用 12 的整数倍字号） | 游戏、像素、复古 | OFL |
 
 ### 其他文字
 
@@ -138,16 +140,16 @@
 | 国风书法 | ma-shan-zheng 或 zhi-mang-xing | noto-serif-sc | eb-garamond-italic | ink、papercut（适合） | 毛笔只用在标题和一两个关键词 |
 | 武侠狂草 | liu-jian-mao-cao | noto-serif-sc（900） | old-standard | ink（适合） | 草书认读难，只用两三个字的大标题 |
 | 温暖笔记 | lxgw-wenkai | lxgw-wenkai | fraunces（SOFT）· caveat | sketch（适合） | 文楷正文 + 软衬线英文 |
-| 手绘白板 | long-cang | lxgw-wenkai | patrick-hand · kalam | sketch（适合） | 像在白板上边讲边写 |
+| 手绘白板 | lxgw-marker | lxgw-marker | patrick-hand · kalam | sketch（适合） | 马克笔手写，像在白板上边讲边写 |
 | 可爱童趣 | zcool-kuaile | zcool-kuaile | zcool-qingke · patrick-hand | flat（适合） | 圆润字配圆角图形 |
 | 文艺杂志 | zcool-xiaowei | noto-serif-sc | playfair-italic · dm-serif | zine（适合） | 小薇宋做大标题，意大利斜体做英文眉题 |
 | 高级极简 | zcool-gaoduanhei | lxgw-neo-xihei | inter（细）· ibm-plex-mono | poster 的冷白页 | 细长黑体 + 大留白 |
 | 复古报纸 | noto-serif-sc（900） | noto-serif-sc | old-standard · unifraktur（报头） | zine、doc | 哥特体只用在报头 |
 | 档案调查 | noto-serif-sc | noto-sans-sc | courier-prime · special-elite | doc、引用类动效（cite_*） | 打字机字体做批注和编号 |
 | 电影片名 | noto-serif-sc（900） | noto-sans-sc | bebas · playfair-italic | doc、atlas | 全大写窄体做英文片名 |
-| 游戏像素 | zcool-kuhei（中文） | noto-sans-sc | press-start-2p · vt323 | pixel（适合） | 中文像素字体待下载（见 research/fonts_wishlist.md） |
+| 游戏像素 | fusion-pixel | fusion-pixel | press-start-2p · vt323 | pixel（适合） | 中文用缝合像素，字号只取 12 / 24 才清晰 |
 | 终端黑客 | jetbrains-mono | lxgw-neo-xihei | vt323 | screen | 绿色等宽 + 扫描线 |
-| 拼贴朋克 | zcool-kuhei | noto-sans-sc | archivo-black · abril-fatface · permanent-marker | zine（适合） | 不同字体混排像剪下来的字 |
+| 拼贴朋克 | zcool-kuhei | noto-sans-sc | archivo-black · abril-fatface · permanent-marker | zine（适合） | 不同字体混排像剪下来的字；手写批注用 lxgw-marker |
 | Y2K 镀铬 | harmonyos-sans-black | harmonyos-sans | space-grotesk · bebas | chrome3d（适合） | 粗黑体最适合做金属、渐变描边 |
 | 清新生活 | lxgw-neo-xihei | lxgw-neo-xihei | fraunces（SOFT）· caveat | flat（适合） | 新晰黑比思源黑更轻 |
 | 数据新闻 | harmonyos-sans | noto-sans-sc | roboto-cond · jetbrains-mono | hud、图表类动效 | 窄体做坐标轴和图例 |
@@ -176,4 +178,4 @@
 4. 重新生成样张：`python3 assets/previews/fonts/make_specimens.py`（会同时更新 `gallery/fonts.html` 的数据）。
 5. 在风格的 `fonts` 里用新 id，构建一次，确认没有打印「not found」。
 
-想加但还没下载的字体（含官方地址、许可和大小）见 [`research/fonts_wishlist.md`](../research/fonts_wishlist.md)。
+还没收录的候选字体（含官方地址、许可和大小）见 [`research/fonts_wishlist.md`](../research/fonts_wishlist.md)。

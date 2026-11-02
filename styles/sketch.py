@@ -23,8 +23,8 @@ STYLE = {
         "cap-bg": "#ffd84a", "cap-fg": "#1f1f22", "cap-size": "40px", "cap-weight": "500", "cap-pad": "6px 20px 8px", "cap-radius": "3px",
         "cap-shadow": "none", "cap-bottom": "58px", "cap-em": "#e2483b", "punch-top": "71%", "punch-size": "70px", "punch-stroke": "0",
     },
-    "fonts": {"display": "lxgw-wenkai", "body": "lxgw-wenkai", "hand": ["caveat", "lxgw-wenkai"], "num": ["kalam", "lxgw-wenkai"],
-              "latin": ["patrick-hand", "lxgw-wenkai"], "punch": "lxgw-wenkai", "cap": "lxgw-wenkai"},
+    "fonts": {"display": "lxgw-marker", "body": "lxgw-marker", "hand": ["caveat", "lxgw-marker"], "num": ["kalam", "lxgw-marker"],
+              "latin": ["patrick-hand", "lxgw-marker"], "punch": "lxgw-marker", "cap": "lxgw-marker", "quiet": "lxgw-wenkai"},
     "motion": {"ease": "power2.out", "dur": 0.5, "stagger": 0.03, "cut": "hard", "transition": "flash", "em": "static", "camera": "none"},
     "layers": [("grain", {"opacity": 0.05})],
     "mascot": {"mode": "cameo", "frame": "sticker", "landscape": {"right": 70, "bottom": 0, "h": 380}, "portrait": {"left": 390, "bottom": 600, "h": 300}},
@@ -44,7 +44,7 @@ CSS = r"""
 .sk svg.ink path { fill:none; stroke-linecap:round; stroke-linejoin:round; }
 .sk svg.under path { mix-blend-mode:multiply; }
 .sk svg.ink .solid { stroke:none; }
-.sk .t { position:absolute; white-space:nowrap; line-height:1.15; color:var(--ink); font-family:var(--f-display); font-weight:500; transform-origin:0 70%; }
+.sk .t { position:absolute; white-space:nowrap; line-height:1.15; color:var(--ink); font-family:var(--f-display); font-weight:400; transform-origin:0 70%; }
 .sk .t.hand { font-family:var(--f-hand); font-weight:700; }
 .sk .t.num { font-family:var(--f-num); font-weight:700; letter-spacing:-.01em; }
 .sk .t.lat { font-family:var(--f-latin); }
@@ -52,9 +52,9 @@ CSS = r"""
 .sk .pen svg { position:absolute; left:-6px; top:-148px; width:120px; height:160px; overflow:visible; filter:drop-shadow(6px 10px 6px rgba(0,0,0,.18)); }
 .sk .hd { position:absolute; left:96px; right:96px; top:34px; display:flex; justify-content:space-between; align-items:flex-start; z-index:6; pointer-events:none; }
 .sk .hd .l { font-family:var(--f-display); font-size:30px; color:var(--ink); }
-.sk .hd .l small { font-size:28px; color:var(--muted); margin-left:12px; }
+.sk .hd .l small { font-family:var(--f-quiet); font-size:28px; color:var(--muted); margin-left:12px; }
 .sk .hd .r { font-family:var(--f-num); font-weight:700; font-size:30px; color:var(--red); }
-.sk .ft { position:absolute; left:96px; right:330px; bottom:16px; font-family:var(--f-display); font-size:28px; color:var(--muted); z-index:6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sk .ft { position:absolute; left:96px; right:330px; bottom:16px; font-family:var(--f-quiet); font-size:28px; color:var(--muted); z-index:6; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .sk .note { position:absolute; background:#fff3a6; box-shadow:0 18px 30px rgba(0,0,0,.14), inset 0 -30px 40px rgba(0,0,0,.03); }
 .sk .tape { position:absolute; background:rgba(214,206,186,.72); }
 #root.v .sk { --mx:34px; } #root.v .sk .hd { left:60px; right:60px; top:206px; } #root.v .sk .hd .l { font-size:30px; }
@@ -303,7 +303,7 @@ class Board:
         X = self.X
         txt = str(s or "")
         if not txt.strip():
-            return {"left": x, "top": y, "w": 0, "px": px, "base": y + px * 0.95, "op": None}
+            return {"left": x, "top": y, "w": 0, "px": px, "base": y + px * 0.95, "mid": y + px * 0.55, "gh": px * 0.8, "op": None}
         em = text_em(txt, cls)
         if max_w and em * px > max_w: px = max(28, int(max_w / em))
         width = w or em * px
@@ -314,10 +314,11 @@ class Board:
         X.used_text.update(txt)
         self.html.append(f'<div id="{i}" class="t {cls}" style="left:{left:.0f}px; top:{y:.0f}px; font-size:{px:.0f}px; color:var(--{colour}); transform:rotate({rot:.2f}deg)">{X.rich(txt)}</div>')
         emit = lambda t0, du: X.tw(f'tl.fromTo("#{i}", {{clipPath:"inset(-30% 100% -30% -4%)"}}, {{clipPath:"inset(-30% -4% -30% -4%)", duration:{du:.3f}, ease:"none"}}, {t0:.3f});')
-        base = y + px * 0.92; n = max(3, min(10, len(txt)))
-        pts = [(left + width * k / n, base - (px * 0.32 if k % 2 else 0)) for k in range(n + 1)]
+        gt, gb = vbox(txt, cls); gt, gb = y + gt * px, y + gb * px
+        n = max(3, min(10, len(txt)))
+        pts = [(left + width * k / n, gb - ((gb - gt) * 0.45 if k % 2 else 0)) for k in range(n + 1)]
         o = self._op(dur, at, lag, pts, emit, pen)
-        return {"left": left, "top": y, "w": width, "px": px, "base": y + px * 0.95, "op": o}
+        return {"left": left, "top": y, "w": width, "px": px, "base": gb, "mid": (gt + gb) / 2, "gh": gb - gt, "op": o}
 
     def para(self, s, x, y, mx, width, mn=30, anchor="start", lh=1.22, at=None, **kw):
         """a title that may need two lines: one line while it fits at ≥ 62% of mx, else split at the best break
@@ -393,7 +394,7 @@ class Board:
 
 # ---------------------------------------------------------------- helpers
 _FM = {}
-CHAINS = {"num": ("kalam", "lxgw-wenkai"), "hand": ("caveat", "lxgw-wenkai"), "lat": ("patrick-hand", "lxgw-wenkai"), "": ("lxgw-wenkai",)}
+CHAINS = {"num": ("kalam", "lxgw-marker"), "hand": ("caveat", "lxgw-marker"), "lat": ("patrick-hand", "lxgw-marker"), "": ("lxgw-marker",)}
 
 
 def _metrics(fid):
@@ -409,6 +410,53 @@ def _metrics(fid):
         except Exception:
             _FM[fid] = None
     return _FM[fid]
+
+
+_VM = {}
+
+
+def _vmetrics(fid):
+    """(baseline offset in a 1.15 line box, ideograph yMin/yMax, digit yMin/yMax) in em, or None."""
+    if fid not in _VM:
+        _VM[fid] = None
+        m = _metrics(fid)
+        try:
+            from fontTools.ttLib import TTFont
+            from fontTools.pens.boundsPen import BoundsPen
+            from h9 import fonts
+            f = TTFont(str(fonts.find(fonts.REG[fid]["file"])), lazy=True)
+            u = f["head"].unitsPerEm; asc, desc = f["hhea"].ascent / u, -f["hhea"].descent / u
+            gs, cmap = f.getGlyphSet(), m[0]
+            def ext(ch):
+                if ord(ch) not in cmap: return None
+                bp = BoundsPen(gs); gs[cmap[ord(ch)]].draw(bp)
+                return (bp.bounds[1] / u, bp.bounds[3] / u) if bp.bounds else None
+            lat = {}
+            for c in map(chr, range(33, 127)):
+                e = ext(c)
+                if e: lat[c] = e
+            _VM[fid] = ((1.15 - asc - desc) / 2 + asc, ext("会"), ext("8"), lat)
+        except Exception:
+            _VM[fid] = None
+    return _VM[fid]
+
+
+def vbox(txt, cls=""):
+    """(top, bottom) of the inked glyphs in em from the top of the text box — so circles, strikes and underlines hug
+    the words whatever face draws them."""
+    chain = next((CHAINS[k] for k in ("num", "hand", "lat") if k in cls.split()), CHAINS[""])
+    prim = _vmetrics(chain[0])
+    if not prim: return 0.12, 1.02
+    bl = prim[0]; lo, hi = [], []
+    t = fit.plain(txt)
+    if any(ord(c) > 0x2e7f for c in t):
+        e = next((v[1] for v in map(_vmetrics, chain) if v and v[1]), None)
+        if e: lo.append(e[0]); hi.append(e[1])
+    for c in t:
+        e = prim[3].get(c) if c.isascii() else None
+        if e: lo.append(max(e[0], -0.18)); hi.append(e[1])
+    if not hi: return 0.12, 1.02
+    return bl - max(hi), bl - min(lo)
 
 
 def text_em(txt, cls=""):
@@ -530,8 +578,9 @@ def hook(b, X, t, d, cid):
     B.doodle(_icon(h, b.get("icon", "cart"), ix, iy, isz), speed=1.6)
     px = fsz(num, nw * 0.86, 240 if not P else 210, 90, hand=True)
     nt = B.text(num, cx_, ny_, px, cls="num", anchor="middle", at=tn - 0.3, dur=0.7)
-    d1, p1 = h.underline(nt["left"] - 10, nt["left"] + nt["w"] + 10, ny_ + px * 1.02, wave=6); B.mark(d1, p1, "red", 7, lag=-0.15)
-    ut = B.text(unit, cx_, ny_ + px * 1.16, min(76, int(px * 0.36)), anchor="middle")
+    d1, p1 = h.underline(nt["left"] - 10, nt["left"] + nt["w"] + 10, nt["base"] + 12, wave=6); B.mark(d1, p1, "red", 7, lag=-0.15)
+    upx = min(76, int(px * 0.36))
+    ut = B.text(unit, cx_, nt["base"] + 40 - vbox(unit)[0] * upx, upx, anchor="middle")
     if note: B.text(note, cx_, ut["top"] + ut["px"] * 1.5, 34, anchor="middle", colour="muted", max_w=nw)
     html = page(X, b, B.build())
     X.sfx(t + 0.1, "title"); X.sfx(nt["op"]["t"], "write")
@@ -568,7 +617,7 @@ def bar(b, X, t, d, cid):
         bg = B.text(big, bx_, by_, 150, cls="num", colour="red", anchor="end", dur=0.5)
         da, pa = h.arrow(bx_ + 30, by_ + 90, mid, y0 + hh + 18, curve=0.32)
     B.mark(da, pa, "blue", 6)
-    de, pe = h.ellipse(bg["left"] + bg["w"] / 2, bg["top"] + bg["px"] * 0.62, bg["w"] / 2 + 40, bg["px"] * 0.62, over=0.4); B.mark(de, pe, "red", 6)
+    de, pe = h.ellipse(bg["left"] + bg["w"] / 2, bg["mid"], bg["w"] / 2 + 40, bg["gh"] * 0.82, over=0.4); B.mark(de, pe, "red", 6)
     if b.get("note"):
         if P: B.para(b["note"], bx + bw / 2, by + bh - 110, 34, bw * 0.95, mn=28, anchor="middle", colour="muted")
         else: B.para(b["note"], x0, y0 + hh + 36, 34, max(360, bg["left"] - x0 - 60), mn=28, colour="muted")
@@ -585,22 +634,22 @@ def question(b, X, t, d, cid):
     head, cands = b.get("head", ""), (fit.as_list(b.get("options")) or ["?"])[:4]
     tq = T(X, b, "at_q", t, t + 1.4)
     for ht in B.para(head, bx + bw / 2, by - 10, 80, bw * 0.92, mn=34, anchor="middle", at=t + 0.1):
-        B.hl(ht["left"] - 6, ht["left"] + ht["w"] + 6, ht["base"] - ht["px"] * 0.12, ht["px"] * 0.32, lag=-0.2)
+        B.hl(ht["left"] - 6, ht["left"] + ht["w"] + 6, ht["base"] - ht["gh"] * 0.22, ht["gh"] * 0.42, lag=-0.2)
     qx, qy, qs = (bx + bw / 2, by + 470, 250) if P else (bx + bw * 0.22, by + 470, 290)
     q = h.qmark(qx, qy, qs); qo = B.mark(*q, "red", 15, at=tq - 0.45, dur=0.6)
     n = len(cands)
     for k, c in enumerate(cands):
         if P:
-            per = n if n <= 3 else 2                     # four answers: two rows of two
-            r_, c_ = divmod(k, per)
-            cx, cy = bx + bw * (c_ + 0.5) / per, by + 800 + r_ * 150
-            sx, sy, ex, ey = qx + (k - (n - 1) / 2) * 50, qy + qs * 0.75, cx + (c_ - (per - 1) / 2) * -60, cy - 30
+            fan = {1: [(0, 0)], 2: [(-0.26, 0)], 3: [(-0.33, 0), (0, 150), (0.33, 0)], 4: [(-0.36, 0), (-0.15, 170), (0.15, 170), (0.36, 0)]}[n]
+            if n == 2: fan = [(-0.26, 0), (0.26, 0)]
+            cx, cy = bx + bw / 2 + fan[k][0] * bw, by + 780 + fan[k][1]
+            sx, sy, ex, ey = qx + (k - (n - 1) / 2) * 30, qy + qs * 0.75, cx, cy - 30
         else:
             cx, cy = bx + bw * 0.62, by + 420 + (k - (n - 1) / 2) * (min(400, 480 / max(n - 1, 1)) if n > 1 else 0)
             sx, sy, ex, ey = qx + qs * 0.6, qy - qs * 0.35 + k * 40, cx - 50, cy + 40
         da, pa = h.arrow(sx, sy, ex, ey, curve=0.2); B.mark(da, pa, "blue", 5)
-        ct = B.text(c, cx, cy, fsz(c, bw / (n if n <= 3 else 2) - 90, 64, 30) if P else fsz(c, bw * 0.34, 72, 34), anchor="middle" if P else "start")
-        de, pe = h.ellipse(ct["left"] + ct["w"] / 2, ct["top"] + ct["px"] * 0.6, ct["w"] / 2 + 40, ct["px"] * 0.8, over=0.25); B.mark(de, pe, "ink", 4)
+        ct = B.text(c, cx, cy, fsz(c, (bw / n - 30) if n >= 3 else bw / 2 - 90, 64, 30) if P else fsz(c, bw * 0.34, 72, 34), anchor="middle" if P else "start")
+        de, pe = h.ellipse(ct["left"] + ct["w"] / 2, ct["mid"], ct["w"] / 2 + (28 if P and n >= 3 else 40), ct["gh"] * 0.95, over=0.25); B.mark(de, pe, "ink", 4)
     html = page(X, b, B.build())
     X.sfx(qo["t"], "brush")
     sheet(X, cid, t, d, html)
@@ -631,7 +680,7 @@ def ratio(b, X, t, d, cid):
     B.text(tl_, x0, y1 - 76, fsz(tl_, w, 52, 30), at=(ttot - 0.2) if ttot is not None else None)
     dr, pr = h.rect(x0, y1, w, hh); B.mark(dr, pr, "ink", 6)
     dh, ph = h.hatch(x0 + 6, y1 + 6, w - 12, hh - 12, gap=26); B.mark(dh, ph, "muted", 3, op=0.5, dur=0.45)
-    dg, pg = h.line(xs, y1 - 26, xs, y2 + hh + 26, over=2); B.mark(dg, pg, "red", 4)
+    dg, pg = h.line(xs, y1 - 4, xs, y2 + hh + 26, over=2); B.mark(dg, pg, "red", 4)
     if P: ix, iy, isz = bx + bw - 320, y2 + hh + 90, 300
     else: ix, iy, isz = bx + bw * 0.75, y1 + 30, bw * 0.24
     B.doodle(_icon(h, b.get("icon", "card"), ix, iy, isz), speed=2.2)
@@ -639,7 +688,7 @@ def ratio(b, X, t, d, cid):
     if P: fx_, fy_, anc = bx + bw * 0.36, y2 + hh + 70, "middle"
     else: fx_, fy_, anc = min(xs + 40, x0 + w - 200), y2 + hh + 50, "start"
     ft_ = B.text(fl, fx_, fy_, 120 if not P else 110, cls="num", colour="red", anchor=anc, at=tfrac - 0.3, dur=0.5)
-    de, pe = h.ellipse(ft_["left"] + ft_["w"] / 2, ft_["top"] + ft_["px"] * 0.6, ft_["w"] / 2 + 40, ft_["px"] * 0.68, over=0.4); B.mark(de, pe, "red", 6)
+    de, pe = h.ellipse(ft_["left"] + ft_["w"] / 2, ft_["mid"], ft_["w"] / 2 + 40, ft_["gh"] * 0.85, over=0.4); B.mark(de, pe, "red", 6)
     if b.get("frac_note"):
         B.text(b["frac_note"], ft_["left"] + ft_["w"] / 2, ft_["top"] + ft_["px"] * 1.34, 48, anchor="middle")
     html = page(X, b, B.build())
@@ -669,7 +718,7 @@ def tag(b, X, t, d, cid):
     o = B.text(old, tx_ + th_ * 0.62, ty_ + th_ * 0.16, int(th_ * 0.56), cls="num")
     if date: B.text(date, tx_ + tw_ / 2, ty_ + th_ + 20, 42, anchor="middle", colour="blue")
     B.para(sub, bx + bw / 2, by + bh - (60 if P else 80), 38, bw * 0.92, mn=28, anchor="middle", colour="muted")
-    dk, pk = h.strike(o["left"], o["left"] + o["w"], o["top"] + o["px"] * 0.62, h=o["px"] * 0.5); sk = B.mark(dk, pk, "red", 10, at=to - 0.55, dur=0.3)
+    dk, pk = h.strike(o["left"], o["left"] + o["w"], o["mid"], h=o["gh"] * 0.6); sk = B.mark(dk, pk, "red", 10, at=to - 0.55, dur=0.3)
     n = B.text(new, o["left"] + o["w"] * 0.55, ty_ - th_ * 0.62, int(th_ * 0.7), cls="num", colour="red", rot=-5, dur=0.45)
     d2, p2 = h.underline(n["left"], n["left"] + n["w"], n["base"] + 2, wave=5); B.mark(d2, p2, "red", 6)
     html = page(X, b, B.build())
@@ -707,7 +756,7 @@ def dots(b, X, t, d, cid):
     fill = B.custom(0.25 + each * n_on, lambda t0, du: X.tw(f'tl.from(".{fid}", {{scale:0, transformOrigin:"50% 50%", duration:0.22, ease:"back.out(2.5)", stagger:{{each:{each * du / (0.25 + each * n_on):.4f}}}}}, {t0:.3f});'),
                     at=tp - 0.95) if fill_c else None
     nt = B.text(big, nx_, ny_, npx, cls="num", colour="red", anchor="middle", at=tp - 0.3, dur=0.5)
-    de, pe = h.ellipse(nx_, nt["top"] + nt["px"] * 0.62, nt["w"] / 2 + 40, nt["px"] * 0.66, over=0.4); B.mark(de, pe, "red", 7)
+    de, pe = h.ellipse(nx_, nt["mid"], nt["w"] / 2 + 40, nt["gh"] * 0.85, over=0.4); B.mark(de, pe, "red", 7)
     if b.get("note"): B.text(b["note"], gx, gy + 10 * cell + 6, 28, colour="muted") if not P else None
     html = page(X, b, B.build(extra_under=dots_html))
     if fill: X.sfx(fill["t"], "pop")
@@ -740,10 +789,10 @@ def loop(b, X, t, d, cid):
         try: k = int(k)
         except (TypeError, ValueError): continue
         if 0 <= k < len(labels):
-            lt = labels[k]; B.hl(lt["left"] - 8, lt["left"] + lt["w"] + 8, lt["top"] + lt["px"] * 0.66, lt["px"] * 0.62)
+            lt = labels[k]; B.hl(lt["left"] - 8, lt["left"] + lt["w"] + 8, lt["mid"] + lt["gh"] * 0.12, lt["gh"] * 0.7)
     if b.get("center"):
         ct = B.text(b["center"], cx, cy - 46, fsz(b["center"], rx * 0.9, 80, 34), anchor="middle", colour="red")
-        de, pe = h.ellipse(cx, ct["top"] + ct["px"] * 0.6, ct["w"] / 2 + 36, ct["px"] * 0.85, over=0.35); B.mark(de, pe, "red", 5)
+        de, pe = h.ellipse(cx, ct["mid"], ct["w"] / 2 + 36, ct["gh"] * 1.0, over=0.35); B.mark(de, pe, "red", 5)
     dot = '<g class="lapdot" style="opacity:0"><circle class="solid" cx="0" cy="0" r="15" style="fill:var(--red)"/></g>'
     html = page(X, b, B.build(extra_over=dot))
     lap0 = B.end + 0.05
@@ -771,15 +820,16 @@ def thesis(b, X, t, d, cid):
     else: x0, y1, y2, y3, big = bx + 70, by + 40, by + 200, by + 430, 150
     B.para(pre, x0, y1 - (30 if len(str(pre)) > 14 else 0), 66, bw * 0.9, mn=32, at=t + 0.1, colour="muted")
     a = B.text(neg, x0, y2 + big * 0.12, int(big * 0.62))
-    nw_ = bw - (a["w"] + 60) - (150 if P else 420)
+    nw_ = bw - (a["w"] + 92) - (150 if P else 420)
     nn = B.text(no, a["left"] + a["w"] + 30, y2, fsz(no, nw_, int(big * 0.9), 40), at=tn - 0.45)
-    dk, pk = h.strike(nn["left"], nn["left"] + nn["w"], nn["top"] + nn["px"] * 0.6, h=nn["px"] * 0.4); sk = B.mark(dk, pk, "red", 12, dur=0.3, lag=0.08)
+    dk, pk = h.strike(nn["left"], nn["left"] + nn["w"], nn["mid"], h=nn["gh"] * 0.45); sk = B.mark(dk, pk, "red", 12, dur=0.3, lag=0.08)
     c = B.text(pos_, x0, y3 + big * 0.12, int(big * 0.62))
     ypx = fsz(yes, nw_, big, 40)
-    yl = c["left"] + c["w"] + 30
-    hl = B.hl(yl - 10, yl + text_em(yes) * ypx + 10, y3 + ypx * 0.7, ypx * 0.55, at=ty - 0.4)
+    yl = c["left"] + c["w"] + 62
+    vt, vb = vbox(yes)
+    hl = B.hl(yl - 10, yl + text_em(yes) * ypx + 10, y3 + ypx * (vt + (vb - vt) * 0.66), ypx * (vb - vt) * 0.6, at=ty - 0.4)
     yy = B.text(yes, yl, y3, ypx, lag=-0.15)
-    de, pe = h.ellipse(yy["left"] + yy["w"] / 2, yy["top"] + yy["px"] * 0.62, yy["w"] / 2 + 46, yy["px"] * 0.72, over=0.4); B.mark(de, pe, "red", 8)
+    de, pe = h.ellipse(yy["left"] + yy["w"] / 2, yy["mid"], yy["w"] / 2 + 46, yy["gh"] * 0.9, over=0.4); B.mark(de, pe, "red", 8)
     for k in range(3):
         sx = min(yy["left"] + yy["w"] + 70, X.W - 80); sy = yy["top"] + yy["px"] * (0.1 + 0.4 * k)
         dd, pp = h.line(sx, sy, sx + 42, sy + (-22, 0, 22)[k], over=1); B.mark(dd, pp, "ink", 5, dur=0.08, lag=0.0)

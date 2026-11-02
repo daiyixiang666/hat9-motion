@@ -914,5 +914,37 @@
   ],
   "script": "latin",
   "redistribute": true
+ },
+ "fusion-pixel": {
+  "file": "FusionPixel12-zh_hans.otf",
+  "weight": "400",
+  "fallback": "monospace",
+  "license": "OFL-1.1",
+  "url": "https://github.com/TakWolf/fusion-pixel-font",
+  "cat": "等宽与像素",
+  "role": "中文像素字体（缝合像素 12px，用 12 的整数倍字号最清晰）",
+  "mood": [
+   "游戏",
+   "像素",
+   "复古"
+  ],
+  "script": "sc",
+  "redistribute": true
+ },
+ "lxgw-marker": {
+  "file": "LXGWMarkerGothic-Regular.ttf",
+  "weight": "400",
+  "fallback": "'Kaiti SC',sans-serif",
+  "license": "OFL-1.1",
+  "url": "https://github.com/lxgw/LxgwMarkerGothic",
+  "cat": "楷体与手写",
+  "role": "马克笔手写黑体（霞鹜漫黑），白板、便签、拼贴标签",
+  "mood": [
+   "手写",
+   "白板",
+   "活泼"
+  ],
+  "script": "sc",
+  "redistribute": true
  }
 }

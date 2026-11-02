@@ -4,7 +4,7 @@ description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE �
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.8.0"
+  version: "0.8.1"
   author: 第九顶帽子
 ---
 

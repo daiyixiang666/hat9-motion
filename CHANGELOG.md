@@ -1,5 +1,8 @@
 # 更新记录
 
+## 0.8.1 · 2026-11-02
+- 新字体 `fusion-pixel` 缝合像素（中文像素字，`pixel` 风格改用它）和 `lxgw-marker` 霞鹜漫黑（马克笔手写，`sketch`、`zine` 改用它），共 60 款。
+
 ## 0.8.0 · 2026-11-02
 - 新风格 8 种，各带一条横竖屏示例成片：`papercut` 剪纸、`sketch` 手绘白板、`ink` 水墨国风、`zine` 拼贴杂志、`flat` 扁平插画、`pixel` 像素复古、`iso3d` 等距微缩（Three.js）、`chrome3d` Y2K 镀铬（Three.js）。
 - 字体扩到 58 款，按类别、用途、气质打标签；`references/fonts.md` 和在线字体样张。

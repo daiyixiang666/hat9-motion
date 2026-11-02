@@ -24,7 +24,8 @@ STYLE = {
     # ransom letters draw on many faces; the free-commercial ones (kuhei, puhuiti) are not shipped, so every stack ends in an OFL face
     "fonts": {"display": "noto-sans-sc", "body": "noto-sans-sc", "serif": "noto-serif-sc", "kuhei": ["zcool-kuhei", "noto-sans-sc"],
               "qing": ["zcool-qingke", "noto-sans-sc"], "smiley": ["smiley-sans", "noto-sans-sc"], "xiaowei": ["zcool-xiaowei", "noto-serif-sc"],
-              "puhui": ["alibaba-puhuiti-heavy", "zcool-kuhei", "noto-sans-sc"], "hand": ["ma-shan-zheng", "noto-serif-sc"],
+              "puhui": ["alibaba-puhuiti-heavy", "zcool-kuhei", "noto-sans-sc"], "hand": ["lxgw-marker", "noto-sans-sc"],
+              "brush": ["ma-shan-zheng", "noto-serif-sc"],
               "abril": ["abril-fatface", "zcool-kuhei", "noto-sans-sc"], "anton": ["anton", "zcool-kuhei", "noto-sans-sc"],
               "archivo": ["archivo-black", "zcool-kuhei", "noto-sans-sc"], "bebas": ["bebas", "zcool-kuhei", "noto-sans-sc"],
               "oswald": ["oswald", "zcool-kuhei", "noto-sans-sc"], "playfair": ["playfair", "noto-serif-sc"],
@@ -45,7 +46,7 @@ STYLE = {
 }
 
 INK, PAPER, PINK, TEAL, NEWS, WHITE = "#141414", "#ece7dc", "#ff3fa0", "#00857f", "#e2dccd", "#fbf8f0"
-GLYPH_ROLES = ["display", "serif", "kuhei", "qing", "smiley", "xiaowei", "puhui", "hand", "display", "kuhei"]
+GLYPH_ROLES = ["display", "serif", "kuhei", "qing", "smiley", "xiaowei", "puhui", "hand", "brush", "display", "kuhei"]
 NUM_ROLES = ["abril", "anton", "archivo", "bebas", "oswald", "playfair", "archivo", "anton", "type"]
 SCRAPS = [(WHITE, INK), (WHITE, INK), (INK, WHITE), (NEWS, INK), (PINK, INK), (TEAL, WHITE), (WHITE, PINK), (NEWS, TEAL)]
 PATTERNS = ["", "", "", "", "repeating-linear-gradient(45deg, rgba(0,0,0,.13) 0 2px, transparent 2px 7px)",
@@ -79,6 +80,7 @@ CSS = r"""
 .zn .stk { display:inline-block; padding:.18em .6em .24em; border-radius:999px; font-family:var(--f-puhui); white-space:nowrap; line-height:1;
   box-shadow:0 0 0 6px #fbf8f0, 5px 7px 0 6px rgba(0,0,0,.18); }
 .zn .typed { font-family:var(--f-type); letter-spacing:.02em; white-space:nowrap; }
+.zn .hand { font-family:var(--f-hand); white-space:nowrap; line-height:1.2; }
 .zn .ht { position:absolute; inset:0; background-image:radial-gradient(circle, rgba(20,20,20,.42) 30%, transparent 33%); background-size:9px 9px; mix-blend-mode:multiply; pointer-events:none; }
 .zn svg.mk { position:absolute; overflow:visible; pointer-events:none; }
 .zn svg.mk path { fill:none; stroke-linecap:round; stroke-linejoin:round; }
@@ -424,7 +426,7 @@ def pie(b, X, t, d, cid):
             f'<div class="bo blab" style="{st(left=lx, top=ly2)}">{lab}</div>')
     if note:
         ny_ = (g.top + 10) if g.v else ly2 + lpx * 1.27 * ln + 34
-        body += f'<div class="bo typed bnote" style="{st(left=(g.m if g.v else lx + 4), top=ny_, font_size=26)}">{X.rich(note)}</div>'
+        body += f'<div class="bo hand bnote" style="{st(left=(g.m if g.v else lx + 4), top=ny_, font_size=32)}; transform:rotate(-2deg)">{X.rich(note)}</div>'
     if rest:
         body += f'<div class="bo brest" style="{st(left=rx - 90, top=ry - 30)}"><div class="stk" style="font-size:{26 if g.v else 30}px; background:{WHITE}; color:{INK}; transform:rotate(-6deg)">{X.rich(rest)}</div></div>'
     body += tape(r, cx - 80, cy - rad - 18, 160) + tape(r, cx + rad * 0.45, cy + rad * 0.82, 140, pink=True)
@@ -595,17 +597,18 @@ def note(b, X, t, d, cid):
     X.used_text.update(fit.plain(txt) + lab + left_)
     lh = f.px * 1.45
     lines_ = "".join(f'<div class="nl">{X.rich(l)}</div>' for l in f.lines)
+    # each ruled line lands just under the marker baseline (line-height 1.45, ascent .88 → baseline at .76 of a line)
     paper = (f'<div class="bo bnp" style="{st(left=nx, top=ny, width=nw, height=nh)}"><div class="sc" style="position:absolute; inset:0; transform:rotate(1.2deg); clip-path:{torn(r, 1.2, 10)};'
-             f' background:repeating-linear-gradient(180deg, transparent 0 {lh - 3:.0f}px, rgba(0,95,170,.28) {lh - 3:.0f}px {lh:.0f}px) 0 {60 + lh * 0.12:.0f}px / 100% {lh:.0f}px, #fbf8f0">'
+             f' background:repeating-linear-gradient(180deg, transparent 0 {lh - 3:.0f}px, rgba(0,95,170,.28) {lh - 3:.0f}px {lh:.0f}px) 0 {63 - lh * 0.142:.0f}px / 100% {lh:.0f}px, #fbf8f0">'
              f'<i style="position:absolute; left:88px; top:0; bottom:0; width:3px; background:rgba(255,63,160,.55)"></i>'
              f'<div class="nt" style="position:absolute; left:116px; top:60px; font-family:var(--f-hand); font-size:{f.px}px; line-height:1.45">{lines_}</div></div></div>')
     stick = (f'<div class="bo bsk" style="{st(left=nx + nw - (330 if g.v else 300), top=ny + nh - 60)}"><div class="sc" style="position:relative; background:{TEAL}; color:{WHITE}; padding:16px 22px; '
-             f'font-family:var(--f-puhui); font-size:{34 if g.v else 36}px; white-space:nowrap; transform:rotate(6deg)">{X.rich(lab)}</div></div>') if lab else ""
+             f'font-family:var(--f-hand); font-size:{38 if g.v else 40}px; white-space:nowrap; transform:rotate(6deg)">{X.rich(lab)}</div></div>') if lab else ""
     bw = 420 * ss
     see = (f'<div class="bo bsee" style="{st(left=sx - bw / 2, top=sy)}">'
            f'<svg style="position:absolute; left:{bw / 2 - 40:.0f}px; top:40px; width:80px; height:70px; overflow:visible"><path d="M40 0 L80 70 L0 70 Z" fill="{INK}"/></svg>'
            f'<div class="beam" style="position:absolute; left:0; top:28px; width:{bw:.0f}px; height:12px; background:{INK}; border-radius:6px; transform-origin:50% 50%">'
-           f'<div style="position:absolute; left:6px; bottom:12px; padding:{14 * ss:.0f}px {16 * ss:.0f}px; background:{NEWS}; border:3px solid {INK}; font-family:var(--f-puhui); font-size:{28 * ss:.0f}px; white-space:nowrap">{X.rich(left_)}</div>'
+           f'<div style="position:absolute; left:6px; bottom:12px; padding:{14 * ss:.0f}px {16 * ss:.0f}px; background:{NEWS}; border:3px solid {INK}; font-family:var(--f-hand); font-size:{32 * ss:.0f}px; white-space:nowrap">{X.rich(left_)}</div>'
            f'<div style="position:absolute; right:-10px; bottom:6px">{critter(r, 130 * ss, PINK)}</div></div></div>')
     gg, s = page(X, b, t, d, cid, paper + stick + see + tape(r, nx + nw * 0.4, ny - 14, 180))
     X.tw(f'tl.from("{s} .bnp .sc", {{x:-260, rotation:-12, opacity:0, duration:0.27, ease:"steps(4)"}}, {t + 0.1:.3f});')
