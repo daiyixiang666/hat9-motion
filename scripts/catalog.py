@@ -295,6 +295,21 @@ PIT.update({"logo_wall":"只用自己的或虚构的 logo，绝不用真实品�
 "notice_card":"刻意做成普通版式：不要红头、不要公章，保留「版式示意」水印，除非是你自己的文件。"})
 
 
+def custom_styles():
+    """styles made with style_kit.py whose showcase film was published to assets/previews: they join the gallery's style wall."""
+    import style_kit
+    out = []
+    for p in sorted((SKILL / "styles").glob("[!_]*.py")):
+        sid = p.stem
+        if not (SKILL / "assets" / "previews" / f"{sid}_16x9.mp4").exists(): continue
+        lin = style_kit.lineage(sid)
+        if len(lin) < 2: continue                      # built-in styles are listed by the gallery itself
+        st = style_kit.derive.load_base(sid).STYLE
+        title = json.loads(style_kit.showcase(sid).read_text()).get("meta", {}).get("title", "")
+        out.append({"id": sid, "name": st.get("name", sid), "fits": st.get("fits", ""), "base": lin[1], "title": title})
+    return out
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True); DOC.parent.mkdir(parents=True, exist_ok=True)
     CARDS.mkdir(parents=True, exist_ok=True); GALLERY.mkdir(parents=True, exist_ok=True)
@@ -378,7 +393,8 @@ def main():
         {"effects": [{"id": fx, "file": key, "band": band, "title": title, "how": how, "cat": cat_of(fx), "ref": ref, "label": label, "suit": SUIT.get(fx, ""),
                       "style": sid, "style_name": STYLE_NAMES.get(sid, sid)}
                      for fx, title, how, keys, label, ref, key, band, sid in rows],
-         "transitions": [{"id": k, "label": label, "file": name} for k, label, name in trans]}, ensure_ascii=False, indent=1))
+         "transitions": [{"id": k, "label": label, "file": name} for k, label, name in trans],
+         "styles": custom_styles()}, ensure_ascii=False, indent=1))
     print(DOC, len({r[0] for r in rows}), "effects,", len(rows), "cards,", len(trans), "transitions")
 
 

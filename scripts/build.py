@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -28,6 +28,7 @@ def load_style(sid):
     if not p.exists(): raise SystemExit(f"no style {sid!r}; have: {', '.join(sorted(x.stem for x in (SKILL / 'styles').glob('[!_]*.py')))}")
     m = load_mod(p)
     st = dict(m.STYLE); st["_mod"] = m
+    st["_chain"] = derive.chain(sid)                     # a custom style also wears its base's root class
     return st
 
 
@@ -231,7 +232,7 @@ def main():
 {X.extra_head}
 <style>{css}</style></head>
 <body>
-<div id="root" class="st-{sid} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and style.get('mascot', {}).get('mode', 'corner') == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{TW}" data-height="{TH}">
+<div id="root" class="{' '.join('st-' + c for c in style['_chain'])} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and style.get('mascot', {}).get('mode', 'corner') == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{TW}" data-height="{TH}">
 {(f'<div id="canvas">' + chr(10).join(X.els) + '</div>') if X.canvas else chr(10).join(X.els)}
 {chr(10).join(aud)}
 </div>

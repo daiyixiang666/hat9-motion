@@ -8,6 +8,7 @@
   python3 scripts/hat9.py build|render <video.json> [--style s] [--aspect a]
   python3 scripts/hat9.py fx [name]                      列出效果 / 看一个效果的说明和参数
   python3 scripts/hat9.py styles                         列出风格
+  python3 scripts/hat9.py style new 我的id --from ink    从现有风格派生自己的（再 style preview / check / publish）
   python3 scripts/hat9.py pack                           打包单文件 skill + zip
 """
 import argparse, json, re, shutil, subprocess, sys, wave
@@ -200,7 +201,13 @@ def styles(_):
     import importlib.util
     for p in sorted((SKILL / "styles").glob("[!_]*.py")):
         spec = importlib.util.spec_from_file_location(p.stem, p); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
-        st = m.STYLE; print(f"  {p.stem:<10} {st.get('name', ''):<8} {' · '.join(st.get('benchmarks', [])[:3])}")
+        st = m.STYLE
+        base = getattr(m, "BASE", None) or getattr(m, "FORKED_FROM", None)
+        print(f"  {p.stem:<10} {st.get('name', ''):<8} {f'（自定义，底稿 {base}）' if base else ' · '.join(st.get('benchmarks', [])[:3])}")
+
+
+def raise_code(rc):
+    if rc: raise SystemExit(rc)
 
 
 def main():
@@ -216,6 +223,9 @@ def main():
                                                         + (["--aspect", a.aspect] if a.aspect else []) + (["--preview"] if c == "render" and a.preview else [])))
     f = sp.add_parser("fx"); f.add_argument("name", nargs="?"); f.set_defaults(fn=fx)
     sp.add_parser("styles").set_defaults(fn=styles)
+    k = sp.add_parser("style", help="自定义风格：new / preview / check / publish（见 scripts/style_kit.py）")
+    k.add_argument("rest", nargs=argparse.REMAINDER)
+    k.set_defaults(fn=lambda a: raise_code(subprocess.run([PY, str(HERE / "style_kit.py")] + a.rest).returncode))
     sp.add_parser("pack").set_defaults(fn=lambda a: subprocess.run([PY, str(HERE / "pack.py")]))
     a = ap.parse_args(); a.fn(a)
 

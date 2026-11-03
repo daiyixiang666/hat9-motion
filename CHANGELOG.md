@@ -1,5 +1,9 @@
 # 更新记录
 
+## 0.10.0 · 2026-11-03
+- 自定义风格：`hat9.py style new <id> --from <风格>` 从任一风格派生。默认只改颜色、字体、动效页底色、质感层和 CSS，其余全部继承底稿（`BASE = "ink"`）；`--copy` 整份复制，连场景代码一起改。
+- `style preview`（示例片 + 动效片的静帧拼图，或 `--render` 出片）、`style check`（字体、对比度、横竖屏构建）、`style publish`（示例片放进画廊，风格墙自动多一格）。
+
 ## 0.9.0 · 2026-11-02
 - 动效跟着风格换皮：动效页面的四种底色从风格配色推出来（`STYLE["fx_themes"]` 可以自己定），风格可以用 `FX_FRAME` 画自己的动效页面。`press` `poster` `zine` `screen` `hud` `doc` `papercut` `sketch` `ink` `flat` `pixel` 都有了各自的版本。
 - 画廊：风格墙（点一种风格，播它的示例成片、只看这个风格的动效）、按风格筛选、每张卡标出风格；138 个动效卡改用最合适的风格演示（`scripts/style_reels.py`）。

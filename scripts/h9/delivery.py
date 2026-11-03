@@ -61,12 +61,13 @@ def apply_brand(style, meta, src_dir):
     # styles name their extra hues differently (press: red / lemon; screen: lime …): map the brand accent onto them
     acc, acc2 = (b.get("colors") or {}).get("accent"), (b.get("colors") or {}).get("accent2")
     sid = getattr(style.get("_mod"), "__name__", "")
+    sid = next((c for c in style.get("_chain", []) if c in ALIASES), sid)    # a custom style uses its base's names
     a1, a2 = style.get("accent_aliases") or ALIASES.get(sid, ((), ()))[0], style.get("accent2_aliases") or ALIASES.get(sid, ((), ()))[1]
     for k in a1:
         if acc: tok[k] = acc
     for k in a2:
         if acc2: tok[k] = acc2
-    if b.get("colors", {}).get("card") and sid == "press": tok["white"] = b["colors"]["card"]
+    if b.get("colors", {}).get("card") and "press" in style.get("_chain", [sid]): tok["white"] = b["colors"]["card"]
     tok.update(b.get("tokens") or {})
     style["tokens"] = tok
     fonts = dict(style.get("fonts", {}))

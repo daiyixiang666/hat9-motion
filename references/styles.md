@@ -26,15 +26,37 @@
 
 每个风格的场景都做了素材适配（文字长短、条数、图片张数和比例），范围见 `references/inputs.md`；各示例文件夹里的 `variants.json` 是故意换了输入的压力样例。
 
-## 新增风格
+## 做你自己的风格
 
-数据 / 商业类先看 `styles/press.py`（整套自写场景 + `shots()` 镜头调度的写法）；只换皮的话复制 `styles/reel.py`，改 `tokens`（颜色）、`fonts`（只用 `assets/fonts.json` 里的字体）、`layers`（质感层）、`sfx`。需要整片一体的布景（比如三维、书页）就写一个 `WORLD()`（参考 `styles/studio.py`）。改完跑：
+从任何一种现成风格派生，改几处就是你自己的风格，和内置风格一样能用、能出现在画廊里。
 
 ```bash
-python3 scripts/hat9.py render examples/demo/video.json --style 新id --preview
+python3 scripts/hat9.py style new my_ink --from ink --name 夜墨 --fits "夜读、悬疑"   # 1. 派生
+#   改 styles/my_ink.py 里的颜色、字体、质感层、CSS
+python3 scripts/hat9.py style preview my_ink            # 2. 用底稿的示例片 + 动效片出静帧拼图（--render 出 mp4，--aspect 9:16 看竖屏）
+python3 scripts/hat9.py style check my_ink              # 3. 字体是否可用、文字对比度、横竖屏构建无错误
+python3 scripts/hat9.py render 你的/video.json --style my_ink
 ```
 
-先排 2–3 张静帧和标杆并排对比（`scripts/board.py`），过关再做动画。**不能只换底色就叫新风格。**
+两种派生方式：
+
+- **换皮**（默认）：生成的文件只写要改的东西，`tokens`（颜色）、`fonts`、`fx_themes`（动效页四种底色）、`layers`（质感层）和追加的 `css` 都已经把底稿的值抄好，直接改值即可。场景、动效页面、镜头、音效都继承底稿；底稿更新时你的风格跟着更新。`"fx_themes": None` 表示动效页按你的颜色自动配。
+- **整份复制**（`--copy`）：把底稿整个文件复制一份，场景代码、镜头、版式都能改，适合要做出明显不同的画面时用。
+
+注意几点：
+
+- 字体只能用 `assets/fonts.json` 里登记的，样张见 `references/fonts.md`。
+- 先排 2–3 张静帧，和你想要的参考并排对比，过关再做动画。**只换底色不算新风格。**
+- 从零写一个风格：数据 / 商业类参考 `styles/press.py`（自写场景 + `shots()` 镜头调度）；整片一体的布景（三维、书页）写 `WORLD()`，参考 `styles/studio.py`。
+
+### 放进画廊
+
+```bash
+python3 scripts/hat9.py style publish my_ink    # 渲染横竖屏示例片，放进 assets/previews/
+python3 scripts/catalog.py                      # 画廊的风格墙会多出这一格
+```
+
+想让大家都能用，把 `styles/my_ink.py` 和 `assets/previews/my_ink_*` 提交 Pull Request。`style check` 通过就可以合并。
 
 ### 让动效跟着风格换皮
 

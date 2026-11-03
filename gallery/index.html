@@ -105,8 +105,10 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 (async function () {
   const ROOT = (location.pathname.includes("/gallery/") ? "../" : "") + "assets/previews/";
   const PV = ROOT + "fx/";
+  let data = { effects: [], transitions: [], styles: [] };
+  try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
   // [style id, 中文名, 适合, film preview prefix (assets/previews/<prefix>_16x9.mp4) or "" , film title]
-  const STYLES = [
+  const BUILTIN = [
     ["press", "财经刊", "商业拆解、数据口播", "mixue", "一杯 4 块钱的柠檬水"], ["poster", "瑞士海报", "观点、金句", "poster", "专注，就是学会说不"],
     ["zine", "拼贴杂志", "潮玩、年轻消费", "zine", "一只怪兽，一年卖了一百四十多亿"], ["screen", "AI 工具台", "AI 工具、产品", "screen", "8 亿人在用，5% 在付钱"],
     ["hud", "暗场 HUD", "拆解、排序", "", ""], ["atlas", "地图纪录", "贸易、航线、地缘", "atlas", "货船为什么不走苏伊士了"],
@@ -115,6 +117,9 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
     ["flat", "扁平插画", "本地生活、城市", "flat", "一份外卖背后的城市网络"], ["pixel", "像素复古", "游戏、互联网", "pixel", "三千二百亿的游戏账本"],
     ["iso3d", "等距微缩", "物流、产业链", "iso3d", "快递的规模账"], ["chrome3d", "Y2K 镀铬", "科技、芯片", "chrome3d", "英伟达：卖铲子的人"],
     ["reel", "动效库", "快节奏口播", "", ""]];
+  // custom styles added with `style_kit.py publish` (listed by catalog.py) join the wall after the built-in ones
+  const STYLES = BUILTIN.concat((data.styles || []).filter((s) => !BUILTIN.some((f) => f[0] === s.id))
+    .map((s) => [s.id, s.name, s.fits || (s.base ? "基于 " + s.base : ""), s.id, s.title || s.name]));
   const NAME = Object.fromEntries(STYLES.map((s) => [s[0], s[1]]));
   const wallEl = document.getElementById("wall");
   let sty = "全部", filmAt = -1, styIds = [];   // styIds filled once effects.json is in
@@ -135,8 +140,6 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
       setSty(f[0]); };
     wallEl.appendChild(b); });
   showFilm(0);
-  let data = { effects: [], transitions: [] };
-  try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
   let orient = "h", cat = "全部", q = "";
   try { orient = localStorage.getItem("h9-orient") || "h"; } catch (e) {}
   const grid = document.getElementById("grid"), tgrid = document.getElementById("tgrid");
