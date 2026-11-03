@@ -8,6 +8,7 @@
   python3 scripts/hat9.py build|render <video.json> [--style s] [--aspect a]
   python3 scripts/hat9.py fx [name]                      列出效果 / 看一个效果的说明和参数
   python3 scripts/hat9.py styles                         列出风格
+  python3 scripts/hat9.py review 成片.mp4 --video video.json   交付前自检（静帧板 + 自动检查）
   python3 scripts/hat9.py style new 我的id --from ink    从现有风格派生自己的（再 style preview / check / publish）
   python3 scripts/hat9.py pack                           打包单文件 skill + zip
 """
@@ -223,6 +224,9 @@ def main():
                                                         + (["--aspect", a.aspect] if a.aspect else []) + (["--preview"] if c == "render" and a.preview else [])))
     f = sp.add_parser("fx"); f.add_argument("name", nargs="?"); f.set_defaults(fn=fx)
     sp.add_parser("styles").set_defaults(fn=styles)
+    r = sp.add_parser("review", help="交付前自检：静帧板 + 自动检查（见 scripts/review.py）")
+    r.add_argument("rest", nargs=argparse.REMAINDER)
+    r.set_defaults(fn=lambda a: raise_code(subprocess.run([PY, str(HERE / "review.py")] + a.rest).returncode))
     k = sp.add_parser("style", help="自定义风格：new / preview / check / publish（见 scripts/style_kit.py）")
     k.add_argument("rest", nargs=argparse.REMAINDER)
     k.set_defaults(fn=lambda a: raise_code(subprocess.run([PY, str(HERE / "style_kit.py")] + a.rest).returncode))
