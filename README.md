@@ -28,7 +28,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
 | **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
 | **做自己的风格** | `hat9.py style new 我的id --from ink`：从任一风格派生，改颜色、字体、质感，或者整份复制改场景；预览、检查、放进画廊各一条命令，见 [`references/styles.md`](references/styles.md#做你自己的风格) |
-| **交付前自检** | `hat9.py review 成片.mp4`：每秒 2 帧静帧板，自动查静止过久、PPT 大字报、大字重复字幕、效果用太多；配套 [`references/director.md`](references/director.md) 导演手册（需求单、关卡、打分） |
+| **导演关卡** | 每一关一个命令：`brief`（需求单 + 分镜检查）→ `stills`（每个 beat 一张静帧的板）→ `sample`（最难几秒的动画小样）→ `montage`（卡拍快切，自动挑每段最好看的一秒）→ `review`（静帧板 + 自动检查 + 打分关）；`refs` 从参考片量节奏、排参考板、写原则。见 [`references/director.md`](references/director.md) |
 | **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
 | **13 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
 
@@ -244,6 +244,7 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 更新
 
+- **0.12.0** 每个导演关卡都有命令：需求单与分镜检查、静帧板、动画小样、卡拍快切、参考板，自检加上声音和打分关。
 - **0.11.0** 导演手册和交付前自检：需求单、关卡流程、画面硬规矩，`hat9.py review` 出静帧板并自动挑刺。
 - **0.10.0** 自定义风格：从任一风格派生自己的风格，预览、检查、放进画廊。
 - **0.9.0** 动效跟着风格换皮：12 种风格各有自己的动效页面（纸张、页眉、字幕、配色）；画廊加了风格墙，每个动效用最合适的风格演示。

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "hat9-motion",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "九帽动效：把口播、文案或录音做成 AE 级动效视频（横屏 16:9 / 竖屏 9:16）。The skill lives at the repo root (SKILL.md) together with its scripts, styles and effects.",
   "author": {
     "name": "第九顶帽子",

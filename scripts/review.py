@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Pre-delivery review of a rendered film: contact sheets to look at, plus the checks a viewer would complain about.
 
-  python3 scripts/review.py work/renders/press_9x16.mp4 [--video work/video.json] [--out work/review] [--strict]
+  python3 scripts/review.py work/renders/press_9x16.mp4 [--video work/video.json] [--ref ref.mp4] [--out work/review] [--strict]
+  python3 scripts/review.py --gate work/renders/review_press_9x16/review.md      # delivery gate: every score filled and ≥ 8
 
 Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.md, and prints the findings:
   freeze        the picture does not change for more than 2.5 s                       (P0)
@@ -10,6 +11,9 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   caption-dup   on-screen big text that only repeats the spoken line                  (P1, P0 above 30 % of text beats)
   cut-gap       more than 6 s without a cut or a big change                           (P1)
   fx-repeat     the same effect used more than 3 times                                (P1)
+  loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1)
+  dead-air      more than 1.2 s of silence inside the film                              (P1)
+  pace          with --ref: the film's median shot is longer than the reference's p75   (P1)
 Then look at every sheet and score the rubric in review.md (references/director.md); deliver only when every score ≥ 8.
 Needs ffmpeg and Pillow.
 """
@@ -46,6 +50,53 @@ def scene_changes(path):
     r = subprocess.run(["ffmpeg", "-v", "info", "-i", str(path), "-vf", "scale=270:-2,select='gt(scene,0.14)',showinfo", "-an", "-f", "null", "-"],
                        capture_output=True, text=True)
     return [float(m.group(1)) for m in re.finditer(r"pts_time:([0-9.]+)", r.stderr)]
+
+
+def loudness(path):
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(path), "-af", "ebur128=peak=true", "-vn", "-f", "null", "-"], capture_output=True, text=True)
+    tail = r.stderr[r.stderr.rfind("Summary:"):]
+    i = re.search(r"I:\s+(-?[0-9.]+) LUFS", tail)
+    p = re.search(r"Peak:\s+(-?[0-9.]+) dBFS", tail)
+    return (float(i.group(1)) if i else None), (float(p.group(1)) if p else None)
+
+
+def silences(path):
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(path), "-af", "silencedetect=n=-45dB:d=1.2", "-vn", "-f", "null", "-"], capture_output=True, text=True)
+    out = []
+    start = None
+    for line in r.stderr.splitlines():
+        if "silence_start:" in line:
+            start = float(line.split("silence_start:")[1].split()[0])
+        if "silence_end:" in line and start is not None:
+            out.append((start, float(line.split("silence_end:")[1].split()[0].rstrip("|"))))
+            start = None
+    return out
+
+
+def has_audio(path):
+    out = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", str(path)])
+    return bool(out.strip())
+
+
+def gate(md):
+    """the delivery gate: every rubric row scored, every score ≥ 8, the three worst problems written down."""
+    text = Path(md).read_text(encoding="utf-8")
+    problems = []
+    rows = [l for l in text.splitlines() if l.startswith("| ") and "：" in l.split("|")[1]]
+    for row in rows:
+        cells = [c.strip() for c in row.strip("|").split("|")]
+        name = cells[0].split("：")[0]
+        score = cells[1] if len(cells) > 1 else ""
+        if not score:
+            problems.append(f"{name} 没打分")
+        elif not score.replace(".", "").isdigit() or float(score) < 8:
+            problems.append(f"{name} {score} 分（< 8）")
+    if "**P0**" in text:
+        problems.append("自动检查还有 P0")
+    worst = re.findall(r"^\d\. (.+)$", text, re.M)
+    if len([w for w in worst if w.strip()]) < 3:
+        problems.append("没写最差的 3 个问题")
+    return problems
 
 
 def frames(path, tmp):
@@ -89,6 +140,29 @@ def sheets(files, out):
     return made
 
 
+def label_font(size):
+    """a font that can draw Chinese labels on boards: the skill's Noto Sans SC, else the system's, else Pillow's default."""
+    from PIL import ImageFont
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from h9 import fonts
+    cands = [fonts.find("NotoSansSC-VF.ttf"), fonts.find("HarmonyOS_Sans_SC_Bold.ttf"),
+             Path("/System/Library/Fonts/PingFang.ttc"), Path("/System/Library/Fonts/STHeiti Medium.ttc"),
+             Path("C:/Windows/Fonts/msyh.ttc"), Path("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc")]
+    for c in cands:
+        if c and Path(c).exists():
+            return ImageFont.truetype(str(c), size)
+    return ImageFont.load_default(size)
+
+
+def load_words(vpath):
+    """the flat word list [{w, s, e}] named by meta.words, or [] when there is none."""
+    meta = json.loads(vpath.read_text()).get("meta", {})
+    if not meta.get("words"):
+        return []
+    data = json.loads((vpath.parent / meta["words"]).read_text())
+    return [w for x in data for w in (x["words"] if "words" in x else [x])]
+
+
 def spoken(words, a, b):
     return "".join(w["w"] for w in words if a - 0.1 <= w["s"] < b)
 
@@ -106,11 +180,9 @@ def screen_text(beat):
 
 def caption_dups(vpath):
     v = json.loads(vpath.read_text())
-    meta = v.get("meta", {})
-    if not meta.get("words"):
+    words = load_words(vpath)
+    if not words:
         return [], 0
-    words = json.loads((vpath.parent / meta["words"]).read_text())
-    words = [w for x in words for w in (x["words"] if "words" in x else [x])]
     beats = [b for b in v["beats"] if isinstance(b.get("t"), (int, float))]
     dups, texty = [], 0
     for i, b in enumerate(beats):
@@ -129,11 +201,21 @@ def caption_dups(vpath):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("film")
+    ap.add_argument("film", nargs="?")
+    ap.add_argument("--gate", metavar="REVIEW_MD", help="check a filled review.md: every score ≥ 8, no P0 left")
+    ap.add_argument("--ref", help="a reference film: compare the cutting pace")
     ap.add_argument("--video", help="the video.json it was built from (enables caption-dup and fx-repeat)")
     ap.add_argument("--out")
     ap.add_argument("--strict", action="store_true", help="exit 1 when a P0 is found")
     a = ap.parse_args()
+    if a.gate:
+        problems = gate(a.gate)
+        for p in problems:
+            print(f"  ✗ {p}")
+        print("  ✓ 可以交付" if not problems else "不能交付：改完重新渲染、重新打分")
+        sys.exit(1 if problems else 0)
+    if not a.film:
+        ap.error("给一个成片，或用 --gate review.md")
     film = Path(a.film).resolve()
     out = Path(a.out).resolve() if a.out else film.parent / f"review_{film.stem}"
     out.mkdir(parents=True, exist_ok=True)
@@ -153,6 +235,25 @@ def main():
     for x, y in zip(edges, edges[1:]):
         if y - x > 6.0:
             found.append(("P1", "cut-gap", f"{x:.1f}–{y:.1f}s {y - x:.1f} 秒没有切换"))
+
+    if has_audio(film):
+        lufs, peak = loudness(film)
+        if lufs is not None and not -16.5 <= lufs <= -11.5:
+            found.append(("P1", "loudness", f"整体响度 {lufs:.1f} LUFS（平台约 -14）"))
+        if peak is not None and peak > -1.0:
+            found.append(("P1", "loudness", f"峰值 {peak:.1f} dBTP，会破音（压到 -1 以下）"))
+        for s, e in silences(film):
+            if 0.5 < s < body_end:
+                found.append(("P1", "dead-air", f"{s:.1f}–{e:.1f}s 没有声音 {e - s:.1f} 秒"))
+    if a.ref:
+        import ref_pacing
+        rb, rd = ref_pacing.cuts(Path(a.ref), 0.3)
+        fb, fd = ref_pacing.cuts(film, 0.3)
+        rs = ref_pacing.stats(rb, rd)
+        fs = ref_pacing.stats(fb, fd)
+        if fs["median"] > rs["p75"]:
+            found.append(("P1", "pace", f"镜头中位 {fs['median']:.1f}s，参考片 {rs['median']:.1f}s（p75 {rs['p75']:.1f}s）：切得太慢"))
+        print(f"  节奏：成片 {fs['per_min']:.0f} 刀/分钟 · 参考 {rs['per_min']:.0f} 刀/分钟")
 
     from PIL import Image
     with tempfile.TemporaryDirectory() as tmp:
@@ -197,7 +298,7 @@ def main():
     for lv, rule, msg in found:
         print(f"  {lv} {rule:<12} {msg}")
     print(f"静帧板：{', '.join(p.name for p in made)}  →  {out}")
-    print("逐张看完再按 review.md 打分；每项 ≥ 8 才交付。")
+    print(f"逐张看完再按 review.md 打分；每项 ≥ 8 才交付：python3 scripts/review.py --gate {out / 'review.md'}")
     if a.strict and any(lv == "P0" for lv, _, _ in found):
         sys.exit(1)
 

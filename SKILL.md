@@ -4,7 +4,7 @@ description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE �
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.11.0"
+  version: "0.12.0"
   author: 第九顶帽子
 ---
 
@@ -23,21 +23,26 @@ metadata:
 | 「我有 PDF / 论文 / 新闻 / 截图 / 录屏 / 表格 / 一堆图 / 一个网址」 | 先查 `references/inputs.md` 找对应效果（`cite_*`、`media`、`scroll_shot`、`screencast`、`table` …）；网址用 `scripts/url_brief.py`，表格用 `csv` 参数 |
 | 「只有录音没有逐字时间」 | `scripts/align.py 录音 稿子 --out words.json` |
 | 「看着像 AI 模板 / 不高级」 | 先读 `references/craft.md`，再跑 `python3 scripts/craft_lint.py <构建目录>` 查默认手法 |
-| 「片子不够厉害 / 太平 / 像 PPT」 | 读 `references/director.md`（需求单、关卡、画面硬规矩、打分自检），渲染后跑 `python3 scripts/review.py <成片> --video <video.json>` |
+| 「片子不够厉害 / 太平 / 像 PPT」 | 读 `references/director.md`，从关卡 1 重走：`brief check` 查分镜 → `stills` 看静帧板 → `review` + `--gate` 打分 |
+| 「学这几条参考片的感觉」 | `hat9.py refs 参考*.mp4 --out work/refs` → 写 `principles.md` → `style new` 派生 → 先做一个场景对比参考板 |
 | 环境报错 | `hat9.py doctor`，按提示补齐 |
 
 ## A. 整片（默认流程）
 
-1. **只问三件事**（已给的不再问）：口播是录音还是只有文案？横屏还是竖屏（可两个都要）？有没有要用的图片 / 截图？
-2. **先写需求单**（`references/director.md` 第一节）：一句话片子、节拍表（前 2 秒钩子、每 3–5 秒一个视觉爆点）、哪几句上大字。
-3. **出分镜**：`hat9.py plan "文案" --out work/` → `work/video.json`。一句一个 beat，按句型自动挑效果（`references/sentence-to-visual.md`）。**检查并改它**：
-   - 每个 beat 必须回答「这句话观众看见什么」；不合适就换 `fx`（id 见 `gallery/llms.txt`）。
+按关卡走，**不许跳关**；哪一关不过就回到那一关改，不在成片上修修补补（`references/director.md`）。
+
+1. **只问三件事**（已给的不再问）：口播是录音还是只有文案？横屏还是竖屏（可两个都要）？有没有要用的图片 / 截图 / 录屏？
+2. **需求单**：`hat9.py brief new work/` → 填 `work/brief.md`：一句话片子、参考、节拍表（前 2 秒是**画面**钩子，之后每 3–5 秒一个视觉爆点）、全片 ≤ 3 句大字。用户想要某种说不清的感觉时，先 `hat9.py refs 参考1.mp4 参考2.mp4 … --out work/refs` 出参考板，把原则写进 `principles.md`。
+3. **分镜**：`hat9.py plan "文案" --out work/` → `work/video.json`，按节拍表改：
+   - 每个 beat 必须回答「这句话观众看见什么」；不合适就换 `fx`（id 见 `gallery/llms.txt`）。讲工具给真实录屏 / 截图，讲风格给同一内容不同风格并排。
    - 关键词写 `"@词"` 对时；说到「这个 / 这里」时加 `marks` 指哪说哪。
-   - 相邻 beat 不要连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
-4. **配音**：有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用任何对齐工具生成）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
-5. **先看关键帧再整片渲染**：`hat9.py build work/video.json --aspect 9:16`，在 `work/build/...` 里 `npx --yes hyperframes@0.8.191 snapshot --at 1,4,8` 看几帧，有问题先改。
-6. **渲染**：`hat9.py render work/video.json --aspect 9:16 --preview`（横竖都要就各跑一次）。`check` 有 error 不会渲染，按报错修。
-7. **交付前自检**：`python3 scripts/review.py <成片> --video work/video.json`，P0 必须改；再把静帧板逐张看完，按 `review.md` 六项打分，写下最差的 3 处改掉重渲，**每项 ≥ 8 才交付**。告诉用户实际检查了什么。
+   - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
+   - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
+4. **配音**：有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
+5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
+6. **小样**：`hat9.py sample work/video.json --range 0,4 --aspect 9:16` 只做最难的几秒（开场钩子、快切），带声音看手感。
+7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。无人声的快切段用 `hat9.py montage montage.json --into 成片.mp4`（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话）；配乐说话时压低、快切时推上来，整片约 -14 LUFS。
+8. **交付前自检**：`hat9.py review 成片.mp4 --video work/video.json [--ref 参考.mp4]`，P0 必须改；把静帧板逐张看完，在 `review.md` 里六项打分、写下最差的 3 处，改掉重渲。最后 `hat9.py review --gate review.md`，**过了才交付**，并告诉用户实际检查了什么。
 
 最快体验（不改分镜）：`hat9.py quick "文案" --aspect 9:16`。
 

@@ -211,7 +211,15 @@ def raise_code(rc):
     if rc: raise SystemExit(rc)
 
 
+PASS = {"brief": "brief.py", "stills": "stills.py", "sample": "sample.py", "montage": "montage.py",
+        "review": "review.py", "refs": "ref_board.py", "style": "style_kit.py"}
+
+
 def main():
+    # gate and style commands hand every argument (including leading --options) straight to their script
+    if len(sys.argv) > 2 and sys.argv[1] in PASS:
+        raise_code(subprocess.run([PY, str(HERE / PASS[sys.argv[1]])] + sys.argv[2:]).returncode)
+        return
     ap = argparse.ArgumentParser(prog="hat9", description="九帽动效：文案 → 动效视频")
     sp = ap.add_subparsers(dest="cmd", required=True)
     sp.add_parser("doctor").set_defaults(fn=doctor)
@@ -224,9 +232,17 @@ def main():
                                                         + (["--aspect", a.aspect] if a.aspect else []) + (["--preview"] if c == "render" and a.preview else [])))
     f = sp.add_parser("fx"); f.add_argument("name", nargs="?"); f.set_defaults(fn=fx)
     sp.add_parser("styles").set_defaults(fn=styles)
-    r = sp.add_parser("review", help="交付前自检：静帧板 + 自动检查（见 scripts/review.py）")
-    r.add_argument("rest", nargs=argparse.REMAINDER)
-    r.set_defaults(fn=lambda a: raise_code(subprocess.run([PY, str(HERE / "review.py")] + a.rest).returncode))
+    gates = [("brief", "关卡 1：需求单 new / 分镜检查 check（见 scripts/brief.py）"),
+             ("stills", "关卡 2：每个 beat 一张静帧的板（见 scripts/stills.py）"),
+             ("sample", "关卡 3：最难的几秒出动画小样（见 scripts/sample.py）"),
+             ("montage", "快切：卡拍、自动挑好看的一段、放进成片（见 scripts/montage.py）"),
+             ("review", "交付前自检：静帧板 + 自动检查 + --gate 打分关（见 scripts/review.py）"),
+             ("refs", "从参考片学风格：节奏 + 参考板 + 原则表（见 scripts/ref_board.py）")]
+    for name, help_text in gates:
+        g = sp.add_parser(name, help=help_text)
+        g.add_argument("rest", nargs=argparse.REMAINDER)
+        script = "ref_board.py" if name == "refs" else f"{name}.py"
+        g.set_defaults(fn=lambda a, script=script: raise_code(subprocess.run([PY, str(HERE / script)] + a.rest).returncode))
     k = sp.add_parser("style", help="自定义风格：new / preview / check / publish（见 scripts/style_kit.py）")
     k.add_argument("rest", nargs=argparse.REMAINDER)
     k.set_defaults(fn=lambda a: raise_code(subprocess.run([PY, str(HERE / "style_kit.py")] + a.rest).returncode))

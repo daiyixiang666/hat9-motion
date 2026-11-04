@@ -251,6 +251,9 @@ window.__timelines["main"] = tl;
         "paths": {"blocks": "compositions", "components": "compositions/components", "assets": "assets"}, "media": {"autoProxy": True}}, indent=2))
     (out / "meta.json").write_text(json.dumps({"id": f"hat9-{sid}", "name": f"{meta.get('title', 'hat9')} · {style['name']}"}, ensure_ascii=False))
     (out / "package.json").write_text(json.dumps({"name": f"hat9-{sid}", "private": True, "type": "module"}, indent=2))
+    # resolved beat times, for the storyboard check, the stills board and samples (scripts/brief.py, stills.py, sample.py)
+    (out / "timeline.json").write_text(json.dumps({"duration": round(D, 3), "lead": lead, "beats": [
+        {"i": i, "t": round(t, 3), "d": round(d, 3), "scene": b.get("scene"), "fx": b.get("fx")} for i, (b, (t, d)) in enumerate(zip(beats, times))]}, ensure_ascii=False, indent=1))
     print(f"{out}  {TW}x{TH}{f' (laid out as {X.layout})' if X.canvas else ''}  {D:.2f}s  {len(X.els)} clips  {len(X.tws)} tweens  style={sid}")
 
 
