@@ -169,10 +169,17 @@ class Ctx:
         p = Path(rel)
         if not p.is_absolute(): p = (self.src / rel)
         if not p.exists(): raise SystemExit(f"missing asset: {p}")
-        dst = self.out / "assets" / sub / p.name
+        seen = self.__dict__.setdefault("_asset_src", {})     # two different files with the same name must not overwrite each other
+        name = p.name
+        key = f"{sub}/{name}"
+        if seen.get(key, p.resolve()) != p.resolve():
+            name = f"{p.parent.name}-{p.name}"
+            key = f"{sub}/{name}"
+        seen[key] = p.resolve()
+        dst = self.out / "assets" / sub / name
         dst.parent.mkdir(parents=True, exist_ok=True)
         if not dst.exists() or dst.stat().st_mtime < p.stat().st_mtime: shutil.copy2(p, dst)
-        return f"assets/{sub}/{p.name}"
+        return f"assets/{sub}/{name}"
 
     def sfx(self, t, role, vol=None):
         """role = a style SFX role (enter/hit/transition/type/pop...) or a file name in assets/sfx."""

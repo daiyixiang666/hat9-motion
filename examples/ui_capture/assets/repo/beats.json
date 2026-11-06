@@ -1,0 +1,90 @@
+[
+ {
+  "scene": "fx",
+  "fx": "ui_lift",
+  "image": "assets/repo/repo-page.jpg",
+  "box": [
+   68,
+   7358,
+   646,
+   554
+  ],
+  "piece": "assets/repo/repo-04-card.png",
+  "url": "github.com/daiyixiang666/hat9-motion",
+  "tab": "GitHub",
+  "frame": "browser",
+  "path": [
+   {
+    "act": "hover",
+    "x": 0.5,
+    "y": 0.5,
+    "label": "《一杯 4 块钱的柠檬水》"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://github.com/daiyixiang666/hat9-motion"
+ },
+ {
+  "scene": "fx",
+  "fx": "scroll_shot",
+  "image": "assets/repo/repo-page.jpg",
+  "url": "github.com/daiyixiang666/hat9-motion",
+  "tab": "GitHub",
+  "frame": "browser",
+  "stops": [
+   {
+    "box": [
+     482,
+     1380,
+     186,
+     64
+    ],
+    "label": "Code"
+   },
+   {
+    "box": [
+     32,
+     1642,
+     716,
+     900
+    ],
+    "label": "View all files"
+   },
+   {
+    "box": [
+     66,
+     2784,
+     648,
+     1082
+    ],
+    "label": "九帽动效"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://github.com/daiyixiang666/hat9-motion",
+  "toc": false
+ },
+ {
+  "scene": "fx",
+  "fx": "cursor",
+  "image": "assets/repo/repo-08-table.png",
+  "frame": "none",
+  "zoom": 1.0,
+  "path": [
+   {
+    "act": "hover",
+    "x": 179,
+    "y": 41,
+    "label": ".claude-plugin"
+   },
+   {
+    "act": "click",
+    "x": 128,
+    "y": 123,
+    "label": "assets"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://github.com/daiyixiang666/hat9-motion"
+ }
+]

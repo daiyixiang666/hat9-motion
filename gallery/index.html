@@ -74,7 +74,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 <div class="wrap">
   <div class="kick">hat9-motion · 第九顶帽子 <a href="fonts.html" style="color:var(--dim);text-decoration:none;margin-left:12px;letter-spacing:.06em;text-transform:none">字体样张 →</a></div>
   <h1>一条口播，变成 AE 级动效成片</h1>
-  <p class="lede">15 种风格、146 个按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
+  <p class="lede">18 种风格、148 个按 VideoHive 销量、YouTube 和 B 站播放量复刻的 AE 动效，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
   <div class="wall" role="group" aria-label="风格" id="wall"></div>
   <p class="wall-note">点一种风格：上面播它的示例成片，下面的动效卡只看这个风格。另有 <code>studio</code> / <code>clay</code> 三维影棚（整片布景，示例在做）。</p>
@@ -109,7 +109,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   try { data = await (await fetch("effects.json")).json(); } catch (e) { document.getElementById("empty").hidden = false; }
   // [style id, 中文名, 适合, film preview prefix (assets/previews/<prefix>_16x9.mp4) or "" , film title]
   const BUILTIN = [
-    ["press", "财经刊", "商业拆解、数据口播", "mixue", "一杯 4 块钱的柠檬水"], ["poster", "瑞士海报", "观点、金句", "poster", "专注，就是学会说不"],
+    ["press", "财经刊", "商业拆解、数据口播", "mixue", "一杯 4 块钱的柠檬水"], ["minimal", "极简讲述", "观点、心理、认知", "minimal", "棉花糖实验，测的真是自控力吗"], ["poster", "瑞士海报", "观点、金句", "poster", "专注，就是学会说不"],
     ["zine", "拼贴杂志", "潮玩、年轻消费", "zine", "一只怪兽，一年卖了一百四十多亿"], ["screen", "AI 工具台", "AI 工具、产品", "screen", "8 亿人在用，5% 在付钱"],
     ["hud", "暗场 HUD", "拆解、排序", "", ""], ["atlas", "地图纪录", "贸易、航线、地缘", "atlas", "货船为什么不走苏伊士了"],
     ["doc", "实拍纪录", "历史、行业", "doc", "一个铁箱子"], ["papercut", "剪纸", "节日、民俗", "papercut", "过年看电影，钱押给最好的那一部"],

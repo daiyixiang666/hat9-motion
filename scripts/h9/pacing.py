@@ -6,6 +6,8 @@
   meta.lead    = 1.8      the narration starts 1.8 s in, so a silent cold open plays first; all cues move with it.
   meta.duck    = true | 10 (dB)   the music bed dips while someone speaks: a sidechain-style envelope built from the
                  word timestamps (0.15 s attack, 0.4 s release), rendered into a ducked copy of the music file.
+  per beat "music": "up" | dB      the bed comes up for that beat (voiceless runs; quick-cut montage beats by default),
+                 up over 0.25 s into its start, back down over its last 0.3 s, on top of the duck envelope (h9/beatsync.py builds the windows).
   breath       = true      in the narrator's breaths and short pauses (0.25–1.4 s gaps between words) the page takes a
                  small breath: the scene's stage eases in ~1% and back, so a pause never reads as a frozen frame.
   rate_adapt   = true      per beat, the speaking rate sets the tempo: fast talk (> 6 syllables/s, a CJK glyph = 1, a Latin
@@ -72,18 +74,28 @@ def speech_spans(words, join=0.35):
 
 
 def duck(X, meta, music_url):
-    """a ducked copy of the music bed; returns its url (unchanged when meta.duck is off or there are no words)."""
+    """a ducked copy of the music bed; returns its url (unchanged when meta.duck is off or there are no words, and no
+    beat lifts the music). Beats with "music": "up" (X.music_up = [(t0, t1, dB)]) lift the bed there: the file keeps
+    the lifted level at full scale and the rest lower, and X.music_gain tells build.py to play the clip that much louder."""
     db = meta.get("duck")
-    if not db or not music_url or not X._words: return music_url
-    db = 10.0 if db is True else float(db)
+    ups = getattr(X, "music_up", None) or []
+    if not music_url or ((not db or not X._words) and not ups): return music_url
+    sp = speech_spans(X._words) if db and X._words else []
+    if not sp and not ups: return music_url
+    db = 10.0 if db is True else float(db or 0)
     low = 10 ** (-db / 20)
-    sp = speech_spans(X._words)
-    if not sp: return music_url
     terms = "+".join(f"min(1,max(0,(t-{a - 0.15:.3f})/0.15))*min(1,max(0,({b + 0.4:.3f}-t)/0.4))" for a, b in sp)
+    expr = f"1-{1 - low:.4f}*min(1,{terms})" if sp else "1"
+    if ups:
+        top = max(u for _, _, u in ups)
+        base = 10 ** (-top / 20)            # the normal bed, relative to the loudest lift
+        lift = "+".join(f"{10 ** ((u - top) / 20) - base:.4f}*min(1,max(0,(t-{a - 0.25:.3f})/0.25))*min(1,max(0,({b:.3f}-t)/0.3))" for a, b, u in ups)
+        expr = f"({expr})*min(1,{base:.4f}+{lift})"
+        X.music_gain = round(10 ** (top / 20), 4)
     src = X.out / music_url
     dst = src.with_name(src.stem + "_duck.wav")
     script = X.out / "assets" / "audio" / ".duck_filter.txt"
-    script.write_text(f"[0:a]volume='1-{1 - low:.4f}*min(1,{terms})':eval=frame[o]")
+    script.write_text(f"[0:a]volume='{expr}':eval=frame[o]")
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-filter_complex_script", str(script), "-map", "[o]", str(dst)], check=True)
     script.unlink()
     return str(Path(music_url).with_name(dst.name))
@@ -154,8 +166,12 @@ def sound_moments(X, b, t, d, cid):
         at = m.get("at", 0)
         ta = float(X.T(at, t)) if isinstance(at, str) else t + float(at)
         if not (t - 0.01 <= ta <= t + d): continue
+        sn = getattr(X, "snapper", None)
+        if sn and m.get("snap") is not False:           # onto the music's beat, within tolerance; "@词" never well before its word
+            ta = sn.snap(ta, at, f"sfx {X.beat.get('i', 0)}.{k} ({m.get('name', 'hit')})", t - 0.01, t + d)
         X.sfx(ta, m.get("name", "hit"), m.get("vol"))
         hit = m.get("hit")
+        if sn: X.__dict__.setdefault("sfx_hits", []).append({"t": round(ta, 3), "name": m.get("name", "hit"), "hit": hit})
         if hit in HITS:
             col, a0, a1, dur = HITS[hit]
             hid = f"{cid}hit{k}"

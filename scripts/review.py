@@ -14,11 +14,19 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1)
   dead-air      more than 1.2 s of silence inside the film                              (P1)
   pace          with --ref: the film's median shot is longer than the reference's p75   (P1)
+  av-sync       with --video and measured music beats: share of picture cuts in voiceless (music-forward) stretches
+                that land within ±2 frames of a beat (P1 below 70 %), and sfx whose visual hit is off by > 2 frames (P1)
+  music-level   with --video and its build folder: the music bed under speech vs the voice, and in the gaps
+                (P1 when the bed is less than 10 dB under the voice)
 Then look at every sheet and score the rubric in review.md (references/director.md); deliver only when every score ≥ 8.
 Needs ffmpeg and Pillow.
 """
 import argparse, json, re, subprocess, sys, tempfile
+from array import array
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from h9.beatsync import flat  # noqa: E402,F401  (re-exported: montage.py and older callers use review.flat)
 
 TEXT_FX = {"stomp", "black_slam", "tracking", "word_swap", "lockup", "mask_up", "flying_words", "text_mask", "typewriter",
            "scramble", "ghost_type", "write_on", "handwrite", "vertical_title", "glitch", "neon", "shine", "apple_blur", "diffuse"}
@@ -104,18 +112,6 @@ def frames(path, tmp):
     return sorted(Path(tmp).glob("f_*.jpg"))
 
 
-def flat(im):
-    """a frame that is mostly one colour: share of pixels close to the most common colour."""
-    small = im.convert("RGB").resize((27, 48))
-    raw = small.tobytes()
-    counts = {}
-    for i in range(0, len(raw), 3):
-        key = (raw[i] // 24, raw[i + 1] // 24, raw[i + 2] // 24)
-        counts[key] = counts.get(key, 0) + 1
-    top = max(counts.values())
-    return top / (len(raw) // 3)
-
-
 def sheets(files, out):
     from PIL import Image, ImageDraw, ImageFont
     font = ImageFont.load_default(18)
@@ -199,6 +195,163 @@ def caption_dups(vpath):
     return dups, texty
 
 
+def build_dir(film, vpath, given=None):
+    """the build folder a render came from: renders/<style>_<aspect>.mp4 ↔ build/<style>_<aspect>/."""
+    if given: return Path(given).resolve()
+    d = vpath.parent / "build" / film.stem
+    return d if (d / "index.html").exists() else None
+
+
+def sync_facts(vpath, bdir):
+    """(fps, beat grid, speech spans, music-up windows, sfx hits) from the build's timeline.json; falls back to the
+    beats.json next to meta.music and the words shifted by meta.lead. None when the film has no measured beats."""
+    tl = {}
+    if bdir and (bdir / "timeline.json").exists():
+        tl = json.loads((bdir / "timeline.json").read_text())
+    if tl.get("grid"):
+        return tl.get("fps", 30), tl["grid"], tl.get("speech", []), tl.get("music_up", []), tl.get("sfx", [])
+    from h9 import beatsync, pacing
+    meta = json.loads(vpath.read_text()).get("meta", {})
+    if isinstance(meta.get("music"), str):
+        meta["music"] = beatsync._path(meta["music"], vpath.parent)
+    try: info = beatsync.load(meta, vpath.parent)
+    except SystemExit: info = None
+    if not info: return None
+    lead = float(meta.get("lead") or 0)
+    words = [dict(w, s=w["s"] + lead, e=w["e"] + lead) for w in load_words(vpath)]
+    return meta.get("fps", 30), info["beats"], pacing.speech_spans(words) if words else [], [], []
+
+
+def in_spans(t, spans, pre=0.0, post=0.0):
+    for x in spans:
+        if x[0] - pre <= t <= x[1] + post: return True
+    return False
+
+
+def gray_frames(path, fps, w=64):
+    """every frame of the film as a small grey image (bytes), for frame-exact hit checks."""
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-vf", f"fps={fps},scale={w}:-2", "-f", "rawvideo", "-pix_fmt", "gray", "-"],
+                         capture_output=True, check=True).stdout
+    size = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "csv=p=0",
+                                    str(path)], text=True).strip().split(",")
+    h = int(round(int(size[1]) * w / int(size[0]) / 2) * 2)
+    n = w * h
+    return [raw[i:i + n] for i in range(0, len(raw) - n + 1, n)]
+
+
+def hit_offset(frames, fps, t, kind):
+    """frames from the sfx time to the strongest visual hit of its kind within ±6 frames (None when nothing shows)."""
+    k0 = int(round(t * fps))
+    best, best_k = 0.0, None
+    for k in range(max(1, k0 - 6), min(len(frames), k0 + 7)):
+        a, b = frames[k - 1], frames[k]
+        if kind in ("flash", "dark"):
+            ma = sum(a) / len(a)
+            mb = sum(b) / len(b)
+            v = (mb - ma) if kind == "flash" else (ma - mb)
+        else:
+            diff = 0
+            for i in range(0, len(a), 4):
+                diff += abs(a[i] - b[i])
+            v = diff / (len(a) / 4)
+        if v > best:
+            best, best_k = v, k
+    if best_k is None or best < 3: return None
+    return best_k - k0
+
+
+def pcm(src, sr=8000):
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(src), "-ac", "1", "-ar", str(sr), "-f", "f32le", "-"], capture_output=True, check=True).stdout
+    a = array("f")
+    a.frombytes(raw[:len(raw) // 4 * 4])
+    return a
+
+
+def music_levels(bdir, speech, dur, sr=8000):
+    """(voice dB, music dB under speech, music dB in voiceless stretches) of the placed audio clips in index.html."""
+    import math
+    html = (bdir / "index.html").read_text()
+    clips = []
+    for tag in re.findall(r"<audio [^>]*>", html):
+        at = dict(re.findall(r'([\w-]+)="([^"]*)"', tag))
+        cid = at.get("id", "")
+        if cid == "voice" or cid.startswith("music"):
+            clips.append(at)
+    if not any(c["id"] == "voice" for c in clips) or not any(c["id"].startswith("music") for c in clips): return None
+    n = int(dur * sr)
+    tracks = {"voice": [0.0] * n, "music": [0.0] * n}
+    for c in clips:
+        x = pcm(bdir / c["src"], sr)
+        st, d = float(c.get("data-start", 0)), float(c.get("data-duration", dur))
+        ms, vol = float(c.get("data-media-start", 0)), float(c.get("data-volume", 1))
+        fi, fo = float(c.get("data-fade-in", 0)), float(c.get("data-fade-out", 0))
+        dst = tracks["voice" if c["id"] == "voice" else "music"]
+        i0 = int(st * sr)
+        i1 = min(n, int((st + d) * sr))
+        off = int(ms * sr) - i0
+        for i in range(i0, i1):
+            j = i + off
+            if j < 0 or j >= len(x): continue
+            g = vol
+            tt = i / sr - st
+            if fi and tt < fi: g *= tt / fi
+            if fo and d - tt < fo: g *= max(0.0, d - tt) / fo
+            dst[i] += x[j] * g
+    def rms(tr, want_speech):
+        acc, cnt = 0.0, 0
+        for i in range(sr, n - 2 * sr, 4):          # skip the fades at both ends
+            if in_spans(i / sr, speech, 0.05, 0.05) != want_speech: continue
+            if not want_speech and in_spans(i / sr, speech, 0.6, 0.6): continue    # release / attack ramps are not the gap level
+            acc += tr[i] * tr[i]
+            cnt += 1
+        return 10 * math.log10(acc / cnt + 1e-12) if cnt > 200 else None
+    return rms(tracks["voice"], True), rms(tracks["music"], True), rms(tracks["music"], False)
+
+
+def av_checks(film, vpath, bdir, cuts, dur, found):
+    facts = sync_facts(vpath, bdir)
+    if facts:
+        fps, grid, speech, ups, hits = facts
+        tol = 2 / fps + 0.5 / fps
+        last = grid[-1] if grid else 0
+        free = [c for c in cuts if 0.5 < c < min(dur - 0.5, last + 0.3)
+                and (not in_spans(c, speech, 0.15, 0.3) or in_spans(c, [u[:2] for u in ups]))]
+        on = [c for c in free if any(abs(c - g) <= tol for g in grid)]
+        offs = []
+        for c in free:
+            near = min(grid, key=lambda g: abs(g - c))
+            offs.append(round((c - near) * fps))
+        print(f"  卡拍：无人声段 {len(on)}/{len(free)} 刀落在节拍 ±2 帧内" + (f"（偏差帧数 {offs}）" if free else ""))
+        if len(free) >= 3 and len(on) / len(free) < 0.70:
+            bad = [f"{c:.2f}s" for c in free if c not in on][:8]
+            found.append(("P1", "av-sync", f"无人声段只有 {len(on)}/{len(free)} 刀卡在拍上（±2 帧）：{'、'.join(bad)}"))
+        hits = [h for h in hits if h.get("hit")]
+        if hits:
+            frames = gray_frames(film, fps)
+            for h in hits:
+                k = hit_offset(frames, fps, h["t"], h["hit"])
+                if k is None:
+                    found.append(("P1", "av-sync", f"{h['t']:.2f}s 音效 {h['name']} 的画面冲击（{h['hit']}）看不出来"))
+                elif abs(k) > 2:
+                    found.append(("P1", "av-sync", f"{h['t']:.2f}s 音效 {h['name']} 和画面冲击差 {k:+d} 帧"))
+            print(f"  音画：{len(hits)} 个带画面冲击的音效已逐帧核对")
+    if bdir:
+        speech = facts[2] if facts else None
+        if speech is None:
+            from h9 import pacing
+            meta = json.loads(vpath.read_text()).get("meta", {})
+            lead = float(meta.get("lead") or 0)
+            words = [dict(w, s=w["s"] + lead, e=w["e"] + lead) for w in load_words(vpath)]
+            speech = pacing.speech_spans(words) if words else []
+        lv = music_levels(bdir, speech, dur) if speech else None
+        if lv and lv[0] is not None and lv[1] is not None:
+            v, m_sp, m_gap = lv
+            gap_s = f"，无人声处 {m_gap:.1f} dB（比说话时高 {m_gap - m_sp:.1f} dB）" if m_gap is not None else ""
+            print(f"  配乐：人声 {v:.1f} dB，说话时配乐 {m_sp:.1f} dB（低 {v - m_sp:.1f} dB）{gap_s}")
+            if v - m_sp < 10:
+                found.append(("P1", "music-level", f"说话时配乐只比人声低 {v - m_sp:.1f} dB（至少 10–12 dB）：调低 music_volume 或开 duck"))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("film", nargs="?")
@@ -206,6 +359,7 @@ def main():
     ap.add_argument("--ref", help="a reference film: compare the cutting pace")
     ap.add_argument("--video", help="the video.json it was built from (enables caption-dup and fx-repeat)")
     ap.add_argument("--out")
+    ap.add_argument("--build", help="the build folder of this render (default <video dir>/build/<film name>)")
     ap.add_argument("--strict", action="store_true", help="exit 1 when a P0 is found")
     a = ap.parse_args()
     if a.gate:
@@ -285,6 +439,7 @@ def main():
         for fx, n in sorted(counts.items(), key=lambda x: -x[1]):
             if n > 3:
                 found.append(("P1", "fx-repeat", f"{fx} 用了 {n} 次"))
+        av_checks(film, vpath, build_dir(film, vpath, a.build), cuts, dur, found)
 
     lines = [f"# 自检：{film.name}", "", f"时长 {dur:.1f}s · 静帧板 {len(made)} 张（每秒 2 帧）", "", "## 自动检查", ""]
     lines += [f"- **{lv}** `{rule}` {msg}" for lv, rule, msg in found] or ["- 没有发现自动可查的问题"]

@@ -24,6 +24,8 @@ def beats(X, p, t, d):
     meta = X.v.get("meta", {})
     if p.get("beats"):
         bs = [float(b) + (t if p.get("beats_rel") else 0) for b in p["beats"]]
+    elif getattr(X, "music_beats", None) and not p.get("bpm"):      # measured beats of the film's music (h9/beatsync.py)
+        bs = X.music_beats["beats"]
     else:
         bpm = float(p.get("bpm") or meta.get("bpm") or 0)
         if not bpm and meta.get("music"):

@@ -19,6 +19,8 @@ Rules it enforces (references/director.md):
 - a label is optional: a solid tag in the top band (the film's captions sit low), ≥ 80 px at 1080 wide, ≤ 8 characters;
 - each cut opens with a short push-in for impact.
 With --into, the run is laid over the film at its start time; the film's sound is kept (bring the music up there).
+Inside the film, prefer a "montage" beat in video.json (same picker, cut on the music's beats, music lifted): see
+references/video-json.md.
 """
 import argparse, json, subprocess, sys, tempfile
 from pathlib import Path
@@ -26,6 +28,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import review  # noqa: E402
+from h9 import beatsync  # noqa: E402
 
 
 def probe(src):
@@ -38,8 +41,7 @@ def probe(src):
 
 def beat_grid(spec, base):
     if spec.get("beats"):
-        data = json.loads((base / spec["beats"]).read_text())
-        grid = list(data["beats"])
+        _, grid = beatsync.read_beats(base / spec["beats"])
     else:
         step = 60.0 / float(spec["bpm"])
         grid = []
@@ -47,55 +49,10 @@ def beat_grid(spec, base):
         while t < 600:
             grid.append(t)
             t += step
-    off = float(spec.get("music_offset", 0))
-    per = float(spec.get("per", 1))
-    film = [b + off for b in grid]
-    if per == 0.5:
-        halves = []
-        for x, y in zip(film, film[1:]):
-            halves.append(x)
-            halves.append((x + y) / 2)
-        return halves
-    step = max(1, int(per))
-    return film[::step]
+    return beatsync.grid(grid, float(spec.get("per", 1)), float(spec.get("music_offset", 0)))
 
 
-def best_moment(src, length, dur, tmp):
-    """start of the best `length` s window: the picture is full (not a near-empty ground) for the whole window, there
-    is no cut or transition wipe inside, and a little motion breaks ties. A motion-design beat looks best just after
-    its entrance settles, not mid-transition, so readability comes first."""
-    from PIL import Image
-    rate = 10
-    d = tmp / f"scan_{Path(src).stem}"
-    d.mkdir(exist_ok=True)
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(src), "-vf", f"fps={rate},scale=54:-2", str(d / "s_%05d.png")], check=True)
-    files = sorted(d.glob("s_*.png"))
-    full = []
-    grey = []
-    for f in files:
-        im = Image.open(f)
-        full.append(1.0 - review.flat(im))
-        grey.append(im.convert("L").tobytes())
-    move = [0.0]
-    for x, y in zip(grey, grey[1:]):
-        diff = 0
-        for i in range(len(x)):
-            diff += abs(x[i] - y[i])
-        move.append(diff / (255.0 * len(x)))
-    n = max(1, int(round(length * rate)))
-    best, best_at = -1.0, min(0.3, max(0.0, dur - length))
-    for i in range(len(files) - n - 2):
-        t = i / rate
-        if t < 0.3 or t + length > dur - 0.3:
-            continue
-        window_full = min(full[i:i + n + 1])
-        window_move = max(move[i + 1:i + n + 3])      # 0.2 s past the end too: no wipe starting on the last frame
-        if window_move > 0.12:      # a cut or a wipe inside the window
-            continue
-        score = window_full + 0.15 * min(1.0, sum(move[i + 1:i + n + 1]) * 5)
-        if score > best:
-            best, best_at = score, t
-    return best_at
+best_moment = beatsync.best_moment      # shared with the in-film "montage" effect (scripts/h9/fx/montage.py)
 
 
 def label_png(text, W, H, path):

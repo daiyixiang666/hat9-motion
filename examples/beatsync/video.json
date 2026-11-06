@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "title": "一杯四块钱的柠檬水 · 卡拍版",
+    "aspect": "9:16",
+    "style": "press",
+    "voice": "../mixue/assets/audio/voice.mp3",
+    "words": "../mixue/assets/audio/words.json",
+    "mascot": "../mixue/assets/video/shiba.webm",
+    "tail": 2.0,
+    "section": "商业拆解",
+    "case": "蜜雪冰城 · 2024 年报",
+    "src": "蜜雪集团 2024 年度业绩公告",
+    "caption_fix": {
+      "四十四亿多": "44 亿多",
+      "四万六千多": "4.6 万多",
+      "二百四十八亿": "248 亿",
+      "百分之九十七点五": "97.5%",
+      "百分之二点五": "2.5%"
+    },
+    "music": "$H9_MEDIA/music/tech/Digital_Lemonade.mp3",
+    "music_volume": 0.2,
+    "duck": true,
+    "beat_snap": 0.12,
+    "gaps": [
+      {
+        "after": "@走得越多$",
+        "dur": 2.6
+      }
+    ]
+  },
+  "beats": [
+    {
+      "scene": "hook",
+      "t": 0,
+      "at_price": "@四块钱",
+      "at_num": "@四十四亿",
+      "price": "¥4",
+      "price_sub": "一杯",
+      "item": "冰鲜柠檬水",
+      "item_en": "ICED LEMON WATER · ONE CUP",
+      "kicker": "2024 年 · 净利润",
+      "value": 44.5,
+      "unit": "亿",
+      "unit2": "元",
+      "src": "蜜雪集团 2024 年度业绩公告；售出杯数为媒体报道约数",
+      "sub": "净利润同比 *+39.8%*  ·  全年收入 248.3 亿元"
+    },
+    {
+      "scene": "stores",
+      "t": "@蜜雪冰城",
+      "at_a": "@四万六千",
+      "at_b": "@比麦当劳",
+      "kicker": "全球门店数 · 截至 2024 年底",
+      "title": "比麦当劳还多",
+      "a": {
+        "name": "蜜雪冰城",
+        "n": 46479
+      },
+      "b": {
+        "name": "麦当劳",
+        "n": 43477
+      },
+      "per": 100,
+      "diff": "+3,002 家",
+      "src": "蜜雪集团 2024 年度业绩公告；McDonald's 2024 Form 10-K"
+    },
+    {
+      "scene": "turn",
+      "t": "@但它",
+      "at_strike": "@卖奶茶$",
+      "q": "但它真正的生意",
+      "pre": "不是",
+      "struck": "卖奶茶"
+    },
+    {
+      "scene": "split",
+      "t": "@二百四十八亿",
+      "at_total": "@二百四十八亿",
+      "at_pct": "@百分之九十七",
+      "at_i1": "@原料",
+      "at_i2": "@包材",
+      "at_i3": "@设备",
+      "at_zoom": "@加盟费",
+      "at_small": "@百分之二点五",
+      "kicker": "2024 年收入构成",
+      "title": "248.3 亿元，从哪来",
+      "pct": 97.5,
+      "pl_pre": "卖给加盟店的",
+      "pl": "商品和设备",
+      "pl_sub": "242.1 亿元",
+      "total": "全年收入 248.3 亿元",
+      "items": [
+        [
+          "lemon",
+          "原料"
+        ],
+        [
+          "pack",
+          "包材"
+        ],
+        [
+          "machine",
+          "设备"
+        ]
+      ],
+      "to": "→ 卖给 4.6 万家加盟店",
+      "small": {
+        "q": "加盟费呢？",
+        "label": "加盟和相关服务",
+        "tag": "6.2 亿元"
+      },
+      "flag": "2.5%",
+      "sfx": [
+        {
+          "at": "@百分之九十七",
+          "name": "hit",
+          "vol": 0.5,
+          "hit": "flash"
+        }
+      ]
+    },
+    {
+      "scene": "chain",
+      "t": "@你买的",
+      "at_you": "@一杯柠檬水",
+      "at_store": "@加盟商买",
+      "at_chain": "@供应链",
+      "kicker": "生意模型",
+      "title": "你买的是一杯水||加盟商买的是一条链",
+      "nodes": [
+        {
+          "name": "采购",
+          "sub": "柠檬 · 茶 · 奶",
+          "icon": "lemon"
+        },
+        {
+          "name": "自有工厂",
+          "sub": "原料 · 包材",
+          "icon": "factory"
+        },
+        {
+          "name": "仓储物流",
+          "sub": "直送到店",
+          "icon": "truck"
+        },
+        {
+          "name": "加盟店",
+          "sub": "46,479 家",
+          "icon": "store"
+        },
+        {
+          "name": "你",
+          "sub": "¥4 / 杯",
+          "icon": "person"
+        }
+      ],
+      "hot": 3,
+      "bracket": "一整条供应链",
+      "bracket_sub": "= 蜜雪 97.5% 的收入",
+      "src": "蜜雪集团 2024 年度业绩公告；招股书业务介绍"
+    },
+    {
+      "scene": "wheel",
+      "t": "@所以它",
+      "at_more": "@卖得越多",
+      "at_mat": "@原料走得",
+      "kicker": "为什么敢卖 4 块",
+      "q": "所以它",
+      "big": "不怕*便宜*",
+      "sum": "价格越低 → 卖得越多 → 原料走得越多 → 采购越便宜 → 价格还能更低",
+      "stations": [
+        "价格更低",
+        "卖得更多",
+        "原料走量",
+        "采购更便宜"
+      ],
+      "center": "飞轮",
+      "center_en": "FLYWHEEL",
+      "src": "第九顶帽子分析"
+    },
+    {
+      "scene": "fx",
+      "fx": "montage",
+      "t": "@走得越多$",
+      "per": 1,
+      "clips": [
+        {
+          "src": "../pacing/assets/clips/factory.mp4",
+          "in": "auto",
+          "label": "工厂",
+          "line": "原料走得越多"
+        },
+        {
+          "src": "../pacing/assets/clips/harbor.mp4",
+          "in": "auto",
+          "label": "海运",
+          "line": "原料走得越多"
+        },
+        {
+          "src": "../pacing/assets/clips/tanks.mp4",
+          "in": "auto",
+          "label": "仓储",
+          "line": "原料走得越多"
+        },
+        {
+          "src": "../pacing/assets/clips/shoppers.mp4",
+          "in": "auto",
+          "label": "门店",
+          "line": "卖得越多"
+        },
+        {
+          "src": "../pacing/assets/clips/kitchen.mp4",
+          "in": "auto",
+          "label": "后厨",
+          "line": "卖得越多"
+        }
+      ]
+    },
+    {
+      "scene": "thesis",
+      "t": "@看懂谁",
+      "at_em": "@赚钱",
+      "at_struck": "@卖货",
+      "host": true,
+      "kicker": "这期的判断",
+      "l1": "看懂谁在赚钱",
+      "em": "赚钱",
+      "l2": "比看懂谁在卖货更重要",
+      "struck": "卖货",
+      "src": "第九顶帽子",
+      "sfx": [
+        {
+          "at": 0.5,
+          "name": "hit",
+          "vol": 0.45,
+          "hit": "punch"
+        }
+      ]
+    },
+    {
+      "scene": "outro",
+      "t": "@这里是",
+      "title": "第九顶帽子",
+      "sub": "商业拆解 · 看懂谁在赚钱",
+      "cta": "关注，下期拆一家",
+      "src": "第九顶帽子"
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+ "meta": {
+  "title": "真实界面 · ui_capture",
+  "aspect": "9:16",
+  "style": "screen",
+  "duration": 24.0
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "ui_lift",
+   "image": "assets/gallery/gallery-page.jpg",
+   "box": [
+    32,
+    630,
+    716,
+    522
+   ],
+   "piece": "assets/gallery/gallery-02-card.png",
+   "url": "daiyixiang666.github.io/hat9-motion/gallery",
+   "tab": "九帽动效画廊",
+   "frame": "browser",
+   "path": [
+    {
+     "act": "hover",
+     "x": 0.5,
+     "y": 0.5,
+     "label": "财经刊press"
+    }
+   ],
+   "line": "画廊里每张风格卡，都是*真实页面*上截下来的。",
+   "src": "https://daiyixiang666.github.io/hat9-motion/gallery/",
+   "d": 4.4,
+   "topic": "真实界面",
+   "theme": "paper",
+   "t": 0
+  },
+  {
+   "scene": "fx",
+   "fx": "scroll_shot",
+   "image": "assets/repo/repo-page.jpg",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "GitHub",
+   "frame": "browser",
+   "stops": [
+    {
+     "box": [
+      482,
+      1380,
+      186,
+      64
+     ],
+     "label": "Code"
+    },
+    {
+     "box": [
+      32,
+      1642,
+      716,
+      900
+     ],
+     "label": "View all files"
+    },
+    {
+     "box": [
+      66,
+      2784,
+      648,
+      1082
+     ],
+     "label": "九帽动效"
+    }
+   ],
+   "line": "仓库首页往下滚，*Code 按钮*、文件列表、README 依次停住。",
+   "src": "https://github.com/daiyixiang666/hat9-motion",
+   "toc": false,
+   "d": 5.6,
+   "topic": "真实界面",
+   "theme": "ink",
+   "tr": "hard",
+   "t": 4.4
+  },
+  {
+   "scene": "fx",
+   "fx": "ui_lift",
+   "image": "assets/repo/repo-page.jpg",
+   "box": [
+    68,
+    7358,
+    646,
+    554
+   ],
+   "piece": "assets/repo/repo-04-card.png",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "GitHub",
+   "frame": "browser",
+   "path": [
+    {
+     "act": "hover",
+     "x": 0.5,
+     "y": 0.5,
+     "label": "《一杯 4 块钱的柠檬水》"
+    }
+   ],
+   "line": "README 里的成片示例，*整块拎出来*给你看。",
+   "src": "https://github.com/daiyixiang666/hat9-motion",
+   "d": 4.8,
+   "topic": "真实界面",
+   "theme": "paper",
+   "t": 10.0
+  },
+  {
+   "scene": "fx",
+   "fx": "cursor",
+   "image": "assets/repo/repo-08-table.png",
+   "frame": "none",
+   "zoom": 1.0,
+   "path": [
+    {
+     "act": "hover",
+     "x": 179,
+     "y": 41,
+     "label": ".claude-plugin"
+    },
+    {
+     "act": "click",
+     "x": 128,
+     "y": 123,
+     "label": "assets"
+    }
+   ],
+   "line": "文件列表也是真的，*点哪个就是哪个*。",
+   "src": "https://github.com/daiyixiang666/hat9-motion",
+   "d": 4.6,
+   "topic": "真实界面",
+   "theme": "ink",
+   "t": 14.8
+  },
+  {
+   "scene": "fx",
+   "fx": "ui_lift",
+   "image": "assets/repo/repo-page.jpg",
+   "box": [
+    68,
+    4098,
+    646,
+    506
+   ],
+   "piece": "assets/repo/repo-06-card.png",
+   "url": "github.com/daiyixiang666/hat9-motion",
+   "tab": "GitHub",
+   "frame": "browser",
+   "path": [
+    {
+     "act": "hover",
+     "x": 0.25,
+     "y": 0.3,
+     "label": "17 种风格"
+    }
+   ],
+   "line": "风格表也一样，*不重画任何界面*。",
+   "src": "https://github.com/daiyixiang666/hat9-motion",
+   "d": 4.6,
+   "topic": "真实界面",
+   "theme": "paper",
+   "t": 19.4
+  }
+ ]
+}

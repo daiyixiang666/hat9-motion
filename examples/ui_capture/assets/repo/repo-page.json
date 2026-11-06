@@ -1,0 +1,45 @@
+{
+ "url": "https://github.com/daiyixiang666/hat9-motion",
+ "title": "GitHub - daiyixiang666/hat9-motion: 九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys · GitHub",
+ "description": "九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys - daiyixiang666/hat9-motion",
+ "site": "GitHub",
+ "width": 780,
+ "height": 8000,
+ "scale": 2.0,
+ "headings": [
+  {
+   "text": "About",
+   "level": 2,
+   "x": 32,
+   "y": 536,
+   "w": 716,
+   "h": 48
+  },
+  {
+   "text": "九帽动效 · hat9-motion",
+   "level": 1,
+   "x": 66,
+   "y": 2784,
+   "w": 648,
+   "h": 182
+  },
+  {
+   "text": "装上就有",
+   "level": 2,
+   "x": 66,
+   "y": 3964,
+   "w": 648,
+   "h": 76
+  },
+  {
+   "text": "成片示例",
+   "level": 2,
+   "x": 66,
+   "y": 7000,
+   "w": 648,
+   "h": 76
+  }
+ ],
+ "boxes": [],
+ "paragraphs": []
+}

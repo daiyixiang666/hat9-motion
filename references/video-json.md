@@ -61,10 +61,30 @@
 | `lead` | 秒数 | 配音和所有 `"@关键词"` 整体后移，前面空出来给无声开场（配合 `cold_open`） |
 | `gaps` | `[{"after": "@词$", "dur": 1.5}]` | 在那个词之后插入静音，后面的词和关键词一起后移（配合 `breather` / `interlude`） |
 | `duck` | `true` 或分贝数（默认 10） | 说话时背景音乐自动压低，停顿里恢复 |
+| `music_beats` | beats.json 路径 | 配乐的实测节拍 `{"tempo", "beats": [秒…]}`；不写时自动找配乐旁边的 `<歌名>.beats.json`（素材库 `music/<情绪>/` 里都有） |
+| `beat_snap` | 默认开；`false` 关掉；或容差秒数（默认 0.12） | 有节拍时，换画面、转场、`sfx` 音效和它的画面冲击自动挪到最近的拍上。写 `"@词"` 的时间以口播为准：最多晚 0.12 秒、最多早 2 帧，挪不动就不挪。单个 beat 或音效写 `"snap": false` 不动。挪了什么记在构建目录的 `timeline.json` |
+| beat `music` | `"up"` 或分贝数 | 这一段配乐推上来（默认 +8 dB，`meta.music_up` 可改），用在无人声段；快切 beat 默认就推，写 `false` 不推 |
 | `elastic` | 默认开启；`false` 关掉 | 拍短时入场按比例加快，拍长时落定后镜头继续推进；单个 beat 写 `"hold": "static"` 关掉 |
 | `speakers` | `{"A": {"name": "主持人", "color": "#f6ce3a", "side": "left"}}` | 多人对话：words.json 里每个词带 `spk`，字幕按说话人分色、分左右、带名牌 |
 | `caption_mode` | `"reading"` / `"punch"` / `"karaoke"` | 卡拉 OK：整句先暗着，说到哪个字亮哪个字 |
 | `caption_tr` | 每句一行 | 第二语言字幕（按 。！？ 切句对齐） |
+
+### 片中快切（无人声段，卡拍）
+
+```json
+"meta": {"music": "$H9_MEDIA/music/tech/Digital_Lemonade.mp3", "duck": true,
+         "gaps": [{"after": "@走得越多$", "dur": 2.6}]},
+"beats": [ …,
+  {"scene": "fx", "fx": "montage", "t": "@走得越多$", "per": 1, "clips": [
+    {"src": "clips/factory.mp4", "in": "auto", "label": "工厂", "line": "原料走得越多"},
+    {"src": "clips/harbor.mp4",  "in": "auto", "label": "海运", "line": "原料走得越多"}]},
+  {"scene": "thesis", "t": "@看懂谁", …} ]
+```
+
+- 快切从下一拍开始（最多等一拍），每 `per` 拍一刀（`0.5` = 半拍），每段自动挑最好看的一截（`"in"` 写秒数则照用），每刀开头轻推一下；`label` 是顶部黄底标签（≤ 8 字，可省）。
+- 每段必须写 `line`：它对应哪句话。和口播无关的画面不进快切。
+- 配合 `gaps` 在那句话后面空出几拍；不写 `d` 且下一个 beat 没写 `t` 时，这段刚好按段数的拍子长。
+- 例子：`examples/beatsync/`。
 
 工具：`scripts/align.py`（录音 + 稿子 → words.json）、`scripts/cover.py`（16:9 / 4:3 / 3:4 封面）、`scripts/url_brief.py`（网址 → 长截图 + 引用 beat）、`scripts/h9/data.py`（数据效果直接读 CSV / Excel）。
 

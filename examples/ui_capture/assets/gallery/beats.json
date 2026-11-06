@@ -1,0 +1,67 @@
+[
+ {
+  "scene": "fx",
+  "fx": "ui_lift",
+  "image": "assets/gallery/gallery-page.jpg",
+  "box": [
+   32,
+   630,
+   716,
+   522
+  ],
+  "piece": "assets/gallery/gallery-02-card.png",
+  "url": "daiyixiang666.github.io/hat9-motion/gallery",
+  "tab": "九帽动效画廊",
+  "frame": "browser",
+  "path": [
+   {
+    "act": "hover",
+    "x": 0.5,
+    "y": 0.5,
+    "label": "财经刊press"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://daiyixiang666.github.io/hat9-motion/gallery/"
+ },
+ {
+  "scene": "fx",
+  "fx": "scroll_shot",
+  "image": "assets/gallery/gallery-page.jpg",
+  "url": "daiyixiang666.github.io/hat9-motion/gallery",
+  "tab": "九帽动效画廊",
+  "frame": "browser",
+  "stops": [
+   {
+    "box": [
+     0,
+     58,
+     780,
+     1440
+    ],
+    "label": "一条口播，变成"
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://daiyixiang666.github.io/hat9-motion/gallery/",
+  "toc": false
+ },
+ {
+  "scene": "fx",
+  "fx": "cursor",
+  "image": "assets/gallery/gallery-03-card.png",
+  "frame": "none",
+  "zoom": 1.0,
+  "path": [
+   {
+    "act": "click",
+    "x": 75,
+    "y": 443,
+    "label": "zoomin",
+    "at": 1.2
+   }
+  ],
+  "line": "（写这一句口播）",
+  "src": "https://daiyixiang666.github.io/hat9-motion/gallery/"
+ }
+]

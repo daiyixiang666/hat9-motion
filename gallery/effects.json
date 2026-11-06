@@ -1897,6 +1897,32 @@
    "suit": "片尾预告下一期",
    "style": "papercut",
    "style_name": "剪纸"
+  },
+  {
+   "id": "ui_lift",
+   "file": "ui_lift",
+   "band": "",
+   "title": "",
+   "how": "",
+   "cat": "屏幕",
+   "ref": "产品宣传片常用手法：真实界面组件出框演示",
+   "label": "真实组件出框 · UI Lift",
+   "suit": "讲产品时指着真实界面说「就是这个」",
+   "style": "screen",
+   "style_name": "AI 工具台"
+  },
+  {
+   "id": "montage",
+   "file": "montage",
+   "band": "",
+   "title": "",
+   "how": "",
+   "cat": "节奏",
+   "ref": "口播里无人声段的卡拍快切",
+   "label": "卡拍快切 · Beat Montage",
+   "suit": "口播停顿处一串画面啪啪啪卡在节拍上",
+   "style": "press",
+   "style_name": "财经刊"
   }
  ],
  "transitions": [

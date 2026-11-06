@@ -6,13 +6,13 @@
 
 Python standard library only (fontTools optional, for font subsetting).
 """
-import argparse, importlib.util, json, subprocess, sys
+import argparse, importlib.util, json, os, subprocess, sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive, beatsync  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -99,6 +99,11 @@ def main():
     out = Path(a.out).resolve() if a.out else vpath.parent / "build" / f"{sid}_{aspect.replace(':', 'x')}"
     out.mkdir(parents=True, exist_ok=True)
     X = core.Ctx(video, style, out, vpath.parent, aspect)
+    if isinstance(meta.get("music"), str) and meta["music"][:1] in ("$", "~"):      # "$H9_MEDIA/music/…" library paths
+        meta["music"] = os.path.expandvars(os.path.expanduser(meta["music"]))
+    # measured music beats (meta.music_beats or <music>.beats.json): cuts, sfx and quick-cut runs land on them
+    X.music_beats = beatsync.load(meta, vpath.parent)
+    X.snapper = beatsync.Snapper(X.music_beats, X.fps) if X.music_beats else None
 
     # narration + timing
     voice = meta.get("voice")
@@ -114,11 +119,21 @@ def main():
     D = float(meta.get("duration") or 0) or (lead + probe(out / voice_url) + float(meta.get("tail", 0.6)) if voice else 0)
     beats = video["beats"]
     times = []
+    pinned = set()
     for i, b in enumerate(beats):
         t = X.T(b.get("t", 0 if i == 0 else None) if b.get("t") is not None else (times[-1][0] + times[-1][1]))
-        times.append([t, b.get("d")])
+        d = b.get("d")
+        if b.get("fx") == "montage" and not d and (i + 1 == len(beats) or beats[i + 1].get("t") is None):
+            # a quick-cut run followed by a chained beat: start it on a beat and make it exactly as long as the run
+            if X.snapper and i and b.get("snap") is not False:
+                t = X.snapper.snap(t, b.get("t"), f"beat {i} (montage)", times[-1][0] + 4 / X.fps, None, X.snapper.period() * 1.02)
+            d = beatsync.run_end(X, b, t) - t
+            pinned.add(i)
+        times.append([t, d])
     if series.get("opener") and times and times[0][0] < lead:     # the first page starts when the series card ends
         times[0][0] = lead
+    if X.snapper:
+        beatsync.snap_beats(beats, times, X.snapper, lead if series.get("opener") else 0.0, skip=pinned)
     for i, (t, d) in enumerate(times):
         nxt = times[i + 1][0] if i + 1 < len(times) else D
         times[i][1] = float(d) if d else nxt - t
@@ -182,6 +197,8 @@ def main():
 
     # audio
     aud = []
+    X.music_up = beatsync.up_windows(beats, times, meta) if meta.get("music") else []
+    mvol = meta.get("music_volume", 0.12)
     if voice:
         aud.append(f'<audio id="voice" class="clip" src="{voice_url}" data-start="{(f"{lead:.3f}" if lead else "0")}" data-duration="{D - lead:.3f}" data-track-index="40" data-volume="1"></audio>')
     mm = meta.get("music_moods") or {}
@@ -192,10 +209,10 @@ def main():
             url = pacing.duck(X, meta, X.asset(src, "audio"))
             a0, a1 = max(0.0, m0 - (0.4 if k else 0)), min(D, m1 + 0.4)
             aud.append(f'<audio id="music{k}" class="clip" src="{url}" data-start="{a0:.3f}" data-duration="{a1 - a0:.3f}" data-media-start="{a0:.3f}" data-track-index="{41 if k % 2 == 0 else 39}" '
-                       f'data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="{0.8 if k == 0 else 0.4}" data-fade-out="{2 if a1 >= D - 0.01 else 0.4}"></audio>')
+                       f'data-volume="{beatsync.bed_volume(X, mvol)}" data-fade-in="{0.8 if k == 0 else 0.4}" data-fade-out="{2 if a1 >= D - 0.01 else 0.4}"></audio>')
     elif meta.get("music"):
         music_url = pacing.duck(X, meta, X.asset(meta["music"], "audio"))
-        aud.append(f'<audio id="music" class="clip" src="{music_url}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{meta.get("music_volume", 0.12)}" data-fade-in="0.8" data-fade-out="2"></audio>')
+        aud.append(f'<audio id="music" class="clip" src="{music_url}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{beatsync.bed_volume(X, mvol)}" data-fade-in="0.8" data-fade-out="2"></audio>')
     lanes = []   # greedy lane allocation so no two SFX share a track while overlapping
     for i, (t, url, vol) in enumerate(sorted(X.audio)):
         if t >= D - 0.05: continue
@@ -252,8 +269,11 @@ window.__timelines["main"] = tl;
     (out / "meta.json").write_text(json.dumps({"id": f"hat9-{sid}", "name": f"{meta.get('title', 'hat9')} · {style['name']}"}, ensure_ascii=False))
     (out / "package.json").write_text(json.dumps({"name": f"hat9-{sid}", "private": True, "type": "module"}, indent=2))
     # resolved beat times, for the storyboard check, the stills board and samples (scripts/brief.py, stills.py, sample.py)
-    (out / "timeline.json").write_text(json.dumps({"duration": round(D, 3), "lead": lead, "beats": [
-        {"i": i, "t": round(t, 3), "d": round(d, 3), "scene": b.get("scene"), "fx": b.get("fx")} for i, (b, (t, d)) in enumerate(zip(beats, times))]}, ensure_ascii=False, indent=1))
+    tl_json = {"duration": round(D, 3), "lead": lead, "beats": [
+        {"i": i, "t": round(t, 3), "d": round(d, 3), "scene": b.get("scene"), "fx": b.get("fx")} for i, (b, (t, d)) in enumerate(zip(beats, times))]}
+    if X.music_beats:      # beat sync: what moved onto the music's beats, and what review.py's av-sync check needs
+        beatsync.record(X, tl_json, beats, D)
+    (out / "timeline.json").write_text(json.dumps(tl_json, ensure_ascii=False, indent=1))
     print(f"{out}  {TW}x{TH}{f' (laid out as {X.layout})' if X.canvas else ''}  {D:.2f}s  {len(X.els)} clips  {len(X.tws)} tweens  style={sid}")
 
 

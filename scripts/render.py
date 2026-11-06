@@ -21,11 +21,28 @@ def run(cmd, cwd=None, ok_fail=False):
     return r.stdout
 
 
+def has_audio(mp4):
+    return bool(run(["ffprobe", "-v", "error", "-select_streams", "a", "-show_entries", "stream=index", "-of", "csv=p=0", str(mp4)]).strip())
+
+
+def loud(mp4, lufs):
+    """two-pass loudnorm to `lufs` with true peak under -1 dBTP (target -2: AAC adds a little); the picture is copied untouched."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(mp4), "-af", f"loudnorm=I={lufs}:TP=-2:LRA=11:print_format=json", "-vn", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    m = json.loads(r.stderr[r.stderr.rfind("{"):r.stderr.rfind("}") + 1])
+    tmp = mp4.with_name(mp4.stem + ".loud.mp4")
+    af = (f"loudnorm=I={lufs}:TP=-2:LRA=11:measured_I={m['input_i']}:measured_TP={m['input_tp']}:measured_LRA={m['input_lra']}"
+          f":measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
+    run(["ffmpeg", "-v", "error", "-y", "-i", str(mp4), "-c:v", "copy", "-af", af, "-ar", "48000", "-c:a", "aac", "-b:a", "192k", str(tmp)])
+    tmp.replace(mp4)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video"); ap.add_argument("--styles", default="all"); ap.add_argument("--aspect", default=None)
     ap.add_argument("--preview", action="store_true"); ap.add_argument("--quality", default="standard")
     ap.add_argument("--lint", action="store_true", help="run scripts/craft_lint.py on each build (report only, never blocks the render)")
+    ap.add_argument("--lufs", type=float, default=-14.0, help="normalise the sound to this loudness (platforms play about -14); 0 = leave it")
     a = ap.parse_args()
     v = Path(a.video).resolve()
     styles = sorted(p.stem for p in (SKILL / "styles").glob("[!_]*.py")) if a.styles == "all" else a.styles.split(",")
@@ -46,6 +63,8 @@ def main():
         if errs: continue
         mp4 = v.parent / "renders" / f"{sid}_{tag}.mp4"
         run(HF + ["render", "--quality", a.quality, "--output", str(mp4)], cwd=out)
+        if a.lufs and has_audio(mp4):
+            loud(mp4, a.lufs)
         print("  ->", mp4)
         if a.preview:
             pv = v.parent / "previews"; pv.mkdir(exist_ok=True)

@@ -1,0 +1,184 @@
+{
+ "url": "https://daiyixiang666.github.io/hat9-motion/gallery/",
+ "title": "九帽动效画廊",
+ "site": "daiyixiang666.github.io",
+ "aspect": "9:16",
+ "page": "gallery-page.jpg",
+ "screen": "gallery-screen.jpg",
+ "page_size": [
+  780,
+  8000
+ ],
+ "page_scale": 2.0,
+ "scale": 2,
+ "components": [
+  {
+   "id": 1,
+   "file": "gallery-01-hero.jpg",
+   "kind": "hero",
+   "kind_zh": "首屏",
+   "selector": "",
+   "region": true,
+   "tag": "h1",
+   "box": {
+    "x": 0,
+    "y": 29,
+    "w": 390,
+    "h": 720
+   },
+   "box_px": [
+    0,
+    58,
+    780,
+    1440
+   ],
+   "size": [
+    780,
+    1440
+   ],
+   "head": "一条口播，变成 AE 级动效成片",
+   "text": "一条口播，变成 AE 级动效成片",
+   "hot": [
+    {
+     "text": "字体样张 →",
+     "tag": "a",
+     "type": "",
+     "x": 488,
+     "y": 32,
+     "w": 134,
+     "h": 32
+    },
+    {
+     "text": "财经刊press 商业拆解、数据口播",
+     "tag": "button",
+     "type": "button",
+     "x": 32,
+     "y": 572,
+     "w": 716,
+     "h": 522
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#11110f",
+     "share": 0.249
+    },
+    {
+     "hex": "#edebe2",
+     "share": 0.188
+    },
+    {
+     "hex": "#f3f3ec",
+     "share": 0.117
+    },
+    {
+     "hex": "#181715",
+     "share": 0.114
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "file": "gallery-02-card.png",
+   "kind": "card",
+   "kind_zh": "卡片",
+   "selector": "#wall > button.tile:nth-of-type(1)",
+   "region": false,
+   "tag": "button",
+   "box": {
+    "x": 16,
+    "y": 315,
+    "w": 358,
+    "h": 261
+   },
+   "box_px": [
+    32,
+    630,
+    716,
+    522
+   ],
+   "size": [
+    716,
+    522
+   ],
+   "head": "财经刊press 商业拆解、数据口播",
+   "text": "财经刊press 商业拆解、数据口播",
+   "hot": [],
+   "colors": [
+    {
+     "hex": "#efece3",
+     "share": 0.311
+    },
+    {
+     "hex": "#f1d754",
+     "share": 0.255
+    },
+    {
+     "hex": "#1d1817",
+     "share": 0.216
+    },
+    {
+     "hex": "#98835c",
+     "share": 0.083
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "file": "gallery-03-card.png",
+   "kind": "card",
+   "kind_zh": "卡片",
+   "selector": "#tr-zoomin",
+   "region": false,
+   "tag": "article",
+   "box": {
+    "x": 16,
+    "y": 54276,
+    "w": 358,
+    "h": 290
+   },
+   "box_px": [
+    32,
+    108552,
+    716,
+    580
+   ],
+   "size": [
+    716,
+    580
+   ],
+   "head": "zoomin",
+   "text": "zoomin #1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）",
+   "hot": [
+    {
+     "text": "zoomin",
+     "tag": "button",
+     "type": "button",
+     "x": 28,
+     "y": 426,
+     "w": 94,
+     "h": 34
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#191817",
+     "share": 0.237
+    },
+    {
+     "hex": "#373d40",
+     "share": 0.174
+    },
+    {
+     "hex": "#76848d",
+     "share": 0.148
+    },
+    {
+     "hex": "#505b61",
+     "share": 0.148
+    }
+   ]
+  }
+ ],
+ "missing": []
+}

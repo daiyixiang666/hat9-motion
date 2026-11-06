@@ -1,0 +1,615 @@
+{
+ "url": "https://github.com/daiyixiang666/hat9-motion",
+ "title": "GitHub - daiyixiang666/hat9-motion: 九帽动效 · 一条口播变成 AE 级动效成片（横屏 16:9 + 竖屏 9:16）— agent skill for Claude Code / Codex, rendered with HyperFrames, zero API keys · GitHub",
+ "site": "GitHub",
+ "aspect": "9:16",
+ "page": "repo-page.jpg",
+ "screen": "repo-screen.jpg",
+ "page_size": [
+  780,
+  8000
+ ],
+ "page_scale": 2.0,
+ "scale": 2,
+ "components": [
+  {
+   "id": 1,
+   "file": "repo-01-nav.png",
+   "kind": "nav",
+   "kind_zh": "导航",
+   "selector": "div.position-relative.header-wrapper:nth-of-type(2) > react-partial.loaded:nth-of-type(3) > div > div > header.root__q6pgdo.HeaderMktg",
+   "region": false,
+   "tag": "header",
+   "box": {
+    "x": 0,
+    "y": 0,
+    "w": 390,
+    "h": 52
+   },
+   "box_px": [
+    0,
+    0,
+    780,
+    104
+   ],
+   "size": [
+    780,
+    104
+   ],
+   "head": "Navigation Menu",
+   "text": "Navigation Menu Sign in",
+   "hot": [
+    {
+     "text": "Toggle navigation",
+     "tag": "button",
+     "type": "button",
+     "x": 700,
+     "y": 20,
+     "w": 48,
+     "h": 64
+    },
+    {
+     "text": "Homepage",
+     "tag": "a",
+     "type": "",
+     "x": 32,
+     "y": 28,
+     "w": 48,
+     "h": 48
+    },
+    {
+     "text": "Sign in",
+     "tag": "a",
+     "type": "",
+     "x": 572,
+     "y": 20,
+     "w": 84,
+     "h": 64
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#000000",
+     "share": 0.912
+    },
+    {
+     "hex": "#414141",
+     "share": 0.017
+    },
+    {
+     "hex": "#090b0a",
+     "share": 0.015
+    },
+    {
+     "hex": "#090b09",
+     "share": 0.014
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "file": "repo-02-hero.png",
+   "kind": "hero",
+   "kind_zh": "首屏",
+   "selector": "div.Box_1__CzsAnb:nth-of-type(2) > div.Box_2__zaRucd > div.SharedMarkdownContent__JRRdYK:nth-of-type(2) > article.markdown-body.entry-content > div:nth-of-type(1)",
+   "region": false,
+   "tag": "div",
+   "box": {
+    "x": 33,
+    "y": 1392,
+    "w": 324,
+    "h": 541
+   },
+   "box_px": [
+    66,
+    2784,
+    648,
+    1082
+   ],
+   "size": [
+    648,
+    1082
+   ],
+   "head": "九帽动效 · hat9-motion",
+   "text": "九帽动效 · hat9-motion 一条口播，变成 AE 级动效成片。 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt. ▶ 看成片 · 🎛 在线看全部 158 个动效 · ⚡ 60 秒出第一条 · 🤖 交给 AI 用 · 📖 效果目录 示例《一杯 4 块钱的柠檬水》：左横屏、右竖屏，同一份 video.json，各自排版。",
+   "hot": [
+    {
+     "text": "▶ 看成片",
+     "tag": "a",
+     "type": "",
+     "x": 2,
+     "y": 396,
+     "w": 130,
+     "h": 36
+    },
+    {
+     "text": "🎛 在线看全部 158 个动效",
+     "tag": "a",
+     "type": "",
+     "x": 158,
+     "y": 396,
+     "w": 374,
+     "h": 36
+    },
+    {
+     "text": "⚡ 60 秒出第一条",
+     "tag": "a",
+     "type": "",
+     "x": 36,
+     "y": 396,
+     "w": 610,
+     "h": 84
+    },
+    {
+     "text": "🤖 交给 AI 用",
+     "tag": "a",
+     "type": "",
+     "x": 220,
+     "y": 444,
+     "w": 190,
+     "h": 36
+    },
+    {
+     "text": "📖 效果目录",
+     "tag": "a",
+     "type": "",
+     "x": 436,
+     "y": 444,
+     "w": 176,
+     "h": 36
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#ffffff",
+     "share": 0.435
+    },
+    {
+     "hex": "#e0301c",
+     "share": 0.192
+    },
+    {
+     "hex": "#c6ccd6",
+     "share": 0.126
+    },
+    {
+     "hex": "#8b8284",
+     "share": 0.088
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "file": "repo-03-cta.png",
+   "kind": "cta",
+   "kind_zh": "按钮",
+   "selector": "div.prc-PageLayout-Content-xWL-A > div.Box__PalQtd.tmp-pl-lg-3 > div.Box_1__424Y1a:nth-of-type(2) > div.Box_6__yyTyGl:nth-of-type(2) > button.prc-Button-ButtonBase-9n-Xk",
+   "region": false,
+   "tag": "button",
+   "box": {
+    "x": 241,
+    "y": 690,
+    "w": 93,
+    "h": 32
+   },
+   "box_px": [
+    482,
+    1380,
+    186,
+    64
+   ],
+   "size": [
+    186,
+    64
+   ],
+   "head": "Code",
+   "text": "Code",
+   "hot": [],
+   "colors": [
+    {
+     "hex": "#1f883d",
+     "share": 0.781
+    },
+    {
+     "hex": "#e4f0e7",
+     "share": 0.066
+    },
+    {
+     "hex": "#1d813a",
+     "share": 0.056
+    },
+    {
+     "hex": "#1f783a",
+     "share": 0.048
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "file": "repo-04-card.png",
+   "kind": "card",
+   "kind_zh": "卡片",
+   "selector": "article.markdown-body.entry-content > markdown-accessiblity-table:nth-of-type(2) > table > tbody > tr:nth-of-type(1)",
+   "region": false,
+   "tag": "tr",
+   "box": {
+    "x": 34,
+    "y": 3679,
+    "w": 323,
+    "h": 277
+   },
+   "box_px": [
+    68,
+    7358,
+    646,
+    554
+   ],
+   "size": [
+    646,
+    554
+   ],
+   "head": "《一杯 4 块钱的柠檬水》",
+   "text": "《一杯 4 块钱的柠檬水》 press 财经刊：大字 + 色块，点阵对比、收入构成条一路推进到 2.5%、钱货两条线、飞轮。 蜜雪集团 2024 年度业绩公告 · McDonald's 2024 10-K",
+   "hot": [],
+   "colors": [
+    {
+     "hex": "#ffffff",
+     "share": 0.752
+    },
+    {
+     "hex": "#edeff0",
+     "share": 0.067
+    },
+    {
+     "hex": "#c6bf9b",
+     "share": 0.061
+    },
+    {
+     "hex": "#7a797a",
+     "share": 0.057
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "file": "repo-05-cards.jpg",
+   "kind": "cards",
+   "kind_zh": "卡片组",
+   "selector": "div.SharedMarkdownContent__JRRdYK:nth-of-type(2) > article.markdown-body.entry-content > markdown-accessiblity-table:nth-of-type(1) > table > tbody",
+   "region": false,
+   "tag": "tbody",
+   "box": {
+    "x": 34,
+    "y": 2049,
+    "w": 323,
+    "h": 1426
+   },
+   "box_px": [
+    68,
+    4098,
+    646,
+    2852
+   ],
+   "size": [
+    646,
+    2852
+   ],
+   "head": "17 种风格",
+   "text": "17 种风格 press 财经刊 · poster 瑞士海报 · zine 拼贴杂志 · screen AI 工具台 · hud 暗场 · atlas 地图纪录 · doc 实拍纪录 · papercut 剪纸 · sketch 手绘白板 · ink 水墨国风 · flat 扁平插画 · pixel 像素复古 · iso3d 等距微缩 · chrome3d Y2K 镀铬 · studio / clay 三维影棚 · reel 动效库 60 款字体 黑体、宋体、书法、手写、像素、展示字……按场景挑，字体样张 158 个动效 146 个效果 + 12 种转场：字效、数据图表、地图、引用、截图录屏、",
+   "hot": [
+    {
+     "text": "字体样张",
+     "tag": "a",
+     "type": "",
+     "x": 146,
+     "y": 574,
+     "w": 466,
+     "h": 84
+    },
+    {
+     "text": "在线画廊",
+     "tag": "a",
+     "type": "",
+     "x": 146,
+     "y": 888,
+     "w": 466,
+     "h": 84
+    },
+    {
+     "text": "下文",
+     "tag": "a",
+     "type": "",
+     "x": 338,
+     "y": 1468,
+     "w": 64,
+     "h": 36
+    },
+    {
+     "text": "references/styles.md",
+     "tag": "a",
+     "type": "",
+     "x": 146,
+     "y": 2000,
+     "w": 350,
+     "h": 36
+    },
+    {
+     "text": "references/director.md",
+     "tag": "a",
+     "type": "",
+     "x": 146,
+     "y": 2506,
+     "w": 382,
+     "h": 36
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#f7f8fa",
+     "share": 0.161
+    },
+    {
+     "hex": "#ffffff",
+     "share": 0.157
+    },
+    {
+     "hex": "#c5c8cd",
+     "share": 0.144
+    },
+    {
+     "hex": "#edeef0",
+     "share": 0.119
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "file": "repo-06-card.png",
+   "kind": "card",
+   "kind_zh": "卡片",
+   "selector": "article.markdown-body.entry-content > markdown-accessiblity-table:nth-of-type(1) > table > tbody > tr:nth-of-type(1)",
+   "region": false,
+   "tag": "tr",
+   "box": {
+    "x": 34,
+    "y": 2049,
+    "w": 323,
+    "h": 253
+   },
+   "box_px": [
+    68,
+    4098,
+    646,
+    506
+   ],
+   "size": [
+    646,
+    506
+   ],
+   "head": "17 种风格",
+   "text": "17 种风格 press 财经刊 · poster 瑞士海报 · zine 拼贴杂志 · screen AI 工具台 · hud 暗场 · atlas 地图纪录 · doc 实拍纪录 · papercut 剪纸 · sketch 手绘白板 · ink 水墨国风 · flat 扁平插画 · pixel 像素复古 · iso3d 等距微缩 · chrome3d Y2K 镀铬 · studio / clay 三维影棚 · reel 动效库",
+   "hot": [],
+   "colors": [
+    {
+     "hex": "#ffffff",
+     "share": 0.528
+    },
+    {
+     "hex": "#eef0f1",
+     "share": 0.134
+    },
+    {
+     "hex": "#7c7f82",
+     "share": 0.121
+    },
+    {
+     "hex": "#c6c7c9",
+     "share": 0.08
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "file": "repo-07-code.png",
+   "kind": "code",
+   "kind_zh": "代码块",
+   "selector": "div.Box_1__CzsAnb:nth-of-type(2) > div.Box_2__zaRucd > div.SharedMarkdownContent__JRRdYK:nth-of-type(2) > article.markdown-body.entry-content > div.highlight.highlight-source-shell:nth-of-type(7)",
+   "region": false,
+   "tag": "div",
+   "box": {
+    "x": 33,
+    "y": 10986,
+    "w": 324,
+    "h": 52
+   },
+   "box_px": [
+    66,
+    21972,
+    648,
+    104
+   ],
+   "size": [
+    648,
+    104
+   ],
+   "head": "python3 scripts/hat9.py doctor",
+   "text": "python3 scripts/hat9.py doctor",
+   "hot": [
+    {
+     "text": "python3 scripts/hat9.py doctor",
+     "tag": "clipboard-copy",
+     "type": "",
+     "x": 576,
+     "y": 16,
+     "w": 56,
+     "h": 56
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#f6f8fa",
+     "share": 0.767
+    },
+    {
+     "hex": "#8d9094",
+     "share": 0.067
+    },
+    {
+     "hex": "#f9fbfc",
+     "share": 0.049
+    },
+    {
+     "hex": "#d4d7d9",
+     "share": 0.043
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "file": "repo-08-table.png",
+   "kind": "table",
+   "kind_zh": "表格",
+   "selector": "div.Box__PalQtd.tmp-pl-lg-3 > div.Box_11__e1F7PX:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(3) > table.Box__0K17vj.OverviewTable__rPbUfl",
+   "region": false,
+   "tag": "table",
+   "box": {
+    "x": 16,
+    "y": 821,
+    "w": 358,
+    "h": 450
+   },
+   "box_px": [
+    32,
+    1642,
+    716,
+    900
+   ],
+   "size": [
+    716,
+    900
+   ],
+   "head": "View all files",
+   "text": "Name Last commit date .claude-plugin assets docs examples gallery references research runtime scenes scripts View all files",
+   "hot": [
+    {
+     "text": ".claude-plugin",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 24,
+     "w": 186,
+     "h": 34
+    },
+    {
+     "text": "assets",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 106,
+     "w": 84,
+     "h": 34
+    },
+    {
+     "text": "docs",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 188,
+     "w": 62,
+     "h": 34
+    },
+    {
+     "text": "examples",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 270,
+     "w": 122,
+     "h": 34
+    },
+    {
+     "text": "gallery",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 352,
+     "w": 86,
+     "h": 34
+    },
+    {
+     "text": "references",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 434,
+     "w": 138,
+     "h": 34
+    },
+    {
+     "text": "research",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 516,
+     "w": 112,
+     "h": 34
+    },
+    {
+     "text": "runtime",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 598,
+     "w": 98,
+     "h": 34
+    },
+    {
+     "text": "scenes",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 680,
+     "w": 92,
+     "h": 34
+    },
+    {
+     "text": "scripts",
+     "tag": "a",
+     "type": "",
+     "x": 86,
+     "y": 762,
+     "w": 88,
+     "h": 34
+    },
+    {
+     "text": "View all files",
+     "tag": "button",
+     "type": "",
+     "x": 278,
+     "y": 838,
+     "w": 160,
+     "h": 42
+    }
+   ],
+   "colors": [
+    {
+     "hex": "#ffffff",
+     "share": 0.738
+    },
+    {
+     "hex": "#f0f3f6",
+     "share": 0.064
+    },
+    {
+     "hex": "#9aafc3",
+     "share": 0.06
+    },
+    {
+     "hex": "#f8f9fa",
+     "share": 0.033
+    }
+   ]
+  }
+ ],
+ "missing": []
+}
