@@ -124,7 +124,13 @@ def build(X, D, fix=None, maxlen=None):
     # mixed-style film, e.g. {"cap-bottom": "300px", "cap-size": "50px", "f-cap": "'PingFang SC', sans-serif"}
     user = meta.get("caption_style") or {}
     if user:
-        X.css("cap-user", "#root#root { " + " ".join(f"--{k}:{val};" for k, val in user.items()) + " }")
+        css = "#root#root { " + " ".join(f"--{k}:{val};" for k, val in user.items()) + " }"
+        if "cap-bottom" in user:
+            # some styles pin the subtitle box themselves (poster: left-aligned, 540 px up); the film's choice wins
+            css += (" #root#root .clip.cap { top:auto !important; bottom:var(--cap-bottom) !important; left:0 !important;"
+                    " right:0 !important; text-align:center !important; }"
+                    " #root#root.v .clip.cap { padding-left:120px; padding-right:120px; }")
+        X.css("cap-user", css)
     fix = fix or {}
     hl = meta.get("caption_hl", [])
     f = 1 / X.fps

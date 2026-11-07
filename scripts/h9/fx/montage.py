@@ -6,6 +6,7 @@ lifted for the run unless the beat says "music": false.
 
 Without measured beats it falls back to meta.bpm, else a 0.5 s grid.
 p: clips [{src, in: "auto" | seconds, label (≤ 8 字), line (the sentence it illustrates — required)}] · per (default 1)
+   · zoom (e.g. 1.45: every clip shown larger from its top edge, so subtitles burned into the clips fall out of frame)
 When the beat has no "d" and the next beat has no "t", build.py makes the beat exactly as long as the run.
 """
 import importlib.util, pathlib, sys
@@ -72,7 +73,10 @@ def montage(X, cid, t, d, p):
         _, sel = FIT.media(X, cid, f"m{i}", str(src), a, w, "mtgv", z=2, start=start)
         if sel:
             n6 = 6 / X.fps          # the push-in of scripts/montage.py: 7 % over the first 6 frames
-            X.tw(f'tl.fromTo("{sel}", {{scale:1.07}}, {{scale:1, duration:{min(n6, w):.3f}, ease:"none", immediateRender:false}}, {a:.3f});')
+            # "zoom": 1.5 shows the clip's top part larger (anchored at the top) — pushes burned-in subtitles out of frame
+            z = float(p.get("zoom", 1))
+            org = ', transformOrigin:"50% 0%"' if z != 1 else ""
+            X.tw(f'tl.fromTo("{sel}", {{scale:{1.07 * z:.3f}{org}}}, {{scale:{z:.3f}, duration:{min(n6, w):.3f}, ease:"none", immediateRender:false}}, {a:.3f});')
         if c.get("label"):
             if len(c["label"]) > 8: print(f"  注意：快切标签「{c['label']}」超过 8 个字，半秒读不完")
             labels.append(f'<b class="lb lb{i}">{X.rich(c["label"])}</b>')
