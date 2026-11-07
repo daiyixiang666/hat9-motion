@@ -138,7 +138,10 @@ class Ctx:
     def clip(self, cid, t, d, inner, cls="", z=2, track=1, tag="div", attrs="", sty=""):
         if cls.startswith("ov-") or cls.startswith("tr-"): attrs += ' data-motion-blur="off"'   # texture jumps are not motion
         if "scene" in cls.split():
-            inner = f'<div class="stage">{inner}{getattr(self, "beat_marks", "")}</div>'; self.beat_marks = ""
+            ff = getattr(self, "stage_fit", None)
+            # CSS scale/translate compose with the transforms GSAP tweens on .stage, so shakes and pushes still work
+            fs = f' style="scale:{ff.get("scale", 1)}; translate:{ff.get("x", 0)}px {ff.get("y", 0)}px;"' if ff and "fx" in cls.split() else ""
+            inner = f'<div class="stage"{fs}>{inner}{getattr(self, "beat_marks", "")}</div>'; self.beat_marks = ""
         self.els.append(f'<{tag} id="{cid}" class="clip {cls}" data-start="{t:.3f}" data-duration="{max(d, 0.05):.3f}" '
                         f'data-track-index="{track}" style="z-index:{z};{sty}" {attrs}>{inner}</{tag}>')
 

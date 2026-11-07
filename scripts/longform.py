@@ -9,10 +9,13 @@ slices the narration (and music, keeping its position), shifts words and cues to
 <out>/chNN/video.json, builds and renders it. Chapters render in parallel (--jobs) and are joined with ffmpeg's
 concat demuxer (stream copy: same encoder settings, no re-encode) into <out>/<name>.mp4.
 
+Mixed styles: a chapter-start beat may carry "style": "ink" (or "chapter": {"style": "ink", ...}); that chapter is
+built in that style, the others in --style / meta.style. A style change at a chapter seam is a hard cut.
+
 Limits: meta.gaps is not applied across chapters (edit the narration first); meta.lead applies to chapter 1 only.
 A cut lands between beats, so a sentence that spans two beats is cut there too — put chapter marks on sentence starts.
 """
-import argparse, copy, json, subprocess, sys
+import argparse, copy, json, os, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -40,8 +43,16 @@ def resolve(obj, X, after):
 def shift(obj, by, keys_time):
     """subtract `by` from absolute times (numbers under cue-like keys)."""
     if isinstance(obj, dict):
-        return {k: (round(v - by, 3) if isinstance(v, (int, float)) and not isinstance(v, bool) and (k in keys_time or k.startswith("at")) else shift(v, by, keys_time))
-                for k, v in obj.items()}
+        out = {}
+        for k, v in obj.items():
+            timed = k in keys_time or k.startswith("at")
+            if timed and isinstance(v, (int, float)) and not isinstance(v, bool):
+                out[k] = round(v - by, 3)
+            elif timed and isinstance(v, list) and v and all(isinstance(x, (int, float)) and not isinstance(x, bool) for x in v):
+                out[k] = [round(x - by, 3) for x in v]          # "at": [t1, t2, ...]
+            else:
+                out[k] = shift(v, by, keys_time)
+        return out
     if isinstance(obj, list): return [shift(v, by, keys_time) for v in obj]
     return obj
 
@@ -91,7 +102,7 @@ def main():
             cw = [dict(w, s=round(w["s"] - t0, 3), e=round(w["e"] - t0, 3)) for w in words if t0 - 1e-3 <= w["s"] < t1]
             (d / "assets" / "words.json").write_text(json.dumps(cw, ensure_ascii=False)); cm["words"] = "assets/words.json"
         if meta.get("music"):
-            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", str(src / meta["music"]), str(d / "assets" / "music.wav")], check=True)
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", str(src / os.path.expandvars(meta["music"])), str(d / "assets" / "music.wav")], check=True)
             cm["music"] = "assets/music.wav"
         for key in ("mascot",):
             if cm.get(key): cm[key] = str((src / cm[key]).resolve())
@@ -99,18 +110,21 @@ def main():
         cm["beat_offset"], cm["beat_total"] = i0, len(beats)     # page furniture keeps the film's numbering
         cb = []
         for b in beats[i0:i1]:
-            nb = shift(b, t0, {"t", "d"})
+            nb = shift(b, t0, {"t"})          # "d" is a length, not a time
             for kk, vv in list(nb.items()):        # media paths stay valid from the chapter folder
                 if isinstance(vv, str) and (src / vv).exists() and not vv.startswith("@"): nb[kk] = str((src / vv).resolve())
             cb.append(nb)
+        head = beats[i0]
+        cst = head.get("style") or (head["chapter"].get("style") if isinstance(head.get("chapter"), dict) else None) or style
+        cm["style"] = cst
         (d / "video.json").write_text(json.dumps({"meta": cm, "beats": cb}, ensure_ascii=False, indent=1))
-        chapters.append((k + 1, d, t0, t1))
-        print(f"chapter {k + 1}: beats {i0}–{i1 - 1}  {t0:.2f}–{t1:.2f} s")
+        chapters.append((k + 1, d, t0, t1, cst))
+        print(f"chapter {k + 1}: beats {i0}–{i1 - 1}  {t0:.2f}–{t1:.2f} s  style={chapters[-1][4]}")
 
     def job(c):
-        n, d, t0, t1 = c
-        tag = aspect.replace(":", "x"); b = d / "build" / f"{style}_{tag}"
-        subprocess.run([sys.executable, "-W", "ignore", str(HERE / "build.py"), str(d / "video.json"), "--style", style, "--aspect", aspect, "--out", str(b)], check=True,
+        n, d, t0, t1, cst = c
+        tag = aspect.replace(":", "x"); b = d / "build" / f"{cst}_{tag}"
+        subprocess.run([sys.executable, "-W", "ignore", str(HERE / "build.py"), str(d / "video.json"), "--style", cst, "--aspect", aspect, "--out", str(b)], check=True,
                        capture_output=True)
         if a.no_render: return None
         mp4 = d / f"ch{n:02d}.mp4"

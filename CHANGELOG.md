@@ -1,5 +1,12 @@
 # 更新记录
 
+## 0.14.2 · 2026-11-07
+- 长片按章换风格：`scripts/longform.py` 里，章节开头的 beat 写 `"style": "ink"`（或 `chapter: {"style": ...}`），这一章就用这个风格出，其余章用默认风格，章与章之间硬切。
+- 修正：主体（如柴犬）`hidden` 时，竖屏画面不再被压在上半屏的小框里，效果重新铺满整个画面。
+- 修正：`longform.py` 不再把 beat 的时长 `d` 当成时间点平移（之前写了 `d` 的 beat 会变成负时长）；`"at": [t1, t2]` 这类时间列表也会随章节平移；配乐路径支持 `$H9_MEDIA`。
+- 新参数 `frame_fit: {scale, x, y}`：单个 beat 的画面整体放大、平移，填满竖屏空白；不影响效果自己的抖动和推镜。
+- `stomp` 第三个词改成强调色底上的实心字，并停到这一拍结束（之前是空心描边，底色还会提前退回）。
+
 ## 0.14.1 · 2026-11-07
 - 版式示例和文档里的数字、文案全部换成九帽动效自己的事实（174 个动效、18 种风格、7 天 15 个版本、把仓库地址发给 Claude Code / Codex / Cursor），`key_card`、`side_stat`、`chip_cycle`、`strike_fix` 的默认值也改成中性的；对应的预览动图重新生成。
 - 新检查 `number-repeat`（P1，review / brief check）：相邻两个 beat 都是「一个大数字 + 小字」（`key_card`、`side_stat`、`odometer`、`number` 场景、`scan_field`、`mosaic_number`、`seat_swarm`、`glass`、带数字的仪表盘等）就提醒换一种载体。名单在 `form_families.json` 的 `number_hero`。

@@ -587,7 +587,7 @@ def stomp(X, cid, t, d, p):
         f = _fit(X, w, box=(0.86, 0.62), max_vmin=base[i % 3], min_vmin=6, max_lines=2, lh=0.98)
         items.append(f'<div class="sw s{i % 3}" data-i="{i}" style="font-size:{f.px}px">{_lines(X, f)}</div>')
     _clip(X, cid, t, d, f'<div class="sbg"></div>{"".join(items)}', p)
-    X.css("aefx-st", ".fx .sbg { position:absolute; inset:0; background:var(--bg); } .fx .sw { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:900; line-height:.95; color:var(--fg); opacity:0; text-align:center; white-space:nowrap; } .fx .sw.s2 { -webkit-text-stroke:3px var(--fg); color:color-mix(in srgb, var(--fg) 8%, transparent); }")
+    X.css("aefx-st", ".fx .sbg { position:absolute; inset:0; background:var(--bg); } .fx .sw { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:900; line-height:.95; color:var(--fg); opacity:0; text-align:center; white-space:nowrap; } .fx .sw.s2 { color:var(--bg); }")
     for i, tt in enumerate(times):
         inv = i % 3 == 2
         X.tw(f'tl.set("#{cid} .sw", {{opacity:0}}, {tt:.3f});')
@@ -595,7 +595,9 @@ def stomp(X, cid, t, d, p):
         X.tw(f'tl.fromTo("#{cid} .sw[data-i=\'{i}\']", {{opacity:1, scale:1.5}}, {{scale:1, duration:0.16, ease:"power4.out"}}, {tt:.3f});')
         X.tw(f'tl.fromTo("#{cid} > .stage", {{x:{X.rand.choice([-14, 14])}, y:{X.rand.choice([-8, 8])}}}, {{x:0, y:0, duration:0.1, ease:"steps(2)"}}, {tt:.3f});')
         X.sfx(tt, "slam" if i % 2 == 0 else "pop")
-    X.tw(f'tl.set("#{cid} .sbg", {{background:"var(--bg)"}}, {times[-1] + 0.5:.3f});')
+    # an inverted last hit stays inverted to the end of the beat (its word is drawn in the background colour)
+    if len(times) % 3 != 0:
+        X.tw(f'tl.set("#{cid} .sbg", {{background:"var(--bg)"}}, {times[-1] + 0.5:.3f});')
 
 
 def mosaic(X, cid, t, d, p):

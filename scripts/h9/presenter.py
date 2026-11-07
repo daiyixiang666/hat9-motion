@@ -110,7 +110,9 @@ def rects(X, place, box, opts, contain=False):
         pres = (x, y, w, h)
         region = free_region(box, pres, X.portrait)
         return pres, region
-    if place in ("full", "hidden"):
+    if place == "hidden":
+        return (0, 0, W, H), None             # nobody on screen: the graphics get the whole frame
+    if place == "full":
         if not contain:
             return (0, 0, W, H), None
         # a cut-out (mascot) owns the frame standing on the bottom chrome; the graphics go above its head (9:16)

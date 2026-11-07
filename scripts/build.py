@@ -158,7 +158,9 @@ def main():
         if layers:
             layers.begin(X, i)                                            # the beat lays out in the space the presenter leaves
         n_tw, n_audio, n_els = len(X.tws), len(X.audio), len(X.els)
+        X.stage_fit = b.get("frame_fit")                                  # {"scale", "x", "y"}: zoom the scene to fill the frame
         scene_fn(b["scene"], style)(b, X, t, d, cid)
+        X.stage_fit = None
         mood = b.get("mood", mood) if i else b.get("mood")
         delivery.paint_mood(X, cid, n_els, mood)                          # "mood": "heavy" → the dark token set for this beat
         pacing.rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els)          # speaking rate sets the tempo (meta.rate_adapt)
