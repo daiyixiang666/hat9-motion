@@ -120,6 +120,11 @@ def build(X, D, fix=None, maxlen=None):
         X.css("cap-preset", "#root { " + " ".join(f"--{k}:{val};" for k, val in v.items()) + " }")
         pre = dict(pre, mode=pmode)
     mode = meta.get("caption_mode") or (pre or {}).get("mode") or X.S.get("caption_mode") or ("punch" if X.portrait else "reading")
+    # meta.caption_style: caption tokens that win over the style and the preset — one subtitle look across a
+    # mixed-style film, e.g. {"cap-bottom": "300px", "cap-size": "50px", "f-cap": "'PingFang SC', sans-serif"}
+    user = meta.get("caption_style") or {}
+    if user:
+        X.css("cap-user", "#root#root { " + " ".join(f"--{k}:{val};" for k, val in user.items()) + " }")
     fix = fix or {}
     hl = meta.get("caption_hl", [])
     f = 1 / X.fps
@@ -128,6 +133,20 @@ def build(X, D, fix=None, maxlen=None):
         pg = pages(regroup(X._words), maxlen or 6, minlen=2, spk_out=spk)
     else:
         pg = pages(regroup(X._words), maxlen or (14 if X.portrait else 16), spk_out=spk)
+    mute = getattr(X, "caption_mute", [])
+    if mute:          # a page is dropped when most of it falls inside a muted beat
+        kept = []
+        kept_spk = []
+        for k in range(len(pg)):
+            p = pg[k]
+            inside = 0.0
+            for m0, m1 in mute:
+                inside += max(0.0, min(p[1], m1) - max(p[0], m0))
+            if inside < 0.5 * max(p[1] - p[0], 0.01):
+                kept.append(p)
+                kept_spk.append(spk[k] if k < len(spk) else None)
+        pg = kept
+        spk[:] = kept_spk
     raw = [(p[0], p[1], p[2]) for p in pg]          # before fixes / timing pads (karaoke maps glyphs to words with it)
     for p in pg:
         for k, v in fix.items(): p[2] = p[2].replace(k, v)

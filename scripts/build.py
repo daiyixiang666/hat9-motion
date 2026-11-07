@@ -184,6 +184,8 @@ def main():
     delivery.ai_label(X, D, meta)
     delivery.logo_mark(X, D, brand)
     fx.overlays(X, D)
+    # beats with "caption": false (their screen already shows the words) get no subtitle pages
+    X.caption_mute = [(t, t + d) for b, (t, d) in zip(beats, times) if b.get("caption") is False]
     captions.build(X, D, meta.get("caption_fix"), meta.get("caption_len"))
     captions.srt(X, D, out / "captions.srt", meta.get("caption_fix"))
 

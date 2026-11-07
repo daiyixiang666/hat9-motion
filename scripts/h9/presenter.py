@@ -295,6 +295,8 @@ class Layers:
             return
         if device.caption_mode(X) != "reading":
             return
+        if X.v.get("meta", {}).get("caption_style"):
+            return            # the film fixed its own subtitle look
         last = None
         for i in range(len(self.places)):
             w = self.world_at(i)
