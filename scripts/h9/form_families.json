@@ -1,0 +1,89 @@
+{
+ "_doc": "Layout family of every effect and core scene: what SHAPE the information takes on screen (not how glyphs appear). Read by scripts/h9/forms.py for the form-repeat / slogan-share / form-variety checks in review.py --video and brief.py check. A new effect: add one line under fx. An effect missing here is a warning, not an error.",
+ "families": {
+  "slogan":    "全屏大字 · one phrase centred full-frame (most text effects)",
+  "beside":    "贴人排版 · text / numbers laid out beside the subject (presenter, host, name strap)",
+  "number":    "大数字 · one figure as the picture",
+  "chart":     "数据图 · bars, lines, rings, tables",
+  "metaphor":  "视觉比喻 · the number made physical (units, seats, dials, swarms)",
+  "compare":   "对比 · before / after, A vs B, stamps",
+  "structure": "结构 · steps, lists, rankings, trees",
+  "card":      "信息卡 · a designed card or genre page (key info, deal, news, action page)",
+  "ui":        "界面 / 屏幕 · app UI, chat, screens, code, logs",
+  "doc":       "文档 / 引用 · papers, articles, posts, documents",
+  "people":    "人物 · profiles, dialogue, interviews, relations",
+  "footage":   "实拍 · one clip or still as the picture",
+  "photo":     "照片处理 · a photo worked over (parallax, callout, halftone)",
+  "montage":   "快切 / 拼墙 · many pictures at once or in quick succession",
+  "map":       "地图",
+  "shape":     "图形动效 · abstract shape animation",
+  "annotate":  "标注 · marks drawn over something (scribble, strike-through)",
+  "breather":  "呼吸页 · pauses, chapter cards, suspense"
+ },
+ "beside_when_presenter": ["card", "side"],
+ "fx": {
+  "stomp": "slogan", "black_slam": "slogan", "tracking": "slogan", "impact": "slogan", "mask_up": "slogan",
+  "apple_blur": "slogan", "neon": "slogan", "glitch": "slogan", "write_on": "slogan", "shine": "slogan",
+  "flip3d": "slogan", "scramble": "slogan", "typewriter": "slogan", "ghost_type": "slogan", "lockup": "slogan",
+  "match_cut": "slogan", "word_swap": "slogan", "text_pages": "slogan", "number_pages": "slogan",
+  "vertical_title": "slogan", "flying_words": "slogan", "pop": "slogan", "blur_focus": "slogan", "slice_text": "slogan",
+  "triple": "slogan", "dual": "slogan", "plate": "slogan",
+
+  "pip": "beside", "talking_head": "beside", "host_point": "beside", "lower3": "beside",
+  "stack_build": "beside", "side_stat": "beside",
+
+  "odometer": "number",
+
+  "bars": "chart", "line_draw": "chart", "donut": "chart", "timeline": "chart", "table": "chart",
+  "statement_table": "chart", "waterfall": "chart", "bar_race": "chart", "stacked_bars": "chart", "formula": "chart",
+  "bars_csv": "chart", "line_csv": "chart", "combo": "chart", "scatter": "chart", "funnel": "chart", "radar": "chart",
+  "gantt": "chart",
+
+  "icon_unit": "metaphor", "scale_compare": "metaphor", "mosaic_number": "metaphor", "seat_swarm": "metaphor",
+  "dial": "metaphor", "one_to_many": "metaphor", "scan_field": "metaphor",
+
+  "then_now": "compare", "pros_cons": "compare", "stamp_compare": "compare",
+
+  "list_stack": "structure", "steps": "structure", "ranking": "structure", "quadrant": "structure",
+  "countdown": "structure", "choose_one": "structure", "converge": "structure", "decision_tree": "structure",
+  "chip_cycle": "structure",
+
+  "term_card": "card", "question_card": "card", "key_card": "card", "action_card": "card", "opener": "card",
+  "news_flash": "card", "deal_card": "card", "review_card": "card", "sponsor_card": "card", "share_card": "card",
+  "next_teaser": "card",
+
+  "notify": "ui", "chat": "ui", "hud_lock": "ui", "glass": "ui", "comment_thread": "ui", "im_chat": "ui",
+  "danmaku": "ui", "receipt": "ui", "app_flow": "ui", "form_fill": "ui", "search_box": "ui", "poll_card": "ui",
+  "scroll_shot": "ui", "screencast": "ui", "spotlight": "ui", "code": "ui", "cursor": "ui", "ui_lift": "ui",
+  "log_scroll": "ui",
+
+  "cite_pdf": "doc", "cite_paper": "doc", "cite_article": "doc", "cite_quote": "doc", "cite_post": "doc",
+  "cite_video": "doc", "cite_stack": "doc", "scanline": "doc", "doc_photo": "doc", "slides": "doc",
+  "doc_flip": "doc", "doc_pick": "doc", "handwrite": "doc", "email_card": "doc", "notice_card": "doc",
+
+  "profile_card": "people", "equity_tree": "people", "relation_graph": "people", "dialogue": "people",
+  "interview": "people", "audio_quote": "people", "podcast": "people", "reaction": "people",
+
+  "media": "footage", "footage": "footage", "freeze_frame": "footage", "speed_ramp": "footage",
+  "gif_clip": "footage", "clip_style": "footage",
+
+  "parallax": "photo", "portal": "photo", "callout": "photo", "text_mask": "photo", "halftone": "photo",
+  "meme_stage": "photo", "turntable": "photo",
+
+  "mosaic": "montage", "collage": "montage", "logo_wall": "montage", "cold_open": "montage", "beat_cut": "montage",
+  "montage": "montage", "card_fan": "montage",
+
+  "earth_zoom": "map", "map_route": "map", "china_map": "map", "area_overlay": "map", "map_timeline": "map",
+  "street_map": "map",
+
+  "burst": "shape", "cartoon": "shape", "diffuse": "shape", "gooey": "shape", "svg_art": "shape",
+
+  "scribble": "annotate", "strike_fix": "annotate",
+
+  "suspense": "breather", "interlude": "breather", "breather": "breather", "chapter_breather": "breather",
+  "chapter_bar": "breather", "loading": "breather", "think_loop": "breather"
+ },
+ "scenes": {
+  "statement": "slogan", "title": "slogan", "quote": "doc", "number": "number", "compare": "compare", "outro": "card"
+ }
+}

@@ -11,6 +11,10 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   caption-dup   on-screen big text that only repeats the spoken line                  (P1, P0 above 30 % of text beats)
   cut-gap       more than 6 s without a cut or a big change                           (P1)
   fx-repeat     the same effect used more than 3 times                                (P1)
+  form-repeat   with --video: the same layout family on 2 neighbouring beats             (P1)
+  slogan-share  with --video: share of full-frame slogan beats                            (P1 above 25 %, P0 above 40 %)
+  form-variety  with --video: fewer than 5 layout families in a film over 60 s           (P1)
+                (families: scripts/h9/form_families.json; `review.py --video video.json` alone runs only these)
   loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1)
   dead-air      more than 1.2 s of silence inside the film                              (P1)
   pace          with --ref: the film's median shot is longer than the reference's p75   (P1)
@@ -27,6 +31,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from h9.beatsync import flat  # noqa: E402,F401  (re-exported: montage.py and older callers use review.flat)
+from h9 import forms  # noqa: E402
 
 TEXT_FX = {"stomp", "black_slam", "tracking", "word_swap", "lockup", "mask_up", "flying_words", "text_mask", "typewriter",
            "scramble", "ghost_type", "write_on", "handwrite", "vertical_title", "glitch", "neon", "shine", "apple_blur", "diffuse"}
@@ -352,6 +357,31 @@ def av_checks(film, vpath, bdir, cuts, dur, found):
                 found.append(("P1", "music-level", f"说话时配乐只比人声低 {v - m_sp:.1f} dB（至少 10–12 dB）：调低 music_volume 或开 duck"))
 
 
+def timeline_for(vpath, bdir=None):
+    """the build's timeline.json (beat times) when there is one, else None."""
+    if bdir and (Path(bdir) / "timeline.json").exists():
+        return json.loads((Path(bdir) / "timeline.json").read_text())
+    builds = sorted((vpath.parent / "build").glob("*/timeline.json"))
+    if builds:
+        return json.loads(builds[0].read_text())
+    return None
+
+
+def form_only(vpath, strict=False):
+    """review.py --video video.json without a film: only the layout-family checks (no render needed)."""
+    video = json.loads(vpath.read_text())
+    found = forms.lint(video, timeline_for(vpath))
+    print(f"  版式：{forms.summary(video)}")
+    for lv, rule, msg in found:
+        print(f"  {lv} {rule:<12} {msg}")
+    if not found:
+        print("  版式检查通过")
+    if strict:
+        for lv, _, _ in found:
+            if lv == "P0":
+                sys.exit(1)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("film", nargs="?")
@@ -368,8 +398,11 @@ def main():
             print(f"  ✗ {p}")
         print("  ✓ 可以交付" if not problems else "不能交付：改完重新渲染、重新打分")
         sys.exit(1 if problems else 0)
+    if not a.film and a.video:
+        form_only(Path(a.video).resolve(), a.strict)
+        return
     if not a.film:
-        ap.error("给一个成片，或用 --gate review.md")
+        ap.error("给一个成片，或用 --gate review.md，或只用 --video video.json 查版式")
     film = Path(a.film).resolve()
     out = Path(a.out).resolve() if a.out else film.parent / f"review_{film.stem}"
     out.mkdir(parents=True, exist_ok=True)
@@ -439,6 +472,9 @@ def main():
         for fx, n in sorted(counts.items(), key=lambda x: -x[1]):
             if n > 3:
                 found.append(("P1", "fx-repeat", f"{fx} 用了 {n} 次"))
+        form_findings = forms.lint(json.loads(vpath.read_text()), timeline_for(vpath, build_dir(film, vpath, a.build)))
+        for item in form_findings:
+            found.append(item)
         av_checks(film, vpath, build_dir(film, vpath, a.build), cuts, dur, found)
 
     lines = [f"# 自检：{film.name}", "", f"时长 {dur:.1f}s · 静帧板 {len(made)} 张（每秒 2 帧）", "", "## 自动检查", ""]

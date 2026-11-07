@@ -104,5 +104,9 @@
 | `lang` / `--lang` | `"ja"` | 多语言字段 `{"zh", "en", "ja", …}` 里选一种；日文、韩文、繁体、阿拉伯文、希伯来文自动换字体 |
 | `offline` | `true` | 地图只用仓库自带的 d3-geo 和 topojson，缺文件就报错 |
 | 文字标记 | `CO_{2}`、`mc^{2}` | 下标、上标 |
+| `meta.presenter` | `{"src": "assets/host.mp4"}` | 常驻主体（录屏、真人或柴犬图），整片连续播放；详见 `references/presenter.md` |
+| beat `presenter` | `"card"` | 这个 beat 里主体的位置：`full` / `card` / `side` / `corner` / `hidden`，换位置时平滑移动 |
+| `meta.device` | `"camera"` | 贯穿全片的外框：`camera` / `browser` / `phone`；详见 `references/device.md` |
+| beat `chapter` | `{"label": "TIME-LAPSE", "bg": "accent"}` | 从这里开始新的一章：外框上的模式名和底色一起换（写 `true` 仍然只是换章转场） |
 
 工具：`scripts/cut_list.py`（长口播挑段精剪）、`scripts/ref_pacing.py`（量参考片的剪辑节奏）、`scripts/export_edit.py`（FCPXML + 分轨音频 + SRT，可导入剪辑软件）、`scripts/longform.py`（长片按章节分段渲染再拼接）、`scripts/share_card.py`（导出单张金句图）、`scripts/audio_tools.py`（降噪、拼接录音、剪口误）。

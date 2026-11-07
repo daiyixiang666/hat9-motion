@@ -1,0 +1,310 @@
+{
+ "meta": {
+  "title": "数字变形状 · 九帽动效",
+  "aspect": "16:9",
+  "style": "poster",
+  "duration": 44.5
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "t": 0.0,
+   "d": 6.0,
+   "topic": "九帽动效",
+   "fx": "mosaic_number",
+   "folder": "../media/assets/frames",
+   "value": 300,
+   "text": "300",
+   "sub": "张示例静帧 · 全部由九帽动效生成",
+   "line": "这 *300 张* 画面，全是九帽自己做出来的。",
+   "label": "作品拼数字 · Mosaic Number",
+   "src": "examples/media/assets/frames"
+  },
+  {
+   "scene": "fx",
+   "t": 6.0,
+   "d": 5.5,
+   "topic": "九帽动效",
+   "fx": "card_fan",
+   "images": [
+    "../../assets/previews/atlas_9x16.jpg",
+    "../../assets/previews/chrome3d_9x16.jpg",
+    "../../assets/previews/doc_9x16.jpg",
+    "../../assets/previews/flat_9x16.jpg",
+    "../../assets/previews/ink_9x16.jpg",
+    "../../assets/previews/iso3d_9x16.jpg",
+    "../../assets/previews/minimal_9x16.jpg",
+    "../../assets/previews/mixue_9x16.jpg",
+    "../../assets/previews/papercut_9x16.jpg",
+    "../../assets/previews/pixel_9x16.jpg",
+    "../../assets/previews/poster_9x16.jpg",
+    "../../assets/previews/screen_9x16.jpg",
+    "../../assets/previews/sketch_9x16.jpg",
+    "../../assets/previews/zine_9x16.jpg"
+   ],
+   "title": "一套效果 · 换风格就换皮",
+   "kicker": "14 部风格示例片",
+   "subject": "../mixue/assets/video/shiba.webm",
+   "subject_label": "柴柴",
+   "line": "同一套效果，换一种风格，*整片换一身皮*。",
+   "label": "作品扇面 · Card Fan",
+   "src": "assets/previews"
+  },
+  {
+   "scene": "fx",
+   "t": 11.5,
+   "d": 5.5,
+   "topic": "九帽动效",
+   "fx": "seat_swarm",
+   "kicker": "画廊首页只留",
+   "label": "一个空位 · Seat Swarm",
+   "steps": [
+    [
+     28,
+     1.6
+    ],
+    [
+     88,
+     2.6
+    ],
+    [
+     "146",
+     3.6
+    ]
+   ],
+   "unit": "个效果在抢",
+   "subject": "../mixue/assets/video/shiba.webm",
+   "line": "首页只有 *一个* 推荐位，效果却从 28 个涨到了 146 个。",
+   "src": "CHANGELOG 0.3.0 → 0.7.0",
+   "seat_label": "1 个推荐位"
+  },
+  {
+   "scene": "fx",
+   "t": 17.0,
+   "d": 5.0,
+   "topic": "九帽动效",
+   "fx": "scan_field",
+   "kicker": "craft_lint 扫一遍",
+   "value": 12,
+   "unit": "处 AI 味被清掉",
+   "tag": "全片都是淡入",
+   "mock": "示意",
+   "line": "交付前 craft_lint 扫一遍，*AI 味*当场清掉。",
+   "label": "扫描清除 · Scan Field"
+  },
+  {
+   "scene": "fx",
+   "t": 22.0,
+   "d": 4.5,
+   "topic": "九帽动效",
+   "fx": "dial",
+   "mode": "gauge",
+   "value": 100,
+   "unit": "%",
+   "lo": "0",
+   "hi": "100",
+   "line": "每个效果都能出 *竖屏*。",
+   "text": "竖屏适配",
+   "label": "仪表 · Dial"
+  },
+  {
+   "scene": "fx",
+   "t": 26.5,
+   "d": 6.0,
+   "topic": "九帽动效",
+   "fx": "dial",
+   "mode": "clock",
+   "hours": 24,
+   "value": 24,
+   "icon": "inbox",
+   "note": "想要的效果",
+   "stamp": "处理好 ✓",
+   "daynight": true,
+   "subject": "../mixue/assets/video/shiba.webm",
+   "mock": "示意",
+   "line": "想要什么效果，留言，*24 小时*内给你做好。",
+   "text": "反馈 24 小时内处理",
+   "label": "时钟 · Dial Clock"
+  },
+  {
+   "scene": "fx",
+   "t": 32.5,
+   "d": 6.0,
+   "topic": "九帽动效",
+   "fx": "log_scroll",
+   "title": "hat9-motion — CHANGELOG",
+   "lines": [
+    [
+     "v0.1.0",
+     "10-31",
+     "引擎：video.json → HyperFrames",
+     "已发布"
+    ],
+    [
+     "v0.2.0",
+     "10-31",
+     "三维引擎：立体中文字、PBR 材质",
+     "已发布"
+    ],
+    [
+     "v0.3.0",
+     "10-31",
+     "AE 动效库：28 个效果 + 12 种转场",
+     "已发布"
+    ],
+    [
+     "v0.3.0",
+     "10-31",
+     "hat9 命令行",
+     "已发布"
+    ],
+    [
+     "v0.4.0",
+     "10-31",
+     "示例重做《一杯 4 块钱的柠檬水》",
+     "已发布"
+    ],
+    [
+     "v0.5.0",
+     "10-31",
+     "新风格 screen / atlas / doc / poster",
+     "已发布"
+    ],
+    [
+     "v0.5.0",
+     "10-31",
+     "素材自适应 + 压力测试",
+     "已发布"
+    ],
+    [
+     "v0.6.0",
+     "10-31",
+     "新效果 50 个",
+     "已发布"
+    ],
+    [
+     "v0.6.0",
+     "10-31",
+     "卡拉 OK 字幕、录音对齐",
+     "已发布"
+    ],
+    [
+     "v0.7.0",
+     "11-01",
+     "新效果 58 个",
+     "已发布"
+    ],
+    [
+     "v0.7.0",
+     "11-01",
+     "1:1 / 4:5 / 3:4 交付",
+     "已发布"
+    ],
+    [
+     "v0.8.0",
+     "11-02",
+     "新风格 8 种",
+     "已发布"
+    ],
+    [
+     "v0.8.0",
+     "11-02",
+     "字体扩到 58 款",
+     "已发布"
+    ],
+    [
+     "v0.8.1",
+     "11-02",
+     "缝合像素、霞鹜漫黑",
+     "已发布"
+    ],
+    [
+     "v0.9.0",
+     "11-02",
+     "动效跟着风格换皮",
+     "已发布"
+    ],
+    [
+     "v0.9.0",
+     "11-02",
+     "画廊风格墙",
+     "已发布"
+    ],
+    [
+     "v0.10.0",
+     "11-03",
+     "自定义风格 style new",
+     "已发布"
+    ],
+    [
+     "v0.11.0",
+     "11-03",
+     "导演手册 + review 自检",
+     "已发布"
+    ],
+    [
+     "v0.12.0",
+     "11-03",
+     "brief / stills / sample 关卡",
+     "已发布"
+    ],
+    [
+     "v0.12.0",
+     "11-03",
+     "montage 卡拍快切",
+     "已发布"
+    ],
+    [
+     "v0.13.0",
+     "11-06",
+     "新风格 minimal 极简讲述",
+     "已发布"
+    ],
+    [
+     "v0.13.0",
+     "11-06",
+     "配乐卡拍 + -14 LUFS",
+     "已发布"
+    ],
+    [
+     "v0.13.0",
+     "11-06",
+     "ui_capture 真实界面",
+     "已发布"
+    ],
+    [
+     "v0.13.0",
+     "11-06",
+     "craft_lint 工作室规矩",
+     "已发布"
+    ]
+   ],
+   "counter": {
+    "label": "DAY",
+    "from": 1,
+    "to": 7,
+    "pad": 2
+   },
+   "tag": "加速提升中 ↑",
+   "line": "一周 *14 个版本*，每天都在更新。",
+   "label": "日志滚动 · Log Scroll",
+   "src": "CHANGELOG.md"
+  },
+  {
+   "scene": "fx",
+   "t": 38.5,
+   "d": 6.0,
+   "topic": "九帽动效",
+   "fx": "one_to_many",
+   "subject": "../mixue/assets/video/shiba.webm",
+   "subject_label": "柴柴",
+   "count": 47,
+   "one_unit": "人",
+   "unit": "个",
+   "title": "背后是*一群 Agent*",
+   "kind": "terminal",
+   "line": "屏幕前是我一个人，背后是 *一群 Agent*。",
+   "label": "一个变一群 · One to Many"
+  }
+ ]
+}

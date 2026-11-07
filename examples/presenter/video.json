@@ -1,0 +1,199 @@
+{
+ "meta": {
+  "title": "8 亿人在用，5% 在付钱",
+  "aspect": "9:16",
+  "style": "minimal",
+  "voice": "../screen/assets/audio/voice.mp3",
+  "words": "../screen/assets/audio/words.json",
+  "music": "../screen/assets/audio/music.mp3",
+  "music_volume": 0.18,
+  "tail": 2.4,
+  "caption_preset": "douyin",
+  "caption_fix": {
+   "八亿": " 8 亿 ",
+   "百分之五": "5%",
+   "一亿": "1 亿",
+   "六十亿": "60 亿",
+   "三千五百万": "3,500 万",
+   "二十美元": "20 美元",
+   "两百美元": "200 美元",
+   "九成五": "95%",
+   "二零三零年": "2030 年",
+   "两亿两千万": "2.2 亿"
+  },
+  "presenter": {
+   "src": "../mixue/assets/video/shiba.webm",
+   "at": "full",
+   "tag": "ON AIR · 第九顶帽子"
+  },
+  "device": {
+   "kind": "camera",
+   "brand": "第九顶帽子",
+   "url": "hat9.dev"
+  }
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": 0,
+   "presenter": "full",
+   "chapter": {
+    "label": "PANO",
+    "sub": "全景",
+    "bg": "ink",
+    "title": "周活"
+   },
+   "text": "每周 *8 亿* 人在用",
+   "sub": "ChatGPT 周活 · OpenAI DevDay 2025"
+  },
+  {
+   "scene": "fx",
+   "fx": "donut",
+   "t": "@真正",
+   "presenter": "card",
+   "value": 5,
+   "text": "真正掏钱的只有 *5%*",
+   "sub": "付费占周活 · The Information"
+  },
+  {
+   "scene": "fx",
+   "fx": "then_now",
+   "t": "@两年前",
+   "presenter": "side",
+   "chapter": {
+    "label": "TIME-LAPSE",
+    "sub": "延时",
+    "bg": "paper",
+    "title": "两年"
+   },
+   "then": {
+    "label": "2023.11",
+    "value": 1,
+    "unit": "亿",
+    "caption": "周活"
+   },
+   "now": {
+    "label": "2025.10",
+    "value": 8,
+    "unit": "亿",
+    "caption": "周活"
+   },
+   "note": "OpenAI 公开数据"
+  },
+  {
+   "scene": "fx",
+   "fx": "odometer",
+   "t": "@现在它",
+   "presenter": "corner",
+   "chapter": {
+    "label": "BURST",
+    "sub": "连拍",
+    "bg": "accent",
+    "title": "接口"
+   },
+   "value": "60亿",
+   "unit": "token / 分钟",
+   "sub": "API 每分钟处理量 · Sam Altman，DevDay 2025"
+  },
+  {
+   "scene": "fx",
+   "fx": "word_swap",
+   "t": "@但付费",
+   "presenter": "side",
+   "chapter": {
+    "label": "PORTRAIT",
+    "sub": "人像",
+    "bg": "bg",
+    "title": "谁在付钱"
+   },
+   "pre": "付费的人",
+   "words": [
+    "8 亿",
+    "3,500 万"
+   ],
+   "mode": "replace"
+  },
+  {
+   "scene": "fx",
+   "fx": "bars",
+   "t": "@一个月",
+   "presenter": "side",
+   "items": [
+    [
+     "Plus",
+     20
+    ],
+    [
+     "Pro",
+     200
+    ]
+   ],
+   "unit": "美元/月",
+   "hl": 1,
+   "title": "ChatGPT 订阅价"
+  },
+  {
+   "scene": "fx",
+   "fx": "icon_unit",
+   "t": "@剩下",
+   "presenter": "card",
+   "total": 100,
+   "share": 95,
+   "icon": "person",
+   "text": "*95 个* 在免费用",
+   "sub": "每 100 个周活用户"
+  },
+  {
+   "scene": "fx",
+   "fx": "line_draw",
+   "t": "@OpenAI押",
+   "presenter": "corner",
+   "chapter": {
+    "label": "OpenAI 的 2030 目标",
+    "device": "browser",
+    "bg": "paper",
+    "url": "hat9.dev/notes/openai-2030"
+   },
+   "points": [
+    [
+     "2025",
+     0.35
+    ],
+    [
+     "2030（目标）",
+     2.2
+    ]
+   ],
+   "unit": "亿",
+   "title": "ChatGPT 付费用户",
+   "note": "来源：The Information 报道的 OpenAI 内部预测"
+  },
+  {
+   "scene": "fx",
+   "fx": "word_swap",
+   "t": "@所以别",
+   "presenter": "card",
+   "chapter": {
+    "label": "SELFIE",
+    "sub": "自拍",
+    "bg": "card",
+    "title": "结论"
+   },
+   "pre": "别只看",
+   "words": [
+    "谁的用户多",
+    "谁愿意付钱"
+   ],
+   "mode": "replace"
+  },
+  {
+   "scene": "fx",
+   "fx": "mask_up",
+   "t": "@这里是",
+   "presenter": "full",
+   "text": "第九顶帽子",
+   "sub": "AI 工具台 · 看懂谁在赚钱"
+  }
+ ]
+}

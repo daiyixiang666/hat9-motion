@@ -11,6 +11,9 @@ about later, while it is still cheap to fix:
   text-share  share of the runtime that is text-only beats — the PPT look                   (P0 above 30 %, P1 above 15 %)
   caption-dup big words that only repeat the spoken line                                    (P1, P0 above 30 % of text beats)
   same-fx     the same effect on two neighbouring beats, or more than 3 times in the film   (P1)
+  form-repeat the same layout family on two neighbouring beats (scripts/h9/form_families.json)   (P1)
+  slogan-share full-frame slogan beats above 25 % of beats (P1), above 40 % (P0)
+  form-variety fewer than 5 layout families in a film over 60 s                              (P1)
   no-brief    there is no brief.md next to video.json                                       (P1)
 """
 import argparse, json, subprocess, sys
@@ -20,6 +23,7 @@ HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
 import review  # noqa: E402
+from h9 import forms  # noqa: E402
 
 TEMPLATE = """# 需求单：{title}
 
@@ -134,6 +138,9 @@ def check(vpath, style=None, aspect=None):
     for k, n in counts.items():
         if n > 3:
             found.append(("P1", "same-fx", f"{k} 用了 {n} 次（全片最多 3 次）"))
+    form_findings = forms.lint(video, tl)
+    for item in form_findings:
+        found.append(item)
     return found, out
 
 

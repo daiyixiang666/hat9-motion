@@ -1,5 +1,11 @@
 # 更新记录
 
+## 0.14.0 · 2026-11-06
+- 同一个重点，换着载体说：新增 7 个贴着主体的版式（`stack_build` 字逐行叠出 / 名片、`side_stat` 侧贴数字、`key_card` 信息卡放大、`stamp_compare` 截图标注对比、`strike_fix` 删除线改口、`chip_cycle` 步骤 + 标签轮换、`action_card` 可截图的结尾行动页）和 7 个把数字变成画面的效果（`mosaic_number` 作品拼数字、`seat_swarm` 空位涌入、`dial` 仪表 / 24 小时钟、`log_scroll` 日志滚动、`one_to_many` 一变一群、`scan_field` 扫描清除、`card_fan` 卡片扇形）。每个都跟着风格换皮，有的连结构一起变（暗场是细线仪表，海报是实心扇形，水墨是一笔弧）。
+- 主体层 `meta.presenter`：真人、录屏或柴犬常驻画面，每个 beat 写 `presenter: full / card / side / corner / hidden`，在镜头之间平滑换位置、视频不断，效果自动排在空出来的区域里；字幕自动垫底色，压在任何画面上都看得清。见 `references/presenter.md`。
+- 章节外框 `meta.device`：相机 / 浏览器 / 手机外框贯穿全片，beat 写 `chapter: {label, bg}`，换章时模式名和底色一起换。见 `references/device.md`。
+- 版式多样性检查（review / brief check）：每个效果归到一类版式；相邻两个 beat 同一类、全屏大字超过 25%（超过 40% 判 P0）、60 秒以上少于 5 类版式都会报出来。
+
 ## 0.13.0 · 2026-11-06
 - 新风格 `minimal` 极简讲述：暖白纸 / 深炭灰底 + 剪影插画，一条细蓝线贯穿全片（地平线、钟面、坐标轴、柱子轮廓、划线都是它），斜体衬线只给每屏一个重音词；示例《棉花糖实验，测的真是自控力吗》（Mischel 1972、Shoda 1990、Kidd 2013、Watts 2018）。
 - 配乐卡拍：配乐旁有 `.beats.json` 时，换画面、转场、音效和冲击帧自动吸到节拍上（不挪到口播词之前）；片中快切 `"fx": "montage"`（每刀卡拍、每段自动挑最好看的一秒）；说话时配乐压低、无人声段自动推上来；渲染自动标准化到 -14 LUFS；review 新增卡拍 / 音画 / 配乐压低检查。

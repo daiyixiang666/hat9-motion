@@ -12,7 +12,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
-from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive, beatsync  # noqa: E402
+from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive, beatsync, presenter  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -144,6 +144,10 @@ def main():
     X.extra_head = X.extra_body = ""
     world = getattr(style["_mod"], "WORLD", None)
     if world: world(beats, times, X, D)
+    # presenter layer + chapter device (meta.presenter / meta.device / beat "chapter": {...}); None when absent
+    layers = None
+    if not world:
+        layers = presenter.plan(X, video, beats, times, D, style)
     prev, mood, spans = None, None, []
     for i, (b, (t, d)) in enumerate(zip(beats, times)):
         if world: break
@@ -151,6 +155,8 @@ def main():
         cid = b.get("id") or X.uid("s")
         X.beat = {"t": t, "d": d, "i": i + int(meta.get("beat_offset", 0)), "n": int(meta.get("beat_total", len(beats)))}   # longform chapters keep global page numbers
         X.beat_marks = marks.build(X, cid, b)
+        if layers:
+            layers.begin(X, i)                                            # the beat lays out in the space the presenter leaves
         n_tw, n_audio, n_els = len(X.tws), len(X.audio), len(X.els)
         scene_fn(b["scene"], style)(b, X, t, d, cid)
         mood = b.get("mood", mood) if i else b.get("mood")
@@ -158,14 +164,19 @@ def main():
         pacing.rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els)          # speaking rate sets the tempo (meta.rate_adapt)
         pacing.elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i)     # keep the beat alive / fit a short entrance
         pacing.sound_moments(X, b, t, d, cid)                             # "sfx": sound + visual hit on one frame
+        if layers:
+            layers.end(X, i)
         spans.append((cid, t, d, b.get("hold") == "static"))
         if i > 0:
             tr = b.get("tr")
             if isinstance(tr, str) and tr not in ("cut", "hard", "slide", "zoom", "rise", "step", "zoomin", "whip", "spin"): fx.transition(X, t, tr)
+            elif layers and layers.owns_transition(b): pass               # the chapter device changes chapter itself
             elif b.get("chapter") or tr is True: fx.transition(X, t, None)
             else: fx.cut(X, prev, cid, t, tr if isinstance(tr, str) else None)
         prev = cid
     pacing.breaths(X, spans, D)                                           # a small inhale in each narration pause (meta.breath)
+    if layers:
+        layers.build(X)                                                   # the presenter + the device chrome and grounds
     fit.scope_media(X)                                                    # video wrappers only while their video plays
     if series.get("opener"): delivery.series_opener(X, meta, float(meta.get("lead") or 1.8))
     delivery.ai_label(X, D, meta)
@@ -242,6 +253,12 @@ def main():
     base_css += "\nsup.ss, sub.ss { font-size:.58em; line-height:0; position:relative; vertical-align:baseline; } sup.ss { top:-.62em; } sub.ss { top:.24em; }\n"
     css = "\n".join([font_css, tok_css, base_css, fx.TR_CSS,
                      *X.css_parts.values(), style.get("css", "")])
+    if layers:      # regions: effects' aspect rules and viewport units follow the region they sit in
+        css = presenter.scope_css(css)
+        scoped = []
+        for el in X.els:
+            scoped.append(presenter.scope_units(el))
+        X.els = scoped
     page = f"""<!doctype html>
 <html lang="{ {"zh": "zh-CN", "en": "en", "ja": "ja", "ko": "ko"}.get(lang, lang) }"><head><meta charset="UTF-8"><meta name="viewport" content="width={TW}, height={TH}">
 <title>{core.esc(meta.get('title', 'hat9'))} · {sid}</title>
