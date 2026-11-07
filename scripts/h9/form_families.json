@@ -85,5 +85,14 @@
  },
  "scenes": {
   "statement": "slogan", "title": "slogan", "quote": "doc", "number": "number", "compare": "compare", "outro": "card"
+ },
+ "number_hero": {
+  "_doc": "Beats whose picture is one hero number with a small caption beside / under it; two adjacent ones trip number-repeat (P1) in forms.py. Decided from what each effect draws. fx = always; scenes = core scenes; when = only if the params say so (all conditions must hold; a missing param takes its default; \"present\": true means the param is given). Left out on purpose: icon_unit, scale_compare, one_to_many, then_now, formula (the picture is the icons / grid / equation, the number is a label) and the clock dial (the hand is the picture).",
+  "fx": ["key_card", "side_stat", "odometer", "number_pages", "scan_field", "mosaic_number", "seat_swarm", "glass"],
+  "scenes": ["number"],
+  "when": [
+   {"fx": "dial", "all": [{"param": "mode", "default": "gauge", "is": "gauge"}, {"param": "show_value", "default": true, "is": true}]},
+   {"fx": "suspense", "all": [{"param": "value", "present": true}]}
+  ]
  }
 }

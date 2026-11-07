@@ -4,6 +4,9 @@ another?  Every effect / scene maps to a layout family in form_families.json (on
   form-repeat   the same family on two neighbouring beats                                  (P1)
   slogan-share  share of beats that are full-frame slogans                                 (P1 above 25 %, P0 above 40 %)
   form-variety  fewer than 5 distinct families in a film longer than 60 s                  (P1)
+  number-repeat two or more neighbouring beats that are each one big number + a small caption (P1)
+                (the list is "number_hero" in form_families.json; a different family is not enough: key_card then
+                side_stat are different families but the same picture)
   form-unknown  an effect or scene missing from the table (counted as its own family)      (warning)
 
 A slogan effect laid out beside the presenter (beat presenter "card" / "side") counts as "beside", not "slogan".
@@ -66,6 +69,36 @@ def family_of(beat, table, position=None):
     return fam, True
 
 
+def condition_holds(beat, cond):
+    """one {param, default, is | present} test against a beat's params."""
+    name = cond.get("param")
+    if cond.get("present"):
+        return beat.get(name) is not None
+    value = beat.get(name, cond.get("default"))
+    return value == cond.get("is")
+
+
+def is_hero_number(beat, table):
+    """True when the beat's picture is one big number with a small caption (table["number_hero"])."""
+    spec = table.get("number_hero") or {}
+    scene = beat.get("scene")
+    if scene != "fx":
+        return scene in spec.get("scenes", [])
+    name = beat.get("fx")
+    if name in spec.get("fx", []):
+        return True
+    for rule in spec.get("when", []):
+        if rule.get("fx") != name:
+            continue
+        ok = True
+        for cond in rule.get("all", []):
+            if not condition_holds(beat, cond):
+                ok = False
+        if ok:
+            return True
+    return False
+
+
 def film_seconds(video, timeline=None):
     if timeline and timeline.get("duration"):
         return float(timeline["duration"])
@@ -120,6 +153,18 @@ def lint(video, timeline=None):
         if run_len >= 2:
             fam = families[run_start]
             found.append(("P1", "form-repeat", f"{beat_where(run_start, times)} 起连续 {run_len} 个 beat 都是「{fam}」版式：换一种载体（贴人 / 图表 / 界面 / 比喻）"))
+        run_start = i
+
+    hero = []
+    for b in beats:
+        hero.append(is_hero_number(b, table))
+    run_start = 0
+    for i in range(1, len(hero) + 1):
+        if i < len(hero) and hero[i] and hero[i - 1]:
+            continue
+        run_len = i - run_start
+        if run_len >= 2 and hero[run_start]:
+            found.append(("P1", "number-repeat", f"{beat_where(run_start, times)} 起连续 {run_len} 个 beat 都是大数字 + 小字：换一种载体（图表 / 比喻 / 截图 / 贴人）"))
         run_start = i
 
     n_slogan = 0

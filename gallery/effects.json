@@ -1946,7 +1946,7 @@
    "cat": "版式",
    "ref": "数字 + 单位 + 小标签贴在主体旁，按口播换数",
    "label": "侧贴数字 · Side Stat",
-   "suit": "「只能 10 个群」「已经 1000+ 条」",
+   "suit": "「已收录 174 个动效」「7 天 15 个版本」",
    "style": "press",
    "style_name": "财经刊"
   },
@@ -2011,7 +2011,7 @@
    "cat": "版式",
    "ref": "编号步骤逐条出现，工具标签的高亮按口播一个个跳",
    "label": "步骤 + 标签轮换 · Chip Cycle",
-   "suit": "「下载，再发给 WorkBuddy、豆包或 Codex」",
+   "suit": "「把地址发给 Claude Code、Codex 或 Cursor」",
    "style": "press",
    "style_name": "财经刊"
   },

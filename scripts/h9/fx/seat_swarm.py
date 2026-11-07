@@ -1,6 +1,6 @@
 """一个空位 · 一群人 Seat swarm (scarcity / demand): a grid of seats, almost all taken; one empty seat gets a dashed
 ring and a label ("1 个空位"), then wave after wave of coloured dots rushes in and circles it while the counter beside
-steps through its anchors (52 → 98 → 100+), each step landing with a punch.
+steps through its anchors (28 → 88 → 174), each step landing with a punch.
 
 Adapts: any anchors (1–6, "100+" style suffixes kept), any seat grid size (from the panel), labels from a word to a
 line (fitted), 0–300 dots; with a subject the counter sits beside the subject card. Seats, dots and the ring take the

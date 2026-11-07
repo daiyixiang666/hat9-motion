@@ -1,10 +1,10 @@
-"""删除线改口 (strike fix · the reference promo's 40 s「不是故意 ~~卡大家~~」): a line lands, then one phrase in it is
+"""删除线改口 (strike fix · the strike-and-correct line seen in an open-source portrait-template promo): a line lands, then one phrase in it is
 struck through and the correction is written in above it with an insert caret, like a proof correction; the
 struck phrase sinks back. A designed strike per style (a solid bar, an ink brush, a strip of tape, a stepped pixel
 bar, a hairline) — not the hand-drawn marker (that is scribble).
 
-p: text ("真的不是故意~~卡大家~~") — ~~…~~ marks the phrase to strike · fix (the correction; optional) · kicker · sub
-   (a small line under) · chip (a status chip on the subject, e.g. "群已满员") · at (when the strike lands)
+p: text ("动效~~越多越好~~") — ~~…~~ marks the phrase to strike · fix (the correction; optional) · kicker · sub
+   (a small line under) · chip (a status chip on the subject, e.g. "要配得上口播") · at (when the strike lands)
    · subject | video | image (+ subject_focus, subject_start, subject_fit, subject_tag)
 Adapts: short to long lines (fitted, up to 3 lines; the struck phrase never breaks), with or without a fix; with a
 subject the line takes the free column (16:9) or the top of the frame above the subject card (9:16); with no subject

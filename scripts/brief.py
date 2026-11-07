@@ -14,6 +14,7 @@ about later, while it is still cheap to fix:
   form-repeat the same layout family on two neighbouring beats (scripts/h9/form_families.json)   (P1)
   slogan-share full-frame slogan beats above 25 % of beats (P1), above 40 % (P0)
   form-variety fewer than 5 layout families in a film over 60 s                              (P1)
+  number-repeat two neighbouring beats that are each a big number + small caption             (P1)
   no-brief    there is no brief.md next to video.json                                       (P1)
 """
 import argparse, json, subprocess, sys

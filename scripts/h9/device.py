@@ -3,7 +3,7 @@ whose mode label / tab title changes at every chapter, while the background colo
 
 video.json
   meta.device = "camera" | "browser" | "phone" | "none"   or   {"kind": "camera", "brand": "第九顶帽子", "url": "hat9.dev"}
-  beat.chapter = {"label": "PANO", "sub": "全景", "bg": "ink" | "#1d4ed8", "title": "粉丝群", "device": "browser", "url": "…"}
+  beat.chapter = {"label": "PANO", "sub": "全景", "bg": "ink" | "#1d4ed8", "title": "开源", "device": "browser", "url": "…"}
     label   the mode name (camera pill / carousel), tab title (browser), screen title (phone)
     sub     a short local-language name shown with it (camera: 「全景 PANO」)
     bg      the chapter's ground: a style token (bg, fg, ink, paper, accent, card, muted) or a colour; default = the

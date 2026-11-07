@@ -1,12 +1,12 @@
-"""步骤 + 标签轮换 (chip cycle · the reference promo's 47–50 s: ① 下载 .motion ② 发给 AI 助手, then WorkBuddy / 豆包 /
-Codex light up one after another): numbered steps light in one by one, and under the step they belong to a row of
+"""步骤 + 标签轮换 (chip cycle · the steps-then-tool-chips layout seen in an open-source portrait-template promo: two steps, then the
+tool names light up one after another): numbered steps light in one by one, and under the step they belong to a row of
 chips (tool names) where a highlight hops from chip to chip on its cues; a window beside the steps re-titles itself to
 the lit chip, and the subject sits in a card over the window's corner.
 
-p: title ("Motion 模板 *非常简单*") · kicker · steps ["下载 .motion", "发给 AI 助手"] (1–5) · chips ["WorkBuddy",
-   "豆包", "Codex", "…等助手"] (2–8) · chip_step (which step the chips hang under; default the last) · at [cues per
+p: title ("九帽动效 *非常简单*") · kicker · steps ["把仓库地址发给 AI 助手", "把录音丢给它"] (1–5) · chips ["Claude Code",
+   "Codex", "Cursor", "…等助手"] (2–8) · chip_step (which step the chips hang under; default the last) · at [cues per
    step] · chip_at [cues per chip] · window (the window's title before the first hop; default "AI 助手") · attach
-   (a file chip that drops into the window at the end, e.g. "模板.motion") · subject | video | image (+ subject_focus,
+   (a file chip that drops into the window at the end, e.g. "hat9-motion") · subject | video | image (+ subject_focus,
    subject_start, subject_fit, subject_tag)
 Adapts: 1–5 steps, 2–8 chips (wrapping to a second row), long step text (fitted); 16:9: steps on the left, window +
 subject on the right; 9:16: steps and chips fill the top half, window and subject card side by side fill the bottom;
@@ -83,7 +83,7 @@ def chip_cycle(X, cid, t, d, p):
     aw = x1 - x0
     ah = y1 - y0
     steps = list(FT.as_list(p.get("steps") or ["下载模板", "发给 AI 助手"]))[:5]
-    chips = list(FT.as_list(p.get("chips") or ["WorkBuddy", "豆包", "Codex"]))[:8]
+    chips = list(FT.as_list(p.get("chips") or ["Claude Code", "Codex", "Cursor"]))[:8]
     ns = len(steps)
     nc = len(chips)
     cstep = int(p.get("chip_step", ns)) - 1

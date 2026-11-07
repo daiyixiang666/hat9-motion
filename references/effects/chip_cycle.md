@@ -7,7 +7,7 @@
 | 项 | 内容 |
 |---|---|
 | 类别 | 重点信息（贴在主体旁） |
-| 适合的句子 | 「下载以后发给 WorkBuddy、豆包、Codex」——步骤里有几个可选项 |
+| 适合的句子 | 「把地址发给 Claude Code、Codex、Cursor」——步骤里有几个可选项 |
 | 建议时长 | 4–5 秒（每个标签 ≥ 0.4 秒） |
 | 参数 | `title`（`*词*` 套色）、`kicker`、`steps`（1–5）、`chips`（2–8）、`chip_step`、`at`、`chip_at`、`window`、`attach`、`subject` / `video` / `image` |
 | 横屏 / 竖屏 | ✓ / ✓（竖屏：步骤和标签占上半屏，窗口 + 主体卡并排占下半屏） |
@@ -25,19 +25,19 @@
  "theme": "red",
  "topic": "两步上手",
  "subject": "../mixue/assets/video/shiba.webm",
- "kicker": "HOW TO USE · .motion",
- "title": "Motion 模板 *非常简单*",
+ "kicker": "HOW TO USE · 两步",
+ "title": "九帽动效 *非常简单*",
  "steps": [
-  "下载 .motion",
-  "发给 AI 助手"
+  "把仓库地址发给 AI 助手",
+  "把录音丢给它"
  ],
  "chips": [
-  "WorkBuddy",
-  "豆包",
+  "Claude Code",
   "Codex",
+  "Cursor",
   "…等助手"
  ],
- "attach": "模板.motion",
- "line": "下载以后，发给 WorkBuddy、豆包、*Codex*。"
+ "attach": "hat9-motion",
+ "line": "把地址发给 Claude Code、Codex、*Cursor*。"
 }
 ```

@@ -14,6 +14,7 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   form-repeat   with --video: the same layout family on 2 neighbouring beats             (P1)
   slogan-share  with --video: share of full-frame slogan beats                            (P1 above 25 %, P0 above 40 %)
   form-variety  with --video: fewer than 5 layout families in a film over 60 s           (P1)
+  number-repeat with --video: two neighbouring beats that are each a big number + small caption (P1)
                 (families: scripts/h9/form_families.json; `review.py --video video.json` alone runs only these)
   loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1)
   dead-air      more than 1.2 s of silence inside the film                              (P1)

@@ -7,7 +7,7 @@ regions()   — the graphic box, the optional subject card and the space beside 
 subject()   — the presenter / subject in a small card (still or clip), the way a 口播 keeps the speaker in view
 pool()      — the pictures for walls and fans: `items` / `images` / `folder` (stills and clips mixed)
 glyph_mask() — a number set in the style's numeral font: its outline as an SVG path and a coverage grid for tiles
-stepper()   — a counter that steps through anchors (52 → 98 → 100+), each step landing with a punch
+stepper()   — a counter that steps through anchors (28 → 88 → 174), each step landing with a punch
 """
 import importlib.util
 import math

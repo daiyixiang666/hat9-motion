@@ -1,13 +1,13 @@
-"""作品拼数字 Mosaic number (the "1000+ made of the work" shot): a wall of real thumbnails fills the frame, close up,
+"""作品拼数字 Mosaic number (the "a big number made of the work" shot): a wall of real thumbnails fills the frame, close up,
 while a counter climbs; the camera pulls back until the wall is hundreds of tiny tiles, then every tile outside the
 glyphs of the final number goes dark and the tiles inside stay lit, the number's outline draws on in the accent colour
 and a sub-caption lands under it — the number is literally made of the work.
 
 Adapts: any number of pictures (1–400 distinct, stills and clips mixed; recycled to fill ~1,000–2,600 tiles, never the
-same picture beside itself), a folder instead of a list, any number string ("1000+", "2.6万", "300"); the numeral face,
+same picture beside itself), a folder instead of a list, any number string ("174", "2.6万", "300"); the numeral face,
 colours, corners and outline weight come from the style; 9:16 sizes tiles so each glyph stroke is several tiles wide.
 p: items | images | folder · value (what the counter reaches; default from text) · text (the number as drawn, e.g.
-   "1000+") · sub · from (counter start, default 0) · tiles (max tiles) · tile_ar (default 0.8) · zoom (start
+   "174") · sub · from (counter start, default 0) · tiles (max tiles) · tile_ar (default 0.8) · zoom (start
    close-up, default 3.2) · subject · subject_label · mock
 """
 import importlib.util

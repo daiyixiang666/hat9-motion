@@ -1,9 +1,9 @@
-"""数字贴在主体旁 (side stat · the reference promo's 729 → 1000+「条视频 · 已产出」and 只能 10 个群 / 7500 人·未升级上限):
+"""数字贴在主体旁 (side stat · the big-number-beside-the-subject layout seen in an open-source portrait-template promo):
 a big number with its unit and a small caption, pinned beside the subject; it counts up (or swaps) and an optional
 coloured tag drops in under it. Several values can replace each other in the same slot inside one beat — each on
 its own "@词" cue — and with side "both" they alternate left and right of a centred subject.
 
-p: values [{v: "1000+", unit: "条", cap: "视频 · 已产出", kicker: "只能", tag: "未升级上限", at: "@词", side}] (1–6;
+p: values [{v: "174", unit: "个", cap: "动效 · 含 12 种转场", kicker: "已收录", tag: "还在涨", at: "@词", side}] (1–6;
    a plain string works) · or value / unit / cap / kicker / tag for one · count (default true: numbers count from
    the previous one) · side left | right | both · subject | video | image (+ subject_focus, subject_start,
    subject_fit, subject_tag)
@@ -55,7 +55,7 @@ NUM = re.compile(r"^(\D*?)([\d][\d,]*(?:\.\d+)?)(.*)$")
 
 
 def _parse(v):
-    """'1000+' → ('', '1000', '+', 1000.0); words → (v, None, '', None)."""
+    """'174+' → ('', '174', '+', 174.0); words → (v, None, '', None)."""
     s = str(v).strip()
     m = NUM.match(s)
     if not m:

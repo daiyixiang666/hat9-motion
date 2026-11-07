@@ -1,9 +1,9 @@
-"""重点信息卡 (key card · the reference promo's KEY INFO card at 67–71 s): the subject holds the frame, then a KEY INFO
+"""重点信息卡 (key card · the KEY INFO card layout seen in an open-source portrait-template promo): the subject holds the frame, then a KEY INFO
 card zooms out from behind it inside four corner brackets while the subject blurs and dims; the card's value swaps
-through a sequence — 1000+ → 7500 → 13 款 — one per cue, each with its own caption, a page counter ticking in the
+through a sequence — 174 → 18 → 15 — one per cue, each with its own caption, a page counter ticking in the
 corner and the brackets snapping in on every swap.
 
-p: values [{v: "1000+", cap: "条视频 · 开源竖屏模板产出", at: "@词"}] (1–6; strings work) · kicker (default
+p: values [{v: "174", cap: "个动效 · 开源竖屏模板", at: "@词"}] (1–6; strings work) · kicker (default
    "KEY INFO · 重要信息") · at (when the card comes out; default 0.7 s) · subject | video | image (+ subject_focus,
    subject_start, subject_fit, subject_tag) · layout full | card (default: full for wide footage, card otherwise)
 Adapts: 1–6 values, numbers or words, long captions (fitted, 2 lines); the value size is set once for the widest
@@ -53,7 +53,7 @@ def key_card(X, cid, t, d, p):
     x0, y0, x1, y1 = K.area(X, p)
     aw = x1 - x0
     ah = y1 - y0
-    raw = list(p.get("values") or [{"v": p.get("value", "1000+"), "cap": p.get("cap", "")}])[:6]
+    raw = list(p.get("values") or [{"v": p.get("value", "174"), "cap": p.get("cap", "")}])[:6]
     vals = []
     for it in raw:
         if not isinstance(it, dict):

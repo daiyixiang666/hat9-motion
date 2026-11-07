@@ -1,5 +1,9 @@
 # 更新记录
 
+## 0.14.1 · 2026-11-07
+- 版式示例和文档里的数字、文案全部换成九帽动效自己的事实（174 个动效、18 种风格、7 天 15 个版本、把仓库地址发给 Claude Code / Codex / Cursor），`key_card`、`side_stat`、`chip_cycle`、`strike_fix` 的默认值也改成中性的；对应的预览动图重新生成。
+- 新检查 `number-repeat`（P1，review / brief check）：相邻两个 beat 都是「一个大数字 + 小字」（`key_card`、`side_stat`、`odometer`、`number` 场景、`scan_field`、`mosaic_number`、`seat_swarm`、`glass`、带数字的仪表盘等）就提醒换一种载体。名单在 `form_families.json` 的 `number_hero`。
+
 ## 0.14.0 · 2026-11-06
 - 同一个重点，换着载体说：新增 7 个贴着主体的版式（`stack_build` 字逐行叠出 / 名片、`side_stat` 侧贴数字、`key_card` 信息卡放大、`stamp_compare` 截图标注对比、`strike_fix` 删除线改口、`chip_cycle` 步骤 + 标签轮换、`action_card` 可截图的结尾行动页）和 7 个把数字变成画面的效果（`mosaic_number` 作品拼数字、`seat_swarm` 空位涌入、`dial` 仪表 / 24 小时钟、`log_scroll` 日志滚动、`one_to_many` 一变一群、`scan_field` 扫描清除、`card_fan` 卡片扇形）。每个都跟着风格换皮，有的连结构一起变（暗场是细线仪表，海报是实心扇形，水墨是一笔弧）。
 - 主体层 `meta.presenter`：真人、录屏或柴犬常驻画面，每个 beat 写 `presenter: full / card / side / corner / hidden`，在镜头之间平滑换位置、视频不断，效果自动排在空出来的区域里；字幕自动垫底色，压在任何画面上都看得清。见 `references/presenter.md`。

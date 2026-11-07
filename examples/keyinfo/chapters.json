@@ -6,11 +6,11 @@
   {"scene": "fx", "fx": "stack_build", "t": 0, "d": 4, "presenter": "side", "chapter": {"label": "PANO", "sub": "全景", "bg": "ink", "title": "开源"},
    "kicker": "OPEN-SOURCE", "lines": ["开源的", "AI 剪辑", "竖屏模板"], "line": "开源的 AI 剪辑*竖屏模板*。"},
   {"scene": "fx", "fx": "side_stat", "d": 4, "presenter": "hidden", "chapter": {"label": "TIME-LAPSE", "sub": "延时", "bg": "paper", "title": "产出"},
-   "subject": "../aefx/assets/broll/phone.jpg", "values": [{"v": "729", "unit": "条", "cap": "视频 · 已产出"}, {"v": "1000+", "unit": "条", "cap": "视频 · 已产出", "tag": "还在涨"}], "line": "已经产出了*一千多条*。"},
+   "subject": "../aefx/assets/broll/phone.jpg", "values": [{"v": "162", "unit": "个", "cap": "效果 · 已收录"}, {"v": "174", "unit": "个", "cap": "动效 · 含转场", "tag": "还在涨"}], "line": "已经收录了*一百七十四个*。"},
   {"scene": "fx", "fx": "key_card", "d": 4, "presenter": "corner", "chapter": {"label": "BURST", "sub": "连拍", "bg": "accent", "title": "重点"},
-   "values": [{"v": "1000+", "cap": "条视频"}, {"v": "7500", "cap": "人 · 10 个群"}], "line": "重要的信息单独展示。"},
+   "values": [{"v": "174", "cap": "个动效"}, {"v": "18", "cap": "种风格"}], "line": "重要的信息单独展示。"},
   {"scene": "fx", "fx": "chip_cycle", "d": 4.5, "presenter": "hidden", "chapter": {"label": "PORTRAIT", "sub": "人像", "bg": "ink", "title": "上手"},
-   "title": "两步 *上手*", "steps": ["下载 .motion", "发给 AI 助手"], "chips": ["WorkBuddy", "豆包", "Codex"], "subject": "../mixue/assets/video/shiba.webm", "line": "发给 WorkBuddy、豆包、*Codex*。"},
+   "title": "两步 *上手*", "steps": ["把仓库地址发给 AI 助手", "把录音丢给它"], "chips": ["Claude Code", "Codex", "Cursor"], "subject": "../mixue/assets/video/shiba.webm", "line": "发给 Claude Code、Codex、*Cursor*。"},
   {"scene": "fx", "fx": "strike_fix", "d": 4, "presenter": "side", "chapter": {"label": "SELFIE", "sub": "自拍", "bg": "card", "title": "改口"},
    "text": "做视频最难的是~~剪辑~~", "fix": "判断", "line": "最难的不是剪辑，是判断。"}
  ]
