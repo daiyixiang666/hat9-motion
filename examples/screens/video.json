@@ -3,7 +3,7 @@
   "title": "录屏 · 长截图 · 代码",
   "aspect": "16:9",
   "duration": 53.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {

@@ -170,9 +170,9 @@ def page(X, b, cid, t, d, inner, kind="red", enter="slide", cls=""):
     i, n = X.beat["i"], X.beat["n"]
     meta = X.v.get("meta", {})
     sec = meta.get("section", "节庆经济"); src = b.get("src", meta.get("src", ""))
-    X.used_text.update(sec + src + "0123456789/·第九顶帽子来源：")
+    X.used_text.update(sec + src + "0123456789/·" + X.channel + "来源：")
     clip = deckle(X.rand, 48, 0.35)
-    furn = (f'<div class="pc-hd"><div class="tag"><b>第九顶帽子</b>{X.rich(sec)}</div><div class="pg">{i + 1:02d}/{n:02d}</div></div>'
+    furn = (f'<div class="pc-hd"><div class="tag"><b>{X.rich(X.channel)}</b>{X.rich(sec)}</div><div class="pg">{i + 1:02d}/{n:02d}</div></div>'
             + (f'<div class="pc-ft">来源：{X.rich(src)}</div>' if src else ""))
     html = (f'<div class="pcw"><div class="pc {kind} {cls}" style="clip-path:{clip}"><div class="sheet" style="background-image:{noise_bg(0.16 if kind == "cream" else 0.12, i + 3)}"></div>'
             f'<div class="cam">{inner}</div>{furn}</div></div>')
@@ -579,7 +579,7 @@ def thesis(b, X, t, d, cid):
 
 
 def outro(b, X, t, d, cid):
-    """落版：一枚红色剪纸印章 + 一句定位 + 关注纸签；柴犬主持人出场。"""
+    """落版：一枚红色剪纸印章 + 一句定位 + 关注纸签；主持人出场。"""
     from h9 import fit
     P = X.portrait; W, H = X.W, X.H
     X.css("pc-out", """
@@ -591,7 +591,7 @@ def outro(b, X, t, d, cid):
 """)
     sz = 380 if not P else 420
     sx, sy = ((W - sz) // 2 - (260 if not P else 0), 210 if not P else 330)
-    tl_ = b.get("title", "第九顶帽子")
+    tl_ = b.get("title", X.channel)
     half = (len(tl_) + 1) // 2
     sf = fit.fit_text(b.get("sub", ""), (W - sx - 520) if not P else (W - 112), 70, 48, max_lines=1)     # landscape: stay clear of the host
     tx = sx if not P else 56
@@ -749,10 +749,10 @@ def FX_FRAME(X, cid, t, d, p, parts):
     src = f'<div>{parts["src"]}</div>' if parts["src"] else ""
     inner = (('<div class="scrim"></div>' if parts["photo"] else "")
              + f'<svg class="frm" viewBox="0 0 {W} {H}" preserveAspectRatio="none"><path d="{frame_path(W, H, m, r)}" fill="{fr["frame"]}" fill-rule="evenodd"/></svg>{corners}'
-             + f'<div class="hd"><div class="tag"><b>第九顶帽子</b><span>{parts["topic"]}</span></div><div class="fxid">{parts["fxid"]}</div></div>'
+             + f'<div class="hd"><div class="tag"><b>{X.rich(X.channel)}</b><span>{parts["topic"]}</span></div><div class="fxid">{parts["fxid"]}</div></div>'
              + f'<div class="cap"><span style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></div>'
              + f'<div class="ft"><div>{parts["foot"]}</div>{src}</div>')
-    X.used_text.update("第九顶帽子")
+    X.used_text.update(X.channel)
     X.clip(f"{cid}c", t, d, inner, f"ctx pcx{' photo' if parts['photo'] else ''}", 30, track=20, sty=sty)
     s = f"#{cid}c"
     X.tw(f'tl.from("{s} .cap > span", {{y:28, rotation:-5, opacity:0, duration:0.42, ease:"back.out(1.8)"}}, {t + 0.08:.3f});')

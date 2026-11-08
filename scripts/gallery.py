@@ -69,11 +69,11 @@ def main():
     log = (SKILL / "CHANGELOG.md").read_text()
     log_html = "".join(f"<li>{html.escape(l[2:])}</li>" for l in log.splitlines() if l.startswith("- "))
     if len(cards) == 1:
-        kick, h1 = "第九顶帽子 · 九帽动效 v0.2 · 样板", "先把一种风格做到位"
+        kick, h1 = "九帽动效 v0.2 · 样板", "先把一种风格做到位"
         lede = ("0.1 的 10 种风格作废：它们共用一套模板只换了皮，所以彼此很像、手法很套。这一版先只做一种，按新做法从头写："
                 "先看标杆大图，再给这个风格写专属的场景和招牌组件。<b>请看这个水准是不是你要的方向</b>，确认后用同样的标准重做其他风格。")
     else:
-        kick, h1 = "第九顶帽子 · 九帽动效", f"{len(cards)} 种风格，同一段口播"
+        kick, h1 = "九帽动效", f"{len(cards)} 种风格，同一段口播"
         lede = "同一段 18 秒示例口播，分别用每种风格渲染。每种风格都<b>对标真实的顶级创作者</b>，有自己的场景、组件和动作语言。点开带声音看。"
     page = (tpl.replace("{{CARDS}}", "".join(cards)).replace("{{CHANGELOG}}", log_html).replace("{{KICK}}", kick).replace("{{H1}}", h1)
             .replace("{{LEDE}}", lede).replace("{{SOLO}}", " solo" if len(cards) == 1 else ""))

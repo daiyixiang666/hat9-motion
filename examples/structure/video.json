@@ -3,7 +3,7 @@
   "title": "结构与文字 · 在真实口播里",
   "aspect": "16:9",
   "duration": 40.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -164,7 +164,7 @@
    ],
    "verdict": "规模越大，管住质量越难",
    "line": "加盟模式的*好处和代价*，要一起看。",
-   "src": "第九顶帽子分析",
+   "src": "作者分析",
    "label": "优缺点两栏 · Pros & Cons",
    "ref": "测评类口播标配 · Envato Elements Checklist Pack",
    "t": 22.4,

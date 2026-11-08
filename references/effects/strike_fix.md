@@ -24,7 +24,7 @@
  "d": 4.0,
  "theme": "lemon",
  "topic": "动效数量",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "text": "动效~~越多越好~~",
  "fix": "光多是不够的",
  "chip": "要配得上口播",

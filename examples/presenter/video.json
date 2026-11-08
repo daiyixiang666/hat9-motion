@@ -7,7 +7,7 @@
   "words": "../screen/assets/audio/words.json",
   "music": "../screen/assets/audio/music.mp3",
   "music_volume": 0.18,
-  "tail": 2.4,
+  "tail": 2.8,
   "caption_preset": "douyin",
   "caption_fix": {
    "八亿": " 8 亿 ",
@@ -22,14 +22,14 @@
    "两亿两千万": "2.2 亿"
   },
   "presenter": {
-   "src": "../mixue/assets/video/shiba.webm",
+   "src": "../../assets/host.webm",
    "at": "full",
-   "tag": "ON AIR · 第九顶帽子"
+   "tag": "ON AIR"
   },
   "device": {
    "kind": "camera",
-   "brand": "第九顶帽子",
-   "url": "hat9.dev"
+   "brand": "示例频道",
+   "url": "example.com"
   }
  },
  "beats": [
@@ -153,7 +153,7 @@
     "label": "OpenAI 的 2030 目标",
     "device": "browser",
     "bg": "paper",
-    "url": "hat9.dev/notes/openai-2030"
+    "url": "example.com/notes/openai-2030"
    },
    "points": [
     [
@@ -190,10 +190,10 @@
   {
    "scene": "fx",
    "fx": "mask_up",
-   "t": "@这里是",
+   "t": 26.21,
    "presenter": "full",
-   "text": "第九顶帽子",
-   "sub": "AI 工具台 · 看懂谁在赚钱"
+   "text": "示例频道",
+   "sub": "AI 工具台"
   }
  ]
 }

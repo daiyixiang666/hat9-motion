@@ -24,7 +24,7 @@
   "assets/clips/toaster.mp4",
   "assets/clips/gas.mp4"
  ],
- "kicker": "第九顶帽子 · 商业拆解",
+ "kicker": "商业拆解",
  "title": "一杯 *¥4* 的生意",
  "sub": "蜜雪冰城 · 2024 年报",
  "t": "@关键词"

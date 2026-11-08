@@ -159,7 +159,7 @@ def fx_variants(P):
                      {"value": 1284903221, "unit": "次"}, {"value": "97.5", "unit": "%"}, {"value": 4450000000, "zh": True, "unit": "元"}]
     V["stomp"] = [{"words": ["钱", "赚"]}, {"words": ["一杯", "4 块钱", "柠檬水", "一年净赚", "44 亿"]},
                   {"words": [str(i) for i in "一二三四五六七八九十百千"]}, {"words": ["一年净赚四十四亿多", "比麦当劳还多的门店数量", "AI"]},
-                  {"text": "大家都在用 AI 结果凭什么是你"}]
+                  {"text": "大家都在用 AI 差别到底在哪里"}]
     V["notify"] = [{"items": ["抖音：你的视频播放量破 10 万"]}, {},
                    {"items": [["抖音", "你的视频播放量破 10 万，还在继续上涨，评论区已经吵起来了"], ["小红书", "有 326 人收藏了你的笔记"], "B站：新增 128 个粉丝",
                               {"app": "微信", "text": "有人转发了你的文章"}, ["视频号", "推荐量 +200%"], ["知乎", "你的回答进入热榜"]]}]
@@ -180,7 +180,7 @@ def fx_variants(P):
     V["match_cut"] = [{"text": "生意", "images": []}, {"text": "判断", "images": L[:2]}, {"text": T_LONG, "images": mixed}, {"text": T_TINY, "images": [por]}]
     V["portal"] = [{"image": L[0], "image2": L[1 % len(L)], "x": 40, "y": 50}, {"image": por, "image2": sq, "x": 60, "y": 35}]
     if vid: V["portal"].append({"video": vid, "image2": L[0], "x": 50, "y": 50})
-    V["lower3"] = [{"text": "九帽"}, {"text": "第九顶帽子", "sub": "商业拆解 · 每期拆一家公司怎么赚钱"},
+    V["lower3"] = [{"text": "频道"}, {"text": "示例频道", "sub": "商业拆解 · 每期拆一家公司怎么赚钱"},
                    {"text": "一个特别特别长的账号名字用来测试下三分之一", "sub": "A VERY LONG ROLE LINE THAT HAS TO WRAP ONTO A SECOND LINE GRACEFULLY"}]
     V["cartoon"] = [{"text": "啪"}, {"text": "翻车了！"}, {"text": "这个拟声词特别特别长"}]
     V["gooey"] = [{}, {"labels": ["流量", "供应链"]}, {"labels": ["很长很长的左边标签", "右"]}]
@@ -242,7 +242,7 @@ PRESS = {
     "thesis": [{"kicker": "判断", "l1": "看懂谁在赚钱", "em": "赚钱", "l2": "比看懂谁在卖货更重要", "struck": "卖货"},
                {"kicker": "长句", "l1": "真正决定一门生意能不能赚钱的，是谁在为它买单", "em": "买单", "l2": "比起热闹的卖货，更该看懂背后那条看不见的供应链", "struck": "卖货"},
                {"kicker": "短", "l1": "钱", "em": "钱", "l2": "就这样"}],
-    "outro": [{"title": "第九顶帽子", "sub": "商业拆解", "cta": "关注"},
+    "outro": [{"title": "示例频道", "sub": "商业拆解", "cta": "关注"},
               {"title": "一个非常非常长的账号名字", "sub": "这一行定位语也写得很长很长，测试会不会超出画面", "cta": "关注我，下期拆一家你天天在用的公司"}],
 }
 POSTER = {
@@ -257,7 +257,7 @@ POSTER = {
     "keep": [{"frames": 24}, {"frames": 6, "a": ["做出", "几张", "不重要"], "b": ["扔掉", "几张", "才重要"]},
              {"frames": 36, "a": ["你一天能做出", "多少张图", "根本不重要"], "b": ["你敢扔掉", "多少张图", "才真正重要"]}],
     "thesis": [{"big": "选择", "rest": "才是|新的创作"}, {"big": "学会选择", "rest": "才是这个时代新的创作方式", "mo": "THESIS — A MUCH LONGER MONO LINE"}],
-    "outro": [{"title": "第九顶帽子", "sub": "AI 时代的审美与判断"}, {"title": "一个非常非常长的账号名字", "sub": "这一行定位语也写得很长很长很长很长"}],
+    "outro": [{"title": "示例频道", "sub": "一句定位"}, {"title": "一个非常非常长的账号名字", "sub": "这一行定位语也写得很长很长很长很长"}],
 }
 SETTLE = {"notify": 0.9, "mask_up": 0.6, "mosaic": 0.5, "portal": 0.9, "typewriter": 0.85, "scramble": 0.85, "write_on": 0.85, "stomp": 0.95, "media": 0.93}
 BEAT = {"media": 4.6}      # per-variant beat length for effects that need longer than the default 2.6 s

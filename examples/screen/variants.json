@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "screen",
   "duration": 48.0,
-  "mascot": "assets/video/shiba.webm",
+  "mascot": "../../assets/host.webm",
   "section": "AI 工具台",
   "case": "变体测试"
  },
@@ -578,9 +578,9 @@
   },
   {
    "scene": "outro",
-   "title": "第九顶帽子 · AI 工具台与商业拆解特别版",
+   "title": "AI 工具台与商业拆解特别版",
    "sub": "一段很长的副标题：每周拆一家公司，用数据看懂谁在赚钱、钱从哪里来、能不能持续",
-   "cta": "关注第九顶帽子，下期继续拆一家正在烧钱的 AI 公司",
+   "cta": "关注示例频道，下期继续拆一家正在烧钱的 AI 公司",
    "src": "变体 B：长标题 · 长副标题 · 长按钮",
    "t": 45.0,
    "d": 3.0

@@ -219,7 +219,7 @@ def frame(X, b, cid, world, ui="", light=False):
     X.css("flat", CSS)
     meta = X.v.get("meta", {})
     src = b.get("src", "")
-    hd = f'<div class="hd"><i></i><b>{X.rich("第九顶帽子")}</b><span>{X.rich(meta.get("section", "生意图鉴"))}</span></div>'
+    hd = f'<div class="hd"><i></i><b>{X.rich(X.channel)}</b><span>{X.rich(meta.get("section", "生意图鉴"))}</span></div>'
     ft = f'<div class="ft">{"来源：" + X.rich(src) if src else ""}</div>'
     return f'<div class="fl{" light" if light else ""}"><div class="cam">{world}</div><div class="ui">{ui}</div>{hd}{ft}</div>'
 
@@ -783,7 +783,7 @@ def outro(b, X, t, d, cid):
                                          f'<g transform="translate(0,{gl + 70:.0f})"><g class="r1">{rider(.7)}</g></g>') + '</svg>')
     x0 = L(X)
     ui = (f'<div class="ob" style="position:absolute; left:{x0}px; top:{H * .26 if not P else 420:.0f}px">'
-          f'<div class="ot" style="font:900 {136 if not P else 120}px/1.1 var(--f-display); color:var(--cream); text-shadow:0 8px 0 rgba(0,0,0,.25)">{X.rich(b.get("title", "第九顶帽子"), split="chars")}</div>'
+          f'<div class="ot" style="font:900 {136 if not P else 120}px/1.1 var(--f-display); color:var(--cream); text-shadow:0 8px 0 rgba(0,0,0,.25)">{X.rich(b.get("title", X.channel), split="chars")}</div>'
           f'<div class="os" style="font:700 40px var(--f-body); color:var(--cream); opacity:.85; margin-top:16px">{X.rich(b.get("sub", ""))}</div>'
           f'<div class="kick" style="position:relative; display:inline-block; margin-top:28px">{X.rich(b.get("cta", ""))}</div></div>')
     X.clip(cid, t, d, frame(X, b, cid, world, ui), "scene", 2)
@@ -988,7 +988,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
                 bob(X, f"{g} .fw-r .pp", t, d, 4, .32)
     topic = f'<span class="tp">{parts["topic"]}</span>' if parts["topic"] else ""
     inner = (('<div class="scrim"></div>' if parts["photo"] else "")
-             + f'<div class="flh"><div class="l"><i></i><b>{X.rich("第九顶帽子")}</b>{topic}</div>'
+             + f'<div class="flh"><div class="l"><i></i><b>{X.rich(X.channel)}</b>{topic}</div>'
              f'<div class="id">{parts["fxid"]}</div></div>'
              + f'<div class="cap"><span style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></div>'
              + f'<div class="flf"><div>{parts["foot"]}</div><div>{parts["src"]}</div></div>')

@@ -1,6 +1,6 @@
 {
  "meta": {"title": "拼贴杂志风 · 输入适配变体（不进画廊）", "aspect": "16:9", "style": "zine", "duration": 40.4, "section": "版式测试",
-          "mast": "HAT9 ZINE", "issue": 99, "mascot": "../mixue/assets/video/shiba.webm", "src": "示意数据 · 版式适配测试"},
+          "mast": "HAT9 ZINE", "issue": 99, "mascot": "../../assets/host.webm", "src": "示意数据 · 版式适配测试"},
  "beats": [
   {"scene": "cover", "t": 0.0, "d": 3.2, "at_num": 1.2, "kicker": "一个很长的小标签 · 测试自动缩放 · LONG KICKER",
    "title": "一个特别长的封面标题，用来测试剪字会不会自动缩小并换成三行", "num": "*3.56*万亿元", "sticker": "很长很长的贴纸标签也要能放下"},

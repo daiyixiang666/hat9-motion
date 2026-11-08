@@ -76,7 +76,7 @@ def sentences(text):
 
 
 def plan(text, aspect="16:9"):
-    """one sentence → one beat. Sentence type → effect, chosen from what ranks highest for that job (research/ae_popular.md)."""
+    """one sentence → one beat. Sentence type → effect, chosen from what ranks highest for that job (references/ae_popular.md)."""
     ss = sentences(text)
     beats, rot = [], ["apple_blur", "mask_up", "stomp", "impact", "blur_focus", "tracking", "flip3d"]
     k = 0
@@ -87,7 +87,7 @@ def plan(text, aspect="16:9"):
         if i == 0:
             b.update(fx="pop" if len(clean) <= 10 else "mask_up", text=_wrap(s))
         elif i == len(ss) - 1 and len(ss) > 2:
-            b.update(fx="lower3", text=s.rstrip("。！!"), sub="关注 · 一起练判断")
+            b.update(fx="lower3", text=s.rstrip("。！!"), sub="关注")
         elif m:
             raw = m.group(1); unit = "%" if ("百分之" in raw or "%" in raw or "％" in raw) else ("倍" if "倍" in raw else "")
             val = cn2num(raw) if not raw[0].isdigit() else re.match(r"\d+(?:\.\d+)?", raw).group(0)

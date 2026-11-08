@@ -1,6 +1,6 @@
 {
  "meta": {"title": "扁平插画风 · 输入适配变体（不进画廊）", "aspect": "16:9", "style": "flat", "duration": 40.0, "section": "版式测试",
-          "mascot": "../mixue/assets/video/shiba.webm"},
+          "mascot": "../../assets/host.webm"},
  "beats": [
   {"scene": "city", "t": 0.0, "d": 3.2, "title": "一个特别长的标题，用来测试城市开场的标题会不会自动缩小换行", "kicker": "一个很长的卡片小标签 · 测试自动缩放",
    "value": 3.56, "dec": 2, "unit": "万亿元", "order": "示意订单", "src": "示意数据 · 版式适配测试"},
@@ -19,6 +19,6 @@
   {"scene": "climb", "t": 29.2, "d": 2.8, "title": "只有两站", "steps": [[2024, 100, "100 亿"], [2028, 900, "900 亿", true]]},
   {"scene": "network", "t": 32.0, "d": 3.0, "routes": 4, "title": "路线少"},
   {"scene": "network", "t": 35.0, "d": 2.6, "routes": 24, "title": "路线很多的时候，城市会被点亮成一张密密麻麻的网，标题也要能放进卡片里"},
-  {"scene": "outro", "t": 37.6, "d": 2.4, "title": "第九顶帽子", "sub": "一句很长很长的副标题，测试落版是否会溢出画面右侧边缘", "cta": "关注"}
+  {"scene": "outro", "t": 37.6, "d": 2.4, "title": "示例频道", "sub": "一句很长很长的副标题，测试落版是否会溢出画面右侧边缘", "cta": "关注"}
  ]
 }

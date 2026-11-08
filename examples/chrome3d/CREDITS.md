@@ -19,9 +19,9 @@
 |---|---|---|
 | 三维字 | Archivo（wdth 125 / wght 900）与阿里巴巴普惠体 Heavy 的字形轮廓，构建时挤出 | OFL / 阿里巴巴普惠体免费商用授权 |
 | 环境光、材质、所有三维物体 | `runtime/chrome3d.js` 程序生成（无贴图、无下载） | MIT |
-| 配音 | 本账号旁白音色（AI 合成） | 自有 |
+| 配音 | TTS 合成旁白 | 自有 |
 | 背景音乐 | `scripts/music.py` 合成（tense，112 bpm） | MIT |
-| 柴犬主持人 | 本账号 IP（引用 `../mixue/assets/video/shiba.webm`） | 自有 |
+| 主持人 | 代码绘制的卡通形象（`assets/host.webm`） | 自有 |
 | three.js r160 | 渲染时从 jsdelivr 按固定版本加载 | MIT |
 
 `variants.json` 是输入适配的压力测试（测试数据，不是事实），不进画廊。

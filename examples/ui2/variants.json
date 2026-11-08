@@ -301,7 +301,7 @@
    "topic": "压力测试",
    "line": "只有一个输入框。",
    "fields": [
-    "名字：第九顶帽子"
+    "名字：示例频道"
    ],
    "submit": "保存"
   },
@@ -316,7 +316,7 @@
    "fields": [
     {
      "label": "账号名称",
-     "value": "第九顶帽子",
+     "value": "示例频道",
      "kind": "text"
     },
     {
@@ -778,7 +778,7 @@
    "theme": "ink",
    "topic": "压力测试",
    "line": "很长的问题和回答，加主持人小窗。",
-   "video": "../mixue/assets/video/shiba.webm",
+   "video": "../../assets/host.webm",
    "name": "一个名字比较长的嘉宾",
    "role": "某某研究院 · 高级研究员",
    "org": "示意机构",
@@ -787,7 +787,7 @@
    "a": "这是一段很长的回答，*关键词*会被标出来，整段话最多五行，会自动缩小字号来放下，不会溢出到字幕区域。",
    "host": {
     "name": "主持人",
-    "video": "../mixue/assets/video/shiba.webm"
+    "video": "../../assets/host.webm"
    },
    "tc": "59:50"
   },

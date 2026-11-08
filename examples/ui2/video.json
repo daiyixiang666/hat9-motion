@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "reel",
   "duration": 42.4,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -273,7 +273,7 @@
    "speakers": [
     {
      "name": "主持人",
-     "role": "第九顶帽子"
+     "role": "示例频道"
     },
     {
      "name": "加盟店老板",
@@ -310,8 +310,8 @@
    "theme": "ink",
    "topic": "做内容",
    "line": "访谈切片：问题放卡片，*回答*放大字。",
-   "video": "../mixue/assets/video/shiba.webm",
-   "name": "第九顶帽子",
+   "video": "../../assets/host.webm",
+   "name": "示例频道",
    "role": "频道主持人",
    "org": "商业拆解",
    "q": "做一条口播，最花时间的是哪一步？",

@@ -23,7 +23,7 @@
  "words": "../mixue/assets/audio/words.json",
  "a": 9.25,
  "b": 14.45,
- "who": "第九顶帽子",
+ "who": "示例频道",
  "role": "旁白 · 原声",
  "source": "《一杯 4 块钱的柠檬水》",
  "date": "00:09–00:14",

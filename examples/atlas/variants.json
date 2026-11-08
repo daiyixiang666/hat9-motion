@@ -42,7 +42,7 @@
      {"id": "d", "t": 12.5, "camera": {"fit": ["sh", "sz", "nb", "qd"], "pad": 3}, "card": {"type": "list", "k": "九个要点", "items": ["深水泊位", "自动化码头", "腹地经济", "航线密度", "铁水联运", "保税政策", {"text": "港口费率", "value": "低"}, "通关效率", "转运枢纽"]}},
      {"id": "e", "t": 16.0, "camera": {"fit": ["route:ec"]}, "card": {"type": "images", "side": "R", "k": "五张不同比例的图",
       "images": ["../aefx/assets/broll/port.jpg", "../aefx/assets/broll/meeting.jpg", {"src": "../aefx/assets/broll/cranes.jpg", "cap": "岸桥"}, "../aefx/assets/broll/crossing.jpg", "../aefx/assets/broll/factory.jpg"]}},
-     {"id": "f", "scene": "outro", "t": 19.5, "d": 2.5, "camera": "world", "outro": {"title": "第九顶帽子 · 一个很长的落版标题测试", "sub": "地图纪录", "cta": "关注"}}]},
+     {"id": "f", "scene": "outro", "t": 19.5, "d": 2.5, "camera": "world", "outro": {"title": "一个很长的落版标题测试", "sub": "地图纪录", "cta": "关注"}}]},
   {"name": "hormuz_closeup",
    "about": "another region (Strait of Hormuz), zone + cut + highlight + 10 m close-up, long paragraph thesis, text card, empty image card, no title",
    "meta": {"center_lon": 60, "duration": 14.0,

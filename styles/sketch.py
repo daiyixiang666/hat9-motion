@@ -152,11 +152,11 @@ def FX_FRAME(X, cid, t, d, p, parts):
     if not parts["photo"]: X.css(f"skr-{cid}", f"#{cid} > .stage {{ filter:url(#{fid}); }}")
     tapes = "" if P else ('<i class="tp" style="left:-34px; top:22px; transform:rotate(-38deg)"></i>'
                           f'<i class="tp" style="left:{W - 136}px; top:22px; transform:rotate(38deg)"></i>')
-    hd = (f'<div class="hd"><div class="l">第九顶帽子<small>{parts["topic"]}</small></div>'
+    hd = (f'<div class="hd"><div class="l">{X.rich(X.channel)}<small>{parts["topic"]}</small></div>'
           f'<div class="tag">{parts["fxid"]}</div></div>')
     cap = f'<div class="cap"><span class="cs"><i class="hlb"></i><span class="ct" style="font-size:{parts["cap_px"]}px">{parts["cap"]}</span></span></div>'
     ft = f'<div class="ft"><div>{parts["foot"]}</div><div>{parts["src"]}</div></div>'
-    X.used_text.update("第九顶帽子")
+    X.used_text.update(X.channel)
     host = " host" if p.get("host") else ""
     X.clip(f"{cid}c", t, d, defs + tapes + rule + hd + cap + ft, "ctx skx" + host, 30, track=20, sty=parts["sty"])
     X.tw(f'tl.fromTo("#{rid}", {{strokeDashoffset:1.05}}, {{strokeDashoffset:0, duration:0.5, ease:"power1.inOut"}}, {t + 0.05:.3f});')
@@ -588,8 +588,8 @@ def page(X, b, inner):
     i, n = X.beat["i"], X.beat["n"]
     meta = X.v.get("meta", {})
     sec = meta.get("section", "白板课"); src = b.get("src", meta.get("src", ""))
-    X.used_text.update(sec + src + "第九顶帽子0123456789/来源：")
-    hd = f'<div class="hd" data-layout-allow-overlap><div class="l">第九顶帽子<small>{X.rich(sec)}</small></div><div class="r">{i + 1}/{n}</div></div>'
+    X.used_text.update(sec + src + "" + X.channel + "0123456789/来源：")
+    hd = f'<div class="hd" data-layout-allow-overlap><div class="l">{X.rich(X.channel)}<small>{X.rich(sec)}</small></div><div class="r">{i + 1}/{n}</div></div>'
     ft = f'<div class="ft" data-layout-allow-overlap>{"来源：" + X.rich(src) if src else ""}</div>'
     return f'<div class="sk"><div class="cam"><div class="paper"></div>{inner}</div>{hd}{ft}</div>'
 
@@ -948,7 +948,7 @@ def outro(b, X, t, d, cid):
     """a sticky note taped to the board; the top hat is drawn above the channel name."""
     B = Board(X, cid, t, d); h = B.h
     bx, by, bw, bh = box(X); P = X.portrait
-    title, sub = b.get("title", "第九顶帽子"), b.get("sub", "")
+    title, sub = b.get("title", X.channel), b.get("sub", "")
     nw, nh = (620, 580) if P else (740, 580)
     nx_, ny_ = (bx + bw / 2 - nw / 2, by + 60) if P else (bx + bw * 0.38 - nw / 2, by + 70)
     note = (f'<div class="note sn" style="left:{nx_:.0f}px; top:{ny_:.0f}px; width:{nw}px; height:{nh}px; transform:rotate(-2.5deg)"></div>'

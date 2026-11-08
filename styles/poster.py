@@ -145,7 +145,7 @@ def frame(X, b, t, d, cid, dark=False, grid_at=None, src=None, rows=False):
     sec = meta.get("section", "判断")
     X.used_text.update(sec + "0123456789/—")
     hd = (f'<div class="hd" style="left:{g.m}px; right:{g.m}px; top:{hd_top}px; font-size:{fs}px">'
-          f'<div class="l"><b>第九顶帽子</b><span>HAT 9 · {X.rich(sec)}</span></div>'
+          f'<div class="l"><b>{X.rich(X.channel)}</b><span>{X.rich(sec)}</span></div>'
           f'<div class="r"><em>{i + 1:02d}</em><span> / {n:02d}</span></div></div>'
           f'<i class="hr" style="left:{g.m}px; right:{g.m}px; top:{hd_top + fs + 14}px"></i>')
     D = X.duration or 30
@@ -475,9 +475,9 @@ def outro(b, X, t, d, cid):
         L = dict(nm=(g.x(0) - 8, 300, 340), zh=(g.x(0), 620, 112), sub=(g.x(0), 770, 36), mo=(g.x(0), 840, 20))
     else:
         L = dict(nm=(g.x(0) - 12, 150, 470), zh=(g.x(0), 560, 120), sub=(g.x(0), 720, 38), mo=(g.x(0), 790, 20))
-    body = (f'<div class="nm out" style="{st(left=L["nm"][0], top=L["nm"][1], font_size=L["nm"][2])}">HAT 9</div>'
-            f'<div class="zh" style="{st(left=L["zh"][0], top=L["zh"][1], font_size=round(min(L["zh"][2], g.w(12) / max(fit.width(b.get("title", "第九顶帽子")), 1))))}">{X.rich(b.get("title", "第九顶帽子"), split="chars")}</div>'
-            f'<div class="zh m" style="{st(left=L["sub"][0], top=L["sub"][1], font_size=round(min(L["sub"][2], g.w(12) / max(fit.width(b.get("sub", "AI 时代的审美与判断")), 1))))}">{X.rich(b.get("sub", "AI 时代的审美与判断"))}</div>'
+    body = (f'<div class="nm out" style="{st(left=L["nm"][0], top=L["nm"][1], font_size=L["nm"][2])}">{X.rich(b.get("nm", "FIN"))}</div>'
+            f'<div class="zh" style="{st(left=L["zh"][0], top=L["zh"][1], font_size=round(min(L["zh"][2], g.w(12) / max(fit.width(b.get("title", X.channel)), 1))))}">{X.rich(b.get("title", X.channel), split="chars")}</div>'
+            f'<div class="zh m" style="{st(left=L["sub"][0], top=L["sub"][1], font_size=round(min(L["sub"][2], g.w(12) / max(fit.width(b.get("sub", "")), 1))))}">{X.rich(b.get("sub", ""))}</div>'
             f'<div class="mo blue" style="{st(left=L["mo"][0], top=L["mo"][1], font_size=L["mo"][2])}">{X.rich(b.get("mo", "FOLLOW · 关注"))}</div>')
     page(X, cid, t, d, False, grid, furn, wipe, body)
     s = f"#{cid}"
@@ -532,7 +532,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
     sq = ("".join(f'<i class="{"on" if k == i else ""}"></i>' for k in range(n))) if n <= 24 else ""
     X.used_text.update(f"{i + 1:02d}{n:02d}/")
     hd = (f'<div class="pf-hd{" one" if v else ""}" style="left:{g.m}px; right:{g.m}px; top:{top}px; height:{34 if v else 60}px">'
-          f'<div class="l"><div class="n">{i + 1:02d}</div><div class="t"><b>第九顶帽子</b><span>HAT 9 — {parts["topic"]}</span></div></div>'
+          f'<div class="l"><div class="n">{i + 1:02d}</div><div class="t"><b>{X.rich(X.channel)}</b><span>{parts["topic"]}</span></div></div>'
           f'<div class="r">{f"<div class=sq>{sq}</div>" if sq and not (v and p.get("host")) else ""}<div class="id">{parts["fxid"]}</div></div></div>'
           f'<i class="pf-hr" style="left:{g.m}px; right:{g.m}px; top:{rule}px"></i><i class="pf-pg" style="left:{g.m}px; width:{g.W - 2 * g.m}px; top:{rule}px"></i>')
     # caption: index cell + ink block, flush to the left margin; in 9:16 the right 120 px stay clear for the platform buttons

@@ -19,10 +19,10 @@
  "fx": "clip_style",
  "theme": "ink",
  "topic": "商业拆解",
- "video": "../mixue/assets/video/shiba.webm",
+ "video": "../../assets/host.webm",
  "title": "4 块钱的柠檬水凭什么赚 44 亿",
- "name": "柴犬主播",
- "role": "第九顶帽子",
+ "name": "主持人",
+ "role": "示例频道",
  "time": "12:08",
  "comments": [
   [

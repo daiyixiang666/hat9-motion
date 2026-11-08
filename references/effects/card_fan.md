@@ -36,7 +36,7 @@
  ],
  "title": "一套效果 · 换风格就换皮",
  "kicker": "14 部风格示例片",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "subject_label": "柴柴",
  "line": "同一套效果，换一种风格，*整片换一身皮*。",
  "t": "@关键词"

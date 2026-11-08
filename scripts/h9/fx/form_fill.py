@@ -32,7 +32,7 @@ def _norm(v):
         else:
             a, _, b = str(f).replace(":", "：").partition("：")
             out.append({"label": a.strip(), "value": b.strip(), "kind": "text"} if b else {"label": str(f), "kind": "check", "on": True})
-    return out[:10] or [{"label": "名字", "value": "第九顶帽子", "kind": "text"}, {"label": "接收通知", "kind": "toggle", "on": True}]
+    return out[:10] or [{"label": "名字", "value": "示例频道", "kind": "text"}, {"label": "接收通知", "kind": "toggle", "on": True}]
 
 
 def form_fill(X, cid, t, d, p):

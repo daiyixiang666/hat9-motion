@@ -19,7 +19,7 @@
  "fx": "email_card",
  "theme": "paper",
  "topic": "做内容",
- "sender": "第九顶帽子 <hello@example.com>",
+ "sender": "示例频道 <hello@example.com>",
  "to": "你",
  "date": "2026-11-01 09:30",
  "subject": "来一起做一条口播视频？",
@@ -35,7 +35,7 @@
  "stamp": "示意",
  "inbox": [
   {
-   "sender": "第九顶帽子",
+   "sender": "示例频道",
    "subject": "来一起做一条口播视频？",
    "time": "09:30"
   },

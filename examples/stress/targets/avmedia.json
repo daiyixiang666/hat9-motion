@@ -13,7 +13,7 @@
     "main_start": 0.5,
     "corner": "bl",
     "shape": "round",
-    "name": "第九顶帽子",
+    "name": "示例频道",
     "role": "旁白",
     "kicker": "竖屏素材",
     "title": "Manhattan Waterfront",
@@ -24,10 +24,10 @@
     "at": 1.2,
     "back_at": 4.4,
     "corner": "tl",
-    "name": "柴犬",
+    "name": "主持人",
     "role": "主持人",
     "src": "American Look (1958) · Prelinger Archives（公有领域）",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    },
    {
     "main": "../../assets/previews/screen_16x9.mp4",
@@ -35,7 +35,7 @@
     "at": 0.5,
     "kicker": "成片",
     "title": "一条屏幕录制",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    }
   ],
   "freeze_frame": [
@@ -205,7 +205,7 @@
     "a": 24.41,
     "b": 28.33,
     "quote": "改变世界的，往往不是新发明，而是把成本打下来的人。",
-    "who": "第九顶帽子",
+    "who": "示例频道",
     "role": "旁白",
     "source": "《一个铁箱子》",
     "date": "00:24–00:28"
@@ -215,7 +215,7 @@
     "words": "../atlas/assets/audio/words.json",
     "a": 0.0,
     "b": 8.57,
-    "who": "第九顶帽子",
+    "who": "示例频道",
     "role": "旁白",
     "source": "《一条航线》",
     "date": "00:00–00:08"
@@ -227,7 +227,7 @@
     "b": 16.77,
     "bars": 24,
     "vol": 0.9,
-    "who": "第九顶帽子",
+    "who": "示例频道",
     "role": "旁白",
     "source": "《一杯 4 块钱的柠檬水》",
     "kicker": "原声"
@@ -239,12 +239,12 @@
     "words": "../doc/assets/audio/words.json",
     "a": 0.0,
     "b": 8.02,
-    "show": "第九顶帽子",
+    "show": "示例频道",
     "episode": "一个铁箱子",
     "ep": "02",
     "hosts": [
      {
-      "name": "柴犬"
+      "name": "主持人"
      },
      {
       "name": "嘉宾 A"
@@ -270,11 +270,11 @@
     "b": 23.59,
     "art": "../pacing/assets/stills/harbor.jpg",
     "ep": "03",
-    "show": "第九顶帽子 · 航线与价格",
+    "show": "航线与价格",
     "episode": "绕道好望角之后：苏伊士运河一年的收入，从一百零二亿美元跌到不到四十亿",
     "hosts": [
      {
-      "name": "柴犬"
+      "name": "主持人"
      }
     ]
    },
@@ -283,12 +283,12 @@
     "words": "../mixue/assets/audio/words.json",
     "a": 21.49,
     "b": 24.39,
-    "show": "第九顶帽子",
+    "show": "示例频道",
     "episode": "一杯 4 块钱的柠檬水",
     "ep": "01",
     "hosts": [
      {
-      "name": "柴犬"
+      "name": "主持人"
      },
      {
       "name": "A"
@@ -306,7 +306,7 @@
   "talking_head": [
    {
     "kicker": "口播",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    },
    {
     "stickers": [
@@ -348,7 +348,7 @@
      }
     ],
     "src": "蜜雪集团 2024 年度业绩公告",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    },
    {
     "host": false,
@@ -389,7 +389,7 @@
     },
     "say": "记住这个",
     "src": "UNCTAD Review of Maritime Transport",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    },
    {
     "at": 1.6,
@@ -406,7 +406,7 @@
     },
     "say": "看右下角！",
     "src": "Dynamic American City (1956) · Prelinger Archives（公有领域）",
-    "host": "../mixue/assets/video/shiba.webm"
+    "host": "../../../assets/host.webm"
    },
    {
     "host": false,

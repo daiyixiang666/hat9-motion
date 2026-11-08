@@ -3,7 +3,7 @@
   "title": "AE 动效库 · 输入适配变体（不进画廊）",
   "aspect": "16:9",
   "duration": 46.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {

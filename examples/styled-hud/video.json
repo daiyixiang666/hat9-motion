@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "hud",
   "duration": 54.1,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {

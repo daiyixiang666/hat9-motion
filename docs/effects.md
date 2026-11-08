@@ -6,7 +6,7 @@
 {"scene": "fx", "fx": "stomp", "words": ["大家", "都在用", "AI"], "t": "@大家"}
 ```
 
-排名和人气依据见 [`research/ae_popular.md`](../research/ae_popular.md)。横屏、竖屏同一套参数。
+排名和人气依据见 [`references/ae_popular.md`](../references/ae_popular.md)。横屏、竖屏同一套参数。
 
 ## 效果
 

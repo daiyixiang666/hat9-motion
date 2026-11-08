@@ -7,8 +7,8 @@
     "words": "assets/audio/words.json",
     "music": "assets/audio/music.mp3",
     "music_volume": 0.18,
-    "mascot": "../mixue/assets/video/shiba.webm",
-    "tail": 1.8,
+    "mascot": "../../assets/host.webm",
+    "tail": 2.8,
     "section": "白板课",
     "src": "Costco 2024 财年年报（Form 10-K，截至 2024.9.1）"
   },
@@ -94,8 +94,8 @@
     },
     {
       "scene": "outro",
-      "t": "@这里",
-      "title": "第九顶帽子",
+      "t": 28.52,
+      "title": "示例频道",
       "sub": "商业拆解 · 白板课"
     }
   ]

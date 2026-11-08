@@ -178,4 +178,3 @@
 4. 重新生成样张：`python3 assets/previews/fonts/make_specimens.py`（会同时更新 `gallery/fonts.html` 的数据）。
 5. 在风格的 `fonts` 里用新 id，构建一次，确认没有打印「not found」。
 
-还没收录的候选字体（含官方地址、许可和大小）见 [`research/fonts_wishlist.md`](../research/fonts_wishlist.md)。

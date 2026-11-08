@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One shareable takeaway card (金句卡) as a still PNG — the same card the `share_card` effect animates in a film.
 
-  python3 scripts/share_card.py "看懂谁在*赚钱*，比看懂谁在卖货更重要。" --by "第九顶帽子 · 商业拆解第 07 期" --handle @第九顶帽子
+  python3 scripts/share_card.py "看懂谁在*赚钱*，比看懂谁在卖货更重要。" --by "我的频道 · 第 07 期" --handle @我的频道
   python3 scripts/share_card.py "..." --aspect 1:1 --theme ink --out covers/quote_1x1.png
 
 *关键词* gets the marker. Aspects: 3:4 (default, 小红书), 4:5, 1:1, 9:16. Themes: paper / ink / red / lemon.

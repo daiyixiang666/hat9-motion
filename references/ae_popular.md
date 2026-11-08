@@ -340,7 +340,7 @@
 | 变装转场（实拍） | B 站「拆解 100 种剪辑手法」330.8 万 | 实拍剪辑手法 | 否 |
 | Split Screen（分屏） | Envato Popular「Vertical Split Screen」；SonduckFilm 23.2 万 | 证据偏弱 | 是 |
 | Video Inside Text（文字镂空透出视频） | SonduckFilm「5 Quick Text Effects」76.7 万；Mixkit「Video Mask Title」 | 证据偏弱 | 是 |
-| Character Explainer Toolkit（角色解说套件） | Pixity Land 7.3K、AinTrailers 3.7K、Explainer Video Toolkit 4 2.5K | 属于角色绑定，不是动效 | 部分（柴犬主持人的骨骼动画可以参考） |
+| Character Explainer Toolkit（角色解说套件） | Pixity Land 7.3K、AinTrailers 3.7K、Explainer Video Toolkit 4 2.5K | 属于角色绑定，不是动效 | 部分（卡通主持人的骨骼动画可以参考） |
 | Logo Sting（片头 logo） | Elegance Flare 6.2K、Logo 3D Levels 4.5K、Particle Reveal 3.6K | 只用在频道片头 | 是 / 部分 |
 | Audio Visualizer（音频频谱） | Envato Popular「Audio Visualizer」「Audio Spectrum Pack」；Mixkit 主推 | 讲解类视频少用 | 是（预先算好 FFT） |
 | Stretched Text（拉伸字） | Envato 2025-05 文章「the rise of stretched text」；Jake In Motion「stretch text like a BOSS」16.9 万 | 数据少 | 是 |
@@ -414,7 +414,7 @@
 5. **Apple 风格 / Liquid Glass**：可以用通用的毛玻璃语言；不要用 SF Pro 字体（许可只限 Apple 平台的样机）、Apple 图标或系统 UI 素材。
 6. **UI 模拟**：做通用界面，不要仿真微信、抖音、iOS 的品牌界面。真实截图里的他人头像和人脸一律打码。
 7. **字体**：只用 OFL 或 Apache 许可的字体（和 `../THIRD_PARTY.md` 一致）。中文笔顺数据（makemeahanzi / hanzi-writer-data）是 Arphic Public License，打包前要核对。
-8. **深度模型**：Depth Anything V2 Small 是 Apache-2.0，可以用；Base / Large 是 CC-BY-NC-4.0，频道开始变现后就不能用。
+8. **深度模型**：Depth Anything V2 Small 是 Apache-2.0，可以用；Base / Large 是 CC-BY-NC-4.0，不能用在商业项目里。
 9. **LottieFiles 等素材站**：每个文件的许可不同，没确认之前一律不用。
 
 ---

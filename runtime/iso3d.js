@@ -496,7 +496,7 @@ BUILD.scale = (m) => {
 // the outro: toy letters and a pastel top hat
 BUILD.outro = (m, cx, first) => {
   const g = slab(world, 22, 16, PAL.slab3, cx, 0);
-  const title = m.title || "第九顶帽子";
+  const title = m.title || "";
   const name = text3(g, title, { size: Math.min(2.2, 12 / Math.max(1, textWidth(title))), depth: 0.55, colors: [PAL.coral, PAL.sky, PAL.mint, PAL.lilac, PAL.gold2] }); name.position.set(PORTRAIT ? -0.2 : -1.6, 1.25, 4.4);
   name.userData.glyphs.forEach((p, i) => tl.from(p.position, { y: 7, duration: 0.75, ease: "bounce.out" }, at(m.t + 0.05 + i * 0.08)));
   const prof = [[0, 0], [1.05, 0], [1.08, 0.04], [1.02, 0.07], [0.62, 0.08], [0.6, 0.14], [0.58, 1.0], [0.6, 1.05], [0.6, 1.08], [0, 1.08]].map(([x, y]) => new THREE.Vector2(x, y));

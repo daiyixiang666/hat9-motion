@@ -3,7 +3,7 @@
   "title": "AE 动效库 · 在真实口播里",
   "aspect": "16:9",
   "duration": 123.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -201,9 +201,9 @@
    "ref": "Lower Thirds 第1名 6.3K份",
    "theme": "paper",
    "topic": "商业拆解",
-   "text": "第九顶帽子",
+   "text": "示例频道",
    "sub": "商业拆解 · 每期拆一家公司怎么赚钱",
-   "line": "我是第九顶帽子，每期拆一家*公司怎么赚钱*。",
+   "line": "我是示例频道，每期拆一家*公司怎么赚钱*。",
    "tr": "hard"
   },
   {

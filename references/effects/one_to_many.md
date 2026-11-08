@@ -33,7 +33,7 @@
 {
  "scene": "fx",
  "fx": "one_to_many",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "subject_label": "柴柴",
  "count": 47,
  "one_unit": "人",

@@ -8,14 +8,14 @@
 
 ```json
 "meta": {
-  "device": {"kind": "camera", "brand": "第九顶帽子", "url": "hat9.dev"}
+  "device": {"kind": "camera", "brand": "我的频道", "url": "example.com"}
   // 或者直接 "device": "camera" | "browser" | "phone" | "none"
 },
 "beats": [
   { "t": 0,          "chapter": {"label": "PANO", "sub": "全景", "bg": "ink", "title": "周活"}, ... },
   { "t": "@两年前",   "chapter": {"label": "TIME-LAPSE", "sub": "延时", "bg": "paper"}, ... },
   { "t": "@现在它",   "chapter": {"label": "BURST", "sub": "连拍", "bg": "accent"}, ... },
-  { "t": "@OpenAI押", "chapter": {"label": "OpenAI 的 2030 目标", "device": "browser", "url": "hat9.dev/notes/openai-2030"}, ... },
+  { "t": "@OpenAI押", "chapter": {"label": "OpenAI 的 2030 目标", "device": "browser", "url": "example.com/notes/openai-2030"}, ... },
   { "t": "@所以别",   "chapter": {"label": "SELFIE", "sub": "自拍", "bg": "card"}, ... }
 ]
 ```

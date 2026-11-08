@@ -3,7 +3,7 @@
   "title": "数据、图表与地图 · 在真实口播里",
   "aspect": "16:9",
   "duration": 66.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -342,7 +342,7 @@
    ],
    "mock": "示意",
    "line": "先看位置，再看回本，最后看*总部怎么赚钱*。",
-   "src": "第九顶帽子 · 观点（示意）",
+   "src": "观点（示意）",
    "label": "决策树 · Decision Tree",
    "ref": "Envato「Infographics 6 Roadmaps」· VideoHive「Infographic Maker」2.6K",
    "t": 41.5

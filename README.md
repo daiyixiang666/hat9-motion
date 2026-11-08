@@ -30,7 +30,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | **做自己的风格** | `hat9.py style new 我的id --from ink`：从任一风格派生，改颜色、字体、质感，或者整份复制改场景；预览、检查、放进画廊各一条命令，见 [`references/styles.md`](references/styles.md#做你自己的风格) |
 | **导演关卡** | 每一关一个命令：`brief`（需求单 + 分镜检查）→ `stills`（每个 beat 一张静帧的板）→ `sample`（最难几秒的动画小样）→ `montage`（卡拍快切，自动挑每段最好看的一秒）→ `review`（静帧板 + 自动检查 + 打分关）；`refs` 从参考片量节奏、排参考板、写原则。见 [`references/director.md`](references/director.md) |
 | **声音和真实界面** | 配乐旁放 `.beats.json` 就自动卡拍，片中快切 `"fx": "montage"`，说话时配乐压低，渲染自动 -14 LUFS；讲产品用 `scripts/ui_capture.py 网址` 抓真实界面组件，配 `ui_lift` 出框，不编界面 |
-| **同一个重点，换着载体说** | 数字可以贴在主体旁、做成信息卡、拼成作品墙、变成仪表或钟、滚成日志；主体（录屏 / 柴犬 / 真人）常驻画面并换位置，相机或浏览器外框按章节换模式名和底色；`review` 会拦住连续的全屏大字。见 [`references/presenter.md`](references/presenter.md)、[`references/device.md`](references/device.md) |
+| **同一个重点，换着载体说** | 数字可以贴在主体旁、做成信息卡、拼成作品墙、变成仪表或钟、滚成日志；主体（录屏 / 卡通形象 / 真人）常驻画面并换位置，相机或浏览器外框按章节换模式名和底色；`review` 会拦住连续的全屏大字。见 [`references/presenter.md`](references/presenter.md)、[`references/device.md`](references/device.md) |
 | **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
 | **13 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
 
@@ -160,7 +160,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 
 ## 动效库：按人气复刻，不是自己编
 
-先统计 VideoHive 销量、YouTube 和 B 站播放量，再逐个用代码复刻（数据见 [`research/ae_popular.md`](research/ae_popular.md)）。每个效果都放在一句真实口播里演示：栏目页眉、整句字幕和关键词，纯文字的页面配柴犬主持人，所以预览看上去就是成片里的一帧。全部效果、竖屏预览、参数和配方卡在 [在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) 和 [`docs/effects.md`](docs/effects.md)。
+先统计 VideoHive 销量、YouTube 和 B 站播放量，再逐个用代码复刻（数据见 [`references/ae_popular.md`](references/ae_popular.md)）。每个效果都放在一句真实口播里演示：栏目页眉、整句字幕和关键词，纯文字的页面配主持人形象，所以预览看上去就是成片里的一帧。全部效果、竖屏预览、参数和配方卡在 [在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/) 和 [`docs/effects.md`](docs/effects.md)。
 
 | 照片 | 字效 | 转场 |
 |---|---|---|
@@ -219,8 +219,7 @@ scripts/h9/aefx.py  AE 动效库（每个效果一个函数）  scripts/build.py
 gallery/            在线画廊（index.html · effects.json · llms.txt）
 references/effects/ 每个效果一张配方卡             references/           格式、动效规矩、句型→画面、出图规则
 styles/             press 财经刊 · screen AI 工具台 · atlas 地图纪录 · doc 实拍纪录 · poster 瑞士海报 · reel 动效库 · hud · studio / clay 三维
-examples/           mixue · screen · atlas · doc · poster（5 条成片）· aefx（动效在真实口播里）· stress（素材压力测试）· demo / promo（旧版）
-research/           调研：AE 动效人气排名、标杆仓库、国内外口播包装、动效工艺
+examples/           mixue · screen · atlas · doc · poster（5 条成片）· aefx（动效在真实口播里）· stress（素材压力测试）· demo（旧版）
 ```
 
 ## FAQ
@@ -243,10 +242,11 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 ## 致谢
 
-学习过这些作品的手法：VideoHive / Envato 的畅销 AE 模板、Animation Composer、Video Copilot、SonduckFilm、Ben Marriott，B 站的 AE 动效作者们；Kurzgesagt、Vox、LEMMiNO、回形针、所长林超、小Lin说；阿杜Next 的 adu-motion-video（MIT）、HeyGen 的 HyperFrames（Apache-2.0）、remotion-dev/skills、video-shotcraft。详见 [`research/`](research/)。
+学习过这些作品的手法：VideoHive / Envato 的畅销 AE 模板、Animation Composer、Video Copilot、SonduckFilm、Ben Marriott，B 站的 AE 动效作者们；Kurzgesagt、Vox、LEMMiNO、回形针、所长林超、小Lin说；阿杜Next 的 adu-motion-video（MIT）、HeyGen 的 HyperFrames（Apache-2.0）、remotion-dev/skills、video-shotcraft。
 
 ## 更新
 
+- **0.15.0** 新参数 `meta.channel`（页眉、落版里的频道名）；示例换成中性的示例频道和代码绘制的主持人。
 - **0.14.4** 统一字幕位置不再被风格覆盖；快切 `zoom` 藏掉素材自带字幕。
 - **0.14.3** 字幕可以统一样式（`caption_style`），也可以按 beat 关掉（`caption: false`）。
 - **0.14.2** 长片可以按章换风格；修正竖屏画面只占上半屏；`frame_fit` 放大填满。
@@ -269,6 +269,3 @@ research/           调研：AE 动效人气排名、标杆仓库、国内外口
 
 详见 [`CHANGELOG.md`](CHANGELOG.md)。
 
----
-
-<div align="center"><sub>第九顶帽子 · 大家都在用 AI，结果凭什么是你的</sub></div>

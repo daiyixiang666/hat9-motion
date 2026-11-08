@@ -5,10 +5,11 @@
   "style": "reel",
   "voice": "assets/audio/voice.mp3",
   "words": "assets/audio/words.json",
+  "tail": 4.9,
   "music": "assets/audio/music.mp3",
   "music_volume": 0.24,
   "bpm": 100,
-  "host_video": "../mixue/assets/video/shiba.webm",
+  "host_video": "../../assets/host.webm",
   "duration": 27.5
  },
  "beats": [
@@ -24,7 +25,7 @@
     "assets/clips/toaster.mp4",
     "assets/clips/gas.mp4"
    ],
-   "kicker": "第九顶帽子 · 商业拆解",
+   "kicker": "商业拆解",
    "title": "一杯 *¥4* 的生意",
    "sub": "蜜雪冰城 · 2024 年报",
    "label": "S08 无声开场 · Cold Open",
@@ -144,9 +145,9 @@
    "theme": "paper",
    "topic": "商业拆解",
    "host": true,
-   "text": "第九顶帽子",
-   "sub": "商业拆解 · 看懂谁在赚钱",
-   "line": "这里是*第九顶帽子*。",
+   "text": "示例频道",
+   "sub": "商业拆解",
+   "line": "",
    "label": "#14 下三分之一字条 · Lower Third",
    "ref": "Lower Thirds 第1名 6.3K份"
   }

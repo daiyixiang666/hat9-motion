@@ -14,7 +14,7 @@
 
 - `../../assets/previews/*.mp4`：本仓库示例渲染出的成片（蜜雪、一个铁箱子、屏幕录制、瑞士海报）。
 - `../mixue|doc|atlas/assets/audio/voice.mp3` 和 `words.json`：这些示例自己的旁白和字级时间戳。音频引用、播客切片只引用旁白原话，没有编造台词；变体里的多人播客标了「示意」。
-- `../mixue/assets/video/shiba.webm`：频道主持人柴犬。
+- `../../assets/host.webm`：代码绘制的卡通主持人。
 
 ## 数字的出处
 

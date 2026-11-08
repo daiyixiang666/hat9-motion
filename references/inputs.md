@@ -184,7 +184,7 @@
 
 ## 0.7 新增效果
 
-第二批补缺（`research/cases_workpackages_2.md`）。各示例文件夹里的 `variants.json` 是故意换了输入的样例。
+第二批补缺。各示例文件夹里的 `variants.json` 是故意换了输入的样例。
 
 ### 视频与声音
 

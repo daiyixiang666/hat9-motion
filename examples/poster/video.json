@@ -7,8 +7,8 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.2,
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 2.0,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "section": "判断",
   "caption_mode": "reading"
  },
@@ -24,6 +24,6 @@
   {"scene": "keep", "t": "@你能", "at_make": "@做出", "at_toss": "@扔掉", "at_keep": "@才重要",
    "a": ["你能做出", "多少张图", "不重要"], "b": ["你敢扔掉", "多少张", "才重要"]},
   {"scene": "thesis", "t": "@选择", "at_rest": "@才是", "big": "选择", "rest": "才是|新的创作"},
-  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子", "sub": "AI 时代的审美与判断", "mo": "FOLLOW · 关注 · 每周一期"}
+  {"scene": "outro", "t": 22.66, "title": "示例频道", "sub": "", "mo": "FOLLOW · 关注 · 每周一期"}
  ]
 }

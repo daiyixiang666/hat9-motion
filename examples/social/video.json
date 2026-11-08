@@ -2,7 +2,7 @@
  "meta": {
   "title": "社交、人物与中国地图",
   "aspect": "16:9",
-  "host_video": "../mixue/assets/video/shiba.webm",
+  "host_video": "../../assets/host.webm",
   "duration": 37.6
  },
  "beats": [

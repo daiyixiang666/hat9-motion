@@ -1,12 +1,12 @@
 # 主体层 Presenter：主体一直在，只是换位置
 
-一整片都留着同一个主体——口播真人、录屏、柴犬（透明 webm）或一张图——每个 beat 只决定它**站在哪**：全屏、图表下面的小卡、侧边、角落、或者先藏起来。换位置是一段 0.65 秒的平滑移动（不是切），视频一直往下播。这个 beat 的图形自动排在主体让出来的那块地方。
+一整片都留着同一个主体——口播真人、录屏、卡通形象（透明 webm）或一张图——每个 beat 只决定它**站在哪**：全屏、图表下面的小卡、侧边、角落、或者先藏起来。换位置是一段 0.65 秒的平滑移动（不是切），视频一直往下播。这个 beat 的图形自动排在主体让出来的那块地方。
 
-参考：抖音 7701488753897917723（`research/refs/douyin_7701488753897917723/拉片.md`）——人一直在，只是全屏 → 下方小卡 → 侧边 → 角落 → 回全屏，信息卡从他身边长出来，所以画面信息每 1–2 秒就换一次。
+参考：抖音 7701488753897917723——人一直在，只是全屏 → 下方小卡 → 侧边 → 角落 → 回全屏，信息卡从他身边长出来，所以画面信息每 1–2 秒就换一次。
 
 ## 什么时候用
 
-- 有一个能一直出现的主体：真人口播、柴犬口播、一段长录屏、一张产品图。
+- 有一个能一直出现的主体：真人口播、卡通形象口播、一段长录屏、一张产品图。
 - 想要「信息围着人动」而不是一屏一屏硬切。
 - 不用：纯图表片、快切蒙太奇、没有主体的片子。
 
@@ -17,12 +17,12 @@
   "presenter": {
     "src": "assets/host.mp4",      // 视频或图片；.webm / .png / .gif 默认按抠像（contain）放
     "at": "full",                  // 第一个 beat 之前的位置（默认 full）
-    "fit": "cover",                // cover（默认，真人/录屏）| contain（抠像、柴犬）
+    "fit": "cover",                // cover（默认，真人/录屏）| contain（抠像、卡通形象）
     "focus": [50, 35],             // cover 时脸在画面里的位置（%）；contain 默认 [50, 100] 站在底边
     "loop": true,                  // 素材比片子短时接着循环（默认 true）
     "start": 0,                    // 从素材第几秒开始
     "audio": false,                // 用素材自己的声音（默认静音，口播走 meta.voice）
-    "tag": "ON AIR · 第九顶帽子",   // 小卡左上角的名牌（只在 card / side / corner 时出现）
+    "tag": "ON AIR",   // 小卡左上角的名牌（只在 card / side / corner 时出现）
     "ground": "#…"                 // 抠像主体在小卡里的底色（默认跟着当前章节的卡片色）
   }
 },
@@ -66,9 +66,8 @@
 
 ## 例子
 
-`examples/presenter/video.json`：30 秒，柴犬主体 full → card → side → corner → full → side → card → corner（浏览器章）→ card → full，相机装置 5 章 + 浏览器 1 章。
+`examples/presenter/video.json`：30 秒，卡通主持人 full → card → side → corner → full → side → card → corner（浏览器章）→ card → full，相机装置 5 章 + 浏览器 1 章。
 
 ```bash
-export H9_MEDIA=$HOME/Desktop/test/video/library
 python3 scripts/build.py examples/presenter/video.json --aspect 9:16 --style poster
 ```

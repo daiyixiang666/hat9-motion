@@ -1,20 +1,20 @@
 {
  "meta": {
-  "title": "凭什么是你",
+  "title": "哪一张不能要",
   "aspect": "16:9",
   "voice": "assets/audio/voice.mp3",
   "words": "assets/audio/words.json",
-  "mascot": "assets/video/shiba.webm",
-  "folio": "第九顶帽子",
-  "tail": 0.8
+  "mascot": "../../assets/host.webm",
+  "folio": "示例频道",
+  "tail": 2.8
  },
  "beats": [
   {
    "scene": "title",
    "t": 0,
-   "kicker": "第九顶帽子 · 判断力",
+   "kicker": "判断力",
    "title": "大家都在用 *AI*",
-   "sub": "结果凭什么是你的",
+   "sub": "",
    "image": "assets/img/desk.jpg",
    "wall": [
     "assets/img/desk.jpg",
@@ -94,10 +94,10 @@
   },
   {
    "scene": "outro",
-   "t": "@这里是",
-   "title": "第九顶帽子",
-   "sub": "大家都在用 AI，结果凭什么是你的",
-   "cta": "关注 · 一起练判断"
+   "t": 15.69,
+   "title": "示例频道",
+   "sub": "",
+   "cta": "关注"
   }
  ]
 }

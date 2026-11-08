@@ -8,7 +8,7 @@
     "music": "assets/audio/music.mp3",
     "music_volume": 0.11,
     "duck": 8,
-    "tail": 1.3,
+    "tail": 2.8,
     "crt": true,
     "section": "游戏",
     "caption_hl": ["三千二百五十七亿", "两千六百多亿", "一百八十五亿", "六亿七千四百万", "翻了一倍"]
@@ -32,6 +32,6 @@
      "banner": "LEVEL UP!", "at_up": "@翻了一倍", "src": "《2024年中国游戏产业报告》· 中国音数协游戏工委"},
     {"scene": "dialog", "t": "@大作负责", "cap": false, "name": "HAT9", "text": "大作负责名气，|小游戏负责现金流。",
      "items": [{"icon": "trophy", "label": "名气", "at": "@名气", "with": "monkey"}, {"icon": "bag", "label": "现金流", "at": "@现金流", "with": "phone"}]},
-    {"scene": "outro", "t": "@这里是", "cap": false, "title": "第九顶帽子", "sub": "HAT 9", "prompt": "PRESS START"}
+    {"scene": "outro", "t": 23.60, "cap": false, "title": "示例频道", "sub": "", "prompt": "PRESS START"}
   ]
 }

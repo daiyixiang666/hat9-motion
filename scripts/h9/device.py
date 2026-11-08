@@ -2,7 +2,7 @@
 whose mode label / tab title changes at every chapter, while the background colour world changes with it.
 
 video.json
-  meta.device = "camera" | "browser" | "phone" | "none"   or   {"kind": "camera", "brand": "第九顶帽子", "url": "hat9.dev"}
+  meta.device = "camera" | "browser" | "phone" | "none"   or   {"kind": "camera", "brand": "我的频道", "url": "example.com"}
   beat.chapter = {"label": "PANO", "sub": "全景", "bg": "ink" | "#1d4ed8", "title": "开源", "device": "browser", "url": "…"}
     label   the mode name (camera pill / carousel), tab title (browser), screen title (phone)
     sub     a short local-language name shown with it (camera: 「全景 PANO」)
@@ -631,7 +631,7 @@ def browser(X, cid, group, t0, t1, chs):
     parts.append(f'<div class="tab ghost" style="left:{tab_x + tab_w + 10}px; top:{y0 + 8}px; width:{min(220, W - tab_x - tab_w - 60)}px; height:{tab_h - 8}px; opacity:.35; background:{first["line"]}"></div>')
     urls = []
     for ch in group:
-        u = ch["url"] or spec.get("url") or "hat9.dev"
+        u = ch["url"] or spec.get("url") or "example.com"
         X.used_text.update(u)
         urls.append(f'<b data-k="{ch["k"]}" style="position:absolute; left:{64}px; opacity:0">{X.rich(u)}</b>')
     url_w = W - 2 * x0

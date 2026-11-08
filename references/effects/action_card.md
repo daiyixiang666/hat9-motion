@@ -24,7 +24,7 @@
  "d": 6.5,
  "theme": "paper",
  "topic": "截图这一页",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "url": "github.com/daiyixiang666/hat9-motion",
  "steps": [
   "打开上面的 GitHub 地址，看清单列出全部效果",

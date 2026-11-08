@@ -152,11 +152,11 @@ def _context(X, cid, t, d, p):
         frame(X, cid, t, d, p, k)
     else:
         inner = (('<div class="scrim"></div>' if k["photo"] else "")
-                 + f'<div class="hd"><div><b>第九顶帽子</b><span>{k["topic"]}</span></div><div class="fxid">{k["fxid"]}</div></div>'
+                 + f'<div class="hd"><div><b>{X.rich(X.channel)}</b><span>{k["topic"]}</span></div><div class="fxid">{k["fxid"]}</div></div>'
                  + f'<div class="cap"><span style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div><div class="ft"><div>{k["foot"]}</div><div>{k["src"]}</div></div>')
         X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
         X.tw(f'tl.from("#{cid}c .cap > span", {{y:16, opacity:0, duration:0.3, ease:"power3.out"}}, {t + 0.05:.3f});')
-    if p.get("host"):    # the faceless host (talking shiba) in the corner, as a presenter would be
+    if p.get("host"):    # the talking host in the corner, as a presenter would be
         src = X.v.get("meta", {}).get("host_video")
         if src:
             url = X.asset(src, "video")
@@ -544,7 +544,7 @@ def plate(X, cid, t, d, p):
     if sel: X.camera(sel, t, d, "push")
 
 
-# ------------------------------------------------------------------ round 2: the remaining top-ranked effects (research/ae_popular.md)
+# ------------------------------------------------------------------ round 2: the remaining top-ranked effects (references/ae_popular.md)
 def parallax(X, cid, t, d, p):
     """2.5D 照片视差 (#2, VoluMax/Photomotion; MDMZ 1171万播放): clean plate + cut-out subject on separate depths,
     the camera dollies in so the subject separates from the background; optional title sits BETWEEN the layers.

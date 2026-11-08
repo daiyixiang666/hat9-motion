@@ -151,7 +151,7 @@ def furn(X, b, extra=""):
     src = b.get("src", meta.get("src", ""))
     pg = "".join(f'<i class="{"on" if k <= i else ""}"></i>' for k in range(n))
     X.used_text.update(sec + case + src + "0123456789/")
-    return (f'<div class="pr-hd"><div><b>第九顶帽子</b><span>{X.rich(sec)}</span></div><div class="r">{X.rich(case)}<i>{i + 1:02d}/{n:02d}</i></div></div>'
+    return (f'<div class="pr-hd"><div><b>{X.rich(X.channel)}</b><span>{X.rich(sec)}</span></div><div class="r">{X.rich(case)}<i>{i + 1:02d}/{n:02d}</i></div></div>'
             f'<div class="pr-ft"><div>{"来源：" + X.rich(src) if src else ""}</div><div class="pg">{pg}</div></div>{extra}')
 
 
@@ -805,7 +805,7 @@ def outro(b, X, t, d, cid):
 #root.v .pr-outro .sub { left:60px; top:690px; font-size:40px; } #root.v .pr-outro .cta { left:60px; top:780px; }
 """)
     P = X.portrait
-    tpx, tl_ = fs(b.get("title", "第九顶帽子"), X.W - (104 if P else 300), 130 if P else 150, 60, lines=2)
+    tpx, tl_ = fs(b.get("title", X.channel), X.W - (104 if P else 300), 130 if P else 150, 60, lines=2)
     spx, _ = fs(b.get("sub", ""), X.W - (120 if P else 320), 40 if P else 42, 24)
     cpx, _ = fs(b.get("cta", ""), X.W - (180 if P else 380), 36, 22)
     y_sub = (500 if P else 360) + len(tl_) * tpx * 1.1 + 30

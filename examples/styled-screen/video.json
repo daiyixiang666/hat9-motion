@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "screen",
   "duration": 68.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -235,7 +235,7 @@
    "main": "../../assets/previews/mixue_16x9.mp4",
    "main_start": 2.0,
    "at": 1.8,
-   "name": "柴犬",
+   "name": "主持人",
    "role": "主持人",
    "line": "图形一铺满，主持人就缩进角落*小窗*。",
    "label": "画中画 · Talking-head PiP",

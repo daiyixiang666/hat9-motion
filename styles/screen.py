@@ -284,14 +284,14 @@ def furn(X, b):
     pg = "".join(f'<i class="{"on" if k <= i else ""}"></i>' for k in range(n))
     X.used_text.update(sec + case + src + "0123456789/")
     return (f'<div class="band t"></div><div class="band b"></div>'
-            f'<div class="sc-hd"><div class="l"><i></i><b>第九顶帽子</b><span>{X.rich(sec)}</span></div>'
+            f'<div class="sc-hd"><div class="l"><i></i><b>{X.rich(X.channel)}</b><span>{X.rich(sec)}</span></div>'
             f'<div class="r">{X.rich(case)}<em>{i + 1:02d} / {n:02d}</em></div></div>'
             f'<div class="sc-ft"><div>{"来源：" + X.rich(src) if src else ""}</div><div class="pg">{pg}</div></div>')
 
 
 def win(X, cls, title, body, tag="", sty=""):
     tg = f'<b class="tag">{X.rich(tag)}</b>' if tag else ""
-    return f'<div class="win {cls}" style="{sty}"><div class="tb"><i></i><i></i><i></i><span data-layout-allow-overlap>{X.rich(title)}</span>{tg}</div><div class="bd">{body}</div></div>'
+    return f'<div class="win {cls}" style="{sty}"><div class="tb"><i></i><i></i><i></i><span data-layout-allow-overlap data-layout-allow-occlusion>{X.rich(title)}</span>{tg}</div><div class="bd">{body}</div></div>'
 
 
 def box(x, y, w, h): return f"left:{x:.0f}px; top:{y:.0f}px; width:{w:.0f}px; height:{h:.0f}px"
@@ -899,7 +899,7 @@ def outro(b, X, t, d, cid):
 .sc-out .sub { color:var(--muted); }
 .sc-out .cta { position:absolute; font-weight:700; color:#0a0c10; background:var(--lime); padding:12px 30px; border-radius:999px; white-space:nowrap; }
 """)
-    title = str(b.get("title", "第九顶帽子"))
+    title = str(b.get("title", X.channel))
     if P:
         ic = (56, 420, 150); tx, ty, tw_ = 56, 610, 968
     else:
@@ -1003,10 +1003,10 @@ def FX_FRAME(X, cid, t, d, p, k):
     P = X.portrait
     key = "" if P else f'<b class="sf-key">{RETURN}</b>'
     right_pad = ' style="padding-right:380px"' if (p.get("host") and not P) else ""   # the presenter sits bottom-right in 16:9
-    X.used_text.update("第九顶帽子/")
+    X.used_text.update("" + X.channel + "/")
     inner = (f'<div class="sf-win"></div>'
              f'<div class="sf-bar"><span class="sf-dots"><i></i><i></i><i></i></span>'
-             f'<span class="sf-crumb"><i class="sf-mark"></i><b>第九顶帽子</b><em>/</em>{k["topic"]}</span>'
+             f'<span class="sf-crumb"><i class="sf-mark"></i><b>{X.rich(X.channel)}</b><em>/</em>{k["topic"]}</span>'
              f'<span class="sf-id"><i>fx</i>{k["fxid"]}</span></div>'
              f'<div class="sf-cap"><div class="sf-box"><i class="sf-ai">{SPARK}</i>'
              f'<span class="sf-tx" style="font-size:{k["cap_px"]}px">{k["cap"]}<i class="sf-caret"></i></span>{key}</div></div>'

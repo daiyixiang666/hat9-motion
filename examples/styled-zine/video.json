@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "zine",
   "duration": 55.6,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -331,7 +331,7 @@
     "都不喝"
    ],
    "line": "你最常点哪一杯？*评论区*告诉我。",
-   "src": "第九顶帽子",
+   "src": "作者整理",
    "label": "T10 · 评论投票 · Poll Card",
    "ref": "Envato Elements Popular「YouTube Subscribe」「Checklist Pack」",
    "d": 5.0,

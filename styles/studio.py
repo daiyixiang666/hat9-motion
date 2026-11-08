@@ -72,7 +72,7 @@ def WORLD(beats, times, X, D):
         "s3": {"t": t3, "a": stack[0], "b": stack[1], "ta": X.T((sb.get("at") or [None])[0], t3) or t3 + 0.1,
                "tb": X.T((sb.get("at") or [None, None])[1], t3) or t3 + 0.9},
         "s4": {"t": t4, "v": int(nb["value"]), "hl": int(nb.get("hl", 10)), "ta": X.T(nb.get("at"), t4) or t4 + 0.2, "th": X.T(nb.get("at_hl"), t4) or t4 + 1.4},
-        "s5": {"t": t5}, "s6": {"t": t6, "d": d6, "title": ob.get("title", "第九顶帽子")},
+        "s5": {"t": t5}, "s6": {"t": t6, "d": d6, "title": ob.get("title", X.channel)},
     }
     text = "".join([cfg["s1"]["title"], cfg["s1"]["sub"], cfg["s2"]["la"], cfg["s2"]["lb"], "".join(cfg["s2"]["stickers"]),
                     stack[0], stack[1], "0123456789%", cfg["s6"]["title"]])
@@ -100,4 +100,4 @@ def WORLD(beats, times, X, D):
     X.clip("wo", t6, d6, f'<div class="w-out"><div class="s">{X.rich(ob.get("sub", ""))}</div><div class="c">{X.rich(ob.get("cta", "关注"))}</div></div>', "w-ov", 5, track=4)
     X.enter("#wo .s", t6 + 0.9, "text", verb="blurin")
     X.enter("#wo .c", t6 + 1.2, "accent", verb="pop", dur=0.45)
-    X.clip("wtag", 0, D, f'<div class="w-tag">{X.rich("第九顶帽子 · THE NINTH HAT")}</div>', "w-ov", 6, track=5)
+    X.clip("wtag", 0, D, f'<div class="w-tag">{X.rich(X.channel)}</div>', "w-ov", 6, track=5)

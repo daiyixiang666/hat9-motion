@@ -7,8 +7,8 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.22,
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 1.2,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "section": "商业拆解",
   "year_roll": {
    "from": "1956",
@@ -369,10 +369,10 @@
   {
    "scene": "card",
    "id": "c2",
-   "t": "@这里是",
+   "t": 28.78,
    "host": true,
    "kicker": "商业拆解 · THE BOX",
-   "title": "第九顶帽子",
+   "title": "示例频道",
    "sub": "Malcom McLean · 1956",
    "meta": "看懂谁在赚钱"
   }

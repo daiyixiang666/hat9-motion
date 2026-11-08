@@ -195,6 +195,16 @@ class Ctx:
         url = self.asset(src, "sfx")
         self.audio.append((t, url, vol if vol is not None else v))
 
+    # ---------------- channel name
+    @property
+    def channel(self):
+        """the channel / show name printed in headers, outros and badges: meta.channel, else the video title, else empty."""
+        meta = self.v.get("meta", {})
+        name = meta.get("channel")
+        if not name:
+            name = meta.get("title", "")
+        return str(name)
+
     # ---------------- text
     def rich(self, s, split=None):
         """escape, *强调* -> <em>, | -> line break; split='chars' wraps every glyph in <i class="c"> for staggers."""

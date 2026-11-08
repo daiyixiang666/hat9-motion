@@ -166,7 +166,7 @@ def WORLD(beats, times, X, D):
             c.update(lines=lines, at_rain=T("at_rain", t + 0.1), at_title=T("at_title", t + 0.9), at_line2=T("at_line2", None))
             text3d.update("".join(lines))
         elif k == "outro":
-            c.update(title=str(b.get("title", "第九顶帽子"))); text3d.update(c["title"])
+            c.update(title=str(b.get("title", X.channel))); text3d.update(c["title"])
         cfg["beats"].append(c)
     marked = [i for i, b in enumerate(beats) if b.get("flash")]
     if not marked:
@@ -198,7 +198,7 @@ def WORLD(beats, times, X, D):
     tag = meta.get("tag", "")
     ticker = meta.get("ticker") or []
     hud = (f'<i class="cn tl"></i><i class="cn tr"></i><i class="cn bl"></i><i class="cn br"></i>'
-           f'<div class="tag" style="left:{L["tag"][0]}px;top:{L["tag"][1]}px"><b>{X.rich("第九顶帽子")}</b><span>{X.rich(tag)}</span></div>'
+           f'<div class="tag" style="left:{L["tag"][0]}px;top:{L["tag"][1]}px"><b>{X.rich(X.channel)}</b><span>{X.rich(tag)}</span></div>'
            f'<div class="tc" style="right:{L["tc"][0]}px;top:{L["tc"][1]}px"><i></i><span class="tcv">00:00:00</span></div>')
     if ticker:
         unit = "".join(f"{X.rich(s)}<b>✦</b>" for s in ticker)

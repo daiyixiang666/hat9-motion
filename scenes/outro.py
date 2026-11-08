@@ -1,6 +1,6 @@
-"""outro — 柴犬主持人收尾 + 账号名 + 一句定位。柴犬从角落走到台前（若 meta.mascot 存在）。
-params: title ("第九顶帽子"), sub ("大家都在用 AI，结果凭什么是你的"), cta ("关注，一起练判断")
-style S['outro']: layout = right | center ; mascot = {x, y, scale} 柴犬在收尾时的位置（相对角落原位的位移）
+"""outro — 收尾：频道名 + 一句定位。主持人形象从角落走到台前（若 meta.mascot 存在）。
+params: title (meta.channel), sub (one line), cta (e.g. "关注")
+style S['outro']: layout = right | center ; mascot = {x, y, scale} 主持人形象在收尾时的位置（相对角落原位的位移）
 """
 
 CSS = """
@@ -20,7 +20,7 @@ def build(b, X, t, d, cid):
     X.css("s-outro", CSS)
     sub = f'<div class="sub">{X.rich(b["sub"])}</div>' if b.get("sub") else ""
     cta = f'<div class="cta">{X.rich(b["cta"])}</div>' if b.get("cta") else ""
-    X.clip(cid, t, d, f'<div class="box L-{lay}"><div class="ttl">{X.rich(b.get("title", "第九顶帽子"), split="chars")}</div>{sub}{cta}</div>', "scene s-outro", 2)
+    X.clip(cid, t, d, f'<div class="box L-{lay}"><div class="ttl">{X.rich(b.get("title", X.channel), split="chars")}</div>{sub}{cta}</div>', "scene s-outro", 2)
     X.enter(f"#{cid} .ttl .c", t + 0.25, "heading", stagger=0.05)
     X.enter(f"#{cid} .sub", t + 0.6, "text")
     X.enter(f"#{cid} .cta", t + 0.9, "accent", verb="pop")

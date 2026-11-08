@@ -5,11 +5,11 @@
   "style": "atlas",
   "voice": "assets/audio/voice.mp3",
   "words": "assets/audio/words.json",
-  "mascot": "../mixue/assets/video/shiba.webm",
+  "mascot": "../../assets/host.webm",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.2,
-  "tail": 1.6,
-  "show": "第九顶帽子 · 地图纪录",
+  "tail": 2.8,
+  "show": "地图纪录",
   "chapter": "红海改道 · 2024",
   "center_lon": 60,
   "caption_fix": {"二零二四年": "2024 年", "一万零五百": "10,500 ", "三千多": "3,000 多", "七到十天": "7 到 10 天", "一百零二亿美元": "102 亿美元", "四十亿": "40 亿", "五倍": "5 倍", "一百九十三公里": "193 公里"},
@@ -74,8 +74,8 @@
    "card": {"type": "stat", "side": "R", "k": "苏伊士运河 · 193.3 公里", "value": "≈12", "unit": "%", "sub": "全球贸易经过这一条水道"},
    "src": "运河长 193.3 公里；贸易占比约 12%（世界经济论坛）"},
   {"id": "thesis", "scene": "map", "t": "@看懂航线", "camera": "world", "clear": ["lines"],
-   "thesis": "看懂*航线*，|才看得懂*价格*。", "src": "第九顶帽子 · 地图纪录"},
-  {"id": "outro", "scene": "outro", "t": "@这里是", "camera": {"box": [-80, -48, 200, 72]}, "labels": false,
-   "outro": {"title": "第九顶帽子", "sub": "地图纪录 · 看懂生意的地理", "cta": "关注，下期换一条航线"}, "src": "第九顶帽子"}
+   "thesis": "看懂*航线*，|才看得懂*价格*。", "src": "地图纪录"},
+  {"id": "outro", "scene": "outro", "t": 30.44, "camera": {"box": [-80, -48, 200, 72]}, "labels": false,
+   "outro": {"title": "示例频道", "sub": "地图纪录", "cta": "关注，下期换一条航线"}, "src": "作者整理"}
  ]
 }

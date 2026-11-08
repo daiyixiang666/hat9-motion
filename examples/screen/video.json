@@ -5,10 +5,10 @@
   "style": "screen",
   "voice": "assets/audio/voice.mp3",
   "words": "assets/audio/words.json",
-  "mascot": "assets/video/shiba.webm",
+  "mascot": "../../assets/host.webm",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.2,
-  "tail": 1.8,
+  "tail": 2.8,
   "section": "AI 工具台",
   "case": "ChatGPT · 用户与付费",
   "src": "OpenAI DevDay 2025；The Information",
@@ -184,15 +184,15 @@
      false
     ]
    ],
-   "src": "第九顶帽子"
+   "src": "作者整理"
   },
   {
    "scene": "outro",
-   "t": "@这里是",
-   "title": "第九顶帽子",
-   "sub": "AI 工具台 · 看懂谁在赚钱",
+   "t": 26.21,
+   "title": "示例频道",
+   "sub": "AI 工具台",
    "cta": "关注，一起算账",
-   "src": "第九顶帽子"
+   "src": "作者整理"
   }
  ]
 }

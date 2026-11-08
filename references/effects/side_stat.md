@@ -24,7 +24,7 @@
  "d": 4.2,
  "theme": "paper",
  "topic": "开源模板",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "subject_tag": "ON AIR · 柴柴",
  "values": [
   {

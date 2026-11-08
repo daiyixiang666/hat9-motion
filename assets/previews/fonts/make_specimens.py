@@ -18,11 +18,11 @@ from h9 import fonts  # noqa: E402
 W, H = 1200, 300
 BG, CARD, INK, DIM, HOT, RULE = (17, 17, 16), (25, 24, 23), (239, 233, 223), (149, 143, 133), (255, 106, 43), (42, 40, 38)
 SAMPLE = {
-    "sc": "大家都在用 AI，结果凭什么是你的",
-    "tc": "大家都在用 AI，結果憑什麼是你的",
-    "jp": "誰もが AI を使う時代、差は判断力",
-    "kr": "모두가 AI를 쓰는 시대, 차이는 판단력",
-    "latin": "Everyone uses AI. Judgment sets you apart.",
+    "sc": "一条口播，变成动效成片",
+    "tc": "一條口播，變成動效成片",
+    "jp": "ひとつの語りを、動くフィルムに",
+    "kr": "한 편의 내레이션을 모션 영상으로",
+    "latin": "One voiceover, one finished motion film.",
     "arabic": "الجميع يستخدم الذكاء الاصطناعي",
     "hebrew": "כולם משתמשים בבינה מלאכותית",
 }
@@ -35,14 +35,14 @@ SAMPLE_ID = {   # a few faces read better with their own line
     "courier-prime": "INT. NIGHT — THE LEDGER, PAGE 47",
     "special-elite": "CASE FILE No. 2024-07 — CONFIDENTIAL",
     "unifraktur": "The Daily Ledger",
-    "bebas": "EVERYONE USES AI",
-    "anton": "EVERYONE USES AI",
-    "oswald": "EVERYONE USES AI · 46,479",
+    "bebas": "ONE VOICEOVER",
+    "anton": "ONE VOICEOVER",
+    "oswald": "MOTION FILM · 46,479",
     "barlow-cond": "46,479  STORES  +39.8%",
     "barlow-cond-black": "46,479  STORES  +39.8%",
-    "ma-shan-zheng": "看懂谁在赚钱",
-    "zhi-mang-xing": "看懂谁在赚钱",
-    "liu-jian-mao-cao": "看懂谁在赚钱",
+    "ma-shan-zheng": "一条口播，十种写法",
+    "zhi-mang-xing": "一条口播，十种写法",
+    "liu-jian-mao-cao": "一条口播，十种写法",
 }
 
 

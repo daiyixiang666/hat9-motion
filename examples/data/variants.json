@@ -3,7 +3,7 @@
   "title": "数据进阶 · 输入变体（不进画廊）",
   "aspect": "16:9",
   "duration": 116.0,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -993,9 +993,9 @@
     "+",
     "×"
    ],
-   "result": "凭什么是你",
-   "line": "工具人人都有，*凭什么是你*。",
-   "src": "第九顶帽子观点",
+   "result": "差别在判断",
+   "line": "工具人人都有，*差别在判断*。",
+   "src": "示例频道观点",
    "t": 88.0,
    "tr": "hard"
   },

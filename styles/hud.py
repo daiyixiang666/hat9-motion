@@ -138,7 +138,7 @@ def title(b, X, t, d, cid):
 .s-hudtitle .micro { font-size:24px; }
 """)
     kick = f'<div class="pill">{X.rich(b.get("kicker_pill", "2026"))}</div>'
-    inner = (wall + img + '<div class="shade"></div>' + furniture(X, b.get("hud_l", "第九顶帽子 · 判断力"), "GENERATED <b class=\"gc\">0</b>")
+    inner = (wall + img + '<div class="shade"></div>' + furniture(X, b.get("hud_l", X.channel), "GENERATED <b class=\"gc\">0</b>")
              + f'<div class="box">{kick}<div class="title-zh">{X.rich(b["title"], split="chars")}</div><div class="micro">{X.rich(b.get("en", "everyone is using ai"))}</div></div>')
     X.clip(cid, t, d, inner, "scene s-hudtitle", 2)
     X.tw(f'tl.from("#{cid} .wall i", {{opacity:0, scale:0.4, duration:0.35, ease:"back.out(2)", stagger:{{each:0.004, from:"random"}}}}, {t:.3f});')
@@ -299,7 +299,7 @@ def quote(b, X, t, d, cid):
 
 
 def outro(b, X, t, d, cid):
-    """the host's badge: a ring of ticks around the shiba, name + positioning line + one CTA capsule."""
+    """the host's badge: a ring of ticks around the host, name + positioning line + one CTA capsule."""
     X.css("hud-out", """
 .s-hudout .badge { position:absolute; left:260px; top:50%; width:520px; height:520px; margin-top:-260px; }
 .s-hudout .badge svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
@@ -313,8 +313,8 @@ def outro(b, X, t, d, cid):
     ticks = "".join(f'<line class="tk" x1="{260 + 250 * math.cos(a):.1f}" y1="{260 + 250 * math.sin(a):.1f}" x2="{260 + (232 if k % 5 else 222) * math.cos(a):.1f}" y2="{260 + (232 if k % 5 else 222) * math.sin(a):.1f}"/>'
                     for k in range(60) for a in [2 * math.pi * k / 60])
     badge = f'<div class="badge"><svg viewBox="0 0 520 520"><circle class="rg" cx="260" cy="260" r="206"/><g class="tks">{ticks}</g></svg></div>'
-    inner = (furniture(X, "HOST · 第九顶帽子", "FOLLOW") + badge
-             + f'<div class="box"><div class="micro">THE NINTH HAT</div><div class="title-zh">{X.rich(b.get("title", "第九顶帽子"), split="chars")}</div><div class="sub">{X.rich(b.get("sub", ""))}</div>'
+    inner = (furniture(X, "HOST · " + X.channel, "FOLLOW") + badge
+             + f'<div class="box"><div class="micro">ON AIR</div><div class="title-zh">{X.rich(b.get("title", X.channel), split="chars")}</div><div class="sub">{X.rich(b.get("sub", ""))}</div>'
              + f'<div class="cps on"><div class="ico">{icon("hat")}</div><div class="tx"><div class="zh">{X.rich(b.get("cta", "关注"))}</div><div class="en">TRAIN YOUR JUDGMENT</div></div><i class="lit"></i></div></div>')
     X.clip(cid, t, d, inner, "scene s-hudout", 2)
     furn_in(X, cid, t)
@@ -326,7 +326,7 @@ def outro(b, X, t, d, cid):
     X.enter(f"#{cid} .sub", t + 0.7, "text", verb="rise")
     X.enter(f"#{cid} .cps", t + 0.95, "accent", verb="left", dur=0.45)
     X.sfx(t + 0.3, "title")
-    if X.v.get("meta", {}).get("mascot"):   # the shiba stands inside the badge
+    if X.v.get("meta", {}).get("mascot"):   # the host stands inside the badge
         X.css("hud-out-m", f".mascot#mascot {{ left:{260 + 40}px !important; right:auto !important; bottom:{(1080 - 520) // 2 + 40}px !important; width:440px !important; height:440px !important; }}")
 
 
@@ -417,10 +417,10 @@ def FX_FRAME(X, cid, t, d, p, k):
     host = bool(p.get("host"))
     rd_pos = ' style="right:330px"' if (host and P) else ""                     # 9:16: the presenter sits top-right
     ft_pad = ' style="padding-right:330px"' if (host and not P) else ""         # 16:9: the presenter sits bottom-right
-    X.used_text.update(f"{i:02d}第九顶帽子 · CH09RECT+0123456789.▸ ")
+    X.used_text.update(f"{i:02d}{X.channel} · CH09RECT+0123456789.▸ ")
     inner = ('<div class="hf-vf"><i></i><i></i><i></i><i></i></div><i class="hf-tk l"></i><i class="hf-tk r"></i><i class="hf-scan"></i>'
              f'<div class="hf-cps"><span class="hf-no">{i:02d}</span><span class="hf-tx"><b>{k["topic"]}</b><em>{k["fxid"]}</em></span></div>'
-             f'<div class="hf-rd"{rd_pos}>第九顶帽子 · <b>CH09</b><br><i class="rec"></i>REC <b class="hf-tc">T+00.0</b></div>'
+             f'<div class="hf-rd"{rd_pos}>{X.rich(X.channel)} · <b>CH09</b><br><i class="rec"></i>REC <b class="hf-tc">T+00.0</b></div>'
              f'<div class="hf-cap"><div class="hf-tkt"><div class="hf-line" style="font-size:{k["cap_px"]}px">{k["cap"]}</div></div></div>'
              f'<div class="hf-ft"><div class="hf-fr"{ft_pad}><span>{k["foot"]}</span><span>{k["src"]}</span></div><i class="hf-rule"></i></div>')
     X.clip(f"{cid}c", t, d, inner, f"ctx hf{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])

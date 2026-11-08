@@ -132,7 +132,7 @@ def WORLD(beats, times, X, D):
         elif k == "scale":
             m.update(word=b.get("word", "规模"), at_word=T(b.get("at_word"), t))
         elif k == "outro":
-            m.update(title=b.get("title", "第九顶帽子"))
+            m.update(title=b.get("title", X.channel))
         else:
             raise SystemExit(f"iso3d: unknown scene {k!r} (pile · city · bars · route · cont · coins · scale · outro)")
         mods.append(m)
@@ -169,7 +169,7 @@ def WORLD(beats, times, X, D):
     src = meta.get("src", "")
     sw = (X.W - 150) if P else 760
     sf = F.fit_text(src, sw, 72 if P else 62, 24 if P else 21, min_px=16, lh=1.35, max_lines=2)
-    X.clip("hd", 0, D, f'<div class="hd"><span class="logo"></span>{X.rich(meta.get("brand", "第九顶帽子"))}<span class="tt">'
+    X.clip("hd", 0, D, f'<div class="hd"><span class="logo"></span>{X.rich(X.channel)}<span class="tt">'
            f'{X.rich(meta.get("title", ""))}</span><span class="dots">{dots}</span></div>'
            + (f'<div class="src" style="font-size:{sf.px}px">{"<br>".join(X.rich(l) for l in sf.lines)}</div>' if src else ""), "iso-ov", 6, track=6)
     X.tw('tl.from("#hd .hd", {y:-30, opacity:0, duration:0.5, ease:"back.out(1.6)"}, 0.15);')

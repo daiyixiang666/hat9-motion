@@ -7,8 +7,8 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.2,
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 2.0,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "section": "商业拆解",
   "caption_mode": "reading",
   "caption_fix": {"二零二四年": "2024 年", "二零二三年": "2023 年", "二零三零年": "2030 年", "七千八百一十亿元": "7810 亿元",
@@ -33,6 +33,6 @@
    "steps": [[2023, 6500, "6500 亿"], [2024, 7810, "7810 亿"], [2026, 10000, "1 万亿+", true], [2030, 20000, "2 万亿", true]],
    "src": "商务部研究院《即时零售行业发展报告（2025）》，2026、2030 为预测"},
   {"scene": "network", "t": "@你等", "title": "你等的不只是一份外卖，|是一张*城市网络*"},
-  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子", "sub": "商业拆解 · 看懂一门生意", "cta": "关注 · 下期见"}
+  {"scene": "outro", "t": 28.76, "title": "示例频道", "sub": "商业拆解 · 看懂一门生意", "cta": "关注 · 下期见"}
  ]
 }

@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "press",
   "duration": 69.8,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -358,7 +358,7 @@
    "d": 5.0,
    "theme": "paper",
    "topic": "做内容",
-   "sender": "第九顶帽子 <hello@example.com>",
+   "sender": "示例频道 <hello@example.com>",
    "to": "你",
    "date": "2026-11-01 09:30",
    "subject": "来一起做一条口播视频？",
@@ -374,7 +374,7 @@
    "stamp": "示意",
    "inbox": [
     {
-     "sender": "第九顶帽子",
+     "sender": "示例频道",
      "subject": "来一起做一条口播视频？",
      "time": "09:30"
     },
@@ -402,12 +402,12 @@
    "d": 5.4,
    "theme": "red",
    "topic": "商业拆解",
-   "org": "第九顶帽子 · 资料卡",
+   "org": "资料卡",
    "kind": "备忘",
    "no": "H9-2026-001",
    "title": "蜜雪集团上市信息",
    "date": "2026-11-01",
-   "signer": "第九顶帽子",
+   "signer": "示例频道",
    "body": [
     "上市地点：香港联合交易所主板。",
     "*上市日期：2025 年 3 月 3 日。*",

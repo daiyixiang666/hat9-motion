@@ -179,7 +179,7 @@ def overlays(X, D):
             X.clip(cid, 0, D, "", "ov-glow", 0, track=27)
             X.css("ov-glow", ".ov-glow { background:radial-gradient(ellipse 60% 45% at 50% 110%, var(--accent2) 0%, rgba(0,0,0,0) 70%), radial-gradient(ellipse 50% 60% at 50% -10%, rgba(255,255,255,.10), rgba(0,0,0,0) 70%), var(--bg); }")
         elif name == "folio":   # magazine running head
-            left, right = o.get("left", X.v.get("meta", {}).get("folio", "第九顶帽子")), o.get("right", "")
+            left, right = o.get("left", X.v.get("meta", {}).get("folio", X.channel)), o.get("right", "")
             X.clip(cid, 0, D, f'<span class="fl">{X.rich(left)}</span><i class="fr-rule"></i><span class="fr">{X.rich(right)}</span>', "ov-folio", Z_OV + 3, track=28)
         elif name == "stamp":   # film date stamp
             X.clip(cid, 0, D, f'<span>{X.rich(o.get("text", "26 10 31"))}</span>', "ov-stamp", Z_OV + 3, track=29)

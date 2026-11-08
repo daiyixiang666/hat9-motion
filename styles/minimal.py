@@ -358,9 +358,9 @@ def furn(X, b, cid, t, d, inner, origin, dark=False, push=1.035):
     meta = X.v.get("meta", {})
     sec = meta.get("section", "认知")
     i, n = X.beat["i"], X.beat["n"]
-    X.used_text.update(sec + "第九顶帽子来源 0123456789/·")
+    X.used_text.update(sec + "" + X.channel + "来源 0123456789/·")
     hx, hy, fs = (64, 206, 26) if P else (96, 52, 22)
-    hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><span>第九顶帽子</span><i></i><span>{X.rich(sec)}</span></div>'
+    hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><span>{X.rich(X.channel)}</span><i></i><span>{X.rich(sec)}</span></div>'
           f'<div class="pg" style="right:{hx}px; top:{hy}px; font-size:{fs}px">{i + 1:02d} / {n:02d}</div>')
     ft = ""
     if b.get("src"):
@@ -1231,8 +1231,8 @@ def FX_FRAME(X, cid, t, d, p, k):
         X.els[X.els.index(eff)] = eff.replace('class="clip scene fx', 'class="clip scene fx mn-under', 1)
         X.clip(f"{cid}g", t, d, f'<div class="mn{" dark" if dark else ""}" style="background:var(--bg)">{grain(X, cid, dark)}</div>', "mng", 2, track=19, sty=k["sty"])
     hx, hy = (64, 206) if P else (96, 52)
-    X.used_text.update("第九顶帽子")
-    hd = (f'<div class="mnh" style="left:{hx}px; top:{hy}px; font-size:{24 if P else 20}px"><span>第九顶帽子</span><i></i><span>{k["topic"]}</span></div>'
+    X.used_text.update(X.channel)
+    hd = (f'<div class="mnh" style="left:{hx}px; top:{hy}px; font-size:{24 if P else 20}px"><span>{X.rich(X.channel)}</span><i></i><span>{k["topic"]}</span></div>'
           f'<div class="mnx" style="right:{hx}px; top:{hy}px; font-size:{22 if P else 18}px">{k["fxid"]}</div>')
     cap_top = 1330 if P else H - 64 - k["cap_px"] * 1.35 * len(k["cap_lines"])
     cap = f'<div class="mnc" style="top:{cap_top:.0f}px"><span class="cl" style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div>'

@@ -301,7 +301,7 @@
    "fx": "code",
    "theme": "paper",
    "topic": "压力测试",
-   "code": "x = fit_text(\"凭什么是你\", 900, 300, 120)\nprint(x.px, x.lines)\n# 只有三行",
+   "code": "x = fit_text(\"一条口播\", 900, 300, 120)\nprint(x.px, x.lines)\n# 只有三行",
    "lang": "python",
    "title": "demo.py",
    "hl": "2",

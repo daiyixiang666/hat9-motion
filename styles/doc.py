@@ -328,7 +328,7 @@ def _persistent(X):
         n = max(len(a), len(z)); a, z = a.rjust(n), z.rjust(n)
         X.used_text.update(a + z)
         cols = "".join(f'<span class="col"><span>{x if x.strip() else "&nbsp;"}</span><span>{y if y.strip() else "&nbsp;"}</span></span>' for x, y in zip(a, z))
-    mark = f'<div class="d-mark"><b>第九顶帽子</b>{X.rich(meta.get("section", "商业拆解"))}</div>'
+    mark = f'<div class="d-mark"><b>{X.rich(X.channel)}</b>{X.rich(meta.get("section", "商业拆解"))}</div>'
     X.used_text.update("YEAR")
     X.clip("dbug", 0, X.duration, f'<div class="d-top"></div><div class="d-bug"><div class="d-yr">{"<small>YEAR</small>" if yr else ""}<span class="dg">{cols}</span></div>{mark}</div>',
            "dov dbug", 60, track=24, attrs="data-layout-allow-overflow")
@@ -543,7 +543,7 @@ FX_CSS = r"""
 /* ---- effect internals in the doc language: serif heads, mono tags, square corners, hairlines, one amber, graded pictures */
 .fx .big { letter-spacing:.04em; }
 .fx .sub { font-family:var(--f-mono); letter-spacing:.32em; }
-.fx img:not(.mb), .fxv video:not([src*="shiba"]) { filter:saturate(.8) contrast(1.06) sepia(.07); }
+.fx img:not(.mb), .fxv video:not([src*="host"]) { filter:saturate(.8) contrast(1.06) sepia(.07); }
 /* tags & chips -> amber mono labels (the film's tracking label) */
 .fx .mx-lab .mx-pill, .fx .pp-tag i, .fx .ff-lab b, .fx .sr-badge span, .fx .fg-band span, .fx .fg-l3 span, .fx .cv-tb em, .fx .ezlab em, .fx .sm .smrl, .fx .w3 .w3tag, .fx .w3 .w3mock {
   font-family:var(--f-mono); font-weight:600; letter-spacing:.08em; background:#f0a640; color:#14110c; border-radius:0; text-shadow:none; }
@@ -630,7 +630,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
         zpx = max(16.0, min(26.0, room * 0.94 / max(em(zh), 1)))
     name = f'<b style="font-size:{zpx:.0f}px">{X.rich(zh)}</b>' + (f'<em style="font-size:{zpx * 0.86:.0f}px">{X.rich(en)}</em>' if en else "")
     topic = "" if P else parts["topic"]
-    mark = f'<div class="dfx-mk"><b>第九顶帽子</b>{topic}</div>'
+    mark = f'<div class="dfx-mk"><b>{X.rich(X.channel)}</b>{topic}</div>'
     fxid = X.rich(p.get("fxid") or p.get("fx", ""))
     ref = X.rich(p.get("ref", ""))
     src = f'来源：{parts["src"]}' if parts["src"] else ""
@@ -639,7 +639,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
     n = len(parts["cap_lines"])
     cpx = parts["cap_px"] if P else (min(34.0, parts["cap_px"]) if n == 1 else min(30.0, parts["cap_px"] * 1.07))
     light = _bg_light(parts["sty"]) and not parts["photo"]
-    X.used_text.update(f"FX{a}{z}第九顶帽子来源：" + zh + en)
+    X.used_text.update(f"FX{a}{z}{X.channel}来源：" + zh + en)
     inner = (f'<div class="dfx-tg"></div><div class="dfx-bg"></div>'
              f'<div class="dfx-hd"><div class="dfx-l"><div class="dfx-id"><small>FX</small><span class="dg">{cols}</span></div><i class="dfx-dv"></i>'
              f'<div class="dfx-nm">{name}</div></div>{mark}</div><i class="dfx-rl"></i><div class="dfx-ft">{foot}</div>'

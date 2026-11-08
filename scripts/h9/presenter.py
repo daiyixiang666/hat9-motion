@@ -5,7 +5,7 @@ wrapper, timed <video> segments inside it, looped when the source is shorter tha
 
 video.json
   meta.presenter = {"src": "assets/host.mp4", "at": "full", "fit": "cover" | "contain", "focus": [50, 35],
-                    "loop": true, "start": 0, "audio": false, "tag": "ON AIR · 第九顶帽子", "ground": "#…"}
+                    "loop": true, "start": 0, "audio": false, "tag": "ON AIR", "ground": "#…"}
     (a plain string is the src). .webm / .png / .gif subjects default to fit "contain" (a cut-out on its ground).
   beat.presenter = "full" | "card" | "side" | "corner" | "hidden"
                 or {"at": "side", "flip": true, "rect": [x, y, w, h], "move": 0.65}

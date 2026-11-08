@@ -79,7 +79,7 @@ def main():
             if not sid or k in seen: continue
             seen.add(k)
             groups.setdefault(sid, []).append((ex, b))
-    host = "../mixue/assets/video/shiba.webm"
+    host = "../../assets/host.webm"
     for sid, items in groups.items():
         out = SKILL / "examples" / f"styled-{sid}"
         out.mkdir(parents=True, exist_ok=True)

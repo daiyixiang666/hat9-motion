@@ -6,7 +6,7 @@
 
 场景（SCENES，全部自写）：stage 横版关卡开场（视差山脉 + 奔跑角色 + 销量计数）· online 在线人数（像素人潮 + 血条式仪表）·
 treasure 宝箱金币（市场规模）· crowd 每两人一个（像素小人点阵）· world 像素世界地图（海外收入流向）·
-levelup 两条经验条对比 + 升级横幅 · dialog RPG 对话框（打字机 + 选项光标）· outro 继续游戏落版（像素柴犬主持人）。
+levelup 两条经验条对比 + 升级横幅 · dialog RPG 对话框（打字机 + 选项光标）· outro 继续游戏落版（像素主持人）。
 输入自适应：标题 / 台词长短、条目数、地图高亮国家数都按 scripts/h9/fit.py 和本文件的位图排版自动缩放。
 """
 import hashlib, json, math
@@ -86,31 +86,28 @@ def outline(im, col="k", diag=False):
     return out
 
 
-def shiba(frame=0):
-    """the channel host: a shiba in round glasses and a top hat, 26×28 art px (frame 1 = blink)."""
+def host(frame=0):
+    """the pixel host: a small boxy robot with an antenna and a screen face, 26×28 art px (frame 1 = blink)."""
     im, d = _canvas(26, 28)
-    # top hat
-    d.rectangle([8, 0, 17, 7], fill=rgb("d")); d.rectangle([9, 1, 10, 6], fill=rgb("m"))
-    d.rectangle([8, 6, 17, 7], fill=rgb("r"))
-    d.rectangle([5, 8, 20, 9], fill=rgb("d"))
-    # ears
-    d.polygon([(3, 15), (5, 7), (10, 12)], fill=rgb("o")); d.polygon([(22, 15), (20, 7), (15, 12)], fill=rgb("o"))
-    d.polygon([(5, 13), (6, 10), (8, 12)], fill=rgb("y")); d.polygon([(20, 13), (19, 10), (17, 12)], fill=rgb("y"))
-    # head
-    d.ellipse([3, 10, 22, 26], fill=rgb("o"))
-    d.ellipse([6, 17, 19, 26], fill=rgb("w"))
-    d.ellipse([5, 15, 9, 19], fill=rgb("w")); d.ellipse([16, 15, 20, 19], fill=rgb("w"))
-    # glasses + eyes
-    for x0 in (6, 14):
-        d.rectangle([x0, 14, x0 + 4, 17], outline=rgb("k"))
-        if frame == 1: d.line([x0 + 1, 16, x0 + 3, 16], fill=rgb("k"))
-        else: d.rectangle([x0 + 2, 15, x0 + 3, 16], fill=rgb("k"))
-    d.line([11, 15, 13, 15], fill=rgb("k"))
-    d.rectangle([12, 19, 13, 20], fill=rgb("k"))           # nose
-    d.line([11, 22, 12, 23], fill=rgb("k")); d.line([13, 23, 14, 22], fill=rgb("k"))
-    d.point([(7, 21), (18, 21)], fill=rgb("r"))             # blush
-    # collar / shirt
-    d.rectangle([7, 25, 18, 27], fill=rgb("b"))
+    # antenna
+    d.rectangle([12, 0, 13, 1], fill=rgb("r"))
+    d.rectangle([12, 2, 13, 5], fill=rgb("m"))
+    # head + screen
+    d.rectangle([4, 6, 21, 19], fill=rgb("w"))
+    d.rectangle([4, 6, 21, 7], fill=rgb("m"))
+    d.rectangle([6, 9, 19, 17], fill=rgb("d"))
+    d.rectangle([2, 11, 3, 15], fill=rgb("m"))
+    d.rectangle([22, 11, 23, 15], fill=rgb("m"))
+    # eyes + mouth on the screen
+    for x0 in (8, 15):
+        if frame == 1:
+            d.line([x0, 12, x0 + 2, 12], fill=rgb("y"))
+        else:
+            d.rectangle([x0, 11, x0 + 2, 13], fill=rgb("y"))
+    d.line([11, 15, 14, 15], fill=rgb("y"))
+    # body
+    d.rectangle([7, 20, 18, 27], fill=rgb("b"))
+    d.rectangle([11, 22, 14, 24], fill=rgb("y"))
     return outline(im)
 
 
@@ -1480,7 +1477,7 @@ def _char_times(X, text, t, d):
 
 
 def dialog(b, X, t, d, cid):
-    """RPG 对话框：主持人柴犬站在草地上，台词逐字打出（与口播逐字同步）+ 说到的道具跳出来 + ▼ 光标。
+    """RPG 对话框：像素主持人站在草地上，台词逐字打出（与口播逐字同步）+ 说到的道具跳出来 + ▼ 光标。
     keys: name（名牌）· text（| 换行）· items[{icon,label,at}]。建议该页 "cap": false（字已在框里）。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
     if V: fy, fh, sx, boxy, boxh = 120, 46, 18, 178, 66
@@ -1490,13 +1487,13 @@ def dialog(b, X, t, d, cid):
     h += sprite(X, f"field{AW}x{fh}", lambda: field(AW, fh), 0, fy)[0]
     for k, x in enumerate((AW - 38, AW - 22) if not V else (AW - 20,)):
         h += sprite(X, "tree", tree, x, fy - 16 + k * 3, "tr")[0]
-    shu, shw, shh = sheet(X, "shiba", shiba, 2)
+    shu, shw, shh = sheet(X, "host", host, 2)
     h += spr(shu, shw, shh, 2, sx, fy + 14 - shh, "sh")
     toggle(X, f"{s} .sh", t, d, 0.3, -P, 0, "y")
     pan(X, f"{s} .cl", t, d, dx=-int(6 * d))
     # items said in the line
     icons = {"trophy": trophy, "coin": coin_stack, "bag": bag, "heart": heart, "star": star, "pad": pad, "phone": phone, "chest": lambda: chest(True)}
-    holders = {"monkey": lambda: monkey(0), "phone": phone, "pad": pad, "chest": lambda: chest2(False), "shiba": lambda: shiba(0)}
+    holders = {"monkey": lambda: monkey(0), "phone": phone, "pad": pad, "chest": lambda: chest2(False), "host": lambda: host(0)}
     items = b.get("items", [])
     span = (AW - (sx + shw) - (44 if not V else 10)) / max(len(items), 1)
     for k, it in enumerate(items):
@@ -1549,7 +1546,7 @@ def dialog(b, X, t, d, cid):
 
 
 def outro(b, X, t, d, cid):
-    """落版：星空 + 逐字掉落的像素标题 + 眨眼的柴犬主持人 + PRESS START。
+    """落版：星空 + 逐字掉落的像素标题 + 眨眼的像素主持人 + PRESS START。
     keys: title · sub（英文小字）· prompt（闪烁提示，默认 PRESS START）。建议 "cap": false。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
     h = sprite(X, f"sky_o{AW}x{AH}", lambda: sky(AW, AH, ("k", "k", "b", "p")), 0, 0)[0]
@@ -1557,7 +1554,7 @@ def outro(b, X, t, d, cid):
     h += sprite(X, f"stars_o2{AW}x{AH}", lambda: starfield(AW, AH, 40, 23), 0, 0, "s2")[0]
     hy = AH - 34 if not V else 196
     h += sprite(X, f"hills_o{AW}", lambda: ridge(AW, 40, "d", seed=8, amp=.4, base=.5), 0, hy)[0]
-    title = b.get("title", "第九顶帽子")
+    title = b.get("title", X.channel)
     px = fitpx(title, AW - 16, 24, 12)
     gl = [btext(X, c, px, "y", "k", "p") for c in title]
     adv = [_font(px).getlength(c) for c in title]
@@ -1572,10 +1569,10 @@ def outro(b, X, t, d, cid):
         X.tw(f'tl.to("{s} .g{k}", {{y:{-2 * P}, duration:0.08, ease:"steps(1)", yoyo:true, repeat:1}}, {tg_ + 0.24:.3f});')
         chip(X, tg_ + 0.24, "blip", 0.18)
         x += adv[k]
-    sub = b.get("sub", "HAT 9")
+    sub = b.get("sub", "")
     yy = ty + max(g[2] + tops[k] - t0 for k, g in enumerate(gl)) + 4
     h += pf(X, sub, AW / 2, yy, 24, PAL["c"], "sb", anchor="c")
-    shu, shw, shh = sheet(X, "shiba", shiba, 2)
+    shu, shw, shh = sheet(X, "host", host, 2)
     K = 2 * P                                 # the end card is a close-up: the host at twice the world pixel size
     sy = (yy + 9) if not V else yy + 14
     h += spr(shu, shw, shh, 2, (AW - shw * 2) / 2, sy, "sh", k=K)

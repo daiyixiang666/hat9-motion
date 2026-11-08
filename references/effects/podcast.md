@@ -23,12 +23,12 @@
  "words": "../mixue/assets/audio/words.json",
  "a": 0,
  "b": 6.6,
- "show": "第九顶帽子 · 商业拆解",
+ "show": "商业拆解",
  "episode": "一杯 4 块钱的柠檬水，一年净赚 44 亿多",
  "ep": "01",
  "hosts": [
   {
-   "name": "柴犬"
+   "name": "主持人"
   }
  ],
  "line": "做成播客切片也行：头像跟着*音量*跳。",

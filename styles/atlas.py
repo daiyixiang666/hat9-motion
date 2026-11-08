@@ -891,7 +891,7 @@ class Atlas:
                f'<rect class="vp" id="vp" x="0" y="0" width="10" height="10"/></svg><div class="cap">LOCATOR</div></div>')
         sb = '<div class="sb"><div class="bar" id="sbar" style="width:200px"></div><div class="n"><span>0</span><span id="sbn">1000 公里</span></div></div>'
         X.used_text.update("0123456789 公里°′NSEW·LOCATOR×.,")
-        hd = f'<div class="hd"><b>{X.rich(meta.get("show", "第九顶帽子 · 地图纪录"))}</b><span>{X.rich(meta.get("chapter", ""))}</span></div>'
+        hd = f'<div class="hd"><b>{X.rich(meta.get("show", X.channel))}</b><span>{X.rich(meta.get("chapter", ""))}</span></div>'
         X.clip("atframe", 0, self.D, f'<div class="scT"></div><div class="scB"></div><div class="nl"></div><div class="nl2"></div>{ticks}{hd}{loc}{sb}<div class="coord" id="coord"></div><div class="src" id="src"></div>', "at-frame", 20, track=3)
         for (tk, mv, s, x, y, lat, box) in self.cam_moves:
             verb, dur = ("set", "") if mv == 0 else ("to", f', duration:{mv:.2f}, ease:"power3.inOut"')
@@ -943,9 +943,9 @@ class Atlas:
                 X.sfx(t + 0.25, "hit")
             if b.get("outro"):
                 ob = b["outro"]; maxw = X.W - 112 if self.V else 1000
-                size, _ = fit(ob.get("title", "第九顶帽子"), maxw, 300, 112 if self.V else 120, 48, maxlines=2)
+                size, _ = fit(ob.get("title", X.channel), maxw, 300, 112 if self.V else 120, 48, maxlines=2)
                 cid = f"otr{i}"
-                X.clip(cid, t, d, f'<div class="outro" style="max-width:{maxw}px"><div class="t" style="font-size:{size}px">{words_html(X, ob.get("title", "第九顶帽子"))}</div>'
+                X.clip(cid, t, d, f'<div class="outro" style="max-width:{maxw}px"><div class="t" style="font-size:{size}px">{words_html(X, ob.get("title", X.channel))}</div>'
                                   f'<div class="sub">{X.rich(ob.get("sub", ""))}</div>' + (f'<div class="cta">{X.rich(ob["cta"])}</div>' if ob.get("cta") else "") + "</div>", "at-ov", 25, track=4 + i % 3)
                 self.tw(f'tl.from("#{cid} .t .c", {{opacity:0, y:30, duration:0.5, ease:"expo.out", stagger:0.05}}, {t + 0.1:.3f});')
                 self.tw(f'tl.from("#{cid} .sub, #{cid} .cta", {{opacity:0, y:16, duration:0.5, ease:"expo.out", stagger:0.12}}, {t + 0.5:.3f});')

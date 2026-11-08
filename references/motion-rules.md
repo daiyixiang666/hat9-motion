@@ -1,6 +1,6 @@
 # 动效规矩（数字版）
 
-来源：`research/bench_craft.md`（Material 3 / Carbon / Apple HIG / HyperFrames 实测 / ITU-R BT.1359 / Netflix 简中字幕规范）。引擎已经按这些默认值实现，写新场景时照着用。
+来源：Material 3 / Carbon / Apple HIG / HyperFrames 实测 / ITU-R BT.1359 / Netflix 简中字幕规范。引擎已经按这些默认值实现，写新场景时照着用。
 
 ## 缓动
 
@@ -30,7 +30,7 @@
 ```
 入场开始 = 词起点 − p90(缓动) × 时长 − 2 帧      p90: expo.out .33 | power4.out .37 | power3.out .44 | power2.out .54
 硬切 / 命中 = 词起点 − 0…2 帧，用 tl.set
-反应（柴犬点头）= 词起点 + 0…1 帧
+反应（主持人点头）= 词起点 + 0…1 帧
 画面早于声音 ≤125 ms 察觉不到；晚于声音 >45 ms 会被察觉
 ```
 在 video.json 里写 `"@词"` 就自动按这个公式算。

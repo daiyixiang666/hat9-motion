@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "sketch",
   "duration": 44.7,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -158,7 +158,7 @@
    ],
    "verdict": "规模越大，管住质量越难",
    "line": "加盟模式的*好处和代价*，要一起看。",
-   "src": "第九顶帽子分析",
+   "src": "作者分析",
    "label": "优缺点两栏 · Pros & Cons",
    "ref": "测评类口播标配 · Envato Elements Checklist Pack",
    "t": 19.4,
@@ -288,7 +288,7 @@
    ],
    "mock": "示意",
    "line": "先看位置，再看回本，最后看*总部怎么赚钱*。",
-   "src": "第九顶帽子 · 观点（示意）",
+   "src": "观点（示意）",
    "label": "决策树 · Decision Tree",
    "ref": "Envato「Infographics 6 Roadmaps」· VideoHive「Infographic Maker」2.6K",
    "t": 34.2,

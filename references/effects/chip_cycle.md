@@ -24,7 +24,7 @@
  "d": 5.0,
  "theme": "red",
  "topic": "两步上手",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "kicker": "HOW TO USE · 两步",
  "title": "九帽动效 *非常简单*",
  "steps": [

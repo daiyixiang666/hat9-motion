@@ -5,7 +5,7 @@
   "style": "ink",
   "duration": 39.8,
   "section": "版式测试",
-  "mascot": "../mixue/assets/video/shiba.webm"
+  "mascot": "../../assets/host.webm"
  },
  "beats": [
   {

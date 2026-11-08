@@ -1,7 +1,7 @@
 {
  "meta": {"title": "重点信息 · 章节底色测试", "aspect": "9:16", "style": "minimal",
-  "presenter": {"src": "../mixue/assets/video/shiba.webm", "at": "full", "tag": "ON AIR · 第九顶帽子"},
-  "device": {"kind": "camera", "brand": "第九顶帽子", "url": "hat9.dev"}},
+  "presenter": {"src": "../../assets/host.webm", "at": "full", "tag": "ON AIR"},
+  "device": {"kind": "camera", "brand": "示例频道", "url": "example.com"}},
  "beats": [
   {"scene": "fx", "fx": "stack_build", "t": 0, "d": 4, "presenter": "side", "chapter": {"label": "PANO", "sub": "全景", "bg": "ink", "title": "开源"},
    "kicker": "OPEN-SOURCE", "lines": ["开源的", "AI 剪辑", "竖屏模板"], "line": "开源的 AI 剪辑*竖屏模板*。"},
@@ -10,7 +10,7 @@
   {"scene": "fx", "fx": "key_card", "d": 4, "presenter": "corner", "chapter": {"label": "BURST", "sub": "连拍", "bg": "accent", "title": "重点"},
    "values": [{"v": "174", "cap": "个动效"}, {"v": "18", "cap": "种风格"}], "line": "重要的信息单独展示。"},
   {"scene": "fx", "fx": "chip_cycle", "d": 4.5, "presenter": "hidden", "chapter": {"label": "PORTRAIT", "sub": "人像", "bg": "ink", "title": "上手"},
-   "title": "两步 *上手*", "steps": ["把仓库地址发给 AI 助手", "把录音丢给它"], "chips": ["Claude Code", "Codex", "Cursor"], "subject": "../mixue/assets/video/shiba.webm", "line": "发给 Claude Code、Codex、*Cursor*。"},
+   "title": "两步 *上手*", "steps": ["把仓库地址发给 AI 助手", "把录音丢给它"], "chips": ["Claude Code", "Codex", "Cursor"], "subject": "../../assets/host.webm", "line": "发给 Claude Code、Codex、*Cursor*。"},
   {"scene": "fx", "fx": "strike_fix", "d": 4, "presenter": "side", "chapter": {"label": "SELFIE", "sub": "自拍", "bg": "card", "title": "改口"},
    "text": "做视频最难的是~~剪辑~~", "fix": "判断", "line": "最难的不是剪辑，是判断。"}
  ]

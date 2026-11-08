@@ -43,7 +43,7 @@
 - **同一个事实，换不同的载体**。说「5%」可以是环形图、100 个小人亮 5 个、收据上的一行、截图里圈出来的数——先想「这个数长什么样」，再选效果。每个效果属于一个版式家族（`scripts/h9/form_families.json`：全屏大字 / 贴人 / 数据图 / 比喻 / 对比 / 界面 / 文档 / 实拍 / 快切……）。
 - **全屏大字不能连着两个**。两个相邻 beat 不许同一家族；全屏大字最多占 25% 的 beat；60 秒以上的片子至少 5 个家族。`review.py --video video.json`（不用渲染）和 `brief.py check` 会查：`form-repeat`、`slogan-share`、`form-variety`、`number-repeat`。
 - **大数字也不能连着两个**。`key_card`、`side_stat`、`odometer`、`number` 场景、`scan_field`、`mosaic_number`、`seat_swarm`、`glass`、带数字的仪表盘（`dial` gauge）这些家族不同，画面却是同一种：一个大数字 + 一行小字。相邻两个 beat 都是它，`number-repeat`（P1）就报：换一种载体——图表 / 比喻 / 截图 / 贴人。名单在 `form_families.json` 的 `number_hero`，新效果按「它实际画的是不是一个大数字」补一行。
-- **主体留在画面里，只是换位置**。有真人、录屏或柴犬时，用 `meta.presenter` 让它整片都在：全屏 → 图表下的小卡 → 侧边 → 角落 → 回全屏，图表从它让出来的地方长出来。信息每 1–2 秒变一次，不需要硬切（见 `references/presenter.md`）。
+- **主体留在画面里，只是换位置**。有真人、录屏或卡通形象时，用 `meta.presenter` 让它整片都在：全屏 → 图表下的小卡 → 侧边 → 角落 → 回全屏，图表从它让出来的地方长出来。信息每 1–2 秒变一次，不需要硬切（见 `references/presenter.md`）。
 - **一个贯穿的装置做章节**：`meta.device`（相机 / 浏览器 / 手机）+ 每章 `chapter: {label, bg}`，模式名和内容对上、每章一个底色世界（见 `references/device.md`）。
 
 ## 三′、声音硬规矩

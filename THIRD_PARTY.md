@@ -18,11 +18,11 @@
 
 ## 借鉴的思路（未复制代码）
 
-见 `research/SOURCES.md`。目前**没有**从任何第三方仓库复制代码；若以后移植 MIT/Apache 代码，在此逐条登记：文件、来源、许可、原作者。
+目前**没有**从任何第三方仓库复制代码；若以后移植 MIT/Apache 代码，在此逐条登记：文件、来源、许可、原作者。
 
 ## 示例素材
 
-`examples/demo/assets/img/*` 为作者用 GPT Image 2 生成；示例配音为 TTS 合成；柴犬主持人为作者的频道形象。
+`examples/demo/assets/img/*` 为作者用 GPT Image 2 生成；示例配音为 TTS 合成。
 
 `examples/aefx/assets/broll/*`：截自 Mixkit 免费视频（Mixkit Stock Video Free License），只用于渲染示例，素材文件不随仓库再分发（已写入 .gitignore），清单见该目录的 CREDITS.md。
 `examples/mixue/`：画面为代码矢量绘制；背景音乐由 `scripts/music.py` 合成（MIT）；数据来自蜜雪集团 2024 年度业绩公告、McDonald's 2024 Form 10-K。

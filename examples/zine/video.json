@@ -7,8 +7,8 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.18,
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 2.0,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "mast": "HAT9 ZINE",
   "issue": 9,
   "section": "商业拆解",
@@ -33,6 +33,6 @@
    "dek": "年度业绩发布当天，收报 168.30 港元", "src": "观察者网 2026-03-26"},
   {"scene": "note", "t": "@市场在", "at_bet": "@押在", "text": "一家公司，|押在一只|怪兽身上。", "label": "单一 IP 依赖", "left": "公司", "src": ""},
   {"scene": "thesis", "t": "@潮玩", "at_strike": "@塑料", "at_em": "@情绪", "a": "卖的不是~塑料~", "b": "是情绪", "src": ""},
-  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子", "sub": "商业拆解 · ISSUE 09", "stamp": "下期见", "src": ""}
+  {"scene": "outro", "t": 27.75, "title": "示例频道", "sub": "商业拆解 · ISSUE 09", "stamp": "下期见", "src": ""}
  ]
 }

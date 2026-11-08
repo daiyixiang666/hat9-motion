@@ -1,11 +1,11 @@
 ---
 name: hat9-motion
-description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE 级动效视频（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 174 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、柴犬主持人，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
+description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE 级动效视频（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 174 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
   version: "0.13.0"
-  author: 第九顶帽子
+  author: daiyixiang666
 ---
 
 # 九帽动效 hat9-motion
@@ -36,7 +36,7 @@ metadata:
 3. **分镜**：`hat9.py plan "文案" --out work/` → `work/video.json`，按节拍表改：
    - 每个 beat 必须回答「这句话观众看见什么」；不合适就换 `fx`（id 见 `gallery/llms.txt`）。讲工具给真实录屏 / 截图，讲风格给同一内容不同风格并排。
    - 关键词写 `"@词"` 对时；说到「这个 / 这里」时加 `marks` 指哪说哪。
-   - **同一个重点换着载体说**：数字和关键词优先用贴着主体的版式（`side_stat` `key_card` `stack_build` `stamp_compare` `strike_fix` `chip_cycle`）或数字画面（`mosaic_number` `seat_swarm` `dial` `log_scroll` `one_to_many` `scan_field` `card_fan`），全屏大字全片 ≤ 25% 且不连着用；有录屏 / 柴犬 / 真人时开 `meta.presenter` 让它常驻并换位置（`references/presenter.md`），想要贯穿外框用 `meta.device`（`references/device.md`）；结尾用 `action_card`。
+   - **同一个重点换着载体说**：数字和关键词优先用贴着主体的版式（`side_stat` `key_card` `stack_build` `stamp_compare` `strike_fix` `chip_cycle`）或数字画面（`mosaic_number` `seat_swarm` `dial` `log_scroll` `one_to_many` `scan_field` `card_fan`），全屏大字全片 ≤ 25% 且不连着用；有录屏 / 卡通形象 / 真人时开 `meta.presenter` 让它常驻并换位置（`references/presenter.md`），想要贯穿外框用 `meta.device`（`references/device.md`）；结尾用 `action_card`。
    - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
    - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
 4. **配音**：有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。

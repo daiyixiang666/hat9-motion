@@ -7,8 +7,8 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.18,
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 1.6,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "tag": "NVDA · 数据中心",
   "ticker": ["NVDA", "数据中心 FY26 $193.7B", "同比 +68%", "GAAP 毛利率 75.0%", "市值首破 $5T", "CUDA 开发者 ≈ 600 万"]
  },
@@ -36,6 +36,6 @@
    "src": "NVIDIA GTC 2025 主题演讲：CUDA 开发者约 600 万"},
   {"scene": "shovel", "t": "@淘金热", "lines": ["卖铲子的人", "先发财"], "at_rain": "@淘金热", "at_title": "@卖铲子", "at_line2": "@先发财",
    "k": "PICKS & SHOVELS", "kz": "淘金热法则"},
-  {"scene": "outro", "t": "@这里是", "title": "第九顶帽子"}
+  {"scene": "outro", "t": 28.59, "title": "示例频道"}
  ]
 }

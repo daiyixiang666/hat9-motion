@@ -263,10 +263,10 @@ def furn(X, b, cid, inner, extra_cls=""):
     i, n = X.beat["i"], X.beat["n"]
     meta = X.v.get("meta", {})
     sec = meta.get("section", "国风 · 商业")
-    X.used_text.update(sec + "第九顶帽子" + NUMZH + "来源：")
+    X.used_text.update(sec + X.channel + NUMZH + "来源：")
     hx, hy, fs = (56, 206, 22) if P else (80, 44, 20)
     idx = NUMZH[(i + 1) % 11] if i + 1 <= 10 else str(i + 1)
-    hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><b>第九顶帽子</b><i></i><span>{X.rich(sec)}</span></div>'
+    hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><b>{X.rich(X.channel)}</b><i></i><span>{X.rich(sec)}</span></div>'
           f'<div class="idx" style="right:{hx}px; top:{hy - 8}px">{idx}</div>')
     ft = ""
     src = b.get("src")
@@ -672,7 +672,7 @@ def couplet(b, X, t, d, cid):
 
 def seal_outro(b, X, t, d, cid):
     P = X.portrait; W, H = X.W, X.H
-    name = b.get("title", "第九顶帽子"); sub = b.get("sub", ""); cta = b.get("cta", "")
+    name = b.get("title", X.channel); sub = b.get("sub", ""); cta = b.get("cta", "")
     px = min(H * (0.13 if P else 0.16), W * (0.8 if P else 0.5) / max(1, sum(fit.gw(c) for c in name)))
     svg, bw, bh = brush(X, name, b.get("font", "zhi-mang-xing"), px, flt=f"{cid}k")
     bx, by = (W - bw) / 2, H * (0.30 if P else 0.30)
@@ -799,8 +799,8 @@ def FX_FRAME(X, cid, t, d, p, k):
         X.tw(f'tl.fromTo("#{cid}g .mt1", {{x:0}}, {{x:-90, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
         X.tw(f'tl.fromTo("#{cid}g .mist", {{x:-50}}, {{x:70, duration:{d:.2f}, ease:"sine.inOut"}}, {t:.3f});')
     hx, hy = (56, 206) if P else (80, 40)
-    X.used_text.update("第九顶帽子九帽")
-    hd = (f'<div class="ikh" style="left:{hx}px; top:{hy}px; font-size:{22 if P else 20}px"><span class="sl">九帽</span><b>第九顶帽子</b><i></i><span>{k["topic"]}</span></div>'
+    X.used_text.update("" + X.channel + "九帽")
+    hd = (f'<div class="ikh" style="left:{hx}px; top:{hy}px; font-size:{22 if P else 20}px"><b>{X.rich(X.channel)}</b><i></i><span>{k["topic"]}</span></div>'
           f'<div class="ikx" style="right:{hx}px; top:{hy + 5}px">{k["fxid"]}</div>')
     cap_pos = "top:1330px" if P else "bottom:62px"
     cap = f'<div class="ikc" style="{cap_pos}"><span class="slip" style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div>'

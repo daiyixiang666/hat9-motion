@@ -5,8 +5,8 @@
   "style": "press",
   "voice": "../mixue/assets/audio/voice.mp3",
   "words": "../mixue/assets/audio/words.json",
-  "mascot": "../mixue/assets/video/shiba.webm",
-  "tail": 2.0,
+  "mascot": "../../assets/host.webm",
+  "tail": 2.8,
   "section": "商业拆解",
   "case": "蜜雪冰城 · 2024 年报",
   "src": "蜜雪集团 2024 年度业绩公告",
@@ -185,7 +185,7 @@
    ],
    "center": "飞轮",
    "center_en": "FLYWHEEL",
-   "src": "第九顶帽子分析"
+   "src": "作者分析"
   },
   {
    "scene": "thesis",
@@ -198,7 +198,7 @@
    "em": "赚钱",
    "l2": "比看懂谁在卖货更重要",
    "struck": "卖货",
-   "src": "第九顶帽子",
+   "src": "作者整理",
    "mood": "heavy",
    "sfx": [
     {
@@ -211,11 +211,11 @@
   },
   {
    "scene": "outro",
-   "t": "@这里是",
-   "title": "第九顶帽子",
-   "sub": "商业拆解 · 看懂谁在赚钱",
+   "t": 27.82,
+   "title": "示例频道",
+   "sub": "商业拆解",
    "cta": "关注，下期拆一家",
-   "src": "第九顶帽子",
+   "src": "作者整理",
    "mood": "light"
   }
  ]

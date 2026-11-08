@@ -5,10 +5,10 @@
   "style": "iso3d",
   "voice": "assets/audio/voice.mp3",
   "words": "assets/audio/words.json",
-  "mascot": "../mixue/assets/video/shiba.webm",
+  "mascot": "../../assets/host.webm",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.16,
-  "tail": 1.5,
+  "tail": 2.8,
   "src": "数据：国家邮政局 2014、2015、2020—2024 年邮政行业发展统计公报｜单件收入 = 快递业务收入 ÷ 业务量，日均、人均为推算｜画面为示意"
  },
  "beats": [
@@ -195,8 +195,8 @@
   },
   {
    "scene": "outro",
-   "t": "@这里是",
-   "title": "第九顶帽子"
+   "t": 25.85,
+   "title": "示例频道"
   }
  ]
 }

@@ -3,7 +3,7 @@
   "title": "视频与声音 · 动效演示",
   "aspect": "16:9",
   "duration": 50.5,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -16,7 +16,7 @@
    "main": "../../assets/previews/mixue_16x9.mp4",
    "main_start": 2.0,
    "at": 1.8,
-   "name": "柴犬",
+   "name": "主持人",
    "role": "主持人",
    "line": "图形一铺满，主持人就缩进角落*小窗*。",
    "label": "画中画 · Talking-head PiP",
@@ -113,7 +113,7 @@
    "words": "../mixue/assets/audio/words.json",
    "a": 9.25,
    "b": 14.45,
-   "who": "第九顶帽子",
+   "who": "示例频道",
    "role": "旁白 · 原声",
    "source": "《一杯 4 块钱的柠檬水》",
    "date": "00:09–00:14",
@@ -133,12 +133,12 @@
    "words": "../mixue/assets/audio/words.json",
    "a": 0,
    "b": 6.6,
-   "show": "第九顶帽子 · 商业拆解",
+   "show": "商业拆解",
    "episode": "一杯 4 块钱的柠檬水，一年净赚 44 亿多",
    "ep": "01",
    "hosts": [
     {
-     "name": "柴犬"
+     "name": "主持人"
     }
    ],
    "line": "做成播客切片也行：头像跟着*音量*跳。",

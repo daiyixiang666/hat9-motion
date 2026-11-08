@@ -42,7 +42,7 @@
  "stamp": "处理好 ✓",
  "text": "反馈 24 小时内处理",
  "daynight": true,
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "line": "想要什么效果，留言，*24 小时*内给你做好。",
  "t": "@关键词"
 }

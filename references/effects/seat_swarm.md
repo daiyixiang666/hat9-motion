@@ -47,7 +47,7 @@
   ]
  ],
  "unit": "个效果在抢",
- "subject": "../mixue/assets/video/shiba.webm",
+ "subject": "../../assets/host.webm",
  "line": "首页只有 *一个* 推荐位，效果却从 28 个涨到了 146 个。",
  "t": "@关键词"
 }

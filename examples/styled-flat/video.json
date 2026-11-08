@@ -4,7 +4,7 @@
   "aspect": "16:9",
   "style": "flat",
   "duration": 73.1,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -15,9 +15,9 @@
    "ref": "Lower Thirds 第1名 6.3K份",
    "theme": "paper",
    "topic": "商业拆解",
-   "text": "第九顶帽子",
+   "text": "示例频道",
    "sub": "商业拆解 · 每期拆一家公司怎么赚钱",
-   "line": "我是第九顶帽子，每期拆一家*公司怎么赚钱*。",
+   "line": "我是示例频道，每期拆一家*公司怎么赚钱*。",
    "t": 0.0,
    "tr": "hard"
   },
@@ -219,7 +219,7 @@
    "words": "../mixue/assets/audio/words.json",
    "a": 9.25,
    "b": 14.45,
-   "who": "第九顶帽子",
+   "who": "示例频道",
    "role": "旁白 · 原声",
    "source": "《一杯 4 块钱的柠檬水》",
    "date": "00:09–00:14",
@@ -239,12 +239,12 @@
    "words": "../mixue/assets/audio/words.json",
    "a": 0,
    "b": 6.6,
-   "show": "第九顶帽子 · 商业拆解",
+   "show": "商业拆解",
    "episode": "一杯 4 块钱的柠檬水，一年净赚 44 亿多",
    "ep": "01",
    "hosts": [
     {
-     "name": "柴犬"
+     "name": "主持人"
     }
    ],
    "line": "做成播客切片也行：头像跟着*音量*跳。",
@@ -372,7 +372,7 @@
    "speakers": [
     {
      "name": "主持人",
-     "role": "第九顶帽子"
+     "role": "示例频道"
     },
     {
      "name": "加盟店老板",
@@ -409,8 +409,8 @@
    "theme": "ink",
    "topic": "做内容",
    "line": "访谈切片：问题放卡片，*回答*放大字。",
-   "video": "../mixue/assets/video/shiba.webm",
-   "name": "第九顶帽子",
+   "video": "../../assets/host.webm",
+   "name": "示例频道",
    "role": "频道主持人",
    "org": "商业拆解",
    "q": "做一条口播，最花时间的是哪一步？",

@@ -3,7 +3,7 @@
   "title": "文字与强调 · 在真实口播里",
   "aspect": "16:9",
   "duration": 56.6,
-  "host_video": "../mixue/assets/video/shiba.webm"
+  "host_video": "../../assets/host.webm"
  },
  "beats": [
   {
@@ -68,10 +68,10 @@
    "topic": "商业拆解",
    "mode": "title",
    "text": "看懂|谁在赚钱",
-   "sub": "第九顶帽子 · 商业拆解",
+   "sub": "商业拆解",
    "seal": "九帽",
    "line": "这个账号只做一件事：*看懂谁在赚钱*。",
-   "src": "第九顶帽子",
+   "src": "作者整理",
    "label": "竖排标题 · Vertical Title",
    "ref": "国风竖排片名（B 站纪录片 / 国风片头）",
    "t": 17.2,

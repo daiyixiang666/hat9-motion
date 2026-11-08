@@ -373,7 +373,7 @@ def main():
     rows.sort(key=lambda r: order.get(r[6], len(order)))
     md = ["# 效果目录 · Effects", "", "每个效果都是 `scripts/h9/aefx.py` 里的一个函数，在 `video.json` 里写成一个 beat：", "",
           '```json\n{"scene": "fx", "fx": "stomp", "words": ["大家", "都在用", "AI"], "t": "@大家"}\n```', "",
-          "排名和人气依据见 [`research/ae_popular.md`](../research/ae_popular.md)。横屏、竖屏同一套参数。", "", "## 效果", ""]
+          "排名和人气依据见 [`references/ae_popular.md`](../references/ae_popular.md)。横屏、竖屏同一套参数。", "", "## 效果", ""]
     for fx, title, how, keys, label, ref, key, band, sid in rows:
         if key != fx:      # band variants: one extra preview line under the effect
             md += [f'<img src="../assets/previews/fx/{key}.webp" width="320" alt="{fx} {band}"> {band}', ""]

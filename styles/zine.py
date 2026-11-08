@@ -671,7 +671,7 @@ def outro(b, X, t, d, cid):
     r = R(X, cid); g = L(X)
     if g.v: x, y, w = g.m, 400, g.cw
     else:   x, y, w = g.m + 40, 250, 1100
-    name, npx, nn = ransom(X, r, b.get("title", "第九顶帽子"), w, 280, 170, 2)
+    name, npx, nn = ransom(X, r, b.get("title", X.channel), w, 280, 170, 2)
     sub = b.get("sub", "")
     X.used_text.update(sub)
     ye = y + npx * 1.27 * nn
@@ -797,7 +797,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
         lw = avail - (sw + 24 + 44 if src_s else 0) - 24
         foot_h = X.rich(fit.fit_text(lab_s, lw, 24, 17, 17, max_lines=1, mono=True, ls=0.04).lines[0]) if lab_s else ""
     foot = (f'<div class="zf-src zf-b"><i>SRC</i>{src_h}</div>' if src_h else "") + (f'<div class="zf-lb zf-b">{foot_h}</div>' if foot_h else "")
-    X.used_text.update("第九顶帽子ZINE·FXSRC")
+    X.used_text.update("" + X.channel + "ZINE·FXSRC")
     tapes = (f'<i class="zf-tape zf-b" style="{st(left=-34, top=118 if not v else 300, width=150)}; rotate:-38deg"></i>'
              f'<i class="zf-tape pk zf-b" style="{st(left=W - 120, top=(H - 230) if not v else 1180, width=150)}; rotate:-32deg"></i>')
     staples = "" if v else (f'<i class="zf-staple" style="{st(left=24, top=330)}; transform:rotate(-84deg)"></i>'
@@ -806,7 +806,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
     col = [PINK, TEAL, INK][X.beat["i"] % 3]
     peel = f'<div class="zf-peel" style="background:{col}; clip-path:{torn(r, 2.2, 14)}"></div>' if X.beat["i"] > 0 else ""
     inner = (f'<div class="zf-tex"></div>{streaks}<div class="zf-xer"></div>{tapes}{staples}'
-             f'<div class="zf-mast zf-b" data-layout-allow-overlap style="{mast_pos}">第九顶帽子 <b>·</b> ZINE <b>·</b> {parts["topic"]}</div>'
+             f'<div class="zf-mast zf-b" data-layout-allow-overlap style="{mast_pos}">{X.rich(X.channel)} <b>·</b> ZINE <b>·</b> {parts["topic"]}</div>'
              f'<div class="zf-fx zf-b" data-layout-allow-overlap style="{fx_pos}"><i>FX</i>{parts["fxid"]}</div>'
              f'{cap}<div class="zf-ft" style="{ft_pos}">{foot}</div>{peel}')
     X.clip(f"{cid}c", t, d, inner, f"ctx zf{' dk' if dark else ''}", 30, track=20, sty=parts["sty"])

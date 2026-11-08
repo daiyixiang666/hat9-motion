@@ -1,9 +1,9 @@
-"""stage · 柴犬剧场 —— Kurzgesagt 的发光扁平宇宙 + Cleo Abram 的"观众代理"。
-深紫夜空、星点慢漂、所有东西自带光；圆角大卡片、弹性的小道具；柴犬是主角，站在台前发光。
+"""stage · 主持人剧场 —— Kurzgesagt 的发光扁平宇宙 + Cleo Abram 的"观众代理"。
+深紫夜空、星点慢漂、所有东西自带光；圆角大卡片、弹性的小道具；主持人是主角，站在台前发光。
 适合：类比、入门、日常场景里的判断题。
 """
 STYLE = {
-    "name": "柴犬剧场", "en": "Mascot Stage", "benchmarks": ["Kurzgesagt", "Cleo Abram", "柴知道"],
+    "name": "主持人剧场", "en": "Mascot Stage", "benchmarks": ["Kurzgesagt", "Cleo Abram", "柴知道"],
     "tokens": {
         "bg": "#140e33", "fg": "#ffffff", "muted": "#b7b0e8", "accent": "#FFC145", "accent2": "#ff5a7a", "alert": "#ff5a7a",
         "line": "#3a2f72", "paper": "#140e33", "ink": "#0b0820", "card": "#ffffff", "card-fg": "#1b1446",

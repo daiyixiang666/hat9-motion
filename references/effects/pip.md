@@ -22,7 +22,7 @@
  "main": "../../assets/previews/mixue_16x9.mp4",
  "main_start": 2.0,
  "at": 1.8,
- "name": "柴犬",
+ "name": "主持人",
  "role": "主持人",
  "line": "图形一铺满，主持人就缩进角落*小窗*。",
  "t": "@关键词"

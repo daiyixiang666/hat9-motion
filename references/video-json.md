@@ -3,12 +3,13 @@
 ```json
 {
   "meta": {
-    "title": "凭什么是你",
+    "title": "一杯四块钱的柠檬水",
+    "channel": "我的频道",          // 页眉、落版、名牌上的频道名；不写就用 title
     "style": "editorial",            // 风格 id，见 styles.md；命令行 --style 可覆盖
     "aspect": "16:9",                // 16:9（默认）| 9:16 | 1:1 | 4:3 | 3:4
     "voice": "assets/audio/voice.mp3",
     "words": "assets/audio/words.json",   // 逐字/逐词时间戳 [{w,s,e}]；有它才能写 "@关键词"
-    "mascot": "assets/video/shiba.webm",  // 透明底的会说话柴犬（avatar/render.py 生成后转 webm）
+    "mascot": "assets/host.webm",  // 透明底的会说话主持人形象（webm，带 alpha）
     "music": "assets/audio/bgm.mp3", "music_volume": 0.12,   // 可选
     "caption_mode": "reading",       // reading（横屏默认）| punch（竖屏默认）
     "caption_hl": ["判断", "不能要"],  // 字幕里允许高亮的词（每页最多 1 个，全片 ≤15%）
@@ -30,7 +31,7 @@
 
 | 字段 | 作用 |
 |---|---|
-| `host: true` | cameo 模式的风格里，柴犬在这一句出场（说观点、提问、恍然）。建议每 20–40 秒一次 |
+| `host: true` | cameo 模式的风格里，主持人在这一句出场（说观点、提问、恍然）。建议每 20–40 秒一次 |
 | `chapter: true` | 这里换章节：用风格的招牌转场；否则是句间剪辑（多为硬切） |
 | `tr: "flash"` | 强制指定这一刀的转场 / 剪辑 |
 | `marks: [...]` | 指哪说哪：在画面元素上画圈、下划线、箭头、方框、删除线、荧光笔，见下 |
@@ -104,7 +105,8 @@
 | `lang` / `--lang` | `"ja"` | 多语言字段 `{"zh", "en", "ja", …}` 里选一种；日文、韩文、繁体、阿拉伯文、希伯来文自动换字体 |
 | `offline` | `true` | 地图只用仓库自带的 d3-geo 和 topojson，缺文件就报错 |
 | 文字标记 | `CO_{2}`、`mc^{2}` | 下标、上标 |
-| `meta.presenter` | `{"src": "assets/host.mp4"}` | 常驻主体（录屏、真人或柴犬图），整片连续播放；详见 `references/presenter.md` |
+| `meta.channel` | `"我的频道"` | 页眉、落版、名牌上印的频道名；不写就用 `meta.title`，都没有就留空 |
+| `meta.presenter` | `{"src": "assets/host.mp4"}` | 常驻主体（录屏、真人或卡通形象），整片连续播放；详见 `references/presenter.md` |
 | beat `presenter` | `"card"` | 这个 beat 里主体的位置：`full` / `card` / `side` / `corner` / `hidden`，换位置时平滑移动 |
 | `meta.device` | `"camera"` | 贯穿全片的外框：`camera` / `browser` / `phone`；详见 `references/device.md` |
 | beat `chapter` | `{"label": "TIME-LAPSE", "bg": "accent"}` | 从这里开始新的一章：外框上的模式名和底色一起换（写 `true` 仍然只是换章转场） |
