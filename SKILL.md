@@ -1,6 +1,6 @@
 ---
 name: hat9-motion
-description: 九帽动效 hat9-motion — 把口播、文案或录音做成 AE 级动效视频（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 174 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
+description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 174 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
@@ -16,7 +16,8 @@ metadata:
 
 | 用户说 | 走哪条路 |
 |---|---|
-| 「把这段文案 / 录音做成视频」 | **A. 整片** |
+| 「帮我剪这条口播 / 我拍了一段口播」（真人出镜视频） | **A. 整片**，走口播视频路线（第 1 步第 1 种） |
+| 「把这段文案 / 录音做成视频」 | **A. 整片**（先问谁来口播） |
 | 「用 xx 效果做一个片头 / 这一句加个 xx」 | **B. 单个效果**：读 `gallery/llms.txt` 选 id，再读 `references/effects/<id>.md` |
 | 「改一下第 3 句 / 换个转场 / 字太小」 | **C. 改已有片**：只改 `video.json` 对应 beat，重新 render |
 | 「只要封面 / 静帧」 | `scripts/cover.py` 出 16:9 / 4:3 / 3:4 封面，或 `snapshot --at` 抽帧 |
@@ -31,7 +32,13 @@ metadata:
 
 按关卡走，**不许跳关**；哪一关不过就回到那一关改，不在成片上修修补补（`references/director.md`）。
 
-1. **只问三件事**（已给的不再问）：口播是录音还是只有文案？横屏还是竖屏（可两个都要）？有没有要用的图片 / 截图 / 录屏？
+1. **先定口播：谁来说、用什么素材。**这是剪口播，没有口播主体就不往下做分镜。已给的不再问，按下面顺序要：
+   1. **口播视频（首选）**：用户自己出镜说话的视频。它既是声音也是画面主体，人整片都在，图表和字围着人换位置。
+      先降噪、剪口误（`scripts/audio_tools.py cut 口播.mp4 剪好.mp4 --remove … --voice voice.wav --words …`，画面和声音在同一处剪，口型不会错位），
+      再把剪好的视频设成 `meta.presenter`（`"fit": "cover", "loop": false`），`voice.wav` 设成 `meta.voice`。完整步骤见 `references/presenter.md`「真人口播视频」。
+   2. **只有录音**：问用户要一个口播形象——本人照片或抠像、自己的卡通形象（透明 webm）、或一段录屏；都没有再用 `assets/host.webm`，或明确不要主体。
+   3. **只有文案**：先问能不能自己录一遍（真人声音最好）；不能再用本地 TTS，主体同第 2 种。
+   然后再问：横屏还是竖屏（可两个都要）？有没有要用的图片 / 截图 / 录屏？
 2. **需求单**：`hat9.py brief new work/` → 填 `work/brief.md`：一句话片子、参考、节拍表（前 2 秒是**画面**钩子，之后每 3–5 秒一个视觉爆点）、全片 ≤ 3 句大字。用户想要某种说不清的感觉时，先 `hat9.py refs 参考1.mp4 参考2.mp4 … --out work/refs` 出参考板，把原则写进 `principles.md`。
 3. **分镜**：`hat9.py plan "文案" --out work/` → `work/video.json`，按节拍表改：
    - 每个 beat 必须回答「这句话观众看见什么」；不合适就换 `fx`（id 见 `gallery/llms.txt`）。讲工具给真实录屏 / 截图，讲风格给同一内容不同风格并排。
@@ -39,7 +46,7 @@ metadata:
    - **同一个重点换着载体说**：数字和关键词优先用贴着主体的版式（`side_stat` `key_card` `stack_build` `stamp_compare` `strike_fix` `chip_cycle`）或数字画面（`mosaic_number` `seat_swarm` `dial` `log_scroll` `one_to_many` `scan_field` `card_fan`），全屏大字全片 ≤ 25% 且不连着用；有录屏 / 卡通形象 / 真人时开 `meta.presenter` 让它常驻并换位置（`references/presenter.md`），想要贯穿外框用 `meta.device`（`references/device.md`）；结尾用 `action_card`。
    - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
    - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
-4. **配音**：有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
+4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
 5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
 6. **小样**：`hat9.py sample work/video.json --range 0,4 --aspect 9:16` 只做最难的几秒（开场钩子、快切），带声音看手感。
 7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。配乐写 `meta.music`（旁边有 `.beats.json` 就自动卡拍：换画面、转场、音效吸到节拍上，不挪到口播词之前）、`"duck": true`（说话时压低）；无人声的快切段写成一个 `{"scene": "fx", "fx": "montage", "clips": [...]}` beat（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话，配乐自动推上来）。渲染自动把响度标准化到 -14 LUFS。

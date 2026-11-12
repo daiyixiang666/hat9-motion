@@ -4,6 +4,8 @@
   python3 scripts/audio_tools.py denoise raw.wav voice.wav            # DeepFilterNet if installed, else ffmpeg
   python3 scripts/audio_tools.py splice t1.wav t2.wav t3.wav --out voice.wav [--gap 0.25] [--words w1.json w2.json w3.json]
   python3 scripts/audio_tools.py cut voice.wav clean.wav --remove 3.2-4.1,9.8-10.4 [--words words.json]
+  python3 scripts/audio_tools.py cut talk.mp4 talk_cut.mp4 --remove 3.2-4.1 --voice voice.wav [--words words.json]
+                                                                     # a talking-head video: picture cut at the same points
   python3 scripts/audio_tools.py flubs words.json                     # suggests --remove ranges (restarts, long pauses)
 
 Every command ends with loudness at -16 LUFS (the house level, same as voice.py), 48 kHz.
@@ -29,6 +31,13 @@ def ff(*args):
 def dur(p):
     return float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration",
                                           "-of", "csv=p=0", str(p)]).decode().strip())
+
+
+def has_video(p):
+    """True when the file has a picture stream (a talking-head video, not just a recording)."""
+    out = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "v", "-show_entries", "stream=codec_type",
+                                   "-of", "csv=p=0", str(p)]).decode().strip()
+    return out != ""
 
 
 def finish(src, out):
@@ -159,9 +168,24 @@ def cut(a):
         fo = max(0.0, k1 - k0 - f)
         chains.append(f"[0:a]atrim={k0:.3f}:{k1:.3f},asetpts=PTS-STARTPTS,"
                       f"afade=t=in:d={f:.3f},afade=t=out:st={fo:.3f}:d={f:.3f}[k{i}]")
-    graph = ";".join(chains) + ";" + "".join(f"[k{i}]" for i in range(len(keep))) + f"concat=n={len(keep)}:v=0:a=1,{LOUD}[o]"
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
-    ff("-i", a.src, "-filter_complex", graph, "-map", "[o]", "-ar", 48000, "-ac", 1, a.out)
+    video_out = Path(a.out).suffix.lower() in (".mp4", ".mov", ".m4v", ".webm")
+    if video_out and has_video(a.src):
+        # a talking-head video: cut the picture at exactly the same points, so the lips stay on the words
+        pieces = ""
+        for i, (k0, k1) in enumerate(keep):
+            vchain = f"[0:v]trim={k0:.3f}:{k1:.3f},setpts=PTS-STARTPTS[v{i}]"
+            chains.append(vchain)
+            pieces += f"[v{i}][k{i}]"
+        graph = ";".join(chains) + ";" + pieces + f"concat=n={len(keep)}:v=1:a=1[vo][ao0];[ao0]{LOUD}[ao]"
+        ff("-i", a.src, "-filter_complex", graph, "-map", "[vo]", "-map", "[ao]", "-c:v", "libx264", "-crf", 18,
+           "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", 48000, a.out)
+        if a.voice:
+            ff("-i", a.out, "-vn", "-ac", 1, "-ar", 48000, a.voice)      # the same sound as a wav, for meta.voice
+            print(f"voice -> {a.voice}")
+    else:
+        graph = ";".join(chains) + ";" + "".join(f"[k{i}]" for i in range(len(keep))) + f"concat=n={len(keep)}:v=0:a=1,{LOUD}[o]"
+        ff("-i", a.src, "-filter_complex", graph, "-map", "[o]", "-ar", 48000, "-ac", 1, a.out)
     gone = sum(c1 - c0 for c0, c1 in cuts)
     print(f"cut {len(cuts)} range(s), {gone:.2f}s removed ({total:.2f}s -> {total - gone:.2f}s) -> {a.out}")
     if a.words:
@@ -248,6 +272,7 @@ def main():
     p.add_argument("--remove", required=True, help='"a-b,c-d" in seconds')
     p.add_argument("--fade", type=float, default=0.02, help="fade at each join, seconds")
     p.add_argument("--words", help="words.json of src -> <out>.words.json retimed")
+    p.add_argument("--voice", help="video in, video out: also write the cut sound here (a .wav for meta.voice)")
     p.set_defaults(fn=cut)
     p = sub.add_parser("flubs", help="suggest cut ranges from a words.json")
     p.add_argument("words")

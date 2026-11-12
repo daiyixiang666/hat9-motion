@@ -10,6 +10,39 @@
 - 想要「信息围着人动」而不是一屏一屏硬切。
 - 不用：纯图表片、快切蒙太奇、没有主体的片子。
 
+## 真人口播视频（最常见）
+
+用户自己出镜说了一段话，要剪成带动效的成片。人就是主体，声音也从这条视频来，两者必须在同一处剪，口型才不会错位。
+
+```bash
+# 1. 拆出声音、降噪，再把干净的声音装回视频
+ffmpeg -i 口播.mp4 -vn -ac 1 -ar 48000 raw.wav
+python3 scripts/audio_tools.py denoise raw.wav clean.wav
+ffmpeg -i 口播.mp4 -i clean.wav -map 0:v -map 1:a -c:v copy -c:a aac 口播_clean.mp4
+
+# 2. 逐字时间：有稿子直接对齐；没有稿子先用 faster-whisper 转写，校对成稿子再对齐
+python3 scripts/align.py clean.wav 稿子.txt --out talk_words.json
+
+# 3. 找口误（重说、长停顿），确认后连画面一起剪掉
+python3 scripts/audio_tools.py flubs talk_words.json
+python3 scripts/audio_tools.py cut 口播_clean.mp4 work/assets/video/talk.mp4 \
+    --remove 3.2-4.1,9.8-10.4 --voice work/assets/audio/voice.wav --words talk_words.json
+```
+
+`cut` 的输入输出都是视频时，画面和声音在同样的时间点剪，另外把剪好的声音写成 `--voice` 指定的 wav；`--words` 写出对应的新逐字时间（`talk.words.json`，放到 `assets/audio/words.json`）。
+
+```json
+"meta": {
+  "voice": "assets/audio/voice.wav",
+  "words": "assets/audio/words.json",
+  "presenter": {"src": "assets/video/talk.mp4", "fit": "cover", "loop": false, "audio": false, "focus": [50, 35]}
+}
+```
+
+- `loop: false`、`start: 0`：视频和口播从同一秒开始一起往下走，人说的就是字幕上的词。
+- 人是这条片子的看点：开头和结尾用 `full`，中间多用 `card` / `side` / `corner` 让图表从人身边长出来，`hidden` 只给真正需要整屏的画面，别连着藏好几句。
+- `focus` 写脸在原视频里的位置（百分比），竖屏裁切时脸不会被切掉。
+
 ## JSON
 
 ```json
