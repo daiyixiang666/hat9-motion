@@ -185,12 +185,17 @@ def key_card(X, cid, t, d, p):
     times = []
     first = t_out + 0.3
     auto = K.U.spread(n, first, t + d * 0.8) if n > 1 else [first]
+    fixed = []
+    say = []
     for i in range(n):
         v_at = vals[i].get("at")
+        fixed.append(v_at is not None)
+        say.append([str(vals[i].get("v", "")), str(vals[i].get("cap", ""))])
         if i == 0 and v_at is None:
             times.append(first)
             continue
         times.append(K.U.when(X, v_at, t, auto[i]))
+    times = K.U.follow(X, say, first, t + d - first, times, fixed, gap=0.7)    # never before the card is out
     for i in range(1, n):
         if times[i] < times[i - 1] + 0.7:
             times[i] = times[i - 1] + 0.7

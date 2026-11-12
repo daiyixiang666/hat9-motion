@@ -84,7 +84,10 @@ def handwrite(X, cid, t, d, p):
     X.tw(f'tl.from("{S} .hw-sh, {S} .hw-tape", {{y:70, rotation:"-=3", opacity:0, duration:0.6, ease:"expo.out"}}, {t:.3f});')
     X.sfx(t, "paper")
     keys = (["t"] if title else []) + [str(i) for i in range(len(lines))]
-    starts = D.times(X, p, t, d, len(keys), key="at", lead=0.5, tail=min(0.8, d * 0.18))
+    say = ([str(title)] if title else [])
+    for ln in lines:
+        say.append(str(ln))
+    starts = D.times(X, p, t, d, len(keys), key="at", lead=0.5, tail=min(0.8, d * 0.18), texts=say)
     yrow = pad_top
     for j, k in enumerate(keys):
         txt = title if k == "t" else lines[int(k)]

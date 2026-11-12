@@ -20,7 +20,7 @@
   "annotate":  "标注 · marks drawn over something (scribble, strike-through)",
   "breather":  "呼吸页 · pauses, chapter cards, suspense"
  },
- "beside_when_presenter": ["card", "side"],
+ "beside_when_presenter": ["card", "side", "bubble", "split", "pip"],
  "fx": {
   "stomp": "slogan", "black_slam": "slogan", "tracking": "slogan", "impact": "slogan", "mask_up": "slogan",
   "apple_blur": "slogan", "neon": "slogan", "glitch": "slogan", "write_on": "slogan", "shine": "slogan",

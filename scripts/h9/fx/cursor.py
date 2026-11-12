@@ -55,7 +55,18 @@ def cursor(X, cid, t, d, p):
             q["tx"], q["ty"] = S.frac(st["to"][0], sw) * k, S.frac(st["to"][1], sh) * k
         elif q["act"] == "drag":
             q["tx"], q["ty"] = min(vw * 0.9, q["x"] + vw * 0.25), q["y"]
+        q["fixed"] = st.get("at") is not None
         steps.append(q)
+    st_times = []
+    st_fixed = []
+    st_say = []
+    for q in steps:
+        st_times.append(q["t"])
+        st_fixed.append(q["fixed"])
+        st_say.append([q["label"], q["text"]])
+    st_times = U.follow(X, st_say, t, d, st_times, st_fixed, gap=0.6)    # a click lands when the narration names it
+    for i in range(len(steps)):
+        steps[i]["t"] = st_times[i]
     steps.sort(key=lambda q: q["t"])
     for i in range(1, len(steps)):                   # keep moves physically possible
         steps[i]["t"] = max(steps[i]["t"], steps[i - 1]["t"] + (1.25 if steps[i - 1]["act"] in ("drag", "type") else 0.6))

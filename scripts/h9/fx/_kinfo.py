@@ -7,7 +7,7 @@ root()      the theme page + spoken-line context (via _clip) and an untimed stag
             including a playing subject video (timed <video> may not sit inside a timed clip)
 subject()   the subject (image or video, any aspect) in a styled card at a given rect, or full-bleed
 beside()    where the subject card and the text column go, for 16:9 and 9:16, subject on the left or right
-cues()      n moments for n items: "@词" / seconds into the beat / evenly spread
+cues()      n moments for n items: "@词" / seconds into the beat / when the narration says the item / evenly spread
 fit()       text fitted to a box → (px, lines)
 """
 import importlib.util, os, pathlib, sys
@@ -309,16 +309,21 @@ def beside(X, p, sub_ar=0.78, side="right", sub_share=None):
     return (sx, sy, sw, sh), (tx, y0, tw, ah)
 
 
-def cues(X, p, key, t, d, n, start=0.35, end=0.82):
-    """n absolute times: p[key][i] when given ("@词" or seconds into the beat), else spread over [start, end] of the beat."""
+def cues(X, p, key, t, d, n, start=0.35, end=0.82, texts=None):
+    """n absolute times: p[key][i] when given ("@词" or seconds into the beat), else when the narration says
+    texts[i] inside the beat (U.follow), else spread over [start, end] of the beat."""
     given = p.get(key)
     if not isinstance(given, (list, tuple)):
         given = []
     auto = U.spread(n, t + d * start if n > 1 else t + min(0.5, d * start), t + d * end)
     out = []
+    fixed = []
     for i in range(n):
         v = given[i] if i < len(given) else None
         out.append(U.when(X, v, t, auto[i] if i < len(auto) else t))
+        fixed.append(v is not None)
+    if texts:
+        out = U.follow(X, texts, t, d, out, fixed, gap=0.25)
     for i in range(1, n):
         if out[i] < out[i - 1] + 0.25:
             out[i] = out[i - 1] + 0.25

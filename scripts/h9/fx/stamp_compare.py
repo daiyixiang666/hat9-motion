@@ -8,7 +8,7 @@ p: image (before; also "before") · box [x, y, w, h] (0–1 of that image, or it
    · box_at · after_at · check_at [cues] · mock (a 「示意」 badge)
 Adapts: any screenshot aspect, shown whole (never cropped, so box coordinates stay exact); with an after image the two
 sit side by side (16:9, or 9:16 when both are tall) or one above the other (9:16 with wide shots); without one the
-tags stack beside the single shot; with no image at all a skeleton screen stands in (marked 示意). 0–5 tags.
+tags stack beside the single shot; with no image a skeleton screen stands in (marked 示意) only with skeleton: true — otherwise a missing image is a build error. 0–5 tags.
 Re-skins with the style: shot frame (radius, border, shadow), stamp shape, tag shape, the style's alert and accent
 colours, the style's ease.
 """
@@ -82,6 +82,9 @@ def stamp_compare(X, cid, t, d, p):
     P = X.portrait
     before = p.get("image") or p.get("before")
     after = p.get("after")
+    if not before and p.get("skeleton") is not True:
+        raise SystemExit(f"stamp_compare at {t:.2f}s needs image (the real before screenshot); "
+                         "without one it would draw a grey skeleton screen — pass skeleton: true only if that is intended")
     checks = list(FT.as_list(p.get("checks") or []))[:5]
     x0, y0, x1, y1 = K.area(X, p)
     aw = x1 - x0
@@ -275,9 +278,17 @@ def stamp_compare(X, cid, t, d, p):
         start = t_after + (0.95 if after else 0.0)
         auto = K.U.spread(len(checks), start, max(start + 0.4 * len(checks), t + d - 0.9))
         given = p.get("check_at") or []
+        ck_t = []
+        fixed = []
+        say = []
         for i in range(len(checks)):
             v = given[i] if i < len(given) else None
-            ti = K.U.when(X, v, t, auto[i])
+            ck_t.append(K.U.when(X, v, t, auto[i]))
+            fixed.append(v is not None)
+            say.append(str(checks[i]))
+        ck_t = K.U.follow(X, say, start, t + d - start, ck_t, fixed, gap=0.3)    # a check lands when it is said
+        for i in range(len(checks)):
+            ti = ck_t[i]
             X.tw(f'tl.fromTo("{s_} .sc-ck[data-i=\\"{i}\\"]", {{x:40, scale:0.5, opacity:0}}, {{x:0, scale:1, opacity:1, duration:0.4, ease:"back.out(2.4)", immediateRender:true}}, {ti:.3f});')
             X.sfx(ti, "pop")
 

@@ -3,10 +3,21 @@
 box(): the free area of the page in px — clear of the header band, the caption pill and the footer — so a
 layout can fill it instead of guessing. items(): any list-ish parameter → [(text, sub)]. fitpx(): one font size
 that fits EVERY string of a group in its slot (rows of a list must share a size). beats(): when each item lands —
-from narration cues ("at": ["@一", "@二"]) when given, else spread evenly over the beat.
+from narration cues ("at": ["@一", "@二"]) when given, else when the narration says each item, else spread evenly.
 """
 from h9 import fit
 from h9.aefx import _cap_clear, THEMES
+
+
+def _load_ui():
+    """the shared _ui helpers, loaded the same way the effects load them (one module per key in sys.modules)."""
+    import importlib.util, pathlib, sys
+    key = "h9fx__ui"
+    if key not in sys.modules:
+        spec = importlib.util.spec_from_file_location(key, pathlib.Path(__file__).with_name("_ui.py"))
+        sys.modules[key] = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(sys.modules[key])
+    return sys.modules[key]
 
 
 def vm(X, v): return min(X.W, X.H) * v / 100
@@ -66,17 +77,29 @@ def lines(X, f, cls="sl"):
     return "".join(f'<span class="{cls}">{X.rich(l)}</span>' for l in f.lines)
 
 
-def beats(X, p, t, d, n, start=0.3, share=0.62):
-    """landing time of each of n items."""
+def beats(X, p, t, d, n, start=0.3, share=0.62, texts=None):
+    """landing time of each of n items: its "at" cue when given; else the moment the narration says texts[k]
+    inside the beat; else spread evenly over the beat."""
+    U = _load_ui()
+    step = max(0.12, d * share / max(n, 1))
+    out = []
+    fixed = []
+    for k in range(n):
+        out.append(t + start + k * step)
+        fixed.append(False)
     at = fit.as_list(p.get("at"))
     if at and X.chars:
-        out = []
-        for k in range(n):
-            try: out.append(float(X.T(at[k], t)) if k < len(at) else None)
-            except SystemExit: out.append(None)
-        if all(x is not None for x in out): return out
-    step = max(0.12, d * share / max(n, 1))
-    return [t + start + k * step for k in range(n)]
+        for k in range(min(n, len(at))):
+            try:
+                tk = X.T(at[k], t)
+            except SystemExit:
+                tk = None
+            if tk is not None:
+                out[k] = float(tk)
+                fixed[k] = True
+    if texts and X.chars:
+        out = U.follow(X, texts, t, d, out, fixed, gap=0.12)
+    return out
 
 
 def num(v):

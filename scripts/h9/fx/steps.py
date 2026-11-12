@@ -117,7 +117,8 @@ def steps(X, cid, t, d, p):
     head = f'<div class="sp-k" style="left:{x:.0f}px; top:{y:.0f}px; font-size:{kf.px}px">{S.lines(X, kf)}</div>' if title else ""
     _clip(X, cid, t, d, f'<div class="sp">{head}{svg}{tok}{"".join(nodes)}{"".join(labels)}</div>', p)
     s = f"#{cid} .sp"
-    T = S.beats(X, p, t, d, n, start=0.55 if title else 0.35, share=0.62)
+    item_texts = [a for a, _ in its]
+    T = S.beats(X, p, t, d, n, start=0.55 if title else 0.35, share=0.62, texts=item_texts)
     if title: X.tw(f'tl.from("{s} .sp-k .sl", {{yPercent:100, opacity:0, duration:0.5, ease:"expo.out", stagger:0.06}}, {t + 0.02:.3f});')
     X.tw(f'tl.from("{s} .bgp", {{opacity:0, duration:0.5}}, {t + 0.05:.3f});')
     X.tw(f'tl.from("{s} .sp-n", {{scale:0.4, opacity:0, duration:0.45, ease:"back.out(2)", stagger:{min(0.05, 0.5 / n):.3f}}}, {t + 0.08:.3f});')

@@ -96,7 +96,8 @@ def quadrant(X, cid, t, d, p):
     X.tw(f'tl.from("{s} .qd-ax.v", {{scaleY:0, duration:0.6, ease:"expo.inOut"}}, {t + 0.12:.3f});')
     X.tw(f'tl.from("{s} .qd-al", {{opacity:0, duration:0.4, stagger:0.06}}, {t + 0.5:.3f});')
     X.tw(f'tl.from("{s} .qd-q", {{opacity:0, scale:0.92, duration:0.5, ease:"expo.out", stagger:0.08}}, {t + 0.45:.3f});')
-    T = S.beats(X, p, t, d, len(its), start=0.8, share=0.5)
+    item_texts = [a for a, _, _ in its]
+    T = S.beats(X, p, t, d, len(its), start=0.8, share=0.5, texts=item_texts)
     for k, tk in enumerate(T):
         X.tw(f'tl.from("{s} .qd-d[data-k=\'{k}\'] i", {{scale:0, y:-40, duration:0.5, ease:"bounce.out"}}, {tk:.3f});')
         X.tw(f'tl.from("{s} .qd-d[data-k=\'{k}\'] b", {{opacity:0, duration:0.4, ease:"power2.out"}}, {tk + 0.15:.3f});')

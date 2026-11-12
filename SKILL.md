@@ -38,6 +38,8 @@ metadata:
       再把剪好的视频设成 `meta.presenter`（`"fit": "cover", "loop": false`），`voice.wav` 设成 `meta.voice`。完整步骤见 `references/presenter.md`「真人口播视频」。
    2. **只有录音**：问用户要一个口播形象——本人照片或抠像、自己的卡通形象（透明 webm）、或一段录屏；都没有再用 `assets/host.webm`，或明确不要主体。
    3. **只有文案**：先问能不能自己录一遍（真人声音最好）；不能再用本地 TTS，主体同第 2 种。
+   有了口播主体，**让用户选出镜形式**（整片一次，写 `meta.presenter.form`）：`full` 全屏口播 · `bubble` 圆形头像 · `split` 上下分屏 · `pip` 小窗 · `cutout` 抠像站位（素材要带透明）。
+   先用用户自己的素材出一张对比图给他看着选：`python3 scripts/h9/presenter.py preview 口播.mp4 --focus 50,30 --out work/forms`（图在 `work/forms/stills/board_01.jpg`）。选定后各 beat 不写 `presenter` 也会跟着形式走；图文需要地方时，人会自动让开，不会被字压住脸。
    然后再问：横屏还是竖屏（可两个都要）？有没有要用的图片 / 截图 / 录屏？
 2. **需求单**：`hat9.py brief new work/` → 填 `work/brief.md`：一句话片子、参考、节拍表（前 2 秒是**画面**钩子，之后每 3–5 秒一个视觉爆点）、全片 ≤ 3 句大字。用户想要某种说不清的感觉时，先 `hat9.py refs 参考1.mp4 参考2.mp4 … --out work/refs` 出参考板，把原则写进 `principles.md`。
 3. **分镜**：`hat9.py plan "文案" --out work/` → `work/video.json`，按节拍表改：
@@ -49,10 +51,18 @@ metadata:
 4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
 5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
 6. **小样**：`hat9.py sample work/video.json --range 0,4 --aspect 9:16` 只做最难的几秒（开场钩子、快切），带声音看手感。
-7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。配乐写 `meta.music`（旁边有 `.beats.json` 就自动卡拍：换画面、转场、音效吸到节拍上，不挪到口播词之前）、`"duck": true`（说话时压低）；无人声的快切段写成一个 `{"scene": "fx", "fx": "montage", "clips": [...]}` beat（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话，配乐自动推上来）。渲染自动把响度标准化到 -14 LUFS。
+7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。它会先自动跑分镜检查，有 P0 就**拒绝渲染**（改掉再来，确实要出才加 `--force`）；渲染完自动出每秒 2 帧的检查图并检查字幕碎片、音画偏差、字压脸、字太小、对比度，**有 P0 退出码非 0，不算完成**。配乐写 `meta.music`（旁边有 `.beats.json` 就自动卡拍：换画面、转场、音效吸到节拍上，不挪到口播词之前）、`"duck": true`（说话时压低）；无人声的快切段写成一个 `{"scene": "fx", "fx": "montage", "clips": [...]}` beat（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话，配乐自动推上来）。渲染自动把响度标准化到 -14 LUFS。
 8. **交付前自检**：`hat9.py review 成片.mp4 --video work/video.json [--ref 参考.mp4]`，P0 必须改；把静帧板逐张看完，在 `review.md` 里六项打分、写下最差的 3 处，改掉重渲。最后 `hat9.py review --gate review.md`，**过了才交付**，并告诉用户实际检查了什么。
 
 最快体验（不改分镜）：`hat9.py quick "文案" --aspect 9:16`。
+
+## 这些事代码会自动做（不用、也不要手动绕开）
+
+- 字幕：一句一页，不在词中间断；真人画面上自动加深色底板。装上 `jieba` 断句更准（`hat9.py doctor` 会提示）。
+- 对口播：清单的每一条、大字标题，没写 `at` / `"@词"` 时自动在说到它的那一刻出现。
+- 版面：真人口播时，需要地方的图文不会压在脸上，人自动挪到小卡 / 侧边 / 选定的形式位。
+- 缺内容直接报错（不画灰色占位条）：报错就补内容，别加 `skeleton: true` 糊过去。
+- 检查：`render` 前后的检查会自己跑。看到 P1 也要打开检查图看一眼再交付。
 
 ## 硬规则
 

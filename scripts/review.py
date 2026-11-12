@@ -23,6 +23,12 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
                 that land within ±2 frames of a beat (P1 below 70 %), and sfx whose visual hit is off by > 2 frames (P1)
   music-level   with --video and its build folder: the music bed under speech vs the voice, and in the gaps
                 (P1 when the bed is less than 10 dB under the voice)
+  with --video and its build folder (also run by `brief.py check`, before any render):
+  caption-frag  caption pages under 4 glyphs or cut inside a word / number / English run   (P1, P0 above 15 % of pages)
+  sync-head     a beat's headline (text / title / big) spoken > 1 s after the beat starts, or before it   (P1, P0 above 3 beats)
+  text-on-face  real presenter footage at "full" under an effect not made to sit on a person   (P1)
+  tiny-text     font sizes under 28 px (9:16, 1080 wide) / 22 px (16:9) in the built page      (P1)
+  contrast      sampled caption band / big-text frames under 3:1 text-vs-ground contrast    (P1)
 Then look at every sheet and score the rubric in review.md (references/director.md); deliver only when every score ≥ 8.
 Needs ffmpeg and Pillow.
 """
@@ -368,6 +374,440 @@ def timeline_for(vpath, bdir=None):
     return None
 
 
+# ------------------------------------------------------------------ automatic gates on the built project
+# They read what the build actually produced (index.html caption pages, beat times, CSS sizes), so they hold
+# whatever model wrote the video.json and whatever the caption builder does today.
+
+ON_PERSON_FX = {"lower3", "key_card", "side_stat", "stack_build", "strike_fix", "chip_cycle", "talking_head", "host_point"}
+FACE_SCENES = {"statement", "title", "quote", "number", "compare"}
+FOOTAGE_EXT = (".mp4", ".mov", ".m4v", ".webm", ".mkv")
+
+
+def core_chars(text):
+    """the glyphs a viewer reads: letters, digits and CJK; punctuation, spaces and markup dropped."""
+    out = []
+    for ch in str(text):
+        if is_core(ch):
+            out.append(ch)
+    return out
+
+
+def is_core(ch):
+    return ch.isalnum() or ch in "%％"
+
+
+def is_ascii_alnum(ch):
+    return ch.isascii() and ch.isalnum()
+
+
+def caption_pages(bdir):
+    """[(start, duration, text)] of the on-screen caption pages in the build's index.html (bilingual lines excluded)."""
+    import html as htmlmod
+    if not bdir or not (Path(bdir) / "index.html").exists():
+        return []
+    doc = (Path(bdir) / "index.html").read_text(encoding="utf-8")
+    pages = []
+    for m in re.finditer(r'<div id="cap(\d+)" class="clip cap[^"]*" data-start="([0-9.]+)" data-duration="([0-9.]+)"[^>]*>(.*?)</div>', doc):
+        inner = m.group(4)
+        inner = re.sub(r'<b class="spkn">.*?</b>', "", inner)
+        inner = re.sub(r"<[^>]+>", "", inner)
+        text = htmlmod.unescape(inner)
+        pages.append((float(m.group(2)), float(m.group(3)), text))
+    pages.sort()
+    return pages
+
+
+def _word_boundaries(core_list, soft):
+    """positions j (a cut between core[j-1] and core[j]) that are word boundaries, from jieba; None when jieba is missing."""
+    import warnings
+    try:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            import jieba
+    except ImportError:
+        return None
+    jieba.setLogLevel(60)
+    cuts = set()
+    start = 0
+    n = len(core_list)
+    for j in range(1, n + 1):
+        if j == n or soft[j]:
+            chunk = "".join(core_list[start:j])
+            pos = start
+            for tok in jieba.cut(chunk):
+                pos += len(tok)
+                cuts.add(pos)
+            cuts.add(start)
+            start = j
+    return cuts
+
+
+def caption_fragments(vpath, bdir):
+    """caption pages that are fragments: under 4 glyphs (unless a whole clause between punctuation), or cut inside a
+    word / an ASCII run. → (findings, n_pages, n_fragments, used_jieba)"""
+    pages = caption_pages(bdir)
+    if not pages:
+        return [], 0, 0, False
+    video = json.loads(vpath.read_text())
+    fixes = video.get("meta", {}).get("caption_fix") or {}
+    words = load_words(vpath)
+    script = ""
+    for w in words:
+        script += str(w["w"])
+    for k in fixes:
+        script = script.replace(k, fixes[k])
+    # transcript as core glyphs + whether punctuation / a space sits before each one
+    core_list = []
+    soft = []
+    gap = True
+    for ch in script:
+        if is_core(ch):
+            core_list.append(ch)
+            soft.append(gap)
+            gap = False
+        else:
+            gap = True
+    core_str = "".join(core_list)
+    soft.append(True)              # the end of the script is a boundary
+    cuts = _word_boundaries(core_list, soft) if core_list else None
+    # place each page in the transcript, in order
+    where = []
+    ptr = 0
+    for st, du, text in pages:
+        pc = "".join(core_chars(text))
+        idx = -1
+        if pc and core_str:
+            idx = core_str.find(pc, ptr)
+            if idx < 0 or idx - ptr > 40:
+                idx = -1
+        if idx >= 0:
+            where.append((idx, idx + len(pc)))
+            ptr = idx + len(pc)
+        else:
+            where.append(None)
+    bad = []
+    for i in range(len(pages)):
+        st, du, text = pages[i]
+        n = len(core_chars(text))
+        if n == 0:
+            continue
+        pos = where[i]
+        reason = ""
+        if n < 4:
+            whole = pos is not None and soft[pos[0]] and soft[pos[1]]
+            if not whole:
+                reason = f"{n} 字"
+        if pos is not None and not reason:
+            j = pos[1]
+            if 0 < j < len(core_list) and not soft[j]:
+                if is_ascii_alnum(core_list[j - 1]) and is_ascii_alnum(core_list[j]):
+                    reason = "切在英文 / 数字中间"
+                elif core_list[j - 1].isdigit() and core_list[j].isdigit():
+                    reason = "切在数字中间"
+                elif cuts is not None and j not in cuts:
+                    reason = "切在词中间"
+        if reason:
+            bad.append((st, text.strip(), reason))
+    found = []
+    share = len(bad) / max(1, len(pages))
+    if bad:
+        level = "P0" if share > 0.15 else "P1"
+        examples = []
+        for st, text, reason in bad[:8]:
+            examples.append(f"{st:.1f}s「{text}」{reason}")
+        found.append((level, "caption-frag", f"{len(bad)}/{len(pages)}（{share:.0%}）页字幕是碎片：" + "；".join(examples)
+                      + "。每页一个完整意群（≥4 字，不切词）"))
+    return found, len(pages), len(bad), cuts is not None
+
+
+def _spoken_index(bdir, vpath, lead):
+    """(core glyph string, time of each glyph) in film time: from the caption pages when there are any, else the words."""
+    chars = []
+    times = []
+    pages = caption_pages(bdir)
+    if pages:
+        for st, du, text in pages:
+            cc = core_chars(text)
+            n = len(cc)
+            for k in range(n):
+                chars.append(cc[k])
+                times.append(st + 2 / 30 + du * k / max(1, n))
+        return "".join(chars), times
+    for w in load_words(vpath):
+        cc = core_chars(w["w"])
+        n = len(cc)
+        for k in range(n):
+            chars.append(cc[k])
+            times.append(float(w["s"]) + lead + (float(w["e"]) - float(w["s"])) * k / max(1, n))
+    return "".join(chars), times
+
+
+def _headline(beat):
+    for key in ("text", "title", "big"):
+        v = beat.get(key)
+        if isinstance(v, list):
+            v = "".join(str(x) for x in v)
+        if isinstance(v, str) and v.strip():
+            return v
+    return ""
+
+
+def graphics_timing(vpath, bdir, tl):
+    """each beat's headline (text / title / big) should be spoken within 1 s after the beat starts — not seconds
+    later (graphic shows too early) and not before it (graphic shows too late)."""
+    video = json.loads(vpath.read_text())
+    if not tl:
+        return []
+    spoken_str, times = _spoken_index(bdir, vpath, float(tl.get("lead") or 0))
+    if not spoken_str:
+        return []
+    off = []
+    for b, x in zip(video["beats"], tl["beats"]):
+        head = "".join(core_chars(_headline(b)))
+        if len(head) < 2:
+            continue
+        needle = head
+        if spoken_str.find(needle) < 0:
+            needle = ""
+            if len(head) > 4:
+                for k in range(0, len(head) - 3):
+                    win = head[k:k + 4]
+                    if spoken_str.find(win) >= 0:
+                        needle = win
+                        break
+        if not needle:
+            continue               # not spoken at all: caption-dup / big-text rules cover it
+        best = None
+        pos = spoken_str.find(needle)
+        while pos >= 0:
+            delta = times[pos] - x["t"]
+            if best is None or abs(delta) < abs(best):
+                best = delta
+            pos = spoken_str.find(needle, pos + 1)
+        if best is None or abs(best) > 8.0:
+            continue
+        if best > 1.0:
+            off.append((x["i"], x["t"], head, f"画面早 {best:.1f}s（字先出，话后到）"))
+        elif best < -0.3:
+            off.append((x["i"], x["t"], head, f"画面晚 {-best:.1f}s（话说完才出）"))
+    found = []
+    if len(off) > 3:
+        items = []
+        for i, t, head, why in off[:8]:
+            items.append(f"#{i} {t:.1f}s「{head[:10]}」{why}")
+        found.append(("P0", "sync-head", f"{len(off)} 个 beat 的大字和口播对不上：" + "；".join(items)
+                      + "。把 t 写成 \"@词\" 锚到说出大字的那个词"))
+    else:
+        for i, t, head, why in off:
+            found.append(("P1", "sync-head", f"#{i} {t:.1f}s「{head[:10]}」{why}：t 用 \"@词\" 锚到说出它的词"))
+    return found
+
+
+def presenter_is_footage(meta):
+    p = meta.get("presenter")
+    src = p.get("src", "") if isinstance(p, dict) else (p or "")
+    return str(src).lower().endswith(FOOTAGE_EXT)
+
+
+def text_on_face(vpath, tl):
+    """real presenter footage: the build moves the speaker off any graphic that needs room (presenter.effective_places);
+    what is left on the face is a beat kept full with "presenter_force" (dimmed footage + light text) → check it by eye."""
+    from h9 import presenter
+    video = json.loads(vpath.read_text())
+    meta = video.get("meta", {})
+    if not presenter_is_footage(meta):
+        return []
+    portrait = str(meta.get("aspect", "9:16")) in ("9:16", "3:4", "4:5")
+    places = presenter.effective_places(video, portrait)
+    found = []
+    beat_times = tl["beats"] if tl else []
+    for i in range(len(places)):
+        place, forced = places[i]
+        if not forced:
+            continue
+        b = video["beats"][i]
+        name = b.get("fx") if b.get("scene") == "fx" else b.get("scene")
+        t = beat_times[i]["t"] if i < len(beat_times) else 0.0
+        found.append(("P1", "text-on-face", f"#{i} {t:.1f}s {name} 用 presenter_force 留在全屏真人上（已压暗）：看静帧确认字读得清、没挡脸"))
+    return found
+
+
+def _px(num, unit):
+    v = float(num)
+    if unit == "px":
+        return v
+    if unit == "vmin":
+        return v * 10.8                 # the layout frame is 1080 × 1920 or 1920 × 1080: 1 vmin = 10.8 px
+    return None
+
+
+def tiny_text(bdir, portrait):
+    """font sizes in the built index.html below 28 px (9:16, 1080 wide) or 22 px (16:9, 1920 × 1080)."""
+    if not bdir or not (Path(bdir) / "index.html").exists():
+        return []
+    doc = (Path(bdir) / "index.html").read_text(encoding="utf-8")
+    limit = 28 if portrait else 22
+    other = "#root.h" if portrait else "#root.v"
+    small = {}
+    size_re = re.compile(r"(?:^|[;{\s])font-size\s*:\s*([0-9.]+)(px|vmin)")
+    short_re = re.compile(r"(?:^|[;{\s])font\s*:\s*([^;}]*)")
+    num_re = re.compile(r"([0-9.]+)(px|vmin)")
+
+    def sizes_in(decl):
+        out = []
+        for m in size_re.finditer(decl):
+            out.append(_px(m.group(1), m.group(2)))
+        for m in short_re.finditer(decl):
+            n = num_re.search(m.group(1))
+            if n:
+                out.append(_px(n.group(1), n.group(2)))
+        return out
+
+    for block in re.findall(r"<style[^>]*>(.*?)</style>", doc, re.S):
+        block = re.sub(r"/\*.*?\*/", "", block, flags=re.S)
+        for m in re.finditer(r"([^{}]+)\{([^{}]*)\}", block):
+            sel = " ".join(m.group(1).split())
+            if other in sel or sel.startswith("@"):
+                continue
+            for v in sizes_in(m.group(2)):
+                if v is not None and 6 <= v < limit:
+                    key = sel[:60]
+                    if key not in small or v < small[key]:
+                        small[key] = v
+    for m in re.finditer(r'<(\w+)([^>]*?)\sstyle="([^"]*)"', doc):
+        cls = re.search(r'class="([^"]*)"', m.group(2))
+        name = "." + ".".join(cls.group(1).split()) if cls else m.group(1)
+        for v in sizes_in(m.group(3)):
+            if v is not None and 6 <= v < limit:
+                key = f"{name[:50]} (inline)"
+                if key not in small or v < small[key]:
+                    small[key] = v
+    if not small:
+        return []
+    items = []
+    for sel in small:
+        items.append((small[sel], sel))
+    items.sort()
+    shown = []
+    for v, sel in items[:8]:
+        shown.append(f"{sel} {v:.0f}px")
+    frame = "9:16 1080 宽" if portrait else "16:9 1920×1080"
+    return [("P1", "tiny-text", f"{len(items)} 处字号小于 {limit}px（{frame}，手机上读不清）：" + "；".join(shown))]
+
+
+def static_checks(vpath, bdir, tl=None, portrait=None):
+    """the gates that need only the build (no render): caption fragments, headline sync, text on face, tiny text."""
+    found = []
+    if tl is None:
+        tl = timeline_for(vpath, bdir)
+    if portrait is None:
+        meta = json.loads(vpath.read_text()).get("meta", {})
+        portrait = "9x16" in str(bdir) or meta.get("aspect") == "9:16"
+    frag, n_pages, n_bad, used_jieba = caption_fragments(vpath, bdir)
+    found += frag
+    if n_pages and not used_jieba:
+        found.append(("P1", "caption-frag", "没装 jieba，查不出切在词中间的字幕：pip install jieba"))
+    found += graphics_timing(vpath, bdir, tl)
+    found += text_on_face(vpath, tl)
+    found += tiny_text(bdir, portrait)
+    return found
+
+
+def _lum(v):
+    c = v / 255.0
+    if c <= 0.03928:
+        return c / 12.92
+    return ((c + 0.055) / 1.055) ** 2.4
+
+
+def _ratio(a, b):
+    la = _lum(a)
+    lb = _lum(b)
+    hi = max(la, lb)
+    lo = min(la, lb)
+    return (hi + 0.05) / (lo + 0.05)
+
+
+def region_contrast(img, box, tail):
+    """WCAG-style contrast of the text against its ground in one region of a grey frame: the ground is the median,
+    the text is whichever extreme (the `tail` share of brightest or darkest pixels) stands further from it."""
+    crop = img.crop(box)
+    hist = crop.histogram()
+    total = sum(hist)
+    if total == 0:
+        return None
+
+    def pct(q):
+        want = total * q
+        acc = 0
+        for v in range(256):
+            acc += hist[v]
+            if acc >= want:
+                return v
+        return 255
+    mid = pct(0.5)
+    dark = pct(tail)
+    light = pct(1 - tail)
+    return max(_ratio(light, mid), _ratio(dark, mid))
+
+
+def contrast_check(film, vpath, bdir, tl):
+    """sample caption pages and text-only beats in the render; text vs ground under 3:1 → P1."""
+    from PIL import Image
+    pages = caption_pages(bdir)
+    video = json.loads(vpath.read_text())
+    size = subprocess.check_output(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
+                                    "-of", "csv=p=0", str(film)], text=True).strip().split(",")
+    W = int(size[0])
+    H = int(size[1])
+    portrait = H > W
+    probes = []                   # (time, what, box in a 540-wide frame, tail)
+    sw = 540
+    sh = int(round(H * sw / W))
+    if portrait:
+        band = (int(sw * 0.08), int(sh * 0.66), int(sw * 0.92), int(sh * 0.80))
+    else:
+        band = (int(sw * 0.10), int(sh * 0.84), int(sw * 0.90), int(sh * 0.97))
+    step = max(1, len(pages) // 12)
+    for k in range(0, len(pages), step):
+        st, du, text = pages[k]
+        probes.append((st + min(du * 0.6, 0.6), f"字幕「{text.strip()[:8]}」", band, 0.005))
+    if tl:
+        cats = {}
+        try:
+            data = json.loads((Path(__file__).resolve().parent.parent / "gallery" / "effects.json").read_text())
+            for e in data["effects"]:
+                cats[e["id"]] = e.get("cat", "")
+        except (OSError, ValueError, KeyError):
+            pass
+        for b, x in zip(video["beats"], tl["beats"]):
+            texty = b.get("scene") in ("statement", "title", "quote")
+            if b.get("scene") == "fx" and (b.get("fx") in TEXT_FX or cats.get(b.get("fx")) == "字效"):
+                texty = True
+            if texty:
+                box = (int(sw * 0.15), int(sh * 0.2), int(sw * 0.85), int(sh * 0.8))
+                probes.append((x["t"] + min(x["d"] * 0.6, 1.5), f"#{x['i']} {b.get('fx') or b.get('scene')} 大字", box, 0.01))
+    low = []
+    with tempfile.TemporaryDirectory() as tmp:
+        for n in range(len(probes)):
+            t, what, box, tail = probes[n]
+            jpg = Path(tmp) / f"c_{n}.png"
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{t:.3f}", "-i", str(film), "-frames:v", "1",
+                            "-vf", f"scale={sw}:{sh},format=gray", str(jpg)], check=False)
+            if not jpg.exists():
+                continue
+            img = Image.open(jpg).convert("L")
+            r = region_contrast(img, box, tail)
+            if r is not None and r < 3.0:
+                low.append((t, what, r))
+    found = []
+    for t, what, r in low[:6]:
+        found.append(("P1", "contrast", f"{t:.1f}s {what} 对比度约 {r:.1f}:1（< 3:1）：加描边 / 底板，或换深浅相反的底"))
+    if len(low) > 6:
+        found.append(("P1", "contrast", f"另有 {len(low) - 6} 处对比度不足"))
+    return found, len(probes)
+
+
 def form_only(vpath, strict=False):
     """review.py --video video.json without a film: only the layout-family checks (no render needed)."""
     video = json.loads(vpath.read_text())
@@ -477,6 +917,15 @@ def main():
         for item in form_findings:
             found.append(item)
         av_checks(film, vpath, build_dir(film, vpath, a.build), cuts, dur, found)
+        bdir = build_dir(film, vpath, a.build)
+        tl = timeline_for(vpath, bdir)
+        if bdir:
+            for item in static_checks(vpath, bdir, tl):
+                found.append(item)
+            low, n_probe = contrast_check(film, vpath, bdir, tl)
+            for item in low:
+                found.append(item)
+            print(f"  对比度：抽查 {n_probe} 处字幕 / 大字")
 
     lines = [f"# 自检：{film.name}", "", f"时长 {dur:.1f}s · 静帧板 {len(made)} 张（每秒 2 帧）", "", "## 自动检查", ""]
     lines += [f"- **{lv}** `{rule}` {msg}" for lv, rule, msg in found] or ["- 没有发现自动可查的问题"]

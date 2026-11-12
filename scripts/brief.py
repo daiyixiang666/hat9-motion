@@ -16,6 +16,8 @@ about later, while it is still cheap to fix:
   form-variety fewer than 5 layout families in a film over 60 s                              (P1)
   number-repeat two neighbouring beats that are each a big number + small caption             (P1)
   no-brief    there is no brief.md next to video.json                                       (P1)
+  caption-frag / sync-head / text-on-face / tiny-text   the build-time gates in review.static_checks (see review.py)
+Missing effect content (an fx that would draw its grey placeholder skeleton) already fails the build here.
 """
 import argparse, json, subprocess, sys
 from pathlib import Path
@@ -105,13 +107,24 @@ def check(vpath, style=None, aspect=None):
     if not (vpath.parent / "brief.md").exists():
         found.append(("P1", "no-brief", "没有 brief.md：先跑 brief.py new 写需求单和节拍表"))
 
-    first = [b for b, x in zip(beats, tl["beats"]) if x["t"] < 2.0]
-    if first and all(text_only(b, cats) for b in first):
+    from h9 import presenter
+    portrait = (aspect or video.get("meta", {}).get("aspect", "16:9")) in ("9:16", "3:4", "4:5")
+    places = presenter.effective_places(video, portrait)
+    first = []
+    first_has_speaker = False
+    for k, (b, x) in enumerate(zip(beats, tl["beats"])):
+        if x["t"] < 2.0:
+            first.append(b)
+            if k < len(places) and places[k][0] not in (None, "hidden"):
+                first_has_speaker = True
+    if first and not first_has_speaker and all(text_only(b, cats) for b in first):
         found.append(("P1", "hook", "前 2 秒只有文字：换成片子里最好看的一段画面（成品、演示、对比）"))
 
     text_dur = 0.0
-    for b, x in zip(beats, tl["beats"]):
-        if text_only(b, cats):
+    for k, (b, x) in enumerate(zip(beats, tl["beats"])):
+        place = places[k][0] if k < len(places) else None
+        speaker_on_screen = place is not None and place != "hidden"
+        if text_only(b, cats) and not speaker_on_screen:      # words beside a talking person are not a PPT page
             text_dur += x["d"]
         if x["d"] > 5.0 and not moving(b, cats):
             level = "P0" if x["d"] > 8.0 else "P1"
@@ -141,6 +154,10 @@ def check(vpath, style=None, aspect=None):
             found.append(("P1", "same-fx", f"{k} 用了 {n} 次（全片最多 3 次）"))
     form_findings = forms.lint(video, tl)
     for item in form_findings:
+        found.append(item)
+    portrait = (aspect or video.get("meta", {}).get("aspect", "16:9")) == "9:16"
+    gate_findings = review.static_checks(vpath, out, tl, portrait)
+    for item in gate_findings:
         found.append(item)
     return found, out
 

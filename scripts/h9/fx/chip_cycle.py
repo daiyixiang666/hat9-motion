@@ -6,8 +6,11 @@ the lit chip, and the subject sits in a card over the window's corner.
 p: title ("九帽动效 *非常简单*") · kicker · steps ["把仓库地址发给 AI 助手", "把录音丢给它"] (1–5) · chips ["Claude Code",
    "Codex", "Cursor", "…等助手"] (2–8) · chip_step (which step the chips hang under; default the last) · at [cues per
    step] · chip_at [cues per chip] · window (the window's title before the first hop; default "AI 助手") · attach
-   (a file chip that drops into the window at the end, e.g. "hat9-motion") · subject | video | image (+ subject_focus,
-   subject_start, subject_fit, subject_tag)
+   (a file chip that drops into the window at the end, e.g. "hat9-motion") · lines ["你：帮我做一条视频", "AI：好的，先…"]
+   (real text rows shown in the window body, 1–7) · skeleton (true = grey loading bars in the window body, opt-in only)
+   · subject | video | image (+ subject_focus, subject_start, subject_fit, subject_tag)
+Required: steps, chips, and something real in the window (lines or attach) — or skeleton: true on purpose. Missing
+content is a build error, never an empty grey window.
 Adapts: 1–5 steps, 2–8 chips (wrapping to a second row), long step text (fitted); 16:9: steps on the left, window +
 subject on the right; 9:16: steps and chips fill the top half, window and subject card side by side fill the bottom;
 no subject: the window takes the whole right side / bottom.
@@ -51,6 +54,7 @@ CSS = r"""
 .ki.sk-pixel .cc-win .cc-bar u, .ki.sk-poster .cc-win .cc-bar u { border-radius:0; }
 .ki .cc-win .cc-tt { position:relative; margin-left:14px; height:40px; overflow:hidden; flex:1; }
 .ki .cc-win .cc-tt b { position:absolute; left:0; top:0; height:40px; line-height:40px; font:900 30px var(--f-body); color:var(--card-fg); white-space:nowrap; }
+.ki .cc-win .cc-tx { position:absolute; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font:600 30px/1.3 var(--f-body); color:var(--card-fg); transform-origin:0 50%; }
 .ki .cc-win .cc-ln { position:absolute; height:16px; border-radius:8px; background:color-mix(in srgb, var(--card-fg) 10%, transparent); transform-origin:0 50%; }
 .ki .cc-win .cc-file { position:absolute; display:inline-flex; align-items:center; gap:10px; white-space:nowrap; font:700 24px var(--f-mono, monospace); color:var(--accent);
   padding:8px 14px; border-radius:var(--k-rs); box-shadow:inset 0 0 0 2px var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--card)); }
@@ -74,6 +78,34 @@ def _layout_chips(names, px, max_w, gap):
     return out
 
 
+def _text_list(v):
+    """a param that should hold real text → list of non-empty strings."""
+    out = []
+    if v is None:
+        return out
+    if isinstance(v, str):
+        v = [v]
+    for item in v:
+        txt = str(item).strip()
+        if txt:
+            out.append(txt)
+    return out
+
+
+def _require_content(t, p):
+    """missing content is a build error: the effect never draws its empty skeleton by accident."""
+    missing = []
+    if not _text_list(p.get("steps")):
+        missing.append("steps (1–5 real step lines)")
+    if len(_text_list(p.get("chips"))) < 2:
+        missing.append("chips (2–8 tool names)")
+    has_body = bool(_text_list(p.get("lines"))) or bool(str(p.get("attach") or "").strip())
+    if not has_body and p.get("skeleton") is not True:
+        missing.append("lines (text shown inside the window) or attach (a file chip) — or skeleton: true for a deliberate loading look")
+    if missing:
+        raise SystemExit(f"chip_cycle at {t:.2f}s is missing content, it would render grey placeholder bars: " + "; ".join(missing))
+
+
 def chip_cycle(X, cid, t, d, p):
     k = K.skin(X)
     e = K.ease(X)
@@ -82,8 +114,9 @@ def chip_cycle(X, cid, t, d, p):
     x0, y0, x1, y1 = K.area(X, p)
     aw = x1 - x0
     ah = y1 - y0
-    steps = list(FT.as_list(p.get("steps") or ["下载模板", "发给 AI 助手"]))[:5]
-    chips = list(FT.as_list(p.get("chips") or ["Claude Code", "Codex", "Cursor"]))[:8]
+    _require_content(t, p)
+    steps = list(FT.as_list(p.get("steps")))[:5]
+    chips = list(FT.as_list(p.get("chips")))[:8]
     ns = len(steps)
     nc = len(chips)
     cstep = int(p.get("chip_step", ns)) - 1
@@ -194,12 +227,27 @@ def chip_cycle(X, cid, t, d, p):
     ly2 = 110
     if p.get("attach"):
         ly2 = 176                 # the file chip lands at the top of the window, clear of the caption band
-    widths = (0.72, 0.9, 0.56, 0.8, 0.64, 0.86, 0.5)
-    li = 0
-    while ly2 < wh - 120 and li < 7:
-        lines += f'<i class="cc-ln" data-l="{li}" style="left:28px; top:{ly2:.0f}px; width:{(ww - 56) * widths[li]:.0f}px"></i>'
-        ly2 += 46
-        li += 1
+    body_lines = _text_list(p.get("lines"))[:7]
+    if body_lines:
+        # real text rows: the window shows what is actually typed / answered
+        row_px = 44 if P else 34
+        li = 0
+        while li < len(body_lines) and ly2 < wh - 80:
+            txt = body_lines[li]
+            f = FT.fit_text(txt, ww - 56, row_px * 1.4, row_px, 28 if P else 22, max_lines=1)
+            shown = f.lines[0] if f.lines else txt
+            X.used_text.update(str(shown))
+            lines += f'<div class="cc-tx cc-ln-t" data-l="{li}" style="left:28px; top:{ly2:.0f}px; width:{ww - 56:.0f}px; font-size:{f.px}px">{K.hl_html(X, shown)}</div>'
+            ly2 += f.px * 1.6
+            li += 1
+    elif p.get("skeleton") is True:
+        # opt-in loading look only
+        widths = (0.72, 0.9, 0.56, 0.8, 0.64, 0.86, 0.5)
+        li = 0
+        while ly2 < wh - 120 and li < 7:
+            lines += f'<i class="cc-ln" data-l="{li}" style="left:28px; top:{ly2:.0f}px; width:{(ww - 56) * widths[li]:.0f}px"></i>'
+            ly2 += 46
+            li += 1
     attach = p.get("attach")
     file_html = ""
     if attach:
@@ -218,13 +266,19 @@ def chip_cycle(X, cid, t, d, p):
         K.rise(X, f"{s_} .cc-title", t + 0.08, e, dist=50, dur=0.55)
         K.hl_tween(X, f"{s_} .cc-title", t + 0.55, k)
     X.tw(f'tl.fromTo("{s_} .cc-win", {{x:80, opacity:0}}, {{x:0, opacity:1, duration:0.6, ease:"{e}", immediateRender:true}}, {t + 0.15:.3f});')
-    X.tw(f'tl.fromTo("{s_} .cc-ln", {{scaleX:0}}, {{scaleX:1, duration:0.5, ease:"power2.out", stagger:0.06, immediateRender:true}}, {t + 0.45:.3f});')
+    if body_lines:
+        X.tw(f'tl.fromTo("{s_} .cc-ln-t", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:0.5, ease:"power2.out", stagger:0.25, immediateRender:true}}, {t + 0.45:.3f});')
+    elif p.get("skeleton") is True:
+        X.tw(f'tl.fromTo("{s_} .cc-ln", {{scaleX:0}}, {{scaleX:1, duration:0.5, ease:"power2.out", stagger:0.06, immediateRender:true}}, {t + 0.45:.3f});')
     X.tw(f'tl.set("{s_} .cc-tt b", {{y:44}}, {t:.3f});')
     X.tw(f'tl.set("{s_} .cc-tt b[data-w=\\"0\\"]", {{y:0}}, {t:.3f});')
     if src:
         K.subject_in(X, f"{s_} .cc-subj", t + 0.25, e)
         K.subject_drift(X, f"{s_} .cc-subj > img, {s_} .cc-subj > video, {s_} .cc-subj .k-pin > *", t, d)
-    st_times = K.cues(X, p, "at", t, d, ns, start=0.12, end=0.32 if ns > 1 else 0.12)
+    step_texts = []
+    for i in range(ns):
+        step_texts.append(str(steps[i]))
+    st_times = K.cues(X, p, "at", t, d, ns, start=0.12, end=0.32 if ns > 1 else 0.12, texts=step_texts)
     for i in range(ns):
         ti = st_times[i]
         sel = f'{s_} .cc-st[data-i=\\"{i}\\"]'

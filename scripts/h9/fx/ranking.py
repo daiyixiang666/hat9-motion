@@ -108,7 +108,10 @@ def ranking(X, cid, t, d, p):
     s = f"#{cid} .rk"
     if title: X.tw(f'tl.from("{s} .rk-k .sl", {{yPercent:100, opacity:0, duration:0.5, ease:"expo.out", stagger:0.06}}, {t + 0.02:.3f});')
     order = list(range(n - 1, 0, -1)) if n > 1 else [0]
-    T = S.beats(X, p, t, d, len(order), start=0.45 if title else 0.25, share=0.5)
+    item_texts = []
+    for k in order:
+        item_texts.append(its[k][0])
+    T = S.beats(X, p, t, d, len(order), start=0.45 if title else 0.25, share=0.5, texts=item_texts)
     X.tw(f'tl.set("{s} .rk-burst i", {{scaleY:0, opacity:0}}, {t:.3f});')
     for k, tk in zip(order, T):
         r_ = f"{s} .rk-r[data-k='{k}']"

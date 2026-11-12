@@ -26,7 +26,22 @@ def _height(msgs, size, bw):
 
 
 def chat(X, cid, t, d, p):
-    msgs = [(r, str(x)) for r, x in p["turns"]] if p.get("turns") else [("user", p["q"]), ("ai", p["a"])]
+    if p.get("turns"):
+        msgs = []
+        for r, x in p["turns"]:
+            msgs.append((r, str(x)))
+    else:
+        q = str(p.get("q") or "").strip()
+        a = str(p.get("a") or "").strip()
+        if not q or not a:
+            raise SystemExit(f"chat at {t:.2f}s needs real messages: give q + a (the question and the answer) or turns — an empty chat window is never rendered")
+        msgs = [("user", q), ("ai", a)]
+    empty = []
+    for r, x in msgs:
+        if not x.strip():
+            empty.append(r)
+    if empty:
+        raise SystemExit(f"chat at {t:.2f}s has empty message(s) from {', '.join(empty)}: every turn needs its text")
     hl = p.get("hl", "")
     Wv, Hv = F.frame_vmin(X)
     cw = min(100.0, Wv * 0.9)

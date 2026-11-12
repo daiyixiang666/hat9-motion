@@ -118,7 +118,17 @@ def ui_lift(X, cid, t, d, p):
     for i, st in enumerate(raw):
         st = st if isinstance(st, dict) else {"act": "click", "x": st[0], "y": st[1]}
         steps.append({"act": str(st.get("act", "click")), "x": S.frac(st.get("x", 0.5), pw) * kk, "y": S.frac(st.get("y", 0.5), ph) * kk,
-                      "label": str(st.get("label", "")), "t": U.when(X, st.get("at"), t, auto[i])})
+                      "label": str(st.get("label", "")), "t": U.when(X, st.get("at"), t, auto[i]), "fixed": st.get("at") is not None})
+    st_times = []
+    st_fixed = []
+    st_say = []
+    for q in steps:
+        st_times.append(q["t"])
+        st_fixed.append(q["fixed"])
+        st_say.append(q["label"])
+    st_times = U.follow(X, st_say, lift + 0.85, max(0.3, t + d - lift - 0.85), st_times, st_fixed, gap=1.3)    # a label lands when it is said
+    for i in range(len(steps)):
+        steps[i]["t"] = st_times[i]
     steps.sort(key=lambda q: q["t"])
     for i in range(1, len(steps)):
         steps[i]["t"] = max(steps[i]["t"], steps[i - 1]["t"] + 1.3)       # each label stays long enough to read

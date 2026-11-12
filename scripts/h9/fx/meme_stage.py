@@ -30,7 +30,10 @@ def meme_stage(X, cid, t, d, p):
     bw, bh = x1 - x0, y1 - y0
     mode = p.get("mode", "pile")
     at = [it["at"] for it in items] if any(it["at"] for it in items) else p.get("at")
-    ts = D.times(X, {"at": at}, t, d, n, key="at", lead=0.15, tail=min(0.9, d * 0.2))
+    say = []
+    for it in items:
+        say.append(str(it["cap"] or ""))
+    ts = D.times(X, {"at": at}, t, d, n, key="at", lead=0.15, tail=min(0.9, d * 0.2), texts=say)
     r = X.rand
     cards = []
     for i, it in enumerate(items):

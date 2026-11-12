@@ -494,7 +494,7 @@ def split_num(v):
 
 
 def anchors(X, raw, t, d, first=0.25, last=0.72):
-    """[[value, at], ...] or [value, ...] -> [(time, value_str)] inside the beat; missing times spread evenly."""
+    """[[value, at], ...] or [value, ...] -> [(time, value_str)] inside the beat; missing times follow the narration, else spread evenly."""
     U = load("_ui")
     items = []
     for a in raw:
@@ -504,11 +504,20 @@ def anchors(X, raw, t, d, first=0.25, last=0.72):
             items.append([a, None])
     n = len(items)
     auto = U.spread(n, t + d * first, t + d * last)
+    times = []
+    fixed = []
+    texts = []
+    for i in range(n):
+        v = items[i][0]
+        at = items[i][1]
+        times.append(U.when(X, at, t, auto[i]))
+        fixed.append(at is not None)
+        texts.append(str(v))
+    times = U.follow(X, texts, t, d, times, fixed, gap=0.2)      # a value lands when it is said, when it is said
     out = []
-    for i, (v, at) in enumerate(items):
-        when = U.when(X, at, t, auto[i])
-        when = min(max(when, t + 0.05), t + d - 0.3)
-        out.append((when, str(v)))
+    for i in range(n):
+        when = min(max(times[i], t + 0.05), t + d - 0.3)
+        out.append((when, texts[i]))
     out.sort()
     return out
 

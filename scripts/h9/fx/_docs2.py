@@ -191,11 +191,13 @@ def drift(X, sel, t, d, s=1.03, y=0):
     X.tw(f'tl.fromTo("{sel}", {{scale:1, y:0}}, {{scale:{s}, y:{y}, duration:{max(d, 0.1):.2f}, ease:"none"}}, {t:.3f});')
 
 
-def times(X, p, t, d, n, key="at", lead=0.25, tail=0.6):
-    """n switch times inside the beat: from p[key] (list of "@词" / seconds) where given, else evenly spaced."""
+def times(X, p, t, d, n, key="at", lead=0.25, tail=0.6, texts=None):
+    """n switch times inside the beat: from p[key] (list of "@词" / seconds) where given, else when the narration
+    says texts[i] inside the beat, else evenly spaced."""
     given = fit.as_list(p.get(key))
     span = max(0.3, d - lead - tail)
     out = []
+    fixed = []
     for i in range(n):
         tt = None
         if i < len(given):
@@ -203,6 +205,9 @@ def times(X, p, t, d, n, key="at", lead=0.25, tail=0.6):
             except SystemExit: tt = None
             if tt is not None and not (t <= tt < t + d): tt = None
         out.append(float(tt) if tt is not None else t + lead + span * i / max(1, n))
+        fixed.append(tt is not None)
+    if texts:
+        out = load("_ui").follow(X, texts, t, d, out, fixed, gap=0.18)
     for i in range(1, n): out[i] = max(out[i], out[i - 1] + 0.18)
     return out
 

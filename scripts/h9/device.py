@@ -413,8 +413,6 @@ def caption_mode(X):
     mode = X.S.get("caption_mode")
     if mode:
         return mode
-    if X.portrait:
-        return "punch"
     return "reading"
 
 

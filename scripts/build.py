@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """video.json -> a HyperFrames project (index.html + assets) in the chosen style.
 
-  python3 scripts/build.py examples/demo/video.json [--style ledger] [--aspect 9:16] [--out DIR]
+  python3 scripts/build.py examples/demo/video.json [--style press] [--aspect 9:16] [--out DIR]
   cd DIR && npx --yes hyperframes@0.8.191 check && npx --yes hyperframes@0.8.191 render -o out.mp4
 
 Python standard library only (fontTools optional, for font subsetting).
@@ -77,6 +77,68 @@ img { display:block; }
 """
 
 
+ANCHOR_SKIP = ("montage", "plate", "transition", "cold_open")
+
+
+def headline(b):
+    """the beat's main on-screen words: text / title / big / value (the first one that is a plain string or number)."""
+    for key in ("text", "title", "big", "value"):
+        v = b.get(key)
+        if isinstance(v, (int, float)) and not isinstance(v, bool):
+            return str(v)
+        if isinstance(v, str) and v.strip():
+            return v
+    return None
+
+
+def auto_anchor(X, beats, times, D, pinned):
+    """beats timed by sentence (no "@" cue) whose headline is said > 0.8 s after the beat starts: start the beat
+    when the headline is said and let the previous beat run until then. Never earlier, never past the next beat's
+    start; montage / plate / transition / cold_open beats, pinned beats and "anchor": false are left alone."""
+    if not X.chars:
+        return
+    for i in range(1, len(beats)):
+        b = beats[i]
+        if b.get("anchor") is False or i in pinned:
+            continue
+        cue = b.get("t")
+        if isinstance(cue, str) and cue.strip().startswith("@"):
+            continue
+        if b.get("fx") in ANCHOR_SKIP or b.get("scene") in ANCHOR_SKIP:
+            continue
+        text = headline(b)
+        if not text:
+            continue
+        t = times[i][0]
+        d = times[i][1]
+        if i + 1 < len(times):
+            nxt = times[i + 1][0]
+        elif D:
+            nxt = D
+        else:
+            nxt = t + (float(d) if d else 6.0)
+        end = nxt
+        if d:
+            end = min(end, t + float(d))
+        need = 3
+        if len(X.spoken_units(text)) <= 3:
+            need = 2                                   # a short headline ("名校offer"): its first two units may do
+        hit = X.spoken_at(text, t, end, min_units=need)
+        if hit is None:
+            continue
+        if hit <= t + 0.8:
+            continue
+        if hit > end - 0.6:
+            continue                                   # too late to leave the beat on screen long enough
+        if d:
+            times[i][1] = t + float(d) - hit           # keep where it ends
+        pt, pd = times[i - 1]
+        if pd and pt + float(pd) >= t - 0.05:
+            times[i - 1][1] = hit - pt                 # the previous beat stays up until this one starts
+        times[i][0] = hit
+        print(f"auto-anchor: beat {i} ({b.get('fx') or b.get('scene')}) {t:.2f}s -> {hit:.2f}s, when \"{text}\" is said")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("video"); ap.add_argument("--style"); ap.add_argument("--aspect"); ap.add_argument("--out")
@@ -88,7 +150,7 @@ def main():
     video = delivery.resolve_lang(video, lang)          # {"zh": …, "en": …} anywhere in the file -> one language
     meta = video.setdefault("meta", {})
     meta["lang"] = lang
-    sid = a.style or meta.get("style", "ledger")
+    sid = a.style or meta.get("style", "press")
     style = load_style(sid)
     brand = delivery.apply_brand(style, meta, vpath.parent)
     aefx.apply_style(style)                                               # effects' page themes follow the style's palette
@@ -134,6 +196,7 @@ def main():
         times[0][0] = lead
     if X.snapper:
         beatsync.snap_beats(beats, times, X.snapper, lead if series.get("opener") else 0.0, skip=pinned)
+    auto_anchor(X, beats, times, D, pinned)          # a beat's headline appears when it is said, not at the sentence start
     for i, (t, d) in enumerate(times):
         nxt = times[i + 1][0] if i + 1 < len(times) else D
         times[i][1] = float(d) if d else nxt - t

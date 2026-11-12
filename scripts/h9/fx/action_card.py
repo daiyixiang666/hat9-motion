@@ -3,7 +3,7 @@
 row of thumbnails, then a「截图此页」stamp lands with a brief frame flash and shutter brackets closing on the card.
 
 p: title ("截图这一页，|交给你的 *AI* 助手") · kicker · url · label ("给 AI 的开始说明") · steps [..] (2–6) · thumbs
-   [images] (0–8; none → skeleton tiles) · note (a footer line) · stamp ("截图此页"; false = none) · stamp_at
+   [images] (0–8; none → no thumbnail row; skeleton: true = grey placeholder tiles on purpose) · note (a footer line) · stamp ("截图此页"; false = none) · stamp_at
    · subject | video | image (+ subject_focus, subject_start, subject_fit, subject_tag)
 Adapts: 2–6 steps, long steps (fitted to one line, then two), long URLs (scrolled in the box as they type), 0–8
 thumbs; 16:9: the card in two columns (title + URL | steps + thumbs), sized to its content and centred;
@@ -61,8 +61,11 @@ def action_card(X, cid, t, d, p):
     x0, y0, x1, y1 = K.area(X, p)
     aw = x1 - x0
     ah = y1 - y0
-    steps = list(FT.as_list(p.get("steps") or ["打开上面的地址", "选一个喜欢的模板", "按 README 制作"]))[:6]
+    if not p.get("steps") or not str(p.get("url") or "").strip():
+        raise SystemExit(f"action_card at {t:.2f}s needs real content: url (the address to type) and steps (2–6 lines) — no default text is filled in")
+    steps = list(FT.as_list(p.get("steps")))[:6]
     thumbs = list(FT.as_list(p.get("thumbs") or []))[:8]
+    skel = p.get("skeleton") is True        # grey skeleton thumbnails only on purpose
     ns = len(steps)
     inner = []
     # ---- card + optional subject
@@ -94,7 +97,7 @@ def action_card(X, cid, t, d, p):
         ls += f'<span class="sl">{K.hl_html(X, ln)}</span>'
     parts.append(f'<div class="ac-title" style="left:{lx:.0f}px; top:{yl:.0f}px; font-size:{f.px}px">{ls}</div>')
     yl += f.n * f.px * 1.22 + 30
-    url = str(p.get("url", "github.com/daiyixiang666/hat9-motion"))
+    url = str(p.get("url"))
     in_h = 84 if not P else 92
     upx = 30 if not P else 34
     room = (colw - 22 * 2 - 50) / upx
@@ -112,11 +115,16 @@ def action_card(X, cid, t, d, p):
         parts.append(f'<div class="ac-lab" style="left:{rx:.0f}px; top:{yr:.0f}px; font-size:{24 if not P else 28}px">{X.rich(label)}</div>')
         yr += 50 if not P else 58
     note = p.get("note")
-    thumbs_n = len(thumbs) if thumbs else (6 if not P else 5)
+    thumbs_n = 0
+    if thumbs:
+        thumbs_n = len(thumbs)
+    elif skel:
+        thumbs_n = 6 if not P else 5
     # how much room the steps get
-    if P:
+    th_h = 0.0
+    if thumbs_n and P:
         th_h = min(300.0, (colw - 14 * (thumbs_n - 1)) / thumbs_n / 0.62)
-    else:
+    elif thumbs_n:
         th_h = min(250.0, (colw - 12 * (thumbs_n - 1)) / thumbs_n / 0.62)
     note_h = 50 if note else 0
     steps_room = ch - pad - yr - th_h - 40 - note_h
@@ -146,7 +154,8 @@ def action_card(X, cid, t, d, p):
             body = (f'<i class="ac-sk" style="top:14%; width:auto"></i><i class="ac-sk" style="top:26%; right:30%"></i>'
                     f'<i class="ac-sk" style="top:44%; height:30%; border-radius:8px"></i>')
         parts.append(f'<div class="{cls}" data-j="{j}" style="left:{tx:.0f}px; top:{yr:.0f}px; width:{tw:.0f}px; height:{th_h:.0f}px">{body}</div>')
-    yr += th_h + 22
+    if thumbs_n:
+        yr += th_h + 22
     if note:
         npx, nl = K.fit(note, colw, 40, 24 if not P else 28, 16, max_lines=1)
         X.used_text.update(str(note))
@@ -210,15 +219,22 @@ def action_card(X, cid, t, d, p):
     st_t = K.cues(X, p, "at", t, d, ns)
     auto = U.spread(ns, first, last)
     given = p.get("at") or []
+    fixed = []
+    step_texts = []
+    for i in range(ns):
+        if i < len(given):
+            auto[i] = st_t[i]
+        fixed.append(i < len(given))
+        step_texts.append(str(steps[i]))
+    auto = U.follow(X, step_texts, t, d, auto, fixed, gap=0.25)     # a step lands when the narration says it
     for i in range(ns):
         ti = auto[i]
-        if i < len(given):
-            ti = st_t[i]
         X.tw(f'tl.fromTo("{s_} .ac-st[data-i=\\"{i}\\"]", {{x:-30, opacity:0}}, {{x:0, opacity:1, duration:0.4, ease:"{e}", immediateRender:true}}, {ti:.3f});')
         X.tw(f'tl.fromTo("{s_} .ac-st[data-i=\\"{i}\\"] i", {{scale:1.8}}, {{scale:1, duration:0.4, ease:"back.out(2)", immediateRender:true}}, {ti:.3f});')
         X.sfx(ti, "tick")
     t_th = last + 0.35
-    X.tw(f'tl.fromTo("{s_} .ac-th", {{y:60, opacity:0}}, {{y:0, opacity:1, duration:0.45, ease:"{e}", stagger:0.06, immediateRender:true}}, {t_th:.3f});')
+    if thumbs_n:
+        X.tw(f'tl.fromTo("{s_} .ac-th", {{y:60, opacity:0}}, {{y:0, opacity:1, duration:0.45, ease:"{e}", stagger:0.06, immediateRender:true}}, {t_th:.3f});')
     if note:
         X.tw(f'tl.fromTo("{s_} .ac-note", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 -2% 0 0)", duration:0.5, ease:"none", immediateRender:true}}, {t_th + 0.3:.3f});')
     if stamp:

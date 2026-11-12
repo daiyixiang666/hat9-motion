@@ -114,9 +114,17 @@ def dialogue(X, cid, t, d, p):
     # more lines than the beat can show at ~0.9 s each: the earlier ones are already said (the last of them waits in the transcript)
     skip = len(L) - fit if len(L) > fit and all(l["at"] is None for l in L) else 0
     auto = U.spread(len(L) - skip, t + 0.6, end_t)
+    base = []
+    fixed = []
+    say = []
+    for j in range(skip, len(L)):
+        base.append(U.when(X, L[j]["at"], t, auto[j - skip]))
+        fixed.append(L[j]["at"] is not None)
+        say.append(str(L[j].get("text", "")))
+    base = U.follow(X, say, t, d, base, fixed, gap=0.5)        # a line pops when the narration says it
     T = [None] * skip
     for j in range(skip, len(L)):
-        T.append(max(T[-1] + 0.5 if j > skip else t + 0.4, U.when(X, L[j]["at"], t, auto[j - skip])))
+        T.append(max(T[-1] + 0.5 if j > skip else t + 0.4, base[j - skip]))
     lift = main_h * 0.72
     if skip:
         ls = f"{s} .dl-l[data-j=\'{skip - 1}\']"

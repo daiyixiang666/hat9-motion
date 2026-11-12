@@ -28,26 +28,14 @@ def load_table():
 
 
 def presenter_positions(video):
-    """where the presenter sits on each beat (None without a presenter layer); a beat without a "presenter" key keeps
-    the previous position."""
+    """where the presenter sits on each beat (None without a presenter layer), the way the build decides it:
+    the film's presenter form, inheritance, and the auto-switch that keeps graphics off a full-frame face."""
+    from h9 import presenter
     meta = video.get("meta") or {}
-    beats = video.get("beats") or []
+    portrait = str(meta.get("aspect", "9:16")) in ("9:16", "3:4", "4:5")
     out = []
-    if not meta.get("presenter"):
-        for _ in beats:
-            out.append(None)
-        return out
-    spec = meta["presenter"]
-    current = "full"
-    if isinstance(spec, dict) and spec.get("at"):
-        current = spec["at"]
-    for b in beats:
-        p = b.get("presenter")
-        if isinstance(p, str):
-            current = p
-        elif isinstance(p, dict) and p.get("at"):
-            current = p["at"]
-        out.append(current)
+    for place, forced in presenter.effective_places(video, portrait):
+        out.append(place)
     return out
 
 

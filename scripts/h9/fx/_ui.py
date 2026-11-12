@@ -7,6 +7,7 @@ typed()    a string as one <i class="tc"> per glyph, so typing can reveal it gly
 type_in()  the typing tween (one glyph every 1/cps s) + a deterministic caret blink; returns when typing ends
 when()     '@词' / seconds into the beat / None → an absolute time
 spread()   n evenly spaced moments inside (a, b)
+follow()   item times → the moments the narration says each item (X.spoken_at), given times kept
 """
 import importlib.util, pathlib, sys
 from h9 import fit as FT
@@ -101,6 +102,76 @@ def spread(n, a, b):
     if n <= 0: return []
     if n == 1: return [a]
     return [a + (b - a) * i / (n - 1) for i in range(n)]
+
+
+def follow(X, texts, t, d, times, fixed=None, gap=0.25):
+    """items land when the narration says them: for every item whose time was not given (fixed[i] false), look for
+    its text in the words spoken inside the beat (X.spoken_at, searching after the previous item) and use that
+    moment; items never spoken keep their fallback time, re-spread between the spoken neighbours. Given times stay
+    first priority. Times come back monotonic with at least `gap` between items. No word timestamps → `times`."""
+    n = len(times)
+    out = list(times)
+    if n == 0 or not getattr(X, "chars", None):
+        return out
+    if fixed is None:
+        fixed = [False] * n
+    texts = list(texts or [])
+    end = t + d
+    anchored = []
+    heard = 0
+    cursor = t
+    for i in range(n):
+        if fixed[i]:
+            anchored.append(True)
+            if out[i] > cursor:
+                cursor = out[i]
+            continue
+        hit = None
+        if i < len(texts):
+            options = texts[i]
+            if not isinstance(options, (list, tuple)):
+                options = [options]                       # an item may offer several texts: tried in order
+            for option in options:
+                hit = X.spoken_at(option, cursor, end - 0.2)
+                if hit is not None:
+                    break
+        if hit is None:
+            anchored.append(False)
+            continue
+        hit = max(hit, t + 0.05)
+        hit = min(hit, end - 0.3)
+        out[i] = hit
+        anchored.append(True)
+        heard += 1
+        cursor = hit + 0.1
+    if heard == 0:
+        return out                                        # nothing was said: the old times stand
+    # items nobody said: spread between the anchored items around them
+    for i in range(n):
+        if anchored[i]:
+            continue
+        a = i - 1
+        while a >= 0 and not anchored[a]:
+            a -= 1
+        b = i + 1
+        while b < n and not anchored[b]:
+            b += 1
+        if a >= 0 and b < n:
+            out[i] = out[a] + (out[b] - out[a]) * (i - a) / (b - a)
+        elif b < n:
+            latest = out[b] - gap * (b - i)
+            if out[i] > latest:
+                out[i] = max(t, latest)
+        elif a >= 0:
+            earliest = out[a] + gap * (i - a)
+            if out[i] < earliest:
+                out[i] = earliest
+    for i in range(1, n):
+        if fixed[i]:
+            continue                                      # a given time is never moved
+        if out[i] < out[i - 1] + gap:
+            out[i] = out[i - 1] + gap
+    return out
 
 
 def mock(X, p, x, y, right=False):

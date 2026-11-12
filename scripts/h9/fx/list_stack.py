@@ -90,7 +90,8 @@ def list_stack(X, cid, t, d, p):
     _clip(X, cid, t, d, f'<div class="ls">{head}<div class="ls-rw" style="position:absolute; inset:0">{hi}{"".join(rows)}</div></div>', p)
     s = f"#{cid} .ls"
     BG, FG, AC = S.col(X, p, "bg"), S.col(X, p, "fg"), S.col(X, p, "accent")
-    T = S.beats(X, p, t, d, n, start=0.75 if title else 0.25, share=0.58 if style != "recap" else 0.42)
+    item_texts = [a for a, _ in its]
+    T = S.beats(X, p, t, d, n, start=0.75 if title else 0.25, share=0.58 if style != "recap" else 0.42, texts=item_texts)
     if title:      # big in the middle → kicker in the corner
         bf = fit.fit_text(title, w * 0.86, h * 0.4, S.vm(X, 13), kf.px, max_lines=2)
         kw = fit.width(max(kf.lines, key=lambda l: fit.width(l))) * kf.px

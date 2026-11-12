@@ -261,10 +261,18 @@ def side_stat(X, cid, t, d, p):
     if bars:
         X.tw(f'tl.fromTo("{s_} .ss-base", {{scaleX:0}}, {{scaleX:1, duration:0.6, ease:"power3.out", immediateRender:true}}, {t + 0.1:.3f});')
     times = K.cues(X, p, "at_list", t, d, n, start=0.12, end=0.66)
+    at_list = p.get("at_list")
+    if not isinstance(at_list, (list, tuple)):
+        at_list = []
+    fixed = []
+    say = []
     for i in range(n):
         v_at = its[i].get("at")
         if v_at is not None:
             times[i] = K.U.when(X, v_at, t, times[i])
+        fixed.append(v_at is not None or (i < len(at_list) and at_list[i] is not None))
+        say.append([str(its[i].get("v", "")) + str(its[i].get("unit", "")), str(its[i].get("v", "")), str(its[i].get("cap", ""))])
+    times = K.U.follow(X, say, t, d, times, fixed, gap=0.6)       # a value lands when the narration says it (or its caption)
     for i in range(1, n):
         if times[i] < times[i - 1] + 0.6:
             times[i] = times[i - 1] + 0.6

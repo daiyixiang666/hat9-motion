@@ -6,11 +6,27 @@ karaoke — caption_mode "karaoke": the whole page shows dim and each glyph ligh
 bilingual — meta.caption_tr = ["first sentence in English", ...] (one per sentence, split at 。！？): a second line
   under the caption for whichever sentence is being spoken.
 
-Two modes (style or meta.caption_mode):
-  reading — 16:9 default. Whole phrase per page, ≤16 glyphs, ，。 become a full-width space (Netflix 简中),
+Two modes (meta.caption_mode, meta.caption_preset or the style):
+  reading — the default in BOTH aspects. One whole phrase per page: ≤16 glyphs in 16:9, ≤14 in 9:16 (1–2 lines),
             in = first glyph − 2 frames, out = last glyph + 5 frames (bridged to the next page if the gap < 0.3 s),
             at most ONE highlighted word per page (from meta.caption_hl keywords).
-  punch   — 9:16 / hooks. 2–6 glyphs per page, page pops 0.85→1.0 (back.out), keyword enlarged in the accent colour.
+  punch   — only when asked for (caption_mode "punch", or the douyin / shipinhao preset in 9:16). 2–6 glyphs per
+            page, page pops 0.85→1.0 (back.out), keyword enlarged in the accent colour.
+
+Page breaks (pages()), with or without jieba:
+  1. phrases end at punctuation (。！？ always), at a speech pause (> 0.3 s between tokens) and at a speaker change;
+  2. a phrase longer than the page limit is split into the fewest balanced pages, between tokens only, at the best
+     boundary near each balanced cut: the biggest speech gap, then word hints (after 的/了/吗…, before 就/也/但是/所以…),
+     else the middle. Latin / number runs (A-Level, AP, 3.8, 2025, 5%), spoken numbers (六十亿), caption_fix keys
+     and caption_hl keywords are one token and never split; a number keeps its unit and range (3到4门); no page is
+     a 1–2 glyph orphan (it joins its neighbour after a full-width space). jieba, when installed, regroups per-character
+     timestamps into real words first (better boundaries); without it the rules above still never cut a run of
+     Latin letters / digits and rarely cut a Chinese word. Latin letters count as about half a glyph.
+
+Readability: in 9:16 reading mode over real footage (meta.presenter is a video, or any beat uses a video file) and
+with no meta.caption_style / meta.caption_preset, captions get a dark see-through plate (rgba(0,0,0,.55), white
+text), a plain heavy sans (PingFang SC / Noto Sans SC 700) and sit in the lower band above the platform UI.
+meta.caption_style and meta.caption_preset always win.
 """
 PUN = "，,。.!！?？、；;：:"
 SOFT = "，,、；;：:"          # 。！？ always end a page, even after a single glyph
@@ -59,36 +75,330 @@ def regroup(words):
     return out
 
 
-def pages(words, maxlen, minlen=1, spk_out=None):
-    """[[start, end, text], ...]; with spk_out=[] it also collects each page's speaker (pages never mix speakers)."""
-    words = _join_decimals(words)
-    lines, cur, cs, ce, sp = [], "", None, None, None
-    spks = []
-    def push():
-        lines.append([cs, ce, cur]); spks.append(sp)
+PAUSE = 0.3            # a silence longer than this between two tokens ends a phrase
+HARD = "。.!！?？"      # sentence ends
+ASCII_JOIN = "-%+/'&_#@"   # glue inside a Latin / number run: A-Level, 5%, C++, 24/7
+# no-jieba word-boundary hints: a phrase may end after these particles, or start at these words
+END_AFTER = "的了吗呢吧啊呀嘛"
+NOT_AFTER = {"了": "解", "的": "确"}          # 了解 / 的确 are words, not particle + next word
+START_AT = "就也都还但而才又把被让和跟与或再很最更只"
+START_AT2 = ("所以", "因为", "如果", "可以", "但是", "而且", "然后", "其实", "就是", "还是", "不过")
+RANGE_LINK = "到至~～-和或第约近超"        # 3到4门 / 第3名: a number stays with what joins it
+
+
+def _ascii_word(c):
+    """True for a character that belongs to a Latin / number run (letters, digits and the joiners above)."""
+    if c.isascii() and c.isalnum():
+        return True
+    return c in ASCII_JOIN
+
+
+def glen(text):
+    """caption length in CJK glyph widths: a Latin letter or digit counts about half a glyph."""
+    n = 0.0
+    for c in text:
+        if c.isascii():
+            n += 0.55
+        else:
+            n += 1.0
+    return n
+
+
+def _merge_ascii(words):
+    """glue neighbouring tokens that form one Latin / number run ("A" "-" "L" "e"... -> "A-Level"; "A" "P" -> "AP")
+    so a page can never break inside it."""
+    out = []
     for w in words:
         tok = str(w["w"]).strip()
-        if not tok: continue
-        if cur and w.get("spk") is not None and w.get("spk") != sp:
-            push(); cur, cs = "", None
-        if not cur: sp = w.get("spk", sp)
-        if all(c in PUN for c in tok):
-            if cur and (tok not in SOFT or len(cur) >= minlen):
-                push(); cur, cs = "", None
+        if out and tok:
+            prev = str(out[-1]["w"]).strip()
+            same_spk = out[-1].get("spk") == w.get("spk")
+            if prev and same_spk and _ascii_word(prev[-1]) and _ascii_word(tok[0]):
+                merged = dict(out[-1])
+                merged["w"] = prev + tok
+                merged["e"] = w["e"]
+                out[-1] = merged
+                continue
+        out.append(w)
+    return out
+
+
+CN_NUM = "零〇一二两三四五六七八九十百千万亿"
+CN_BIG = "十百千万亿"
+
+
+def _merge_numbers(words):
+    """glue a spoken number that the aligner gave glyph by glyph ("六" "十" "亿" -> "六十亿", "3" "千" -> "3千"),
+    so a page never breaks inside it and caption_fix ("六十亿" -> "60 亿") still finds it."""
+    out = []
+    for w in words:
+        tok = str(w["w"]).strip()
+        if out and tok:
+            prev = str(out[-1]["w"]).strip()
+            same_spk = out[-1].get("spk") == w.get("spk")
+            glue = False
+            if prev and prev[-1] in CN_NUM and tok[0] in CN_NUM:
+                glue = True
+            if prev and prev[-1].isdigit() and tok[0] in CN_BIG:
+                glue = True
+            if glue and same_spk:
+                merged = dict(out[-1])
+                merged["w"] = prev + tok
+                merged["e"] = w["e"]
+                out[-1] = merged
+                continue
+        out.append(w)
+    return out
+
+
+def _merge_keep(words, keep):
+    """glue the tokens under each occurrence of a protected string (caption_fix keys, caption_hl keywords) into one
+    token, so a page never breaks inside a fixed term or a highlighted word."""
+    if not keep:
+        return words
+    starts = []
+    text = ""
+    for w in words:
+        starts.append(len(text))
+        text += str(w["w"]).strip()
+    # owner[i] = index of the token that holds character i
+    owner = []
+    for i in range(len(words)):
+        size = len(str(words[i]["w"]).strip())
+        for j in range(size):
+            owner.append(i)
+    group = list(range(len(words)))        # group[i] = first token of the run token i is glued into
+    for key in keep:
+        key = str(key).strip()
+        if len(key) < 2:
             continue
-        if cs is not None and w["s"] - ce > 0.45:
-            push(); cur, cs = "", None
-        if cur and len(cur) + len(tok) > maxlen:
-            push(); cur, cs = "", None
-        if cs is None: cs = w["s"]
-        cur += tok; ce = w["e"]
-    if cur: push()
-    out, osp = [], []
-    for ln, k in zip(lines, spks):   # fold a ≤2-glyph orphan into the previous page when it fits (same speaker only)
-        if out and len(ln[2]) <= 2 and len(out[-1][2]) + len(ln[2]) <= maxlen + 2 and ln[0] - out[-1][1] < 0.3 and osp[-1] == k:
-            out[-1][1] = ln[1]; out[-1][2] += ln[2]
-        else: out.append(ln); osp.append(k)
-    if spk_out is not None: spk_out[:] = osp
+        pos = text.find(key)
+        while pos >= 0:
+            first = owner[pos]
+            last = owner[pos + len(key) - 1]
+            ok = True
+            for i in range(first, last + 1):
+                if words[i].get("spk") != words[first].get("spk"):
+                    ok = False
+            if ok:
+                for i in range(first, last + 1):
+                    group[i] = group[first]
+            pos = text.find(key, pos + 1)
+    out = []
+    for i in range(len(words)):
+        tok = str(words[i]["w"]).strip()
+        if out and i > 0 and group[i] == group[i - 1]:
+            merged = dict(out[-1])
+            merged["w"] = str(merged["w"]).strip() + tok
+            merged["e"] = words[i]["e"]
+            out[-1] = merged
+        else:
+            out.append(words[i])
+    return out
+
+
+def _clauses(words, minlen):
+    """split the token stream into phrases: at punctuation, at a speech pause (> PAUSE s) and at a speaker change.
+    Each phrase = {"toks": [...], "hard": ends a sentence, "spk": speaker}."""
+    out = []
+    cur = []
+    cur_spk = None
+    for w in words:
+        tok = str(w["w"]).strip()
+        if not tok:
+            continue
+        if cur and w.get("spk") is not None and w.get("spk") != cur_spk:
+            _close(out, cur, cur_spk, True)
+        if not cur:
+            cur_spk = w.get("spk", cur_spk)
+        is_pun = True
+        for c in tok:
+            if c not in PUN:
+                is_pun = False
+        if is_pun:
+            text = ""
+            for t in cur:
+                text += str(t["w"]).strip()
+            if cur and (tok not in SOFT or glen(text) >= minlen):
+                hard = False
+                for c in tok:
+                    if c in HARD:
+                        hard = True
+                _close(out, cur, cur_spk, hard)
+            continue
+        if cur and w["s"] - cur[-1]["e"] > PAUSE:
+            _close(out, cur, cur_spk, False)
+            cur_spk = w.get("spk", cur_spk)
+        cur.append(dict(w, w=tok))
+    _close(out, cur, cur_spk, True)
+    return out
+
+
+def _close(out, cur, spk, hard):
+    """end the phrase being collected in cur (if any) and add it to out."""
+    if not cur:
+        return
+    out.append({"toks": list(cur), "hard": hard, "spk": spk})
+    cur.clear()
+
+
+def _boundary_score(toks, k):
+    """how good a page break is between toks[k-1] and toks[k]: a speech gap, a particle before it or a
+    phrase-starting word after it make it better; cutting a number off its unit or range makes it worse."""
+    left = toks[k - 1]["w"]
+    right = toks[k]["w"]
+    after = ""
+    if k + 1 < len(toks):
+        after = toks[k + 1]["w"]
+    last = left[-1]
+    first = right[0]
+    score = 0.0
+    gap = toks[k]["s"] - toks[k - 1]["e"]
+    if gap > 0:
+        score += min(gap, 0.3) * 8
+    if last in END_AFTER and NOT_AFTER.get(last) != first:
+        score += 1.0
+    two = (right + after)[:2]
+    if two in START_AT2:
+        score += 1.0
+    elif first in START_AT:
+        score += 0.8
+    if last.isdigit():
+        score -= 3.0                   # 3|门, 2025|年
+    if first.isdigit() and last in RANGE_LINK:
+        score -= 3.0                   # 3到|4
+    return score
+
+
+def _best_cut(toks, n, maxlen, parts, floor):
+    """(score, k) of the best first cut when the phrase (n glyphs) is shown on `parts` pages, or None."""
+    limit = maxlen + 0.5                # Latin widths are estimates: half a glyph of slack
+    target = n / parts
+    best = None
+    acc = 0.0
+    for k in range(1, len(toks)):
+        acc += glen(toks[k - 1]["w"])
+        left = acc
+        right = n - acc
+        if left > limit:
+            break
+        if right > (parts - 1) * limit:
+            continue
+        if left < floor or right < floor:
+            continue
+        score = _boundary_score(toks, k) - abs(left - target) / maxlen * 3
+        if best is None or score > best[0]:
+            best = (score, k)
+    return best
+
+
+def _split_clause(toks, maxlen, minpart):
+    """break one phrase longer than maxlen into the fewest balanced pages (one more when that avoids a bad cut),
+    only between tokens, at the best boundary near each balanced cut (speech gap > word hints > middle), never
+    leaving a part shorter than minpart."""
+    text = ""
+    for t in toks:
+        text += t["w"]
+    n = glen(text)
+    if n <= maxlen + 0.5 or len(toks) < 2:
+        return [toks]
+    parts = int(n // maxlen)
+    if parts * maxlen < n:
+        parts += 1
+    best = None
+    for floor in (minpart, 1):
+        for extra in (0, 1):
+            tries = parts + extra
+            if extra and n / tries < minpart:
+                continue
+            cut = _best_cut(toks, n, maxlen, tries, floor)
+            if cut is None:
+                continue
+            score = cut[0] - extra * 1.5           # an extra page costs something, a word cut costs more
+            if best is None or score > best[0]:
+                best = (score, cut[1])
+        if best is not None:
+            break
+    if best is None:
+        # nothing fits (e.g. one very long Latin token): cut as close to the middle as the tokens allow
+        acc = 0.0
+        best_diff = None
+        best_k = 1
+        for k in range(1, len(toks)):
+            acc += glen(toks[k - 1]["w"])
+            diff = abs(acc - n / 2)
+            if best_diff is None or diff < best_diff:
+                best_diff = diff
+                best_k = k
+        best = (0.0, best_k)
+    head = toks[:best[1]]
+    rest = toks[best[1]:]
+    return [head] + _split_clause(rest, maxlen, minpart)
+
+
+def pages(words, maxlen, minlen=1, spk_out=None, keep=None):
+    """[[start, end, text], ...]; with spk_out=[] it also collects each page's speaker (pages never mix speakers).
+    keep = strings a page may never break inside (caption_fix keys, caption_hl keywords).
+    Breaks at punctuation and speech pauses first; a phrase longer than maxlen is split into balanced parts at the
+    best gap between tokens (jieba words when installed, else characters scored by speech gaps and word hints), never
+    inside a Latin / number run, never leaving a 1-2 glyph orphan page."""
+    words = _join_decimals(words)
+    words = _merge_ascii(words)
+    words = _merge_numbers(words)
+    words = _merge_keep(words, keep)
+    minpart = 3
+    if maxlen < 9:
+        minpart = 2
+    raw = []
+    for cl in _clauses(words, minlen):
+        parts = _split_clause(cl["toks"], maxlen, minpart)
+        for j in range(len(parts)):
+            part = parts[j]
+            text = ""
+            for t in part:
+                text += t["w"]
+            hard = False
+            if j == len(parts) - 1:
+                hard = cl["hard"]
+            raw.append({"s": part[0]["s"], "e": part[-1]["e"], "text": text, "hard": hard, "spk": cl["spk"]})
+    # a <= 2-glyph orphan joins the page before it (same sentence, same speaker) ...
+    folded = []
+    for pg in raw:
+        if folded:
+            prev = folded[-1]
+            small = glen(pg["text"]) <= 2
+            fits = glen(prev["text"]) + glen(pg["text"]) + 1 <= maxlen + 2
+            if small and fits and not prev["hard"] and prev["spk"] == pg["spk"] and pg["s"] - prev["e"] < 1.0:
+                prev["e"] = pg["e"]
+                prev["text"] += "\u3000" + pg["text"]     # full-width space where the comma / pause was
+                prev["hard"] = pg["hard"]
+                continue
+        folded.append(pg)
+    # ... or, when it opens a sentence, the page after it
+    final = []
+    carry = None
+    for pg in folded:
+        if carry is not None:
+            if carry["spk"] == pg["spk"] and glen(carry["text"]) + glen(pg["text"]) + 1 <= maxlen + 2:
+                pg = dict(pg)
+                pg["s"] = carry["s"]
+                pg["text"] = carry["text"] + "\u3000" + pg["text"]
+            else:
+                final.append(carry)
+            carry = None
+        if glen(pg["text"]) <= 2 and not pg["hard"]:
+            carry = pg
+            continue
+        final.append(pg)
+    if carry is not None:
+        final.append(carry)
+    out = []
+    osp = []
+    for pg in final:
+        out.append([pg["s"], pg["e"], pg["text"]])
+        osp.append(pg["spk"])
+    if spk_out is not None:
+        spk_out[:] = osp
     return out
 
 
@@ -107,6 +417,51 @@ PRESETS = {
 }
 
 
+VIDEO_EXT = (".mp4", ".mov", ".m4v", ".webm", ".mkv", ".avi")
+
+# 9:16 reading captions over real footage (a filmed presenter, B-roll): a dark see-through plate and a plain heavy
+# sans, in the lower band clear of the platform's bottom UI. White text on a light table / wall stays readable.
+FOOTAGE_PLATE = (
+    "#root#root.v { --cap-bg:rgba(0,0,0,.55); --cap-fg:#fff; --cap-em:#ffd84a; --cap-shadow:none;"
+    " --cap-pad:8px 22px 11px; --cap-radius:12px; --cap-size:50px; --cap-weight:700; --cap-bottom:516px;"
+    " --f-cap:'PingFang SC', 'Noto Sans SC', 'Source Han Sans SC', 'Microsoft YaHei', 'h9-noto-sans-sc', sans-serif; }"
+    " #root#root.v .clip.cap { top:auto !important; bottom:var(--cap-bottom) !important; left:0 !important;"
+    " right:0 !important; text-align:center !important; padding-left:120px; padding-right:120px; }"
+    " #root#root.v .cap .cp { line-height:1.3; letter-spacing:.01em; }"
+)
+
+
+def _mentions_video(obj):
+    """True when a video.json value (string, list or dict, searched all the way down) names a video file."""
+    if isinstance(obj, str):
+        low = obj.lower()
+        for ext in VIDEO_EXT:
+            if low.endswith(ext):
+                return True
+        return False
+    if isinstance(obj, dict):
+        for key in obj:
+            if _mentions_video(obj[key]):
+                return True
+        return False
+    if isinstance(obj, list):
+        for item in obj:
+            if _mentions_video(item):
+                return True
+    return False
+
+
+def has_footage(video):
+    """True when real footage can sit under the captions: a video presenter or any video clip in the beats."""
+    meta = video.get("meta", {})
+    pres = meta.get("presenter")
+    if isinstance(pres, dict):
+        pres = pres.get("src")
+    if pres and _mentions_video(pres):
+        return True
+    return _mentions_video(video.get("beats", []))
+
+
 def build(X, D, fix=None, maxlen=None):
     if not X.chars or X.S.get("captions") is False: return
     meta = X.v.get("meta", {})
@@ -119,7 +474,8 @@ def build(X, D, fix=None, maxlen=None):
             v.update({"cap-shadow": "0 0 4px #000, 0 0 4px #000, 0 3px 8px rgba(0,0,0,.8)", "cap-size": "46px"})
         X.css("cap-preset", "#root { " + " ".join(f"--{k}:{val};" for k, val in v.items()) + " }")
         pre = dict(pre, mode=pmode)
-    mode = meta.get("caption_mode") or (pre or {}).get("mode") or X.S.get("caption_mode") or ("punch" if X.portrait else "reading")
+    # reading (one whole phrase per page) is the default in both aspects; punch only when the film or a preset asks
+    mode = meta.get("caption_mode") or (pre or {}).get("mode") or X.S.get("caption_mode") or "reading"
     # meta.caption_style: caption tokens that win over the style and the preset — one subtitle look across a
     # mixed-style film, e.g. {"cap-bottom": "300px", "cap-size": "50px", "f-cap": "'PingFang SC', sans-serif"}
     user = meta.get("caption_style") or {}
@@ -131,14 +487,19 @@ def build(X, D, fix=None, maxlen=None):
                     " right:0 !important; text-align:center !important; }"
                     " #root#root.v .clip.cap { padding-left:120px; padding-right:120px; }")
         X.css("cap-user", css)
+    if not user and not pre and mode == "reading" and X.portrait and has_footage(X.v):
+        X.css("cap-auto", FOOTAGE_PLATE)
     fix = fix or {}
     hl = meta.get("caption_hl", [])
     f = 1 / X.fps
     spk = []
+    keep = list(fix.keys())
+    for k in hl:
+        keep.append(k)
     if mode == "punch":
-        pg = pages(regroup(X._words), maxlen or 6, minlen=2, spk_out=spk)
+        pg = pages(regroup(X._words), maxlen or 6, minlen=2, spk_out=spk, keep=keep)
     else:
-        pg = pages(regroup(X._words), maxlen or (14 if X.portrait else 16), spk_out=spk)
+        pg = pages(regroup(X._words), maxlen or (14 if X.portrait else 16), spk_out=spk, keep=keep)
     mute = getattr(X, "caption_mute", [])
     if mute:          # a page is dropped when most of it falls inside a muted beat
         kept = []
@@ -258,7 +619,7 @@ def srt(X, D, path, fix=None):
     if not X.chars: return None
     fix = fix or {}
     spk = []
-    pg = pages(regroup(X._words), 14 if X.portrait else 16, spk_out=spk)
+    pg = pages(regroup(X._words), 14 if X.portrait else 16, spk_out=spk, keep=list(fix.keys()))
     names = {k: v.get("name", "") for k, v in (X.v.get("meta", {}).get("speakers") or {}).items()}
     def ts(x):
         h, r = divmod(max(0.0, x), 3600); m, s_ = divmod(r, 60)

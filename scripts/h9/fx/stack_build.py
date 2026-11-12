@@ -304,7 +304,13 @@ def stack_build(X, cid, t, d, p):
         X.tw(f'tl.fromTo("{s_} .sb-ghost", {{x:80, opacity:0}}, {{x:0, opacity:1, duration:0.8, ease:"power3.out"}}, {t:.3f});')
         X.tw(f'tl.to("{s_} .sb-ghost", {{x:-60, duration:{max(0.5, d - 1.0):.2f}, ease:"none"}}, {t + 1.0:.3f});')
     end_share = 0.55 if (name_mode and follow) else 0.62
-    times = K.cues(X, p, "at", t, d, n_rows, start=0.08, end=end_share)
+    row_texts = []
+    for j in range(n_rows):
+        rt = rows[j][1]
+        if isinstance(rt, (list, tuple)):
+            rt = "".join(str(x) for x in rt)
+        row_texts.append(str(rt))
+    times = K.cues(X, p, "at", t, d, n_rows, start=0.08, end=end_share, texts=row_texts)
     if kick:
         X.tw(f'tl.fromTo("{s_} .sb-k", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 -5% 0 0)", duration:0.45, ease:"power2.out", immediateRender:true}}, {max(t, times[0] - 0.25):.3f});')
     if layout != "side":

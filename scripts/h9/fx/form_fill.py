@@ -131,8 +131,13 @@ def form_fill(X, cid, t, d, p):
     X.sfx(t + 0.05, "whoosh_soft")
     end = t + d - (1.4 if btn_h else 0.4)
     T = U.spread(n, t + 0.8, max(t + 0.9, end - 0.6))
+    fixed = []
+    say = []
     for i, f in enumerate(F):
         if f.get("at") is not None: T[i] = U.when(X, f["at"], t, T[i])
+        fixed.append(f.get("at") is not None)
+        say.append([str(f.get("value", "")), str(f.get("label", ""))])
+    T = U.follow(X, say, t + 0.8, max(0.3, end - t - 0.8), T, fixed, gap=0.15)    # a field fills when it is said
     if cur: X.tw(f'tl.set("{s} .ff-ptr, {s} .ff-rip", {{x:{cx + cw * 0.8:.0f}, y:{cy + ch + 40:.0f}}}, {t:.3f});')
     gap = (T[1] - T[0]) if n > 1 else (end - T[0])
     mv = max(0.15, min(0.45, gap - 0.04))      # many fields in a short beat: quicker hops, no overlapping moves

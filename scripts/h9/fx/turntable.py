@@ -159,8 +159,15 @@ def turntable(X, cid, t, d, p):
     if head:
         X.tw(f'tl.from("{s} .tt-head > *", {{y:30, opacity:0, duration:0.5, ease:"expo.out", stagger:0.08}}, {t + 0.2:.3f});')
     T = U.spread(len(specs), t + 0.9, t + d - 1.0)
+    fixed = []
+    say = []
+    for j in range(len(specs)):
+        T[j] = U.when(X, specs[j].get("at"), t, T[j])
+        fixed.append(specs[j].get("at") is not None)
+        say.append(str(specs[j].get("text", "")))
+    T = U.follow(X, say, t + 0.9, max(0.5, d - 0.9), T, fixed, gap=0.3)     # a spec callout lands when it is said
     for j, sp in enumerate(specs):
-        tj = U.when(X, sp.get("at"), t, T[j])
+        tj = T[j]
         if lines_svg:
             X.tw(f'tl.from("{s} .tt-lines circle[data-j=\'{j}\']", {{scale:0, transformOrigin:"50% 50%", duration:0.3, ease:"back.out(3)"}}, {tj:.3f});')
             X.tw(f'tl.to("{s} .tt-lines path[data-j=\'{j}\']", {{strokeDashoffset:0, duration:0.4, ease:"power2.out"}}, {tj + 0.05:.3f});')

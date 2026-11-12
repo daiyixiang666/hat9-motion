@@ -76,7 +76,10 @@ def pros_cons(X, cid, t, d, p):
     for k in range(m):
         if k < len(pros): order.append((0, k))
         if k < len(cons): order.append((1, k))
-    T = S.beats(X, p, t, d, len(order), start=0.55, share=0.55 if verdict else 0.62)
+    item_texts = []
+    for side, k in order:
+        item_texts.append(pros[k] if side == 0 else cons[k])
+    T = S.beats(X, p, t, d, len(order), start=0.55, share=0.55 if verdict else 0.62, texts=item_texts)
     for (side, k), tk in zip(order, T):
         X.tw(f'tl.from("{s} .pc-i[data-s=\'{side}\'][data-k=\'{k}\']", {{x:{-40 if side == 0 else 40}, opacity:0, duration:0.45, ease:"expo.out"}}, {tk:.3f});')
         X.sfx(tk, "click")

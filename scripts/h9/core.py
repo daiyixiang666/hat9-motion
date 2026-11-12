@@ -123,6 +123,77 @@ class Ctx:
         t = self.chars[i + len(word) - 1][2] if end else self.chars[i][1]
         return Cue(round(t + off, 3))
 
+    def _spoken_index(self):
+        """the narration as one normalized string (no spaces / punctuation / markup, ASCII lower-cased, '-' dropped)
+        plus, for every kept glyph, its index in self.chars. Cached until self.chars is replaced (time edits)."""
+        cache = getattr(self, "_spoken_cache", None)
+        if cache is not None and cache[0] is self.chars:
+            return cache[1], cache[2]
+        glyphs = []
+        index = []
+        for i in range(len(self.chars)):
+            ch = self.chars[i][0]
+            if not ch.isalnum():
+                continue
+            glyphs.append(ch.lower())
+            index.append(i)
+        norm = "".join(glyphs)
+        self._spoken_cache = (self.chars, norm, index)
+        return norm, index
+
+    @staticmethod
+    def spoken_units(text):
+        """text -> list of match units: an ASCII letter/digit run is one unit ('A-Level' -> 'alevel'), every other
+        letter (a Chinese glyph) is one unit; spaces, punctuation and markup (*…*, |) are dropped."""
+        units = []
+        run = ""
+        for ch in str(text or ""):
+            if ch.isascii() and ch.isalnum():
+                run += ch.lower()
+                continue
+            if ch == "-" and run:
+                continue                                  # A-Level == ALevel
+            if run:
+                units.append(run)
+                run = ""
+            if ch.isalnum():
+                units.append(ch.lower())
+        if run:
+            units.append(run)
+        return units
+
+    def spoken_at(self, text, t0, t1=None, min_units=2):
+        """when `text` is first spoken inside [t0, t1): the start time of the first hit, else None.
+        Tolerant: tries the whole text, then its leading 4, 3 and 2 units (a unit = one glyph or one ASCII word,
+        compared case-insensitively without '-'); min_units=3 drops the 2-unit try (fewer chance hits).
+        Needs word timestamps (meta.words); None without them."""
+        if not self.chars or text is None:
+            return None
+        units = self.spoken_units(text)
+        if not units:
+            return None
+        norm, index = self._spoken_index()
+        tries = ["".join(units)]
+        for k in (4, 3, 2):
+            if len(units) > k and k >= min_units:
+                tries.append("".join(units[:k]))
+        if len(units) > 1 and units[0].isascii() and len(units[0]) >= 3:
+            tries.append(units[0])                        # "A-Level课程" → "alevel" alone
+        if len(units) == 1 and len(units[0]) < 2:
+            return None                                   # one lone glyph would match almost anywhere
+        for probe in tries:
+            if len(probe) < 2:
+                continue
+            pos = norm.find(probe)
+            while pos >= 0:
+                s = self.chars[index[pos]][1]
+                if t1 is not None and s >= t1:
+                    break
+                if s >= t0 - 0.05:
+                    return round(s, 3)
+                pos = norm.find(probe, pos + 1)
+        return None
+
     def speaker_at(self, t):
         """who is speaking at t (words may carry "spk"; meta.speakers names them) — a layout hint for dialogue scenes,
         e.g. put the visual on the side opposite the speaker's caption. None when unknown."""

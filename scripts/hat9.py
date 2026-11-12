@@ -5,7 +5,9 @@
   python3 scripts/hat9.py quick "一段文案" [--aspect 9:16] [--style reel] [--voice my.wav] [--out dir]
                                                          文案 → 自动分镜 → 配音 → 渲染 mp4（60 秒出第一条）
   python3 scripts/hat9.py plan "一段文案" --out dir       只生成 video.json（自动分镜），给 AI / 人再改
-  python3 scripts/hat9.py build|render <video.json> [--style s] [--aspect a]
+  python3 scripts/hat9.py build|render <video.json> [--style s] [--aspect a] [--force]
+                                                         render 自带关卡：先 brief check（P0 不渲染，--force 例外），
+                                                         渲完自动出每秒 2 帧静帧板 + 自动检查，有 P0 退出码 1
   python3 scripts/hat9.py fx [name]                      列出效果 / 看一个效果的说明和参数
   python3 scripts/hat9.py styles                         列出风格
   python3 scripts/hat9.py review 成片.mp4 --video video.json   交付前自检（静帧板 + 自动检查）
@@ -42,9 +44,20 @@ def doctor(_):
     from h9 import fonts
     miss = [k for k in ("noto-sans-sc", "noto-serif-sc", "inter", "jetbrains-mono") if not fonts.find(fonts.REG[k]["file"])]
     line("核心字体（思源黑体 / 思源宋体 / Inter / JetBrains Mono）", not miss, f"缺 {', '.join(miss)}：放进 assets/fonts/，地址见 assets/fonts.json")
-    for mod, pkg, why in (("fontTools", "fonttools", "字体子集化，渲染更快"), ("jieba", "jieba", "字幕按词断行"),
-                          ("faster_whisper", "faster-whisper", "自己的录音自动对齐出逐字时间（scripts/align.py）"),
-                          ("whisperx", "whisperx", "更准的强制对齐，二选一即可")):
+    # recommended: the caption gate and word timings depend on these two
+    missing = []
+    for mod, pkg, why in (("jieba", "jieba", "中文分词：字幕按词断页，渲染关卡用它查「切在词中间」的字幕"),
+                          ("faster_whisper", "faster-whisper", "自己的录音自动对齐出逐字时间（scripts/align.py）")):
+        try:
+            __import__(mod)
+            print(f"  ✓ {pkg}（推荐）")
+        except ImportError:
+            missing.append(pkg)
+            print(f"  ✗ {pkg} 未安装（推荐）：{why}   → pip install {pkg}")
+    if missing:
+        print(f"    一次装齐：pip install {' '.join(missing)}")
+    for mod, pkg, why in (("fontTools", "fonttools", "字体子集化，渲染更快"),
+                          ("whisperx", "whisperx", "更准的强制对齐，和 faster-whisper 二选一即可")):
         try: __import__(mod); print(f"  ✓ {mod}（可选）")
         except ImportError: print(f"  · {mod} 未安装（可选：pip install {pkg}，{why}）")
     print("  · 没装对齐模型也行：scripts/align.py --backend silence 按停顿切分（也可用 --transcript 导入已有逐字时间）")
@@ -211,6 +224,35 @@ def raise_code(rc):
     if rc: raise SystemExit(rc)
 
 
+def cmd_build(a):
+    cmd = [PY, str(HERE / "build.py"), a.video]
+    if a.style:
+        cmd += ["--style", a.style]
+    if a.aspect:
+        cmd += ["--aspect", a.aspect]
+    raise_code(subprocess.run(cmd).returncode)
+
+
+def cmd_render(a):
+    """render through the quality gate: brief check first (P0 → no render unless --force), review after."""
+    cmd = [PY, str(HERE / "render.py"), a.video, "--gate"]
+    if a.style:
+        cmd += ["--styles", a.style]
+    else:
+        style = json.loads(Path(a.video).read_text()).get("meta", {}).get("style")
+        if not style:
+            style = "press"          # one film, one style: never fall through to rendering every style
+            print("没有写 meta.style，用 press 财经刊渲染（换风格：--style <id>，见 references/styles.md）")
+        cmd += ["--styles", style]
+    if a.aspect:
+        cmd += ["--aspect", a.aspect]
+    if a.preview:
+        cmd.append("--preview")
+    if a.force:
+        cmd.append("--force")
+    raise_code(subprocess.run(cmd).returncode)
+
+
 PASS = {"brief": "brief.py", "stills": "stills.py", "sample": "sample.py", "montage": "montage.py",
         "review": "review.py", "refs": "ref_board.py", "style": "style_kit.py"}
 
@@ -226,10 +268,18 @@ def main():
     q = sp.add_parser("quick"); q.add_argument("text"); q.add_argument("--aspect", default="16:9"); q.add_argument("--style", default="reel")
     q.add_argument("--voice"); q.add_argument("--out"); q.set_defaults(fn=quick)
     p = sp.add_parser("plan"); p.add_argument("text"); p.add_argument("--aspect", default="16:9"); p.add_argument("--out", required=True); p.set_defaults(fn=cmd_plan)
-    for c in ("build", "render"):
-        x = sp.add_parser(c); x.add_argument("video"); x.add_argument("--style"); x.add_argument("--aspect"); x.add_argument("--preview", action="store_true")
-        x.set_defaults(fn=lambda a, c=c: subprocess.run([PY, str(HERE / f"{c}.py"), a.video] + (["--style" if c == "build" else "--styles", a.style] if a.style else [])
-                                                        + (["--aspect", a.aspect] if a.aspect else []) + (["--preview"] if c == "render" and a.preview else [])))
+    x = sp.add_parser("build")
+    x.add_argument("video")
+    x.add_argument("--style")
+    x.add_argument("--aspect")
+    x.set_defaults(fn=cmd_build)
+    x = sp.add_parser("render", help="渲染（自动关卡：先 brief check，P0 不渲染；渲完出静帧板 + 自动检查，有 P0 退出码 1）")
+    x.add_argument("video")
+    x.add_argument("--style")
+    x.add_argument("--aspect")
+    x.add_argument("--preview", action="store_true")
+    x.add_argument("--force", action="store_true", help="brief check 有 P0 也先渲染出来看")
+    x.set_defaults(fn=cmd_render)
     f = sp.add_parser("fx"); f.add_argument("name", nargs="?"); f.set_defaults(fn=fx)
     sp.add_parser("styles").set_defaults(fn=styles)
     gates = [("brief", "关卡 1：需求单 new / 分镜检查 check（见 scripts/brief.py）"),
