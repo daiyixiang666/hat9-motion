@@ -71,6 +71,10 @@ CORNERS = ("top-right", "top-left", "bottom-right", "bottom-left")
 ALPHA_EXT = (".webm", ".png", ".gif", ".webp")
 # effects built to sit on / beside a subject: they may stay on a full-frame speaker
 ON_PERSON = ("lower3", "callout", "key_card", "side_stat", "stack_build", "strike_fix", "chip_cycle", "talking_head", "host_point")
+# on real full-frame footage only these stay on the person (they sit at the edge, beside the speaker)
+ON_FOOTAGE = ("lower3", "callout", "host_point", "talking_head")
+# words drawn straight on the dimmed footage with no card of their own: switch them to light text
+BARE_ON_PERSON = ("lower3", "side_stat", "stack_build", "strike_fix")
 FRAMED = ("card", "side", "corner", "pip", "bubble")
 MOVE = 0.65            # seconds a move takes; it straddles the beat boundary
 LEAD = 0.3             # how long before the boundary the move starts
@@ -108,7 +112,7 @@ CSS = """
 """
 
 # light text on a full-frame speaker when a graphic was forced over the footage
-LIGHT_VARS = "--fg:#ffffff; --card-fg:#ffffff; --muted:rgba(255,255,255,.84); text-shadow:0 2px 16px rgba(0,0,0,.55);"
+LIGHT_VARS = "--fg:#ffffff; --muted:rgba(255,255,255,.84); text-shadow:0 2px 16px rgba(0,0,0,.55);"
 
 
 def skin_for(style):
@@ -157,15 +161,20 @@ def place_of(beat, current):
     return p.get("at", current), p
 
 
-def needs_area(beat):
-    """True when the beat's graphic needs its own page (it must not be drawn over a speaker's face)."""
+def needs_area(beat, footage=False):
+    """True when the beat's graphic needs its own page (it must not be drawn over a speaker's face).
+    footage=True (real video filling the frame): only the effects that truly sit beside a person stay on it;
+    the side/stack/card layouts were drawn for a cut-out host and would land on the face."""
     scene = beat.get("scene", "fx")
     if scene != "fx":
         return True
     name = beat.get("fx")
     if not name:
         return False
-    return name not in ON_PERSON
+    allowed = ON_PERSON
+    if footage:
+        allowed = ON_FOOTAGE
+    return name not in allowed
 
 
 def effective_places(video, portrait=True):
@@ -544,6 +553,8 @@ class Layers:
                         opts = self.merged_opts(place, form_place, {})
                 elif b.get("fx"):
                     overlay = 0.6
+                    if b.get("fx") in BARE_ON_PERSON:
+                        light = True          # its words sit straight on the dimmed footage: white text, not the paper colour
             beat_kind = kind
             if self.chs:
                 beat_kind = self.chs["list"][self.chs["of_beat"][i]]["device"]
@@ -614,10 +625,15 @@ class Layers:
         if self.chs:
             ch = self.chs["list"][self.chs["of_beat"][i]]
             vars_css = device.world_vars(ch["world"]) + ";"
+        light_attr = ""
         if self.light[i]:
             vars_css = vars_css + " " + LIGHT_VARS
+            light_attr = " data-light"
+            # effects set their own colour variables on inner roots; on dimmed footage the words must still be light
+            X.css("pz-light", ".pz-reg[data-light] .fx, .pz-reg[data-light] .fx * { --fg:#ffffff !important; --muted:rgba(255,255,255,.86) !important; }"
+                              " .pz-reg[data-light] .fx { text-shadow:0 2px 14px rgba(0,0,0,.6); }")
         place = self.places[i]
-        X.els.insert(self._n0, f'<div class="pz-reg pz-at-{place} {orient}" data-beat="{i}" style="position:absolute; z-index:3; container-type:size; {box} {vars_css}">')
+        X.els.insert(self._n0, f'<div class="pz-reg pz-at-{place} {orient}" data-beat="{i}"{light_attr} style="position:absolute; z-index:3; container-type:size; {box} {vars_css}">')
         X.els.append("</div>")
 
     def owns_transition(self, beat):
