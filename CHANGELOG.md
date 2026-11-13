@@ -1,5 +1,27 @@
 # 更新记录
 
+## 0.17.0 · 2026-11-12
+- 14 种风格重做画面：`atlas` `chrome3d` `doc` `flat` `ink` `iso3d` `minimal` `press` `papercut` `pixel` `poster` `screen` `sketch` `zine`，各自的示例片和预览重新渲染，说明见 `references/styles.md`。
+- 新效果 15 个：物理 `drop_stack` `pour_fill` `topple` `magnet_sort` · 镜头 `dolly_layers` `rack_focus` `orbit_number` · 字效 `word_mosaic` `type_mask` `weight_breath` `unroll` · 数据 `zoom_scale` `small_multiples` · 质感 `ink_reveal` `stamp_press`；示例 `examples/fx2/`，每个都有配方卡。
+- 新转场 4 种：`whip_carry` 甩镜带物、`shape_match` 形状匹配、`paper_tear` 撕纸、`paint_wipe` 三笔刷屏，写法同其他转场 `"tr": "paint_wipe"`。
+- `bar_race` 改进：竖屏条形用满版面，期数章铺到底边；口播说到某一期时那一期就开始。
+- 不出主持人的风格（如 `poster` `flat` `ink` `minimal` `pixel`）真的不放主持人，`host: true` 和落版也不放；要放写 `"host": "force"`，或用 `meta.mascot_mode` 整片指定。
+- 字幕：beat 写 `caption_pos: {"bottom", "align"}` 指定这一句字幕的位置；风格可用 `"caption_plate": False` 关掉真人画面上的默认深色底板。
+- `key_card` `side_stat` `stack_build` `chip_cycle` 等贴人版式没写 `theme` 时画在风格自己的底色上（之前在深色风格里大字会看不见）。
+- 找不到登记的字体时，`doctor`、`style check`、`render` 会写明缺哪款字体、怎么补（`H9_MEDIA` / `H9_FONT_DIRS`）；三维字缺字体时报错说明缺哪个文件。
+- 检查更准：字幕对比度按字幕实际所在的位置取样；场景自带的 `at_big` / `at_title` 对时不再误报「大字和口播对不上」；整片一个布景的风格（`atlas` `chrome3d` `iso3d` 等）镜头飞到下一站算一次切换，它们和实拍为主的 `doc` 不再报「相邻版式重复」；字号检查只看当前画幅的规则；`brief check` 认识新效果和各风格自己的场景。
+- `stills --settled` 多出一张每个 beat 结束前 0.35 秒的静帧板；`style publish` 渲染时带检查关。
+- 竖屏字幕不再压在平台的标题 / 音乐 / 评论栏下：各风格 9:16 的字幕都挪到底部 400 px 以上（`atlas` `doc` `flat` `ink` `iso3d` `minimal` `papercut` `poster` `screen` `sketch` `zine` `studio` `clay`），压在底部的来源行也挪到安全线上方，需要时把画面内容往上让；横屏不变。
+- 新检查 `caption-safe`（P0）：按字幕在成片里的真实位置，查 9:16 每页字幕（含动效页上的字幕）是否进了底部 400 px、顶部 200 px 或右下按钮区；`style check`、`brief check`、`render` 前的检查和 `stress.py` 都会跑。
+- 不出主持人的风格、以及自己给主持人画框的风格（`screen` 的视频通话小窗），动效页也不再贴主持人小贴纸。
+- `doc` `minimal` `screen` `pixel` `press` 竖屏重新排版，所有要读的字都在安全区内；`press` 长输入不再溢出、来源跟着版式走，并新增 1:1 和 3:4 版式；从 `press` 派生的风格默认字幕也在安全区内。
+- `style check` 新增安全区扫描：示例片每个 beat 取两帧，页面上要读的字进了平台界面区就算错误（页眉、页码等家具写进 `STYLE["safe_exempt"]` 即可）。动效页的页脚和来源也收进安全区。
+- 对比场景 `compare` 竖屏不再让标签压在顶部小标签下面，贴纸避开右下按钮区。
+- 竖屏示例片里要读的字全部回到安全区内：`chrome3d` 页眉下移、`sketch` `papercut` `zine` 的大数字和图表让出右下按钮区、`pixel` 日期下移、`atlas` 航线标注只在本段出现、动效页的页脚换成两行。
+- `render`：构建检查有错误的风格不再悄悄跳过，会写明原因并以非 0 退出（`--force` 照样渲染）。
+- 修正：数字格式化把 1200000 写成「1,200,」、把整数末尾的 0 去掉的问题。
+- `clay` 强调色从 `#c2643f` 调深到 `#ad5632`，在陶土底上的对比度达到 3:1。
+
 ## 0.16.1 · 2026-11-11
 - 修正：`lower3`、`side_stat`、`stack_build`、`strike_fix` 叠在全屏真人画面上时，字原来跟着风格用深色，画面一压暗就看不清；现在这一镜的字自动换成浅色加阴影。排版位置不变，带白卡片的效果（如 `key_card`）不受影响。
 

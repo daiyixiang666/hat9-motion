@@ -21,7 +21,7 @@ def cut(X, prev, nxt, t, kind=None):
     the new one decelerates in (power4.out) from the same direction, both blurred at the seam."""
     kind = kind or X.M.get("cut", "hard")
     if kind == "hard" or not prev: return
-    if kind in ("dip", "flash", "wipe", "bars", "leak", "paper", "ink", "glitch", "iris", "shutter", "burn"):
+    if kind in ("dip", "flash", "wipe", "bars", "leak", "paper", "ink", "glitch", "iris", "shutter", "burn") or kind in TR2:
         return transition(X, t, kind)
     a = 0.16
     if kind == "slide":
@@ -47,9 +47,26 @@ def cut(X, prev, nxt, t, kind=None):
     X.sfx(t - 0.05, "cut")
 
 
+TR2 = ("whip_carry", "shape_match", "paper_tear", "paint_wipe")     # drawn by scripts/h9/fx/fx2_transitions.py
+
+
+def _tr2(kind):
+    """the fx2 transition function for `kind` (the module is loaded with the effect library; loaded here if not yet)."""
+    import importlib.util, pathlib, sys
+    m = sys.modules.get("h9fx_fx2_transitions")
+    if m is None:
+        spec = importlib.util.spec_from_file_location("h9fx_fx2_transitions", pathlib.Path(__file__).with_name("fx") / "fx2_transitions.py")
+        m = importlib.util.module_from_spec(spec)
+        sys.modules["h9fx_fx2_transitions"] = m
+        spec.loader.exec_module(m)
+    return m.TRS[kind]
+
+
 def transition(X, t, kind=None):
     kind = kind or X.M["transition"]
     if not kind or kind in ("cut", "hard"): return
+    if kind in TR2:          # whip_carry also moves the two scenes it joins; the others are overlays like the ones below
+        return _tr2(kind)(X, t)
     cid = X.uid("tr")
     a, b = t - 0.32, 0.7          # clip window around the cut
     X.sfx(t - 0.25 if kind not in ("flash", "glitch") else t, "transition")

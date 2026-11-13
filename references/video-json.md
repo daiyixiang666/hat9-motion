@@ -10,6 +10,7 @@
     "voice": "assets/audio/voice.mp3",
     "words": "assets/audio/words.json",   // 逐字/逐词时间戳 [{w,s,e}]；有它才能写 "@关键词"
     "mascot": "assets/host.webm",  // 透明底的会说话主持人形象（webm，带 alpha）
+    "mascot_mode": "cameo",          // 可选：corner 常驻 | cameo 点名出场 | off 不出；不写按风格（有的风格不出主持人）
     "music": "assets/audio/bgm.mp3", "music_volume": 0.12,   // 可选
     "caption_mode": "reading",       // reading（横屏默认）| punch（竖屏默认）
     "caption_hl": ["判断", "不能要"],  // 字幕里允许高亮的词（每页最多 1 个，全片 ≤15%）
@@ -32,9 +33,10 @@
 
 | 字段 | 作用 |
 |---|---|
-| `host: true` | cameo 模式的风格里，主持人在这一句出场（说观点、提问、恍然）。建议每 20–40 秒一次 |
+| `host: true` | cameo 模式的风格里，主持人在这一句出场（说观点、提问、恍然）。建议每 20–40 秒一次；不出主持人的风格（`poster` `flat` `ink` `minimal` `pixel` 等）里不出，确实要就写 `"host": "force"` |
+| `caption_pos: {"bottom": 300, "align": "left"}` | 这一句的字幕放到离底边 300 px 处、左对齐（`left` / `center` / `right`），压过风格自己的字幕位置 |
 | `chapter: true` | 这里换章节：用风格的招牌转场；否则是句间剪辑（多为硬切） |
-| `tr: "flash"` | 强制指定这一刀的转场 / 剪辑 |
+| `tr: "flash"` | 强制指定这一刀的转场 / 剪辑（新的四种：`whip_carry` 甩镜带物、`shape_match` 形状匹配、`paper_tear` 撕纸、`paint_wipe` 三笔刷屏） |
 | `marks: [...]` | 指哪说哪：在画面元素上画圈、下划线、箭头、方框、删除线、荧光笔，见下 |
 
 ```json

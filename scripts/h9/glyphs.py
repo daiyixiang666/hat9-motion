@@ -9,6 +9,9 @@ from pathlib import Path
 def outlines(font_path, text, axes=None):
     from fontTools.ttLib import TTFont
     from fontTools.pens.recordingPen import DecomposingRecordingPen
+    if not font_path or not Path(str(font_path)).exists():     # fonts.find() gave None: say which file and how to fix it
+        from h9 import fonts
+        fonts.need(None if not font_path else Path(str(font_path)).name)
     f = TTFont(str(font_path))
     if axes and "fvar" in f:
         from fontTools.varLib import instancer

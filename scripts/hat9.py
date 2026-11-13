@@ -43,7 +43,24 @@ def doctor(_):
         r = sh(HF + ["--version"]); line(f"HyperFrames {r.stdout.strip()[:20]}", r.returncode == 0, "首次会自动下载；检查网络后重试")
     from h9 import fonts
     miss = [k for k in ("noto-sans-sc", "noto-serif-sc", "inter", "jetbrains-mono") if not fonts.find(fonts.REG[k]["file"])]
-    line("核心字体（思源黑体 / 思源宋体 / Inter / JetBrains Mono）", not miss, f"缺 {', '.join(miss)}：放进 assets/fonts/，地址见 assets/fonts.json")
+    line("核心字体（思源黑体 / 思源宋体 / Inter / JetBrains Mono）", not miss, f"缺 {', '.join(miss)}：{fonts.HOW}，地址见 assets/fonts.json")
+    # every style's registered fonts: a missing one silently falls back to a system face, so name it here
+    from h9 import derive
+    by_font = {}
+    for p in sorted((SKILL / "styles").glob("[!_]*.py")):
+        try:
+            st = derive.load_base(p.stem).STYLE
+        except Exception:
+            continue
+        for fid, fname, _url in fonts.missing(st):
+            by_font.setdefault((fid, fname), []).append(p.stem)
+    if by_font:
+        print(f"  ! 风格字体缺 {len(by_font)} 款（不报错，但这些风格会退回系统字体；chrome3d / iso3d / studio / clay 的三维字缺了构建不了）：")
+        for (fid, fname), sids in sorted(by_font.items()):
+            print(f"      {fid}（{fname}）← {', '.join(sids)}")
+        print(f"    修复：{fonts.HOW}")
+    else:
+        print("  ✓ 所有风格的字体都找得到")
     # recommended: the caption gate and word timings depend on these two
     missing = []
     for mod, pkg, why in (("jieba", "jieba", "中文分词：字幕按词断页，渲染关卡用它查「切在词中间」的字幕"),

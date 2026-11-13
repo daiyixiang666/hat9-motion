@@ -5,9 +5,9 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看成片](#成片示例) · [🎛 在线看全部 174 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看成片](#成片示例) · [🎛 在线看全部 193 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.13.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.17.0-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -23,7 +23,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 |---|---|
 | **18 种风格** | `press` 财经刊 · `minimal` 极简讲述 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `studio` / `clay` 三维影棚 · `reel` 动效库 |
 | **60 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
-| **174 个动效** | 162 个效果 + 12 种转场：字效、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
+| **193 个动效** | 177 个效果 + 16 种转场：字效、物理、镜头、质感、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
 | **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
 | **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
@@ -41,19 +41,19 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | 横屏 16:9 | 竖屏 9:16 | 题材 · 风格 |
 |---|---|---|
 | <a href="assets/previews/mixue_16x9.mp4"><img src="assets/previews/mixue_16x9.jpg" width="420" alt="一杯 4 块钱的柠檬水 横屏"></a> | <a href="assets/previews/mixue_9x16.mp4"><img src="assets/previews/mixue_9x16.jpg" width="120" alt="一杯 4 块钱的柠檬水 竖屏"></a> | **《一杯 4 块钱的柠檬水》**<br>`press` 财经刊：大字 + 色块，点阵对比、收入构成条一路推进到 2.5%、钱货两条线、飞轮。<br><sub>蜜雪集团 2024 年度业绩公告 · McDonald's 2024 10-K</sub> |
-| <a href="assets/previews/screen_16x9.mp4"><img src="assets/previews/screen_16x9.jpg" width="420" alt="8 亿人在用，5% 在付钱 横屏"></a> | <a href="assets/previews/screen_9x16.mp4"><img src="assets/previews/screen_9x16.jpg" width="120" alt="8 亿人在用，5% 在付钱 竖屏"></a> | **《8 亿人在用，5% 在付钱》**<br>`screen` AI 工具台：深色产品界面，仪表盘、实时日志计数、定价卡、预测图、⌘K 命令面板，光标真的在点。<br><sub>OpenAI DevDay 2025 · The Information（路透未能核实，画面已标注）· ChatGPT 官方定价</sub> |
-| <a href="assets/previews/atlas_16x9.mp4"><img src="assets/previews/atlas_16x9.jpg" width="420" alt="货船为什么不走苏伊士了 横屏"></a> | <a href="assets/previews/atlas_9x16.mp4"><img src="assets/previews/atlas_9x16.jpg" width="120" alt="货船为什么不走苏伊士了 竖屏"></a> | **《货船为什么不走苏伊士了》**<br>`atlas` 地图纪录：一张连续的世界地图，镜头推拉，航线实时绘制、船在走，危险区、运河、运价折线叠在地图上。<br><sub>苏伊士运河管理局 · 世界银行 · Drewry WCI · WEF</sub> |
-| <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" width="420" alt="一个铁箱子 横屏"></a> | <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" width="120" alt="一个铁箱子 竖屏"></a> | **《一个铁箱子》**<br>`doc` 实拍纪录：2.39 遮幅 + 调色 + 颗粒，1956 档案片接现代港口实拍，年份计数器、数据卡贴在画面上。<br><sub>Levinson《The Box》· 上港集团 2024 快报 · UNCTAD</sub> |
-| <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" width="420" alt="专注，就是学会说不 横屏"></a> | <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" width="120" alt="专注，就是学会说不 竖屏"></a> | **《专注，就是学会说不》**<br>`poster` 瑞士海报：12 栏网格随每句话重排，黑白 + 一个信号蓝，100 格答案矩阵、24 张图扔到只剩 1 张。<br><sub>Steve Jobs，WWDC 1997 收尾问答</sub> |
-| <a href="assets/previews/papercut_16x9.mp4"><img src="assets/previews/papercut_16x9.jpg" width="420" alt="过年看电影，钱押给最好的那一部 横屏"></a> | <a href="assets/previews/papercut_9x16.mp4"><img src="assets/previews/papercut_9x16.jpg" width="120" alt="过年看电影，钱押给最好的那一部 竖屏"></a> | **《过年看电影，钱押给最好的那一部》**<br>`papercut` 剪纸：中国红纸张层层叠，电影票、日历、窗花、灯笼，纸页翻折推入，镜头带纵深视差。<br><sub>国家电影局（新华网 2025-02-05）</sub> |
-| <a href="assets/previews/sketch_16x9.mp4"><img src="assets/previews/sketch_16x9.jpg" width="420" alt="Costco 真正卖的是什么 横屏"></a> | <a href="assets/previews/sketch_9x16.mp4"><img src="assets/previews/sketch_9x16.jpg" width="120" alt="Costco 真正卖的是什么 竖屏"></a> | **《Costco 真正卖的是什么》**<br>`sketch` 手绘白板：方格纸上马克笔一笔一笔画出购物车、会员卡、箭头和圈，红笔跟着笔画走，镜头跟笔。<br><sub>Costco 2024 财年年报（Form 10-K）</sub> |
-| <a href="assets/previews/ink_16x9.mp4"><img src="assets/previews/ink_16x9.jpg" width="420" alt="一只猴子，三天卖出一千万套 横屏"></a> | <a href="assets/previews/ink_9x16.mp4"><img src="assets/previews/ink_9x16.jpg" width="120" alt="一只猴子，三天卖出一千万套 竖屏"></a> | **《一只猴子，三天卖出一千万套》**<br>`ink` 水墨国风：宣纸远山，书法字一笔一笔写出来，墨点人群、挂轴、手卷、对联和印章，墨滴晕开转场。<br><sub>游戏科学官方公告 · VG Insights 估算 · 澎湃新闻 · 界面新闻</sub> |
-| <a href="assets/previews/zine_16x9.mp4"><img src="assets/previews/zine_16x9.jpg" width="420" alt="一只怪兽，一年卖了一百四十多亿 横屏"></a> | <a href="assets/previews/zine_9x16.mp4"><img src="assets/previews/zine_9x16.jpg" width="120" alt="一只怪兽，一年卖了一百四十多亿 竖屏"></a> | **《一只怪兽，一年卖了一百四十多亿》**<br>`zine` 拼贴杂志：每个字是一块剪报，粉青黑孔版印刷，胶带、邮票、邮戳、马克笔，逐两帧定格，撕纸换页。<br><sub>泡泡玛特 2024 / 2025 年度业绩公告 · 观察者网</sub> |
-| <a href="assets/previews/flat_16x9.mp4"><img src="assets/previews/flat_16x9.jpg" width="420" alt="一份外卖背后的城市网络 横屏"></a> | <a href="assets/previews/flat_9x16.mp4"><img src="assets/previews/flat_9x16.jpg" width="120" alt="一份外卖背后的城市网络 竖屏"></a> | **《一份外卖背后的城市网络》**<br>`flat` 扁平插画：夜色城市、骑手人群、跑道、硬币和钱包，挤压回弹、分层视差、色盘转场。<br><sub>商务部研究院《即时零售行业发展报告（2025）》· 美团 2024 社会责任报告 · 王兴内部信</sub> |
-| <a href="assets/previews/pixel_16x9.mp4"><img src="assets/previews/pixel_16x9.jpg" width="420" alt="三千二百亿的游戏账本 横屏"></a> | <a href="assets/previews/pixel_9x16.mp4"><img src="assets/previews/pixel_9x16.jpg" width="120" alt="三千二百亿的游戏账本 竖屏"></a> | **《三千二百亿的游戏账本》**<br>`pixel` 像素复古：? 砖块顶出 HI-SCORE、宝箱、像素世界地图、像素人群、经验条 LEVEL UP、RPG 对话框，方块溶解转场、芯片音效。<br><sub>《2024年中国游戏产业报告》· 国家统计局</sub> |
-| <a href="assets/previews/iso3d_16x9.mp4"><img src="assets/previews/iso3d_16x9.jpg" width="420" alt="快递的规模账 横屏"></a> | <a href="assets/previews/iso3d_9x16.mp4"><img src="assets/previews/iso3d_9x16.jpg" width="120" alt="快递的规模账 竖屏"></a> | **《快递的规模账》**<br>`iso3d` 等距微缩：一个连续的三维微缩世界，包裹堆成山、城市长出来、柱子升起，镜头跟着包裹走完五站。<br><sub>国家邮政局 2014、2015、2020—2024 年邮政行业发展统计公报</sub> |
-| <a href="assets/previews/chrome3d_16x9.mp4"><img src="assets/previews/chrome3d_16x9.jpg" width="420" alt="英伟达：卖铲子的人 横屏"></a> | <a href="assets/previews/chrome3d_9x16.mp4"><img src="assets/previews/chrome3d_9x16.jpg" width="120" alt="英伟达：卖铲子的人 竖屏"></a> | **《英伟达：卖铲子的人》**<br>`chrome3d` Y2K 镀铬：镀铬立体数字和芯片、霓虹粉光环，在环形门隧道里穿梭换场，$5T、CUDA 上才闪一下。<br><sub>NVIDIA 历年财报（8-K）· Reuters · GTC 2025</sub> |
-| <a href="assets/previews/minimal_16x9.mp4"><img src="assets/previews/minimal_16x9.jpg" width="420" alt="棉花糖实验，测的真是自控力吗 横屏"></a> | <a href="assets/previews/minimal_9x16.mp4"><img src="assets/previews/minimal_9x16.jpg" width="120" alt="棉花糖实验，测的真是自控力吗 竖屏"></a> | **《棉花糖实验，测的真是自控力吗》**<br>`minimal` 极简讲述：暖白纸上的剪影插画，一条细蓝线贯穿全片，变成地平线、钟面、坐标轴和柱子轮廓，斜体衬线只给一个重音词。<br><sub>Mischel 等 1972 · Shoda 等 1990 · Kidd 等 2013 · Watts 等 2018</sub> |
+| <a href="assets/previews/screen_16x9.mp4"><img src="assets/previews/screen_16x9.jpg" width="420" alt="8 亿人在用，5% 在付钱 横屏"></a> | <a href="assets/previews/screen_9x16.mp4"><img src="assets/previews/screen_9x16.jpg" width="120" alt="8 亿人在用，5% 在付钱 竖屏"></a> | **《8 亿人在用，5% 在付钱》**<br>`screen` AI 工具台：暖白桌面上的粗线窗口和 Dock，仪表盘、实时日志计数、定价卡、预测图、⌘K 命令面板，光标真的在点，字幕是一条系统通知。<br><sub>OpenAI DevDay 2025 · The Information（路透未能核实，画面已标注）· ChatGPT 官方定价</sub> |
+| <a href="assets/previews/atlas_16x9.mp4"><img src="assets/previews/atlas_16x9.jpg" width="420" alt="货船为什么不走苏伊士了 横屏"></a> | <a href="assets/previews/atlas_9x16.mp4"><img src="assets/previews/atlas_9x16.jpg" width="120" alt="货船为什么不走苏伊士了 竖屏"></a> | **《货船为什么不走苏伊士了》**<br>`atlas` 地图纪录：深蓝海面、纸色陆地的一张连续世界地图，带图框刻度和定位小图；镜头推拉，航线实时绘制、船在走，危险区、运河、运价折线叠在地图上。<br><sub>苏伊士运河管理局 · 世界银行 · Drewry WCI · WEF</sub> |
+| <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" width="420" alt="一个铁箱子 横屏"></a> | <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" width="120" alt="一个铁箱子 竖屏"></a> | **《一个铁箱子》**<br>`doc` 实拍纪录：2.39 遮幅 + 调色 + 颗粒，1956 档案片接现代港口实拍，年份计数器、衬线数据卡贴在画面上，字幕是遮幅里的白色衬线斜体。<br><sub>Levinson《The Box》· 上港集团 2024 快报 · UNCTAD</sub> |
+| <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" width="420" alt="专注，就是学会说不 横屏"></a> | <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" width="120" alt="专注，就是学会说不 竖屏"></a> | **《专注，就是学会说不》**<br>`poster` 瑞士海报：五种网格版式轮流用，超窄巨型数字贴边出血，黑白 + 一个信号蓝，100 格答案矩阵、24 张图扔到只剩 1 张。<br><sub>Steve Jobs，WWDC 1997 收尾问答</sub> |
+| <a href="assets/previews/papercut_16x9.mp4"><img src="assets/previews/papercut_16x9.jpg" width="420" alt="过年看电影，钱押给最好的那一部 横屏"></a> | <a href="assets/previews/papercut_9x16.mp4"><img src="assets/previews/papercut_9x16.jpg" width="120" alt="过年看电影，钱押给最好的那一部 竖屏"></a> | **《过年看电影，钱押给最好的那一部》**<br>`papercut` 剪纸：朱砂红、金箔、靛蓝纸层层叠成纸景，电影票、撕日历、窗花、纸台阶，镂空透金的大字，纸页翻折盖住上一页，镜头带纵深视差。<br><sub>国家电影局（新华网 2025-02-05）</sub> |
+| <a href="assets/previews/sketch_16x9.mp4"><img src="assets/previews/sketch_16x9.jpg" width="420" alt="Costco 真正卖的是什么 横屏"></a> | <a href="assets/previews/sketch_9x16.mp4"><img src="assets/previews/sketch_9x16.jpg" width="120" alt="Costco 真正卖的是什么 竖屏"></a> | **《Costco 真正卖的是什么》**<br>`sketch` 手绘白板：牛皮纸上黑马克笔和白油漆笔一笔一笔画出价签、会员卡、箭头和圈，红笔圈重点，镜头跟笔，画完的图缩到底部标尺上越攒越满。<br><sub>Costco 2024 财年年报（Form 10-K）</sub> |
+| <a href="assets/previews/ink_16x9.mp4"><img src="assets/previews/ink_16x9.jpg" width="420" alt="一只猴子，三天卖出一千万套 横屏"></a> | <a href="assets/previews/ink_9x16.mp4"><img src="assets/previews/ink_9x16.jpg" width="120" alt="一只猴子，三天卖出一千万套 竖屏"></a> | **《一只猴子，三天卖出一千万套》**<br>`ink` 水墨国风：宣纸、层叠远山、大面积留白，书法字一笔一笔写出来，墨点人群、立轴、手卷、对联，数字刻进朱红印块，墨滴晕开转场。<br><sub>游戏科学官方公告 · VG Insights 估算 · 澎湃新闻 · 界面新闻</sub> |
+| <a href="assets/previews/zine_16x9.mp4"><img src="assets/previews/zine_16x9.jpg" width="420" alt="一只怪兽，一年卖了一百四十多亿 横屏"></a> | <a href="assets/previews/zine_9x16.mp4"><img src="assets/previews/zine_9x16.jpg" width="120" alt="一只怪兽，一年卖了一百四十多亿 竖屏"></a> | **《一只怪兽，一年卖了一百四十多亿》**<br>`zine` 拼贴杂志：复印纸上每个字是一块剪报，荧光粉、孔雀绿、墨黑孔版色纸轮换，胶带、邮票、邮戳、条码价签，逐两帧定格，撕纸换页。<br><sub>泡泡玛特 2024 / 2025 年度业绩公告 · 观察者网</sub> |
+| <a href="assets/previews/flat_16x9.mp4"><img src="assets/previews/flat_16x9.jpg" width="420" alt="一份外卖背后的城市网络 横屏"></a> | <a href="assets/previews/flat_9x16.mp4"><img src="assets/previews/flat_9x16.jpg" width="120" alt="一份外卖背后的城市网络 竖屏"></a> | **《一份外卖背后的城市网络》**<br>`flat` 扁平插画：严格五色的招贴画，几何造型和 45° 长投影，夜色城市、骑手、人群、钱包，数字就是画里的月亮和招牌，色盘转场。<br><sub>商务部研究院《即时零售行业发展报告（2025）》· 美团 2024 社会责任报告 · 王兴内部信</sub> |
+| <a href="assets/previews/pixel_16x9.mp4"><img src="assets/previews/pixel_16x9.jpg" width="420" alt="三千二百亿的游戏账本 横屏"></a> | <a href="assets/previews/pixel_9x16.mp4"><img src="assets/previews/pixel_9x16.jpg" width="120" alt="三千二百亿的游戏账本 竖屏"></a> | **《三千二百亿的游戏账本》**<br>`pixel` 像素复古：16 色调色板、整像素移动，? 砖块顶出销量、宝箱、像素世界地图、像素人群、经验条 LEVEL UP、RPG 对话框，芯片音效。<br><sub>《2024年中国游戏产业报告》· 国家统计局</sub> |
+| <a href="assets/previews/iso3d_16x9.mp4"><img src="assets/previews/iso3d_16x9.jpg" width="420" alt="快递的规模账 横屏"></a> | <a href="assets/previews/iso3d_9x16.mp4"><img src="assets/previews/iso3d_9x16.jpg" width="120" alt="快递的规模账 竖屏"></a> | **《快递的规模账》**<br>`iso3d` 等距微缩：马卡龙色漂浮小岛连成一个三维微缩世界，包裹堆成山、城市长出来、柱子升起，镜头跟着包裹走完五站。<br><sub>国家邮政局 2014、2015、2020—2024 年邮政行业发展统计公报</sub> |
+| <a href="assets/previews/chrome3d_16x9.mp4"><img src="assets/previews/chrome3d_16x9.jpg" width="420" alt="英伟达：卖铲子的人 横屏"></a> | <a href="assets/previews/chrome3d_9x16.mp4"><img src="assets/previews/chrome3d_9x16.jpg" width="120" alt="英伟达：卖铲子的人 竖屏"></a> | **《英伟达：卖铲子的人》**<br>`chrome3d` Y2K 镀铬：天空、橙色地平线和深紫镜面地板，镀铬立体数字和芯片带倒影，穿过环形门换站，$5T、CUDA 上才闪一下。<br><sub>NVIDIA 历年财报（8-K）· Reuters · GTC 2025</sub> |
+| <a href="assets/previews/minimal_16x9.mp4"><img src="assets/previews/minimal_16x9.jpg" width="420" alt="棉花糖实验，测的真是自控力吗 横屏"></a> | <a href="assets/previews/minimal_9x16.mp4"><img src="assets/previews/minimal_9x16.jpg" width="120" alt="棉花糖实验，测的真是自控力吗 竖屏"></a> | **《棉花糖实验，测的真是自控力吗》**<br>`minimal` 极简讲述：冷调浅底上的剪影插画，一条钴蓝细线贯穿全片，变成地平线、钟面、坐标轴和柱子轮廓，斜体衬线只给一个重音词。<br><sub>Mischel 等 1972 · Shoda 等 1990 · Kidd 等 2013 · Watts 等 2018</sub> |
 
 每条片子就是一份 `video.json`（每句一个场景）加配音，源文件在 [`examples/`](examples/)。
 
@@ -181,7 +181,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
 | 配音 | 系统语音 / 本地 TTS / 静音按字数估时 | 你自己的录音（推荐） |
-| 画面 | 174 个代码动效（162 效果 + 12 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
+| 画面 | 193 个代码动效（177 效果 + 16 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
 | 字体 | 思源黑体 / 宋体、得意黑、霞鹜文楷等 OFL 字体 | — |
@@ -246,6 +246,7 @@ examples/           mixue · screen · atlas · doc · poster（5 条成片）·
 
 ## 更新
 
+- **0.17.0** 14 种风格重做画面；新增 15 个效果（物理、镜头、字效、数据、质感）和 4 种转场；竖屏字幕全部避开平台界面并自动检查；不出主持人的风格真的不出；字幕位置可按句指定；缺字体时明确提示。
 - **0.16.1** 字直接叠在真人画面上的排版保留不动，字自动换成浅色加阴影，压暗的画面上也读得清。
 - **0.16.0** 弱一点的模型也能出好片：字幕整句不切词、动效自动对准口播、真人口播不被字压脸、5 种出镜形式可选、渲染前后自动检查。
 - **0.15.1** 第一步先定谁来口播：首选用户自己出镜的口播视频；剪口误时画面和声音一起剪，口型不错位。

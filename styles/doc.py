@@ -28,16 +28,29 @@ STYLE = {
     "tokens": {
         "bg": "#050505", "fg": "#f4efe6", "muted": "rgba(244,239,230,.62)", "accent": "#f0a640", "accent2": "#f0a640", "alert": "#f0a640",
         "line": "rgba(244,239,230,.35)", "paper": "#050505", "ink": "#050505", "card": "#0c0c0c", "card-fg": "#f4efe6",
-        "cap-fg": "#f4efe6", "cap-size": "34px", "cap-weight": "500", "cap-shadow": "0 1px 2px rgba(0,0,0,.6)", "cap-bottom": "46px", "cap-em": "#f0a640",
+        "cap-fg": "#ffffff", "cap-size": "38px", "cap-weight": "500", "cap-shadow": "0 1px 2px rgba(0,0,0,.6)", "cap-bottom": "40px", "cap-em": "#c8a24a",
+        "cap-bg": "none", "cap-pad": "0 12px", "f-cap": "var(--f-serif)",
         "mascot-bg": "#0c0c0c",
     },
     "fonts": {"display": "noto-serif-sc", "serif": "noto-serif-sc", "num": ["playfair", "noto-serif-sc"], "numi": ["playfair-italic", "noto-serif-sc"],
               "body": "noto-sans-sc", "mono": ["ibm-plex-mono", "noto-sans-sc"], "latin": "inter"},
     "motion": {"ease": "expo.out", "dur": 0.6, "stagger": 0.03, "cut": "hard", "transition": "flash", "em": "static", "camera": "none"},
     "caption_mode": "reading",
+    "caption_plate": False,         # the subtitle is designed below (white serif italic in the bottom bar), not the generic footage plate
     "layers": [("letterbox", {"ratio": 2.39}), ("vignette", {"alpha": 0.5, "inner": 48}), ("grain", {"opacity": 0.14, "fps": 24})],
     "mascot": {"mode": "cameo", "frame": "none", "landscape": {"right": 150, "bottom": 140, "h": 380}, "portrait": {"left": 400, "bottom": 610, "h": 290}},
     "outro": {"move": False},
+    # 9:16: every readable element sits in y 200–1504 (the platform's title / music / comment bar covers y > 1520).
+    # Footage from the top edge to y 1062 (slate + year overlaid at y 206–246 on a soft gradient) · data bar y 1062–1504 · bottom 416 px designed
+    # black with grain, hairline and perforations only. The caption is a white serif italic line on the window's lower edge
+    # over a soft dark gradient (caption_plate False keeps the generic dark footage plate off). Host off.
+    "css": """
+.st-doc .cap .cp { font-style:italic; font-weight:500; letter-spacing:.04em; text-shadow:0 1px 2px #000; }
+#root.v.st-doc { --cap-bottom:878px; --cap-em:#ffd84a; }   /* 9:16: on the lower edge of the footage window (window bottom y 1062): caption y ≈ 992–1042 */
+#root.v.st-doc .clip.cap { padding-left:90px; padding-right:90px; }
+#root.v.st-doc .cap .cp { line-height:1.3; letter-spacing:.01em; padding:16px 64px; background:radial-gradient(closest-side, rgba(0,0,0,.5), rgba(0,0,0,0)); }
+.st-doc .mascot { display:none !important; }
+""",
     "sfx": {"transition": ("whoosh_deep", 0.35), "hit": ("hit", 0.32), "count": ("type", 0.25), "line": ("click", 0.25), "lock": ("beep", 0.12),
             "enter": ("whoosh_soft", 0.25), "mascot": ("whoosh_soft", 0.25), "title": ("hit", 0.3)},
 }
@@ -48,7 +61,46 @@ CSS = r"""
 .dm { overflow:hidden; } .dm img { position:absolute; display:block; max-width:none; }
 .dm .bl, .dv.bl { filter:blur(38px) brightness(.42) saturate(.8); }
 .dov { pointer-events:none; }
-#root.v .cap { bottom:auto; top:1330px; padding:0 70px; } #root.v .cap .cp { font-size:44px; text-shadow:0 2px 14px rgba(0,0,0,.85), 0 1px 2px #000; }
+/* 9:16 frame: the bars around the 1:1 window are designed space (#0d0d0c + the film grain layer on top) */
+.d-bars { pointer-events:none; }
+.d-bars .bt, .d-bars .bb { position:absolute; left:0; right:0; background:#0d0d0c; }
+.d-bars .bt { top:0; height:400px; background:linear-gradient(180deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.72) 50%, rgba(0,0,0,.3) 78%, rgba(0,0,0,0) 100%); }
+#root.v .d-slate, #root.v .d-yr { text-shadow:0 1px 3px rgba(0,0,0,.9), 0 0 14px rgba(0,0,0,.6); } .d-bars .bb { top:1062px; bottom:0; }
+.d-bars .hl { position:absolute; left:0; right:0; top:1504px; height:1px; background:rgba(244,239,230,.12); }
+.d-bars .bt::after { display:none; }
+.d-bars .bb::before { content:""; position:absolute; left:0; right:0; height:1px; background:rgba(244,239,230,.16); }
+.d-bars .bt::after { bottom:0; } .d-bars .bb::before { top:0; }
+.d-bars .sp { position:absolute; left:0; right:0; top:1522px; height:14px; background:repeating-linear-gradient(90deg, rgba(244,239,230,.1) 0 22px, transparent 22px 44px); }
+.d-bars .sp.b { top:auto; bottom:22px; }
+/* archive slate, top-left in the top bar */
+.d-slate { position:absolute; left:64px; top:211px; font-family:var(--f-mono); font-size:28px; line-height:1; letter-spacing:.12em; font-variant:small-caps; text-transform:uppercase; color:#e9e2d4; white-space:nowrap; }
+.d-slate i { display:inline-block; width:10px; height:10px; border-radius:50%; background:#c8a24a; margin-right:16px; transform:translateY(-3px); }
+/* bottom-bar data card: gold rule, serif label, serif figure 220–320 px, small-caps unit, source 24 px */
+.d-dc { position:absolute; left:64px; right:64px; top:1082px; height:414px; display:flex; flex-direction:column; align-items:flex-start; }
+.d-dc .src { margin-top:auto !important; max-width:100%; }
+.d-dc .rule { width:120px; height:2px; background:#c8a24a; transform-origin:0 50%; }
+.d-dc .lab { margin-top:12px; font-family:var(--f-serif); font-weight:600; font-size:30px; line-height:1.25; color:#efe8da; letter-spacing:.04em; white-space:nowrap; }
+.d-dc .fig { margin-top:4px; display:flex; align-items:baseline; gap:.06em; font-family:var(--f-num); font-weight:800; line-height:.82; color:#fff; letter-spacing:-.02em; white-space:nowrap; font-variant-numeric:lining-nums; }
+.d-dc .fig .pre { color:#c8a24a; }
+.d-dc .fig .u { font-family:var(--f-serif); font-weight:700; font-variant:small-caps; letter-spacing:.1em; color:#c8a24a; margin-left:.25em; }
+.d-dc .src { margin-top:12px; font-family:var(--f-mono); font-size:24px; line-height:1.3; letter-spacing:.03em; color:rgba(239,232,218,.72); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.d-dc .bar { position:relative; background:rgba(244,239,230,.18); } .d-dc .bar i { position:absolute; inset:0; right:auto; background:#c8a24a; transform-origin:0 50%; }
+.d-dc .src b { font-family:var(--f-body); font-weight:500; color:#efe8da; margin-right:18px; }
+/* bottom-bar running chapter */
+.d-ch { position:absolute; left:64px; right:64px; top:1196px; }
+.d-ch .rule { width:120px; height:2px; background:#c8a24a; transform-origin:0 50%; }
+.d-ch .k { margin-top:16px; font-family:var(--f-mono); font-size:26px; letter-spacing:.24em; color:#c8a24a; white-space:nowrap; }
+.d-ch .t { margin-top:10px; font-family:var(--f-serif); font-weight:900; line-height:1.15; color:#fff; letter-spacing:.06em; white-space:nowrap; }
+.d-ch .m { margin-top:8px; font-family:var(--f-numi); font-style:italic; font-size:34px; color:rgba(239,232,218,.8); }
+/* bottom-bar statement */
+.d-bs { position:absolute; left:64px; right:64px; top:1100px; }
+.d-bs .rule { width:120px; height:2px; background:#c8a24a; margin-bottom:18px; transform-origin:0 50%; }
+.d-bs .l { font-family:var(--f-serif); font-weight:700; line-height:1.28; color:#fff; letter-spacing:.04em; white-space:nowrap; }
+.d-bs .l .c { display:inline-block; }
+.d-cb { top:1236px !important; } .d-bs .l .em .emt { color:#c8a24a; }
+/* grade: one treatment for every clip (lifted blacks, teal shadows, warm highlights) */
+.dv:not(.bl), .dm img:not(.bl) { filter:url(#dgrade); }
+.d-dust { pointer-events:none; } .d-dust svg { position:absolute; left:0; top:0; }
 /* running bug + year counter (inside the top letterbox bar in 16:9) */
 .d-bug { position:absolute; left:96px; right:96px; top:44px; height:52px; display:flex; align-items:center; justify-content:space-between; z-index:60; }
 .d-yr { display:flex; align-items:baseline; gap:16px; }
@@ -57,12 +109,13 @@ CSS = r"""
 .d-yr .col { display:inline-block; height:1em; overflow:hidden; } .d-yr .col span { display:block; height:1em; }
 .d-mark { font-family:var(--f-mono); font-size:18px; letter-spacing:.3em; color:var(--muted); text-transform:uppercase; white-space:nowrap; }
 .d-mark b { color:var(--fg); font-weight:500; font-family:var(--f-body); letter-spacing:.12em; margin-right:14px; }
-#root.v .d-bug { left:60px; right:60px; top:170px; }
+#root.v .d-bug { left:64px; right:64px; top:202px; height:44px; justify-content:flex-end; } #root.v .d-mark { display:none; }
+#root.v .d-yr small { font-size:24px; } #root.v .d-yr .dg { font-size:44px; color:#c8a24a; }
 /* scrims for legibility over footage */
 .d-scrim { position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,.74) 0%, rgba(0,0,0,.42) 42%, rgba(0,0,0,0) 72%); }
 .d-l3s { position:absolute; inset:0; opacity:0; background:linear-gradient(20deg, rgba(0,0,0,.7) 0%, rgba(0,0,0,.25) 35%, rgba(0,0,0,0) 55%); }
 .d-top { display:none; }
-#root.v .d-top { display:block; position:absolute; left:0; right:0; top:0; height:420px; background:linear-gradient(180deg, rgba(0,0,0,.6), rgba(0,0,0,0)); }
+#root.v .d-top { display:none; }
 #root.v .d-l3s { background:linear-gradient(0deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 45%, rgba(0,0,0,0) 62%); }
 .d-scrim.strong { background:linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.6) 50%, rgba(0,0,0,.2) 80%); }
 #root.v .d-scrim.strong { background:linear-gradient(180deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.62) 55%, rgba(0,0,0,.3) 75%, rgba(0,0,0,.5) 100%); }
@@ -92,10 +145,16 @@ CSS = r"""
 .d-l3 .nm span, .d-l3 .la span, .d-l3 .ro span { display:inline-block; }
 .d-l3 .la { margin-top:2px; font-family:var(--f-numi); font-style:italic; font-weight:500; line-height:1.25; color:var(--fg); opacity:.88; overflow:hidden; }
 .d-l3 .ro { margin-top:10px; font-family:var(--f-mono); font-size:17px; line-height:1.5; letter-spacing:.2em; color:var(--muted); overflow:hidden; }
-#root.v .d-l3 { left:64px; bottom:auto; top:1040px; width:950px; }
+#root.v .d-l3 { left:64px; bottom:auto; top:730px; width:950px; }   /* clear of the caption on the window's lower edge */
+#root.v .d-l3 .bar { height:2px; background:#f4efe6; }
+#root.v .d-l3 .nm { margin-top:14px; font-size:64px !important; }
+#root.v .d-l3 .la { font-family:var(--f-serif); font-style:italic; font-size:30px !important; }
+#root.v .d-l3 .ro { font-family:var(--f-serif); font-style:italic; font-size:30px; letter-spacing:.04em; color:#efe8da; margin-top:2px; }
+#root.v .d-l3s { inset:auto 0 auto 0; top:0; height:1062px; background:linear-gradient(0deg, rgba(0,0,0,.84) 0%, rgba(0,0,0,.7) 30%, rgba(0,0,0,.3) 48%, rgba(0,0,0,0) 64%); }
+#root.v .d-l3 .nm, #root.v .d-l3 .la, #root.v .d-l3 .ro { text-shadow:0 2px 12px rgba(0,0,0,.7), 0 1px 2px rgba(0,0,0,.8); }
 /* tag: archive / illustrative footage label */
 .d-tag { position:absolute; right:150px; bottom:168px; max-width:700px; font-family:var(--f-mono); font-size:18px; line-height:1.45; letter-spacing:.12em; color:rgba(244,239,230,.75); border:1px solid rgba(244,239,230,.4); padding:5px 12px; text-align:right; }
-#root.v .d-tag { right:60px; bottom:auto; top:1250px; max-width:620px; }
+#root.v .d-tag { display:none; }
 /* tracking bracket */
 .d-trk { position:absolute; }
 .d-trk i { position:absolute; width:26px; height:26px; border:2.5px solid var(--fg); }
@@ -119,7 +178,7 @@ CSS = r"""
 .d-say .rule { width:90px; height:3px; background:var(--accent); margin-bottom:34px; transform-origin:50% 50%; }
 #root.v .d-say { padding:0 70px; }
 /* chapter card / outro */
-.d-card { background:#050505; }
+.d-card { background:#0d0d0c; }
 .d-card .in { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; text-align:center; padding:0 120px; }
 .d-card .k { font-family:var(--f-mono); font-size:18px; line-height:1.5; letter-spacing:.4em; color:var(--accent); }
 .d-card .t { font-family:var(--f-serif); font-weight:900; color:var(--fg); letter-spacing:.06em; line-height:1.15; }
@@ -127,7 +186,8 @@ CSS = r"""
 .d-card .s { font-family:var(--f-numi); font-style:italic; font-size:34px; line-height:1.3; color:var(--fg); opacity:.8; }
 .d-card .m { font-family:var(--f-mono); font-size:17px; line-height:1.6; letter-spacing:.24em; color:var(--muted); }
 .d-card .hr { width:120px; height:2px; background:var(--accent); transform-origin:50% 50%; }
-#root.v .d-card .in { justify-content:flex-start; padding:600px 64px 0; }
+#root.v .d-card .in { justify-content:center; padding:200px 64px 858px; }
+#root.v .d-card .k { font-size:26px; } #root.v .d-card .m { font-size:26px; letter-spacing:.16em; } #root.v .d-card .s { font-size:40px; }
 """
 
 
@@ -253,16 +313,24 @@ def _items(b):
     return out
 
 
+WIN_V = (0, 0, 1080, 1062)          # 9:16: footage from the top edge to y 1062 (slate + year overlaid on a soft gradient); data bar below
+
+
 def _picture(X):
-    """the visible picture box (inside the letterbox in 16:9)."""
-    if X.portrait: return 0, X.H
+    """the visible picture box (inside the letterbox in 16:9, the 1:1 window in 9:16)."""
+    if X.portrait: return WIN_V[1], WIN_V[3]
     bar = round((X.H - X.W / 2.39) / 2)
     return bar, X.H - 2 * bar
 
 
+def _box(X):
+    return WIN_V if X.portrait else (0, 0, X.W, X.H)
+
+
 def _cover(X, sw, sh, fx, fy):
-    s = max(X.W / sw, X.H / sh); ew, eh = sw * s, sh * s
-    x = min(0, max(X.W - ew, X.W / 2 - fx * ew)); y = min(0, max(X.H - eh, X.H / 2 - fy * eh))
+    bx, by, bw, bh = _box(X)
+    s = max(bw / sw, bh / sh); ew, eh = sw * s, sh * s
+    x = bx + min(0, max(bw - ew, bw / 2 - fx * ew)); y = by + min(0, max(bh - eh, bh / 2 - fy * eh))
     return x, y, ew, eh
 
 
@@ -297,12 +365,13 @@ def _media(X, b, t, d, cid):
         else:
             x, y, ew, eh = _cover(X, sw, sh, *f0)
             layers.append(("", x, y, ew, eh, [max(1.0, p0), max(1.0, p1)], tuple(f0), tuple(f1)))
+        bx, by, bw, bh = _box(X)
         for j, (cls, x, y, ew, eh, (q0, q1), fa, fb) in enumerate(layers):
             lid = f"{sid}{'b' if cls else ''}"
-            xa = min(0, max(X.W - ew, X.W / 2 - fa[0] * ew)) if not (cls == "" and fitm == "contain") else x
-            xb = min(0, max(X.W - ew, X.W / 2 - fb[0] * ew)) if not (cls == "" and fitm == "contain") else x
-            ya = min(0, max(X.H - eh, X.H / 2 - fa[1] * eh)) if not (cls == "" and fitm == "contain") else y
-            yb = min(0, max(X.H - eh, X.H / 2 - fb[1] * eh)) if not (cls == "" and fitm == "contain") else y
+            xa = bx + min(0, max(bw - ew, bw / 2 - fa[0] * ew)) if not (cls == "" and fitm == "contain") else x
+            xb = bx + min(0, max(bw - ew, bw / 2 - fb[0] * ew)) if not (cls == "" and fitm == "contain") else x
+            ya = by + min(0, max(bh - eh, bh / 2 - fa[1] * eh)) if not (cls == "" and fitm == "contain") else y
+            yb = by + min(0, max(bh - eh, bh / 2 - fb[1] * eh)) if not (cls == "" and fitm == "contain") else y
             geo = f"left:{xa:.0f}px; top:{ya:.0f}px; width:{ew:.0f}px; height:{eh:.0f}px"
             org = f"{fa[0] * ew:.0f}px {fa[1] * eh:.0f}px"
             if still:
@@ -314,7 +383,39 @@ def _media(X, b, t, d, cid):
                        sty=f"right:auto; bottom:auto; {geo}; object-fit:fill")
                 sel = f"#{lid}"
             X.tw(f'tl.fromTo("{sel}", {{x:0, y:0, scale:{q0}, transformOrigin:"{org}"}}, {{x:{xb - xa:.0f}, y:{yb - ya:.0f}, scale:{q1}, duration:{dk:.2f}, ease:"{ease}"}}, {tk:.3f});')
+            if _archive(b) and not cls:
+                n = max(2, int(dk * 12)); kf = []
+                for q in range(n):
+                    kf.append(f'{{marginLeft:{X.rand.uniform(-2.5, 2.5):.1f}, marginTop:{X.rand.uniform(-3.5, 3.5):.1f}, duration:{1 / 12:.4f}, ease:"steps(1)"}}')
+                X.tw(f'tl.to("{sel}", {{keyframes:[{",".join(kf)}]}}, {tk:.3f});')
         tk += dk
+
+
+def _archive(b):
+    """archive footage: flagged, or sourced from an archive folder, or graded as archive."""
+    return bool(b.get("archive")) or "archive/" in str(b.get("src", "")) or str(b.get("lut", "")) in ("bw-soft", "warm-archive")
+
+
+def _dust(X, cid, t, d):
+    """dust and hairs on archive footage: six frames of specks, one shown per 1/12 s (seeded, so every render matches)."""
+    bx, by, bw, bh = _box(X)
+    r = X.rand
+    frames = []
+    for f in range(6):
+        el = []
+        for _ in range(r.randint(3, 7)):
+            x, y = bx + r.uniform(0, bw), by + r.uniform(0, bh)
+            if r.random() < 0.25:
+                el.append(f'<path d="M{x:.0f} {y:.0f} q {r.uniform(-30, 30):.0f} {r.uniform(-20, 20):.0f} {r.uniform(-60, 60):.0f} {r.uniform(-40, 40):.0f}" stroke="rgba(10,8,6,.55)" stroke-width="1.6" fill="none"/>')
+            else:
+                c = "rgba(245,240,228,.55)" if r.random() < 0.5 else "rgba(10,8,6,.6)"
+                el.append(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r.uniform(1.2, 3.4):.1f}" fill="{c}"/>')
+        frames.append(f'<g class="df{f}" opacity="0">{"".join(el)}</g>')
+    X.clip(f"{cid}du", t, d, f'<svg width="{X.W}" height="{X.H}" viewBox="0 0 {X.W} {X.H}">{"".join(frames)}</svg>', "dov d-dust", 6, track=9)
+    n = int(d * 12)
+    for q in range(n):
+        f = r.randint(0, 5)
+        X.tw(f'tl.set("#{cid}du .df{f}", {{opacity:1}}, {t + q / 12:.3f}); tl.set("#{cid}du .df{f}", {{opacity:0}}, {t + (q + 1) / 12:.3f});')
 
 
 # ---------------------------------------------------------------- persistent bug
@@ -327,15 +428,28 @@ def _persistent(X):
         a, z = str(yr["from"]), str(yr["to"])
         n = max(len(a), len(z)); a, z = a.rjust(n), z.rjust(n)
         X.used_text.update(a + z)
-        cols = "".join(f'<span class="col"><span>{x if x.strip() else "&nbsp;"}</span><span>{y if y.strip() else "&nbsp;"}</span></span>' for x, y in zip(a, z))
+        # 9:16: the next digit waits above (inside the dark top bar), the column rolls down; 16:9 rolls up as before
+        if X.portrait:
+            cols = "".join(f'<span class="col"><span>{y if y.strip() else "&nbsp;"}</span><span>{x if x.strip() else "&nbsp;"}</span></span>' for x, y in zip(a, z))
+        else:
+            cols = "".join(f'<span class="col"><span>{x if x.strip() else "&nbsp;"}</span><span>{y if y.strip() else "&nbsp;"}</span></span>' for x, y in zip(a, z))
     mark = f'<div class="d-mark"><b>{X.rich(X.channel)}</b>{X.rich(meta.get("section", "商业拆解"))}</div>'
     X.used_text.update("YEAR")
     X.clip("dbug", 0, X.duration, f'<div class="d-top"></div><div class="d-bug"><div class="d-yr">{"<small>YEAR</small>" if yr else ""}<span class="dg">{cols}</span></div>{mark}</div>',
            "dov dbug", 60, track=24, attrs="data-layout-allow-overflow")
     X.tw('tl.from("#dbug .d-bug", {opacity:0, duration:0.6, ease:"power2.out"}, 0.15);')
+    grade = ('<svg width="0" height="0" style="position:absolute"><filter id="dgrade" color-interpolation-filters="sRGB"><feComponentTransfer>'
+             '<feFuncR type="table" tableValues="0.055 0.29 0.56 0.83 1"/><feFuncG type="table" tableValues="0.075 0.3 0.545 0.79 0.95"/>'
+             '<feFuncB type="table" tableValues="0.095 0.305 0.515 0.72 0.86"/></feComponentTransfer></filter></svg>')
+    bars = '<div class="bt"></div><div class="bb"></div><i class="hl"></i><i class="sp"></i><i class="sp b"></i>' if X.portrait else ""
+    X.clip("dbars", 0, X.duration, grade + bars, "dov d-bars", 10, track=23, attrs="data-layout-allow-overflow")
     if yr:
         ta = float(X.T(yr["at"]))
-        X.tw(f'tl.to("#dbug .col span", {{yPercent:-100, duration:0.55, ease:"expo.inOut", stagger:0.07}}, {ta:.3f});')
+        if X.portrait:
+            X.tw('tl.set("#dbug .col span", {yPercent:-100}, 0);')
+            X.tw(f'tl.to("#dbug .col span", {{yPercent:0, duration:0.55, ease:"expo.inOut", stagger:0.07}}, {ta:.3f});')
+        else:
+            X.tw(f'tl.to("#dbug .col span", {{yPercent:-100, duration:0.55, ease:"expo.inOut", stagger:0.07}}, {ta:.3f});')
         X.sfx(ta, "count")
 
 
@@ -349,12 +463,28 @@ def shot(b, X, t, d, cid):
     BOX = 950 if P else 1100                      # text column width for callouts / lists / lower thirds
     top, ph = _picture(X)
     over, s = [], f"#{cid}"
-    if b.get("scrim", bool(b.get("call") or b.get("say") or b.get("list"))):
+    if (b.get("list") or (b.get("scrim") == "strong")) if P else b.get("scrim", bool(b.get("call") or b.get("say") or b.get("list"))):
         over.append(f'<div class="d-scrim{" strong" if b.get("list") or b.get("scrim") == "strong" else ""}"></div>')
 
     # centred stamp (e.g. a year), tracking in; its own layer so it may outlive a quick shot (until: a cue)
     dst = 0
-    if b.get("stamp"):
+    slate = b.get("slate") or (b.get("tag") if P else None)
+    if slate and P and " · " in slate and slate.split(" · ")[0] in ("档案影像", "画面", "ARCHIVE"):
+        slate = " · ".join(slate.split(" · ")[1:])          # an archive slate reads place · date
+    if P and b.get("stamp"):
+        st = b["stamp"]
+        slate = slate or " · ".join(x for x in (st.get("small", ""), st["big"]) if x)
+    if P and slate:
+        X.used_text.update(slate)
+        X.clip(f"{cid}sl", t, d, f'<div class="d-slate"><i></i>{X.rich(slate)}</div>', "dov", 14, track=10)
+        X.tw(f'tl.from("#{cid}sl .d-slate", {{opacity:0, x:-14, duration:0.35, ease:"expo.out"}}, {t + 0.05:.3f});')
+    if P and b.get("stamp"):
+        st = b["stamp"]
+        fpx = min(300.0, (X.W - 128) / max(em(st["big"]), 0.5))
+        dst = max(0.6, (_T(X, st, "until", t, t + d) - t))
+        X.clip(f"{cid}st", t, dst, f'<div class="d-dc" data-layout-allow-overlap><div class="rule"></div><div class="lab">{X.rich(st.get("small", ""))}</div>'
+                                   f'<div class="fig" style="font-size:{fpx:.0f}px">{_chars(X, st["big"])}</div></div>', "dov", 13, track=7)
+    elif b.get("stamp"):
         st = b["stamp"]
         px, txt = fit(st["big"], X.W - (160 if P else 300), 230 if P else 300, 96 if P else 120, maxlines=3, track=0.02)
         dst = max(0.6, (_T(X, st, "until", t, t + d) - t))
@@ -369,7 +499,26 @@ def shot(b, X, t, d, cid):
         X.clip(f"{cid}l3", tl3 - 0.3, dl3, f'<div class="d-l3s"></div><div class="d-l3"><div class="bar" style="width:{barw:.0f}px"></div>'
                f'<div class="nm" style="font-size:{npx:.0f}px"><span>{X.rich(ntx)}</span></div><div class="la" style="font-size:{lpx:.0f}px"><span>{X.rich(ltx)}</span></div>'
                f'<div class="ro"><span>{X.rich(l.get("role", ""))}</span></div></div>', "dov", 13, track=8)
-    for k, c in enumerate(b.get("call", [])):
+    for k, c in enumerate(b.get("call", []) if P else []):            # 9:16: the data card lives in the bottom bar
+        fig, pre, unit = str(c["fig"]), str(c.get("pre", "")), str(c.get("unit", ""))
+        pct = unit == "%"
+        if pct: unit = ""
+        short = em(fig) < 2.0
+        need = em(pre) * 0.7 + em(fig) + (0.5 if pct else 0)
+        fpx = min(320.0 if short else 280.0, (X.W - 128 - (em(unit) * 46 * 1.15 + 12 if unit else 0)) / max(need, 0.5))
+        if c.get("bar"): fpx = min(fpx, 262.0)              # the share bar needs its line above the caption
+        upx = max(46, fpx * 0.42) if short else 46
+        fpx = max(220.0 if not c.get("bar") else 210.0, min(fpx, (X.W - 128 - (em(unit) * upx * 1.15 + upx * 0.25 if unit else 0)) / max(need, 0.5)))
+        prespan = f'<span class="pre" style="font-size:{fpx * 0.7:.0f}px">{X.rich(pre)}</span>' if pre else ""
+        sub = c.get("sub", ""); src = c.get("src", "")
+        bar = f'<div class="bar" style="margin-top:14px; width:952px; height:8px"><i style="width:{c["bar"]}%"></i></div>' if c.get("bar") else ""
+        over.append(f'<div class="d-dc" data-k="{k}" data-layout-allow-overlap><div class="rule"></div><div class="lab">{X.rich(c.get("label", ""))}</div>'
+                    f'<div class="fig" style="font-size:{fpx:.0f}px">{prespan}<span class="n">{X.rich(c.get("from", fig))}</span>'
+                    + ('<span class="pre" style="font-size:.5em">%</span>' if pct else "")
+                    + (f'<span class="u" style="font-size:{upx:.0f}px">{X.rich(unit)}</span>' if unit else "") + f'</div>{bar}'
+                    f'<div class="src">' + (f'<b>{X.rich(sub)}</b>' if sub else "") + f'{X.rich(src)}</div></div>')
+        X.used_text.update(fig + "0123456789.,")
+    for k, c in enumerate(b.get("call", []) if not P else []):
         bar = f'<div class="bar"><i style="width:{c["bar"]}%"></i></div>' if c.get("bar") else ""
         fig, pre, unit = str(c["fig"]), str(c.get("pre", "")), str(c.get("unit", ""))
         # figure line: pre at .65, unit at .31 of the figure size; the unit wraps under the figure if it must
@@ -406,20 +555,49 @@ def shot(b, X, t, d, cid):
         room_r, room_l = X.W - left_px - 40, left_px + bw - 40
         side = "left:0; right:auto" if room_r >= room_l else "left:auto; right:0"
         room = max(room_r, room_l)
-        lbpx, _ = fit(k["label"], room - 24, 18, 12, track=0.12)
+        lbpx, _ = fit(k["label"], room - 24, 26 if P else 18, 12, track=0.12)
         wrap = "" if em(k["label"]) * lbpx * 1.12 <= room - 24 else f"white-space:normal; width:{room - 24:.0f}px;"
         over.append(f'<div class="d-trk" style="left:{k["x"]}%; top:{k["y"]}%; width:{bw}px; height:{k.get("h", 120)}px"><i></i><i></i><i></i><i></i><b class="ch"></b>'
                     f'<div class="lb" style="font-size:{max(lbpx, 12):.0f}px; {side}; {wrap}">{X.rich(k["label"])}</div></div>')
-    if b.get("say"):
+    if b.get("say") and P:                 # 9:16: the statement is set in the bottom bar, the footage stays clean
+        spx, stx = fit(b["say"], X.W - 128, 116, 56, maxlines=3, track=0.04)
+        lines = "".join(f'<div class="l" style="font-size:{spx:.0f}px">{X.rich(x, split="chars")}</div>' for x in stx.split("|"))
+        over.append(f'<div class="d-bs"><div class="rule"></div>{lines}</div>')
+    elif b.get("say"):
         spx, stx = fit(b["say"], X.W - (140 if P else 280), 74 if P else 80, 44 if P else 52, maxlines=4 if P else 3, track=0.04)
         lines = "".join(f'<div class="l" style="font-size:{spx:.0f}px">{X.rich(x, split="chars")}</div>' for x in stx.split("|"))
         over.append(f'<div class="d-say"><div class="rule"></div>{lines}</div>')
-    if b.get("tag"): over.append(f'<div class="d-tag">{X.rich(b["tag"])}</div>')
+    if b.get("tag") and not P: over.append(f'<div class="d-tag">{X.rich(b["tag"])}</div>')
+    if _archive(b): _dust(X, cid, t, d)
+    slug_ok = True
+    if P and b.get("call"):
+        tc_first = _T(X, b, "at_call", t, t + 0.2)
+        pb0 = X.v.get("beats", [])[X.beat["i"] - 1] if X.beat["i"] else {}
+        t_free = _T(X, pb0["stamp"], "until", t, t) if (pb0.get("stamp") and pb0["stamp"].get("until")) else t
+        slug_ok = tc_first - max(t, t_free) >= 1.2
+    if P and slug_ok and not (b.get("stamp") or b.get("say")):
+        # the bottom bar never sits empty: it carries the running chapter (the last chapter card, else the film title)
+        prev = [x for x in X.v.get("beats", [])[:X.beat["i"]] if x.get("scene") == "card"]
+        meta = X.v.get("meta", {})
+        kick = prev[-1].get("kicker", "") if prev else meta.get("section", "")
+        ttl = prev[-1].get("title", "") if prev else meta.get("title", "")
+        if ttl:
+            tpx, ttx = fit(ttl, X.W - 128, 112, 44, maxlines=1, track=0.04)
+            X.used_text.update(kick + ttl)
+            over.append(f'<div class="d-ch"><div class="rule"></div><div class="k">{X.rich(kick)}</div><div class="t" style="font-size:{tpx:.0f}px">{X.rich(ttx)}</div>'
+                        + (f'<div class="m">{X.rich(prev[-1].get("sub", ""))}</div>' if prev and prev[-1].get("sub") else "") + '</div>')
     if over:
         X.clip(cid, t, d, "".join(over), "dov", 12, track=6)
 
     # ---- motion
-    if b.get("stamp"):
+    if b.get("stamp") and P:
+        q = f"#{cid}st"
+        X.tw(f'tl.from("{q} .rule", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t:.3f});')
+        X.tw(f'tl.from("{q} .lab", {{opacity:0, x:-16, duration:0.4, ease:"expo.out"}}, {t + 0.1:.3f});')
+        X.tw(f'tl.from("{q} .fig .c", {{opacity:0, y:50, filter:"blur(12px)", duration:0.6, ease:"expo.out", stagger:0.05}}, {t + 0.05:.3f});')
+        X.tw(f'tl.to("{q} .d-dc", {{opacity:0, duration:0.3, ease:"power2.in"}}, {t + dst - 0.3:.3f});')
+        X.sfx(t, "title")
+    elif b.get("stamp"):
         q = f"#{cid}st"
         X.tw(f'tl.from("{q} .d-stamp .big .c", {{opacity:0, x:(i, el, all)=>(i - (all.length - 1) / 2) * 60, filter:"blur(14px)", duration:0.7, ease:"expo.out", stagger:0.04}}, {t:.3f});')
         X.tw(f'tl.from("{q} .d-stamp .sm", {{opacity:0, duration:0.4}}, {t + 0.25:.3f});')
@@ -435,7 +613,7 @@ def shot(b, X, t, d, cid):
     calls = b.get("call", [])
     for k, c in enumerate(calls):
         tc = _T(X, b, f"at_call{k}" if k else "at_call", t, t + 0.2 + k * (d - 0.4) / max(len(calls), 1))
-        q = f"{s} .d-call[data-k='{k}']"
+        q = f"{s} [data-k='{k}']"
         X.tw(f'tl.from("{q} .rule", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {max(t, tc - 0.35):.3f});')
         X.tw(f'tl.from("{q} .lab", {{x:-24, opacity:0, duration:0.5, ease:"expo.out"}}, {max(t, tc - 0.3):.3f});')
         X.tw(f'tl.from("{q} .fig", {{y:40, opacity:0, filter:"blur(10px)", duration:0.6, ease:"expo.out"}}, {max(t, tc - 0.25):.3f});')
@@ -450,7 +628,7 @@ def shot(b, X, t, d, cid):
         X.sfx(tc, "hit")
         if k + 1 < len(calls):   # the next callout replaces this one
             tn = _T(X, b, f"at_call{k + 1}", t, t + 0.2 + (k + 1) * (d - 0.4) / len(calls))
-            X.tw(f'tl.to("{q}", {{opacity:0, y:-20, duration:0.3, ease:"power2.in"}}, {tn - 0.5:.3f});')
+            X.tw(f'tl.to("{q}", {{opacity:0, y:-20, duration:0.3, ease:"power2.in"}}, {tn - (0.75 if P else 0.5):.3f});')
     if b.get("list"):
         L = b["list"]; n = len(L["items"][:8]); at = L.get("at") or []
         X.tw(f'tl.from("{s} .d-list .ttl", {{x:-24, opacity:0, duration:0.5, ease:"expo.out"}}, {t + 0.05:.3f});')
@@ -469,11 +647,21 @@ def shot(b, X, t, d, cid):
     if b.get("say"):
         ts = _T(X, b, "at_say", t, (t + dst) if b.get("stamp") else t + 0.1)   # never on top of a stamp
         n = len(str(b["say"]).replace("|", "").replace("*", ""))
-        X.tw(f'tl.from("{s} .d-say .rule", {{scaleX:0, duration:0.6, ease:"expo.out"}}, {max(t, ts - 0.2):.3f});')
-        X.tw(f'tl.from("{s} .d-say .l .c", {{opacity:0, y:18, filter:"blur(10px)", duration:0.5, ease:"power3.out", stagger:{min(0.045, max(0.012, (d * 0.5) / max(n, 1))):.3f}}}, {ts:.3f});')
+        X.tw(f'tl.from("{s} .d-say .rule, {s} .d-bs .rule", {{scaleX:0, duration:0.6, ease:"expo.out"}}, {max(t, ts - 0.2):.3f});')
+        X.tw(f'tl.from("{s} .d-say .l .c, {s} .d-bs .l .c", {{opacity:0, y:18, filter:"blur(10px)", duration:0.5, ease:"power3.out", stagger:{min(0.045, max(0.012, (d * 0.5) / max(n, 1))):.3f}}}, {ts:.3f});')
         X.sfx(ts, "enter")
-    if b.get("tag"):
+    if b.get("tag") and not P:
         X.tw(f'tl.from("{s} .d-tag", {{opacity:0, duration:0.4}}, {t + 0.2:.3f});')
+    if P and not (b.get("stamp") or b.get("say")) and f'class="d-ch"' in "".join(over):
+        t_in = t + 0.1
+        pb = X.v.get("beats", [])[X.beat["i"] - 1] if X.beat["i"] else {}
+        if pb.get("stamp") and pb["stamp"].get("until"):          # a year carried over from the last shot holds the bar first
+            t_in = max(t_in, _T(X, pb["stamp"], "until", t, t) + 0.05)
+        X.tw(f'tl.from("{s} .d-ch .rule", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t_in - 0.05:.3f});')
+        X.tw(f'tl.from("{s} .d-ch .k, {s} .d-ch .t, {s} .d-ch .m", {{opacity:0, x:-16, duration:0.45, ease:"expo.out", stagger:0.07}}, {t_in:.3f});')
+        if calls:                                                 # the chapter gives way to the figure
+            tc0 = _T(X, b, "at_call", t, t + 0.2)
+            X.tw(f'tl.to("{s} .d-ch", {{opacity:0, duration:0.25, ease:"power2.in"}}, {tc0 - 0.7:.3f});')   # fully out before the figure's rule starts
 
 
 def card(b, X, t, d, cid):
@@ -481,16 +669,24 @@ def card(b, X, t, d, cid):
     X.css("doc", CSS)
     if X.beat["i"] == 0: _persistent(X)
     P = X.portrait
-    tpx, ttx = fit(b["title"], X.W - (128 if P else 240), 104 if P else 120, 56 if P else 64, maxlines=2, track=0.06)
+    tpx, ttx = fit(b["title"], X.W - (128 if P else 240), 140 if P else 120, 56 if P else 64, maxlines=2, track=0.06)
     k = f'<div class="k">{X.rich(b.get("kicker", ""))}</div>' if b.get("kicker") else ""
     sub = f'<div class="s">{X.rich(b["sub"])}</div>' if b.get("sub") else ""
-    m = f'<div class="m">{X.rich(b["meta"])}</div>' if b.get("meta") else ""
+    m = f'<div class="m">{X.rich(b["meta"])}</div>' if (b.get("meta") and not P) else ""
+    bar = ""
+    if P and b.get("meta"):
+        mpx, mtx = fit(b["meta"], X.W - 128, 72, 56, maxlines=2, track=0.04)
+        bar = f'<div class="d-bs d-cb"><div class="rule"></div>' + "".join(f'<div class="l" style="font-size:{mpx:.0f}px">{X.rich(x)}</div>' for x in mtx.split("|")) + '</div>'
     X.clip(cid, t, d, f'<div class="in">{k}<div class="t" style="font-size:{tpx:.0f}px">{_chars(X, ttx)}</div><div class="hr"></div>{sub}{m}</div>', "scene d-card", 4)
+    if bar: X.clip(f"{cid}cb", t, d, bar, "dov", 14, track=10)   # above the bars layer
     s = f"#{cid}"
     X.tw(f'tl.from("{s} .k", {{opacity:0, y:10, duration:0.4}}, {t + 0.05:.3f});')
     X.tw(f'tl.from("{s} .t .c", {{opacity:0, x:(i, el, all)=>(i - (all.length - 1) / 2) * 30, filter:"blur(12px)", duration:0.6, ease:"expo.out", stagger:{min(0.04, 0.5 / max(len(ttx), 1)):.3f}}}, {t + 0.05:.3f});')
     X.tw(f'tl.from("{s} .hr", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t + 0.25:.3f});')
     X.tw(f'tl.from("{s} .s, {s} .m", {{opacity:0, y:12, duration:0.5, stagger:0.1}}, {t + 0.35:.3f});')
+    if P and b.get("meta"):
+        X.tw(f'tl.from("{s}cb .d-cb .rule", {{scaleX:0, duration:0.5, ease:"expo.out"}}, {t + 0.45:.3f});')
+        X.tw(f'tl.from("{s}cb .d-cb .l", {{opacity:0, x:-16, duration:0.5, ease:"expo.out", stagger:0.08}}, {t + 0.55:.3f});')
     X.sfx(t + 0.05, "title")
 
 

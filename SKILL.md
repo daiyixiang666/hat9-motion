@@ -1,10 +1,10 @@
 ---
 name: hat9-motion
-description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 174 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
+description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 193 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、掉落堆叠、倒入液面、推轨穿层、焦点转移、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.13.0"
+  version: "0.17.0"
   author: daiyixiang666
 ---
 
@@ -49,7 +49,7 @@ metadata:
    - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
    - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
 4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
-5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
+5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播（加 `--settled` 再出一张每个 beat 结束前、全部内容出齐时的板）。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
 6. **小样**：`hat9.py sample work/video.json --range 0,4 --aspect 9:16` 只做最难的几秒（开场钩子、快切），带声音看手感。
 7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。它会先自动跑分镜检查，有 P0 就**拒绝渲染**（改掉再来，确实要出才加 `--force`）；渲染完自动出每秒 2 帧的检查图并检查字幕碎片、音画偏差、字压脸、字太小、对比度，**有 P0 退出码非 0，不算完成**。配乐写 `meta.music`（旁边有 `.beats.json` 就自动卡拍：换画面、转场、音效吸到节拍上，不挪到口播词之前）、`"duck": true`（说话时压低）；无人声的快切段写成一个 `{"scene": "fx", "fx": "montage", "clips": [...]}` beat（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话，配乐自动推上来）。渲染自动把响度标准化到 -14 LUFS。
 8. **交付前自检**：`hat9.py review 成片.mp4 --video work/video.json [--ref 参考.mp4]`，P0 必须改；把静帧板逐张看完，在 `review.md` 里六项打分、写下最差的 3 处，改掉重渲。最后 `hat9.py review --gate review.md`，**过了才交付**，并告诉用户实际检查了什么。
@@ -59,6 +59,7 @@ metadata:
 ## 这些事代码会自动做（不用、也不要手动绕开）
 
 - 字幕：一句一页，不在词中间断；真人画面上自动加深色底板。装上 `jieba` 断句更准（`hat9.py doctor` 会提示）。
+- 竖屏字幕不压平台界面：9:16 每页字幕必须在底部 400 px（标题 / 音乐 / 评论栏）以上、顶部 200 px 以下，检查量的是字幕的真实位置，压进去算 P0。
 - 对口播：清单的每一条、大字标题，没写 `at` / `"@词"` 时自动在说到它的那一刻出现。
 - 版面：真人口播时，需要地方的图文不会压在脸上，人自动挪到小卡 / 侧边 / 选定的形式位。
 - 缺内容直接报错（不画灰色占位条）：报错就补内容，别加 `skeleton: true` 糊过去。
@@ -77,4 +78,4 @@ metadata:
 - `scripts/hat9.py` 命令行 · `scripts/build.py` video.json → HyperFrames 工程 · `scripts/h9/aefx.py` **AE 动效库**
 - `gallery/` 在线画廊（`llms.txt` 效果索引、`effects.json`）· `references/effects/<id>.md` 每个效果的配方卡
 - `references/video-json.md` 格式 · `references/motion-rules.md` 缓动 / 时长 / 对口播 · `references/sentence-to-visual.md` 句型 → 画面 · `references/aesthetics.md` 出图规则
-- `styles/` 风格：`press` 财经刊（商业拆解 / 数据）· `screen` AI 工具台（产品界面 / AI 工具）· `atlas` 地图纪录（贸易 / 地缘）· `doc` 实拍纪录（实拍视频）· `minimal` 极简讲述（观点 / 心理 / 认知）· `poster` 瑞士海报（观点 / 金句）· `zine` 拼贴杂志（潮玩 / 年轻消费）· `papercut` 剪纸（节日 / 民俗）· `sketch` 手绘白板（讲原理）· `ink` 水墨国风（国风 / 文化）· `flat` 扁平插画（本地生活 / 城市）· `pixel` 像素复古（游戏 / 互联网）· `iso3d` 等距微缩（物流 / 产业链）· `chrome3d` Y2K 镀铬（科技 / 芯片）· `reel` 动效库 · `hud` · `studio` / `clay` 三维。选法见 `references/styles.md`；用户想要自己的风格时 `python3 scripts/hat9.py style new <id> --from <最接近的风格>`，改完 `style check`，输入范围见 `references/inputs.md`· `examples/` 可直接渲染的示例
+- `styles/` 风格：`press` 财经刊（商业拆解 / 数据）· `screen` AI 工具台，暖白桌面窗口（产品界面 / AI 工具）· `atlas` 地图纪录（贸易 / 地缘）· `doc` 实拍纪录（实拍视频）· `minimal` 极简讲述，冷调浅底一条蓝线（观点 / 心理 / 认知）· `poster` 瑞士海报（观点 / 金句）· `zine` 拼贴杂志（潮玩 / 年轻消费）· `papercut` 层叠剪纸（节日 / 民俗）· `sketch` 手绘白板，牛皮纸（讲原理）· `ink` 水墨国风（国风 / 文化）· `flat` 五色扁平招贴（本地生活 / 城市）· `pixel` 像素复古（游戏 / 互联网）· `iso3d` 等距微缩（物流 / 产业链）· `chrome3d` Y2K 镀铬影棚（科技 / 芯片）· `reel` 动效库 · `hud` · `studio` / `clay` 三维。选法见 `references/styles.md`；用户想要自己的风格时 `python3 scripts/hat9.py style new <id> --from <最接近的风格>`，改完 `style check`，输入范围见 `references/inputs.md`· `examples/` 可直接渲染的示例

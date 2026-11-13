@@ -12,7 +12,7 @@ STYLE = dict(_studio.STYLE)
 STYLE.update({
     "name": "陶土影棚", "en": "Clay Studio", "benchmarks": ["Buck", "Ordinary Folk", "Apple iPhone 陶土片"],
     "look": "clay", "bg3d": "#cfc8be", "floor3d": "#cfc8be", "font3d": "noto-serif-sc", "aperture": 0.0011,
-    "tokens": {**_studio.STYLE["tokens"], "bg": "#cfc8be", "fg": "#2b2723", "muted": "#7b7268", "accent": "#c2643f", "accent2": "#c2643f",
+    "tokens": {**_studio.STYLE["tokens"], "bg": "#cfc8be", "fg": "#2b2723", "muted": "#7b7268", "accent": "#ad5632", "accent2": "#ad5632",
                "cap-fg": "#2b2723", "cap-shadow": "none", "cap-bg": "rgba(241,235,224,.82)", "cap-pad": "4px 16px", "cap-radius": "6px", "cap-em": "#c2643f"},
     "fonts": {"display": ["eb-garamond", "noto-serif-sc"], "body": "noto-sans-sc", "mono": "jetbrains-mono"},
     "layers": [("grain", {"opacity": 0.05, "blend": "multiply"})],

@@ -9,7 +9,7 @@
 | 类别 | 照片 |
 | 适合的句子 | 产品亮相、单品拆解、参数卖点 |
 | 建议时长 | 4–6 秒 |
-| 参数 | `at`, `image`, `kicker`, `name`, `price`, `specs`, `sway`, `text`, `turns`, `views` |
+| 参数 | `image`, `kicker`, `name`, `price`, `specs`, `sway`, `text`, `turns`, `views` |
 | 横屏 / 竖屏 | ✓ / ✓（尺寸用 vmin，竖屏自动缩放） |
 | 人气依据 | VideoHive Product Promo 分类销量榜 |
 

@@ -22,11 +22,12 @@
    "cp": {"ll": [18.47, -34.36], "name": "好望角", "sub": "34.4°S 18.5°E"}
   },
   "routes": {
-   "suez": {"from": [122.3, 30.6], "to": [3.9, 52.0]},
-   "cape": {"from": [122.3, 30.6], "to": [3.9, 52.0], "avoid": ["redsea"]}
+   "suez": {"from": [122.3, 30.6], "to": [3.9, 52.0], "name": "苏伊士航线"},
+   "cape": {"from": [122.3, 30.6], "to": [3.9, 52.0], "avoid": ["redsea"], "name": "绕行好望角"}
   },
-  "zones": {"houthi": {"poly": [[41.0, 17.5], [43.6, 16.0], [45.2, 13.4], [49.5, 12.6], [51.5, 11.6], [48.0, 10.6], [43.6, 11.2], [42.2, 13.0], [39.8, 16.0]]}},
-  "lines": {"canal": {"coords": [[32.31, 31.27], [32.31, 31.0], [32.29, 30.75], [32.28, 30.58], [32.34, 30.45], [32.40, 30.33], [32.50, 30.25], [32.57, 30.10], [32.56, 29.95]], "label": "193 公里"}},
+  "cut_name": "航线中断",
+  "zones": {"houthi": {"name": "红海袭击区", "poly": [[41.0, 17.5], [43.6, 16.0], [45.2, 13.4], [49.5, 12.6], [51.5, 11.6], [48.0, 10.6], [43.6, 11.2], [42.2, 13.0], [39.8, 16.0]]}},
+  "lines": {"canal": {"coords": [[32.31, 31.27], [32.31, 31.0], [32.29, 30.75], [32.28, 30.58], [32.34, 30.45], [32.40, 30.33], [32.50, 30.25], [32.57, 30.10], [32.56, 29.95]], "label": "193 公里", "name": "苏伊士运河"}},
   "seas": [
    {"ll": [72, -4], "name": "印度洋", "en": "INDIAN OCEAN", "show": ["route", "detour", "freight"]},
    {"ll": [-22, 8], "name": "大西洋", "en": "ATLANTIC", "show": ["detour", "freight"]},
@@ -43,7 +44,7 @@
    "title": {"kicker": "红海危机 · 2024", "text": "货船为什么|不走苏伊士了"},
    "src": "航线按 searoute 海运网络（Apache-2.0）计算 · 底图 Natural Earth 中国视角（公有领域）"},
   {"id": "route", "scene": "map", "t": "@到鹿特丹",
-   "camera": {"fit": ["route:suez"], "pad": 4}, "draw": ["suez"],
+   "camera": {"fit": ["route:suez"], "pad": 4}, "draw": [{"route": "suez", "label": "约 10,500 海里", "label_at": 0.6, "dist": 10500, "unit": "海里"}],
    "pins": [{"id": "ml", "at": "pass:suez"}, {"id": "bm", "at": "pass:suez"}, {"id": "sz", "at": "pass:suez"}],
    "card": {"type": "stat", "k": "苏伊士航线 · 上海→鹿特丹", "value": "10500", "unit": "海里", "count_dur": 3.2, "sub": "经马六甲海峡 · 曼德海峡 · 苏伊士运河"},
    "src": "航线距离按 searoute 网络计算，与港航研究常用的约 10,500 海里一致"},
@@ -51,12 +52,12 @@
    "camera": {"box": [30, 7, 56, 31]}, "moves": [{"at": "@绕道", "camera": {"box": [-22, -42, 64, 30]}}],
    "zones": [{"zone": "houthi", "at": "@红海袭击"}], "highlight": [{"iso": ["YEM", "ERI", "DJI"], "color": "#e9b9a8", "at": "@红海袭击"}],
    "cut": {"route": "suez", "box": [32, 11, 46, 31], "at": "@商船", "x": [43.4, 13.4]},
-   "draw": [{"route": "cape", "at": "@绕道", "dur": 3.4}],
+   "draw": [{"route": "cape", "at": "@绕道", "dur": 3.4, "label": "约 13,800 海里", "label_at": 0.62}],
    "card": {"type": "stat", "tone": "red", "k": "2023 年 11 月起", "value": "红海航线中断", "sub": "胡塞武装袭击过往商船，主要班轮公司改道好望角"},
    "src": "苏伊士运河管理局；胡塞武装 2023 年 11 月起袭击红海商船"},
   {"id": "detour", "scene": "map", "t": "@一趟",
    "camera": {"box": [6, -40, 40, -18]}, "moves": [{"at": "@多花", "camera": {"fit": ["route:suez", "route:cape"], "pad": 3}}],
-   "pins": [{"id": "cp", "at": "pass:cape"}],
+   "pins": [{"id": "cp", "at": "pass:cape"}], "dist": {"value": 3300, "unit": "海里", "at": "@多花", "dur": 1.4},
    "card": {"type": "stat", "tone": "red", "k": "绕行好望角", "value": "+3300", "unit": "海里", "sub": "全程约 13,800 海里 · 多花 7–10 天"},
    "src": "绕行距离按 searoute 网络计算；World Bank：亚欧航线绕行多 3,000–3,500 海里、7–10 天"},
   {"id": "revenue", "scene": "map", "t": "@运河一年",
@@ -70,10 +71,10 @@
             "points": [["2023.12.28", 1667], ["2024.01.04", 3577], ["2024.07.18", 8267]], "sub": "Drewry 世界集装箱指数 WCI"},
    "src": "Drewry WCI：2024-01-04 为 3,577 美元（单周 +1,910），2024-07-18 为 8,267 美元"},
   {"id": "canal", "scene": "map", "t": "@一条一百",
-   "camera": {"box": [31.35, 29.55, 33.35, 31.55]}, "detail": true, "dim": true, "lines": [{"line": "canal", "at": "@一百九十三"}],
+   "camera": {"box": [31.35, 29.55, 33.35, 31.55]}, "detail": true, "dim": true, "lines": [{"line": "canal", "at": "@一百九十三"}], "dist": {"value": 193.3, "unit": "公里", "at": "@一百九十三", "dur": 1.0},
    "card": {"type": "stat", "side": "R", "k": "苏伊士运河 · 193.3 公里", "value": "≈12", "unit": "%", "sub": "全球贸易经过这一条水道"},
    "src": "运河长 193.3 公里；贸易占比约 12%（世界经济论坛）"},
-  {"id": "thesis", "scene": "map", "t": "@看懂航线", "camera": "world", "clear": ["lines"],
+  {"id": "thesis", "scene": "map", "t": "@看懂航线", "camera": {"box": [-20, -45, 150, 65]}, "clear": ["lines"],
    "thesis": "看懂*航线*，|才看得懂*价格*。", "src": "地图纪录"},
   {"id": "outro", "scene": "outro", "t": 30.44, "camera": {"box": [-80, -48, 200, 72]}, "labels": false,
    "outro": {"title": "示例频道", "sub": "地图纪录", "cta": "关注，下期换一条航线"}, "src": "作者整理"}

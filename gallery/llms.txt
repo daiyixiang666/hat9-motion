@@ -60,7 +60,7 @@
 - statement_table [数据]:  — 利润表 / 资产负债表里的一行
 - waterfall [数据]:  — 从收入一路扣到净利
 - scale_compare [数据]:  — 「相当于 N 个…」「绕赤道 N 圈」
-- bar_race [数据]:  — 排名随时间变化、超车
+- bar_race [数据]: 柱状图赛跑 — 排名随时间变化、超车
 - stacked_bars [数据]:  — 构成变化、占比
 - formula [数据]:  — 一个比率怎么算出来
 - bars_csv [数据]:  — 手上只有一张表格
@@ -138,6 +138,21 @@
 - poll_card [类型]:  — 引导评论、你会选哪个
 - share_card [类型]:  — 结尾金句、可截图转发的结论
 - next_teaser [类型]:  — 片尾预告下一期
+- drop_stack [物理]: 掉落堆叠 Drop Stack — 「到 2023 年已经有 26 座」「一年开了 N 家」——一个可数的总数，最好还能点名每一个
+- pour_fill [物理]: 倒入液面 Pour Fill — 渗透率、完成率、占比从 A 涨到 B，「已经超了」
+- topple [物理]: 多米诺推倒 Topple — 「靠的是三件事」「一个接一个」、因果链、连锁反应
+- dolly_layers [镜头]: 推轨穿层 Dolly Layers — 「工厂、仓配、采购，背后是……」逐层递进、最后落到一个数
+- rack_focus [镜头]: 焦点转移 Rack Focus — 「很多人以为……其实……」、前后对比、表象 vs 真相
+- magnet_sort [物理]: 磁极分拣 Magnet Sort — 「收入里 97.5% 来自……」「多数 vs 少数」二分
+- orbit_number [镜头]: 环绕大数 Orbit Number — 一个值得停下来看的核心数字，配 2–4 个注脚
+- zoom_scale [数据]: 十倍缩放 Zoom Scale — 「4 块钱一杯，一年净赚 44.5 亿」差几个数量级的两个数
+- small_multiples [数据]: 小倍数图 Small Multiples — 很多个对象各自的走势、「一座座亮起来」
+- word_mosaic [字效]: 字海成形 Word Mosaic — 「最后都汇成一条供应链」、由许多个组成一个
+- type_mask [字效]: 字形窗口 Type Mask — 开章、点题、「第一件事：自己生产」配一段实拍
+- weight_breath [字效]: 字重呼吸 Weight Breath — 金句、口号、一句要一字一顿说出来的话
+- stamp_press [质感]: 盖章 Stamp Press — 「已上市」「驳回」「完成」、一个定论或日期
+- unroll [字效]: 卷轴展开 Unroll — 账单、清单、利润表、「248 亿收入，最后剩多少」
+- ink_reveal [质感]: 墨迹显影 Ink Reveal — 开篇、点题、一个有分量的词
 
 ## 转场
 - zoomin: #1 无缝缩放 · Seamless Zoom（VideoHive 销量第1 · 4.16万份）
@@ -152,3 +167,7 @@
 - burn: 胶片烧 · Film Burn
 - ink: 墨晕 · Ink
 - shutter: 快门 · Shutter
+- paint_wipe: 三笔刷屏 · Paint Wipe（三道宽笔刷扫过盖满，再扫出去）
+- whip_carry: 甩镜带物 · Whip Carry（上一句的重点词锁在画面里带进下一拍）
+- shape_match: 形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状）
+- paper_tear: 撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开）

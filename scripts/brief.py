@@ -152,10 +152,10 @@ def check(vpath, style=None, aspect=None):
     for k, n in counts.items():
         if n > 3:
             found.append(("P1", "same-fx", f"{k} 用了 {n} 次（全片最多 3 次）"))
-    form_findings = forms.lint(video, tl)
+    form_findings = forms.lint(video, tl, style)
     for item in form_findings:
         found.append(item)
-    portrait = (aspect or video.get("meta", {}).get("aspect", "16:9")) == "9:16"
+    portrait = (aspect or video.get("meta", {}).get("aspect", "16:9")) in ("9:16", "3:4", "4:5")
     gate_findings = review.static_checks(vpath, out, tl, portrait)
     for item in gate_findings:
         found.append(item)

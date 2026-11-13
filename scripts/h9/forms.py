@@ -8,6 +8,7 @@ another?  Every effect / scene maps to a layout family in form_families.json (on
                 (the list is "number_hero" in form_families.json; a different family is not enough: key_card then
                 side_stat are different families but the same picture)
   form-unknown  an effect or scene missing from the table (counted as its own family)      (warning)
+form-repeat is not reported for one-world styles (WORLD) and footage-led styles (doc).
 
 A slogan effect laid out beside the presenter (beat presenter "card" / "side") counts as "beside", not "slogan".
 Used by review.py --video and brief.py check.
@@ -39,8 +40,37 @@ def presenter_positions(video):
     return out
 
 
-def family_of(beat, table, position=None):
-    """(family, known): the layout family of one beat."""
+def style_chain(style):
+    """the style and the bases it was derived from (style_kit), nearest first; [] when unknown."""
+    if not style:
+        return []
+    try:
+        from h9 import derive
+        return list(derive.chain(style))
+    except Exception:
+        return [style]
+
+
+FOOTAGE_LED = ("doc",)        # styles where every beat is a shot of real footage
+
+
+def continuous_style(style):
+    """True for a style built as one continuous set (it defines WORLD: atlas, chrome3d, iso3d, studio, clay) or led by
+    footage (doc): form-repeat does not apply there."""
+    for sid in style_chain(style):
+        if sid in FOOTAGE_LED:
+            return True
+        try:
+            from h9 import derive
+            if hasattr(derive.load_base(sid), "WORLD"):
+                return True
+        except SystemExit:
+            return False
+    return False
+
+
+def family_of(beat, table, position=None, style=None):
+    """(family, known): the layout family of one beat. A style's own scenes are looked up in style_scenes first."""
     scene = beat.get("scene")
     if scene == "fx":
         name = beat.get("fx")
@@ -48,7 +78,14 @@ def family_of(beat, table, position=None):
         label = f"fx:{name}"
     else:
         name = scene
-        fam = table["scenes"].get(name)
+        fam = None
+        own = table.get("style_scenes") or {}
+        for sid in style_chain(style):
+            fam = (own.get(sid) or {}).get(name)
+            if fam:
+                break
+        if fam is None:
+            fam = table["scenes"].get(name)
         label = f"scene:{name}"
     if fam is None:
         return label, False
@@ -109,9 +146,11 @@ def beat_where(i, times):
     return f"#{i}"
 
 
-def lint(video, timeline=None):
-    """[(level, rule, message)] for one video.json (timeline = the build's timeline.json, for beat times)."""
+def lint(video, timeline=None, style=None):
+    """[(level, rule, message)] for one video.json (timeline = the build's timeline.json, for beat times;
+    style = the style it is built in, default meta.style)."""
     table = load_table()
+    style = style or (video.get("meta") or {}).get("style") or "press"
     beats = video.get("beats") or []
     found = []
     if not beats:
@@ -124,7 +163,7 @@ def lint(video, timeline=None):
     families = []
     unknown = []
     for i, b in enumerate(beats):
-        fam, known = family_of(b, table, positions[i])
+        fam, known = family_of(b, table, positions[i], style)
         families.append(fam)
         if not known and fam not in unknown:
             unknown.append(fam)
@@ -132,13 +171,14 @@ def lint(video, timeline=None):
     if unknown:
         found.append(("WARN", "form-unknown", "不在 form_families.json 里（各算一个家族，请补表）：" + "、".join(unknown)))
 
+    one_set = continuous_style(style)      # one world / one footage film: the same layout family all through is the design
     run_start = 0
     for i in range(1, len(families) + 1):
         same = i < len(families) and families[i] == families[i - 1]
         if same:
             continue
         run_len = i - run_start
-        if run_len >= 2:
+        if run_len >= 2 and not one_set:
             fam = families[run_start]
             found.append(("P1", "form-repeat", f"{beat_where(run_start, times)} 起连续 {run_len} 个 beat 都是「{fam}」版式：换一种载体（贴人 / 图表 / 界面 / 比喻）"))
         run_start = i
@@ -175,14 +215,15 @@ def lint(video, timeline=None):
     return found
 
 
-def summary(video):
+def summary(video, style=None):
     """'slogan ×12 · ui ×3 …' for printing."""
     table = load_table()
+    style = style or (video.get("meta") or {}).get("style") or "press"
     positions = presenter_positions(video)
     counts = {}
     order = []
     for i, b in enumerate(video.get("beats") or []):
-        fam, _ = family_of(b, table, positions[i])
+        fam, _ = family_of(b, table, positions[i], style)
         if fam not in counts:
             counts[fam] = 0
             order.append(fam)

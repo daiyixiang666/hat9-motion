@@ -15,13 +15,58 @@ def roots():
     return [p for p in r if p.exists()]
 
 
+LAST_MISS = ""      # file name of the last font find() could not locate (for readable errors downstream)
+HOW = "设置 H9_MEDIA=<素材库目录>（字体放在它的 fonts/ 下）或 H9_FONT_DIRS=<字体目录>，或把文件放进 assets/fonts/"
+
+
 def find(fname):
+    global LAST_MISS
     for r in roots():
         p = r / fname
         if p.exists(): return p
         for dp, _, fs in os.walk(r):
             if fname in fs: return Path(dp) / fname
+    LAST_MISS = fname
     return None
+
+
+def style_ids(style):
+    """every registered font id a style uses: its text roles plus the 3D face(s) of a world style (font3d)."""
+    ids = []
+    for v in (style.get("fonts") or {}).values():
+        for fid in (v if isinstance(v, list) else [v]):
+            if fid not in ids: ids.append(fid)
+    f3 = style.get("font3d")
+    if isinstance(f3, str): f3 = {"cjk": f3}
+    for k in ("cjk", "latin"):
+        fid = (f3 or {}).get(k)
+        if fid and fid not in ids: ids.append(fid)
+    return ids
+
+
+def missing(style):
+    """[(id, file, url)] for the style's registered, non-optional fonts that cannot be found on this machine."""
+    out = []
+    for fid in style_ids(style):
+        meta = REG.get(fid)
+        if not meta or meta.get("optional"): continue
+        if not find(meta["file"]): out.append((fid, meta["file"], meta.get("url", "")))
+    return out
+
+
+def warn_missing(style, label=""):
+    """print one clear warning per missing font (text falls back to a system face; 3D glyph styles cannot build)."""
+    miss = missing(style)
+    for fid, fname, url in miss:
+        print(f"  ! 字体 {fid}（{fname}）找不到{f'（风格 {label}）' if label else ''}：画面会退回系统字体。{HOW}" + (f"；下载：{url}" if url else ""))
+    return miss
+
+
+def need(fname, what="3D 字形"):
+    """a font file that must exist (glyph outlines are cut from it): its path, or a readable error."""
+    p = find(fname) if fname else None
+    if not p: raise SystemExit(f"{what}需要字体文件 {fname or LAST_MISS or '?'}，本机找不到。{HOW}")
+    return p
 
 
 def build(X, text):

@@ -862,14 +862,14 @@
    "id": "bar_race",
    "file": "bar_race",
    "band": "",
-   "title": "",
+   "title": "柱状图赛跑",
    "how": "",
    "cat": "数据",
-   "ref": "Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放",
-   "label": "柱状图赛跑 · Bar Race",
+   "ref": "",
+   "label": "",
    "suit": "排名随时间变化、超车",
-   "style": "hud",
-   "style_name": "暗场"
+   "style": "reel",
+   "style_name": "动效库"
   },
   {
    "id": "stacked_bars",
@@ -1897,6 +1897,201 @@
    "suit": "片尾预告下一期",
    "style": "papercut",
    "style_name": "剪纸"
+  },
+  {
+   "id": "drop_stack",
+   "file": "drop_stack",
+   "band": "",
+   "title": "掉落堆叠 Drop Stack",
+   "how": "units fall with gravity, bounce once and stack into a column whose height IS the number; a counter ticks on every landing and names the unit that just landed (items, synced to the narration). A dashed outline shows the final height from the first frame, so the eye knows where the count is going.",
+   "cat": "物理",
+   "ref": "",
+   "label": "",
+   "suit": "「到 2023 年已经有 26 座」「一年开了 N 家」——一个可数的总数，最好还能点名每一个",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "pour_fill",
+   "file": "pour_fill",
+   "band": "",
+   "title": "倒入液面 Pour Fill",
+   "how": "a stream pours into a container outline and the level rises to the percentage; the surface sloshes and settles (or grains heap up and slump flat). From `from` to `value`, with a dashed mark where it started. Over 100 % it overflows: the liquid runs down the outside and pools on the floor.",
+   "cat": "物理",
+   "ref": "",
+   "label": "",
+   "suit": "渗透率、完成率、占比从 A 涨到 B，「已经超了」",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "topple",
+   "file": "topple",
+   "band": "",
+   "title": "多米诺推倒 Topple",
+   "how": "a row of tall slabs, one item written up each spine; a ball rolls in, the first slab tips and knocks the next — a real domino chain (each one leans on its neighbour, never through it) — and as they land flat the row reads left to right: the items become the sentence. An optional headline slams down on top.",
+   "cat": "物理",
+   "ref": "",
+   "label": "",
+   "suit": "「靠的是三件事」「一个接一个」、因果链、连锁反应",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "dolly_layers",
+   "file": "dolly_layers",
+   "band": "",
+   "title": "推轨穿层 Dolly Layers",
+   "how": "one continuous camera push through 4–6 planes standing at real depth — the title, each item, then the number. The plane at the focal distance is sharp; planes ahead are soft and small, planes behind the lens sweep past and dissolve. Each plane arrives in focus when the narration says it.",
+   "cat": "镜头",
+   "ref": "",
+   "label": "一起下单 · 截至 2024 年底",
+   "suit": "「工厂、仓配、采购，背后是……」逐层递进、最后落到一个数",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "rack_focus",
+   "file": "rack_focus",
+   "band": "",
+   "title": "焦点转移 Rack Focus",
+   "how": "two planes at different depths — the claim on a card close to the lens, the fact further back. The focus pulls from one to the other: the near plane melts into blur and drifts toward camera, the far one sharpens (with a small focus-hunt overshoot) and settles. The pull lands when the narration says the fact.",
+   "cat": "镜头",
+   "ref": "",
+   "label": "",
+   "suit": "「很多人以为……其实……」、前后对比、表象 vs 真相",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "magnet_sort",
+   "file": "magnet_sort",
+   "band": "",
+   "title": "磁极分拣 Magnet Sort",
+   "how": "dozens of chips lie scattered over the whole frame; two magnets switch on and every chip flies to its pole (closest first, overshooting into the pile), each pole tallying as its pile grows. The split you see IS the split in the data: 97.5 % vs 2.5 % lands as 39 chips against 1.",
+   "cat": "物理",
+   "ref": "",
+   "label": "",
+   "suit": "「收入里 97.5% 来自……」「多数 vs 少数」二分",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "orbit_number",
+   "file": "orbit_number",
+   "band": "",
+   "title": "环绕大数 Orbit Number",
+   "how": "a huge number extruded in real CSS 3D (sixteen stacked slices), the camera orbiting 60° around it while it counts up; labels are pinned in space around it and keep facing the lens as the view turns.",
+   "cat": "镜头",
+   "ref": "",
+   "label": "",
+   "suit": "一个值得停下来看的核心数字，配 2–4 个注脚",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "zoom_scale",
+   "file": "zoom_scale",
+   "band": "",
+   "title": "十倍缩放 Zoom Scale",
+   "how": "two bars on one axis. The axis starts where the small one is easy to see, then zooms out by powers of ten — 10 → 100 → 1,000 … — gridlines sliding down and relabelling each step — until the small bar is a dot on the floor and the big one finally fits beside it. The number of steps IS the gap.",
+   "cat": "数据",
+   "ref": "",
+   "label": "",
+   "suit": "「4 块钱一杯，一年净赚 44.5 亿」差几个数量级的两个数",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "small_multiples",
+   "file": "small_multiples",
+   "band": "",
+   "title": "小倍数图 Small Multiples",
+   "how": "up to twelve mini-charts on one shared scale in a 3 × 4 grid, drawing one after another in reading order; then one is singled out — outlined in the accent and, in 9:16, lifted into a full-width version under the caption that runs to the bottom edge.",
+   "cat": "数据",
+   "ref": "",
+   "label": "",
+   "suit": "很多个对象各自的走势、「一座座亮起来」",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "word_mosaic",
+   "file": "word_mosaic",
+   "band": "",
+   "title": "字海成形 Word Mosaic",
+   "how": "hundreds of small glyphs related to the word drift over the whole frame as noise, then fly into the cells of the headline's real letter shapes (rasterised from the style's font) and assemble it, left to right; the leftover glyphs stay as a faint field to the bottom edge.",
+   "cat": "字效",
+   "ref": "",
+   "label": "",
+   "suit": "「最后都汇成一条供应链」、由许多个组成一个",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "type_mask",
+   "file": "type_mask",
+   "band": "",
+   "title": "字形窗口 Type Mask",
+   "how": "the headline, huge, is a window cut in the page — the beat's photo or footage plays through the letters. Then the camera dives into a stroke (the point deepest inside the letters, found from the real glyph shapes) and the window opens to the full frame.",
+   "cat": "字效",
+   "ref": "",
+   "label": "",
+   "suit": "开章、点题、「第一件事：自己生产」配一段实拍",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "weight_breath",
+   "file": "weight_breath",
+   "band": "",
+   "title": "字重呼吸 Weight Breath",
+   "how": "the headline is set thin and grey; as the narration says each syllable, that glyph inhales — weight swells to black and width stretches, then settles to bold — while a syllable meter along the bottom pulses in step. Uses the style's variable-weight font when it has one; otherwise thickens the strokes.",
+   "cat": "字效",
+   "ref": "",
+   "label": "",
+   "suit": "金句、口号、一句要一字一顿说出来的话",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "stamp_press",
+   "file": "stamp_press",
+   "band": "",
+   "title": "盖章 Stamp Press",
+   "how": "a rubber stamp hangs over the document, then slams down — the stamp squashes, the frame jolts — and lifts away, leaving an inked mark with a rough, speckled texture (turbulence-eroded ink): the verdict, a date, a total. The slam lands when the narration says it.",
+   "cat": "质感",
+   "ref": "",
+   "label": "",
+   "suit": "「已上市」「驳回」「完成」、一个定论或日期",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "unroll",
+   "file": "unroll",
+   "band": "",
+   "title": "卷轴展开 Unroll",
+   "how": "a scroll hangs from a rod; its weighted roll drops and turns, paying out paper that runs to the bottom edge, and the headline, the rows and the total are printed on it in the order they are said — the roll reaches each line as the narration does.",
+   "cat": "字效",
+   "ref": "",
+   "label": "",
+   "suit": "账单、清单、利润表、「248 亿收入，最后剩多少」",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "ink_reveal",
+   "file": "ink_reveal",
+   "band": "",
+   "title": "墨迹显影 Ink Reveal",
+   "how": "ink drops hit the page and bloom — blots with turbulent, wet edges (SVG turbulence displacing the shapes) spread until they join, and the headline (and the beat's picture, if any) is revealed inside the ink, knocked out in the ground colour. Works on any ground: the ink is the style's text colour or its accent.",
+   "cat": "质感",
+   "ref": "",
+   "label": "",
+   "suit": "开篇、点题、一个有分量的词",
+   "style": "reel",
+   "style_name": "动效库"
   }
  ],
  "transitions": [
@@ -1959,6 +2154,26 @@
    "id": "shutter",
    "label": "快门 · Shutter",
    "file": "tr_shutter"
+  },
+  {
+   "id": "paint_wipe",
+   "label": "三笔刷屏 · Paint Wipe（三道宽笔刷扫过盖满，再扫出去）",
+   "file": "tr_paint_wipe"
+  },
+  {
+   "id": "whip_carry",
+   "label": "甩镜带物 · Whip Carry（上一句的重点词锁在画面里带进下一拍）",
+   "file": "tr_whip_carry"
+  },
+  {
+   "id": "shape_match",
+   "label": "形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状）",
+   "file": "tr_shape_match"
+  },
+  {
+   "id": "paper_tear",
+   "label": "撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开）",
+   "file": "tr_paper_tear"
   }
  ],
  "styles": []

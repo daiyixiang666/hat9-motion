@@ -57,14 +57,14 @@ const sc = sun.shadow.camera;
 scene.add(sun); scene.add(sun.target);
 
 // the islands float: an invisible floor far below only catches their soft shadows
-const catcher = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), new THREE.ShadowMaterial({ color: PAL.shadow, opacity: 0.2 }));
+const catcher = new THREE.Mesh(new THREE.PlaneGeometry(6000, 6000), new THREE.ShadowMaterial({ color: PAL.shadow, opacity: 0.35 }));
 catcher.rotation.x = -Math.PI / 2; catcher.position.y = -5.5; catcher.receiveShadow = true; scene.add(catcher);
 
 // contact shadow blob (fake ambient occlusion under every object)
 const blobTex = (() => { const c = document.createElement("canvas"); c.width = c.height = 128; const g = c.getContext("2d");
-  const gr = g.createRadialGradient(64, 64, 4, 64, 64, 62); gr.addColorStop(0, "rgba(70,50,110,.6)"); gr.addColorStop(0.55, "rgba(70,50,110,.25)"); gr.addColorStop(1, "rgba(70,50,110,0)");
+  const gr = g.createRadialGradient(64, 64, 4, 64, 64, 62); gr.addColorStop(0, "rgba(59,47,99,.75)"); gr.addColorStop(0.55, "rgba(59,47,99,.32)"); gr.addColorStop(1, "rgba(59,47,99,0)");
   g.fillStyle = gr; g.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
-const blobMat = new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, depthWrite: false, opacity: 0.5 });
+const blobMat = new THREE.MeshBasicMaterial({ map: blobTex, transparent: true, depthWrite: false, opacity: 0.62 });
 const blobGeo = new THREE.PlaneGeometry(1, 1);
 function blob(parent, w, d, x = 0, z = 0, y = 0.02) { const m = new THREE.Mesh(blobGeo, blobMat); m.rotation.x = -Math.PI / 2; m.scale.set(w, d, 1); m.position.set(x, y, z); m.renderOrder = 1; parent.add(m); return m; }
 
@@ -180,6 +180,7 @@ function text3(parent, str, { size = 1, depth = 0.22, color = PAL.ink, colors, t
 
 // ---------- the timeline + streams
 const tl = gsap["timeline"]({ paused: true });   // seeked by hf-seek below
+const boards = [];                                 // billboards turned to the camera each frame
 const streams = [];                                // f(t), every frame
 const pins = [];                                   // DOM labels that follow 3D points
 const at = (v) => Math.max(0, v);
@@ -207,14 +208,122 @@ function arrive(group, t, kids, first) {
 }
 const bounce = (obj, t, amt = 0.16) => tl.fromTo(obj.scale, { y: 1 - amt, x: 1 + amt * 0.5, z: 1 + amt * 0.5 }, { y: 1, x: 1, z: 1, duration: 0.6, ease: "elastic.out(1.1,0.45)", immediateRender: false }, at(t));
 
+// ---------- numbers as objects: billboards, standing lettering, road paint, truck decals
+// "*…*" marks the words in the accent colour; the rest is navy ink
+function emSplit(str) {
+  let plain = "", on = false; const cols = [];
+  for (const ch of String(str)) { if (ch === "*") { on = !on; continue; } plain += ch; if (ch !== " " && GLYPHS[ch]) cols.push(on ? PAL.coral : PAL.ink); }
+  return { plain, cols: cols.length ? cols : [PAL.ink] };
+}
+const PXU = (ww) => W / ww;                         // screen px per world unit at a given frame width (orthographic)
+// sign faces are lit from the front so they read white whatever the sun does (a printed board, not a lit wall)
+const signFace = new THREE.MeshStandardMaterial({ color: "#ffffff", roughness: 0.9, emissive: new THREE.Color("#ffffff"), emissiveIntensity: 0.62 });
+const signRim = new THREE.MeshStandardMaterial({ color: PAL.coral, roughness: 0.7, emissive: new THREE.Color(PAL.coral), emissiveIntensity: 0.25 });
+// a billboard on two posts, facing the camera: kicker line, the figure in condensed 3D digits, the unit in the accent colour.
+// The posts rise on the beat; the digits are dropped in one by one on the figure's word (old figure knocked off first when "from" is set).
+function billboard(parent, s, x, z, ww, t0, post) {
+  const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = Q; parent.add(g); boards.push(g);   // turned to the camera every frame
+  const vstr = (s.pre || "") + s.v, ustr = s.u || "";
+  const TR = 0.07;                                   // open tracking so counters ("4.8") never close up
+  const vw = Math.max(0.5, textWidth(vstr, TR)), uw = textWidth(ustr, 0.03), us = 0.42;
+  const BW0 = ww * (PORTRAIT ? 0.62 : 0.4), vmax = ww * (PORTRAIT ? 0.24 : 0.16);          // a short figure gets a narrower board, not giant digits
+  const vs = Math.min(vmax, (BW0 * 0.88) / (vw + 0.12 + uw * us));
+  const BW = Math.max(BW0 * 0.62, (vw + 0.12 + uw * us) * vs / 0.84), pad = BW * 0.08;      // ≥ 8 % padding all round
+  const ks = s.k ? Math.min(vs * 0.3, (BW - 2 * pad) / Math.max(1, textWidth(s.k))) : 0;
+  const subs = (s.rows || []).map((f) => emSplit(f.text));
+  const ss = subs.length ? Math.min(vs * 0.3, ...subs.map((r) => (BW - 2 * pad) / Math.max(1, textWidth(r.plain)))) : 0;
+  const SB = subs.length * ss * 1.35;
+  const BH = pad * 2 + vs * 0.8 + (ks ? ks * 1.5 : 0) + SB;
+  const HP = post != null ? (PORTRAIT ? post : post * 0.5) : BW * 0.22;
+  const posts = new THREE.Group(); g.add(posts);
+  for (const px of [-BW * 0.34, BW * 0.34]) cyl(posts, BW * 0.016, HP + BH * 0.5, PAL.muted, px, 0, -0.35, 10);
+  blob(g, BW * 0.9, BW * 0.25, 0, -0.3);
+  const up = new THREE.Group(); up.position.y = HP; g.add(up);
+  box(up, BW + 0.5, BH + 0.5, 0.36, PAL.coral, 0, -0.25, -0.12, 0.3, signRim);
+  box(up, BW, BH, 0.5, PAL.card, 0, 0, 0, 0.26, signFace);
+  const zf = 0.3;
+  if (ks) { const k = text3(up, s.k, { size: ks, depth: ks * 0.04, color: PAL.ink, face: false, track: 0.03 }); k.position.set(0, BH - pad - ks * 0.4, zf); }
+  const total = vw * vs + 0.12 * vs + uw * vs * us;
+  const vy = pad + SB + vs * 0.4;
+  subs.forEach((r, i) => {
+    const ln = text3(up, r.plain, { size: ss, depth: ss * 0.07, colors: r.cols, face: false, track: 0.03 });
+    ln.position.set(0, pad * 0.8 + (subs.length - 1 - i) * ss * 1.35 + ss * 0.4, zf);
+    const ta = at(((s.rows[i].at) || t0 + 1.2) - 0.25);
+    ln.userData.glyphs.forEach((p, j) => tl.from(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.4, ease: "back.out(2.2)" }, ta + j * 0.04));
+  });
+  const mk = (str, col) => { const t = text3(up, str, { size: vs, depth: vs * 0.018, color: col, face: false, track: TR }); t.position.set(-total / 2 + vw * vs / 2, vy, zf); return t; };
+  const val = mk(vstr, PAL.ink);
+  if (ustr) { const u = text3(up, ustr, { size: vs * us, depth: vs * us * 0.03, color: PAL.coral, face: false, track: 0.03 }); u.position.set(total / 2 - uw * vs * us / 2, vy - vs * (1 - us) * 0.36, zf); }
+  const tUp = at(t0 - 0.15);
+  tl.from(posts.scale, { y: 0.001, duration: 0.5, ease: "back.out(1.6)" }, tUp);
+  tl.from(up.position, { y: 0.4, duration: 0.6, ease: "back.out(1.4)" }, tUp + 0.05);
+  tl.from(up.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.45, ease: "back.out(2)" }, tUp + 0.05);
+  // digits are set into the board one by one, each popping in place (never travelling over the label or out of the face)
+  const drop = (txt, t1) => txt.userData.glyphs.forEach((p, i) => {
+    tl.from(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.32, ease: "back.out(2.4)" }, at(t1 + i * 0.06));
+  });
+  if (s.from) {
+    const old = mk((s.pre || "") + s.from, PAL.muted);
+    drop(old, tUp + 0.35);
+    const tk = at(s.at - 0.4);
+    old.userData.glyphs.forEach((p, i) => tl.to(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.18, ease: "power2.in" }, tk + i * 0.03));
+    drop(val, tk + 0.25);
+  } else drop(val, Math.max(tUp + 0.3, Math.min(s.at - 0.35, t0 + 0.45)));   // built right after the sign goes up: the page's headline
+  return { g, w: BW };
+}
+// lettering standing on the island (casts a real shadow) or painted flat on the ground
+function lettering(parent, f, x, z, ww, t0, flat) {
+  const { plain, cols } = emSplit(f.text);
+  const want = (flat ? 84 : 84) / PXU(ww);            // ≈ 60–80 px tall glyphs on screen
+  const size = Math.min(want, (ww * (PORTRAIT ? 0.86 : 0.5)) / Math.max(0.5, textWidth(plain)));
+  const t = text3(parent, plain, { size, depth: flat ? size * 0.05 : size * 0.3, colors: cols, flat, track: 0.03 });
+  t.position.set(x, flat ? 0.04 : size * 0.38 + 0.02, z);
+  if (!flat) blob(parent, textWidth(plain) * size * 0.75, size * 1.2, x + size * 0.3, z + size * 0.3);
+  const ta = at((f.at || t0 + 0.6) - 0.3);
+  t.userData.glyphs.forEach((p, i) => {
+    tl.from(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.45, ease: "back.out(2.2)" }, ta + i * 0.045);
+    if (!flat) tl.from(p.position, { y: 1.4, duration: 0.5, ease: "bounce.out" }, ta + i * 0.045);
+  });
+  return t;
+}
+// a figure painted on a truck's cargo side (the +z face the camera sees)
+function decal(tk, f, t0) {
+  const { plain, cols } = emSplit(f.text);
+  const pm = String(f.text).match(/\*([^*]+)\*/); const str = pm ? pm[1] : plain;
+  const size = Math.min(1.0, 2.3 / Math.max(0.5, textWidth(str)));
+  const t = text3(tk, str, { size, depth: 0.05, color: PAL.coral, face: false, track: 0.02 });
+  t.position.set(-0.35, 0.95, 0.66);
+  t.userData.glyphs.forEach((p, i) => tl.from(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.4, ease: "back.out(2.4)" }, at((f.at || t0 + 0.8) - 0.25 + i * 0.05)));
+  return t;
+}
+function decorate(b, m) {
+  const sp = b.spots || {}; const g = b.g;
+  const ww = viewFor(b.size, REG, AZ0) * ZOOM * W / H;
+  const onBoard = (m.floats || []).filter((f) => (f.mode || sp.mode) === "board");
+  if (m.sign && sp.sign) {
+    const bb = billboard(g, Object.assign({}, m.sign, { rows: onBoard }), sp.sign[0], sp.sign[1], ww, m.t, sp.post);
+    if (b.cont && b.cont.follow && sp.ride) {        // the ride: the board travels with the parcel so it never leaves the frame
+      const x0 = sp.sign[0], f = b.cont.follow, gx = g.position.x;
+      streams.push((t) => { bb.g.position.x = Math.max(x0, Math.min(sp.ride, f(t)[0] - gx + sp.lead)); });
+    }
+  }
+  (m.floats || []).forEach((f, i) => {
+    const mode = f.mode || sp.mode || "stand";
+    if (mode === "board") return;
+    if (mode === "truck" && sp.truck) { decal(sp.truck, f, m.t); return; }
+    const spot = (sp.floats || [[0, 6]])[i % Math.max(1, (sp.floats || [1]).length)];
+    lettering(g, f, spot[0], spot[1], ww, m.t, mode === "road");
+  });
+}
+
 const MODS = CFG.mods;
 const world = new THREE.Group(); scene.add(world);
 
 // ---------------------------------------------------------------- modules
-// framing: each island is fitted into the screen region the overlay cards leave free; the target sits at its centre
-// each island is framed into the screen region the overlay cards leave free; the target sits at that region's centre
-const REG = PORTRAIT ? { cw: 0.94, ch: 0.42, fx: 0.5, fy: 0.6 } : { cw: 0.6, ch: 0.76, fx: 0.665, fy: 0.5 };
-const REG0 = PORTRAIT ? { cw: 0.92, ch: 0.5, fx: 0.5, fy: 0.5 } : { cw: 0.86, ch: 0.74, fx: 0.5, fy: 0.47 };
+// framing: no overlay cards — the island fills the frame (9:16: from under the title sign to past the bottom edge, its corners cropped);
+// the numbers stand in the world, so each island's billboard rises into the upper part of the frame
+const REG = PORTRAIT ? { cw: 1.0, ch: 0.6, fx: 0.5, fy: 0.56 } : { cw: 0.74, ch: 0.6, fx: 0.5, fy: 0.64 };
+const REG0 = PORTRAIT ? { cw: 0.98, ch: 0.56, fx: 0.5, fy: 0.56 } : { cw: 0.86, ch: 0.74, fx: 0.5, fy: 0.47 };
 const AZ0 = 45, EL0 = PORTRAIT ? 35 : 32;
 function viewFor(size, reg, azDeg) {
   const [dx, dy, dz] = size; const a = (azDeg * Math.PI) / 180, e = (EL0 * Math.PI) / 180;
@@ -259,10 +368,10 @@ BUILD.pile = (m, cx, first) => {
   streams.push((t) => { const k = Math.max(0, t - tagT); tag.rotation.z = Math.sin(k * 3.2) * 0.22 * Math.exp(-k * 1.2) + Math.sin(t * 1.1) * 0.02; tag.rotation.y = 0.75 + Math.sin(t * 0.7) * 0.05; });
   const kids = [crane];
   [[-10.5, -9.5], [-11, 8.5], [10.5, 9.5], [-6, 10.5], [4, -10]].forEach(([x, z]) => kids.push(tree(g, x, z, R(0.9, 1.3))));
-  const tk = truck(g, PAL.coral); tk.position.set(6.5, 0, 7.2); tk.rotation.y = -0.35; kids.push(tk);
+  const tk = truck(g, PAL.sky); tk.position.set(6.5, 0, 7.2); tk.rotation.y = -0.35; tk.scale.setScalar(1.5); kids.push(tk);
   kids.push(person(g, PAL.sky, 4.2, 4.6, 1.3), person(g, PAL.mint, -8, 4, 1.3));
   arrive(g, m.t, kids, first);
-  return { g, focus: [cx, 3.6, -0.5], size: [22, 10, 18], card: true };
+  return { g, focus: [cx, 3.6, -0.5], size: [22, 10, 18], card: true, spots: { sign: [-9.5, -10.2], post: 3.2, truck: tk, mode: "truck", floats: [[0, 9]] } };
 };
 
 // a city block: houses, a looping conveyor, one person and their year of parcels
@@ -302,7 +411,7 @@ BUILD.city = (m, cx, first) => {
     s1.position.set(x1, 0, z1); s1.rotation.y = heading(inner, u1); s2.position.set(x2, 0, z2); s2.rotation.y = heading(inner, u2) + Math.PI; });
   kids.push(tree(g, -10.5, 9.5), tree(g, 10.5, -9.5, 1.2), tree(g, 1, 8.4, 0.8));
   arrive(g, m.t, kids, first);
-  return { g, focus: [cx + 0.5, 2, 0.5], size: [24, 7, 21], card: true };
+  return { g, focus: [cx + 0.5, 2, 0.5], size: [24, 7, 21], card: true, spots: { sign: [-8.5, -8.5], post: 5.2, floats: [[5, 7.6]] } };
 };
 
 // a 3D bar chart, block by block
@@ -330,7 +439,7 @@ BUILD.bars = (m, cx, first) => {
   if (m.gap_after != null) { const gx = -span / 2 + (m.gap_after + 0.5) * step + gapW / 2; for (let k = -1; k <= 1; k++) cyl(g, 0.11, 0.1, PAL.muted, gx + k * 0.34, 0, bw / 2 + 1.0, 10); }
   kids.push(tree(g, -span / 2 - 3.2, -5.5, 1.1), tree(g, span / 2 + 3, 5, 1.2));
   arrive(g, m.t, kids, first);
-  return { g, focus: [cx, 5.6, 0.5], size: [span + bw + 2, 13, 7], card: true };
+  return { g, focus: [cx, 5.6, 0.5], size: [span + bw + 2, 13, 7], card: true, spots: { sign: [-span / 2 + 2.5, -5.5], post: 1.2, mode: "board" } };
 };
 
 // stations a parcel passes through; the camera rides along with the coral parcel
@@ -424,10 +533,11 @@ BUILD.route = (m, cx, first) => {
   st.forEach((o, i) => bounce(o.s, ts[i] + 0.02, 0.1));
   // DOM pins over the stations: pop one by one on the count ("五站"), stay until the ride ends
   const pinT = m.at_pins || m.t + 0.6, endT = m.t + m.d + (m.d2 || 0);
-  st.forEach((o, i) => pins.push({ id: "pin" + i, p: [stripX + o.s.position.x + o.pin[0], o.pin[1], o.pin[2]], on: Math.min(pinT + i * 0.12, ts[i] - 0.2), off: endT - 0.1, hi: ts[i] }));
+  st.forEach((o, i) => pins.push({ id: "pin" + i, p: [stripX + o.s.position.x + o.pin[0] - 1.5, 0.1, 4.6], on: Math.min(pinT + i * 0.12, ts[i] - 0.2), off: endT - 0.1, hi: ts[i] }));
   arrive(g, m.t, st.map((o) => o.s), first);
   const follow = (t) => { let x = 0, z = 0; for (let j = 0; j < 5; j++) { const p = heroAt(t - j * 0.09); x += p[0]; z += p[2]; } return [stripX + x / 5, 1.5, z / 5]; };
-  return { g, focus: [stripX, 1.6, 0], size: [L - 2, 5, 12], card: true, slots: (L + 14) / SPACING, cont: { size: [34, 5, 12], follow } };
+  return { g, focus: [stripX, 1.6, 0], size: [L - 2, 5, 12], card: true, slots: (L + 14) / SPACING, cont: { size: [34, 5, 12], follow },
+    spots: { sign: [-L / 2 + 18, -6.5], post: 2.2, ride: L / 2 - 8, lead: 6 }, signSize: [34, 5, 12] };
 };
 
 // unit price melts while volume climbs: a coin stack loses coins, a parcel tower grows beside it
@@ -445,9 +555,10 @@ BUILD.coins = (m, cx, first) => {
   const tb = m.at_drop || m.t + 1.8;
   coins.slice(keep).reverse().forEach((c, i) => {           // the extra coins hop off the top one by one, flip and drop into the void
     const t1 = tb + i * 0.09, side = i % 2 ? 1 : -1, y0 = c.position.y;
-    tl.to(c.position, { y: y0 + 1.6, duration: 0.18, ease: "power2.out" }, at(t1));
-    tl.to(c.position, { x: cX + side * (3.2 + i * 0.25), z: 3.6 + i * 0.25, y: -10, duration: 0.7, ease: "power2.in" }, at(t1 + 0.18));
+    tl.to(c.position, { y: y0 + 0.5, duration: 0.14, ease: "power2.out" }, at(t1));
+    tl.to(c.position, { x: cX + 0.8 + i * 0.2, z: 4.5 + i * 0.3, y: -10, duration: 0.7, ease: "power2.in" }, at(t1 + 0.18));   // off the front edge, away from the sign
     tl.to(c.rotation, { x: 1.9 * side, z: 0.6, duration: 0.88, ease: "none" }, at(t1));
+    tl.to(c.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.4, ease: "power2.in" }, at(t1 + 0.1));   // gone before it can cross the sign
   });
   const TN = 108; const tower = parcels(g, TN);
   streams.push((t) => { const k = easeIO((t - (m.t + 0.2)) / Math.max(1, m.d - 0.6)) * TN;
@@ -459,7 +570,7 @@ BUILD.coins = (m, cx, first) => {
   const yb = text3(g, String(m.yb || ""), { size: 0.85, depth: 0.08, color: PAL.ink, flat: true }); yb.position.set(3.0, 0.03, 3.0);
   const kids = [tree(g, -10, -6.5), tree(g, 10, 6.5, 1.2), tree(g, 9, -6, 0.9), person(g, PAL.sky, 7.2, 3.2, 1.3)];
   arrive(g, m.t, kids, first);
-  return { g, focus: [cx - 0.3, 3.4, 0.3], size: [14, 9, 7], card: true };
+  return { g, focus: [cx - 0.8, 5.2, -0.8], size: [19, 13, 11], card: true, spots: { sign: [-5.5, -4.8], post: 8.6, mode: "road", floats: [[-0.6, 2.2]] } };
 };
 
 // the reveal: the whole world from far away, a field of little towns rising around it, one word above
@@ -467,6 +578,23 @@ BUILD.scale = (m) => {
   const g = new THREE.Group(); world.add(g);
   const holder = new THREE.Group(); g.add(holder);
   const word = text3(holder, m.word || "规模", { size: 1, depth: 0.16, color: PAL.coral });
+  const rows = m.floats || [];                         // the card's rows hang under the word on a floating white board, in the word's own scale
+  if (rows.length) {
+    const pl = new THREE.Group(); pl.rotation.y = Q; holder.add(pl);
+    const sz = Math.min(0.34, ...rows.map((f) => 1.7 / Math.max(0.5, textWidth(emSplit(f.text).plain))));
+    const bw = Math.max(...rows.map((f) => textWidth(emSplit(f.text).plain))) * sz + 0.36, bh = rows.length * sz * 1.3 + 0.24;
+    const top = 0.62 + bh;                            // above the word, in the open sky
+    box(pl, bw + 0.08, bh + 0.08, 0.05, PAL.coral, 0, top - bh - 0.04, -0.03, 0.06, signRim);
+    box(pl, bw, bh, 0.08, PAL.card, 0, top - bh, 0, 0.06, signFace);
+    rows.forEach((f, i) => {
+      const { plain, cols } = emSplit(f.text);
+      const ln = text3(pl, plain, { size: sz, depth: 0.03, colors: cols, track: 0.03, face: false }); ln.position.set(0, top - 0.12 - sz * 0.62 - i * sz * 1.3, 0.06);
+      ln.userData.glyphs.forEach((p, j) => tl.from(p.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.4, ease: "back.out(2.2)" }, at((f.at || m.t + 0.6) - 0.25 + j * 0.04)));
+    });
+    tl.from(pl.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.45, ease: "back.out(1.8)" }, at((rows[0].at || m.t + 0.6) - 0.4));
+  }
+  m.floats = [];
+  tl.to(holder.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.3, ease: "power2.in" }, at(m.t + m.d - 0.75));   // gone before the camera flies on to the next island
   const wt = m.at_word || m.t + 1.5;
   word.userData.glyphs.forEach((p, i) => tl.from(p.position, { y: -0.8, duration: 0.7, ease: "back.out(1.7)" }, at(wt - 0.3 + i * 0.1)));
   tl.from(word.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 0.5, ease: "back.out(1.7)" }, at(wt - 0.32));
@@ -486,7 +614,7 @@ BUILD.scale = (m) => {
     const size = [100, 14, 50];
     const view = viewFor(size, REG, AZ0) * ZOOM, ww = (view * W) / H;
     const s = ((PORTRAIT ? 0.62 : 0.34) * ww) / Math.max(0.5, textWidth(m.word || "规模"));
-    const wy = 4 + view * (PORTRAIT ? 0.07 : 0.2);
+    const wy = 4 + view * (PORTRAIT ? 0.07 : 0.06);
     holder.scale.setScalar(s); holder.position.set(fx, wy, 0);
     streams.push((t) => { holder.position.y = wy + Math.sin(t * 1.3) * view * 0.006; });
     return { focus: [fx, 4, 0], size };
@@ -497,7 +625,7 @@ BUILD.scale = (m) => {
 BUILD.outro = (m, cx, first) => {
   const g = slab(world, 22, 16, PAL.slab3, cx, 0);
   const title = m.title || "";
-  const name = text3(g, title, { size: Math.min(2.2, 12 / Math.max(1, textWidth(title))), depth: 0.55, colors: [PAL.coral, PAL.sky, PAL.mint, PAL.lilac, PAL.gold2] }); name.position.set(PORTRAIT ? -0.2 : -1.6, 1.25, 4.4);
+  const name = text3(g, title, { size: Math.min(PORTRAIT ? 3.4 : 2.2, (PORTRAIT ? 17 : 12) / Math.max(1, textWidth(title))), depth: 0.55, colors: [PAL.coral, PAL.sky, PAL.mint, PAL.lilac, PAL.gold2] }); name.position.set(PORTRAIT ? -0.2 : -1.6, 1.25, 4.4);
   name.userData.glyphs.forEach((p, i) => tl.from(p.position, { y: 7, duration: 0.75, ease: "bounce.out" }, at(m.t + 0.05 + i * 0.08)));
   const prof = [[0, 0], [1.05, 0], [1.08, 0.04], [1.02, 0.07], [0.62, 0.08], [0.6, 0.14], [0.58, 1.0], [0.6, 1.05], [0.6, 1.08], [0, 1.08]].map(([x, y]) => new THREE.Vector2(x, y));
   const hat = new THREE.Group(); hat.position.set(3.4, 0, -3.6); hat.scale.setScalar(2.6); g.add(hat);
@@ -520,13 +648,14 @@ MODS.forEach((m, i) => {
   if (m.kind !== "scale") { slot += b.slots || 1; minX = Math.min(minX, b.g.position.x - 14); maxX = Math.max(maxX, b.g.position.x + 14); }
 });
 built.forEach((b) => { if (b && b.late && !b._done) { Object.assign(b, b.late(minX, maxX)); b._done = true; } });
+MODS.forEach((m, i) => { if (m.kind !== "cont") decorate(Object.assign({}, built[i], built[i].signSize ? { size: built[i].signSize } : {}), m); });
 
 // the road that joins the islands, with traffic; clouds drifting over the void
 const roadL = maxX - minX + 120, roadX = (minX + maxX) / 2;
 box(world, roadL, 0.5, 3.6, PAL.road, roadX, -0.7, 15.2, 0.2);
 for (let k = 0; k < roadL / 3; k++) box(world, 1.2, 0.03, 0.18, PAL.lane, roadX - roadL / 2 + k * 3, -0.2, 15.2, 0.02);
 const fleet = [];
-for (let k = 0; k < 10; k++) { const tr = truck(world, [PAL.coral, PAL.mint, PAL.sky, PAL.lilac][k % 4]); fleet.push({ tr, ph: k / 10 + R(0, 0.04), lane: k % 2 }); }
+for (let k = 0; k < 10; k++) { const tr = truck(world, [PAL.b1, PAL.mint, PAL.sky, PAL.lilac][k % 4]); fleet.push({ tr, ph: k / 10 + R(0, 0.04), lane: k % 2 }); }
 streams.push((t) => fleet.forEach(({ tr, ph, lane }) => {
   const u = ((((t * 9) / roadL + ph) % 1) + 1) % 1; const x = roadX - roadL / 2 + (lane ? 1 - u : u) * roadL;
   tr.position.set(x, -0.2, 15.2 + (lane ? -0.85 : 0.85)); tr.rotation.y = lane ? Math.PI : 0; }));
@@ -571,6 +700,7 @@ function renderAt(t) {
   let tx = cam.tx, tz = cam.tz;
   if (cam.fw > 0.001 && followFn) { const p = followFn(t); tx += (p[0] - tx) * cam.fw; tz += (p[2] - tz) * cam.fw * 0.4; }
   const az = (cam.az * Math.PI) / 180, el = (cam.el * Math.PI) / 180, r = 220;
+  for (const bd of boards) bd.rotation.y = az - (bd.parent ? bd.parent.rotation.y : 0);
   camera.position.set(tx + r * Math.cos(el) * Math.sin(az), cam.ty + r * Math.sin(el), tz + r * Math.cos(el) * Math.cos(az));
   camera.lookAt(tx, cam.ty, tz);
   const hh = cam.view, ww = (hh * W) / H;

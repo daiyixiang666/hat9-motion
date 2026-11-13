@@ -21,6 +21,7 @@ STYLE = {
     "motion": {"ease": "expo.out", "dur": 0.6, "stagger": 0.03, "heading": "blurin", "text": "blurin", "camera": "none", "cut": "hard", "transition": "dip", "em": "static"},
     "layers": [("grain", {"opacity": 0.07})],
     "motion_blur": False,
+    "safe_exempt": [".w-tag"],     # the channel tag at the top is page furniture
     "mascot": {"mode": "cameo", "frame": "none", "landscape": {"right": 70, "bottom": 30, "h": 300}, "portrait": {"left": 60, "bottom": 300, "h": 340}},
     "sfx": {"transition": ("whoosh_deep", 0.35), "title": ("boom", 0.4), "line": ("whoosh_soft", 0.25), "enter": ("whoosh_deep", 0.3), "pop": ("pop", 0.4),
             "hit": ("hit", 0.4), "count": ("tick", 0.25), "mascot": ("whoosh_soft", 0.25), "fly": ("whoosh_soft", 0.3)},
@@ -36,6 +37,9 @@ STYLE = {
 }
 
 STYLE["css"] = """
+/* 9:16: the caption's bottom edge sits at y 1496, above the platform's bottom bar (bottom 400 px) */
+#root.v.st-studio { --cap-bottom:424px; }
+#root.v.st-studio .w-out { bottom:440px; }   /* 9:16: the call to action above the platform's bottom bar */
 #w3d { position:absolute; inset:0; width:100%; height:100%; display:block; }
 .st-studio .w-ov { position:absolute; inset:0; pointer-events:none; }
 .st-studio .w-q { position:absolute; left:130px; top:50%; transform:translateY(-55%); width:720px; }

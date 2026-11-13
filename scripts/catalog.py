@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Effect catalog: cut every effect out of the showcase reel as a looping preview, and write docs/effects.md.
 
-  python3 scripts/catalog.py      (needs examples/aefx/renders/reel_16x9.mp4 [+ reel_9x16.mp4])
-  -> assets/previews/fx/<name>.webp + .gif   and   docs/effects.md
+  python3 scripts/catalog.py [--recut] [--gif]   (needs examples/aefx/renders/reel_16x9.mp4 [+ reel_9x16.mp4])
+  -> assets/previews/fx/<name>.webp (+ .gif)   and   docs/effects.md, gallery/effects.json, gallery/llms.txt
+A hand-written card in references/effects/ is never overwritten; previews already cut from the same render are kept.
 """
 import json, re, subprocess, sys
 from pathlib import Path
@@ -17,6 +18,7 @@ OUT = SKILL / "assets" / "previews" / "fx"
 DOC = SKILL / "docs" / "effects.md"
 CARDS = SKILL / "references" / "effects"
 GIF = "--gif" in sys.argv          # webp only by default (GitHub renders animated webp); --gif adds fallbacks
+RECUT = "--recut" in sys.argv      # cut every preview again (default: only previews missing or older than their render)
 GALLERY = SKILL / "gallery"
 CAT = {   # gallery filter categories
     "字效": ["pop", "mask_up", "tracking", "blur_focus", "apple_blur", "typewriter", "scramble", "write_on", "flip3d", "slice_text", "shine",
@@ -92,7 +94,7 @@ PIT = {
 
 
 REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing",
-                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2")]   # every demo reel that feeds the gallery
+                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2", "fx2")]   # every demo reel that feeds the gallery
 
 
 def beats():
@@ -108,8 +110,29 @@ def beats():
     for ex in REELS:
         vj, r = ex / "video.json", ex / "renders" / "reel_16x9.mp4"
         if not (vj.exists() and r.exists()): continue
-        for b in json.loads(vj.read_text())["beats"]:
+        for b in timed(ex, json.loads(vj.read_text())["beats"]):
             yield b, r, ex / "renders" / "reel_9x16.mp4", "reel"
+
+
+def timed(ex, beats):
+    """beats with their resolved start / length: a chained beat (no "t") takes them from the reel's build
+    (build/reel_16x9/timeline.json), else from the beat before it."""
+    tl = ex / "build" / "reel_16x9" / "timeline.json"
+    times = json.loads(tl.read_text())["beats"] if tl.exists() else []
+    out = []
+    end = 0.0
+    for i, b in enumerate(beats):
+        if "t" not in b or "d" not in b:
+            b = dict(b)
+            if i < len(times) and len(times) == len(beats):
+                b.setdefault("t", times[i]["t"])
+                b.setdefault("d", times[i]["d"])
+            else:
+                b.setdefault("t", end)
+                b.setdefault("d", 4.0)
+        end = float(b["t"]) + float(b["d"])
+        out.append(b)
+    return out
 
 SUIT.update({
     "media": "任意张数的图片 / 视频：1 张、3 张、200 张各是一种编排",
@@ -294,6 +317,85 @@ PIT.update({"logo_wall":"只用自己的或虚构的 logo，绝不用真实品�
 "email_card":"示例或虚构邮件必须带「示意」章；界面是中性的，不模仿任何真实邮箱产品。",
 "notice_card":"刻意做成普通版式：不要红头、不要公章，保留「版式示意」水印，除非是你自己的文件。"})
 
+# ---- 0.17: physics, camera, type-as-picture, data, texture (examples/fx2)
+CAT["物理"] = ["drop_stack", "pour_fill", "topple", "magnet_sort"]
+CAT["镜头"] = ["dolly_layers", "rack_focus", "orbit_number"]
+CAT["字效"] += ["word_mosaic", "type_mask", "weight_breath", "unroll"]
+CAT["数据"] += ["zoom_scale", "small_multiples"]
+CAT["质感"] = ["ink_reveal", "stamp_press"]
+SUIT.update({
+    "drop_stack": "「到 2023 年已经有 26 座」「一年开了 N 家」——一个可数的总数，最好还能点名每一个",
+    "pour_fill": "渗透率、完成率、占比从 A 涨到 B，「已经超了」",
+    "topple": "「靠的是三件事」「一个接一个」、因果链、连锁反应",
+    "magnet_sort": "「收入里 97.5% 来自……」「多数 vs 少数」二分",
+    "dolly_layers": "「工厂、仓配、采购，背后是……」逐层递进、最后落到一个数",
+    "rack_focus": "「很多人以为……其实……」、前后对比、表象 vs 真相",
+    "orbit_number": "一个值得停下来看的核心数字，配 2–4 个注脚",
+    "word_mosaic": "「最后都汇成一条供应链」、由许多个组成一个",
+    "type_mask": "开章、点题、「第一件事：自己生产」配一段实拍",
+    "weight_breath": "金句、口号、一句要一字一顿说出来的话",
+    "unroll": "账单、清单、利润表、「248 亿收入，最后剩多少」",
+    "zoom_scale": "「4 块钱一杯，一年净赚 44.5 亿」差几个数量级的两个数",
+    "small_multiples": "很多个对象各自的走势、「一座座亮起来」",
+    "ink_reveal": "开篇、点题、一个有分量的词",
+    "stamp_press": "「已上市」「驳回」「完成」、一个定论或日期",
+})
+DUR.update({
+    "drop_stack": "4–5 秒（单位越多越久）", "pour_fill": "4–5 秒", "topple": "4–5 秒", "magnet_sort": "4–5 秒",
+    "dolly_layers": "5 秒左右（每层 ≥ 0.8 秒）", "rack_focus": "4–5 秒", "orbit_number": "4–5 秒",
+    "word_mosaic": "4–5 秒", "type_mask": "4–5 秒", "weight_breath": "3.5–5 秒", "unroll": "5 秒左右",
+    "zoom_scale": "5 秒左右", "small_multiples": "5 秒左右", "ink_reveal": "4–5 秒", "stamp_press": "4–5 秒",
+})
+PIT.update({
+    "drop_stack": "单位超过 60 块会报错，要设 `per`；items 比单位多也会报错。",
+    "pour_fill": "数字在 9:16 会被夹在字幕带上方，液面太低时数字不会沉到字幕后面。",
+    "topple": "第一块被推的时刻 = 第一项被说出的时刻（没有字级时间戳时在 30% 处）。",
+    "magnet_sort": "筹码数最多 80；百分比按 n 取整，所以显示值请写在 a_value / b_value 里。",
+    "rack_focus": "没有字级时间戳时在 45% 处转焦。",
+    "word_mosaic": "细笔画字体（毛笔、宋体）会自动加粗采样，保证能认出字形。",
+    "weight_breath": "字级时间戳来自 meta.words；对不上时按 rate 均匀排。",
+    "zoom_scale": "`show` 写显示用的数（如 \"44.5 亿元\"），value 写换算后的同单位数值。",
+    "ink_reveal": "滤镜每帧重算，长时间用会慢一点；建议 ≤ 6 秒。",
+})
+# transitions written on an effect beat ("tr" on the next beat, not a plate): how they are listed
+PREFER = {"bar_race": "fx2"}      # effects reworked later: cut their card from the newer demo reel
+TR_LABEL = {
+    "whip_carry": "甩镜带物 · Whip Carry（上一句的重点词锁在画面里带进下一拍）",
+    "shape_match": "形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状）",
+    "paper_tear": "撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开）",
+    "paint_wipe": "三笔刷屏 · Paint Wipe（三道宽笔刷扫过盖满，再扫出去）",
+}
+
+
+def hand_written(path):
+    """True for a card someone wrote or edited by hand (it carries fields this script never writes, or lacks the
+    popularity row it always writes): catalog.py leaves those alone and only (re)writes its own cards."""
+    if not path.exists():
+        return False
+    text = path.read_text(encoding="utf-8")
+    if "| 人气依据 |" not in text:
+        return True
+    for mark in ("| 跟风格换皮 |", "| 什么时候用 |", "| 同步口播 |", "| 写法 |"):
+        if mark in text:
+            return True
+    return False
+
+
+def card_title(fx):
+    """the title line of an effect's card (its first line, "# `id` · 标题"), for effects whose docstring gives none."""
+    p = CARDS / f"{fx}.md"
+    if not p.exists():
+        return ""
+    first = p.read_text(encoding="utf-8").splitlines()[0]
+    return first.partition("·")[2].strip()
+
+
+def fresh(dst, src):
+    """an existing preview cut from this same render (newer than it) is kept; --recut cuts every preview again."""
+    if RECUT:
+        return False
+    return dst.with_suffix(".webp").exists() and dst.with_suffix(".webp").stat().st_mtime >= src.stat().st_mtime
+
 
 def custom_styles():
     """styles made with style_kit.py whose showcase film was published to assets/previews: they join the gallery's style wall."""
@@ -322,29 +424,41 @@ def main():
         for ob in json.loads(vj.read_text())["beats"]:
             if ob.get("scene") == "fx":
                 ORIG.setdefault(f"{ob['fx']}-{ob['preview']}" if ob.get("preview") else ob["fx"], ob)
+    tr_seen = set()
     for b, reel, reel_v, sid in beats():
         fx = b["fx"]
+        tr = b.get("tr")
+        if fx != "plate" and tr in TR_LABEL and tr not in tr_seen:      # a transition written on an effect beat (examples/fx2)
+            tr_seen.add(tr)
+            name = f"tr_{tr}"
+            if not fresh(OUT / name, reel): cut(reel, b["t"] - 0.45, 1.2, OUT / name, w=360)
+            if reel_v.exists() and not fresh(OUT / f"{name}_v", reel_v): cut(reel_v, b["t"] - 0.45, 1.2, OUT / f"{name}_v", w=200)
+            trans.append((tr, TR_LABEL[tr], name))
+        if fx in PREFER and reel.parent.parent.name != PREFER[fx]: continue
         if fx == "plate":
             if b.get("tr") and b["tr"] != "hard":
                 name = f"tr_{b['tr']}"
-                cut(reel, b["t"] - 0.45, 1.2, OUT / name, w=360)
-                if reel_v.exists(): cut(reel_v, b["t"] - 0.45, 1.2, OUT / f"{name}_v", w=200)
+                if not fresh(OUT / name, reel): cut(reel, b["t"] - 0.45, 1.2, OUT / name, w=360)
+                if reel_v.exists() and not fresh(OUT / f"{name}_v", reel_v): cut(reel_v, b["t"] - 0.45, 1.2, OUT / f"{name}_v", w=200)
                 trans.append((b["tr"], b.get("label", ""), name))
             continue
         band = b.get("preview")                 # a variant worth its own card (e.g. media with 3 vs 200 items)
         key = f"{fx}-{band}" if band else fx
         if key in seen: continue
         seen.add(key)
-        cut(reel, b["t"], b["d"], OUT / key)
-        if reel_v.exists(): cut(reel_v, b["t"], b["d"], OUT / f"{key}_v", w=240)
+        if not fresh(OUT / key, reel): cut(reel, b["t"], b["d"], OUT / key)
+        if reel_v.exists() and not fresh(OUT / f"{key}_v", reel_v): cut(reel_v, b["t"], b["d"], OUT / f"{key}_v", w=240)
         doc = (aefx.FX[fx].__doc__ or "").strip().replace("\n", " ")
         title, _, how = doc.partition(":")
+        if not title.strip() or not how.strip():
+            title = title.strip() or card_title(fx)
         import inspect
         params = sorted(set(re.findall(r'p\[["\'](\w+)["\']\]|p\.get\(["\'](\w+)["\']', inspect.getsource(aefx.FX[fx]))))
         keys = sorted({a or b_ for a, b_ in params} - {"label", "ref"})
         rows.append((fx, title.strip(), how.strip(), keys, b.get("label", ""), b.get("ref", ""), key, b.get("band_label", ""), sid))
         if fx in carded: continue
         carded.add(fx)
+        if hand_written(CARDS / f"{fx}.md"): continue      # written / edited by hand: keep it
         src_b = ORIG.get(key, b)               # the example shows the beat as written in its demo reel (original asset paths)
         ex = {k: v for k, v in src_b.items() if k not in ("t", "d", "tr", "label", "ref")}
         ex = {"scene": "fx", **{k: v for k, v in ex.items() if k != "scene"}, "t": "@关键词"}

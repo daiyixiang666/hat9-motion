@@ -1,6 +1,6 @@
 # 压力测试报告
 
-480 / 480 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
+499 / 499 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
 
 | 目标 | 画幅 | 变体 | 结果 |
 |---|---|---|---|
@@ -55,6 +55,25 @@
 | `burst@6` | 9:16 | 2 | 通过 |
 | `callout` | 16:9 | 4 | 通过 |
 | `callout` | 9:16 | 4 | 通过 |
+| `caption:atlas` | 9:16 | 1 | 通过 |
+| `caption:brand_qingzhou` | 9:16 | 1 | 通过 |
+| `caption:chrome3d` | 9:16 | 1 | 通过 |
+| `caption:clay` | 9:16 | 1 | 通过 |
+| `caption:doc` | 9:16 | 1 | 通过 |
+| `caption:flat` | 9:16 | 1 | 通过 |
+| `caption:hud` | 9:16 | 1 | 通过 |
+| `caption:ink` | 9:16 | 1 | 通过 |
+| `caption:iso3d` | 9:16 | 1 | 通过 |
+| `caption:minimal` | 9:16 | 1 | 通过 |
+| `caption:papercut` | 9:16 | 1 | 通过 |
+| `caption:pixel` | 9:16 | 1 | 通过 |
+| `caption:poster` | 9:16 | 1 | 通过 |
+| `caption:press` | 9:16 | 1 | 通过 |
+| `caption:reel` | 9:16 | 1 | 通过 |
+| `caption:screen` | 9:16 | 1 | 通过 |
+| `caption:sketch` | 9:16 | 1 | 通过 |
+| `caption:studio` | 9:16 | 1 | 通过 |
+| `caption:zine` | 9:16 | 1 | 通过 |
 | `cartoon` | 16:9 | 3 | 通过 |
 | `cartoon` | 9:16 | 3 | 通过 |
 | `chapter_bar` | 16:9 | 3 | 通过 |

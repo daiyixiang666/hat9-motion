@@ -1,5 +1,5 @@
 """pixel · 像素复古游戏风 —— 8/16-bit 游戏的视觉语言做口播：Celeste / Stardew 式的克制像素美术，不是糊成一片的马赛克。
-一个 16 色调色板（Sweetie 16），逻辑分辨率 320×180（竖屏 180×320）、每个像素放大 6 倍；所有精灵都在构建时用 Pillow 无抗锯齿画出、
+一个 16 色调色板（PICO-8 的 16 色，精确色值），逻辑分辨率 320×180（竖屏 180×320）、每个像素放大 6 倍；所有精灵都在构建时用 Pillow 无抗锯齿画出、
 自动描边、最近邻放大；中文用缝合像素 Fusion Pixel 12 栅格成 1-bit 位图（只用 12 / 24 px，放不下就换行，不缩小），
 英文和数字用 Press Start 2P / VT323。
 动作一律走「整像素、整帧」：步进缓动、精灵帧动画、镜头按像素格平移；HUD（金币、计时、关卡）每页常驻。
@@ -17,16 +17,17 @@ from h9 import fit, fonts
 STYLE = {
     "name": "像素复古游戏风", "en": "Pixel", "benchmarks": ["Celeste", "Stardew Valley", "Shovel Knight", "GBA / SNES UI"],
     "tokens": {
-        "bg": "#1a1c2c", "fg": "#f4f4f4", "muted": "#94b0c2", "accent": "#ffcd75", "accent2": "#73eff7", "alert": "#b13e53",
-        "line": "#333c57", "paper": "#1a1c2c", "ink": "#1a1c2c", "card": "#29366f", "card-fg": "#f4f4f4",
-        "cap-bg": "#1a1c2c", "cap-fg": "#f4f4f4", "cap-size": "38px", "cap-weight": "700", "cap-pad": "10px 22px 12px", "cap-radius": "0",
-        "cap-shadow": "0 0 0 6px #f4f4f4, 0 0 0 12px #1a1c2c", "cap-bottom": "60px", "cap-em": "#ffcd75",
+        "bg": "#000000", "fg": "#fff1e8", "muted": "#c2c3c7", "accent": "#ffec27", "accent2": "#ffccaa", "alert": "#ff004d",
+        "line": "#5f574f", "paper": "#000000", "ink": "#000000", "card": "#1d2b53", "card-fg": "#fff1e8",
+        "cap-bg": "#000000", "cap-fg": "#fff1e8", "cap-size": "38px", "cap-weight": "700", "cap-pad": "10px 22px 12px", "cap-radius": "0",
+        "cap-shadow": "0 0 0 6px #fff1e8, 0 0 0 12px #000000", "cap-bottom": "60px", "cap-em": "#ffec27",
         "punch-top": "70%", "punch-size": "64px",
     },
     "fonts": {"display": "fusion-pixel", "body": "fusion-pixel", "pixel": "press-start-2p", "vt": "vt323", "mono": "vt323"},
     "motion": {"ease": "steps(6)", "dur": 0.4, "stagger": 0.05, "cut": "hard", "transition": "cut", "em": "static", "camera": "none"},
     "layers": [],
     "captions": False,          # the style draws its own bitmap captions (see captions()); beats with "cap": false skip them
+    "safe_exempt": [".hud", "#pxfloor", "b.dn"],     # 9:16 game HUD, the floor's ITEMS bar and the dialogue cursor ▼ are furniture
     "mascot": {"mode": "none"},
     # the shared realistic SFX would break the 8-bit world: scenes synthesise chip sounds instead (see chip())
     "sfx": {k: None for k in ("enter", "pop", "hit", "click", "count", "type", "transition", "cut", "wipe", "whoosh", "mascot", "tick")},
@@ -35,24 +36,24 @@ STYLE = {
 #root.v.st-pixel .cap { padding:0 140px 0 60px; }
 /* effects drawn in this style: square corners, no blur, hard stepped type shadows, a 6-px dither on the ground,
    photos and video mosaicked + posterised through the #pxmo filter that FX_FRAME puts on the page */
-.st-pixel .fx { background-image:repeating-conic-gradient(rgba(26,28,44,.07) 0 25%, transparent 0 50%) !important; background-size:12px 12px !important; }
+.st-pixel .fx { background-image:repeating-conic-gradient(rgba(0,0,0,.07) 0 25%, transparent 0 50%) !important; background-size:12px 12px !important; }
 .st-pixel .fx * { border-radius:0 !important; }
 .st-pixel .fx .big { text-shadow:.07em .07em 0 var(--line); }
 .st-pixel .fx .c, .st-pixel .fx .w, .st-pixel .fx .ln, .st-pixel .fx .big, .st-pixel .fx .fw-w { filter:none !important; }
 .st-pixel .fx img:not(.mx-cov), .st-pixel .fx video:not(.mx-cov) { filter:url(#pxmo) !important; image-rendering:pixelated; }
 """,
-    # the four page themes an effect can ask for, all from Sweetie 16: menu grey, night, boss red, desert sand
+    # the four page themes an effect can ask for, all from the PICO-8 palette: menu grey, night, boss red, desert sand
     "fx_themes": {
-        "paper": {"bg": "#f4f4f4", "fg": "#1a1c2c", "muted": "#333c57", "accent": "#b13e53", "card": "#94b0c2", "card-fg": "#1a1c2c", "line": "#94b0c2"},
-        "ink":   {"bg": "#1a1c2c", "fg": "#f4f4f4", "muted": "#94b0c2", "accent": "#ffcd75", "card": "#29366f", "card-fg": "#f4f4f4", "line": "#333c57"},
-        "red":   {"bg": "#b13e53", "fg": "#f4f4f4", "muted": "#f4f4f4", "accent": "#ffcd75", "card": "#1a1c2c", "card-fg": "#f4f4f4", "line": "#5d275d"},
-        "lemon": {"bg": "#ffcd75", "fg": "#1a1c2c", "muted": "#5d275d", "accent": "#b13e53", "card": "#f4f4f4", "card-fg": "#1a1c2c", "line": "#ef7d57"},
+        "paper": {"bg": "#fff1e8", "fg": "#000000", "muted": "#5f574f", "accent": "#ff004d", "card": "#c2c3c7", "card-fg": "#000000", "line": "#c2c3c7"},
+        "ink":   {"bg": "#000000", "fg": "#fff1e8", "muted": "#c2c3c7", "accent": "#ffec27", "card": "#1d2b53", "card-fg": "#fff1e8", "line": "#5f574f"},
+        "red":   {"bg": "#ff004d", "fg": "#fff1e8", "muted": "#fff1e8", "accent": "#ffec27", "card": "#000000", "card-fg": "#fff1e8", "line": "#7e2553"},
+        "lemon": {"bg": "#ffec27", "fg": "#000000", "muted": "#7e2553", "accent": "#ff004d", "card": "#fff1e8", "card-fg": "#000000", "line": "#ffa300"},
     },
 }
 
-# ------------------------------------------------------------------ palette: Sweetie 16 (GrafxKid)
-PAL = {"k": "#1a1c2c", "p": "#5d275d", "r": "#b13e53", "o": "#ef7d57", "y": "#ffcd75", "l": "#a7f070", "g": "#38b764", "t": "#257179",
-       "b": "#29366f", "u": "#3b5dc9", "s": "#41a6f6", "c": "#73eff7", "w": "#f4f4f4", "e": "#94b0c2", "m": "#566c86", "d": "#333c57"}
+# ------------------------------------------------------------------ palette: PICO-8 (the 16 fantasy-console colours, exact hexes)
+PAL = {"k": "#000000", "p": "#7e2553", "r": "#ff004d", "o": "#ffa300", "y": "#ffec27", "l": "#00e436", "g": "#008751", "t": "#ab5236",
+       "b": "#1d2b53", "u": "#ff77a8", "s": "#29adff", "c": "#ffccaa", "w": "#fff1e8", "e": "#c2c3c7", "m": "#83769c", "d": "#5f574f"}
 P = 6                      # screen pixels per art pixel
 
 
@@ -162,7 +163,7 @@ def chest(open_=False):
 
 def person(variant=0):
     im, d = _canvas(5, 8)
-    skin = ("y", "o", "y", "w")[variant % 4]; shirt = ("u", "g", "r", "s", "p", "l")[variant % 6]
+    skin = ("c", "c", "o", "c")[variant % 4]; shirt = ("u", "g", "r", "s", "p", "l")[variant % 6]
     d.rectangle([1, 0, 3, 2], fill=rgb(skin)); d.rectangle([0, 3, 4, 6], fill=rgb(shirt)); d.rectangle([1, 7, 3, 7], fill=rgb("d"))
     return im
 
@@ -380,7 +381,7 @@ def clouds(w, h, seed=3, n=6, col="w", shade="e"):
     return im
 
 
-def ground(w, h, top="l", grass="g", dirt="p", speck="r"):
+def ground(w, h, top="l", grass="g", dirt="t", speck="o"):
     from PIL import Image
     im = Image.new("RGBA", (w, h), rgb(dirt)); o = im.load()
     for x in range(w):
@@ -425,7 +426,7 @@ def person2(variant=0, grey=False):
     im, d = _canvas(9, 14)
     if grey: skin, hair, shirt, legs = "e", "m", "m", "d"
     else:
-        skin = ("y", "o", "y", "w")[variant % 4]; hair = ("k", "p", "r", "d", "o")[variant % 5]
+        skin = ("c", "c", "o", "c")[variant % 4]; hair = ("k", "p", "r", "d", "o")[variant % 5]
         shirt = ("u", "g", "r", "s", "p", "o", "c", "l")[variant % 8]; legs = ("b", "d", "t")[variant % 3]
     d.rectangle([2, 1, 6, 5], fill=rgb(skin)); d.rectangle([2, 0, 6, 1], fill=rgb(hair)); d.point([(2, 2), (6, 2)], fill=rgb(hair))
     if not grey: d.point([(3, 3), (5, 3)], fill=rgb("k"))
@@ -668,17 +669,38 @@ CSS = r"""
 .pxs .hud > * { position:relative !important; flex:none; }
 .pxs .ft { position:absolute; z-index:20; font-family:var(--f-body); font-size:36px; color:var(--muted); white-space:nowrap; text-shadow:3px 3px 0 var(--ink); line-height:1; }
 .pxs .box { position:absolute; background:var(--ink); box-shadow:0 0 0 6px var(--fg), 0 0 0 12px var(--ink); }
-.pxs .box.blue { background:#29366f; }
+.pxs .box.blue { background:#1d2b53; }
 .pxs .box > *, .pxs .tag > * { position:relative !important; left:auto !important; top:auto !important; flex:none; }
 .pxs .tag { position:absolute; background:var(--ink); box-shadow:0 0 0 3px var(--fg), 0 0 0 6px var(--ink); padding:9px 12px 6px; }
-.pxs .bar { position:absolute; background:#333c57; box-shadow:0 0 0 6px var(--fg), 0 0 0 12px var(--ink); overflow:hidden; }
+.pxs .bar { position:absolute; background:#5f574f; box-shadow:0 0 0 6px var(--fg), 0 0 0 12px var(--ink); overflow:hidden; }
 .pxs .bar i { position:absolute; left:0; top:0; bottom:0; width:100%; transform-origin:0 50%; display:block; }
 .pxs .bar i::after { content:""; position:absolute; left:0; right:0; top:0; height:6px; background:rgba(255,255,255,.45); }
-.pxs .bar b { position:absolute; top:0; bottom:0; width:6px; background:#1a1c2c; opacity:.4; display:block; z-index:2; }
+.pxs .bar b { position:absolute; top:0; bottom:0; width:6px; background:#000000; opacity:.4; display:block; z-index:2; }
 .pxs .dz { position:absolute; inset:0; z-index:40; pointer-events:none; }
 .pxs .dz i { position:absolute; background:var(--ink); display:block; }
 .pxs .scan { position:absolute; inset:0; z-index:30; pointer-events:none; background:repeating-linear-gradient(0deg, rgba(10,10,20,.12) 0 1px, transparent 1px 3px); }
 .pxs .vt.hi { color:var(--fg); }
+/* 9:16 handheld layout: HUD bar (0–150) · playfield · RPG caption box at the playfield's foot · game floor + status panel (bottom 30 %) */
+.pxs .hudbar { position:absolute; left:0; right:0; top:0; height:150px; z-index:19; background:var(--ink); box-shadow:0 6px 0 #1d2b53, 0 12px 0 var(--ink); }
+.pxs .hud.v { font-size:32px; text-shadow:4px 4px 0 #1d2b53; }
+.clip.pxcap.v { top:1146px; bottom:auto; left:18px; right:18px; display:block; }
+.pxcap.v .rpg { position:relative; height:180px; background:var(--ink); box-shadow:inset 0 0 0 6px var(--fg), 0 0 0 6px var(--ink); display:flex; align-items:center; gap:24px; padding:0 30px 0 24px; }
+.pxcap.v .slot { flex:none; width:108px; height:108px; background:#1d2b53; box-shadow:0 0 0 6px var(--fg); display:flex; align-items:center; justify-content:center; }
+.pxcap.v .tx { display:flex; align-items:flex-end; }
+.pxcap.v .dn { position:absolute; right:24px; bottom:14px; font-family:var(--f-pixel); font-size:32px; color:#ffec27; line-height:1; font-weight:400; }
+.clip.pxfl { inset:0; pointer-events:none; }
+.pxfl .flr { position:absolute; left:0; right:0; top:1344px; bottom:0; overflow:hidden; background:#1d2b53; box-shadow:inset 0 6px 0 var(--ink); }
+.pxfl img, .pxfl .spr { position:absolute; image-rendering:pixelated; display:block; max-width:none; }
+.pxfl .spr { background-repeat:no-repeat; }
+.pxfl .lay { position:absolute; left:0; top:0; }
+.pxfl .box { position:absolute; background:var(--ink); box-shadow:inset 0 0 0 6px var(--fg); }
+.pxfl .pf { position:absolute; font-family:var(--f-pixel); color:var(--fg); white-space:nowrap; line-height:1; }
+.pxfl .s32 { font-size:32px; text-shadow:4px 4px 0 #1d2b53; }
+.pxfl .slotr { position:absolute; display:flex; align-items:center; gap:15px; }
+.pxfl .slotr > * { position:relative !important; flex:none; }
+.clip.pxsrc { inset:0; pointer-events:none; }
+.pxsrc .s { position:absolute; left:174px; right:60px; display:flex; flex-direction:column; gap:4px; }
+.pxsrc img { image-rendering:pixelated; display:block; }
 .clip.pxcap { top:auto; height:auto; left:0; right:0; display:flex; justify-content:center; pointer-events:none; }
 .pxcap .in { display:flex; align-items:flex-end; background:var(--ink); padding:12px 21px 15px; box-shadow:0 0 0 6px var(--fg), 0 0 0 12px var(--ink); }
 .pxcap img { image-rendering:pixelated; display:block; }
@@ -845,6 +867,111 @@ def fill(X, sel, t, dur, frac, n=12):
     X.tw(f'tl.fromTo("{sel} i", {{scaleX:0}}, {{scaleX:{frac:.4f}, duration:{max(dur, 0.1):.3f}, ease:"steps({n})"}}, {t:.3f});')
 
 
+# ------------------------------------------------------------------ hero figures: 3×5 bitmap digits, integer-scaled to 300 px
+DIG = {"0": "111101101101111", "1": "010110010010111", "2": "111001111100111", "3": "111001111001111", "4": "101101111001001",
+       "5": "111100111001111", "6": "111100111101111", "7": "111001001010010", "8": "111101111101111", "9": "111101111001111",
+       "+": "000010111010000", "%": "101001010100101"}
+DIG_IX = {**{str(k): k for k in range(10)}, "+": 11, "%": 12}
+BK = 60                     # screen px per digit pixel: 5 rows × 60 = 300-px-tall figures
+
+
+def digit_sheet(col="y"):
+    """0–9 + blank, each a 3×5 cell, one art pixel per digit pixel (scaled by BK in CSS)."""
+    im, d = _canvas(3 * 13, 5)
+    for ch, k in DIG_IX.items():
+        bits = DIG[ch]
+        for j, b_ in enumerate(bits):
+            if b_ == "1": d.point((k * 3 + j % 3, j // 3), fill=rgb(col))
+    return im
+
+
+def big_split(final):
+    """the part drawn in 300-px digits (all of it when it fits ~1020 px, else the integer part) and the small rest."""
+    units = sum(4 if c.isdigit() else 2 for c in final) - 1
+    if units * BK <= 1024: return final, ""
+    ip, _, fr = final.partition(".")
+    return ip, ("." + fr if fr else "")
+
+
+def bignum(X, cls, final, x, y, anchor="c", col="y", init=None):
+    """300-px bitmap figure at art (x, y): one sprite cell per digit position, a static dot; counts with bigcount().
+    A 2-art-px drop shadow in the palette's dark blue. Returns (html, screen width)."""
+    url = asset_png(X, f"dig2_{col}", lambda: digit_sheet(col))
+    shown = list((init or "0").replace(".", "").rjust(sum(c.isdigit() for c in final))[-sum(c.isdigit() for c in final):])
+    di = 0
+    cw, chh = 3 * BK, 5 * BK
+    parts, L = [], 0
+    last = max(k for k, c in enumerate(final) if c != ".")
+    for k, c in enumerate(final):
+        if c == ".":
+            parts.append(f'<i class="dot" style="position:absolute;left:{L}px;top:{4 * BK}px;width:{BK}px;height:{BK}px;background:{PAL[col]}"></i>')
+            L += 2 * BK
+        else:
+            if c.isdigit():
+                ch_ = shown[di]; di += 1
+                ix, cl = (10 if ch_ == " " else int(ch_)), "dg"
+            else:
+                ix, cl = DIG_IX.get(c, 10), "dgs"         # + and % stand still while the digits count
+            parts.append(f'<span class="{cl}" style="position:absolute;left:{L}px;top:0;width:{cw}px;height:{chh}px;background-image:url({url});'
+                         f'background-size:{39 * BK}px {chh}px;background-position:-{ix * 3 * BK}px 0;image-rendering:pixelated"></span>')
+            L += 4 * BK
+    W = L - BK
+    left = x * P - (W / 2 if anchor == "c" else W if anchor == "r" else 0)
+    left = round(left / P) * P
+    return (f'<div class="bign {cls}" style="position:absolute;z-index:6;left:{left}px;top:{round(y * P)}px;width:{W}px;height:{chh}px;'
+            f'filter:drop-shadow({2 * P}px {2 * P}px 0 {PAL["b"]})">{"".join(parts)}</div>'), W
+
+
+def bigcount(X, sel, t, val, dur, dec, big_dec=None, steps=16, v0=None):
+    """count the 300-px figure up to val (the digits shown follow big_dec decimals; blank cells left of the number)."""
+    bd = dec if big_dec is None else big_dec
+    v0 = round(val * 0.4, bd) if v0 is None else v0       # counts start from a visible value, never a lone 0
+    X.tw(f'(()=>{{const o={{v:{v0}}}, els=[...document.querySelectorAll("{sel} .dg")]; if(!els.length) return; '
+         f'const show=()=>{{const s=(Math.floor(o.v*{10 ** bd}+1e-6)/{10 ** bd}).toFixed({bd}).replace(".",""); const pad=Math.max(0, els.length-s.length); '
+         f'els.forEach((e,k)=>{{const c=k<pad?10:+s[k-pad]; e.style.backgroundPosition=(-c*{3 * BK})+"px 0";}});}}; '
+         f'tl.to(o, {{v:{val}, duration:{max(dur, 0.1):.3f}, ease:"steps({steps})", onUpdate:show}}, {t:.3f});}})();')
+    if bd != dec:        # the decimals line lands with the count (it would contradict a figure still counting)
+        X.tw(f'tl.set("{sel}r", {{visibility:"visible"}}, {t + max(dur, 0.1):.3f});')
+
+
+def bigrow(X, cls, val, dec, unit, y, ucol="y"):
+    """9:16 hero figure: the 300-px digits centred at art row y, the rest (decimals that do not fit) + the unit on a line
+    under it in 72-px type. Returns (html, bottom art y, big_dec for bigcount)."""
+    AW = art(X)[0]
+    final = f"{val:.{dec}f}"
+    bigs, rest = big_split(final)
+    bd_ = dec if not rest else 0
+    h, W = bignum(X, cls, bigs, AW / 2, y, "c", init=f"{round(val * 0.4, bd_):.{bd_}f}")
+    yb = y + 5 * BK / P + 3
+    tail = ""
+    if rest: tail += f'<div class="pf s72" style="position:relative;color:{PAL["y"]}">{core_esc(rest)}</div>'; X.used_text.update(rest)
+    if unit:
+        uu, uw, uh = btext(X, unit, 24, ucol, "k", "b")
+        tail += f'<img src="{uu}" alt="" style="position:relative;width:{uw * UK}px;height:{uh * UK}px">'
+    if tail:
+        h += f'<div class="row {cls}r" style="left:0;right:0;justify-content:center;top:{round(yb * P)}px;gap:18px{";visibility:hidden" if rest else ""}">{tail}</div>'
+        yb += 14
+    X.used_text.update(final)
+    return h, yb, (dec if not rest else 0)
+
+
+def bust():
+    """the host as an 8-bit portrait (32×32, PICO-8 colours): black hair, peach skin, navy sweater over a white collar."""
+    im, d = _canvas(32, 32)
+    d.rectangle([4, 25, 27, 31], fill=rgb("b")); d.rectangle([2, 27, 29, 31], fill=rgb("b"))      # shoulders
+    d.polygon([(12, 24), (16, 29), (20, 24)], fill=rgb("w"))                                       # collar
+    d.rectangle([13, 21, 18, 25], fill=rgb("c"))                                                    # neck
+    d.rectangle([9, 7, 22, 21], fill=rgb("c"))                                                      # face
+    d.rectangle([8, 11, 8, 16], fill=rgb("c")); d.rectangle([23, 11, 23, 16], fill=rgb("c"))       # ears
+    d.rectangle([8, 3, 23, 8], fill=rgb("k")); d.rectangle([7, 5, 9, 12], fill=rgb("k")); d.rectangle([22, 5, 24, 11], fill=rgb("k"))
+    d.rectangle([11, 2, 20, 3], fill=rgb("k")); d.rectangle([17, 8, 21, 9], fill=rgb("k"))        # hair + fringe
+    d.rectangle([12, 13, 13, 14], fill=rgb("k")); d.rectangle([18, 13, 19, 14], fill=rgb("k"))    # eyes
+    d.rectangle([11, 11, 14, 11], fill=rgb("m")); d.rectangle([17, 11, 20, 11], fill=rgb("m"))    # brows
+    d.point([(10, 16), (21, 16)], fill=rgb("u"))                                                    # cheeks
+    d.rectangle([14, 18, 17, 18], fill=rgb("r"))                                                    # mouth
+    return outline(im)
+
+
 # ------------------------------------------------------------------ seams: the tile dissolve (three patterns, alternating)
 SEAMS = (("start", None), ("center", None), ("end", "y"))
 
@@ -869,6 +996,21 @@ def seam_in(X, cid, t, i):
     return h
 
 
+def seam_in_v(X, cid, t, i):
+    """9:16: the new page is revealed tile by tile straight over the old one (an SVG clip of growing squares), so the
+    swap never passes through a black screen; the old page simply ends underneath once the reveal is done."""
+    AW, AH = art(X); s_ = 20; S = s_ * P
+    cols, rows = -(-AW // s_), -(-AH // s_)
+    rects = "".join(f'<rect x="{c * S}" y="{r * S}" width="0" height="0"/>' for r in range(rows) for c in range(cols))
+    frm, axis = SEAMS[i % len(SEAMS)]
+    ax = f', axis:"{axis}"' if axis else ""
+    X.tw(f'tl.set("#{cid} .pxs", {{clipPath:"url(#cp{cid})"}}, {t - 0.01:.3f});')
+    X.tw(f'tl.fromTo("#cp{cid} rect", {{attr:{{width:0, height:0}}}}, {{attr:{{width:{S}, height:{S}}}, duration:0.1, ease:"steps(2)", stagger:{{amount:0.16, grid:[{rows},{cols}], from:"{frm}"{ax}}}}}, {t:.3f});')
+    X.tw(f'tl.set("#{cid} .pxs", {{clipPath:"none"}}, {t + 0.3:.3f});')
+    chip(X, t, "warp", 0.22)
+    return f'<svg width="0" height="0" style="position:absolute"><defs><clipPath id="cp{cid}" clipPathUnits="userSpaceOnUse">{rects}</clipPath></defs></svg>'
+
+
 def seam_out(X, cid, t_end, i):
     h, rows, cols = _tiles(X, "dzo")
     frm, axis = SEAMS[i % len(SEAMS)]
@@ -888,14 +1030,17 @@ def hud(X, b, t, d, cid):
     hearts = "".join(f'<img src="{hu}" alt="" style="width:{9 * UK}px;height:{8 * UK}px">' for _ in range(3))
     coins = getattr(X, "_px_coins", 0)
     D = X.duration or (t + d)
-    top = 36 if X.portrait else 6
+    top = 6 if X.portrait else 6
     X.used_text.update(f"HAT9 WORLD {world} TIME 0123456789×")
-    h = f'<div class="hud" style="left:{8 * P}px;top:{top * P}px">{hearts}<span style="margin-left:6px">HAT9</span></div>'
+    h = ""
+    if X.portrait:        # 9:16: the HUD is a solid bar across the top 150 px, like a handheld's status strip
+        h += f'<div class="hudbar"></div>'
+    h += f'<div class="hud{" v" if X.portrait else ""}" style="left:{8 * P}px;top:{top * P}px">{hearts}<span style="margin-left:6px">HAT9</span></div>'
     if X.portrait:
-        h += f'<div class="hud" style="left:{8 * P}px;top:{(top + 8) * P}px;color:{PAL["c"]}">WORLD {core_esc(world)}</div>'
+        h += f'<div class="hud v" style="left:{8 * P}px;top:{(top + 8) * P}px;color:{PAL["c"]}">WORLD {core_esc(world)}</div>'
     else:
         h += f'<div class="hud" style="left:0;right:0;top:{top * P}px;justify-content:center;color:{PAL["c"]}">WORLD {core_esc(world)}</div>'
-    h += (f'<div class="hud" style="right:{8 * P}px;top:{top * P}px"><span class="spr coinic" style="width:{cw * UK}px;height:{ch * UK}px;'
+    h += (f'<div class="hud{" v" if X.portrait else ""}" style="right:{8 * P}px;top:{top * P}px"><span class="spr coinic" style="width:{cw * UK}px;height:{ch * UK}px;'
           f'background-image:url({cu});background-size:{cw * UK * 4}px {ch * UK}px;display:block"></span><span class="cn">×{coins:02d}</span>'
           f'<span style="margin-left:18px;color:{PAL["e"]}">TIME</span><span class="tm">{max(0, math.ceil(D - t)):03d}</span></div>')
     run_frames(X, f"#{cid} .coinic", cw, 4, t, d, fps=8, k=UK)
@@ -905,8 +1050,8 @@ def hud(X, b, t, d, cid):
         ticker(X, f"#{cid} .cn", t, d, f"'×' + String({coins} + {json.dumps(got)}.filter(x => x <= T).length).padStart(2, '0')")
     X._px_coins = coins + len(got)
     src = b.get("src")
-    if src:
-        X.used_text.update(src)
+    if src: X.used_text.update(src)
+    if src and not X.portrait:            # 9:16: the source sits in the status panel of the game floor (floor())
         txt = f"SOURCE · {src}"
         AW = art(X)[0]
         W = (AW - 16) * P / 3                           # the footer is 36 px pixel type (12-px font, 3×)
@@ -959,7 +1104,7 @@ def captions(X):
     from h9 import captions as C
     meta = X.v.get("meta", {})
     fr = 1 / X.fps
-    mx = int(meta.get("caption_len") or (8 if X.portrait else 12))
+    mx = int(meta.get("caption_len") or (12 if X.portrait else 12))
     ws = []
     for w in C.regroup(X._words):        # 六亿 + 七千 + 四百万 → one token, so a page never breaks inside a spoken number
         tok = str(w["w"]).strip()
@@ -977,7 +1122,7 @@ def captions(X):
         if i + 1 < len(pg): p[1] = min(p[1], pg[i + 1][0] - 2 * fr)
     beats = X.v.get("beats", []); off = []          # beats with "cap": false show the words themselves (dialogue box, title)
     for k, b in enumerate(beats):
-        if b.get("cap") is False:
+        if b.get("cap") is False and not (X.portrait and b.get("scene") == "dialog"):   # 9:16 dialogue is spoken in the standard caption box
             a = X.T(b.get("t", 0)); z = X.T(beats[k + 1]["t"]) if k + 1 < len(beats) else X.duration + 99
             off.append((a, z))
     hl = meta.get("caption_hl") or []
@@ -989,11 +1134,25 @@ def captions(X):
         mark = next((m for m in hl if m in txt), None)
         if mark:
             j = txt.index(mark); runs = [r for r in ((txt[:j], "w"), (mark, "y"), (txt[j + len(mark):], "w")) if r[0]]
+        cid = f"pxc{i}"
+        if X.portrait:     # 9:16: an RPG dialogue box across the foot of the playfield — the host's 8-bit portrait, 36-px type typed out, a blinking ▼
+            body = ""
+            for s_, col in runs:
+                url, w, h = btext(X, s_, 12, col, "k", "b")
+                body += f'<img src="{url}" alt="" style="width:{w * 4}px;height:{h * 4}px">'
+            bu = asset_png(X, "bust", bust)
+            X.used_text.update("▼")
+            X.clip(cid, a, z - a, f'<div class="rpg"><div class="slot"><img src="{bu}" alt="" style="width:{32 * 3}px;height:{32 * 3}px;image-rendering:pixelated"></div>'
+                   f'<div class="tx">{body}</div><b class="dn">▼</b></div>', "pxcap v", 35, track=9)
+            n = max(1, len(txt))
+            X.tw(f'tl.fromTo("#{cid} .tx", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:{min(0.55, n * 0.045):.3f}, ease:"steps({n})"}}, {a:.3f});')
+            toggle(X, f"#{cid} .dn", a + 0.3, max(0.2, z - a - 0.3), 0.25, 0, 1)
+            continue
         body = ""
         for s, col in runs:
             url, w, h = btext(X, s, cpx, col, "k", "b")
             body += f'<img src="{url}" alt="" style="width:{w * UK}px;height:{h * UK}px">'
-        cid = f"pxc{i}"
+
         bot = 520 if X.portrait else 66
         X.clip(cid, a, z - a, f'<div class="in">{body}</div>', "pxcap", 35, track=9, sty=f"bottom:{bot}px")
         X.tw(f'tl.from("#{cid} .in", {{scale:0.7, duration:0.08, ease:"steps(2)"}}, {a:.3f});')
@@ -1025,9 +1184,105 @@ def page(X, b, t, d, cid, body):
     cut_in = b.get("seam") == "cut"                                              # "seam": "cut" = a hard cut on the word
     cut_out = k + 1 < len(beats) and beats[k + 1].get("seam") == "cut"          # (for a page split in mid-sentence)
     t0 = t - lead(X)
-    dz = (seam_in(X, cid, t0, i) if i > 0 and not cut_in else "") + (seam_out(X, cid, t + d - lead(X, k + 1), i + 1) if i < n - 1 and not cut_out else "")
+    svg = ""
+    if X.portrait:      # 9:16: tile-reveal straight from page to page (no black between); the old page ends under the new one
+        dz = ""
+        if i > 0 and not cut_in: svg = seam_in_v(X, cid, t0, i)
+    else:
+        dz = (seam_in(X, cid, t0, i) if i > 0 and not cut_in else "") + (seam_out(X, cid, t + d - lead(X, k + 1), i + 1) if i < n - 1 and not cut_out else "")
     scan = '<div class="scan"></div>' if X.v.get("meta", {}).get("crt", False) else ""
-    X.clip(cid, t0, t + d - t0, f'<div class="pxs">{body}{hud(X, b, t, d, cid)}{scan}{dz}</div>', "scene", 2, track=1 + i % 2)
+    X.clip(cid, t0, t + d - t0, f'{svg}<div class="pxs">{body}{hud(X, b, t, d, cid)}{scan}{dz}</div>', "scene", 2, track=1 + i % 2)
+    if X.portrait:
+        X._px_spans = getattr(X, "_px_spans", []) + [(i, b, t, d)]
+        if i == n - 1: floor(X)
+
+
+FACT_KEY = {"stage": "at_hit", "treasure": "at_end", "world": "at_end", "online": "at_peak", "crowd": "at_lit", "levelup": "at_up"}
+FACT_ICON = {"stage": "star", "treasure": "bag", "world": "coin", "online": "heart", "crowd": "heart", "levelup": "phone"}
+
+
+def facts(X):
+    """one inventory item per beat with a figure: (time it is collected, icon, text) — the beat's own value and unit."""
+    out = []
+    for i, b, t, d in getattr(X, "_px_spans", []):
+        sc = b.get("scene")
+        if sc not in FACT_KEY: continue
+        if sc == "levelup":
+            rows_ = b.get("rows") or []
+            if not rows_: continue
+            r = max(rows_, key=lambda r: float(r["v"]))
+            txt = f"+{float(r['v']):.2f}%"
+        elif b.get("value") is None: continue
+        else:
+            v = float(b["value"]); dec = int(b.get("dec", 2 if v != int(v) else 0))
+            txt = f"{v:.{dec}f}{b.get('unit', '')}"
+        tk = T(X, b, FACT_KEY[sc], t, t + d * 0.7)
+        out.append((min(tk + 0.2, t + d - 0.3), FACT_ICON[sc], txt))
+    return out
+
+
+def floor(X):
+    """9:16 bottom 30 %: the game floor under the playfield, the same for the whole film — a back layer and a ground strip
+    scrolling at two speeds, the runner on it (jumps when a figure is collected), coins that land and stack, and a status
+    panel: the inventory of figures collected so far, plus the current page's source."""
+    AW, AH = art(X); D = X.duration
+    LW = AW * 6
+    h = ""
+    back = asset_png(X, f"flback{LW}", lambda: ridge(LW, 22, "g", seed=12, amp=.5, base=.45, rough=1.2))
+    gnd = asset_png(X, f"flgnd{LW}", lambda: ground(LW, 20))
+    h += f'<div class="lay fb" style="top:{2 * P}px;width:{LW * P}px">{img(back, 0, 0, LW, 22)}</div>'
+    h += f'<div class="lay fg" style="top:{20 * P}px;width:{LW * P}px">{img(gnd, 0, 0, LW, 20)}</div>'
+    pan(X, ".pxfl .fb", 0, D, dx=-round(4 * D))
+    pan(X, ".pxfl .fg", 0, D, dx=-round(min(LW - AW - 2, 30 * D)))
+    mu, mw, mh = sheet(X, "monkey", monkey, 4)
+    h += spr(mu, mw, mh, 4, 18, 22 - mh, "rn")
+    run_frames(X, ".pxfl .rn", mw, 4, 0, D, fps=10)
+    fs = facts(X)
+    for tk, _, _ in fs:            # hop on each collected figure
+        X.tw(f'tl.to(".pxfl .rn", {{y:{-14 * P}, duration:0.18, ease:"steps(4)"}}, {tk - 0.18:.3f}); tl.to(".pxfl .rn", {{y:0, duration:0.22, ease:"steps(5)"}}, {tk + 0.02:.3f});')
+        chip(X, tk - 0.18, "jump", 0.12)
+    # coins land on a stack at the right of the lane, one per coin the scenes collect
+    su = asset_png(X, "coin0", lambda: coin(0)); cw_, ch_ = png_size(X, su)
+    got = sorted(getattr(X, "_px_got", []))[:24]
+    for k, tc in enumerate(got):
+        x = 128 + (k // 8) * (cw_ + 4); y = 21 - ch_ - (k % 8) * 3
+        h += img(su, x, y, cw_, ch_, f"sc sc{k}", sty="opacity:0")
+        X.tw(f'tl.set(".pxfl .sc{k}", {{opacity:1}}, {tc:.3f}); tl.from(".pxfl .sc{k}", {{y:{-18 * P}, duration:0.2, ease:"steps(4)"}}, {tc:.3f});')
+    # the status panel: ITEMS + the inventory (2 columns × 3 rows)
+    h += f'<div class="box" style="left:{3 * P}px;top:{38 * P}px;width:{(AW - 6) * P}px;height:{56 * P}px"></div>'
+    cu, cw, ch = sheet(X, "coin", coin, 4)
+    h += spr(cu, cw, ch, 4, 9, 42, "pic", k=UK) + pf(X, "ITEMS", 16, 42, 32, PAL["y"])
+    X.used_text.update("ITEMS")
+    run_frames(X, ".pxfl .pic", cw, 4, 0, D, fps=8, k=UK)
+    icons = {"star": star, "bag": bag, "coin": coin_stack, "heart": heart, "phone": phone}
+    for j, (tk, icn, txt) in enumerate(fs[:6]):
+        cx = 9 + (j % 2) * 86; cy = 50 + (j // 2) * 10
+        iu = asset_png(X, f"ic_{icn}", icons.get(icn, star)); iw, ih = png_size(X, iu)
+        tu, tw, th = btext(X, txt, 12, "w", "k", "b")
+        sc_ = min(UK, 36 / max(ih, 1))
+        h += (f'<div class="slotr it{j}" style="left:{cx * P}px;top:{cy * P}px;opacity:0"><img src="{iu}" alt="" style="width:{round(iw * sc_)}px;height:{round(ih * sc_)}px">'
+              f'<img src="{tu}" alt="" style="width:{tw * UK}px;height:{th * UK}px"></div>')
+        X.used_text.update(txt)
+        X.tw(f'tl.set(".pxfl .it{j}", {{opacity:1}}, {tk:.3f}); tl.from(".pxfl .it{j}", {{scale:0, duration:0.15, ease:"steps(3)", transformOrigin:"0 50%"}}, {tk:.3f});')
+        flash(X, f".pxfl .it{j}", tk + 0.16, 2)
+        chip(X, tk, "select", 0.2)
+    X.clip("pxfloor", 0, D, f'<div class="flr">{h}</div>', "pxfl", 30, track=8)
+    # the current page's source, small, at the foot of the panel
+    for i, b, t, d in getattr(X, "_px_spans", []):
+        src = b.get("src")
+        if not src: continue
+        txt = f"SOURCE · {src}"
+        W = (AW * P - 174 - 60) / 2                     # inside the dialogue box, under the line, right of the portrait (24-px type)
+        lines = [txt] if _font(12).getlength(txt) <= W else wrap(txt, W, 12)
+        lines = lines[:2]
+        imgs = ""
+        hh = 15
+        for ln in lines:
+            u, w, hh = btext(X, ln, 12, "e", "k", "b")
+            imgs += f'<img src="{u}" alt="" style="width:{w * 2}px;height:{hh * 2}px">'
+        top = 1318 - len(lines) * (hh * 2 + 4)          # bottom edge just inside the box, above the safe line (1504)
+        t0 = t - lead(X, i) if i > 0 else t
+        X.clip(f"pxsrc{i}", t0, t + d - t0, f'<div class="s" style="top:{top}px">{imgs}</div>', "pxsrc", 36, track=10 + i % 2)
 
 
 def got_coin(X, tc):
@@ -1039,10 +1294,10 @@ def stage(b, X, t, d, cid):
     """横版关卡开场：视差山脉 + 奔跑角色吃金币 + 顶问号砖时销量计数落定。
     keys: pre（数字上方一行字）· value（终值）· unit（单位，位图字）· at_hit（顶砖那一刻，默认 2/3 处）。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
-    gy = 204 if V else 150
+    gy = 186 if V else 150
     LW = AW * 3; spd = 64.0
     T1 = T(X, b, "at_hit", t, t + d * 0.62)
-    h = sprite(X, f"sky{AW}x{AH}", lambda: sky(AW, AH, ("b", "u", "s", "c")), 0, 0)[0]
+    h = sprite(X, f"sky{AW}x{AH}", lambda: sky(AW, AH, ("b", "s", "c")), 0, 0)[0]
 
     def layer(cls, name, fn, y, v, inner=""):
         url = asset_png(X, name, fn); w, hh = png_size(X, url)
@@ -1084,11 +1339,19 @@ def stage(b, X, t, d, cid):
     # title + counter
     pre = b.get("pre", ""); unit = b.get("unit", ""); val = float(b.get("value", 0))
     final = f"{val:,.0f}" if val == int(val) else f"{val:,.2f}"
-    ty = 54 if V else 24
+    ty = 30 if V else 24
     if pre:
         th, ty2 = btitle(X, pre, AW / 2, ty, AW - 24, px_max=16, anchor="c", cls="pre")
         h += th; step_in(X, f"{s} .pre", t + 0.06)
     else: ty2 = ty
+    if V:               # 9:16: the figure is drawn in 300-px bitmap digits, decimals + unit underneath
+        bh, yb2, bd = bigrow(X, "cr", val, 0 if val == int(val) else 2, unit, ty2 + 2)
+        h += bh
+        step_in(X, f"{s} .cr, {s} .crr", t + 0.14)
+        bigcount(X, f"{s} .cr", t + 0.3, val, T1 - t - 0.3, 0 if val == int(val) else 2, bd)
+        slam(X, f"{s} .cr", T1); flash(X, f"{s} .cr", T1 + 0.02, 2)
+        size = 0
+        ty2 = yb2 - 2 - 5 * BK / P - 3
     uh, uw, uhh = bimg(X, unit, 0, 0, 24, "y", UK, "un") if unit else ("", 0, 0)
     big = (72, 48) if V or ty2 - ty < 26 else (48,)        # a two-line title on 16:9 leaves room for a 48-px counter only
     size = next((z for z in big + (32, 24) if len(final) * z + uw + 12 <= (AW - 16) * P), 24)
@@ -1096,14 +1359,16 @@ def stage(b, X, t, d, cid):
     row = (f'<div class="row cr" style="left:{round(((AW * P - tot) / 2) / P) * P}px;top:{round((ty2 + 2) * P)}px;gap:12px">'
            f'<div class="pf s{size} num" style="width:{len(final) * size}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     X.used_text.update(final)
-    h += row
-    step_in(X, f"{s} .cr", t + 0.14)
-    counter(X, f"{s} .num", t + 0.3, 0, val, T1 - t - 0.3, dec=0 if val == int(val) else 2, steps=16)
-    slam(X, f"{s} .cr", T1); flash(X, f"{s} .num", T1 + 0.02, 2)
+    if not V:
+        h += row
+        step_in(X, f"{s} .cr", t + 0.14)
+        counter(X, f"{s} .num", t + 0.3, 0, val, T1 - t - 0.3, dec=0 if val == int(val) else 2, steps=16)
+        slam(X, f"{s} .cr", T1); flash(X, f"{s} .num", T1 + 0.02, 2)
     if b.get("badge"):                      # e.g. HI-SCORE! on 「再创新高」
         tB = T(X, b, "at_badge", t, min(t + d - 0.6, T1 + 0.8))
         bs = 48 if len(b["badge"]) * 48 <= (AW - 16) * P else 32
-        h += pf(X, b["badge"], AW / 2, ty2 + 2 + size / P + 5, bs, PAL["y"], "bd", anchor="c", sty="opacity:0")
+        yB = (yb2 + 2) if V else (ty2 + 2 + size / P + 5)
+        h += pf(X, b["badge"], AW / 2, yB, bs, PAL["y"], "bd", anchor="c", sty="opacity:0")
         X.tw(f'tl.set("{s} .bd", {{opacity:1}}, {tB:.3f});'); slam(X, f"{s} .bd", tB, 2.0)
         toggle(X, f"{s} .bd", tB + 0.2, min(0.8, t + d - tB - 0.3), 0.1, f'"{PAL["w"]}"', f'"{PAL["y"]}"', "color")
         chip(X, tB, "up", 0.32)
@@ -1117,17 +1382,17 @@ def online(b, X, t, d, cid):
     ti = t_in(X, t)
     tT = T(X, b, "at_title", t, ti); tV = T(X, b, "at_peak", t, t + d * 0.8)
     val = float(b.get("value", 3000000)); dec = int(b.get("dec", 0)); unit = b.get("unit", "")
-    h = sprite(X, f"night{AW}x{AH}", lambda: sky(AW, AH, ("k", "k", "b", "d")), 0, 0)[0]
+    h = sprite(X, f"night{AW}x{AH}", lambda: sky(AW, AH, ("b", "b", "d")), 0, 0)[0]
     lx = 12 if V else 14
-    ys = dict(date=50, title=58, label=82, bar=94, num=106, leg=120) if V else dict(date=26, title=36, label=70, bar=84, num=98, leg=114)
+    ys = dict(date=34, title=40, label=56, bar=64, num=74, leg=135) if V else dict(date=26, title=36, label=70, bar=84, num=98, leg=114)   # 9:16: the date under the top tabs (y ≥ 204)
     h += pf(X, b.get("date", ""), lx, ys["date"], 32, PAL["c"], "dt")
     th, tb = btitle(X, b.get("title", ""), lx, ys["title"], (AW - 2 * lx) if V else 140, px_max=16, cls="ti", max_lines=2)
     h += th
     sh_ = max(0, round(tb + 1 - ys["label"]))           # a two-line title pushes the meter (and, on 9:16, the stand) down
     for k_ in ("label", "bar", "num", "leg"): ys[k_] += sh_
-    cols, rows = (15, 8) if V else (20, 12)
+    cols, rows = (15, 4) if V else (20, 12)
     sx_, sy_ = (10, 10) if V else (7, 9)
-    gx, gy = ((AW - cols * sx_) // 2 + 2, 130 + sh_) if V else (166, 38)
+    gx, gy = ((AW - cols * sx_) // 2 + 2, 146 + sh_) if V else (166, 38)
     h += sprite(X, f"bleach{cols}x{rows}", lambda: bleachers(cols * sx_ + 6, rows * sy_, rows), gx - 3, gy)[0]
     ppl = ""
     for r in range(rows):
@@ -1142,10 +1407,14 @@ def online(b, X, t, d, cid):
     final = f"{val:,.{dec}f}" if not dec else f"{val:.{dec}f}"
     X.used_text.update(final)
     uh, uw, _ = bimg(X, unit, 0, 0, 12, "y", UK, "un") if unit else ("", 0, 0)
-    h += (f'<div class="row nm" style="left:{lx * P}px;top:{ys["num"] * P}px;gap:12px"><div class="pf s48 num" style="width:{len(final) * 48}px;'
-          f'text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
+    if V:
+        bh, yb2, bd = bigrow(X, "nm", val, dec, unit, ys["num"])
+        h += bh
+    else:
+        h += (f'<div class="row nm" style="left:{lx * P}px;top:{ys["num"] * P}px;gap:12px"><div class="pf s48 num" style="width:{len(final) * 48}px;'
+              f'text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     tag = b.get("peak_tag", "MAX")
-    if tag: h += pf(X, tag, lx + bw, ys["num"] + 1, 32, PAL["r"] if tag == "MAX" else PAL["l"], "mx", anchor="r", sty="opacity:0")
+    if tag: h += pf(X, tag, lx + bw, (ys["bar"] - 9) if V else (ys["num"] + 1), 32, PAL["r"] if tag == "MAX" else PAL["l"], "mx", anchor="r", sty="opacity:0")
     per = float(b.get("count", val)) / (cols * rows)
     leg = b.get("unit_label", "每个小人 ≈ {n}人").replace("{n}", f"{per:,.0f} " if per < 1e5 else f"{per / 1e4:,.0f} 万")
     X.used_text.update(leg)
@@ -1155,15 +1424,16 @@ def online(b, X, t, d, cid):
         X.tw(f'tl.fromTo("{s} .dt", {{clipPath:"inset(0 100% 0 0)"}}, {{clipPath:"inset(0 0% 0 0)", duration:0.3, ease:"steps({max(len(b.get("date", "")), 1)})"}}, {ti:.3f});')
         for k in range(4): chip(X, ti + 0.02 + k * 0.07, "type", 0.18)
     step_in(X, f"{s} .ti", tT); chip(X, tT, "select", 0.3)
-    step_in(X, f"{s} .lb, {s} .hp, {s} .nm, {s} .lg", ti + 0.06, dy=4, st=0.03)
+    step_in(X, f"{s} .lb, {s} .hp, {s} .nm, {s} .lg" + (f", {s} .nmr" if V else ""), ti + 0.06, dy=4, st=0.03)
     a0 = max(t, ti + 0.25)
     frac = min(1.0, float(b.get("fill", 1.0)))
     fill(X, f"{s} .hp", a0, tV - a0, frac, n=12)
-    counter(X, f"{s} .num", a0, 0, val, tV - a0, dec=dec, steps=12)
+    if V: bigcount(X, f"{s} .nm", a0, val, tV - a0, dec, bd, steps=12)
+    else: counter(X, f"{s} .num", a0, 0, val, tV - a0, dec=dec, steps=12)
     X.tw(f'tl.from("{s} .pp", {{y:{3 * P}, opacity:0, duration:0.08, ease:"steps(2)", stagger:{{amount:{max(tV - a0 - 0.1, 0.2):.3f}, grid:[{rows},{cols}], from:"end", axis:"y"}}}}, {a0:.3f});')
     for k in range(6): chip(X, a0 + (tV - a0) * k / 6, "tick", 0.18)
     if tag: X.tw(f'tl.set("{s} .mx", {{opacity:1}}, {tV:.3f});'); slam(X, f"{s} .mx", tV, 1.8)
-    flash(X, f"{s} .num", tV, 3)
+    flash(X, f"{s} .nm" if V else f"{s} .num", tV, 3)
     X.tw(f'tl.to("{s} .pp", {{y:{-2 * P}, duration:0.07, ease:"steps(1)", yoyo:true, repeat:3, stagger:{{each:0.012, grid:[{rows},{cols}], from:"start", axis:"x"}}}}, {tV:.3f});')
     chip(X, tV, "up", 0.32)
     page(X, b, t, d, cid, h)
@@ -1174,11 +1444,11 @@ def treasure(b, X, t, d, cid):
     keys: banner · label · value · dec · unit · tag · at_open · at_end。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
     tO = T(X, b, "at_open", t, t + d * 0.3); tE = T(X, b, "at_end", t, t + d * 0.75)
-    fy = 204 if V else 138
+    fy = 186 if V else 138
     h = sprite(X, f"bricks{AW}x{AH}", lambda: bricks(AW, AH), 0, 0)[0]
     h += sprite(X, f"floor{AW}", lambda: ground(AW, AH - fy, top="e", grass="m", dirt="d", speck="k"), 0, fy)[0]
     cxs = (18, 150) if V else (22, 118)
-    tyy = 150 if V else 62
+    tyy = 140 if V else 62
     fu, fw, fh = sheet(X, "flame", flame, 2)
     for k, x in enumerate(cxs):
         h += sprite(X, "torch", torch, x, tyy, "tc")[0] + spr(fu, fw, fh, 2, x - 1, tyy - fh + 1, f"fl fl{k}")
@@ -1213,19 +1483,23 @@ def treasure(b, X, t, d, cid):
     # info
     val = float(b.get("value", 0)); dec = int(b.get("dec", 2 if val != int(val) else 0))
     final = f"{val:.{dec}f}"
-    if V: ix, anc, yb, yl, yn, yt = AW / 2, "c", 56, 68, 82, 100
+    if V: ix, anc, yb, yl, yn, yt = AW / 2, "c", 30, 40, 54, 0
     else: ix, anc, yb, yl, yn, yt = 150, "l", 30, 44, 58, 80
     h += pf(X, b.get("banner", "ITEM GET!"), ix, yb, 32, PAL["c"], "bn", anchor=anc, sty="opacity:0")
     lh, lb_ = btitle(X, b.get("label", ""), ix, yl, (AW - 16) if V else AW - ix - 8, px_max=16, k=UK, anchor=anc, cls="lb", max_lines=2, gap=1)
     h += lh
     if lb_ + 1 > yn: yt += round(lb_ + 1 - yn); yn = round(lb_ + 1)
-    uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 12, "y", UK, "un") if b.get("unit") else ("", 0, 0)
-    size = 48 if len(final) * 48 + uw + 12 <= ((AW - 12) if V else AW - ix - 6) * P else 24
-    tot = len(final) * size + uw + 12
-    L = (AW * P - tot) / 2 if V else ix * P
-    X.used_text.update(final)
-    h += (f'<div class="row cr" style="left:{round(L / P) * P}px;top:{yn * P}px;gap:12px"><div class="pf s{size} num" '
-          f'style="width:{len(final) * size}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
+    if V:
+        bh, yt, bd = bigrow(X, "cr", val, dec, b.get("unit", ""), yn)
+        h += bh; yt += 1
+    else:
+        uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 12, "y", UK, "un") if b.get("unit") else ("", 0, 0)
+        size = 48 if len(final) * 48 + uw + 12 <= ((AW - 12) if V else AW - ix - 6) * P else 24
+        tot = len(final) * size + uw + 12
+        L = (AW * P - tot) / 2 if V else ix * P
+        X.used_text.update(final)
+        h += (f'<div class="row cr" style="left:{round(L / P) * P}px;top:{yn * P}px;gap:12px"><div class="pf s{size} num" '
+              f'style="width:{len(final) * size}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     tag = b.get("tag", "")
     if tag:
         X.used_text.update(tag)
@@ -1240,9 +1514,14 @@ def treasure(b, X, t, d, cid):
     for k, (x, _) in enumerate(pile):
         h += img(su_, x, fy - 15, 20, 16, f"pl pl{k}")
     X.tw(f'tl.from("{s} .pl", {{y:{8 * P}, opacity:0, duration:0.12, ease:"steps(2)", stagger:{max(0.05, (tE - tO) / max(len(pile), 1)):.3f}}}, {tO + 0.2:.3f});')
-    step_in(X, f"{s} .cr", ti + 0.06, dy=4)
-    counter(X, f"{s} .num", tO, 0, val, tE - tO, dec=dec, steps=14)
-    flash(X, f"{s} .num", tE, 2)
+    if V:
+        step_in(X, f"{s} .cr, {s} .crr", ti + 0.06, dy=4)
+        bigcount(X, f"{s} .cr", tO, val, tE - tO, dec, bd)
+        flash(X, f"{s} .cr", tE, 2)
+    else:
+        step_in(X, f"{s} .cr", ti + 0.06, dy=4)
+        counter(X, f"{s} .num", tO, 0, val, tE - tO, dec=dec, steps=14)
+        flash(X, f"{s} .num", tE, 2)
     if tag: pop_in(X, f"{s} .tg", tE + 0.05); chip(X, tE + 0.05, "select", 0.3)
     page(X, b, t, d, cid, h)
 
@@ -1252,11 +1531,11 @@ def crowd(b, X, t, d, cid):
     keys: label · value · dec · unit · ratio（大字）· note（小字算式）· at_n · at_lit · at_hop。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
     tN = T(X, b, "at_n", t, t + 0.1); tL = T(X, b, "at_lit", t, t + d * 0.45); tH = T(X, b, "at_hop", t, t + d * 0.8)
-    fy = 214 if V else 152
-    h = sprite(X, f"dusk{AW}x{AH}", lambda: sky(AW, AH, ("k", "b", "p", "r")), 0, 0)[0]
+    fy = 196 if V else 152
+    h = sprite(X, f"dusk{AW}x{AH}", lambda: sky(AW, AH, ("b", "b", "s")), 0, 0)[0]
     h += sprite(X, f"street{AW}", lambda: ground(AW, AH - fy, top="m", grass="d", dirt="k", speck="d"), 0, fy)[0]
-    cols, rows = (6, 4) if V else (12, 3)
-    sx_, sy_ = (26, 22) if V else (24, 22)
+    cols, rows = (6, 3) if V else (12, 3)
+    sx_, sy_ = (26, 20) if V else (24, 22)
     gw = (cols - 1) * sx_ + 11
     gx, gy = (AW - gw) // 2, (fy - (rows - 1) * sy_ - 16 - (14 if V else 6))
     bu = asset_png(X, "bang", bang)
@@ -1275,15 +1554,19 @@ def crowd(b, X, t, d, cid):
     h += ppl
     val = float(b.get("value", 0)); dec = int(b.get("dec", 2 if val != int(val) else 0)); final = f"{val:.{dec}f}"
     uh, uw, _ = bimg(X, b.get("unit", ""), 0, 0, 12, "y", UK, "un") if b.get("unit") else ("", 0, 0)
-    if V: lx, anc, yl, yn, yr, yno = AW / 2, "c", 56, 68, 88, 102
+    if V: lx, anc, yl, yn, yr, yno = AW / 2, "c", 30, 41, 0, 0
     else: lx, anc, yl, yn, yr, yno = 14, "l", 26, 38, 32, 50
     lh, _ = btitle(X, b.get("label", ""), lx, yl, AW - 20 if V else 150, px_max=16, k=UK, anchor=anc, cls="lb", max_lines=1)
     h += lh
-    tot = len(final) * 48 + 12 + uw
-    L = (AW * P - tot) / 2 if V else lx * P
-    X.used_text.update(final)
-    h += (f'<div class="row cr" style="left:{round(L / P) * P}px;top:{yn * P}px;gap:12px"><div class="pf s48 num" '
-          f'style="width:{len(final) * 48}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
+    if V:
+        bh, yr, bd = bigrow(X, "cr", val, dec, b.get("unit", ""), yn)
+        h += bh; yr += 2; yno = yr + 11
+    else:
+        tot = len(final) * 48 + 12 + uw
+        L = (AW * P - tot) / 2 if V else lx * P
+        X.used_text.update(final)
+        h += (f'<div class="row cr" style="left:{round(L / P) * P}px;top:{yn * P}px;gap:12px"><div class="pf s48 num" '
+              f'style="width:{len(final) * 48}px;text-align:right;color:{PAL["y"]}">0</div>{uh}</div>')
     ratio = b.get("ratio", ""); note = b.get("note", "")
     if ratio: h += pf(X, ratio, AW / 2 if V else AW - 14, yr, 48, PAL["c"], "rt", anchor="c" if V else "r", sty="opacity:0")
     if note:
@@ -1291,8 +1574,9 @@ def crowd(b, X, t, d, cid):
         sty = f"left:0;right:0;text-align:center" if V else f"right:{14 * P}px"
         h += f'<div class="vt hi no" style="{sty};top:{yno * P}px">{core_esc(note)}</div>'
     ti = t_in(X, t)
-    step_in(X, f"{s} .lb", ti); step_in(X, f"{s} .cr", ti + 0.05, dy=4)
-    counter(X, f"{s} .num", tN, 0, val, max(0.5, min(1.2, tL - tN - 0.2)), dec=dec, steps=12)
+    step_in(X, f"{s} .lb", ti); step_in(X, f"{s} .cr" + (f", {s} .crr" if V else ""), ti + 0.05, dy=4)
+    if V: bigcount(X, f"{s} .cr", tN, val, max(0.5, min(1.2, tL - tN - 0.2)), dec, bd, steps=12)
+    else: counter(X, f"{s} .num", tN, 0, val, max(0.5, min(1.2, tL - tN - 0.2)), dec=dec, steps=12)
     X.tw(f'tl.from("{s} .pc", {{x:{-6 * P}, opacity:0, duration:0.16, ease:"steps(3)", stagger:{{amount:{min(0.7, max(0.2, (tL - ti) * 0.6)):.2f}, grid:[{rows},{cols}], from:"start", axis:"x"}}}}, {ti + 0.04:.3f});')
     X.tw(f'tl.to("{s} .pc.lit .c", {{opacity:1, duration:0.05, ease:"steps(1)", stagger:{{amount:0.5, from:"start"}}}}, {tL:.3f});')
     X.tw(f'tl.to("{s} .pc.lit .bg", {{opacity:1, duration:0.05, ease:"steps(1)", stagger:{{amount:0.5, from:"start"}}}}, {tL + 0.04:.3f});')
@@ -1323,12 +1607,12 @@ def world(b, X, t, d, cid):
     lats = [home[1]] + [x["ll"][1] for x in tg]
     span = max(max(lons) - min(lons) + 30, 230 if V else 360); c0 = (max(lons) + min(lons)) / 2
     lon = tuple(b.get("lon") or (round(c0 - span / 2), round(c0 + span / 2)))
-    top_, bot_ = (62, -16) if V else (75, -50)
+    top_, bot_ = (60, -4) if V else (75, -50)
     lat = tuple(b.get("lat") or (max(top_, max(lats) + 14), min(bot_, min(lats) - 12)))
-    MW, MH, my = round(lon[1] - lon[0]), round(lat[0] - lat[1]), (118 if V else 34)
+    MW, MH, my = round(lon[1] - lon[0]), round(lat[0] - lat[1]), (122 if V else 34)
     cols = {"CN": "r", **{x["iso"]: "y" for x in tg}}
     key = hkey(cols, lon, lat, MW, MH)
-    h = sprite(X, f"sea{AW}x{AH}", lambda: sky(AW, AH, ("k", "b", "b")), 0, 0)[0]
+    h = sprite(X, f"sea{AW}x{AH}", lambda: sky(AW, AH, ("b", "b", "b")), 0, 0)[0]
     mu = asset_png(X, f"map{key}", lambda: pacific(MW, MH, cols, lon, lat, land="t"))
     inner = img(mu, 0, 0, MW, MH)
     hx, hy = proj(home, MW, MH, lon, lat)
@@ -1383,13 +1667,20 @@ def world(b, X, t, d, cid):
     note = b.get("note", "")
     X.used_text.update(note)
     nt = f'<div class="vt">{core_esc(note)}</div>' if note else ""
-    if V: L, top = 8 * P, 54 * P
-    else: L, top = 10 * P, 20 * P
-    h += (f'<div class="box tot" style="left:{L}px;top:{top}px;padding:15px 18px;display:flex;flex-direction:column;gap:12px;align-items:flex-start">'
-          f'{lh_}{rowc}{nt}</div>')
-    step_in(X, f"{s} .tot", t_in(X, t))
-    counter(X, f"{s} .num", tP, 0, val, tE - tP, dec=dec, steps=14)
-    flash(X, f"{s} .num", tE, 2); chip(X, tE, "up", 0.28)
+    if V:          # 9:16: label + note in the box, the total in 300-px digits under it, the map below
+        h += (f'<div class="box tot" style="left:{8 * P}px;top:{29 * P}px;padding:12px 18px;display:flex;flex-direction:column;gap:9px;align-items:flex-start">'
+              f'{lh_}{nt}</div>')
+        bh, _, bd = bigrow(X, "cr", val, dec, b.get("unit", ""), 56)
+        h += bh
+        bigcount(X, f"{s} .cr", min(tP, t + 0.2), val, tE - min(tP, t + 0.2), dec, bd)
+        flash(X, f"{s} .cr", tE, 2); chip(X, tE, "up", 0.28)
+    else:
+        L, top = 10 * P, 20 * P
+        h += (f'<div class="box tot" style="left:{L}px;top:{top}px;padding:15px 18px;display:flex;flex-direction:column;gap:12px;align-items:flex-start">'
+              f'{lh_}{rowc}{nt}</div>')
+        step_in(X, f"{s} .tot", t_in(X, t))
+        counter(X, f"{s} .num", tP, 0, val, tE - tP, dec=dec, steps=14)
+        flash(X, f"{s} .num", tE, 2); chip(X, tE, "up", 0.28)
     page(X, b, t, d, cid, h)
 
 
@@ -1399,9 +1690,9 @@ def levelup(b, X, t, d, cid):
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
     rows_ = b.get("rows", [])
     tU = T(X, b, "at_up", t, t + d * 0.8)
-    h = sprite(X, f"menu{AW}x{AH}", lambda: sky(AW, AH, ("k", "p", "k")), 0, 0)[0]
+    h = sprite(X, f"menu{AW}x{AH}", lambda: sky(AW, AH, ("b", "b", "b")), 0, 0)[0]
     h += sprite(X, f"stars{AW}x{AH}", lambda: starfield(AW, AH, 50, 3), 0, 0, "sf")[0]
-    if V: bx, by, bw, bh = 8, 58, 164, 150
+    if V: bx, by, bw, bh = 8, 98, 164, 90
     else: bx, by, bw, bh = 16, 26, 288, 124
     h += f'<div class="box blue win" style="left:{bx * P}px;top:{by * P}px;width:{bw * P}px;height:{bh * P}px"></div>'
     hh, _ = btitle(X, b.get("head", ""), bx + 8, by + 5, bw - 16, px_max=16, k=UK, cls="hd", max_lines=1)
@@ -1446,6 +1737,16 @@ def levelup(b, X, t, d, cid):
         step_in(X, f"{s} .ic{k}, {s} .nm{k}, {s} .xb{k}, {s} .vv{k}" + (f", {s} .sb{k}" if r.get("sub") else ""), t_in(X, t) + 0.08 + k * 0.06, dy=3, st=0.02)
         toggle(X, f"{s} .ic{k}", t + k * 0.12, d - k * 0.12, 0.25, -P, 0, "y")
     step_in(X, f"{s} .win", t_in(X, t), dy=0, dur=0.12, n=2); step_in(X, f"{s} .hd", t_in(X, t) + 0.04)
+    if V and rows_:     # 9:16 hero: the fastest growth in 300-px digits (whole percent), the exact value on the line under it
+        rb = rows_[best]; vb = float(rb["v"])
+        hh2, _ = bignum(X, "lvh", f"+{int(vb)}%", AW / 2, 28, "c")
+        h += hh2
+        ex = f"+{vb:.2f}% · {rb['name']}"
+        eu, ew, eh = btext(X, ex, 12, "w", "k", "b")
+        h += f'<img class="lvx" src="{eu}" alt="" style="left:{round((AW * P - ew * 4) / 2 / P) * P}px;top:{82 * P}px;width:{ew * 4}px;height:{eh * 4}px">'
+        X.used_text.update(ex)
+        bigcount(X, f"{s} .lvh", t_in(X, t) + 0.1, int(vb), 0.6, 0, 0, steps=10)
+        flash(X, f"{s} .lvh", tU, 3)
     banner = b.get("banner", "LEVEL UP!")
     X.used_text.update(banner)
     yb = by + bh - 15 if V else by + bh - 19
@@ -1480,9 +1781,9 @@ def dialog(b, X, t, d, cid):
     """RPG 对话框：像素主持人站在草地上，台词逐字打出（与口播逐字同步）+ 说到的道具跳出来 + ▼ 光标。
     keys: name（名牌）· text（| 换行）· items[{icon,label,at}]。建议该页 "cap": false（字已在框里）。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
-    if V: fy, fh, sx, boxy, boxh = 120, 46, 18, 178, 66
+    if V: fy, fh, sx, boxy, boxh = 120, 72, 18, 160, 50
     else: fy, fh, sx, boxy, boxh = 66, 46, 34, 116, 52
-    h = sprite(X, f"day{AW}x{fy}", lambda: sky(AW, fy, ("u", "s", "c")), 0, 0)[0]
+    h = sprite(X, f"day{AW}x{fy}", lambda: sky(AW, fy, ("s", "s", "c")), 0, 0)[0]
     h += sprite(X, f"cl{AW}", lambda: clouds(AW * 2, 40, seed=7, n=6), 0, 12 if not V else 50, "cl")[0]
     h += sprite(X, f"field{AW}x{fh}", lambda: field(AW, fh), 0, fy)[0]
     for k, x in enumerate((AW - 38, AW - 22) if not V else (AW - 20,)):
@@ -1513,12 +1814,16 @@ def dialog(b, X, t, d, cid):
         X.tw(f'tl.set("{s} .it{k}, {s} .il{k}", {{opacity:1}}, {ta:.3f}); tl.from("{s} .it{k}", {{y:{-14 * P}, duration:0.24, ease:"steps(4)"}}, {ta:.3f});')
         toggle(X, f"{s} .it{k}", ta + 0.3, t + d - ta - 0.3, 0.2, -2 * P, 0, "y")
         chip(X, ta, "select", 0.28)
+    if V:              # 9:16: the line is spoken in the standard RPG caption box (captions()); the field fills the playfield
+        page(X, b, t, d, cid, h)
+        return
     # dialogue box + typewriter on the spoken glyph times
     bxx, bw = (6, AW - 12) if V else (10, AW - 20)
     text = b.get("text", "")
-    px = 12                              # 12-px pixel font at world scale (72-px glyphs); long text wraps
-    lines = [w_ for ln in text.split("|") for w_ in wrap(ln, bw - 14, px)]
-    need = len(lines) * (px + 9) + 6
+    px = 12                              # 12-px pixel font; 9:16 at the UI scale (36-px glyphs), 16:9 at world scale; long text wraps
+    kk = UK if V else P
+    lines = [w_ for ln in text.split("|") for w_ in wrap(ln, (bw - 14) * P / kk, px)]
+    need = len(lines) * ((px + 9) * kk / P) + 6
     if need > boxh: boxy -= need - boxh; boxh = need        # more text: the box grows upward over the field
     h += f'<div class="box db" style="left:{bxx * P}px;top:{boxy * P}px;width:{bw * P}px;height:{boxh * P}px"></div>'
     name = b.get("name", "HAT9")
@@ -1529,14 +1834,14 @@ def dialog(b, X, t, d, cid):
     ly = boxy + 5
     for j, ln in enumerate(lines):
         url, w, hh = btext(X, ln, px, "w", "k", "b")
-        h += f'<img class="ln ln{j}" src="{url}" alt="" style="left:{(bxx + 7) * P}px;top:{round(ly * P)}px;width:{w * P}px;height:{hh * P}px;clip-path:inset(0 100% 0 0)">'
+        h += f'<img class="ln ln{j}" src="{url}" alt="" style="left:{(bxx + 7) * P}px;top:{round(ly * P)}px;width:{w * kk}px;height:{hh * kk}px;clip-path:inset(0 100% 0 0)">'
         f = _font(px)
         for k in range(1, len(ln) + 1):
             shown = 1 + f.getlength(ln[:k]) + 3
             tk = times[k0 + k - 1]
-            X.tw(f'tl.set("{s} .ln{j}", {{clipPath:"inset(0 {max(0, round((w - shown) * P))}px 0 0)"}}, {tk:.3f});')
+            X.tw(f'tl.set("{s} .ln{j}", {{clipPath:"inset(0 {max(0, round((w - shown) * kk))}px 0 0)"}}, {tk:.3f});')
             if ln[k - 1] not in "，。、！？,.!?": chip(X, tk, "type", 0.16)
-        k0 += len(ln); ly += hh + 3
+        k0 += len(ln); ly += (hh + 3) * kk / P
     X.used_text.update("▼")
     h += f'<div class="pf s24 cur" style="left:{(bxx + bw - 14) * P}px;top:{(boxy + boxh - 9) * P}px;color:{PAL["y"]};opacity:0">▼</div>'
     tend = times[-1] + 0.15 if times else t + d * 0.7
@@ -1549,7 +1854,7 @@ def outro(b, X, t, d, cid):
     """落版：星空 + 逐字掉落的像素标题 + 眨眼的像素主持人 + PRESS START。
     keys: title · sub（英文小字）· prompt（闪烁提示，默认 PRESS START）。建议 "cap": false。"""
     AW, AH = art(X); V = X.portrait; s = f"#{cid}"
-    h = sprite(X, f"sky_o{AW}x{AH}", lambda: sky(AW, AH, ("k", "k", "b", "p")), 0, 0)[0]
+    h = sprite(X, f"sky_o{AW}x{AH}", lambda: sky(AW, AH, ("b", "b", "b")), 0, 0)[0]
     h += sprite(X, f"stars_o{AW}x{AH}", lambda: starfield(AW, AH, 80, 11), 0, 0, "s1")[0]
     h += sprite(X, f"stars_o2{AW}x{AH}", lambda: starfield(AW, AH, 40, 23), 0, 0, "s2")[0]
     hy = AH - 34 if not V else 196
@@ -1597,19 +1902,19 @@ FX_CSS = r"""
 .pxf .bz { position:absolute; inset:12px; box-shadow:0 0 0 6px var(--fg), 0 0 0 60px var(--bg); }
 .pxf .bz b, .pxf .bz i { position:absolute; width:6px; height:6px; display:block; }
 .pxf .bz b { background:var(--bg); } .pxf .bz i { background:var(--fg); }
-.pxf .bar { position:absolute; left:18px; right:18px; background:#1a1c2c; box-shadow:0 6px 0 #333c57; }
+.pxf .bar { position:absolute; left:18px; right:18px; background:#000000; box-shadow:0 6px 0 #5f574f; }
 .pxf .bar .hud { top:50%; transform:translateY(-50%); }
 .pxf .plate { position:absolute; left:0; right:0; display:flex; justify-content:center; }
-.pxf .plate .in { position:relative; display:flex; flex-direction:column; gap:6px; background:#1a1c2c; padding:18px 30px 18px;
-  box-shadow:0 0 0 6px #f4f4f4, 0 0 0 12px #1a1c2c, 12px 12px 0 12px rgba(26,28,44,.45); }
+.pxf .plate .in { position:relative; display:flex; flex-direction:column; gap:6px; background:#000000; padding:18px 30px 18px;
+  box-shadow:0 0 0 6px #fff1e8, 0 0 0 12px #000000, 12px 12px 0 12px rgba(0,0,0,.45); }
 .pxf .plate .row { position:relative; display:flex; align-items:flex-end; }
 .pxf .plate .row > img { position:relative; image-rendering:pixelated; display:block; }
-.pxf .plate .nt { position:absolute; left:24px; top:-18px; background:#1a1c2c; box-shadow:0 0 0 3px #f4f4f4, 0 0 0 6px #1a1c2c; padding:6px 9px 3px;
-  font-family:var(--f-pixel); font-size:24px; color:#ffcd75; line-height:1; white-space:nowrap; }
-.pxf .plate .cur { position:absolute; right:12px; bottom:6px; font-family:var(--f-pixel); font-size:24px; color:#ffcd75; line-height:1; }
-.pxf .stat { position:absolute; display:flex; justify-content:space-between; gap:36px; background:#1a1c2c; padding:3px 12px 0;
-  font-family:var(--f-body); font-size:24px; line-height:30px; color:#94b0c2; white-space:nowrap; }
-.pxf .stat b { font-weight:400; color:#f4f4f4; }
+.pxf .plate .nt { position:absolute; left:24px; top:-18px; background:#000000; box-shadow:0 0 0 3px #fff1e8, 0 0 0 6px #000000; padding:6px 9px 3px;
+  font-family:var(--f-pixel); font-size:24px; color:#ffec27; line-height:1; white-space:nowrap; }
+.pxf .plate .cur { position:absolute; right:12px; bottom:6px; font-family:var(--f-pixel); font-size:24px; color:#ffec27; line-height:1; }
+.pxf .stat { position:absolute; display:flex; justify-content:space-between; gap:36px; background:#000000; padding:3px 12px 0;
+  font-family:var(--f-body); font-size:24px; line-height:30px; color:#c2c3c7; white-space:nowrap; }
+.pxf .stat b { font-weight:400; color:#fff1e8; }
 .pxf .scan { position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(10,10,20,.10) 0 1px, transparent 1px 3px); }
 """
 
@@ -1647,11 +1952,11 @@ def FX_FRAME(X, cid, t, d, p, parts):
         th = f'<img src="{url}" alt="" style="width:{tw * UK}px;height:{thh * UK}px;margin-left:12px">'
     world = f"WORLD {i // 4 + 1}-{i % 4 + 1}"
     X.used_text.update(world + " HAT9 TIME 0123456789×")
-    hud_l = f'<div class="hud" style="left:18px">{hearts}<span style="margin-left:6px;color:#f4f4f4">HAT9</span>{th}</div>'
-    hud_c = "" if V else f'<div class="hud" style="left:0;right:0;justify-content:center;color:#73eff7">{world}</div>'
-    hud_r = (f'<div class="hud" style="right:18px;color:#f4f4f4"><span class="spr coinic" style="width:{cw * UK}px;height:{ch * UK}px;display:block;'
+    hud_l = f'<div class="hud" style="left:18px">{hearts}<span style="margin-left:6px;color:#fff1e8">HAT9</span>{th}</div>'
+    hud_c = "" if V else f'<div class="hud" style="left:0;right:0;justify-content:center;color:#ffccaa">{world}</div>'
+    hud_r = (f'<div class="hud" style="right:18px;color:#fff1e8"><span class="spr coinic" style="width:{cw * UK}px;height:{ch * UK}px;display:block;'
              f'background-image:url({cu});background-size:{cw * UK * 4}px {ch * UK}px"></span><span>×{(i + 1) * 7:02d}</span>'
-             f'<span style="margin-left:18px;color:#94b0c2">TIME</span><span class="tm">{math.ceil(d):03d}</span></div>')
+             f'<span style="margin-left:18px;color:#c2c3c7">TIME</span><span class="tm">{math.ceil(d):03d}</span></div>')
     h += f'<div class="bar" style="top:{bt}px;height:{bh}px">{hud_l}{hud_c}{hud_r}</div>'
     run_frames(X, f"{s} .coinic", cw, 4, t, d, fps=8, k=UK)
     ticker(X, f"{s} .tm", t, d, f"String(Math.max(0, Math.ceil({t + d:.3f} - T))).padStart(3, '0')")

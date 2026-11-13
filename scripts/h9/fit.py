@@ -252,11 +252,18 @@ def fmt_num(v, zh=True, dec=None):
         try: v = float(v.replace(",", ""))
         except ValueError: return v
     neg = v < 0; a = abs(float(v))
-    if zh and a >= 1e8: s = f"{a / 1e8:.{1 if dec is None else dec}f}".rstrip("0").rstrip(".") + "亿"
-    elif zh and a >= 1e4: s = f"{a / 1e4:.{1 if dec is None else dec}f}".rstrip("0").rstrip(".") + "万"
+    if zh and a >= 1e8: s = _trim(f"{a / 1e8:.{1 if dec is None else dec}f}") + "亿"
+    elif zh and a >= 1e4: s = _trim(f"{a / 1e4:.{1 if dec is None else dec}f}") + "万"
     elif a == int(a) and dec is None: s = f"{int(a):,}"
-    else: s = f"{a:,.{2 if dec is None else dec}f}".rstrip("0").rstrip(".")
+    else: s = _trim(f"{a:,.{2 if dec is None else dec}f}")
     return ("-" if neg else "") + s
+
+
+def _trim(s):
+    """drop trailing zeros of the decimals only ("12.50" → "12.5", "3.0" → "3"); "1,200,000" and "120" stay whole."""
+    if "." not in s:
+        return s
+    return s.rstrip("0").rstrip(".")
 
 
 def nice_unit(a, b=0, lo=40, hi=640):
@@ -377,3 +384,23 @@ def seeded_order(n, rand):
     rank = [0] * n
     for pos, i in enumerate(order): rank[i] = pos
     return rank
+
+
+def _selftest():
+    """python3 scripts/h9/fit.py → checks the number formatting (a decimals-only trim; whole numbers keep their zeros)."""
+    cases = [((1200000,), {"zh": False}, "1,200,000"), ((1200000,), {"zh": False, "dec": 0}, "1,200,000"),
+             ((1500,), {"zh": False, "dec": 0}, "1,500"), ((0,), {"zh": False, "dec": 0}, "0"),
+             ((1200000,), {"dec": 0}, "120万"), ((12000,), {}, "1.2万"), ((4.45e9,), {}, "44.5亿"),
+             ((-3.5,), {"zh": False}, "-3.5"), ((12.50,), {"zh": False, "dec": 2}, "12.5"), (("2,000",), {"zh": False}, "2,000")]
+    bad = 0
+    for args, kw, want in cases:
+        got = fmt_num(*args, **kw)
+        if got != want:
+            bad += 1
+            print(f"fmt_num{args} {kw} = {got!r}, want {want!r}")
+    print("fit self-test:", "ok" if not bad else f"{bad} failed")
+    return bad
+
+
+if __name__ == "__main__":
+    raise SystemExit(1 if _selftest() else 0)

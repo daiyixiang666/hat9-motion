@@ -548,14 +548,14 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 - 参数：`a_label`, `b_label`, `basis`, `dec`, `head`, `icon`, `method`, `mode`, `ratio`, `ratio_label`, `ref_value`, `unit_name`, `value`
 - 人气：Envato Popular Infographic · Mapal VOX 式信息图 34.6万播放
 
-### `bar_race` — 
+### `bar_race` — 柱状图赛跑
 
 <img src="../assets/previews/fx/bar_race.webp" width="480" alt="bar_race">
 
 
 
 - 参数：`compact`, `csv`, `dec`, `hl`, `note`, `title`, `top`, `transpose`, `unit`
-- 人气：Data Is Beautiful 编程语言排行赛跑 上线一个半月 265万播放
+- 人气：—
 
 ### `stacked_bars` — 
 
@@ -1134,7 +1134,7 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 
 
 
-- 参数：`at`, `image`, `kicker`, `name`, `price`, `specs`, `sway`, `text`, `turns`, `views`
+- 参数：`image`, `kicker`, `name`, `price`, `specs`, `sway`, `text`, `turns`, `views`
 - 人气：VideoHive Product Promo 分类销量榜
 
 ### `search_box` — 
@@ -1254,6 +1254,141 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 - 参数：`ep`, `hints`, `image`, `kicker`, `note`, `text`, `title`, `video`, `when`
 - 人气：系列号片尾常用「下期拆 XX」
 
+### `drop_stack` — 掉落堆叠 Drop Stack
+
+<img src="../assets/previews/fx/drop_stack.webp" width="480" alt="drop_stack">
+
+units fall with gravity, bounce once and stack into a column whose height IS the number; a counter ticks on every landing and names the unit that just landed (items, synced to the narration). A dashed outline shows the final height from the first frame, so the eye knows where the count is going.
+
+- 参数：`note`, `title`, `unit`, `value`
+- 人气：—
+
+### `pour_fill` — 倒入液面 Pour Fill
+
+<img src="../assets/previews/fx/pour_fill.webp" width="480" alt="pour_fill">
+
+a stream pours into a container outline and the level rises to the percentage; the surface sloshes and settles (or grains heap up and slump flat). From `from` to `value`, with a dashed mark where it started. Over 100 % it overflows: the liquid runs down the outside and pools on the floor.
+
+- 参数：`at`, `caption`, `from`, `note`, `title`, `unit`, `value`
+- 人气：—
+
+### `topple` — 多米诺推倒 Topple
+
+<img src="../assets/previews/fx/topple.webp" width="480" alt="topple">
+
+a row of tall slabs, one item written up each spine; a ball rolls in, the first slab tips and knocks the next — a real domino chain (each one leans on its neighbour, never through it) — and as they land flat the row reads left to right: the items become the sentence. An optional headline slams down on top.
+
+- 参数：`hl`, `note`, `text`, `title`
+- 人气：—
+
+### `dolly_layers` — 推轨穿层 Dolly Layers
+
+<img src="../assets/previews/fx/dolly_layers.webp" width="480" alt="dolly_layers">
+
+one continuous camera push through 4–6 planes standing at real depth — the title, each item, then the number. The plane at the focal distance is sharp; planes ahead are soft and small, planes behind the lens sweep past and dissolve. Each plane arrives in focus when the narration says it.
+
+- 参数：`title`, `unit`, `value`
+- 人气：—
+
+### `rack_focus` — 焦点转移 Rack Focus
+
+<img src="../assets/previews/fx/rack_focus.webp" width="480" alt="rack_focus">
+
+two planes at different depths — the claim on a card close to the lens, the fact further back. The focus pulls from one to the other: the near plane melts into blur and drifts toward camera, the far one sharpens (with a small focus-hunt overshoot) and settles. The pull lands when the narration says the fact.
+
+- 参数：`a`, `a_label`, `at`, `b`, `b_label`
+- 人气：—
+
+### `magnet_sort` — 磁极分拣 Magnet Sort
+
+<img src="../assets/previews/fx/magnet_sort.webp" width="480" alt="magnet_sort">
+
+dozens of chips lie scattered over the whole frame; two magnets switch on and every chip flies to its pole (closest first, overshooting into the pile), each pole tallying as its pile grows. The split you see IS the split in the data: 97.5 % vs 2.5 % lands as 39 chips against 1.
+
+- 参数：`a`, `a_value`, `at`, `b`, `b_value`, `chip_a`, `chip_b`, `note`, `title`
+- 人气：—
+
+### `orbit_number` — 环绕大数 Orbit Number
+
+<img src="../assets/previews/fx/orbit_number.webp" width="480" alt="orbit_number">
+
+a huge number extruded in real CSS 3D (sixteen stacked slices), the camera orbiting 60° around it while it counts up; labels are pinned in space around it and keep facing the lens as the view turns.
+
+- 参数：`note`, `title`, `unit`, `value`
+- 人气：—
+
+### `zoom_scale` — 十倍缩放 Zoom Scale
+
+<img src="../assets/previews/fx/zoom_scale.webp" width="480" alt="zoom_scale">
+
+two bars on one axis. The axis starts where the small one is easy to see, then zooms out by powers of ten — 10 → 100 → 1,000 … — gridlines sliding down and relabelling each step — until the small bar is a dot on the floor and the big one finally fits beside it. The number of steps IS the gap.
+
+- 参数：`a`, `at`, `b`, `note`, `title`, `unit`
+- 人气：—
+
+### `small_multiples` — 小倍数图 Small Multiples
+
+<img src="../assets/previews/fx/small_multiples.webp" width="480" alt="small_multiples">
+
+up to twelve mini-charts on one shared scale in a 3 × 4 grid, drawing one after another in reading order; then one is singled out — outlined in the accent and, in 9:16, lifted into a full-width version under the caption that runs to the bottom edge.
+
+- 参数：`at`, `charts`, `hl`, `note`, `title`, `x`
+- 人气：—
+
+### `word_mosaic` — 字海成形 Word Mosaic
+
+<img src="../assets/previews/fx/word_mosaic.webp" width="480" alt="word_mosaic">
+
+hundreds of small glyphs related to the word drift over the whole frame as noise, then fly into the cells of the headline's real letter shapes (rasterised from the style's font) and assemble it, left to right; the leftover glyphs stay as a faint field to the bottom edge.
+
+- 参数：`at`, `glyphs`, `note`, `text`, `title`
+- 人气：—
+
+### `type_mask` — 字形窗口 Type Mask
+
+<img src="../assets/previews/fx/type_mask.webp" width="480" alt="type_mask">
+
+the headline, huge, is a window cut in the page — the beat's photo or footage plays through the letters. Then the camera dives into a stroke (the point deepest inside the letters, found from the real glyph shapes) and the window opens to the full frame.
+
+- 参数：`at`, `kicker`, `text`
+- 人气：—
+
+### `weight_breath` — 字重呼吸 Weight Breath
+
+<img src="../assets/previews/fx/weight_breath.webp" width="480" alt="weight_breath">
+
+the headline is set thin and grey; as the narration says each syllable, that glyph inhales — weight swells to black and width stretches, then settles to bold — while a syllable meter along the bottom pulses in step. Uses the style's variable-weight font when it has one; otherwise thickens the strokes.
+
+- 参数：`at`, `note`, `text`, `title`
+- 人气：—
+
+### `stamp_press` — 盖章 Stamp Press
+
+<img src="../assets/previews/fx/stamp_press.webp" width="480" alt="stamp_press">
+
+a rubber stamp hangs over the document, then slams down — the stamp squashes, the frame jolts — and lifts away, leaving an inked mark with a rough, speckled texture (turbulence-eroded ink): the verdict, a date, a total. The slam lands when the narration says it.
+
+- 参数：`at`, `sub`, `text`, `tilt`, `title`
+- 人气：—
+
+### `unroll` — 卷轴展开 Unroll
+
+<img src="../assets/previews/fx/unroll.webp" width="480" alt="unroll">
+
+a scroll hangs from a rod; its weighted roll drops and turns, paying out paper that runs to the bottom edge, and the headline, the rows and the total are printed on it in the order they are said — the roll reaches each line as the narration does.
+
+- 参数：`text`, `unit`, `value`
+- 人气：—
+
+### `ink_reveal` — 墨迹显影 Ink Reveal
+
+<img src="../assets/previews/fx/ink_reveal.webp" width="480" alt="ink_reveal">
+
+ink drops hit the page and bloom — blots with turbulent, wet edges (SVG turbulence displacing the shapes) spread until they join, and the headline (and the beat's picture, if any) is revealed inside the ink, knocked out in the ground colour. Works on any ground: the ink is the style's text colour or its accent.
+
+- 参数：`at`, `ink`, `sub`, `text`
+- 人气：—
+
 ## 转场
 
 写在下一个 beat 上：`"tr": "zoomin"`。
@@ -1272,3 +1407,7 @@ two balls approach, merge with a liquid neck, bounce apart; squash & stretch. la
 | `burn` | <img src="../assets/previews/fx/tr_burn.webp" width="240"> | 胶片烧 · Film Burn |
 | `ink` | <img src="../assets/previews/fx/tr_ink.webp" width="240"> | 墨晕 · Ink |
 | `shutter` | <img src="../assets/previews/fx/tr_shutter.webp" width="240"> | 快门 · Shutter |
+| `paint_wipe` | <img src="../assets/previews/fx/tr_paint_wipe.webp" width="240"> | 三笔刷屏 · Paint Wipe（三道宽笔刷扫过盖满，再扫出去） |
+| `whip_carry` | <img src="../assets/previews/fx/tr_whip_carry.webp" width="240"> | 甩镜带物 · Whip Carry（上一句的重点词锁在画面里带进下一拍） |
+| `shape_match` | <img src="../assets/previews/fx/tr_shape_match.webp" width="240"> | 形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状） |
+| `paper_tear` | <img src="../assets/previews/fx/tr_paper_tear.webp" width="240"> | 撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开） |

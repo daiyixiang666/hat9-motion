@@ -1,6 +1,7 @@
 """minimal · 极简讲述 —— 观点 / 心理 / 认知类口播的「高级极简」讲述风格。十条原则提炼自一批同类讲解片的共同做法：
-两种字体各司其职（无衬线正文，斜体衬线只给每屏一个重音词）、暖白纸或深炭灰底 + 纸纹 + 柔和暗角、剪影插画、
-**一条细蓝线贯穿全片**、竖卡式的几种固定版式、慢而不停（每 2–4 秒有新东西）。
+两种字体各司其职（无衬线正文，斜体衬线只给每屏一个重音词）、冷调浅蓝灰平底 #e9eef2（不加纸纹、不加暗角），
+转折处换深海军蓝底、剪影插画、**一条钴蓝细线贯穿全片**、竖卡式的几种固定版式、慢而不停（每 2–4 秒有新东西）。
+字幕是无底板的墨色细字；不出主持人。
 
 招牌：蓝线。每一页的线都从上一页线停下的那个点接着画（ENTRY 登记每种版式的入口点，场景把线画到下一页的入口点），
 切镜头时旧线收回到这个点、新线从这里长出来——线在剪辑点上不断。线在不同页面里是地平线、钟面上走过的 15 分钟、
@@ -10,22 +11,23 @@
 scatter 线变成坐标轴和趋势线（示意） · words 文字居中 + 重音下划线 / 划掉 · split 线是分隔线的左右对照 ·
 bars 线画出柱子轮廓 · paper 真实文献卡片 + 文字 · ratio 一段线剪掉一部分 · card 物件 + 文字收尾。
 剪影插画（孩子、闹钟、画笔、盘子里的棉花糖）全部是本文件里的 SVG，不用外部图片。
-文字标记：*词* = 斜体衬线重音（每屏一个）；| = 换行。beat 写 "ground": "dark" 换深炭灰底。
+文字标记：*词* = 斜体衬线重音（每屏一个）；| = 换行。beat 写 "ground": "dark" 换深海军蓝底。
 """
 import math, random
 
 from h9 import fit, fonts as h9fonts
 
-PAPER, INK, MUTED, BLUE = "#efe9de", "#2b2925", "#625c51", "#2f56c4"
-CHAR, BONE, BLUE_D = "#22211e", "#e9e2d4", "#86a2f2"
+PAPER, INK, MUTED, BLUE = "#e9eef2", "#101820", "#3d4a58", "#2a52e0"     # cool pale blue-grey ground, ink, ink tint for labels, cobalt line
+CHAR, BONE, BLUE_D = "#0e1a2b", "#e9eef2", "#7fa2ff"    # deep navy for turning points, its type, its line
+HZ_V, HZ_H = 1600, 972     # the horizon: the thread's home in the bottom zone (9:16: picture only, under the platform bar; no text there)
 
 STYLE = {
     "name": "极简讲述", "en": "Minimal", "benchmarks": ["高级极简讲解片的十条原则", "18 世纪剪影肖像", "瑞士式留白排版"],
     "tokens": {
         "bg": PAPER, "fg": INK, "muted": MUTED, "accent": BLUE, "accent2": "#8d867a", "alert": BLUE,
-        "line": "#d8d0c2", "paper": PAPER, "ink": INK, "card": "#f7f3eb", "card-fg": INK, "thread": BLUE, "sil": "#2e2b27",
-        "cap-bg": "rgba(239,233,222,0)", "cap-fg": INK, "cap-size": "46px", "cap-weight": "500", "cap-pad": "0 8px",
-        "cap-radius": "0", "cap-shadow": "0 0 14px rgba(239,233,222,.95), 0 0 4px rgba(239,233,222,.9)", "cap-em": BLUE, "cap-bottom": "64px",
+        "line": "#c9d3db", "paper": PAPER, "ink": INK, "card": "#f4f7f9", "card-fg": INK, "thread": BLUE, "sil": INK,
+        "cap-bg": "none", "cap-fg": INK, "cap-size": "38px", "cap-weight": "500", "cap-pad": "0",
+        "cap-radius": "0", "cap-shadow": "none", "cap-em": BLUE, "cap-bottom": "50px",
         "punch-top": "70%", "punch-size": "60px", "punch-stroke": "0",
     },
     # two families only: a clean sans for everything, an italic serif (Garamond italic for Latin + digits, Song for 汉字) for the stressed word
@@ -34,31 +36,31 @@ STYLE = {
               "quote": ["eb-garamond-italic", "noto-serif-sc"]},
     # effect pages: warm paper, deep charcoal, a stone ground, and the card white; the accent is always the thread blue
     "fx_themes": {
-        "paper": {"bg": PAPER, "fg": INK, "muted": "#6f695e", "accent": BLUE, "card": "#f7f3eb", "card-fg": INK, "line": "#d8d0c2"},
-        "ink":   {"bg": CHAR, "fg": BONE, "muted": "#a39c8f", "accent": BLUE_D, "card": "#2c2b28", "card-fg": BONE, "line": "#3a3834"},
-        "red":   {"bg": "#e2ddd2", "fg": INK, "muted": "#6a645a", "accent": BLUE, "card": "#f4f0e8", "card-fg": INK, "line": "#c9c1b2"},
-        "lemon": {"bg": "#f7f3eb", "fg": INK, "muted": "#6f695e", "accent": BLUE, "card": "#efe9de", "card-fg": INK, "line": "#d8d0c2"},
+        "paper": {"bg": PAPER, "fg": INK, "muted": MUTED, "accent": BLUE, "card": "#f4f7f9", "card-fg": INK, "line": "#c9d3db"},
+        "ink":   {"bg": CHAR, "fg": BONE, "muted": "#a9b6c4", "accent": BLUE_D, "card": "#16243a", "card-fg": BONE, "line": "#24344c"},
+        "red":   {"bg": "#dde4ea", "fg": INK, "muted": MUTED, "accent": BLUE, "card": "#f4f7f9", "card-fg": INK, "line": "#c3ced8"},
+        "lemon": {"bg": "#f4f7f9", "fg": INK, "muted": MUTED, "accent": BLUE, "card": PAPER, "card-fg": INK, "line": "#c9d3db"},
     },
-    "motion": {"ease": "power2.out", "dur": 0.9, "stagger": 0.08, "cut": "hard", "transition": "hard", "em": "underline", "camera": "none"},
-    "layers": [("grain", {"opacity": 0.07, "fps": 8, "blend": "multiply"})],
-    "mascot": {"mode": "cameo", "frame": "none", "landscape": {"right": 90, "bottom": 40, "h": 300}, "portrait": {"left": 400, "bottom": 600, "h": 260}},
+    "motion": {"ease": "sine.out", "dur": 0.8, "stagger": 0.08, "cut": "hard", "transition": "hard", "em": "underline", "camera": "none"},
+    "layers": [],     # flat ground: no paper grain, no vignette
+    "mascot": {"mode": "none"},     # no host in this style (build.py still places it on cameo beats, so css hides it)
     "sfx": {"enter": ("whoosh_soft", 0.12), "draw": ("brush", 0.10), "pop": ("tick", 0.18), "tick": ("tick", 0.2), "paper": ("paper", 0.22),
-            "mascot": ("whoosh_soft", 0.15), "cut": None, "transition": None, "count": ("tick", 0.15), "hit": ("tick", 0.25)},
+            "mascot": None, "cut": None, "transition": None, "count": ("tick", 0.15), "hit": ("tick", 0.25)},
     "css": """
-.st-minimal .cap .cp { letter-spacing:.05em; }
-#root.v.st-minimal { --cap-bottom:430px; --cap-size:48px; }
+.st-minimal .mascot { display:none !important; }
+.st-minimal .cap .cp { letter-spacing:.04em; font-size:38px; text-shadow:none; background:none; }
+#root.st-minimal .clip.cap { top:auto; bottom:46px; }
+#root.v.st-minimal .clip.cap { top:1418px; bottom:auto; height:auto; }   /* 9:16: all text lives in y 200-1504; the caption is its last line, the source just above it */
 .st-minimal .cap .em .emt { font-family:var(--f-em); font-style:italic; font-synthesis:none; color:inherit; }
 """,
 }
 
 CSS = r"""
 .mn { position:absolute; inset:0; overflow:hidden; background:var(--paper); color:var(--ink); --th:var(--thread); --mut:var(--muted); --sl:var(--sil); }
-.mn.dark { background:#22211e; color:#e9e2d4; --th:#86a2f2; --mut:#b5ae9f; --sl:#d9d1c1; --paper:#22211e; }
+.mn.dark { background:#0e1a2b; color:#e9eef2; --th:#7fa2ff; --mut:#a9b6c4; --sl:#e9eef2; --paper:#0e1a2b; }
 .mn .cam { position:absolute; inset:0; }
 .mn .grain { position:absolute; inset:0; pointer-events:none; }
 .mn .grain svg { position:absolute; inset:0; width:100%; height:100%; }
-.mn .vig { position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 78% 72% at 50% 46%, rgba(0,0,0,0) 52%, rgba(70,55,35,.16) 100%); }
-.mn.dark .vig { background:radial-gradient(ellipse 78% 72% at 50% 46%, rgba(255,240,215,.035), rgba(0,0,0,.45) 100%); }
 .mn .ln { position:absolute; white-space:nowrap; line-height:1; }
 .mn .b { font-family:var(--f-body); font-weight:300; }
 .mn .s { font-family:var(--f-em); font-style:italic; font-weight:300; font-synthesis:none; }
@@ -69,15 +71,19 @@ CSS = r"""
 .mn .ft { position:absolute; font-family:var(--f-body); font-weight:400; color:var(--mut); letter-spacing:.04em; white-space:nowrap; z-index:6; }
 .mn svg.thr, .mn-tail svg { position:absolute; left:0; top:0; overflow:visible; pointer-events:none; }
 .mn .th, .mn-tail .th { fill:none; stroke:var(--th, #2f56c4); stroke-linecap:round; stroke-linejoin:round; }
-.mn .art { position:absolute; overflow:visible; filter:drop-shadow(0 12px 16px rgba(50,35,20,.16)); }
-.mn.dark .art { filter:drop-shadow(0 12px 18px rgba(0,0,0,.45)); }
+.mn .art { position:absolute; overflow:visible; }
 .mn .sil { fill:var(--sl); } .mn .cut { fill:var(--paper); }
 .mn .hair { position:absolute; background:var(--sl); opacity:.55; transform-origin:0 50%; }
 .mn .dot { fill:var(--sl); }
 .mn .tick { position:absolute; font-family:var(--f-body); font-weight:400; color:var(--mut); letter-spacing:.06em; white-space:nowrap; }
-.mn .sheet { position:absolute; background:#f8f5ee; box-shadow:0 1px 0 rgba(0,0,0,.05), 0 24px 50px rgba(50,35,20,.18), 0 4px 10px rgba(50,35,20,.08); }
-.mn .sheet .bar { position:absolute; height:3px; background:#d9d2c5; border-radius:2px; }
+.mn .sheet { position:absolute; background:#f9fbfc; box-shadow:0 0 0 2px #101820; }
+.mn .sheet .bar { position:absolute; height:3px; background:#c9d3db; border-radius:2px; }
 .mn .fill { position:absolute; background:color-mix(in srgb, var(--th) 10%, transparent); transform-origin:50% 100%; }
+.mn .hz { position:absolute; left:0; top:0; }
+.mn .hz i { position:absolute; width:2px; height:18px; background:var(--ink); opacity:.55; }
+.mn.dark .hz i { background:#e9eef2; }
+.mn .hz b { position:absolute; font-family:var(--f-body); font-weight:400; font-size:26px; line-height:1; color:var(--mut); letter-spacing:.06em; transform:translateX(-50%); }
+.mn .hz b.on { color:var(--th); font-weight:700; }
 """
 
 # ---------------------------------------------------------------- small helpers
@@ -122,6 +128,32 @@ def adv(s, stress=False):
 
 
 SK = 1.06    # the stressed run sits a touch bigger so the serif's smaller x-height matches the sans
+ACC_ZH = 240     # the one accent word per page: Chinese at 200–280 px …
+ACC_NUM = 800    # … figures at a font size that makes them ~520 px tall (Garamond italic lining figures ≈ .65 em)
+_BOX = {"w": 920}
+_CAP = {"px": None}      # a scene with a tight layout (chart labels, table rows) caps the accent's font size here
+
+
+def fac(run, px, room=None):
+    """how much bigger than the body the stressed run is set: the accent sizes above, capped so the run fits the page width."""
+    plain = fit.plain(run)
+    if not plain.strip(): return SK
+    digits = sum(1 for c in plain if c.isdigit() or c in "/⅓⅔½.%")
+    cjk = sum(1 for c in plain if ord(c) > 0x2e7f)
+    if not digits and not cjk: return SK        # Latin titles stay at body size
+    target = ACC_NUM if digits and digits >= cjk else (_CAP.get("zh") or ACC_ZH)
+    target *= _CAP.get("k", 1)              # 16:9 sets the accents a size smaller (the frame is 1080 tall)
+    if _CAP["px"]: target = min(target, _CAP["px"])
+    f = max(SK, target / max(px, 1))
+    w = adv(run, True) * px * f
+    lim = _BOX["w"] if room is None else max(room, 1)
+    if w > lim: f = max(SK, f * lim / w)
+    return f
+
+
+def _room(line, px):
+    """page width left for a line's accent once its plain runs are set."""
+    return _BOX["w"] - sum(adv(s, e) * px for s, e in runs(line) if not e)
 
 
 def runs(text):
@@ -134,7 +166,8 @@ def runs(text):
 
 
 def line_w(line, px):
-    return sum(adv(s, e) * px * (SK if e else 1) for s, e in runs(line))
+    rm = _room(line, px)
+    return sum(adv(s, e) * px * (fac(s, px, rm) if e else 1) for s, e in runs(line))
 
 
 def textblock(X, text, x, y, px, align="center", box_w=None, lh=1.4, cls="", weight=None, color=None):
@@ -145,16 +178,20 @@ def textblock(X, text, x, y, px, align="center", box_w=None, lh=1.4, cls="", wei
         widest = max(line_w(l, px) for l in lines)
         if widest > box_w: px = px * box_w / widest
     html, geo, st = [], [], []
+    cur = y
     for k, l in enumerate(lines):
         w = line_w(l, px)
         x0 = x - w / 2 if align == "center" else (x - w if align == "right" else x)
-        top = y + k * px * lh
+        top = cur
+        rm = _room(l, px)
+        big = max([fac(s, px, rm) * px for s, e in runs(l) if e] or [px])
+        cur += px * lh + (big - px) * 1.08        # a line holding the accent is as tall as the accent
         spans, cx = [], x0
         for s, e in runs(l):
-            ww = adv(s, e) * px * (SK if e else 1)
+            ww = adv(s, e) * px * (fac(s, px, rm) if e else 1)
             if e:
-                st.append((cx, cx + ww, top))
-                spans.append(f'<span class="s" style="font-size:{SK}em">{X.rich(s)}</span>')
+                st.append((cx, cx + ww, top + (big - px)))
+                spans.append(f'<span class="s" style="font-size:{fac(s, px, rm):.3f}em">{X.rich(s)}</span>')
             else:
                 wt = weight or (300 if px >= 64 else 400)
                 spans.append(f'<span class="b" style="font-weight:{wt}">{X.rich(s)}</span>')
@@ -162,7 +199,7 @@ def textblock(X, text, x, y, px, align="center", box_w=None, lh=1.4, cls="", wei
         geo.append((x0, x0 + w, top))
         sty = f"left:{x0:.0f}px; top:{top:.0f}px; font-size:{px:.0f}px" + (f"; color:{color}" if color else "")
         html.append(f'<div class="ln {cls}" style="{sty}">{"".join(spans)}</div>')
-    return "".join(html), {"lines": geo, "stress": st, "px": px, "h": len(lines) * px * lh}
+    return "".join(html), {"lines": geo, "stress": st, "px": px, "h": cur - y}
 
 
 def under(px):
@@ -252,6 +289,7 @@ class Pen:
         return min(1.0, self.marks.get(name, self.L) / max(self.L, 1))
 
     def svg(self, W, H, w, cls="th", extra=""):
+        _LAST_L["L"] = self.L
         return (f'<svg class="thr" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
                 f'<path class="{cls}" d="{" ".join(self.d)}" pathLength="1" stroke-width="{w}" stroke-dasharray="1 2" stroke-dashoffset="1"{extra}/></svg>')
 
@@ -261,6 +299,15 @@ def tw_draw(X, sel, steps, t0=None, t1=None):
     (each starts when the previous one ends) and, given the beat window, the last one finishes before the cut.
     Animated as the dash attribute (CSS px would be rounded to whole units on a pathLength=1 path)."""
     fixed, end = [], None
+    L = _LAST_L.get("L", 0) or 1500
+    fprev = 0.0
+    steps2 = []
+    for t, f, dur, ease in steps:            # constant speed: each stroke lasts as long as its length takes at SPEED
+        steps2.append((t, f, max(0.25, (f - fprev) * L / SPEED), "none"))
+        fprev = max(fprev, f)
+    if steps2 and fprev < 0.999:            # always finish the line (its run along the horizon included)
+        steps2.append((steps2[-1][0] + 0.01, 1.0, max(0.25, (1.0 - fprev) * L / SPEED), "none"))
+    steps = steps2
     if t0 is not None and local_i(X) > 0 and steps and steps[0][0] < t0 + LEG:
         steps = [(t0 + LEG, *steps[0][1:])] + list(steps[1:])
     for t, f, dur, ease in steps:
@@ -277,8 +324,12 @@ def tw_draw(X, sel, steps, t0=None, t1=None):
             X.tw(f'tl.to("{sel}", {{attr:{{"stroke-dashoffset":{1 - f:.4f}}}, duration:{dur:.2f}, ease:"{ease}"}}, {t:.3f});')
 
 
+SPEED = 900          # px per second: the line always draws at this pace (no eases)
+_LAST_L = {}
+
+
 def TW(X):
-    return 3.4 if X.portrait else 3.0
+    return 5
 
 
 def local_i(X):
@@ -337,6 +388,11 @@ LEG = 0.28     # a page's own thread starts growing once the leg from the previo
 
 # ---------------------------------------------------------------- paper, page furniture
 def grain(X, cid, dark):
+    """flat ground: no paper texture, no vignette (kept as a function so derived styles can bring texture back)."""
+    return ""
+
+
+def _grain_paper(X, cid, dark):
     W, H = X.W, X.H
     r = random.Random(17)
     tint = "0 0 0 0 .92  0 0 0 0 .88  0 0 0 0 .8  0 0 0 .07 0" if dark else "0 0 0 0 .33  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .16 0"
@@ -359,34 +415,37 @@ def furn(X, b, cid, t, d, inner, origin, dark=False, push=1.035):
     sec = meta.get("section", "认知")
     i, n = X.beat["i"], X.beat["n"]
     X.used_text.update(sec + "" + X.channel + "来源 0123456789/·")
-    hx, hy, fs = (64, 206, 26) if P else (96, 52, 22)
-    hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><span>{X.rich(X.channel)}</span><i></i><span>{X.rich(sec)}</span></div>'
-          f'<div class="pg" style="right:{hx}px; top:{hy}px; font-size:{fs}px">{i + 1:02d} / {n:02d}</div>')
+    hx = 64 if P else 96
+    # the horizon in the bottom zone: one tick per page, labelled 26 px; this page's label in the line colour
+    hz = HZ_V if P else HZ_H
+    # no ruler: the horizon is only the thread itself (each page makes it something: an axis, a baseline, a floor).
+    # The page's place is one small marker in the bottom-right corner (16:9: top-right).
+    hd = (f'<div class="pg" style="right:{hx}px; top:{214 if P else 40}px; font-size:26px; letter-spacing:.08em">'
+          f'{i + 1:02d} / {n:02d}</div>')
     ft = ""
     if b.get("src"):
-        fy = 1528 if P else 1030
-        ft = (f'<div class="ft" style="left:{hx}px; top:{fy}px; width:{X.W - 2 * hx}px; white-space:normal; line-height:1.45; '
+        pos = "top:auto; bottom:524px" if P else "top:1046px"      # 9:16: ends at y 1396, just above the caption
+        ft = (f'<div class="ft" style="left:{hx}px; {pos}; width:{X.W - 2 * hx}px; white-space:normal; line-height:1.45; '
               f'font-size:{SP(X)}px">来源 · {X.rich(b["src"])}</div>')
     ox, oy = origin
     html = (f'<div class="mn{" dark" if dark else ""}">{grain(X, cid, dark)}'
             f'<div class="cam" style="transform-origin:{ox:.0f}px {oy:.0f}px">{inner}</div>{hd}{ft}</div>')
     X.clip(cid, t, d, html, "scene", 2)
     X.tw(f'tl.fromTo("#{cid} .cam", {{scale:1}}, {{scale:{push}, duration:{d:.2f}, ease:"sine.inOut"}}, {t:.3f});')
-    X.tw(f'tl.from("#{cid} .hd, #{cid} .pg", {{opacity:0, duration:0.6, ease:"power1.out"}}, {t + 0.1:.3f});')
     if ft: X.tw(f'tl.from("#{cid} .ft", {{opacity:0, y:6, duration:0.7, ease:"power2.out"}}, {t + 0.8:.3f});')
     if dark:     # captions turn bone-white over a charcoal page and back afterwards
-        X.tw(f'tl.set("#root", {{"--cap-fg":"{BONE}", "--cap-shadow":"0 0 14px rgba(34,33,30,.95), 0 0 4px rgba(34,33,30,.9)"}}, {t:.3f});')
-        X.tw(f'tl.set("#root", {{"--cap-fg":"{INK}", "--cap-shadow":"0 0 14px rgba(239,233,222,.95), 0 0 4px rgba(239,233,222,.9)"}}, {t + d:.3f});')
+        X.tw(f'tl.set("#root", {{"--cap-fg":"{BONE}"}}, {t:.3f});')
+        X.tw(f'tl.set("#root", {{"--cap-fg":"{INK}"}}, {t + d:.3f});')
 
 
 def reveal(X, sel, t, dur=0.9, y=14, stagger=0.0):
     """the house entrance: a soft focus pull + a short rise."""
-    X.tw(f'tl.from("{sel}", {{opacity:0, y:{y}, filter:"blur(8px)", duration:{dur:.2f}, ease:"power2.out", stagger:{stagger}}}, {t:.3f});')
+    X.tw(f'tl.from("{sel}", {{opacity:0, y:12, duration:0.8, ease:"sine.out", stagger:{stagger}}}, {t:.3f});')
 
 
 def stress_in(X, sel, t):
     """the stressed word arrives a beat later and a little slower — the one moment on the page."""
-    X.tw(f'tl.from("{sel} .s", {{opacity:0, y:10, filter:"blur(10px)", duration:1.1, ease:"power3.out"}}, {t:.3f});')
+    X.tw(f'tl.from("{sel} .s", {{opacity:0, y:12, duration:0.8, ease:"sine.out"}}, {t:.3f});')
 
 
 # ---------------------------------------------------------------- silhouettes (cut paper, code-drawn)
@@ -406,8 +465,8 @@ CHILD = """<g class="sil">
 <path d="M286 250 L424 250 L424 262 L412 262 L414 470 L400 470 L398 262 L302 262 L304 470 L290 470 L288 262 Z"/>
 <ellipse cx="356" cy="249" rx="40" ry="6"/>
 </g>
-<path d="M342 230 C342 223 370 223 370 230 L370 241 C370 248 342 248 342 241 Z" fill="#f3eee4"/>
-<ellipse cx="356" cy="228.5" rx="13.5" ry="3.6" fill="#fffdf7"/>"""
+<path d="M342 230 C342 223 370 223 370 230 L370 241 C370 248 342 248 342 241 Z" fill="#f9fbfc"/>
+<ellipse cx="356" cy="228.5" rx="13.5" ry="3.6" fill="#ffffff"/>"""
 
 
 def _clock(k=0):
@@ -420,7 +479,7 @@ def _clock(k=0):
     return (f'<g class="sil"><path d="M40 74 C40 34 78 14 104 30 Z" transform="rotate(-8 70 60)"/><path d="M200 74 C200 34 162 14 136 30 Z" transform="rotate(8 170 60)"/>'
             f'<rect x="114" y="12" width="12" height="24" rx="3"/><circle cx="120" cy="136" r="96"/>'
             f'<path d="M58 214 L36 252 L52 252 L76 222 Z"/><path d="M182 214 L204 252 L188 252 L164 222 Z"/></g>'
-            f'<circle cx="120" cy="136" r="80" fill="#f4efe6"/>{"".join(ticks)}'
+            f'<circle cx="120" cy="136" r="80" fill="#f9fbfc"/>{"".join(ticks)}'
             f'<g class="sil"><path class="hm" d="M117 136 L120 84 L123 136 Z"/><path class="hh" d="M120 133 L156 136 L120 139 Z"/><circle cx="120" cy="136" r="6"/></g>')
 
 
@@ -437,17 +496,17 @@ def _pencils(empty=False):
 def _plate(n=1, k=0):
     """a dark glazed saucer with soft marshmallows on it: the 'real object' of this film."""
     defs = (f'<defs><filter id="sf{k}" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>'
-            f'<linearGradient id="sd{k}" x1="0" x2="1"><stop offset="0" stop-color="#d4ccbe"/><stop offset=".32" stop-color="#f8f4ec"/><stop offset=".68" stop-color="#ece6da"/><stop offset="1" stop-color="#c4bcad"/></linearGradient>'
-            f'<radialGradient id="tp{k}" cx=".42" cy=".38" r=".75"><stop offset="0" stop-color="#fffdf9"/><stop offset="1" stop-color="#e6dfd2"/></radialGradient>'
-            f'<radialGradient id="gl{k}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#57524a"/><stop offset="1" stop-color="#2c2925"/></radialGradient></defs>')
-    out = [defs, f'<ellipse cx="230" cy="222" rx="206" ry="50" fill="rgba(45,32,18,.28)" filter="url(#sf{k})"/>',
+            f'<linearGradient id="sd{k}" x1="0" x2="1"><stop offset="0" stop-color="#c9d3db"/><stop offset=".32" stop-color="#ffffff"/><stop offset=".68" stop-color="#eef2f5"/><stop offset="1" stop-color="#b9c5cf"/></linearGradient>'
+            f'<radialGradient id="tp{k}" cx=".42" cy=".38" r=".75"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dfe6ec"/></radialGradient>'
+            f'<radialGradient id="gl{k}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#2c3a4a"/><stop offset="1" stop-color="#101820"/></radialGradient></defs>')
+    out = [defs, f'<ellipse cx="230" cy="222" rx="206" ry="50" fill="rgba(16,24,32,.18)" filter="url(#sf{k})"/>',
            f'<ellipse class="sil" cx="230" cy="208" rx="200" ry="46"/>', f'<ellipse cx="230" cy="205" rx="146" ry="29" fill="url(#gl{k})"/>']
     spots = [(230, 0)] if n == 1 else [(176, 0), (292, 8)]
     for cx, dy in spots:
         w, h = 104, 58
         rx, ry = w / 2, w * 0.24
         top = 200 + dy - h - ry * 0.4
-        out.append(f'<ellipse cx="{cx}" cy="{200 + dy + 4}" rx="{rx * 1.05}" ry="{ry * 0.8}" fill="rgba(20,14,8,.35)" filter="url(#sf{k})"/>'
+        out.append(f'<ellipse cx="{cx}" cy="{200 + dy + 4}" rx="{rx * 1.05}" ry="{ry * 0.8}" fill="rgba(16,24,32,.28)" filter="url(#sf{k})"/>'
                    f'<path d="M{cx - rx} {top + 6} Q{cx - rx - 1} {top + h * .6} {cx - rx + 5} {top + h} A{rx - 5} {ry * .9} 0 0 0 {cx + rx - 5} {top + h} '
                    f'Q{cx + rx + 1} {top + h * .6} {cx + rx} {top + 6} Z" fill="url(#sd{k})"/>'
                    f'<ellipse cx="{cx}" cy="{top + 4}" rx="{rx}" ry="{ry}" fill="url(#tp{k})"/>')
@@ -480,12 +539,12 @@ def art(X, name, x, y, w, cls=""):
 def first(X, sel, t, dur=0.6):
     """the page's main element on a cut: already on screen in the first frame (40 %, soft), settling in 0.6 s, so no frame
     of the film is empty paper."""
-    X.tw(f'tl.from("{sel}", {{opacity:0.4, y:8, filter:"blur(4px)", duration:{dur:.2f}, ease:"power2.out"}}, {t:.3f});')
+    X.tw(f'tl.from("{sel}", {{opacity:0.4, y:12, duration:0.8, ease:"sine.out"}}, {t:.3f});')
 
 
 def art_in(X, sel, t, dur=1.2):
     """cut paper laid down: a slow rise out of soft focus, settling."""
-    X.tw(f'tl.from("{sel}", {{opacity:0, y:26, scale:0.97, filter:"blur(10px)", transformOrigin:"50% 100%", duration:{dur:.2f}, ease:"power3.out"}}, {t:.3f});')
+    X.tw(f'tl.from("{sel}", {{opacity:0, y:12, transformOrigin:"50% 100%", duration:0.8, ease:"sine.out"}}, {t:.3f});')
 
 
 # ---------------------------------------------------------------- layouts (pure: the same numbers for ENTRY and for the scene)
@@ -499,10 +558,10 @@ def SP(X): return 24 if X.portrait else 22       # source lines, journal meta
 
 def L_object(X, b):
     P, W, H = X.portrait, X.W, X.H
-    aw = 920 if P else 640
+    aw = 820 if P else 640
     vw, vh = ART[b.get("art", "mallow1")][:2]
     ah = vh * aw / vw
-    ay = (720 if P else 420) - ah / 2
+    ay = (600 if P else 420) - ah / 2
     ax = (W - aw) / 2
     c = (ax + ART[b.get("art", "mallow1")][3]["c"][0] * aw / vw, ay + ART[b.get("art", "mallow1")][3]["c"][1] * aw / vw)
     r = ART[b.get("art", "mallow1")][3]["r"]
@@ -515,7 +574,7 @@ def L_object(X, b):
 def L_year(X, b):
     P, W = X.portrait, X.W
     m = M(X)
-    ay = 860 if P else 720
+    ay = 1120 if P else 720      # 9:16: the time axis sits with the year, inside the safe area
     y0, y1 = b.get("axis", [1960, 2025])
     def xa(yr): return m + 40 + (yr - y0) / (y1 - y0) * (W - 2 * m - 80)
     return {"ay": ay, "xa": xa, "y0": y0, "y1": y1, "entry": (m, ay)}
@@ -526,9 +585,9 @@ def L_side(X, b):
     name = b.get("art", "child")
     vw, vh = ART[name][:2]
     if P:
-        aw = 660 if name == "child" else 560
-        ax, ay = (80 if name == "child" else (W - aw) / 2 - 100), (330 if name == "child" else 350)
-        tx, ty = 80, (1100 if name == "child" else 950)
+        aw = 580 if name == "child" else 500
+        ax, ay = (80 if name == "child" else (W - aw) / 2 - 100), (270 if name == "child" else 260)
+        tx, ty = 80, (950 if name == "child" else 770)      # 9:16: rows end by y 1300 (source 1360, caption 1418)
     else:
         aw = 620 if name == "child" else 520
         ax, ay = 170, 540 - vh * aw / vw / 2
@@ -541,12 +600,25 @@ def L_side(X, b):
 
 def L_scatter(X, b):
     P = X.portrait
-    x0, x1, y0, y1 = (160, 970, 480, 1270) if P else (520, 1560, 330, 840)
+    x0, x1, y0, y1 = (160, 930, 480, 1270) if P else (520, 1560, 330, 840)
     return {"x0": x0, "x1": x1, "y0": y0, "y1": y1, "entry": (x0, y0 - (70 if P else 60))}
 
 
 def L_words(X, b):
     P, W = X.portrait, X.W
+    px = b.get("px") or (124 if P else 112)
+    prev_zh = _CAP.get("zh")
+    _CAP["zh"] = 280
+    try:
+        return _L_words(X, b, P, W)
+    finally:
+        _CAP["zh"] = prev_zh
+
+
+WORDS_OVAL = {True: (540, 800, 470, 430), False: (960, 520, 760, 390)}     # cx, cy, rx, ry of the thread's oval (9:16 / 16:9)
+
+
+def _L_words(X, b, P, W):
     px = b.get("px") or (124 if P else 112)
     lines = str(b.get("text", "")).split("|")
     box = W - 2 * M(X) - (40 if P else 300)
@@ -554,17 +626,23 @@ def L_words(X, b):
     if widest > box: px = px * box / widest
     lh = 1.42
     h = len(lines) * px * lh
-    top = (830 if P else 520) - h / 2
+    h = 0.0
+    for l in lines:
+        big = max([fac(s_, px, _room(l, px)) * px for s_, e in runs(l) if e] or [px])
+        h += px * lh + (big - px) * 1.08
+    cx_, cy_, rx_, ry_ = WORDS_OVAL[P]
+    top = cy_ - h / 2
+    ent = (cx_ - rx_, cy_)
     # where the stressed run sits (first one), for the entry drop
     sx = W / 2
     for k, l in enumerate(lines):
         w = line_w(l, px); x0 = W / 2 - w / 2; cx = x0
         for s, e in runs(l):
-            ww = adv(s, e) * px * (SK if e else 1)
+            ww = adv(s, e) * px * (fac(s, px, _room(l, px)) if e else 1)
             if e: return {"px": px, "top": top, "lh": lh, "box": box, "sx": cx, "ex": cx + ww, "sy": top + k * px * lh,
-                          "entry": (cx, 300 if P else 170)}
+                          "entry": ent}
             cx += ww
-    return {"px": px, "top": top, "lh": lh, "box": box, "sx": sx - 40, "ex": sx + 40, "sy": top, "entry": (sx, 300 if P else 170)}
+    return {"px": px, "top": top, "lh": lh, "box": box, "sx": sx - 40, "ex": sx + 40, "sy": top, "entry": ent}
 
 
 def L_split(X, b):
@@ -576,30 +654,27 @@ def L_split(X, b):
 def L_bars(X, b):
     P, W = X.portrait, X.W
     m = M(X)
-    if P: return {"base": 1270, "xs": [320, 760], "bw": 250, "hmax": 690, "entry": (m, 1270), "x_end": W - m}
+    if P: return {"base": HZ_V, "xs": [300, 780], "bw": 290, "hmax": HZ_V - 760, "entry": (m, HZ_V), "x_end": W - m}   # bars stand on the horizon (picture); their words sit above them
     return {"base": 830, "xs": [770, 1170], "bw": 230, "hmax": 520, "entry": (m, 830), "x_end": W - m}
 
 
 def L_paper(X, b):
     P, W = X.portrait, X.W
     m = M(X)
-    if P: return {"tx": m + 16, "ty": 320, "card": (90, 680, 900, 700), "entry": (m, 320 + 260)}
+    if P: return {"tx": m + 16, "ty": 320, "card": (90, 660, 900, 620), "entry": (m, 320 + 260)}
     return {"tx": 190, "ty": 360, "card": (1010, 210, 720, 640), "entry": (m, 360 + 270)}
 
 
 def L_ratio(X, b):
     P, W = X.portrait, X.W
     m = M(X)
-    if b.get("ref"):
-        if P: return {"ky": 320, "yr": 720, "y": 1030, "x0": m + 20, "x1": W - m - 20, "entry": (m, 1030)}
-        return {"ky": 160, "yr": 480, "y": 720, "x0": 300, "x1": 1620, "entry": (m, 720)}
-    if P: return {"ky": 320, "yr": 0, "y": 900, "x0": m + 40, "x1": W - m - 40, "entry": (m, 900)}
-    return {"ky": 160, "yr": 0, "y": 610, "x0": 300, "x1": 1620, "entry": (m, 610)}
+    if P: return {"ky": 260, "yt": 560, "yb": 870, "th": 140, "x0": m, "x1": W - m, "entry": (m, 770)}   # 9:16: the note clears the caption (y 1388–1440)
+    return {"ky": 120, "yt": 330, "yb": 560, "th": 110, "x0": 200, "x1": W - 200, "entry": (m, 495)}
 
 
 def L_card(X, b):
     P, W = X.portrait, X.W
-    if P: return {"tx": W / 2, "ty": 360, "ax": 160, "ay": 830, "aw": 760, "entry": (M(X), 360 + 230)}
+    if P: return {"tx": W / 2, "ty": 300, "ax": 60, "ay": 740, "aw": 960, "entry": (M(X), 300 + 230)}
     return {"tx": 500, "ty": 330, "ax": 980, "ay": 300, "aw": 820, "entry": (M(X), 330 + 280)}
 
 
@@ -614,7 +689,22 @@ def gutter(X):
 
 
 def _end(X, pen, E=None, last_t=None, d_t=None):
-    """a page's thread ends where its job ends; the way to the next page is drawn after the cut (thread_out)."""
+    """a page's thread ends on the horizon: from where its job ended it drops into the bottom zone and runs along the
+    horizon to the far side (away from where it came down), so every page's line touches the bottom third and the
+    next page picks it up there (thread_out draws that leg after the cut)."""
+    hz = HZ_V if X.portrait else HZ_H
+    if abs(pen.y - hz) <= 4:
+        far = (X.W + 40 if pen.x >= X.W / 2 else -40) if X.portrait else (X.W - M(X) if pen.x >= X.W / 2 else M(X))
+        pen.to(far, hz)
+        pen.mark("end")
+        return
+    if X.portrait:      # 9:16: go down the side margin, clear of the source line and caption, then along the horizon
+        side = 36 if pen.x < X.W / 2 else X.W - 36
+        pen.poly([(side, pen.y), (side, hz)], 40)
+    else:
+        pen.poly([(pen.x, hz)], 40)
+    far = (X.W + 40 if pen.x < X.W / 2 else -40) if X.portrait else (X.W - M(X) if pen.x < X.W / 2 else M(X))
+    pen.to(far, hz)
     pen.mark("end")
 
 
@@ -671,21 +761,27 @@ def year_scene(b, X, t, d, cid):
         ticks.append(f'<div class="hair tk" style="left:{x:.0f}px; top:{ay - 9}px; width:1px; height:18px"></div>'
                      f'<div class="tick tkl" style="left:{x - 50:.0f}px; width:100px; text-align:center; top:{ay + 22}px; font-size:{26 if P else 22}px">{dec}</div>')
     prev = "".join(f'<svg class="thr pv" width="{W}" height="{H}"><circle cx="{xa(p):.0f}" cy="{ay}" r="7" style="fill:var(--mut)" opacity=".7"/></svg>'
-                   f'<div class="tick pv" style="left:{xa(p) - 60:.0f}px; width:120px; text-align:center; top:{ay - LP(X) - 22}px; font-size:{LP(X)}px">{p}</div>' for p in b.get("prev", []))
-    ypx = 300 if P else 270
-    yx = min(max(nx, m + ypx * 1.2), W - m - ypx * 1.2)
-    y_html, yg = textblock(X, f"*{yr}*", yx, ay - ypx * 1.18 - 40, ypx)
+                   + (f'<div class="tick pv" style="left:{xa(p) - 60:.0f}px; width:120px; text-align:center; top:{ay - LP(X) - 22}px; font-size:{LP(X)}px">{p}</div>' if not P else "")   # 9:16: the year above leaves no room; the dot on the axis marks it
+                   for p in b.get("prev", []))
+    _BOX["w"] = 800 if P else 920        # 9:16: the year's ink stays left of the platform buttons
+    ypx = min(ACC_NUM, (W - 190 - 2 * m) / max(adv(str(yr), True), 1)) if P else min(400, (W / 2 - m) / max(adv(str(yr), True), 1))
+    yw = line_w(f"*{yr}*", ypx)
+    yx = min(max(nx, m + yw / 2), (W - 170 if P else W - m) - yw / 2)     # 9:16: clear of the platform buttons on the right
+    ybig = fac(str(yr), ypx, _room(f"*{yr}*", ypx)) * ypx      # the year's real size once the accent rule has set it
+    # 9:16: Garamond italic figures sit high in their line box, so the box starts lower to land the ink ~50 px above the axis
+    y_html, yg = textblock(X, f"*{yr}*", yx, ay - ybig * 0.98 + (-24 if P else -40), ypx)
+    _BOX["w"] = 920
     place, who = b.get("place", ""), b.get("who", "")
     lx = W / 2 if P else min(max(nx, m + 360), W - m - 360)
-    p_html, _ = textblock(X, place, lx, ay + (96 if P else 84), 54 if P else 44, box_w=W - 2 * m)
-    w_html = f'<div class="ln k wh" style="left:0; right:0; text-align:center; top:{ay + (186 if P else 150)}px; font-size:{LP(X) - 2}px">{X.rich(who)}</div>' if who else ""
+    p_html, _ = textblock(X, place, lx, ay + (58 if P else 84), 48 if P else 44, box_w=W - 2 * m)
+    w_html = f'<div class="ln k wh" style="left:0; right:0; text-align:center; top:{ay + (118 if P else 150)}px; font-size:{LP(X) - 4}px">{X.rich(who)}</div>' if who else ""
     a_html = ""
     if b.get("art"):      # the second event: what was on the table that year
         an = b["art"]
         vw_, vh_ = ART[an][:2]
         if P:
-            aw_ = 420 if vw_ > vh_ else 280
-            a_html = art(X, an, (W - aw_) / 2, ay + 270, aw_, "ya")[0]
+            aw_ = 520 if vw_ > vh_ else 290      # what was on the table that year, above the year
+            a_html = art(X, an, (W - aw_) / 2, 300, aw_, "ya")[0]
         else:
             aw_ = 420 if vw_ > vh_ else 300
             ax_ = W - m - aw_ - 40 if yx < W / 2 else m + 60
@@ -695,6 +791,7 @@ def year_scene(b, X, t, d, cid):
     pen.to(nx - 18, ay).mark("node0")
     pen.ellipse(nx, ay, 18, 18, 180, 540).mark("node")
     pen.to(W - m - (0 if E else 0), ay).mark("axis")
+    _end(X, pen, E, t, d)
     inner = (f'<div class="hair ax" style="left:{m}px; top:{ay}px; width:{W - 2 * m}px; height:1px; opacity:.25"></div>' + "".join(ticks) + prev
              + f'<div class="yr">{y_html}</div><div class="pl">{p_html}</div>{w_html}{a_html}' + pen.svg(W, H, TW(X)))
     furn(X, b, cid, t, d, inner, (pen.x, pen.y), dark)
@@ -881,8 +978,10 @@ def words_scene(b, X, t, d, cid):
     pen = Pen(*g["entry"])
     sx, ex, top = (tg["stress"][0] if tg["stress"] else (g["sx"], g["ex"], g["sy"]))
     uy = top + under(tg["px"])
-    pen.to(sx, uy - 40).mark("drop")
-    pen.poly([(sx, uy), (ex, uy)], 18).mark("word")
+    ocx, ocy, orx, ory = WORDS_OVAL[P]
+    pen.ellipse(ocx, ocy, orx, ory, 180, 520).mark("drop")      # a full-frame oval around the words, stopping short
+    pen.glide(sx - 30, uy, 0.5)
+    pen.to(ex, uy).mark("word")
     if b.get("strike"):
         my = top + tg["px"] * 0.56
         pen.curve((ex + 50, uy), (ex + 50, my), (ex + 10, my)).to(sx - 24, my).mark("strike")
@@ -921,15 +1020,15 @@ def split_scene(b, X, t, d, cid):
         name = it.get("art", "pencils")
         if P:
             y0 = 330 if k == 0 else 900
-            ahtml, A, ah = art(X, name, m, y0 + 20, 430, f"a{k}")
-            tx, ty = 560, y0 + 120
+            ahtml, A, ah = art(X, name, m - 20, y0 + 10, 490, f"a{k}")
+            tx, ty = 470, y0 + 110
             th, tg = textblock(X, it.get("word", ""), tx, ty, 140, align="left", cls=f"w{k}")
-            nh = f'<div class="ln k n{k}" style="left:{tx}px; top:{ty + 200:.0f}px; font-size:{LP(X)}px">{X.rich(it.get("note", ""))}</div>'
+            nh = f'<div class="ln k n{k}" style="left:{tx}px; top:{ty + tg["h"] + 6:.0f}px; font-size:{LP(X)}px">{X.rich(it.get("note", ""))}</div>'
         else:
             cx = W / 4 if k == 0 else W * 3 / 4
             ahtml, A, ah = art(X, name, cx - 170, 200, 340, f"a{k}")
             th, tg = textblock(X, it.get("word", ""), cx, 600, 120, cls=f"w{k}")
-            nh = f'<div class="ln k n{k}" style="left:{cx - 400:.0f}px; width:800px; text-align:center; top:780px; font-size:{LP(X)}px">{X.rich(it.get("note", ""))}</div>'
+            nh = f'<div class="ln k n{k}" style="left:{cx - 400:.0f}px; width:800px; text-align:center; top:{max(780, 600 + tg["h"] + 10):.0f}px; font-size:{LP(X)}px">{X.rich(it.get("note", ""))}</div>'
         parts.append(ahtml + th + nh)
     pen = Pen(*g["entry"])
     if P: pen.to(W - m, g["dv"]).mark("div")
@@ -968,11 +1067,11 @@ def bars_scene(b, X, t, d, cid):
         pen.poly([(xl, ytop), (xr, ytop), (xr, base)], 10).mark(f"b{k}")
         parts.append(f'<div class="fill f{k}" style="left:{xl:.0f}px; top:{ytop:.0f}px; width:{bw}px; height:{h:.0f}px"></div>')
         val = str(it.get("v", it["value"]))
-        vpx = 150 if P else 150
+        vpx = 300 if P else 150
         vh, vg = textblock(X, val, xc - 20, ytop - vpx * 1.12, vpx, cls=f"v{k}", weight=200)
-        uw = adv(fit.plain(val), "*" in val) * vpx * (SK if "*" in val else 1)
+        uw = adv(fit.plain(val), "*" in val) * vpx * (fac(val, vpx) if "*" in val else 1)
         parts.append(vh + f'<div class="ln k u{k}" style="left:{xc - 20 + uw / 2 + 12:.0f}px; top:{ytop - vpx * 0.36:.0f}px; font-size:{LP(X)}px">{X.rich(it.get("unit", ""))}</div>')
-        parts.append(f'<div class="ln k l{k}" style="left:{xc - 200:.0f}px; width:400px; text-align:center; top:{base + 30:.0f}px; font-size:{LP(X) + 2}px; color:var(--ink)">{X.rich(it.get("label", ""))}</div>')
+        parts.append(f'<div class="ln k l{k}" style="left:{xc - 200:.0f}px; width:400px; text-align:center; top:{(ytop - vpx * 1.12 - 58) if P else (base + 30):.0f}px; font-size:{LP(X) + 2}px; color:var(--ink)">{X.rich(it.get("label", ""))}</div>')
     pen.to(g["x_end"], base).mark("base")
     parts.append(f'<div class="hair bl" style="left:{g["entry"][0]}px; top:{base - 1}px; width:{g["x_end"] - g["entry"][0]}px; height:2px; opacity:.4"></div>')
     for k, it in enumerate(items):      # ghost outlines of the bars, so the chart is on the page before the thread draws it
@@ -981,7 +1080,7 @@ def bars_scene(b, X, t, d, cid):
                      f'border:2px dashed color-mix(in srgb, var(--mut) 45%, transparent); border-bottom:0"></div>')
     _end(X, pen, E, t, d)
     kick = b.get("kicker", "")
-    if kick: parts.append(f'<div class="ln k kk" style="left:{M(X) + (0 if P else 0)}px; top:{300 if P else 150}px; font-size:{KP(X)}px">{X.rich(kick)}</div>')
+    if kick: parts.append(f'<div class="ln k kk" style="left:{(W / 2 + 40) if P else M(X)}px; top:{300 if P else 150}px; font-size:{KP(X)}px">{X.rich(kick)}</div>')
     parts.append(pen.svg(W, H, TW(X)))
     origin = (pen.x, pen.y)
     furn(X, b, cid, t, d, "".join(parts), origin, dark)
@@ -1058,74 +1157,80 @@ def paper_scene(b, X, t, d, cid):
 
 
 def ratio_scene(b, X, t, d, cid):
-    """lengths of thread as sizes of an effect. Optional "ref": {"label", "of"} = a grey reference row (the original
-    finding) and the thread row at `of` of its length; at the cue the far part of the thread row goes grey and dashed,
-    a bracket names the share that went (the page's italic), and the thread carries on from what is left."""
+    """two thick bars, one under the other: the reference finding (optional "ref": {"label", "of"}) across the page and
+    the new row at `of` of its length. On the cue the blue line cuts the lower bar down to `keep` (default 1/3): the
+    removed part empties to a dashed outline and the share that went (the page's italic, ~420 px) lands in it."""
     P, W, H = X.portrait, X.W, X.H
     g = L_ratio(X, b)
     dark = b.get("ground") == "dark"
-    y, x0, x1 = g["y"], g["x0"], g["x1"]
+    yt, yb, th, x0, x1 = g["yt"], g["yb"], g["th"], g["x0"], g["x1"]
     ref = b.get("ref")
     lrow = (x1 - x0) * float(ref.get("of", 1)) if ref else (x1 - x0)
     xe = x0 + lrow
     keep = float(b.get("keep", 1 / 3))
     xk = x0 + lrow * keep
     m = M(X)
-    tw_ = TW(X)
     lp = LP(X)
     parts = []
     kick = b.get("kicker", "")
     if kick:
-        k_html, kg = textblock(X, kick, m + (0 if P else 172), g["ky"], 60 if P else 58, align="left", cls="kk", box_w=W - 2 * m)
+        k_html, kg = textblock(X, kick, m, g["ky"], 60 if P else 58, align="left", cls="kk", box_w=W - 2 * m)
         parts.append(k_html)
-    parts.append(f'<div class="ln k lb" style="left:{m + (0 if P else 172)}px; top:{g["ky"] + (100 if P else 92):.0f}px; font-size:{lp}px">{X.rich(b.get("label", ""))}</div>')
+    parts.append(f'<div class="ln k lb" style="left:{m}px; top:{g["ky"] + (100 if P else 90):.0f}px; font-size:{lp}px">{X.rich(b.get("label", ""))}</div>')
     if ref:
-        yr = g["yr"]
-        parts.append(f'<div class="hair rf" style="left:{x0}px; top:{yr - 2}px; width:{x1 - x0}px; height:4px; opacity:.7"></div>'
-                     f'<div class="ln k rfl" style="left:{x0}px; top:{yr - lp - 22}px; font-size:{lp}px">{X.rich(ref.get("label", ""))}</div>')
+        parts.append(f'<div class="ln k rfl" style="left:{x0}px; top:{yt - lp - 22}px; font-size:{lp}px">{X.rich(ref.get("label", ""))}</div>'
+                     f'<div class="rbar r0" style="position:absolute; left:{x0}px; top:{yt}px; width:{x1 - x0}px; height:{th}px; background:var(--sl); transform-origin:0 50%"></div>')
     if b.get("row"):
-        parts.append(f'<div class="ln k rwl" style="left:{x0}px; top:{y - lp - 22}px; font-size:{lp}px">{X.rich(b["row"])}</div>')
-    pen = Pen(*g["entry"])
-    pen.to(x0, y).mark("start")
-    pen.to(xe, y).mark("full")
-    by = y - (96 if P else 80)
-    parts.append(pen.svg(W, H, tw_))
-    parts.append(f'<svg class="thr gh" width="{W}" height="{H}"><line x1="{xk:.0f}" y1="{y}" x2="{xe + 4:.0f}" y2="{y}" stroke="var(--paper)" stroke-width="{tw_ + 4}"/>'
-                 f'<line x1="{xk + 10:.0f}" y1="{y}" x2="{xe:.0f}" y2="{y}" style="stroke:var(--mut)" stroke-width="2.5" stroke-dasharray="10 10"/></svg>')
-    parts.append(f'<svg class="thr bk" width="{W}" height="{H}"><path d="M{xk + 6:.0f} {by + 18} L{xk + 6:.0f} {by} L{xe:.0f} {by} L{xe:.0f} {by + 18}" fill="none" style="stroke:var(--mut)" stroke-width="2"/></svg>')
-    vpx = 150 if P else 140
-    vw_ = line_w(b.get("value", "*约 2/3*"), vpx)
-    vx = min(max((xk + xe) / 2, x0 + vw_ / 2), W - m - vw_ / 2)
-    v_html, vg = textblock(X, b.get("value", "*约 2/3*"), vx, by - vpx * 1.2, vpx, cls="vv")
+        parts.append(f'<div class="ln k rwl" style="left:{x0}px; top:{yb - lp - 22}px; font-size:{lp}px">{X.rich(b["row"])}</div>')
+    parts.append(f'<div class="rbar r1" style="position:absolute; left:{x0}px; top:{yb}px; width:{xk - x0:.0f}px; height:{th}px; background:var(--sl); transform-origin:0 50%"></div>'
+                 f'<div class="rbar r2" style="position:absolute; left:{xk:.0f}px; top:{yb}px; width:{xe - xk:.0f}px; height:{th}px; box-sizing:border-box; '
+                 f'background:var(--sl); border:3px dashed var(--mut); transform-origin:0 50%"></div>')
+    # the share that went: italic, ~420 px tall, landing in the emptied part (it may run on past it)
+    _CAP["px"] = 540 if P else 420
+    val = b.get("value", "*约 2/3*")
+    acc = val.split("*")[1] if val.count("*") >= 2 else val
+    pre = fit.plain(val.replace(f"*{acc}*", "")).strip()        # "约": a small word set above the share, not on its baseline
+    vpx = 64 if P else 56
+    vg_w = line_w(f"*{acc}*", vpx)
+    vx = min(xk + (110 if P else 50), W - m - vg_w)
+    big = fac(acc, vpx, _room(f"*{acc}*", vpx)) * vpx
+    vtop = yb + th / 2 - big * 0.5
+    v_html, vg = textblock(X, f"*{acc}*", vx, vtop, vpx, align="left", cls="vv")
+    _CAP["px"] = None
     parts.append(v_html)
-    parts.append(f'<div class="ln k kp" style="left:{xk + 30:.0f}px; top:{y + 26}px; font-size:{lp}px; color:var(--th)">{X.rich(b.get("kept", ""))}</div>')
+    if pre:
+        parts.append(f'<div class="ln k vv vp" style="left:{vx + big * 0.05:.0f}px; top:{vtop + big * 0.08:.0f}px; font-size:{lp + 6}px; color:var(--ink)"><span class="b">{X.rich(pre)}</span></div>')
+    ky_ = yb + th + 40
+    parts.append(f'<div class="ln k kp" style="left:{x0}px; top:{ky_:.0f}px; font-size:{lp}px; color:var(--th)">{X.rich(b.get("kept", ""))}</div>')
     if b.get("note"):
-        parts.append(f'<div class="ln k nt" style="left:{xk + 30:.0f}px; top:{y + 26 + lp * 1.7:.0f}px; width:{W - m - xk - 30:.0f}px; white-space:normal; line-height:1.55; '
+        ny_ = max(ky_ + lp * 1.8, yb + th / 2 + big * 0.5)
+        parts.append(f'<div class="ln k nt" style="left:{m}px; top:{ny_:.0f}px; width:{W - 2 * m:.0f}px; white-space:normal; line-height:1.5; '
                      f'font-size:{lp - 2}px; letter-spacing:.04em">{X.rich(b["note"])}</div>')
-    pen2 = Pen(xk, y)
-    pen2.poly([(xk, y + (300 if P else 200)), (x0 - 20, y + (300 if P else 200))], 40).mark("go")
-    pen2.mark("end")
-    parts.append(pen2.svg(W, H, tw_, cls="th t2"))
-    origin = (pen2.x, pen2.y)
+    pen = Pen(*g["entry"])
+    pen.to(xk, g["entry"][1]).mark("a")
+    pen.to(xk, yb + th + 16).mark("cut")          # the cut through the lower bar
+    pen.poly([(x0 - 22, yb + th + 16)], 24)       # then back under the kept third and down the margin to the horizon
+    _end(X, pen)
+    parts.append(pen.svg(W, H, TW(X)))
+    origin = (pen.x, pen.y)
     furn(X, b, cid, t, d, "".join(parts), origin, dark)
     s = f"#{cid}"
     t_cut = T(X, b, "at_cut", t, t + 1.8)
     if kick: first(X, f"{s} .kk", t)
-    reveal(X, f"{s} .lb", t + 0.2, 0.6)
+    reveal(X, f"{s} .lb", t + 0.2)
     if ref:
-        first(X, f"{s} .rf", t)
-        reveal(X, f"{s} .rfl", t + 0.15, 0.6)
-    if b.get("row"): reveal(X, f"{s} .rwl", t + 0.6, 0.6)
-    tw_draw(X, f"{s} .th:not(.t2)", [(t + 0.05, pen.f("start"), 0.3, "power1.in"), (t + 0.4, 1.0, max(0.9, min(1.6, t_cut - t - 0.6)), "power2.inOut")], t, t + d)
-    X.tw(f'tl.from("{s} .gh", {{opacity:0, duration:0.6, ease:"power2.inOut"}}, {t_cut:.3f});')
-    X.tw(f'tl.from("{s} .bk", {{opacity:0, y:10, duration:0.6, ease:"power2.out"}}, {t_cut + 0.3:.3f});')
-    X.tw(f'tl.from("{s} .vv .b", {{opacity:0, duration:0.8, ease:"power1.out"}}, {t_cut + 0.35:.3f});')
-    X.tw(f'tl.from("{s} .vv .s", {{opacity:0, y:16, filter:"blur(12px)", duration:1.1, ease:"power3.out"}}, {t_cut + 0.45:.3f});')
-    reveal(X, f"{s} .kp", t_cut + 0.9, 0.7)
-    if b.get("note"): reveal(X, f"{s} .nt", t_cut + 1.4, 0.7)
+        X.tw(f'tl.from("{s} .r0", {{scaleX:0, duration:1.0, ease:"sine.inOut"}}, {t + 0.1:.3f});')
+        reveal(X, f"{s} .rfl", t + 0.1)
+    if b.get("row"): reveal(X, f"{s} .rwl", t + 0.7)
+    X.tw(f'tl.from("{s} .r1, {s} .r2", {{scaleX:0, duration:0.9, ease:"sine.inOut"}}, {t + 0.8:.3f});')
+    X.tw(f'tl.to("{s} .r2", {{backgroundColor:"rgba(0,0,0,0)", duration:0.8, ease:"sine.inOut"}}, {t_cut + 0.2:.3f});')
+    X.tw(f'tl.from("{s} .vv .b", {{opacity:0, y:12, duration:0.8, ease:"sine.out"}}, {t_cut + 0.5:.3f});')
+    X.tw(f'tl.from("{s} .vv .s", {{opacity:0, y:12, duration:0.8, ease:"sine.out"}}, {t_cut + 0.6:.3f});')
+    reveal(X, f"{s} .kp", t_cut + 0.9)
+    if b.get("note"): reveal(X, f"{s} .nt", t_cut + 1.4)
     X.sfx(t_cut, "tick")
-    tw_draw(X, f"{s} .t2", [(t_cut + 1.1, pen2.f("go"), 0.8, "power2.inOut")], t, t + d)
-    thread_out(X, pen2, cid, t, d, 1.035, origin, dark)
+    tw_draw(X, f"{s} .th", [(t + 0.3, pen.f("a"), 0.6, "none"), (t_cut - 0.1, pen.f("cut"), 0.5, "none")], t, t + d)
+    thread_out(X, pen, cid, t, d, 1.035, origin, dark)
 
 
 def card_scene(b, X, t, d, cid):
@@ -1156,7 +1261,7 @@ def card_scene(b, X, t, d, cid):
         pen.glide(c[0] - rx, c[1], 0.5)
         pen.mark("toobj")
         pen.ellipse(c[0], c[1], rx, ry, 180, 520).mark("loop")
-    if E: _end(X, pen, E, t, d)
+    _end(X, pen, E, t, d)
     inner = a_html + k_html + w_html + s_html + pen.svg(W, H, TW(X))
     origin = (pen.x, pen.y)
     furn(X, b, cid, t, d, inner, origin, dark)
@@ -1261,5 +1366,43 @@ def FX_FRAME(X, cid, t, d, p, k):
     thread_out(X, pen, cid, t, d, 1.0, (pen.x, pen.y), dark)
 
 
+def _capped(fn, px):
+    """run a scene whose layout has fixed rows / bars with the accent capped at px (it must fit its slot)."""
+    def run(b, X, t, d, cid):
+        _CAP["px"] = px if X.portrait else (px * 0.8 if px else None)
+        try:
+            return fn(b, X, t, d, cid)
+        finally:
+            _CAP["px"] = None
+    run.__doc__ = fn.__doc__
+    return run
+
+
+def _zh(fn, px):
+    """run a scene whose one accent word is set at px (the word pages: 280)."""
+    def run(b, X, t, d, cid):
+        _CAP["zh"] = px
+        try:
+            return fn(b, X, t, d, cid)
+        finally:
+            _CAP["zh"] = None
+    run.__doc__ = fn.__doc__
+    return run
+
+
+words_scene = _zh(words_scene, 280)
+card_scene = _zh(card_scene, 280)
+side_scene = _capped(side_scene, 260)
+bars_scene = _capped(bars_scene, 300)
+
+def _aspect(fn):
+    def run(b, X, t, d, cid):
+        _CAP["k"] = 1 if X.portrait else 0.72
+        return fn(b, X, t, d, cid)
+    run.__doc__ = fn.__doc__
+    return run
+
+
 SCENES = {"object": object_scene, "year": year_scene, "side": side_scene, "scatter": scatter_scene, "words": words_scene,
           "split": split_scene, "bars": bars_scene, "paper": paper_scene, "ratio": ratio_scene, "card": card_scene}
+SCENES = {k: _aspect(v) for k, v in SCENES.items()}

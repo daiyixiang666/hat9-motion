@@ -60,7 +60,7 @@ def bar_race(X, cid, t, d, p):
     head_h = max((9.5 if note else 7.0) if title else 0, 0 if X.portrait else 9.0)
     name_em = max(U.em(n) for n, _ in ser)
     plot_top = head_h + 2.0
-    plot_h = bh - plot_top - (2 if not X.portrait else 18)
+    plot_h = bh - plot_top - 2          # 9:16: the bars use the whole text-safe box; the period stamp moves under the caption
     rowh = plot_h / top
     name_size = min(3.4, rowh * 0.46, bw * 0.24 / max(name_em, 1))
     name_w = name_em * name_size + 2.2
@@ -74,10 +74,13 @@ def bar_race(X, cid, t, d, p):
         ranks.append({e: r for r, e in enumerate(order)})
     maxes = [max(ser[e][1][k] for e in range(E)) or 1 for k in range(F_)]
     X.css("fx-dtr", CSS)
-    pd_size = min(10.0 if not X.portrait else 18.0, bw * (0.34 if not X.portrait else 0.5) / max(max(U.em(l) for l in labels) or 1, 1))
-    pd_pos = "top:0; bottom:auto" if not X.portrait else ""      # 16:9: top-right beside the title; 9:16: under the bars
+    pd_size = min(10.0 if not X.portrait else 30.0, bw * (0.34 if not X.portrait else 0.92) / max(max(U.em(l) for l in labels) or 1, 1))
+    pd_pos = "top:0; bottom:auto" if not X.portrait else ""      # 16:9: top-right beside the title
+    if X.portrait:      # 9:16: a giant period stamp fills the frame under the caption band, bleeding to the bottom edge
+        pd_top = (X.H - 40) / vpx - by - pd_size * 0.9
+        pd_pos = f"top:{pd_top:.2f}vmin; bottom:auto; right:auto; left:0; text-align:left; color:color-mix(in srgb, var(--fg) 22%, transparent)"
     html = [f'<div class="dtr-tt">{X.rich(title)}{"<small>" + X.rich(note) + "</small>" if note else ""}</div>' if title else "",
-            f'<div class="dtr-pd" style="font-size:{pd_size:.2f}vmin; height:{pd_size * 0.9:.2f}vmin; width:{bw * 0.62:.2f}vmin; {pd_pos}">' + "".join(f'<span data-k="{k}">{X.rich(l)}</span>' for k, l in enumerate(labels)) + "</div>",
+            f'<div class="dtr-pd" style="font-size:{pd_size:.2f}vmin; height:{pd_size * 0.9:.2f}vmin; width:{bw * (0.62 if not X.portrait else 1.0):.2f}vmin; {pd_pos}">' + "".join(f'<span data-k="{k}">{X.rich(l)}</span>' for k, l in enumerate(labels)) + "</div>",
             f'<i class="dtr-ax" style="left:{x0:.2f}vmin; top:{plot_top:.2f}vmin; height:{plot_h:.2f}vmin"></i>']
     init = []
     for e, (name, vs) in enumerate(ser):
@@ -117,8 +120,14 @@ def bar_race(X, cid, t, d, p):
         budget = max(0.8 * (F_ - 1), t + d - 0.9 - start)
         seg = budget / (F_ - 1)
         mv = seg * 0.62
+        said = []          # a period the narration names ("2024 年底") starts its step when it is said
+        for k in range(F_):
+            hit = X.spoken_at(str(labels[k]), t, t + d) if getattr(X, "chars", None) and k else None
+            said.append(hit)
         for k in range(1, F_):
             tk = start + seg * (k - 1)
+            if said[k] is not None and start <= said[k] - 0.2 <= t + d - 0.9:
+                tk = said[k] - 0.2
             for e, (name, vs) in enumerate(ser):
                 ra, rb = ranks[k - 1][e], ranks[k][e]
                 sa, sb = vs[k - 1] / maxes[k - 1], vs[k] / maxes[k]

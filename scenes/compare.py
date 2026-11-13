@@ -24,6 +24,12 @@ CSS = """
 .s-compare.v-halves .note { left:50%; bottom:150px; transform:translateX(-50%); }
 #root.v .s-compare.v-halves .side { left:0; right:0; width:auto; height:50%; } #root.v .s-compare.v-halves .A { top:0; bottom:auto; border-right:0; border-bottom:4px solid var(--bg); } #root.v .s-compare.v-halves .B { top:50%; }
 #root.v .s-compare.v-halves .lab { top:60px; }
+/* 9:16 halves: clear of the platform's top tabs, bottom bar and right-hand buttons; the chip sits under the tabs, label A under the chip */
+#root.v .s-compare.v-halves { --chip-top:216px; } #root.v .s-compare.v-halves .A .lab { top:300px; }
+#root.v .s-compare.v-halves .B .note { bottom:440px; }
+#root.v .s-compare.v-halves .stk.s0 { right:14% !important; top:12% !important; }
+#root.v .s-compare.v-halves .stk.s1 { left:6% !important; bottom:46% !important; }
+#root.v .s-compare.v-halves .stk.s2 { right:14% !important; bottom:46% !important; }
 /* cards */
 .s-compare.v-cards .side { top:50%; width:var(--card-w, 38%); aspect-ratio:3/2; border-radius:var(--radius, 0); box-shadow:var(--shadow, 0 30px 80px rgba(0,0,0,.45)); border:var(--card-border, 0); background:var(--card, #fff); padding:var(--card-pad, 0); }
 .s-compare.v-cards .A { left:var(--card-x, 9%); transform:translateY(-50%) rotate(calc(var(--tilt, 0deg) * -1)); }
@@ -53,8 +59,8 @@ def side(X, cls, s, variant):
     img = f'<img src="{X.asset(s["img"])}" alt="">' if s.get("img") else ""
     lab = f'<div class="lab">{X.rich(s["label"])}</div>' if s.get("label") else ""
     note = f'<div class="note">{X.rich(s["note"])}</div>' if s.get("note") else ""
-    stk = "".join(f'<div class="stk" style="{pos}">{X.rich(w)}</div>' for w, pos in zip(s.get("stickers", []),
-                  ["right:6%;top:18%;transform:rotate(-8deg)", "left:6%;bottom:26%;transform:rotate(5deg);background:#ff7a00;box-shadow:0 6px 0 #a34d00", "right:8%;bottom:16%;transform:rotate(7deg)"]))
+    stk = "".join(f'<div class="stk s{k}" style="{pos}">{X.rich(w)}</div>' for k, (w, pos) in enumerate(zip(s.get("stickers", []),
+                  ["right:6%;top:18%;transform:rotate(-8deg)", "left:6%;bottom:26%;transform:rotate(5deg);background:#ff7a00;box-shadow:0 6px 0 #a34d00", "right:8%;bottom:16%;transform:rotate(7deg)"])))
     if variant == "windows":
         bar = f'<div class="bar"><b></b><b></b><b></b>&nbsp; {X.rich(s.get("file", "output.png"))}</div>'
         return f'<div class="side {cls}">{bar}<div class="ph">{img}<div class="dim"></div>{stk}</div>{lab}{note}</div>'

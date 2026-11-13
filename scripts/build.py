@@ -249,18 +249,26 @@ def main():
     fx.overlays(X, D)
     # beats with "caption": false (their screen already shows the words) get no subtitle pages
     X.caption_mute = [(t, t + d) for b, (t, d) in zip(beats, times) if b.get("caption") is False]
+    # "caption_pos": {"bottom": px, "align": …}: this beat's subtitle pages sit there, whatever the style pins
+    X.caption_pos = [(t, t + d, b["caption_pos"]) for b, (t, d) in zip(beats, times) if isinstance(b.get("caption_pos"), dict)]
     captions.build(X, D, meta.get("caption_fix"), meta.get("caption_len"))
     captions.srt(X, D, out / "captions.srt", meta.get("caption_fix"))
 
-    # mascot (faceless host): a transparent talking video. corner = always on; cameo = only on beats with "host": true + the outro
+    # mascot (faceless host): a transparent talking video. corner = always on; cameo = only on beats with "host": true + the outro;
+    # off (style mode "none" / "off", or meta.mascot_mode "off") = no host, except beats that ask with "host": "force"
+    mmode = core.mascot_mode(style, meta)
+    wins = []
     if meta.get("mascot"):
+        if mmode == "corner":
+            wins = [(0.0, D)]
+        elif mmode == "off":
+            wins = [(t, d) for b, (t, d) in zip(beats, times) if b.get("host") == "force"]
+        else:
+            wins = [(t, d) for b, (t, d) in zip(beats, times) if b.get("host") or b["scene"] == "outro"]
+    if wins:
         m = style.get("mascot", {})
         url = X.asset(meta["mascot"], "video")
         frame = m.get("frame", "none")
-        if m.get("mode", "corner") == "corner":
-            wins = [(0.0, D)]
-        else:
-            wins = [(t, d) for b, (t, d) in zip(beats, times) if b.get("host") or b["scene"] == "outro"]
         src_d = probe(X.out / url) or D
         for k, (a, dur) in enumerate(wins):
             mid = "mascot" if a + dur >= D - 0.01 else f"mascot{k}"
@@ -333,7 +341,7 @@ def main():
 {X.extra_head}
 <style>{css}</style></head>
 <body>
-<div id="root" class="{' '.join('st-' + c for c in style['_chain'])} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and style.get('mascot', {}).get('mode', 'corner') == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{TW}" data-height="{TH}">
+<div id="root" class="{' '.join('st-' + c for c in style['_chain'])} {'v' if X.portrait else 'h'}{' has-mascot' if meta.get('mascot') and mmode == 'corner' else ''}" data-composition-id="main"{' data-motion-blur="on"' if style.get("motion_blur", False) else ''} data-start="0" data-duration="{D:.3f}" data-width="{TW}" data-height="{TH}">
 {(f'<div id="canvas">' + chr(10).join(X.els) + '</div>') if X.canvas else chr(10).join(X.els)}
 {chr(10).join(aud)}
 </div>
@@ -353,7 +361,7 @@ window.__timelines["main"] = tl;
     (out / "meta.json").write_text(json.dumps({"id": f"hat9-{sid}", "name": f"{meta.get('title', 'hat9')} · {style['name']}"}, ensure_ascii=False))
     (out / "package.json").write_text(json.dumps({"name": f"hat9-{sid}", "private": True, "type": "module"}, indent=2))
     # resolved beat times, for the storyboard check, the stills board and samples (scripts/brief.py, stills.py, sample.py)
-    tl_json = {"duration": round(D, 3), "lead": lead, "beats": [
+    tl_json = {"duration": round(D, 3), "lead": lead, "style": sid, "beats": [
         {"i": i, "t": round(t, 3), "d": round(d, 3), "scene": b.get("scene"), "fx": b.get("fx")} for i, (b, (t, d)) in enumerate(zip(beats, times))]}
     if X.music_beats:      # beat sync: what moved onto the music's beats, and what review.py's av-sync check needs
         beatsync.record(X, tl_json, beats, D)

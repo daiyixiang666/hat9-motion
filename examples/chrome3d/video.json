@@ -7,7 +7,6 @@
   "words": "assets/audio/words.json",
   "music": "assets/audio/music.mp3",
   "music_volume": 0.18,
-  "mascot": "../../assets/host.webm",
   "tail": 2.8,
   "tag": "NVDA · 数据中心",
   "ticker": ["NVDA", "数据中心 FY26 $193.7B", "同比 +68%", "GAAP 毛利率 75.0%", "市值首破 $5T", "CUDA 开发者 ≈ 600 万"]

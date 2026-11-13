@@ -9,6 +9,7 @@ Only generic techniques are re-created (no template designs or assets copied).
 import math
 
 from h9 import fit
+from h9 import core
 from h9.core import RTL_RX
 
 CSS = r"""
@@ -58,7 +59,7 @@ CTX_CSS = r"""
 .ctx.photo .hd, .ctx.photo .ft { color:#fff; border-color:rgba(255,255,255,.7); text-shadow:0 1px 8px rgba(0,0,0,.6); opacity:1; }
 .ctx.photo .hd .fxid { background:#fff; color:#111; text-shadow:none; }
 .ctx.photo .scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,0) 18%, rgba(0,0,0,0) 72%, rgba(0,0,0,.6)); }
-#root.v .fx .sub { max-width:840px; } #root.v .ctx .hd { left:56px; right:56px; top:206px; } #root.v .ctx .ft { left:56px; right:56px; bottom:auto; top:1478px; }
+#root.v .fx .sub { max-width:840px; } #root.v .ctx .hd { left:56px; right:56px; top:206px; } #root.v .ctx .ft { left:56px; right:120px; bottom:auto; top:1458px; flex-direction:column; align-items:flex-start; gap:4px; } #root.v .ctx .ft > div { max-width:100%; }
 #root.v .ctx .cap { bottom:auto; top:1330px; padding:0 120px; } #root.v .ctx .cap > span { font-size:44px; max-width:100%; }
 """
 PHOTO = {"parallax", "portal", "mosaic", "callout", "match_cut", "plate"}
@@ -156,7 +157,8 @@ def _context(X, cid, t, d, p):
                  + f'<div class="cap"><span style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div><div class="ft"><div>{k["foot"]}</div><div>{k["src"]}</div></div>')
         X.clip(f"{cid}c", t, d, inner, f"ctx{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
         X.tw(f'tl.from("#{cid}c .cap > span", {{y:16, opacity:0, duration:0.3, ease:"power3.out"}}, {t + 0.05:.3f});')
-    if p.get("host"):    # the talking host in the corner, as a presenter would be
+    host_on = p.get("host") == "force" or (p.get("host") and core.fx_host_ok(X.S, X.v.get("meta")))
+    if host_on:    # the talking host in the corner, as a presenter would be (never in a no-host style unless "force")
         src = X.v.get("meta", {}).get("host_video")
         if src:
             url = X.asset(src, "video")

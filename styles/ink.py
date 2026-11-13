@@ -2,7 +2,8 @@
 克制、透气、墨色有层次，不用渐变金、不用祥云贴图。墨的边缘用 SVG 湍流 + 位移滤镜做出洇开和飞白（固定种子，逐帧确定）。
 
 场景（SCENES，全部自写）：brush 书法大字落笔 · column 竖排日期 + 题名 · drops 墨点洇开成人群 · scrolls 立轴展开的数字 ·
-wash 一笔被水冲淡 · handscroll 手卷横移的年份 · splash 泼墨数字 · couplet 竖排对句 + 盖章 · seal 落款。
+wash 一笔被水冲淡 · handscroll 手卷横移的年份 · splash 泼墨数字 · bars 一笔一柱的干笔柱图 · share 圆相墨晕占比 ·
+couplet 竖排对句 + 盖章 · seal 落款。数字一律刻进朱红印块（#b2271f）。
 横屏竖屏各自排版；所有文字走 fit.py 自适应字号与断行。
 """
 import math, random, re
@@ -12,11 +13,11 @@ from h9 import fit, fonts as h9fonts
 STYLE = {
     "name": "水墨国风", "en": "Ink", "benchmarks": ["故宫数字展陈", "数字敦煌", "当代国风动态设计"],
     "tokens": {
-        "bg": "#ebe3d1", "fg": "#171612", "muted": "#5a544a", "accent": "#b03a2e", "accent2": "#3d4a52", "alert": "#b03a2e",
+        "bg": "#ebe3d1", "fg": "#171612", "muted": "#5a544a", "accent": "#b2271f", "accent2": "#3d4a52", "alert": "#b2271f",
         "line": "#cfc5ae", "paper": "#ebe3d1", "ink": "#171612", "card": "#f2ecdd", "card-fg": "#171612",
-        "seal": "#b03a2e", "wash": "rgba(23,22,18,.10)", "mist": "rgba(245,240,229,.85)",
-        "cap-bg": "rgba(239,232,216,.92)", "cap-fg": "#171612", "cap-size": "38px", "cap-weight": "600", "cap-pad": "6px 22px 9px",
-        "cap-radius": "2px", "cap-shadow": "0 0 0 1px rgba(23,22,18,.12)", "cap-em": "#b03a2e", "cap-bottom": "46px",
+        "seal": "#b2271f", "wash": "rgba(23,22,18,.10)", "mist": "rgba(245,240,229,.85)",
+        "cap-bg": "none", "cap-fg": "#1c1a17", "cap-size": "40px", "cap-weight": "600", "cap-pad": "0 20px",
+        "cap-radius": "0", "cap-shadow": "none", "cap-em": "#b2271f", "cap-bottom": "40px",
         "punch-top": "70%", "punch-size": "60px", "punch-stroke": "0",
     },
     "fonts": {"display": "ma-shan-zheng", "body": "noto-serif-sc", "cap": "noto-serif-sc", "serif": "noto-serif-sc",
@@ -29,18 +30,30 @@ STYLE = {
         "red":   {"bg": "#9e3327", "fg": "#f4ecd9", "muted": "#ead8c4", "accent": "#171612", "card": "#f4ecd9", "card-fg": "#171612", "line": "rgba(244,236,217,.35)"},
         "lemon": {"bg": "#cfd9d0", "fg": "#13201c", "muted": "#44564f", "accent": "#b03a2e", "card": "#edf1ec", "card-fg": "#13201c", "line": "#a7b8ae"},
     },
-    "motion": {"ease": "power3.out", "dur": 0.8, "stagger": 0.05, "cut": "hard", "transition": "flash", "em": "static", "camera": "none"},
+    "motion": {"ease": "power3.out", "dur": 0.8, "stagger": 0.05, "cut": "hard", "transition": "hard", "em": "static", "camera": "none"},
     "layers": [],
-    "mascot": {"mode": "cameo", "frame": "sticker", "landscape": {"right": 110, "bottom": 70, "h": 300}, "portrait": {"left": 400, "bottom": 640, "h": 260}},
+    "mascot": {"mode": "none", "frame": "none", "landscape": {"right": 110, "bottom": 70, "h": 300}, "portrait": {"left": 400, "bottom": 640, "h": 260}},
     "sfx": {"enter": ("whoosh_soft", 0.22), "brush": ("brush", 0.45), "stamp": ("hit", 0.35), "drop": ("pop", 0.25), "paper": ("paper", 0.35),
             "count": ("type", 0.2), "mascot": ("whoosh_soft", 0.22), "wash": ("whoosh_deep", 0.3)},
     "css": """
-.st-ink .cap .cp { letter-spacing:.06em; }
-#root.v.st-ink { --cap-bottom:516px; }
+.st-ink .cap .cp { position:relative; display:inline-block; color:#1c1a17; letter-spacing:.1em; text-shadow:0 0 4px #efe8d8, 0 0 10px #efe8d8, 0 0 20px #efe8d8; }
+.st-ink .cap .cp::before { content:""; position:absolute; z-index:-1; left:-30%; right:-30%; top:-85%; bottom:-120%; pointer-events:none;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(241,235,222,.97) 0, rgba(241,235,222,.92) 34%, rgba(241,235,222,.58) 62%, rgba(241,235,222,.18) 84%, rgba(241,235,222,0) 100%); }
+.st-ink .cap .cp::after { content:""; position:absolute; left:50%; bottom:-20px; width:120px; height:16px; margin-left:-60px; pointer-events:none; background:url("BRUSH") center / 120px 16px no-repeat; }
+#root.v.st-ink { --cap-bottom:456px; --cap-size:40px; --cap-pad:0 20px; }
+#root.v.st-ink .cap { padding-left:110px; padding-right:110px; }
+.st-ink .mascot { display:none !important; }
 .st-ink .cap .em .emt { color:var(--seal); }
 #root.v.st-ink .cap-punch .cp { font-weight:700; }
 """,
 }
+
+# the dry-brush stroke under the caption: one tapered mark, its body broken into hair streaks (flying white)
+_DRY = ("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='32' viewBox='0 0 240 32'><defs>"
+        "<filter id='d' x='-5%' y='-40%' width='110%' height='180%'><feTurbulence type='fractalNoise' baseFrequency='0.012 0.55' numOctaves='2' seed='4' result='t'/>"
+        "<feColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.4 1.75' result='m'/><feComposite in='SourceGraphic' in2='m' operator='in'/></filter></defs>"
+        "<path d='M3 17 C 30 7, 90 6, 160 8 C 200 9, 226 10, 238 14 C 214 19, 170 22, 110 24 C 60 26, 22 25, 3 17 Z' fill='%231c1a17' filter='url(%23d)'/></svg>")
+STYLE["css"] = STYLE["css"].replace("BRUSH", _DRY)
 
 CSS = r"""
 .st-ink .em .emb { display:none; }
@@ -56,6 +69,8 @@ CSS = r"""
   -webkit-mask-image:linear-gradient(176deg, #000 40%, rgba(0,0,0,0) 60%); mask-image:linear-gradient(176deg, #000 40%, rgba(0,0,0,0) 60%);
   -webkit-mask-size:100% 320%; mask-size:100% 320%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
   -webkit-mask-position:0 var(--m); mask-position:0 var(--m); }
+.ik .num.gl { --m:0%; -webkit-mask-image:linear-gradient(100deg, #000 40%, rgba(0,0,0,0) 60%); mask-image:linear-gradient(100deg, #000 40%, rgba(0,0,0,0) 60%);
+  -webkit-mask-size:320% 100%; mask-size:320% 100%; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:var(--m) 0; mask-position:var(--m) 0; }
 .ik .bt path { fill:var(--ink); }
 .ik .bt.red path { fill:var(--seal); }
 .ik .serif { position:absolute; font-family:var(--f-serif); color:var(--ink); }
@@ -63,20 +78,40 @@ CSS = r"""
 .ik .vt { position:absolute; writing-mode:vertical-rl; font-family:var(--f-serif); letter-spacing:.18em; color:var(--ink); white-space:nowrap; }
 .ik .num { position:absolute; font-family:var(--f-num); font-weight:600; color:var(--ink); font-variant-numeric:oldstyle-nums proportional-nums; white-space:nowrap; letter-spacing:.01em; }
 .ik .seal { position:absolute; display:grid; place-items:center; background:var(--seal); color:var(--paper); border-radius:6px;
-  font-family:var(--f-serif); font-weight:900; line-height:1; box-shadow:0 0 0 2px rgba(176,58,46,.25); }
+  font-family:var(--f-serif); font-weight:900; line-height:1; box-shadow:0 0 0 2px rgba(178,39,31,.22); }
+/* a figure carved into a vermilion seal: paper-coloured numerals, an inner carved rule, uneven ink (paper specks show through) */
+.ik .fsw { position:absolute; }
+.ik .fseal { position:relative; display:flex; align-items:baseline; justify-content:center; gap:.06em; background:var(--seal); color:#f3ead6;
+  font-family:var(--f-serif); font-weight:900; line-height:1; white-space:nowrap; border-radius:5px; font-variant-numeric:lining-nums proportional-nums; letter-spacing:-.03em;
+  box-shadow:inset 0 0 0 9px var(--seal), inset 0 0 0 13px rgba(243,234,214,.9); }
+.ik .fseal::after { content:""; position:absolute; inset:0; border-radius:5px; pointer-events:none; background:url("SPECK") 0 0 / 260px 260px; }
+.ik .fseal .u { font-size:.36em; letter-spacing:.04em; }
+
 .ik .seal .si { display:grid; grid-auto-flow:column; grid-template-rows:repeat(2, 1fr); direction:rtl; gap:2px 4px; }
 .ik .seal.out { background:transparent; color:var(--seal); box-shadow:inset 0 0 0 5px var(--seal); }
 .ik .hd { position:absolute; display:flex; align-items:center; gap:14px; font-family:var(--f-serif); color:var(--ink); z-index:6; }
 .ik .hd b { font-weight:700; letter-spacing:.24em; } .ik .hd span { opacity:.55; letter-spacing:.2em; }
 .ik .hd i { display:block; width:42px; height:2px; background:var(--ink); opacity:.6; }
-.ik .idx { position:absolute; z-index:6; width:46px; height:46px; display:grid; place-items:center; font-family:var(--f-serif); font-weight:900;
-  color:var(--paper); background:var(--seal); border-radius:4px; font-size:24px; }
-.ik .ft { position:absolute; font-family:var(--f-serif); color:var(--muted); letter-spacing:.06em; z-index:6; white-space:nowrap;
-  background:rgba(235,227,209,.85); padding:3px 10px; margin-left:-10px; border-radius:2px; }
+.ik .idx { position:absolute; z-index:6; width:58px; height:58px; display:grid; place-items:center; font-family:var(--f-serif); font-weight:900;
+  color:var(--paper); background:var(--seal); border-radius:5px; font-size:30px; transform:rotate(-2deg); }
+.ik .ft { position:absolute; font-family:var(--f-serif); font-weight:600; color:#4a443a; letter-spacing:.08em; z-index:6; white-space:nowrap;
+  text-shadow:0 0 5px var(--paper), 0 0 12px var(--paper), 0 0 20px var(--paper); }
+.ik .ft::after { content:""; position:absolute; z-index:-1; left:-60px; right:-90px; top:-22px; bottom:-22px; pointer-events:none;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(241,235,222,.9) 0, rgba(241,235,222,.72) 45%, rgba(241,235,222,0) 100%); }
+.ik .ft::before { content:""; display:inline-block; width:9px; height:9px; margin-right:12px; background:var(--seal); transform:translateY(-3px) rotate(45deg); }
+.ik .mount { position:absolute; background:linear-gradient(90deg, #a9ad9b, #bcc0ae 18%, #bcc0ae 82%, #a4a896); box-shadow:0 14px 30px rgba(60,45,20,.16); }
+.ik .heart { position:absolute; background:var(--card); box-shadow:0 0 0 1px rgba(23,22,18,.22); overflow:hidden; }
 .ik .rule { position:absolute; background:var(--ink); transform-origin:50% 0; }
 .ik .card { position:absolute; background:var(--card); box-shadow:0 18px 40px rgba(60,45,20,.18), 0 0 0 1px rgba(23,22,18,.08); }
 .ik .rod { position:absolute; background:linear-gradient(180deg, #4a3a2a, #2a2018); border-radius:6px; box-shadow:0 4px 10px rgba(0,0,0,.25); }
 """
+
+# where the seal paste did not take: small paper-coloured specks and a worn edge (seeded noise, thresholded)
+_SPECK = ("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='s'>"
+          "<feTurbulence type='fractalNoise' baseFrequency='0.09' numOctaves='3' seed='12'/>"
+          "<feColorMatrix type='matrix' values='0 0 0 0 .953  0 0 0 0 .918  0 0 0 0 .839  0 0 0 -24 5.9'/></filter>"
+          "<rect width='260' height='260' filter='url(%23s)'/></svg>")
+CSS = CSS.replace("SPECK", _SPECK)
 
 NUMZH = "零壹贰叁肆伍陆柒捌玖拾"
 
@@ -145,6 +180,42 @@ def brush(X, text, fid, px, cls="", flt=None):
     return f'<div class="bt {cls}" style="width:{x:.0f}px; height:{h:.0f}px">{"".join(out)}</div>', x, h
 
 
+def brush_col(X, text, fid, px, flt=None, lead=0.98):
+    """a short word written top-to-bottom, one glyph under the other (how a hanging scroll carries its title).
+    Returns (html, width_px, height_px)."""
+    out, y, w = [], 0.0, 0.0
+    for ch in text:
+        g, gw_, gh = brush(X, ch, fid, px, flt=flt)
+        out.append((g, gw_, y))
+        w = max(w, gw_)
+        y += px * lead
+    html = "".join(f'<div style="position:absolute; left:{(w - gw_) / 2:.0f}px; top:{yy:.0f}px">{g}</div>' for g, gw_, yy in out)
+    return f'<div class="bc" style="position:relative; width:{w:.0f}px; height:{y:.0f}px">{html}</div>', w, y
+
+
+def fig_seal(X, val, unit, px, cid, cls="", width=None, num_cls="n"):
+    """a figure carved into a vermilion seal block (#b2271f): numerals in paper colour at `px`, the unit small beside
+    them. Returns (html, width_px, height_px); the block keeps a fixed width so a running counter does not jitter it."""
+    X.used_text.update(str(val) + str(unit) + "0123456789,.+")
+    tw = sum(0.6 if c.isdigit() else fit.gw(c) for c in str(val)) * px + (len(unit) * px * 0.36 + px * 0.06 if unit else 0)
+    padx, pady = px * 0.17, px * 0.2
+    bw = width or tw + 2 * padx
+    bh = px * 0.78 + 2 * pady
+    u = f'<span class="u">{X.rich(unit)}</span>' if unit else ""
+    html = (f'<div class="fsw {cls}" style="width:{bw:.0f}px; height:{bh:.0f}px; filter:url(#{cid}k)">'
+            f'<div class="fseal" style="width:{bw:.0f}px; height:{bh:.0f}px; font-size:{px:.0f}px; padding-top:{pady * 0.9:.0f}px; box-sizing:border-box">'
+            f'<span class="{num_cls}">{X.rich(str(val))}</span>{u}</div></div>')
+    return html, bw, bh
+
+
+def can_write(fid, text):
+    """True when the calligraphy font has every glyph of `text` (most of them carry no digits or Latin)."""
+    path = font_file(fid)
+    if not path: return False
+    cmap = _font(path)[1]
+    return all(ord(c) in cmap for c in text if not c.isspace())
+
+
 def write_on(X, sel, t, dur=1.2, stagger=None):
     """calligraphy: each glyph is uncovered top-to-bottom by a soft-edged mask (the brush travelling down), settling
     from a slight swell and a wet blur into a crisp mark."""
@@ -165,6 +236,10 @@ def filters(cid, seed=3, scale=10, freq=0.03):
             f'<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G" class="wd"/><feGaussianBlur stdDeviation="0" class="wb"/></filter>'
             f'<filter id="{cid}k" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="{seed + 11}" result="n"/>'
             f'<feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/></filter>'
+            f'<filter id="{cid}h" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.42 0.012" numOctaves="2" seed="{seed + 5}" result="t"/>'
+            f'<feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12.5 8.4" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>'
+            f'<filter id="{cid}r" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.16" numOctaves="2" seed="{seed + 9}" result="t"/>'
+            f'<feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12.5 8.4" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>'
             f'</defs></svg>')
 
 
@@ -193,7 +268,7 @@ def mountains(cid, X, seed, layers=3, top=0.45, amp=0.12, dark=0.85, width=None,
         pts = []
         n = 140
         for i in range(n + 1):
-            x = W * i / n
+            x = -160 + (W + 400) * i / n              # wider than the page: the parallax drift never shows an end
             u = x / W * 6.283
             y = base - a * sum(am[j] * (0.5 + 0.5 * math.sin(fr[j] * u + ph[j])) for j in range(5)) / sum(am)
             pts.append(f"{x:.0f},{y:.0f}")
@@ -202,20 +277,46 @@ def mountains(cid, X, seed, layers=3, top=0.45, amp=0.12, dark=0.85, width=None,
         out.append(f'<g class="mt mt{k}"><defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1">'
                    f'<stop offset="0" stop-color="{color}" stop-opacity="{op:.2f}"/><stop offset="0.28" stop-color="{color}" stop-opacity="{op * 0.45:.2f}"/>'
                    f'<stop offset="0.7" stop-color="{color}" stop-opacity="0"/></linearGradient></defs>'
-                   f'<path d="M0,{H} L{" L".join(pts)} L{W},{H} Z" fill="url(#{gid})" filter="url(#{cid}b)"/></g>')
+                   f'<path d="M-160,{H} L{" L".join(pts)} L{W + 240},{H} Z" fill="url(#{gid})" filter="url(#{cid}b)"/></g>')
     return f'<svg class="svgl" viewBox="0 0 {W} {H}" preserveAspectRatio="none" style="width:{W}px">{"".join(out)}</svg>'
 
 
-def mini_mts(cid, w, h, seed):
-    """a small painted landscape for the head of a hanging scroll: two washed ridges and a vermilion sun."""
-    r = random.Random(seed)
-    out = []
-    for k, (base, a, op) in enumerate(((0.62, 0.30, 0.13), (0.82, 0.24, 0.24))):
-        ph = [r.uniform(0, 6.283) for _ in range(3)]
-        pts = " L".join(f"{w * i / 40:.0f},{h * (base - a * (0.5 + 0.3 * math.sin(i / 40 * 7 + ph[0]) + 0.2 * math.sin(i / 40 * 17 + ph[1]))):.0f}" for i in range(41))
-        out.append(f'<path d="M0,{h} L{pts} L{w:.0f},{h} Z" fill="#171612" fill-opacity="{op}" filter="url(#{cid}b)"/>')
-    sun = f'<circle cx="{w * r.uniform(.22, .4):.0f}" cy="{h * 0.3:.0f}" r="{h * 0.09:.0f}" fill="#b03a2e" fill-opacity=".75"/>'
-    return f'<svg class="mini" width="{w:.0f}" height="{h:.0f}" viewBox="0 0 {w:.0f} {h:.0f}" style="position:absolute; left:0; top:0">{sun}{"".join(out)}</svg>'
+def shore(cid, X, seed, mode="bank"):
+    """the near ground that closes the bottom edge, so a page is a whole painting and not a picture with a blank foot:
+    a pale far ridge standing in water mist and (mode "bank") a dark near bank rising on
+    one side with reeds. Everything is a brush mark with the scene's bleed / flying-white filters; seeded per page."""
+    W, H, P = X.W, X.H, X.portrait
+    r = random.Random(300 + seed)
+    flip = seed % 2
+    ph = [r.uniform(0, 6.283) for _ in range(4)]
+    base, a = H * (0.925 if P else 0.93), H * (0.04 if P else 0.06)
+    far = " L".join(f"{W * i / 80:.0f},{base - a * (0.5 + 0.3 * math.sin(i / 80 * 5 + ph[0]) + 0.2 * math.sin(i / 80 * 13 + ph[1])):.0f}" for i in range(81))
+    out = [f'<g class="sf"><defs><linearGradient id="{cid}sf" gradientUnits="userSpaceOnUse" x1="0" y1="{base - a:.0f}" x2="0" y2="{H}">'
+           f'<stop offset="0" stop-color="#171612" stop-opacity=".26"/><stop offset=".5" stop-color="#171612" stop-opacity=".12"/><stop offset="1" stop-color="#171612" stop-opacity=".2"/></linearGradient></defs>'
+           f'<path d="M-80,{H + 40} L-80,{base:.0f} L{far} L{W + 80},{base:.0f} L{W + 80},{H + 40} Z" fill="url(#{cid}sf)" filter="url(#{cid}b)"/></g>']
+    if mode == "bank":
+        hi, lo = H * (0.105 if P else 0.17), H * 0.012
+        prof = []
+        for i in range(101):
+            u = i / 100
+            v = 1 - u if flip else u                       # v = 0 on the side where the bank stands high
+            k = max(0.0, 1 - v / 0.78) ** 1.7
+            prof.append((W * u, H - lo - (hi - lo) * k - H * 0.006 * math.sin(u * 23 + ph[2]) * (0.3 + k) - H * 0.003 * math.sin(u * 61 + ph[3])))
+        line = " L".join(f"{x:.0f},{y:.0f}" for x, y in prof)
+        reeds = []
+        for _ in range(9 if P else 11):
+            v = r.uniform(0.02, 0.26 if P else 0.4)
+            u = 1 - v if flip else v
+            x, y = min(prof, key=lambda q: abs(q[0] - W * u))
+            ln = H * r.uniform(0.025, 0.06) * (1 if P else 1.5)
+            lean = r.uniform(-0.5, 0.5) * ln + (ln * 0.25 if flip else -ln * 0.25)
+            reeds.append(f'<path d="M{x:.0f} {y + 8:.0f} q {lean * 0.2:.0f} {-ln * 0.6:.0f} {lean:.0f} {-ln:.0f}" fill="none" stroke="#171612" stroke-opacity="{r.uniform(.6, .9):.2f}" '
+                         f'stroke-width="{r.uniform(2, 4.5):.1f}" stroke-linecap="round"/>')
+        out.append(f'<g class="sb"><defs><linearGradient id="{cid}sb" gradientUnits="userSpaceOnUse" x1="0" y1="{H - hi:.0f}" x2="0" y2="{H}">'
+                   f'<stop offset="0" stop-color="#171612" stop-opacity=".92"/><stop offset="1" stop-color="#171612" stop-opacity=".62"/></linearGradient></defs>'
+                   f'<path d="M-80,{H + 60} L-80,{prof[0][1]:.0f} L{line} L{W + 80},{prof[-1][1]:.0f} L{W + 80},{H + 60} Z" fill="url(#{cid}sb)" filter="url(#{cid}b)"/>'
+                   f'<g filter="url(#{cid}k)">{"".join(reeds)}</g></g>')
+    return f'<svg class="svgl shore" viewBox="0 0 {W} {H}">{"".join(out)}</svg>'
 
 
 def mist(X, n=3, seed=9):
@@ -256,24 +357,31 @@ def drift(X, sel, t, d, s=1.04, x=0, y=0):
     X.tw(f'tl.fromTo("{sel}", {{scale:1, x:0, y:0}}, {{scale:{s}, x:{x}, y:{y}, duration:{d:.2f}, ease:"sine.inOut"}}, {t:.3f});')
 
 
-def furn(X, b, cid, inner, extra_cls=""):
-    """page: paper, header (channel + section), index seal, footnote, then the scene; opens through an ink bleed from the previous page."""
+def furn(X, b, cid, inner, t=None, d=None, ground="bank", extra_cls=""):
+    """page: paper, the near ground that carries the picture to the bottom edge, header (channel + section), index seal,
+    footnote, then the scene; opens through an ink bleed from the previous page."""
     X.css("ink", CSS)
     P = X.portrait
     i, n = X.beat["i"], X.beat["n"]
     meta = X.v.get("meta", {})
     sec = meta.get("section", "国风 · 商业")
     X.used_text.update(sec + X.channel + NUMZH + "来源：")
-    hx, hy, fs = (56, 206, 22) if P else (80, 44, 20)
+    hx, hy, fs = (56, 204, 28) if P else (80, 44, 24)
     idx = NUMZH[(i + 1) % 11] if i + 1 <= 10 else str(i + 1)
     hd = (f'<div class="hd" style="left:{hx}px; top:{hy}px; font-size:{fs}px"><b>{X.rich(X.channel)}</b><i></i><span>{X.rich(sec)}</span></div>'
-          f'<div class="idx" style="right:{hx}px; top:{hy - 8}px">{idx}</div>')
+          f'<div class="idx" style="right:{hx}px; top:{hy - 12}px">{idx}</div>')
     ft = ""
     src = b.get("src")
     if src:
-        fy = 1470 if P else 1036
-        ft = f'<div class="ft" style="left:{hx}px; top:{fy}px; font-size:{18 if P else 16}px">来源：{X.rich(src)}</div>'
-    return f'<div class="ik {extra_cls}">{filters(cid)}{paper(X)}<div class="cam">{inner}</div>{hd}{ft}</div>'
+        fy = 1478 if P else 1030
+        ft = f'<div class="ft" style="left:{hx}px; top:{fy}px; font-size:{28 if P else 22}px">来源：{X.rich(src)}</div>'
+    foot = shore(cid, X, i, ground) if ground else ""
+    if foot and t is not None:
+        sx = 36 if i % 2 else -36
+        X.tw(f'tl.fromTo("#{cid} .shore .sf", {{x:{-sx * 0.5:.0f}}}, {{x:{sx * 0.5:.0f}, duration:{d:.2f}, ease:"none"}}, {t:.3f});')
+        if ground == "bank":
+            X.tw(f'tl.fromTo("#{cid} .shore .sb", {{x:{sx * 1.5:.0f}, y:26}}, {{x:{-sx * 1.5:.0f}, y:0, duration:{d:.2f}, ease:"power1.out"}}, {t:.3f});')
+    return f'<div class="ik {extra_cls}">{filters(cid)}{paper(X)}<div class="cam">{foot}{inner}</div>{hd}{ft}</div>'
 
 
 def opening(X, cid, t):
@@ -332,30 +440,45 @@ def fitpx(text, box_w, max_px, min_px=None, lines=1, lh=1.1):
 
 # ---------------------------------------------------------------- scenes
 def brush_scene(b, X, t, d, cid):
-    """hook: far mountains drift; a huge calligraphy word is written; a vertical kicker and a seal frame it."""
+    """hook: far mountains drift; a huge calligraphy word is written; a vertical kicker and a seal frame it.
+    9:16 with a 1–2 glyph word: the word hangs as one tall column (each glyph ~half the frame wide), kicker and
+    sub as narrow columns either side, like the title and colophon of a hanging scroll."""
     P = X.portrait; W, H = X.W, X.H
     word = b.get("big", "千万")
     kick = b.get("kicker", "")
     sub = b.get("sub", "")
-    box_w = W * (0.70 if P else 0.54)
-    px = min(H * (0.24 if P else 0.36), box_w / max(1, sum(fit.gw(c) for c in word)))
-    svg, bw, bh = brush(X, word, b.get("font", "ma-shan-zheng"), px, flt=f"{cid}k")
-    bx = W - bw - 70 if P else W * 0.40
-    by = H * 0.25 if P else H * 0.15
-    kx = 80 if P else W * 0.16
-    ky = by - (110 if P else -20)
-    vt_fs = min(46 if P else 44, ((by + bh - ky) if P else H * 0.6) / max(1, len(kick)) / 1.2)
+    fid = b.get("font", "ma-shan-zheng")
     ssz = 92 if P else 104
-    sl = "" if not b.get("seal") else seal(X, b["seal"], ssz, style=f"left:{min(bx + bw - ssz * 0.55, W - 60 - ssz):.0f}px; top:{by + bh - ssz * 0.7:.0f}px; transform:rotate(-3deg)")
-    if sub:
-        sfs, shtml = ftext(X, sub, W - 160 if P else box_w, 38 if P else 34, 24, ls=0.14)
-        subh = (f'<div class="serif sub halo" style="left:80px; right:80px; top:{by + bh + (90 if P else 60):.0f}px; font-size:{sfs}px; font-weight:600; letter-spacing:.14em; line-height:1.3; text-align:center">{shtml}</div>'
-                if P else f'<div class="serif sub halo" style="left:{bx:.0f}px; top:{by + bh + 50:.0f}px; width:{box_w:.0f}px; font-size:{sfs}px; font-weight:600; letter-spacing:.14em; line-height:1.3">{shtml}</div>')
-    else: subh = ""
+    if P and len(word) <= 2:
+        px = 650 if len(word) == 2 else 720
+        svg, bw, bh = brush_col(X, word, fid, px, flt=f"{cid}k", lead=0.92)
+        bx, by = (W - bw) / 2 + 10, H * 0.12
+        kx, ky = 70, max(300, by + 40)
+        vt_fs = min(46, bh * 0.55 / max(1, len(kick)) / 1.2)
+        sl = "" if not b.get("seal") else seal(X, b["seal"], ssz, style=f"left:{bx - ssz * 0.35:.0f}px; top:{min(by + bh - ssz * 0.6, 1478 - ssz - 34):.0f}px; transform:rotate(-3deg)")
+        if sub:
+            sfs = min(36, (bh * 0.9) / max(1, len(sub)) / 1.12)
+            subh = f'<div class="vt sub halo" style="right:72px; top:{max(300, by + 60):.0f}px; font-size:{sfs:.0f}px; font-weight:600; letter-spacing:.12em">{X.rich(sub)}</div>'
+        else: subh = ""
+    else:
+        box_w = W * (0.70 if P else 0.54)
+        px = min(H * (0.24 if P else 0.36), box_w / max(1, sum(fit.gw(c) for c in word)))
+        svg, bw, bh = brush(X, word, fid, px, flt=f"{cid}k")
+        bx = W - bw - 70 if P else W * 0.40
+        by = H * 0.25 if P else H * 0.15
+        kx = 80 if P else W * 0.16
+        ky = by - (110 if P else -20)
+        vt_fs = min(46 if P else 44, ((by + bh - ky) if P else H * 0.6) / max(1, len(kick)) / 1.2)
+        sl = "" if not b.get("seal") else seal(X, b["seal"], ssz, style=f"left:{min(bx + bw - ssz * 0.55, W - 60 - ssz):.0f}px; top:{by + bh - ssz * 0.7:.0f}px; transform:rotate(-3deg)")
+        if sub:
+            sfs, shtml = ftext(X, sub, W - 160 if P else box_w, 38 if P else 34, 24, ls=0.14)
+            subh = (f'<div class="serif sub halo" style="left:80px; right:80px; top:{by + bh + (90 if P else 60):.0f}px; font-size:{sfs}px; font-weight:600; letter-spacing:.14em; line-height:1.3; text-align:center">{shtml}</div>'
+                    if P else f'<div class="serif sub halo" style="left:{bx:.0f}px; top:{by + bh + 50:.0f}px; width:{box_w:.0f}px; font-size:{sfs}px; font-weight:600; letter-spacing:.14em; line-height:1.3">{shtml}</div>')
+        else: subh = ""
     inner = (f'<div class="mtl" style="position:absolute;inset:0">{mountains(cid, X, 11, layers=3, top=0.62 if P else 0.64, amp=0.13)}</div>{mist(X, 3)}'
-             f'<div class="vt kick" style="left:{kx:.0f}px; top:{ky:.0f}px; font-size:{vt_fs}px; font-weight:600">{X.rich(kick)}</div>'
+             f'<div class="vt kick" style="left:{kx:.0f}px; top:{ky:.0f}px; font-size:{vt_fs:.0f}px; font-weight:600">{X.rich(kick)}</div>'
              f'<div class="word" style="position:absolute; left:{bx:.0f}px; top:{by:.0f}px">{svg}</div>{sl}{subh}')
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     tw_ = T(X, b, "at_big", t, t + 0.6)
     ts = T(X, b, "at_seal", t, tw_ + 0.9)
@@ -368,7 +491,7 @@ def brush_scene(b, X, t, d, cid):
     write_on(X, f"{s} .word", tw_ - 0.25, dur=1.3, stagger=0.18)
     X.sfx(tw_ - 0.2, "brush")
     if sl: stamp(X, f"{s} .seal", ts)
-    if sub: X.tw(f'tl.from("{s} .sub", {{opacity:0, y:16, duration:0.7}}, {ts + 0.2:.3f});')
+    if sub: X.tw(f'tl.from("{s} .sub", {{opacity:0, y:16, duration:0.7}}, {min(ts + 0.2, tw_ + 0.6):.3f});')
     drift(X, f"{s} .cam", t, d, 1.05, -20 if not P else 0, -10)
 
 
@@ -391,7 +514,7 @@ def column(b, X, t, d, cid):
              f'<div class="vt dt" style="left:{cx:.0f}px; top:{H * (0.17 if P else 0.18):.0f}px; font-size:{vfs}px; font-weight:600">{dchars}</div>'
              f'<div class="title" style="position:absolute; left:{tx:.0f}px; top:{ty:.0f}px">{svg}</div>'
              + (f'<div class="serif note" style="left:{tx:.0f}px; top:{ty + th + 30:.0f}px; font-size:{30 if P else 28}px; letter-spacing:.14em; color:var(--muted)">{X.rich(note)}</div>' if note else ""))
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     ttl = T(X, b, "at_title", t, t + d * 0.45)
     opening(X, cid, t)
@@ -410,29 +533,36 @@ def drops(b, X, t, d, cid):
     total = float(b.get("value", 3000000)); per = float(b.get("per", 1000))
     n = int(min(3200, max(30, round(total / per))))
     r = random.Random(7)
-    cx, cy = (W * 0.5, H * 0.33) if P else (W * 0.655, H * 0.50)
-    R = (W * 0.34) if P else (H * 0.40)
+    cx, cy = (W * 0.5, H * 0.395) if P else (W * 0.655, H * 0.50)
+    R = (W * 0.35) if P else (H * 0.40)
     pts = []
     for k in range(n):
         a = r.uniform(0, 6.283)
-        rr = R * math.sqrt(r.random()) * (0.85 + 0.15 * math.sin(3 * a + 1.3) + 0.08 * math.sin(7 * a))
+        rr = R * math.sqrt(r.random()) * (0.9 + 0.07 * math.sin(3 * a + 1.3) + 0.04 * math.sin(7 * a))
         pts.append((cx + rr * math.cos(a) * (1.25 if not P else 1.0), cy + rr * math.sin(a) * (0.9 if not P else 0.95), rr))
     pts.sort(key=lambda p: p[2])
     dots = "".join(f'<circle class="dp" cx="{x:.1f}" cy="{y:.1f}" r="{r.uniform(2.2, 4.6):.1f}" fill="#171612" fill-opacity="{r.uniform(.45, .95):.2f}"/>' for x, y, _ in pts)
     unit = b.get("unit", "万人"); label = b.get("label", ""); kicker = b.get("kicker", "")
     show = float(b.get("show", total / 10000)); dec = int(b.get("dec", 0))
+    final = f"{show:,.{dec}f}"
     col_w = W - 160 if P else W * 0.29
-    nfs = min(160 if P else 190, col_w / (sum(fit.gw(c) for c in f"{show:,.{dec}f}") * 1.05 + 0.42 * len(unit) + 0.12))
-    lfs, lhtml = ftext(X, label, col_w, 26 if P else 24, 18, ls=0.12)
-    nx, ny = (W * 0.5, H * 0.565) if P else (W * 0.10, H * 0.40)
+    fpx = min(240 if P else 200, (col_w - 40) / (sum(0.6 if c.isdigit() else fit.gw(c) for c in final) + len(unit) * 0.36 + 0.4))
+    fs_html, fbw, fbh = fig_seal(X, final, unit, fpx, cid, cls="big")
+    lfs, lhtml = ftext(X, label, col_w, 32 if P else 26, 24, ls=0.12)
+    if P:
+        fx_, fy_ = (W - fbw) / 2, cy + R * 0.95 - fbh * 0.35       # stamped over the lower rim of the crowd
+    else:
+        fx_, fy_ = W * 0.10, H * 0.40
+    nx = fx_
+    kk_top = 292 if P else fy_ - 80
+    lb_top = fy_ + fbh + 26
     align = "center" if P else "left"
     inner = (f'<svg class="svgl" viewBox="0 0 {W} {H}"><g filter="url(#{cid}b)">{dots}</g>'
              f'<circle class="core" cx="{cx:.0f}" cy="{cy:.0f}" r="26" fill="#171612" filter="url(#{cid}b)"/></svg>'
-             f'<div class="serif kk" style="left:{0 if P else nx:.0f}px; {"right:0;" if P else ""} top:{ny - (70 if P else 80):.0f}px; font-size:{34 if P else 32}px; letter-spacing:.2em; text-align:{align}">{X.rich(kicker)}</div>'
-             f'<div class="num big" style="left:{0 if P else nx:.0f}px; {"right:0;" if P else ""} top:{ny:.0f}px; font-size:{nfs:.0f}px; line-height:.9; text-align:{align}"><span class="n">0</span>'
-             f'<span style="font-family:var(--f-serif); font-weight:900; font-size:.42em; margin-left:.12em">{X.rich(unit)}</span></div>'
-             f'<div class="serif lb" style="left:{0 if P else nx:.0f}px; {"right:0;" if P else ""} top:{ny + nfs * 0.9 + 22:.0f}px; {"" if P else f"width:{col_w:.0f}px; "}font-size:{lfs}px; line-height:1.3; letter-spacing:.12em; color:var(--muted); text-align:{align}">{lhtml}</div>')
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+             f'<div class="serif kk halo" style="left:{0 if P else nx:.0f}px; {"right:0;" if P else ""} top:{kk_top:.0f}px; font-size:{40 if P else 32}px; font-weight:600; letter-spacing:.2em; text-align:{align}">{X.rich(kicker)}</div>'
+             f'<div style="position:absolute; left:{fx_:.0f}px; top:{fy_:.0f}px; transform:rotate(-1.5deg)">{fs_html}</div>'
+             f'<div class="serif lb halo" style="left:{0 if P else nx:.0f}px; {"right:0;" if P else ""} top:{lb_top:.0f}px; {"" if P else f"width:{col_w:.0f}px; "}font-size:{lfs}px; font-weight:600; line-height:1.3; letter-spacing:.12em; color:#4a443a; text-align:{align}">{lhtml}</div>')
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     tn = T(X, b, "at_num", t, t + 0.6)
     opening(X, cid, t)
@@ -442,54 +572,78 @@ def drops(b, X, t, d, cid):
     X.tw(f'tl.from("{s} .dp", {{attr:{{r:0}}, duration:0.5, ease:"power2.out", stagger:{{each:{spread / n:.5f}}}}}, {t + 0.25:.3f});')
     X.tw(f'tl.from("{s} .kk", {{opacity:0, y:12, duration:0.6}}, {t + 0.1:.3f});')
     tc = max(t + 0.3, tn - 0.5)
-    X.tw(f'tl.from("{s} .big", {{opacity:0, y:20, duration:0.4, ease:"power2.out"}}, {tc:.3f});')
-    counter(X, f"{s} .n", tc, 0, show, dur=1.3, dec=dec)
+    X.tw(f'tl.fromTo("{s} .big", {{scale:1.3, opacity:0, rotation:-6}}, {{scale:1, opacity:1, rotation:0, duration:0.32, ease:"back.out(2.2)"}}, {tc:.3f});')
+    X.sfx(tc + 0.08, "stamp")
+    counter(X, f"{s} .big .n", tc + 0.1, 0, show, dur=1.3, dec=dec)
     X.sfx(tn - 0.4, "count")
-    X.tw(f'tl.from("{s} .lb", {{opacity:0, duration:0.6}}, {tn + 0.8:.3f});')
+    X.tw(f'tl.from("{s} .lb", {{opacity:0, duration:0.5}}, {tn + 0.3:.3f});')
     drift(X, f"{s} .cam", t, d, 1.05, 0, 0)
 
 
 def scrolls(b, X, t, d, cid):
-    """1–3 hanging scrolls unroll from their top rods; each holds a figure and a vertical label; seals mark estimates."""
+    """1–3 hanging scrolls (立轴) unroll from their top rods: silk mount, a paper heart, a vertical label; the figure is
+    carved into a vermilion seal stamped across heart and mount (骑缝章), the unit written under it with a brush.
+    All figures share one size so the comparison is fair."""
     P = X.portrait; W, H = X.W, X.H
     items = b.get("items", [])[:3] or [{"value": "—", "label": ""}]
     n = len(items)
-    gap = 40 if P else 70
-    sw = min((W - (2 * 70 if P else 2 * 180) - gap * (n - 1)) / n, 520)
-    sh = H * (0.46 if P else 0.58)
+    gap = 34 if P else 80
+    sw = min((W - (2 * 34 if P else 2 * 180) - gap * (n - 1)) / n, 560)
+    sh = H * (0.47 if P else 0.62)
     x0 = (W - (n * sw + (n - 1) * gap)) / 2
-    y0 = H * (0.17 if P else 0.12)
+    y0 = H * (0.165 if P else 0.13)
+    hx, hw = sw * 0.075, sw * 0.85                     # the paper heart inside the mount: wide head (天头), short foot (地头)
+    hy, hh = sh * 0.125, sh * 0.80
+    fid = b.get("font", "ma-shan-zheng")
+    vals = [str(it.get("value", "")) for it in items]
+    fpx = min(250 if P else 220, hh * 0.3, min((sw * 1.02) / (sum(0.6 if c.isdigit() else fit.gw(c) for c in v) + 0.34) for v in vals))
     html = []
     for k, it in enumerate(items):
         x = x0 + k * (sw + gap)
-        val = str(it.get("value", "")); unit = it.get("unit", ""); lab = it.get("label", ""); sl = it.get("seal", "")
-        fpx = fitpx(val, sw * 0.78, 132 if P else 150, 48).px
+        val = vals[k]; unit = it.get("unit", ""); lab = it.get("label", ""); sl = it.get("seal", "")
+        fs_html, fbw, fbh = fig_seal(X, val, "", fpx, cid, cls="val")
+        upx = min(fpx * 0.5, 76 if P else 72, hw * 0.8 / max(1, len(unit)))
+        usvg, uw, uh = brush(X, unit, fid, upx, flt=f"{cid}k") if unit else ("", 0, 0)
+        vy = sh * (0.54 if P else 0.42)                 # in scroll coordinates: the seal rides the heart's edges
+        lfs = min(38 if P else 34, hh * 0.3 / max(1, len(lab)) * 1.6)
+        blot = (f'<svg class="svgl" viewBox="0 0 {hw:.0f} {hh:.0f}"><ellipse class="bl" cx="{hw * 0.5:.0f}" cy="{vy - hy + fbh + uh * 0.6:.0f}" rx="{hw * 0.42:.0f}" ry="{uh * 0.9 + 20:.0f}" '
+                f'fill="#171612" fill-opacity=".1" filter="url(#{cid}s)"/></svg>')
         html.append(f'<div class="scr s{k}" style="position:absolute; left:{x:.0f}px; top:{y0:.0f}px; width:{sw:.0f}px; height:{sh:.0f}px">'
-                    f'<div class="rod rt" style="left:-16px; right:-16px; top:-14px; height:22px"></div>'
-                    f'<div class="body card" style="left:0; right:0; top:0; height:{sh:.0f}px; transform-origin:50% 0">'
-                    f'<div style="position:absolute; left:{sw * 0.06:.0f}px; top:{sh * 0.05:.0f}px; width:{sw * 0.88:.0f}px; height:{sh * 0.34:.0f}px; overflow:hidden">{mini_mts(cid, sw * 0.88, sh * 0.34, 70 + k)}</div>'
-                    f'<div class="vt lab halo" style="right:{sw * 0.1:.0f}px; top:{sh * 0.08:.0f}px; font-size:{30 if P else 30}px; font-weight:600">{X.rich(lab)}</div>'
-                    f'<div class="num" style="left:{sw * 0.08:.0f}px; top:{sh * 0.50:.0f}px; font-size:{fpx:.0f}px; line-height:1">{X.rich(val)}</div>'
-                    f'<div class="serif" style="left:{sw * 0.09:.0f}px; top:{sh * 0.50 + fpx * 1.05:.0f}px; font-size:{40 if P else 42}px; font-weight:900">{X.rich(unit)}</div>'
-                    + (seal(X, sl, 64, style=f"right:{sw * 0.08:.0f}px; top:{sh * 0.76:.0f}px; transform:rotate(-3deg)") if sl else "") +
-                    f'</div><div class="rod rb" style="left:-12px; right:-12px; top:{sh - 8:.0f}px; height:20px"></div></div>')
+                    f'<svg class="cord" width="{sw:.0f}" height="{sh * 0.08:.0f}" viewBox="0 0 {sw:.0f} {sh * 0.08:.0f}" style="position:absolute; left:0; top:{-sh * 0.08 - 6:.0f}px; overflow:visible">'
+                    f'<path d="M{sw * 0.16:.0f} {sh * 0.08:.0f} L{sw * 0.5:.0f} 4 L{sw * 0.84:.0f} {sh * 0.08:.0f}" fill="none" stroke="#3a2e22" stroke-width="2.5"/>'
+                    f'<circle cx="{sw * 0.5:.0f}" cy="4" r="6" fill="#3a2e22"/></svg>'
+                    f'<div class="body mount" style="left:0; right:0; top:0; height:{sh:.0f}px">'
+                    f'<div class="heart" style="left:{hx:.0f}px; top:{hy:.0f}px; width:{hw:.0f}px; height:{hh:.0f}px">{blot}'
+                    f'<div class="vt lab" style="right:{hw * 0.07:.0f}px; top:{hh * 0.05:.0f}px; font-size:{lfs:.0f}px; font-weight:700">{X.rich(lab)}</div>'
+                    + (f'<div class="unit" style="position:absolute; left:{(hw - uw) / 2:.0f}px; top:{vy - hy + fbh + 18:.0f}px">{usvg}</div>' if unit else "")
+                    + (seal(X, sl, int(min(84, hw * 0.2)), style=f"left:{hw * 0.08:.0f}px; top:{hh * 0.05:.0f}px; transform:rotate(-3deg)") if sl else "") +
+                    f'</div>'
+                    f'<div class="vw" style="position:absolute; left:{(sw - fbw) / 2:.0f}px; top:{vy:.0f}px; transform:rotate({-1.2 if k % 2 == 0 else 1.0}deg)">{fs_html}</div></div>'
+                    f'<div class="rod rt" style="left:-6px; right:-6px; top:-9px; height:14px; border-radius:3px"></div>'
+                    f'<div class="rod rb" style="left:-20px; right:-20px; top:{sh - 10:.0f}px; height:24px"></div></div>')
     note = b.get("note", "")
-    inner = (mist(X, 2, 12) + "".join(html) + (f'<div class="serif nt" style="left:0; right:0; top:{y0 + sh + 50:.0f}px; text-align:center; font-size:{26 if P else 24}px; letter-spacing:.12em; color:var(--muted)">{X.rich(note)}</div>' if note else ""))
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    flt = (f'<svg width="0" height="0" style="position:absolute"><defs><filter id="{cid}s" x="-40%" y="-40%" width="180%" height="180%">'
+           f'<feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="3" seed="29" result="n"/>'
+           f'<feDisplacementMap in="SourceGraphic" in2="n" scale="90" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="3"/></filter></defs></svg>')
+    inner = (flt + mist(X, 2, 12) + "".join(html)
+             + (f'<div class="serif nt halo" style="left:0; right:0; top:{y0 + sh + (46 if P else 40):.0f}px; text-align:center; font-size:{31 if P else 26}px; font-weight:600; letter-spacing:.14em; color:#4a443a">{X.rich(note)}</div>' if note else ""))
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     ats = [T(X, b, f"at_{k}", t, t + 0.4 + k * 0.9) for k in range(n)]
     for k, ta in enumerate(ats):
         st = min(t + 0.12 + k * 0.35, ta - 1.0)                    # the scroll hangs and unrolls straight away …
-        X.tw(f'tl.from("{s} .s{k}", {{opacity:0, y:-30, duration:0.4}}, {st:.3f});')
-        X.tw(f'tl.from("{s} .s{k} .body", {{scaleY:0, duration:0.9, ease:"power3.inOut"}}, {st + 0.1:.3f});')
-        X.tw(f'tl.from("{s} .s{k} .rb", {{y:{-sh + 8:.0f}, duration:0.9, ease:"power3.inOut"}}, {st + 0.1:.3f});')
+        X.tw(f'tl.from("{s} .s{k} .cord, {s} .s{k} .rt", {{opacity:0, y:-40, duration:0.4, ease:"power3.out"}}, {st:.3f});')
+        X.tw(f'tl.fromTo("{s} .s{k} .body", {{clipPath:"inset(0% 0% 100% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:0.9, ease:"power3.inOut"}}, {st + 0.1:.3f});')
+        X.tw(f'tl.fromTo("{s} .s{k} .rb", {{y:{-sh + 8:.0f}, opacity:0}}, {{y:0, opacity:1, duration:0.9, ease:"power3.inOut"}}, {st + 0.1:.3f});')
         X.tw(f'tl.from("{s} .s{k} .lab", {{opacity:0, y:-14, duration:0.6}}, {st + 0.7:.3f});')
-        X.tw(f'tl.from("{s} .s{k} .num, {s} .s{k} .serif", {{opacity:0, y:18, filter:"blur(6px)", duration:0.55, ease:"power3.out", stagger:0.1}}, {ta - 0.15:.3f});')   # … the figure lands on its word
-        X.tw(f'tl.from("{s} .s{k} .seal", {{scale:1.35, opacity:0, duration:0.3, ease:"back.out(2.4)"}}, {ta + 0.45:.3f});')
-        X.sfx(st + 0.1, "paper"); X.sfx(ta + 0.5, "stamp")
+        X.tw(f'tl.fromTo("{s} .s{k} .bl", {{scale:0.2, opacity:0, transformOrigin:"50% 50%"}}, {{scale:1, opacity:1, duration:0.9, ease:"power2.out"}}, {ta - 0.35:.3f});')
+        X.tw(f'tl.fromTo("{s} .s{k} .vw", {{scale:1.3, opacity:0}}, {{scale:1, opacity:1, duration:0.3, ease:"back.out(2.2)"}}, {ta - 0.1:.3f});')   # … the seal is stamped on its word
+        if unit: write_on(X, f"{s} .s{k} .unit", ta + 0.1, dur=0.6, stagger=0.06)
+        X.tw(f'tl.from("{s} .s{k} .seal", {{scale:1.35, opacity:0, duration:0.3, ease:"back.out(2.4)"}}, {ta + 0.75:.3f});')
+        X.sfx(st + 0.1, "paper"); X.sfx(ta - 0.05, "stamp"); X.sfx(ta + 0.15, "brush")
     if note: X.tw(f'tl.from("{s} .nt", {{opacity:0, y:10, duration:0.6}}, {t + 0.5:.3f});')
-    X.tw(f'tl.fromTo("{s} .scr", {{rotation:0}}, {{rotation:0.6, duration:{d / 2:.2f}, ease:"sine.inOut", yoyo:true, repeat:1, transformOrigin:"50% 0"}}, {t:.3f});')
+    X.tw(f'tl.fromTo("{s} .scr", {{rotation:-0.5}}, {{rotation:0.5, duration:{d:.2f}, ease:"sine.inOut", transformOrigin:"50% -8%"}}, {t:.3f});')
     drift(X, f"{s} .cam", t, d, 1.035, 0, -8)
 
 
@@ -497,13 +651,20 @@ def wash(b, X, t, d, cid):
     """a word is written, held, then water washes through it: the ink loosens (displacement + blur) and fades."""
     P = X.portrait; W, H = X.W, X.H
     word = b.get("big", "运气"); kick = b.get("kicker", "")
-    box = W * (0.7 if P else 0.5)
-    px = min(H * (0.28 if P else 0.38), box / max(1, sum(fit.gw(c) for c in word)))
-    svg, bw, bh = brush(X, word, b.get("font", "liu-jian-mao-cao"), px, flt=f"{cid}k")
-    bx, by = (W - bw) / 2, H * (0.30 if P else 0.26)
-    inner = (f'<div class="serif kk" style="left:0; right:0; top:{by - (110 if P else 90):.0f}px; text-align:center; font-size:{40 if P else 38}px; letter-spacing:.3em">{X.rich(kick)}</div>'
+    if P and len(word) <= 2:
+        svg, bw, bh = brush_col(X, word, b.get("font", "liu-jian-mao-cao"), 690 if len(word) == 2 else 720, flt=f"{cid}k", lead=0.9)
+        bx, by = (W - bw) / 2 + 30, H * 0.12
+        kfs = min(42, bh * 0.6 / max(1, len(kick)) / 1.2)
+        kk = f'<div class="vt kk halo" style="left:76px; top:{max(300, by + 30):.0f}px; font-size:{kfs:.0f}px; font-weight:600; letter-spacing:.24em">{X.rich(kick)}</div>'
+    else:
+        box = W * (0.7 if P else 0.5)
+        px = min(H * (0.28 if P else 0.38), box / max(1, sum(fit.gw(c) for c in word)))
+        svg, bw, bh = brush(X, word, b.get("font", "liu-jian-mao-cao"), px, flt=f"{cid}k")
+        bx, by = (W - bw) / 2, H * (0.30 if P else 0.26)
+        kk = f'<div class="serif kk" style="left:0; right:0; top:{by - (110 if P else 90):.0f}px; text-align:center; font-size:{40 if P else 38}px; letter-spacing:.3em">{X.rich(kick)}</div>'
+    inner = (kk +
              f'<div class="wd" style="position:absolute; left:{bx:.0f}px; top:{by:.0f}px; filter:url(#{cid}w)">{svg}</div>{mist(X, 2, 21)}')
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     tw_ = T(X, b, "at_big", t, t + 0.5)
@@ -527,7 +688,7 @@ def handscroll(b, X, t, d, cid):
     n = len(years)
     LW = W * (2.4 if not P else 3.0)
     r = random.Random(31)
-    base = H * (0.52 if P else 0.56)
+    base = H * (0.63 if P else 0.56)
     pts = []
     for i in range(161):
         x = LW * i / 160
@@ -535,9 +696,9 @@ def handscroll(b, X, t, d, cid):
         pts.append((x, y))
     line = "M" + " L".join(f"{x:.0f} {y:.0f}" for x, y in pts)
     big = b.get("big", "六年"); kick = b.get("kicker", "")
-    px = min(H * (0.19 if P else 0.30), W * (0.70 if P else 0.42) / max(1, sum(fit.gw(c) for c in big)))
+    px = min(H * (0.27 if P else 0.30), W * (0.92 if P else 0.42) / max(1, sum(fit.gw(c) for c in big)))
     svg, bw, bh = brush(X, big, b.get("font", "ma-shan-zheng"), px, flt=f"{cid}k")
-    bx, by = (W - bw) / 2 + (40 if P else 0) if P else W * 0.56, H * (0.20 if P else 0.14)
+    bx, by = ((W - bw) / 2, H * 0.19) if P else (W * 0.56, H * 0.14)
     marks = []
     for k, yv in enumerate(years):
         x = LW * (0.12 + 0.76 * k / max(1, n - 1))
@@ -553,11 +714,13 @@ def handscroll(b, X, t, d, cid):
     inner = (f'<div class="strip" style="position:absolute; left:0; top:0; width:{LW:.0f}px; height:{H}px">'
              f'<div style="position:absolute;inset:0;opacity:.5">{mountains(cid, X, 37, layers=2, top=0.62, amp=0.1, dark=0.55, width=LW)}</div>'
              f'<div class="trw" style="position:absolute; left:0; top:0; width:{LW:.0f}px; height:{H}px"><svg class="svgl" viewBox="0 0 {LW:.0f} {H}" style="width:{LW:.0f}px">'
-             f'<path class="trail" d="{line}" fill="none" stroke="#171612" stroke-width="6" stroke-linecap="round" filter="url(#{cid}b)"/></svg></div>'
+             f'<g filter="url(#{cid}b)"><path class="trail" d="{line}" fill="none" stroke="#171612" stroke-width="17" stroke-linecap="round" filter="url(#{cid}d)"/>'
+             f'<path d="{line}" fill="none" stroke="#171612" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" transform="translate(0 5)"/></g></svg></div>'
              f'{"".join(marks)}</div>'
              f'<div class="big" style="position:absolute; left:{bx:.0f}px; top:{by:.0f}px">{svg}</div>'
-             + (f'<div class="vt kk halo" style="left:{80 if P else 150}px; top:{H * (0.17 if P else 0.15):.0f}px; font-size:{40 if P else 38}px; font-weight:600">{X.rich(kick)}</div>' if kick else ""))
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+             + ((f'<div class="serif kk halo" style="left:0; right:0; top:{by - 50:.0f}px; text-align:center; font-size:40px; font-weight:600; letter-spacing:.3em">{X.rich(kick)}</div>' if P
+                 else f'<div class="vt kk halo" style="left:150px; top:{H * 0.15:.0f}px; font-size:38px; font-weight:600">{X.rich(kick)}</div>') if kick else ""))
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     tb = T(X, b, "at_big", t, t + d * 0.6)
@@ -603,7 +766,7 @@ def splash(b, X, t, d, cid):
              f'<div class="serif kk halo" style="left:0; right:0; top:{by - (100 if P else 90):.0f}px; text-align:center; font-size:{36 if P else 34}px; letter-spacing:.24em">{X.rich(kick)}</div>'
              f'<div class="big" style="position:absolute; left:{bx:.0f}px; top:{by:.0f}px">{svg}</div>'
              + (f'<div class="serif nt halo" style="left:0; right:0; top:{by + bh + 70:.0f}px; text-align:center; font-size:{28 if P else 26}px; letter-spacing:.14em; color:var(--muted)">{X.rich(note)}</div>' if note else ""))
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     tb = T(X, b, "at_big", t, t + 0.5)
@@ -622,6 +785,101 @@ def splash(b, X, t, d, cid):
     drift(X, f"{s} .cam", t, d, 1.05)
 
 
+def bars(b, X, t, d, cid):
+    """a bar chart painted, not drawn: each bar is one vertical dry-brush stroke (the brush lands at the value and drags
+    down to the ground line, the tail breaking into flying white); the figures sit in vermilion seals over the strokes."""
+    P = X.portrait; W, H = X.W, X.H
+    items = (b.get("items") or [{"label": "", "value": 1}])[:6]
+    n = len(items)
+    kick = b.get("kicker", ""); unit = b.get("unit", "")
+    vals = [float(it.get("value", 0)) for it in items]
+    vmax = max(vals) or 1.0
+    x0, x1 = (80, W - 80) if P else (W * 0.30, W - 160)
+    top, base = (H * 0.30, H * 0.68) if P else (H * 0.24, H * 0.80)
+    slot = (x1 - x0) / n
+    sw_ = min(slot * 0.5, 150)
+    r = random.Random(61)
+    strokes, labs, seals = [], [], []
+    for k, (it, v) in enumerate(zip(items, vals)):
+        cx = x0 + slot * (k + 0.5)
+        hgt = max(40.0, (base - top) * v / vmax)
+        y_top = base - hgt
+        w0 = sw_ * r.uniform(0.92, 1.05)
+        lean = r.uniform(-0.04, 0.04) * hgt
+        # one tapered stroke: a heavy head where the brush lands, the body narrowing a little, a split tail at the ground
+        d_ = (f"M{cx - w0 * 0.5:.0f} {y_top + w0 * 0.18:.0f} Q {cx:.0f} {y_top - w0 * 0.22:.0f} {cx + w0 * 0.52:.0f} {y_top + w0 * 0.12:.0f} "
+              f"L {cx + w0 * 0.44 + lean:.0f} {base - 6:.0f} Q {cx + lean:.0f} {base + 14:.0f} {cx - w0 * 0.42 + lean:.0f} {base - 2:.0f} Z")
+        strokes.append(f'<g class="br b{k}"><path d="{d_}" fill="#171612" fill-opacity="{0.94 - 0.08 * (k % 2):.2f}" filter="url(#{cid}h)"/></g>')
+        val_s = it.get("show", f"{v:g}")
+        fpx = min(96 if P else 84, slot * 0.8 / max(1.0, sum(0.6 if c.isdigit() else fit.gw(c) for c in str(val_s)) + 0.34))
+        sh_, sbw, sbh = fig_seal(X, val_s, "", fpx, cid, cls=f"fv v{k}")
+        seals.append(f'<div style="position:absolute; left:{cx - sbw / 2:.0f}px; top:{y_top - sbh - 22:.0f}px; transform:rotate({(-1.5 if k % 2 else 1.2)}deg)">{sh_}</div>')
+        lab = it.get("label", "")
+        lfs = min(34 if P else 30, slot * 0.9 / max(1, len(lab)))
+        labs.append(f'<div class="serif blab l{k}" style="left:{cx - slot / 2:.0f}px; width:{slot:.0f}px; top:{base + 26:.0f}px; text-align:center; font-size:{max(26, lfs):.0f}px; font-weight:700; letter-spacing:.08em">{X.rich(lab)}</div>')
+    ground = (f'<path class="gl0" d="M{x0 - 30:.0f} {base + 4:.0f} C {x0 + (x1 - x0) * 0.3:.0f} {base - 4:.0f}, {x0 + (x1 - x0) * 0.7:.0f} {base + 10:.0f}, {x1 + 30:.0f} {base + 2:.0f}" '
+              f'fill="none" stroke="#171612" stroke-width="7" stroke-linecap="round" filter="url(#{cid}r)"/>')
+    kk = (f'<div class="serif kk halo" style="left:0; right:0; top:292px; text-align:center; font-size:42px; font-weight:700; letter-spacing:.24em">{X.rich(kick)}</div>' if P
+          else f'<div class="vt kk halo" style="left:{W * 0.14:.0f}px; top:{top:.0f}px; font-size:42px; font-weight:700">{X.rich(kick)}</div>') if kick else ""
+    un = f'<div class="serif un" style="left:{x0:.0f}px; top:{base + 90:.0f}px; font-size:26px; color:#4a443a; letter-spacing:.12em">{X.rich(unit)}</div>' if unit else ""
+    inner = (f'<div style="position:absolute;inset:0;opacity:.4">{mountains(cid, X, 71, layers=2, top=0.74, amp=0.07, dark=0.45)}</div>'
+             f'<svg class="svgl" viewBox="0 0 {W} {H}"><g filter="url(#{cid}b)">{ground}{"".join(strokes)}</g></svg>' + "".join(seals) + "".join(labs) + kk + un)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
+    s = f"#{cid}"
+    opening(X, cid, t)
+    X.tw(f'tl.fromTo("{s} .gl0", {{clipPath:"inset(0% 100% 0% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:0.6, ease:"power2.inOut"}}, {t + 0.1:.3f});')
+    if kick: X.tw(f'tl.from("{s} .kk", {{opacity:0, y:-12, duration:0.6}}, {t + 0.1:.3f});')
+    X.tw(f'tl.from("{s} .blab", {{opacity:0, y:10, duration:0.5, stagger:0.08}}, {t + 0.35:.3f});')
+    ats = [T(X, b, f"at_{k}", t, t + 0.5 + k * min(0.45, (d - 1.6) / max(1, n))) for k in range(n)]
+    for k, ta in enumerate(ats):
+        X.tw(f'tl.fromTo("{s} .b{k}", {{clipPath:"inset(0% 0% 100% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:0.5, ease:"power2.in"}}, {ta - 0.35:.3f});')
+        X.tw(f'tl.fromTo("{s} .v{k}", {{scale:1.3, opacity:0}}, {{scale:1, opacity:1, duration:0.28, ease:"back.out(2.2)"}}, {ta + 0.1:.3f});')
+        X.sfx(ta - 0.35, "brush"); X.sfx(ta + 0.12, "stamp")
+    drift(X, f"{s} .cam", t, d, 1.03, 0, -6)
+
+
+def share(b, X, t, d, cid):
+    """a share as an ink-wash circle: a dry-brush ring (圆相) is drawn in one sweep, then wash floods the part that is
+    the share; the figure is carved in a vermilion seal stamped across the rim."""
+    P = X.portrait; W, H = X.W, X.H
+    v = max(0.0, min(100.0, float(b.get("value", 50))))
+    kick = b.get("kicker", ""); label = b.get("label", "")
+    show = b.get("show", f"{v:g}%")
+    cx, cy, R = (W / 2, H * 0.40, W * 0.36) if P else (W * 0.62, H * 0.47, H * 0.33)
+    C = 2 * math.pi * (R * 0.5)
+    ring_c = 2 * math.pi * R
+    sector = (f'<circle class="sec" cx="{cx:.0f}" cy="{cy:.0f}" r="{R * 0.5:.0f}" fill="none" stroke="#171612" stroke-opacity=".34" stroke-width="{R * 0.86:.0f}" '
+              f'stroke-dasharray="{C * v / 100:.1f} {C:.1f}" transform="rotate(-90 {cx:.0f} {cy:.0f})" filter="url(#{cid}sw)"/>')
+    wf = (f'<defs><filter id="{cid}sw" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="3" seed="37" result="n"/>'
+          f'<feDisplacementMap in="SourceGraphic" in2="n" scale="38" xChannelSelector="R" yChannelSelector="G"/><feGaussianBlur stdDeviation="7"/></filter></defs>')
+    ring = (f'<circle class="ring" cx="{cx:.0f}" cy="{cy:.0f}" r="{R:.0f}" fill="none" stroke="#171612" stroke-width="{R * 0.09:.0f}" stroke-linecap="round" '
+            f'stroke-dasharray="{ring_c * 0.97:.0f} {ring_c:.0f}" transform="rotate(-80 {cx:.0f} {cy:.0f})" filter="url(#{cid}r)"/>')
+    fpx = min(200 if P else 170, R * 1.2 / max(1.0, sum(0.6 if c.isdigit() else fit.gw(c) for c in str(show)) + 0.34))
+    sh_, sbw, sbh = fig_seal(X, show, "", fpx, cid, cls="fv")
+    sx, sy = (cx - sbw / 2, cy + R - sbh * 0.45) if P else (W * 0.12, cy - sbh / 2)
+    lfs, lhtml = ftext(X, label, W - 200 if P else W * 0.3, 36 if P else 32, 26, ls=0.12)
+    lab = (f'<div class="serif lb halo" style="left:{100 if P else W * 0.12:.0f}px; {"right:100px; text-align:center;" if P else f"width:{W * 0.3:.0f}px;"} top:{(sy + sbh + 30) if P else (sy + sbh + 30):.0f}px; '
+           f'font-size:{lfs}px; font-weight:600; line-height:1.3; letter-spacing:.12em; color:#4a443a">{lhtml}</div>') if label else ""
+    kk = (f'<div class="serif kk halo" style="left:0; right:0; top:{cy - R - 110:.0f}px; text-align:center; font-size:42px; font-weight:700; letter-spacing:.24em">{X.rich(kick)}</div>' if P
+          else f'<div class="serif kk halo" style="left:{W * 0.12:.0f}px; top:{sy - 90:.0f}px; font-size:40px; font-weight:700; letter-spacing:.2em">{X.rich(kick)}</div>') if kick else ""
+    inner = (f'<div style="position:absolute;inset:0;opacity:.4">{mountains(cid, X, 83, layers=2, top=0.74, amp=0.07, dark=0.45)}</div>'
+             f'<svg class="svgl" viewBox="0 0 {W} {H}">{wf}<g filter="url(#{cid}b)">{sector}{ring}</g></svg>'
+             f'<div style="position:absolute; left:{sx:.0f}px; top:{sy:.0f}px; transform:rotate(-2deg)">{sh_}</div>' + lab + kk)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
+    s = f"#{cid}"
+    opening(X, cid, t)
+    ta = T(X, b, "at_num", t, t + 0.9)
+    if kick: X.tw(f'tl.from("{s} .kk", {{opacity:0, y:-12, duration:0.6}}, {t + 0.1:.3f});')
+    X.tw(f'tl.fromTo("{s} .ring", {{attr:{{"stroke-dashoffset":{ring_c * 0.97:.0f}}}}}, {{attr:{{"stroke-dashoffset":0}}, duration:0.8, ease:"power2.inOut"}}, {t + 0.15:.3f});')
+    X.sfx(t + 0.15, "brush")
+    X.tw(f'tl.fromTo("{s} .sec", {{attr:{{"stroke-dasharray":"0 {C:.1f}"}}}}, {{attr:{{"stroke-dasharray":"{C * v / 100:.1f} {C:.1f}"}}, duration:1.0, ease:"power2.out"}}, {ta - 0.6:.3f});')
+    X.sfx(ta - 0.6, "wash")
+    X.tw(f'tl.fromTo("{s} .fv", {{scale:1.3, opacity:0}}, {{scale:1, opacity:1, duration:0.3, ease:"back.out(2.2)"}}, {ta:.3f});')
+    X.sfx(ta + 0.05, "stamp")
+    if label: X.tw(f'tl.from("{s} .lb", {{opacity:0, duration:0.5}}, {ta + 0.3:.3f});')
+    drift(X, f"{s} .cam", t, d, 1.035)
+
+
 def couplet(b, X, t, d, cid):
     """two vertical lines read right-to-left, written brush-first; a seal lands on the key phrase; wide 留白 around them."""
     P = X.portrait; W, H = X.W, X.H
@@ -635,7 +893,7 @@ def couplet(b, X, t, d, cid):
     lines = lines[:5]; owner = owner[:5]
     maxlen = max(len(x) for x in lines) or 1
     colh = H * (0.56 if P else 0.72)
-    px = min(colh / maxlen / 1.02, (W * (0.72 if P else 0.46)) / max(1, len(lines)) / 1.4, 128 if P else 120)
+    px = min(colh / maxlen / 1.02, (W * (0.80 if P else 0.46)) / max(1, len(lines)) / 1.4, 158 if P else 120)
     gap = px * 0.55
     total_w = len(lines) * px + (len(lines) - 1) * gap
     x_right = (W + total_w + (px * 1.2 if b.get("seal") else 0)) / 2
@@ -651,7 +909,7 @@ def couplet(b, X, t, d, cid):
     sl = b.get("seal", "")
     sl_html = seal(X, sl, int(px * 0.9), style=f"left:{x_right - total_w - px * 1.2:.0f}px; top:{y0 + colh * 0.72:.0f}px; transform:rotate(-3deg)") if sl else ""
     inner = f'<div style="position:absolute;inset:0;opacity:.35">{mountains(cid, X, 53, layers=2, top=0.74, amp=0.08, dark=0.45)}</div>' + "".join(cols) + sl_html
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     line_at = [T(X, b, f"at_{k}", t, t + 0.3 + k * d * 0.3) for k in range(len(src_lines))]
@@ -682,7 +940,7 @@ def seal_outro(b, X, t, d, cid):
              + f'<div class="nm" style="position:absolute; left:{bx:.0f}px; top:{by:.0f}px">{svg}</div>'
              + (f'<div class="serif sb" style="left:0; right:0; top:{by + bh + 30:.0f}px; text-align:center; font-size:{34 if P else 32}px; letter-spacing:.3em">{X.rich(sub)}</div>' if sub else "")
              + (f'<div class="serif ct" style="left:0; right:0; top:{by + bh + 100:.0f}px; text-align:center; font-size:{28 if P else 26}px; letter-spacing:.2em; color:var(--seal)">{X.rich(cta)}</div>' if cta else ""))
-    X.clip(cid, t, d, furn(X, b, cid, inner), "scene", 2)
+    X.clip(cid, t, d, furn(X, b, cid, inner, t, d), "scene", 2)
     s = f"#{cid}"
     opening(X, cid, t)
     stamp(X, f"{s} .seal", t + 0.15)
@@ -804,7 +1062,7 @@ def FX_FRAME(X, cid, t, d, p, k):
           f'<div class="ikx" style="right:{hx}px; top:{hy + 5}px">{k["fxid"]}</div>')
     cap_pos = "top:1330px" if P else "bottom:62px"
     cap = f'<div class="ikc" style="{cap_pos}"><span class="slip" style="font-size:{k["cap_px"]}px">{k["cap"]}</span></div>'
-    ft_pos = f"left:{hx}px; right:{hx}px; top:1478px" if P else "left:80px; right:80px; bottom:20px"
+    ft_pos = f"left:{hx}px; right:120px; top:1478px" if P else "left:80px; right:80px; bottom:20px"     # 9:16: the source ends clear of the right-hand buttons
     ft = f'<div class="ikft" style="{ft_pos}; font-size:{17 if P else 16}px"><div>{k["foot"]}</div><div>{k["src"]}</div></div>' if (k["foot"] or k["src"]) else ""
     X.clip(f"{cid}c", t, d, hd + cap + ft, f"ctx ikf{' photo' if k['photo'] else ''}", 30, track=20, sty=k["sty"])
     X.tw(f'tl.fromTo("#{cid}c .slip", {{clipPath:"inset(0% 100% 0% 0%)"}}, {{clipPath:"inset(0% 0% 0% 0%)", duration:0.5, ease:"power2.inOut"}}, {t + 0.05:.3f});')
@@ -812,4 +1070,4 @@ def FX_FRAME(X, cid, t, d, p, k):
 
 
 SCENES = {"brush": brush_scene, "column": column, "drops": drops, "scrolls": scrolls, "wash": wash,
-          "handscroll": handscroll, "splash": splash, "couplet": couplet, "seal": seal_outro}
+          "handscroll": handscroll, "splash": splash, "bars": bars, "share": share, "couplet": couplet, "seal": seal_outro}

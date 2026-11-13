@@ -1,41 +1,46 @@
-"""chrome3d · Y2K 镀铬 3D —— 液态镀铬立体字、镭射全息材质、酸性图形 HUD：Behance / Instagram 上的 chrome typography 潮流，
-加上当代 MV 包装的镜头语言。真正从字体轮廓挤出的三维字（拉丁用 Archivo 超宽特粗，中文用阿里巴巴普惠体 Heavy），
-程序生成的影棚 HDRI 给出锐利的高光条；纯黑底 + 镜面铬 + 一种霓虹粉。镜头在一组组"展台"之间甩镜飞行。
-适合：科技 / 潮流 / 增长数字 / 产品发布 / 年轻向的开场。与 studio（金色 PBR 影棚）和 clay（黏土）完全不同：
-没有地面布景，没有暖光，物体漂浮在黑色虚空里，靠反射和辉光说话。
+"""chrome3d · Y2K 镀铬 3D —— 液态镀铬立体字站在明亮影棚里：浅灰蓝天空一路暖到地平线上一道热橙色光带，下面是一整片深紫镜面地板，
+每个物体都在地板上有倒影。真正从字体轮廓挤出的三维字（拉丁用 Archivo 超宽特粗，中文用阿里巴巴普惠体 Heavy），程序生成的影棚
+HDRI（天空 + 橙色地平线 + 紫色地面 + 三根灯条）让镀铬反射出颜色，镜头一动灯条高光就在字面上滑过。只有一个热粉色，只给闪光。
+适合：科技 / 潮流 / 增长数字 / 产品发布 / 年轻向的开场。与 studio（金色 PBR 影棚）和 clay（黏土）完全不同：没有布景，只有天空、
+地平线和镜面地板，主体是铺满画幅的镀铬大字。
 
 这个风格不走逐句场景：WORLD() 一次性搭好整条片子（runtime/chrome3d.js），每个 beat 是一个展台：
   hero    一个大数字 / 短词（deco: ring | blob；可选 chip、sticker、date、at_enter 推迟数字入场）
-  bars    3–6 根镀铬柱，最后一根计数 + 霓虹描边          items: [[标签, 数值], …]
-  multiple 倍数冲屏 + 冲击环 + 速度线                    value: "12.9×"
-  coins   N 枚镀铬圆片翻面，hit 枚翻成粉色               n, hit, value: "75%"
-  moat    芯片落位 → 护城河环 → 打叉下沉 → 新词升起       chip, word
-  swarm   数字 + 成百上千颗环绕的小球 + 代码面板          value, count
-  shovel  镀铬铲子 + 金块雨 + 两行立体字                  lines: [第一行, 第二行]
-  outro   镀铬礼帽 + 名字
-换站是无闪光的甩镜（运动线 + 局部高光）；全屏闪白只给最多 3 个揭晓点（beat 上写 "flash": true，默认：blob 数字、moat 新词、outro）。
+  bars    3–6 根立在地板上的镀铬柱，最后一根生长时顶上的大数字计数     items: [[标签, 数值], …]
+  multiple 倍数冲屏 + 冲击环 + 速度线                                  value: "12.9×"
+  coins   N 枚镀铬圆片翻面，hit 枚翻成全息面                            n, hit, value: "75%"
+  moat    芯片落在地板上 → 护城河环 → 打叉沉入地板 → 新词从环里升起    chip, word
+  swarm   数字 + 成百上千颗环绕的小球 + 代码面板                        value, count
+  shovel  插在镀铬金块堆里的铲子 + 两行立体字                           lines: [第一行, 第二行]
+  outro   落在地板上的镀铬礼帽 + 名字
+镜头低机位、略仰、FOV 40（横屏 36），主体在画面 45% 高处，地平线在 70%，每个 beat 绕主体转 25–32°；物体落地有一次小回弹。
+换站是穿过环形门的甩镜；全屏闪白只给最多 3 个揭晓点（beat 上写 "flash": true，默认：blob 数字、moat 新词、outro）。
+字幕是磨砂镀铬胶囊里的藏青字，放在地板上；标签和来源是天空上的藏青字。不出主持人贴纸。
 """
 import json, math
 from pathlib import Path
 
 SKILL = Path(__file__).resolve().parent.parent
-PINK = "#ff3ec8"
+PINK = "#ff3d7f"      # glints only
+NAVY = "#151538"
 
 STYLE = {
     "name": "Y2K 镀铬 3D", "en": "Y2K Chrome 3D", "benchmarks": ["Behance chrome type", "MV 包装 (Y2K revival)", "Nike / Apple Music 潮流海报", "Acid graphics"],
-    "tokens": {
-        "bg": "#000000", "fg": "#f4f4f6", "muted": "#8d8e98", "accent": PINK, "accent2": "#cfd3dc", "alert": PINK,
-        "line": "#2a2a31", "paper": "#000000", "ink": "#000000", "card": "#0b0b0f", "card-fg": "#f4f4f6",
-        "cap-fg": "#ffffff", "cap-size": "42px", "cap-weight": "800", "cap-em": PINK,
-        "cap-shadow": "0 0 3px #000, 0 2px 0 #000, 0 0 22px rgba(0,0,0,.95)",
+    "tokens": {      # accent here is the deep shade for any UI text; the runtime's glints use PINK
+        "bg": "#dfe6f2", "fg": NAVY, "muted": "#4a4a72", "accent": "#d81b60", "accent2": "#ff8a3c", "alert": "#d81b60",
+        "line": "#b8bdd2", "paper": "#dfe6f2", "ink": NAVY, "card": "#ffffff", "card-fg": NAVY,
+        "cap-fg": NAVY, "cap-size": "40px", "cap-weight": "800", "cap-em": "#b0124f",
+        "cap-bg": "linear-gradient(180deg,rgba(255,255,255,.86) 0%,rgba(232,235,245,.72) 46%,rgba(206,211,228,.7) 54%,rgba(255,255,255,.8) 100%)",
+        "cap-pad": ".3em .9em .32em", "cap-radius": "999px", "cap-shadow": "none",
     },
     "fonts": {"display": ["archivo", "smiley-sans"], "zh": ["smiley-sans", "noto-sans-sc"], "body": ["alibaba-puhuiti", "noto-sans-sc"],
               "mono": ["space-mono", "noto-sans-sc"]},
     "font3d": {"latin": "archivo", "latin_axes": {"wght": 900, "wdth": 125}, "cjk": "alibaba-puhuiti-heavy"},
     "motion": {"ease": "expo.out", "dur": 0.5, "stagger": 0.03, "heading": "blurin", "text": "blurin", "camera": "none", "cut": "hard", "transition": "dip", "em": "color"},
     "caption_mode": "reading",
-    "layers": [("grain", {"opacity": 0.05})],
+    "layers": [("grain", {"opacity": 0.06})],
     "motion_blur": False,
+    # the flat cartoon host does not belong in this world: chrome3d hides it (see css)
     "mascot": {"mode": "cameo", "frame": "none", "landscape": {"left": 56, "bottom": 30, "h": 250}, "portrait": {"left": 40, "bottom": 600, "h": 280}},
     "sfx": {"fly": ("whoosh", 0.28), "transition": ("whoosh", 0.28), "slam": ("slam", 0.42), "boom": ("boom", 0.42), "pop": ("pop", 0.32),
             "glitch": ("glitch", 0.3), "hit": ("hit", 0.38), "tick": ("tick", 0.22), "riser": ("riser", 0.22), "type": ("type", 0.16),
@@ -44,69 +49,54 @@ STYLE = {
 
 STYLE["css"] = """
 #w3d { position:absolute; inset:0; width:100%; height:100%; display:block; }
+.st-chrome3d { background:#dfe6f2; }
+.st-chrome3d .mascot { display:none !important; }
 .st-chrome3d .c-ov { position:absolute; inset:0; pointer-events:none; }
 .st-chrome3d .mono { font-family:var(--f-mono); }
-/* frame furniture */
-.st-chrome3d .cn { position:absolute; width:38px; height:38px; border:0 solid rgba(226,228,236,.75); }
-.st-chrome3d .cn.tl { left:28px; top:28px; border-left-width:2px; border-top-width:2px; }
-.st-chrome3d .cn.tr { right:28px; top:28px; border-right-width:2px; border-top-width:2px; }
-.st-chrome3d .cn.bl { left:28px; bottom:28px; border-left-width:2px; border-bottom-width:2px; }
-.st-chrome3d .cn.br { right:28px; bottom:28px; border-right-width:2px; border-bottom-width:2px; }
-.st-chrome3d .tag { position:absolute; display:flex; align-items:baseline; gap:14px; }
-.st-chrome3d .tag b { font-family:var(--f-zh); font-weight:400; font-size:28px; color:#fff; letter-spacing:.04em; }
-.st-chrome3d .tag span { font-family:var(--f-mono); font-size:15px; letter-spacing:.24em; color:var(--muted); }
-.st-chrome3d .tc { position:absolute; font-family:var(--f-mono); font-size:17px; letter-spacing:.16em; color:#e8e9ee; display:flex; align-items:center; gap:12px; }
-.st-chrome3d .tc i { width:12px; height:12px; border-radius:50%; background:var(--accent); box-shadow:0 0 14px var(--accent); display:block; }
-.st-chrome3d .tick { position:absolute; left:28px; right:28px; height:34px; overflow:hidden; border-top:1px solid rgba(255,255,255,.16); border-bottom:1px solid rgba(255,255,255,.16); }
-.st-chrome3d .tick .tk { position:absolute; left:0; top:0; height:34px; line-height:34px; white-space:nowrap; font-family:var(--f-mono); font-size:15px; letter-spacing:.18em; color:#a9aab3; }
-.st-chrome3d .tick .tk b { color:#ff6fd6; font-weight:400; padding:0 .9em; }
-/* per-beat kicker + source */
+/* caption: navy type on a frosted chrome pill, standing on the mirror floor */
+.st-chrome3d .cap .cp { -webkit-backdrop-filter:blur(14px) saturate(1.3); backdrop-filter:blur(14px) saturate(1.3); line-height:1.25;
+  border:1.5px solid rgba(255,255,255,.95); box-shadow:inset 0 2px 0 rgba(255,255,255,.9), inset 0 -2px 0 rgba(150,156,190,.55), 0 10px 28px rgba(21,21,56,.32); }
+/* per-beat kicker: index chip + English line + Chinese headline, navy on the sky */
 .st-chrome3d .kk { position:absolute; }
-.st-chrome3d .kk .ke { font-family:var(--f-mono); font-size:16px; letter-spacing:.22em; color:#b7b8c2; white-space:nowrap; }
-.st-chrome3d .kk .ke b { color:var(--accent); font-weight:400; margin-right:1.1em; }
-.st-chrome3d .kk .kz { font-family:var(--f-zh); color:#fff; line-height:1.1; margin-top:8px; white-space:nowrap;
-  background:linear-gradient(180deg,#ffffff 0%,#e9eaf0 38%,#8a8c96 52%,#f6f6fa 70%,#c9cbd4 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-.st-chrome3d .kk .kb { height:3px; width:120px; background:var(--accent); margin-top:12px; transform-origin:0 50%; box-shadow:0 0 12px var(--accent); }
-.st-chrome3d .src { position:absolute; font-family:var(--f-mono); color:#9c9da7; letter-spacing:.04em; line-height:1.35; }
-.st-chrome3d .src b { color:var(--accent); font-weight:400; margin-right:.6em; letter-spacing:.2em; }
-/* stickers and chips */
+.st-chrome3d .kk .ke { font-family:var(--f-mono); font-size:30px; letter-spacing:.1em; color:#151538; white-space:nowrap; display:flex; align-items:center; gap:.6em; }
+.st-chrome3d .kk .ke b { font-weight:700; color:#fff; background:#151538; border-radius:999px; padding:.04em .6em; letter-spacing:.06em; }
+.st-chrome3d .kk .kz { font-family:var(--f-zh); color:#151538; line-height:1.1; margin-top:10px; white-space:nowrap; }
+.st-chrome3d .kk.c { left:0; right:0; text-align:center; } .st-chrome3d .kk.c .ke { justify-content:center; }
+.st-chrome3d .src { position:absolute; font-family:var(--f-mono); color:#151538; letter-spacing:.02em; line-height:1.3; }
+.st-chrome3d .src b { font-weight:700; margin-right:.6em; letter-spacing:.14em; }
+/* chips, stickers, panels: navy / white / frosted, never neon */
 .st-chrome3d .chip { position:absolute; display:flex; justify-content:center; }
-.st-chrome3d .chip span { font-family:var(--f-body); font-weight:700; color:#fff; border:2px solid var(--accent); border-radius:999px; padding:.18em .9em;
-  box-shadow:0 0 18px rgba(255,62,200,.45), inset 0 0 12px rgba(255,62,200,.25); background:rgba(0,0,0,.55); white-space:nowrap; }
-.st-chrome3d .pill { position:absolute; font-family:var(--f-display); font-variation-settings:"wdth" 125, "wght" 900; color:#000; background:var(--accent);
-  padding:.12em .55em; border-radius:999px; white-space:nowrap; box-shadow:0 0 26px rgba(255,62,200,.6); }
+.st-chrome3d .chip span { font-family:var(--f-body); font-weight:800; color:#fff; background:#151538; border-radius:999px; padding:.14em .85em .18em;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.25), 0 8px 22px rgba(21,21,56,.3); white-space:nowrap; }
+.st-chrome3d .pill { position:absolute; font-family:var(--f-display); font-variation-settings:"wdth" 125, "wght" 900; color:#fff; background:#151538;
+  padding:.12em .6em; border-radius:999px; white-space:nowrap; box-shadow:0 8px 22px rgba(21,21,56,.3); }
 .st-chrome3d .burst { position:absolute; display:grid; place-items:center; }
-.st-chrome3d .burst svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-.st-chrome3d .burst .bt { position:relative; text-align:center; color:#000; line-height:1.05; }
+.st-chrome3d .burst svg { position:absolute; inset:0; width:100%; height:100%; overflow:visible; filter:drop-shadow(0 10px 18px rgba(21,21,56,.35)); }
+.st-chrome3d .burst .bt { position:relative; text-align:center; color:#fff; line-height:1.05; }
 .st-chrome3d .burst .bt b { display:block; font-family:var(--f-zh); font-weight:400; }
-.st-chrome3d .burst .bt i { display:block; font-style:normal; font-family:var(--f-mono); letter-spacing:.14em; margin-top:.25em; }
-.st-chrome3d .date { position:absolute; font-family:var(--f-mono); color:#fff; letter-spacing:.2em; border:1px solid rgba(255,255,255,.5); padding:.35em .8em; background:rgba(0,0,0,.5); white-space:nowrap; }
-.st-chrome3d .date b { color:var(--accent); font-weight:400; margin-right:.7em; }
-.st-chrome3d .eq { position:absolute; text-align:center; font-family:var(--f-mono); color:#d8d9e0; letter-spacing:.12em; white-space:nowrap; }
-.st-chrome3d .eq b { color:var(--accent); font-weight:400; }
-.st-chrome3d .lg { position:absolute; display:flex; gap:28px; font-family:var(--f-body); font-weight:700; color:#e9eaf0; white-space:nowrap; }
-.st-chrome3d .lg span { display:flex; align-items:center; gap:10px; }
+.st-chrome3d .burst .bt i { display:block; font-style:normal; font-family:var(--f-mono); letter-spacing:.12em; margin-top:.25em; }
+.st-chrome3d .date { position:absolute; font-family:var(--f-mono); color:#151538; letter-spacing:.14em; border:2px solid #151538; padding:.25em .7em; background:rgba(255,255,255,.55); white-space:nowrap; border-radius:6px; }
+.st-chrome3d .eq { position:absolute; text-align:center; font-family:var(--f-mono); color:#151538; letter-spacing:.08em; white-space:nowrap; font-weight:700; }
+.st-chrome3d .lg { position:absolute; display:flex; gap:34px; font-family:var(--f-body); font-weight:800; color:#151538; white-space:nowrap; }
+.st-chrome3d .lg span { display:flex; align-items:center; gap:12px; }
 .st-chrome3d .lg i { width:.8em; height:.8em; border-radius:50%; display:block; }
-.st-chrome3d .lg .a i { background:var(--accent); box-shadow:0 0 12px var(--accent); }
-.st-chrome3d .lg .b i { background:linear-gradient(135deg,#fff,#7d808a); }
-/* code panel */
-.st-chrome3d .code { position:absolute; border:1px solid rgba(255,255,255,.22); background:rgba(6,6,9,.72); overflow:hidden; }
-.st-chrome3d .code .hd { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; border-bottom:1px solid rgba(255,255,255,.14); font-family:var(--f-mono); color:#a7a8b2; letter-spacing:.16em; }
-.st-chrome3d .code .hd .n { color:#fff; font-family:var(--f-display); font-variation-settings:"wdth" 125, "wght" 800; letter-spacing:.02em; }
-.st-chrome3d .code .bd { padding:14px 18px; font-family:var(--f-mono); color:#d6d7de; white-space:pre; line-height:1.55; }
-.st-chrome3d .code .bd .l { display:block; } .st-chrome3d .code .bd .k { color:var(--accent); } .st-chrome3d .code .bd .c { color:#6f707a; }
-.st-chrome3d .code .bd .cur { display:inline-block; width:.6em; height:1.1em; background:var(--accent); vertical-align:-.2em; }
-/* whip streaks over each camera flight: thin motion lines, no full-frame light */
+.st-chrome3d .lg .a i { background:linear-gradient(135deg,#ffb0cb,#ff3d7f 50%,#ff8a3c); }
+.st-chrome3d .lg .b i { background:linear-gradient(135deg,#fff,#8d90a6); border:1.5px solid #151538; }
+/* code panel: a frosted chrome window on the sky */
+.st-chrome3d .code { position:absolute; border:1.5px solid rgba(255,255,255,.95); border-radius:22px; overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(228,232,244,.7)); -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px);
+  box-shadow:inset 0 2px 0 #fff, 0 14px 34px rgba(21,21,56,.28); }
+.st-chrome3d .code .hd { display:flex; justify-content:space-between; align-items:center; padding:12px 22px; border-bottom:1.5px solid rgba(21,21,56,.18); font-family:var(--f-mono); color:#151538; letter-spacing:.1em; }
+.st-chrome3d .code .hd .n { color:#151538; font-family:var(--f-display); font-variation-settings:"wdth" 125, "wght" 900; letter-spacing:.02em; }
+.st-chrome3d .code .bd { padding:12px 22px; font-family:var(--f-mono); color:#151538; white-space:pre; line-height:1.36; }
+.st-chrome3d .code .bd .l { display:block; } .st-chrome3d .code .bd .k { font-weight:700; } .st-chrome3d .code .bd .c { color:#55557a; }
+.st-chrome3d .code .bd .cur { display:inline-block; width:.6em; height:1.1em; background:#151538; vertical-align:-.2em; }
+/* whip streaks over each camera flight: thin navy motion lines on the bright sky */
 .st-chrome3d .whip i { position:absolute; left:0; display:block; border-radius:2px;
-  background:linear-gradient(90deg, rgba(225,228,238,0), rgba(225,228,238,.7) 55%, rgba(255,255,255,.85) 70%, rgba(225,228,238,0)); }
-.st-chrome3d .whip i.p { background:linear-gradient(90deg, rgba(255,62,200,0), rgba(255,62,200,.75) 60%, rgba(255,62,200,0)); }
-.st-chrome3d .spk { position:absolute; width:40px; height:40px; }
-.st-chrome3d .spk svg { width:100%; height:100%; display:block; overflow:visible; }
-#root.v .cap .cp { max-width:900px; }
+  background:linear-gradient(90deg, rgba(21,21,56,0), rgba(21,21,56,.45) 60%, rgba(21,21,56,0)); }
+.st-chrome3d .whip i.p { background:linear-gradient(90deg, rgba(255,61,127,0), rgba(255,61,127,.8) 60%, rgba(255,61,127,0)); }
+#root.v .cap .cp { max-width:860px; }
 """
-
-STAR = '<svg viewBox="-50 -50 100 100"><path d="M0-50 Q0 0 50 0 Q0 0 0 50 Q0 0 -50 0 Q0 0 0-50Z" fill="{c}"/></svg>'
-
 
 def _burst_svg(n=16, r0=0.78, r1=1.0):
     pts = []
@@ -114,7 +104,7 @@ def _burst_svg(n=16, r0=0.78, r1=1.0):
         a = math.pi * k / n - math.pi / 2
         r = r1 if k % 2 == 0 else r0
         pts.append(f"{50 + 50 * r * math.cos(a):.1f},{50 + 50 * r * math.sin(a):.1f}")
-    return f'<svg viewBox="0 0 100 100"><polygon points="{" ".join(pts)}" fill="{PINK}"/><polygon points="{" ".join(pts)}" fill="none" stroke="#fff" stroke-width="1.2" transform="translate(50 50) scale(.9) translate(-50 -50)"/></svg>'
+    return f'<svg viewBox="0 0 100 100"><polygon points="{" ".join(pts)}" fill="{NAVY}"/><polygon points="{" ".join(pts)}" fill="none" stroke="#fff" stroke-width="1.2" transform="translate(50 50) scale(.9) translate(-50 -50)"/></svg>'
 
 
 def _num(v):
@@ -188,71 +178,64 @@ def WORLD(beats, times, X, D):
                     f'window.__H9_CHROME={json.dumps(cfg, ensure_ascii=False)};window.__H9_GLYPHS={json.dumps(gl, separators=(",", ":"))};</script>'
                     f'<script type="module">{js}</script>')
     X.clip("world", 0, D, '<canvas id="w3d" width="%d" height="%d"></canvas>' % (W, H), "w3d-host", 1, track=2, attrs="data-motion-blur=\"off\"")
-    if P: X.css("chr-cap", "#root.v { --cap-bottom:520px; --cap-size:46px; }")
+    # the caption stands on the mirror floor (horizon at 70 % of the frame)
+    X.css("chr-cap", "#root.v { --cap-bottom:430px; } #root.h { --cap-bottom:104px; }")
 
-    # ---------------- layout (px) per aspect: frame furniture, kicker, source, the subject band the runtime frames into
-    L = ({"tag": (60, 212), "tc": (60, 216), "tick": 262, "kk": (60, 318), "kkw": 960, "kzh": 68, "src": (60, 436), "srcw": 900, "cy": 860}
-         if P else {"tag": (70, 44), "tc": (70, 48), "tick": 94, "kk": (70, 150), "kkw": 900, "kzh": 60, "src": (70, 132), "srcw": 1180, "cy": 510})
-
-    # ---------------- persistent HUD
-    tag = meta.get("tag", "")
-    ticker = meta.get("ticker") or []
-    hud = (f'<i class="cn tl"></i><i class="cn tr"></i><i class="cn bl"></i><i class="cn br"></i>'
-           f'<div class="tag" style="left:{L["tag"][0]}px;top:{L["tag"][1]}px"><b>{X.rich(X.channel)}</b><span>{X.rich(tag)}</span></div>'
-           f'<div class="tc" style="right:{L["tc"][0]}px;top:{L["tc"][1]}px"><i></i><span class="tcv">00:00:00</span></div>')
-    if ticker:
-        unit = "".join(f"{X.rich(s)}<b>✦</b>" for s in ticker)
-        est = sum(fit.width(s, mono=True) * 15 * 1.18 + 15 * 3 for s in ticker) or 400
-        speed = 70
-        rep = int(math.ceil((W + speed * D) / est)) + 1
-        hud += f'<div class="tick" style="top:{L["tick"]}px"><div class="tk">{unit * rep}</div></div>'
-    X.clip("hud", 0, D, hud, "c-ov", 8, track=5, attrs="data-layout-ignore")
-    X.tw(f'(()=>{{const o={{v:0}};const el=document.querySelector("#hud .tcv");tl.to(o,{{v:{D:.3f},duration:{D:.3f},ease:"none",onUpdate:()=>{{const s=Math.floor(o.v),f=Math.floor((o.v-s)*30);el.textContent="00:"+String(s).padStart(2,"0")+":"+String(f).padStart(2,"0");}}}},0);}})();')
-    if ticker: X.tw(f'tl.fromTo("#hud .tk",{{x:0}},{{x:{-speed * D:.0f},duration:{D:.3f},ease:"none"}},0);')
-    for k2 in range(int(D / 0.5)):           # REC dot blinks
-        X.tw(f'tl.set("#hud .tc i",{{opacity:{1 if k2 % 2 == 0 else 0.15}}},{k2 * 0.5:.2f});')
-    X.enter("#hud .cn", 0.0, "accent", verb="pop", dur=0.4, stagger=0.05)
-    X.enter("#hud .tag", 0.1, "text", verb="fade", dur=0.4)
+    # ---------------- layout (px) per aspect. 9:16: kicker centred on the sky, source printed just above the horizon line
+    # (hero beats) or under the kicker; 16:9: kicker top-left, source top-right. cy = the subject centre the runtime frames.
+    hor = round(H * 0.70)
+    L = ({"kk": (0, 204), "kzh": 68, "kkw": 980, "src_top": 350, "src_bot": H - hor + 18, "srcw": 960, "cy": round(H * 0.45)}   # 9:16: kicker under the top tabs
+         if P else {"kk": (70, 40), "kzh": 56, "kkw": 900, "src_top": 44, "srcw": 700, "cy": round(H * 0.45)})
 
     # ---------------- per beat overlays
     real = [c for c in cfg["beats"] if c["kind"] != "outro"]
     for i, (b, c) in enumerate(zip(beats, cfg["beats"])):
         t, d, k = c["t"], c["d"], c["kind"]
-        if i: X.sfx(t - 0.56, "fly")      # the flight runs t-0.53 → t-0.08, inside the narration pause
+        late = 0.55 if k == "outro" else 0.0     # runtime LATE: the outro station arrives after its line starts
+        if i: X.sfx(t - 0.56 + late, "fly")      # the flight runs t-0.53 → t-0.08, inside the narration pause
         if i:   # whip streaks over the camera flight, travelling against the camera's sideways move
             dx = math.sin(i * 1.7) - math.sin((i - 1) * 1.7)
             sgn = -1 if dx > 0 else 1
             lines = []
             for k2 in range(14):
-                y = X.rand.uniform(0.12, 0.86) * H; w = X.rand.uniform(0.18, 0.42) * W; hh = X.rand.choice([1, 2, 2, 3])
-                lines.append(f'<i class="{"p" if k2 % 5 == 0 else ""}" style="top:{y:.0f}px;width:{w:.0f}px;height:{hh}px;{"transform:scaleX(-1);" if sgn < 0 else ""}"></i>')
-            X.clip(f"sw{i}", t - 0.56, 0.56, f'<div class="whip">{"".join(lines)}</div>', "c-ov", 9, track=6 + i % 2, attrs="data-layout-ignore")
+                y = X.rand.uniform(0.12, 0.66) * H; w = X.rand.uniform(0.18, 0.42) * W; hh = X.rand.choice([2, 2, 3, 4])
+                lines.append(f'<i class="{"p" if k2 % 6 == 0 else ""}" style="top:{y:.0f}px;width:{w:.0f}px;height:{hh}px;{"transform:scaleX(-1);" if sgn < 0 else ""}"></i>')
+            X.clip(f"sw{i}", t - 0.56 + late, 0.56, f'<div class="whip">{"".join(lines)}</div>', "c-ov", 9, track=6 + i % 2, attrs="data-layout-ignore")
             a0, a1 = (-0.45 * W, 1.1 * W) if sgn > 0 else (1.1 * W, -0.45 * W)
-            X.tw(f'tl.fromTo("#sw{i} .whip i",{{x:{a0:.0f},opacity:0}},{{x:{a1:.0f},opacity:1,duration:0.38,ease:"power2.inOut",stagger:{{each:0.01,from:"random"}}}},{t - 0.53:.3f});')
-            X.tw(f'tl.to("#sw{i} .whip",{{opacity:0,duration:0.1}},{t - 0.12:.3f});')
+            X.tw(f'tl.fromTo("#sw{i} .whip i",{{x:{a0:.0f},opacity:0}},{{x:{a1:.0f},opacity:1,duration:0.38,ease:"power2.inOut",stagger:{{each:0.01,from:"random"}}}},{t - 0.53 + late:.3f});')
+            X.tw(f'tl.to("#sw{i} .whip",{{opacity:0,duration:0.1}},{t - 0.12 + late:.3f});')
         if k != "outro" and (b.get("k") or b.get("kz")):
             idx = f"{real.index(c) + 1:02d}/{len(real):02d}"
-            ft = fit.fit_text(b.get("kz", ""), L["kkw"], L["kzh"], L["kzh"] * 0.92, 26, max_lines=1)
-            html = (f'<div class="kk" style="left:{L["kk"][0]}px;top:{L["kk"][1]}px"><div class="ke" data-layout-ignore><b>{idx}</b>{X.rich(b.get("k", ""), split="chars")}</div>'
-                    f'<div class="kz" style="font-size:{ft.px}px">{X.rich(ft.lines[0] if ft.lines else "")}</div><div class="kb"></div></div>')
+            ft = fit.fit_text(b.get("kz", ""), L["kkw"], L["kzh"], L["kzh"] * 0.92, 40, max_lines=1)
+            cls = "kk c" if P else "kk"
+            pos = f"top:{L['kk'][1]}px" if P else f"left:{L['kk'][0]}px;top:{L['kk'][1]}px"
+            html = (f'<div class="{cls}" style="{pos}"><div class="ke"><b>{idx}</b><span>{X.rich(b.get("k", ""), split="chars")}</span></div>'
+                    f'<div class="kz" style="font-size:{ft.px}px">{X.rich(ft.lines[0] if ft.lines else "")}</div></div>')
             ka = t - 0.08 if i else t       # the kicker lands with the camera
             X.clip(f"kk{i}", ka, d, html, "c-ov", 7, track=3 + i % 2)
-            X.enter(f"#kk{i} .ke .c", ka + 0.04, "text", verb="type", stagger=min(0.025, 0.6 / max(1, len(str(b.get("k", ""))))))
-            X.tw(f'tl.from("#kk{i} .kz",{{x:-40,opacity:0,filter:"blur(8px)",duration:0.45,ease:"expo.out"}},{ka + 0.08:.3f});')
-            X.tw(f'tl.fromTo("#kk{i} .kb",{{scaleX:0}},{{scaleX:1,duration:0.5,ease:"expo.out"}},{ka + 0.14:.3f});')
-            X.tw(f'tl.to("#kk{i}",{{opacity:0,x:-24,duration:0.2,ease:"power2.in"}},{t + d - 0.66:.3f});')
+            X.enter(f"#kk{i} .ke .c", ka + 0.06, "text", verb="type", stagger=min(0.025, 0.6 / max(1, len(str(b.get("k", ""))))))
+            X.tw(f'tl.from("#kk{i} .ke b",{{scale:0,duration:0.35,ease:"back.out(1.6)"}},{ka:.3f});')
+            X.tw(f'tl.from("#kk{i} .kz",{{y:-36,opacity:0,duration:0.42,ease:"back.out(1.4)"}},{ka + 0.08:.3f});')
+            X.tw(f'tl.to("#kk{i}",{{opacity:0,y:-20,duration:0.2,ease:"power2.in"}},{t + d - 0.66:.3f});')
         if b.get("src"):
-            fs = fit.fit_text(b["src"], L["srcw"], 56, 18 if not P else 19, 13, max_lines=2, mono=True)
-            X.clip(f"src{i}", t, d, f'<div class="src" data-layout-ignore style="left:{L["src"][0]}px;bottom:{L["src"][1]}px;font-size:{fs.px}px;max-width:{L["srcw"]}px"><b>SRC</b>{"<br>".join(X.rich(s) for s in fs.lines)}</div>', "c-ov", 7, track=9 + i % 2)
+            fs = fit.fit_text(b["src"], L["srcw"] - 110, 110 if P else 100, 30 if P else 26, 28 if P else 24, max_lines=3 if not P else 2, mono=True)
+            body = f'<b>SRC</b>{"<br>".join(X.rich(s) for s in fs.lines)}'
+            if P and k == "hero":
+                pos = f"left:0;right:0;text-align:center;bottom:{L['src_bot']}px"
+            elif P:
+                pos = f"left:0;right:0;text-align:center;top:{L['src_top']}px"
+            else:
+                pos = f"right:70px;top:{L['src_top']}px;text-align:right;max-width:{L['srcw']}px"
+            X.clip(f"src{i}", t, d, f'<div class="src" data-layout-ignore style="{pos};font-size:{fs.px}px">{body}</div>', "c-ov", 7, track=9 + i % 2)
             X.tw(f'tl.from("#src{i} .src",{{opacity:0,y:10,duration:0.4,ease:"expo.out"}},{t + 0.5:.3f});')
         n_els = len(X.els)
         _extras(X, b, c, i, L, P, W, H, fit)
         # this beat's chips, stickers, panels and source leave before the camera whips away
         ids = [e.split('id="', 1)[1].split('"', 1)[0] for e in X.els[n_els:]] + ([f"src{i}"] if b.get("src") else [])
         if ids and i + 1 < len(beats):
-            X.tw(f'tl.to([{",".join(f"{chr(34)}#{x}{chr(34)}" for x in ids)}],{{opacity:0,duration:0.22,ease:"power2.in"}},{t + d - 0.68:.3f});')
+            nl = 0.55 if cfg["beats"][i + 1]["kind"] == "outro" else 0.0
+            X.tw(f'tl.to([{",".join(f"{chr(34)}#{x}{chr(34)}" for x in ids)}],{{opacity:0,duration:0.22,ease:"power2.in"}},{t + d - 0.68 + nl:.3f});')
 
-    # outro: the mascot cameo is placed by build.py; sound for the hat + name
     for c in cfg["beats"]:
         if c["kind"] == "outro": X.sfx(c["t"] + 0.15, "boom"); X.sfx(c["t"] + 0.75, "slam")
 
@@ -263,24 +246,24 @@ def _extras(X, b, c, i, L, P, W, H, fit):
     if k == "hero":
         X.sfx(c["at"], "slam"); X.sfx(t + 0.05, "riser" if i == 0 else "enter")
         if b.get("chip"):
-            ft = fit.fit_text(b["chip"], W * 0.7, 60, 36 if not P else 40, 22, max_lines=1)
-            top = cy + (190 if not P else 250)
+            ft = fit.fit_text(b["chip"], W * 0.7, 60, 40 if P else 36, 30, max_lines=1)
+            top = cy + (216 if P else 190)
             X.clip(f"chip{i}", t, d, f'<div class="chip" style="left:0;right:0;top:{top}px"><span style="font-size:{ft.px}px">{X.rich(ft.lines[0])}</span></div>', "c-ov", 7, track=11)
-            X.tw(f'tl.from("#chip{i} span",{{scale:0.6,opacity:0,duration:0.45,ease:"back.out(2.4)"}},{c["at"] + 0.15:.3f});')
+            X.tw(f'tl.from("#chip{i} span",{{scale:0.6,opacity:0,duration:0.42,ease:"back.out(1.8)"}},{c["at"] + 0.15:.3f});')
         if b.get("sticker"):
             st = b["sticker"] if isinstance(b["sticker"], list) else [b["sticker"]]
-            sz = 250 if not P else 270
-            x, y = (W * 0.74, cy - 330) if not P else (W - sz - 70, cy - 470)
+            sz = 270 if P else 240
+            x, y = (W - sz - 44, cy - 560) if P else (W * 0.75, cy - 330)
             at = X.T(b.get("at_sticker"), t) if b.get("at_sticker") else c["at"] - 0.6
-            f1 = fit.fit_text(st[0], sz * 0.62, sz * 0.26, sz * 0.2, 18, max_lines=1)
-            sub = f'<i data-layout-ignore style="font-size:{max(16, int(sz * 0.075))}px">{X.rich(st[1])}</i>' if len(st) > 1 else ""
+            f1 = fit.fit_text(st[0], sz * 0.62, sz * 0.26, sz * 0.2, 30, max_lines=1)
+            sub = f'<i data-layout-ignore style="font-size:{max(28, int(sz * 0.1))}px">{X.rich(st[1])}</i>' if len(st) > 1 else ""
             X.clip(f"bst{i}", t, d, f'<div class="burst" style="left:{x:.0f}px;top:{y:.0f}px;width:{sz}px;height:{sz}px">{_burst_svg()}<div class="bt"><b style="font-size:{f1.px}px">{X.rich(f1.lines[0])}</b>{sub}</div></div>', "c-ov", 7, track=12)
-            X.tw(f'tl.from("#bst{i} .burst",{{scale:0,rotation:-140,duration:0.6,ease:"back.out(2)"}},{at:.3f});')
-            X.tw(f'tl.to("#bst{i} .burst svg",{{rotation:60,duration:{max(1.0, t + d - at):.2f},ease:"none"}},{at:.3f});')
+            X.tw(f'tl.from("#bst{i} .burst",{{scale:0,rotation:-140,duration:0.55,ease:"back.out(1.7)"}},{at:.3f});')
+            X.tw(f'tl.to("#bst{i} .burst svg",{{rotation:40,duration:{max(1.0, t + d - at):.2f},ease:"none"}},{at:.3f});')
             X.sfx(at, "pop")
         if b.get("date"):
-            x, y = (L["kk"][0], cy + 250) if not P else (L["kk"][0], cy + 300)
-            X.clip(f"dt{i}", t, d, f'<div class="date" style="left:{x}px;top:{y}px;font-size:{18 if not P else 20}px"><b>●</b>{X.rich(b["date"], split="chars")}</div>', "c-ov", 7, track=13)
+            pos = f"left:50%;translate:-50% 0;top:{L['src_top']}px" if P else f"left:70px;top:{cy + 230}px"
+            X.clip(f"dt{i}", t, d, f'<div class="date" style="{pos};font-size:30px">{X.rich(b["date"], split="chars")}</div>', "c-ov", 7, track=13)
             X.enter(f"#dt{i} .c", t + 0.35, "text", verb="type", stagger=0.04)
             X.tw(f'tl.from("#dt{i} .date",{{opacity:0,duration:0.2}},{t + 0.3:.3f});')
     elif k == "bars":
@@ -288,27 +271,26 @@ def _extras(X, b, c, i, L, P, W, H, fit):
         for j in range(len(c["items"]) - 1): X.sfx(min(c["at"], t - 0.48) + 0.1 + j * 0.16, "tick")
         X.sfx(c["at_v"], "slam")
         if b.get("pill"):
-            ft = fit.fit_text(b["pill"], 420, 50, 34, 20, max_lines=1)
-            x, y = (L["kk"][0], L["kk"][1] + 128) if not P else (L["kk"][0], L["kk"][1] + 130)
-            X.clip(f"pl{i}", t, d, f'<div class="pill" style="left:{x}px;top:{y}px;font-size:{ft.px}px">{X.rich(ft.lines[0])}</div>', "c-ov", 7, track=11)
-            X.tw(f'tl.from("#pl{i} .pill",{{scale:0,rotation:-12,duration:0.45,ease:"back.out(2.6)"}},{c["at_v"] + 0.9:.3f});')
+            ft = fit.fit_text(b["pill"], 460, 56, 40, 30, max_lines=1)
+            pos = f"left:50%;top:{L['src_top'] + 112}px" if P else f"right:70px;top:{L['src_top'] + 130}px"
+            X.clip(f"pl{i}", t, d, f'<div class="pill" style="{pos};font-size:{ft.px}px{";translate:-50% 0" if P else ""}">{X.rich(ft.lines[0])}</div>', "c-ov", 7, track=11)
+            X.tw(f'tl.from("#pl{i} .pill",{{scale:0,rotation:-10,duration:0.42,ease:"back.out(1.8)"}},{c["at_v"] + 0.9:.3f});')
             X.sfx(c["at_v"] + 0.9, "pop")
     elif k == "multiple":
         X.sfx(t + 0.05, "enter"); X.sfx(c["at"], "boom")
         if b.get("eq"):
-            ft = fit.fit_text(b["eq"], W * 0.8, 50, 30 if not P else 32, 16, max_lines=1, mono=True)
-            top = cy + (200 if not P else 260)
+            ft = fit.fit_text(b["eq"], W * 0.8, 56, 38 if P else 34, 28, max_lines=1, mono=True)
+            top = cy + (200 if P else 200)
             X.clip(f"eq{i}", t, d, f'<div class="eq" style="left:0;right:0;top:{top}px;font-size:{ft.px}px">{X.rich(ft.lines[0], split="chars")}</div>', "c-ov", 7, track=11)
             X.enter(f"#eq{i} .c", t + 0.25, "text", verb="type", stagger=0.02)
     elif k == "coins":
         X.sfx(c["at_show"], "shutter"); X.sfx(c["at_hit"], "pop"); X.sfx(c["at_hit"] + 0.5, "tick")
         lg = b.get("legend")
         if lg:
-            fs = 26 if not P else 30
-            x0, top = ((W * 0.5 + 0.27 * W * 0.84) - 230, cy + 170) if not P else (None, cy + 350)
-            pos = f"left:{x0:.0f}px;top:{top}px" if not P else f"left:0;right:0;justify-content:center;top:{top}px"
+            fs = 34 if P else 30
+            pos = f"left:0;right:0;justify-content:center;top:{L['src_top'] + 96}px" if P else f"left:{W * 0.5 + 0.25 * 0.0 + 340:.0f}px;top:{cy + 190}px"
             X.clip(f"lg{i}", t, d, f'<div class="lg" style="{pos};font-size:{fs}px"><span class="a"><i></i>{X.rich(lg[0])}</span><span class="b"><i></i>{X.rich(lg[1])}</span></div>', "c-ov", 7, track=11)
-            X.tw(f'tl.from("#lg{i} span",{{opacity:0,y:14,duration:0.4,stagger:0.12,ease:"expo.out"}},{c["at_hit"] + 0.6:.3f});')
+            X.tw(f'tl.from("#lg{i} span",{{opacity:0,y:14,duration:0.4,stagger:0.12,ease:"back.out(1.4)"}},{c["at_hit"] + 0.6:.3f});')
     elif k == "moat":
         X.sfx(t + 0.2, "enter"); X.sfx(c["at_moat"], "riser"); X.sfx(c["at_chip"] + 0.05, "glitch"); X.sfx(c["at_word"] + 0.1, "slam")
     elif k == "swarm":
@@ -317,15 +299,15 @@ def _extras(X, b, c, i, L, P, W, H, fit):
             ("c", "// kernel.cu"), ("k", "__global__ void scale(float *x, float a, int n) {"),
             ("", "  int i = blockIdx.x * blockDim.x + threadIdx.x;"), ("", "  if (i < n) x[i] *= a;"), ("", "}"),
             ("k", "scale<<<blocks, 256>>>(d_x, 2.0f, n);"), ("", "cudaDeviceSynchronize();")]
-        if P: box = (60, cy + 190, 960, 252, 18)
-        else: box = (70, cy - 140, 640, 360, 18)
+        if P: box = (40, round(H * 0.70) - 392, 920, 376, 28)      # 9:16: the counter ends clear of the right-hand buttons
+        else: box = (60, 330, 780, 392, 22)
         x, y, w, h, fs = box
         total = int(b.get("count", 0))
         lines = "".join(f'<span class="l {cls}">{X.rich(s)}</span>' for cls, s in code)
-        X.clip(f"cd{i}", t, d, f'<div class="code" style="left:{x}px;top:{y:.0f}px;width:{w}px;height:{h}px"><div class="hd" data-layout-ignore style="font-size:{fs - 3}px">'
-                               f'<span>{X.rich(b.get("label", "DEVELOPERS"))}</span><span class="n" style="font-size:{fs + 8}px">0</span></div>'
+        X.clip(f"cd{i}", t, d, f'<div class="code" style="left:{x}px;top:{y:.0f}px;width:{w}px;height:{h}px"><div class="hd" data-layout-ignore style="font-size:{fs + 2}px">'
+                               f'<span>{X.rich(b.get("label", "DEVELOPERS"))}</span><span class="n" style="font-size:{fs + 12}px">0</span></div>'
                                f'<div class="bd" data-layout-ignore style="font-size:{fs}px">{lines}<span class="cur"></span></div></div>', "c-ov", 7, track=11)
-        X.tw(f'tl.from("#cd{i} .code",{{clipPath:"inset(0 100% 0 0)",duration:0.5,ease:"expo.inOut"}},{t + 0.15:.3f});')
+        X.tw(f'tl.from("#cd{i} .code",{{clipPath:"inset(0 100% 0 0 round 22px)",duration:0.5,ease:"expo.inOut"}},{t + 0.15:.3f});')
         atc = X.T(b.get("at_code"), t) if b.get("at_code") else t + 1.2
         X.tw(f'tl.from("#cd{i} .bd .l",{{opacity:0,x:-12,duration:0.25,stagger:0.12,ease:"power2.out"}},{min(atc, t + 0.5):.3f});')
         if total:

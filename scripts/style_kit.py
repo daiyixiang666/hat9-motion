@@ -185,6 +185,23 @@ def cmd_preview(a):
         print(f"  {'':<16} 构建：{out.relative_to(SKILL)}   实时预览：cd {out.relative_to(SKILL)} && npx --yes hyperframes@0.8.191 preview")
 
 
+def safe_text(out, sid):
+    """9:16 safe-area probe (scripts/h9/safearea.cjs) over a built example, twice per beat (settled, and just before the
+    cut): readable text under the platform's top tabs, bottom bar or right-hand buttons. Furniture listed in
+    stress.SAFE_EXEMPT, the style's STYLE["safe_exempt"] and data-safe="ignore" are skipped. [] when Chrome is missing."""
+    import stress
+    tl = json.loads((out / "timeline.json").read_text())
+    at = []
+    for x in tl["beats"]:
+        at.append(round(x["t"] + x["d"] * 0.55, 2))
+        at.append(round(max(x["t"], x["t"] + x["d"] - 0.35), 2))
+    found = stress.safe_area(f"style:{sid}", sid, out, at, 1.0)
+    out_ = []
+    for f in found:
+        out_.append(re.sub(r"^v\d+ safe ", "", f))
+    return out_
+
+
 def cmd_check(a):
     sid = a.id
     p = STYLES / f"{sid}.py"
@@ -195,7 +212,8 @@ def cmd_check(a):
     for role, fid in (S.get("fonts") or {}).items():
         for f in (fid if isinstance(fid, list) else [fid]):
             if f not in fonts.REG: probs.append(f"字体 {role}={f!r} 不在 assets/fonts.json 里")
-            elif not fonts.find(fonts.REG[f]["file"]): notes.append(f"字体 {f} 已登记但本机没有文件（别人装了才显示）")
+    for fid, fname, url in fonts.missing(S):      # registered but not on this machine: the build silently uses a system face
+        print(f"  ! 字体 {fid}（{fname}）本机找不到：构建会退回系统字体，看到的不是这个风格的样子。{fonts.HOW}" + (f"；下载：{url}" if url else ""))
     tok = S.get("tokens", {})
     from h9.aefx import _contrast
     for fg, bg, need in (("fg", "bg", 4.5), ("card-fg", "card", 4.5), ("cap-fg", "cap-bg", 4.5), ("accent", "bg", 3.0)):
@@ -215,6 +233,15 @@ def cmd_check(a):
         errs = hf_errors(out)
         print(f"  构建 {v.parent.name} {aspect}：{'通过' if not errs else f'{len(errs)} 个错误'}")
         probs += [f"{aspect} {e}" for e in errs]
+        if aspect == "9:16":          # captions must sit clear of the platform's bottom bar, top tabs and right-hand buttons
+            import review
+            safe, span = review.caption_safety(out)
+            if span:
+                print("  9:16 字幕位置：" + " · ".join(f"{'字幕' if k == 'cap' else '效果页字幕'} y {a}–{b}" for k, (a, b) in span.items()))
+            probs += [f"9:16 {msg}" for lv, rule, msg in safe if lv == "P0"]
+            notes += [msg for lv, rule, msg in safe if lv != "P0"]
+            for f in safe_text(out, sid):          # every readable text of the example film clear of the platform chrome
+                probs.append(f"9:16 安全区 {f}")
     for x in notes: print("  提示：", x)
     for x in probs: print("  问题：", x)
     print("检查通过" if not probs else f"{len(probs)} 个问题要改")
@@ -228,7 +255,7 @@ def cmd_publish(a):
     dst = SKILL / "assets" / "previews"
     for aspect in ("16:9", "9:16"):
         tag = aspect.replace(":", "x")
-        subprocess.run([PY, str(HERE / "render.py"), str(v), "--styles", sid, "--aspect", aspect, "--preview"], check=True)
+        subprocess.run([PY, str(HERE / "render.py"), str(v), "--styles", sid, "--aspect", aspect, "--preview", "--gate"], check=True)
         for ext in ("mp4", "jpg"):
             src = v.parent / "previews" / f"{sid}_{tag}.{ext}"
             if src.exists(): shutil.copy2(src, dst / f"{sid}_{tag}.{ext}")

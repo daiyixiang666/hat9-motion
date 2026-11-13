@@ -1,5 +1,5 @@
 {
- "_doc": "Layout family of every effect and core scene: what SHAPE the information takes on screen (not how glyphs appear). Read by scripts/h9/forms.py for the form-repeat / slogan-share / form-variety checks in review.py --video and brief.py check. A new effect: add one line under fx. An effect missing here is a warning, not an error.",
+ "_doc": "Layout family of every effect and core scene: what SHAPE the information takes on screen (not how glyphs appear). Read by scripts/h9/forms.py for the form-repeat / slogan-share / form-variety checks in review.py --video and brief.py check. A new effect: add one line under fx; a style's own scenes go under style_scenes.<style id>. An effect missing here is a warning, not an error.",
  "families": {
   "slogan":    "全屏大字 · one phrase centred full-frame (most text effects)",
   "beside":    "贴人排版 · text / numbers laid out beside the subject (presenter, host, name strap)",
@@ -81,14 +81,38 @@
   "scribble": "annotate", "strike_fix": "annotate",
 
   "suspense": "breather", "interlude": "breather", "breather": "breather", "chapter_breather": "breather",
-  "chapter_bar": "breather", "loading": "breather", "think_loop": "breather"
+  "chapter_bar": "breather", "loading": "breather", "think_loop": "breather",
+
+  "drop_stack": "metaphor", "pour_fill": "metaphor", "magnet_sort": "metaphor", "topple": "structure",
+  "dolly_layers": "structure", "unroll": "structure", "rack_focus": "compare", "orbit_number": "number",
+  "word_mosaic": "slogan", "weight_breath": "slogan", "ink_reveal": "slogan", "type_mask": "photo",
+  "zoom_scale": "chart", "small_multiples": "chart", "stamp_press": "annotate"
  },
  "scenes": {
   "statement": "slogan", "title": "slogan", "quote": "doc", "number": "number", "compare": "compare", "outro": "card"
  },
+ "style_scenes": {
+  "_doc": "Scenes a style draws itself (its SCENES or its WORLD), by style id: the same scene name can be a different picture in another style. Looked up before the shared scenes table; a style derived with style_kit uses its base's entries.",
+  "atlas":    {"map": "map"},
+  "chrome3d": {"hero": "number", "bars": "chart", "multiple": "number", "coins": "metaphor", "moat": "shape", "swarm": "metaphor", "shovel": "slogan"},
+  "doc":      {"shot": "footage", "card": "breather"},
+  "flat":     {"city": "number", "grow": "compare", "hero": "shape", "crowd": "metaphor", "month": "number", "wallet": "chart", "climb": "chart", "network": "map"},
+  "ink":      {"brush": "slogan", "column": "card", "drops": "metaphor", "scrolls": "compare", "wash": "slogan", "handscroll": "structure", "splash": "number",
+               "bars": "chart", "share": "chart", "couplet": "slogan", "seal": "card"},
+  "iso3d":    {"pile": "metaphor", "city": "metaphor", "bars": "chart", "route": "map", "cont": "structure", "coins": "compare", "scale": "slogan"},
+  "minimal":  {"object": "photo", "year": "structure", "side": "card", "scatter": "chart", "words": "slogan", "split": "compare", "bars": "chart",
+               "paper": "doc", "ratio": "compare", "card": "card"},
+  "papercut": {"hook": "number", "tickets": "compare", "calendar": "number", "share": "chart", "banner": "card", "stacks": "structure", "thesis": "slogan"},
+  "pixel":    {"stage": "number", "online": "metaphor", "treasure": "number", "crowd": "metaphor", "world": "map", "levelup": "chart", "dialog": "people"},
+  "poster":   {"hundred": "number", "problem": "slogan", "quote": "doc", "price": "compare", "keep": "montage", "thesis": "slogan"},
+  "press":    {"hook": "compare", "stores": "metaphor", "turn": "annotate", "split": "chart", "chain": "structure", "wheel": "structure", "thesis": "slogan"},
+  "screen":   {"dash": "chart", "api": "ui", "pricing": "card", "forecast": "chart", "shots": "montage", "palette": "ui"},
+  "sketch":   {"hook": "number", "bar": "chart", "question": "structure", "ratio": "compare", "tag": "compare", "dots": "metaphor", "loop": "structure", "thesis": "slogan"},
+  "zine":     {"cover": "number", "versus": "compare", "pie": "chart", "bars": "chart", "stamps": "structure", "clip": "doc", "note": "metaphor", "thesis": "slogan"}
+ },
  "number_hero": {
   "_doc": "Beats whose picture is one hero number with a small caption beside / under it; two adjacent ones trip number-repeat (P1) in forms.py. Decided from what each effect draws. fx = always; scenes = core scenes; when = only if the params say so (all conditions must hold; a missing param takes its default; \"present\": true means the param is given). Left out on purpose: icon_unit, scale_compare, one_to_many, then_now, formula (the picture is the icons / grid / equation, the number is a label) and the clock dial (the hand is the picture).",
-  "fx": ["key_card", "side_stat", "odometer", "number_pages", "scan_field", "mosaic_number", "seat_swarm", "glass"],
+  "fx": ["key_card", "side_stat", "odometer", "number_pages", "scan_field", "mosaic_number", "seat_swarm", "glass", "orbit_number"],
   "scenes": ["number"],
   "when": [
    {"fx": "dial", "all": [{"param": "mode", "default": "gauge", "is": "gauge"}, {"param": "show_value", "default": true, "is": true}]},

@@ -35,14 +35,17 @@ STYLE = {
     "tokens": {
         "bg": "#0f2733", "fg": "#f4efe3", "muted": "#a9bcc1", "accent": "#ffb02e", "accent2": "#ff5b3a", "alert": "#ff4a3d",
         "line": "#2b4652", "paper": "#ebe3cf", "ink": "#0f2733", "card": "#0b1d26", "card-fg": "#f4efe3",
-        "sea": "#0f2733", "sea2": "#163644", "land": "#e9e1cc", "border": "#b9ad92", "route1": "#ffb02e", "route2": "#ff5b3a", "route3": "#6fd0ff",
-        "cap-fg": "#fbf7ec", "cap-size": "42px", "cap-weight": "700", "cap-bottom": "58px", "cap-em": "#ffb02e",
-        "cap-shadow": "0 2px 0 rgba(4,14,19,.9), 0 0 22px rgba(4,14,19,.85)", "punch-top": "70%", "punch-size": "76px", "punch-stroke": "0",
+        "sea": "#0f2733", "sea2": "#163644", "land": "#e9e1cc", "border": "#b9ad92", "route1": "#ffb02e", "route2": "#f4efe3", "route3": "#6fd0ff",
+        "cap-fg": "#ffffff", "cap-size": "40px", "cap-weight": "700", "cap-bottom": "52px", "cap-em": "#ffb02e", "cap-bg": "none", "cap-pad": "0 16px",
+        "cap-shadow": "0 0 2px #061218, 0 0 3px #061218, 0 0 4px #061218, 0 0 7px rgba(6,18,24,.75)", "punch-top": "70%", "punch-size": "76px", "punch-stroke": "0",
     },
     "fonts": {"display": "noto-serif-sc", "body": "noto-sans-sc", "mono": "jetbrains-mono", "latin": "eb-garamond-italic"},
     "motion": {"ease": "expo.out", "dur": 0.6, "stagger": 0.04, "cut": "hard", "em": "static", "camera": "none"},
     "layers": [("grain", {"opacity": 0.07}), ("vignette", {"alpha": 0.4, "inner": 60})],
+    "safe_exempt": [".at-frame .hd", ".at-frame .sb", ".at-leg"],     # 9:16 page furniture (header / HUD / legend / scale bar) may sit under the platform chrome
     "mascot": {"mode": "cameo", "frame": "none", "landscape": {"right": 96, "bottom": 30, "h": 360}, "portrait": {"right": 40, "bottom": 560, "h": 320}},
+    # the host is off in this style: a cartoon sticker is not map furniture
+    "css": "#root.v.st-atlas { --cap-bottom:440px; } .st-atlas .mascot { display:none !important; } .st-atlas .cap .cp { letter-spacing:.04em; }",
     "sfx": {"transition": ("whoosh_soft", 0.3), "enter": ("whoosh_soft", 0.3), "pop": ("tick", 0.45), "hit": ("hit", 0.4), "mascot": ("whoosh_soft", 0.3),
             "count": ("type", 0.3), "fly": ("whoosh_deep", 0.35), "pin": ("click", 0.35), "alarm": ("beep", 0.22)},
 }
@@ -315,57 +318,81 @@ CSS = r"""
 .at-frame .hd span { font-family:var(--f-mono); font-size:16px; letter-spacing:.2em; color:var(--muted); }
 .at-frame .src { position:absolute; left:58px; bottom:30px; font-family:var(--f-mono); font-size:15px; letter-spacing:.03em; color:#e4eef0; text-shadow:0 1px 3px #061218; max-width:1180px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .at-frame .coord { position:absolute; right:58px; bottom:30px; font-family:var(--f-mono); font-size:16px; letter-spacing:.12em; color:var(--muted); text-align:right; }
-.at-frame .sb { position:absolute; left:58px; bottom:72px; }
+.at-frame .sb { position:absolute; right:58px; bottom:72px; text-align:right; } .at-frame .sb .bar, .at-frame .sb .n { margin-left:auto; }
 .at-frame .sb .bar { height:8px; background:repeating-linear-gradient(90deg, var(--fg) 0 25%, transparent 25% 50%); border:1.5px solid var(--fg); }
-.at-frame .sb .n { margin-top:6px; font-family:var(--f-mono); font-size:16px; color:var(--fg); letter-spacing:.08em; display:flex; justify-content:space-between; text-shadow:0 1px 3px #061218, 0 0 10px #061218; }
+.at-frame .sb .n { white-space:nowrap; min-width:200px; gap:24px; margin-top:6px; font-family:var(--f-mono); font-size:16px; color:var(--fg); letter-spacing:.08em; display:flex; justify-content:space-between; text-shadow:0 1px 3px #061218, 0 0 10px #061218; }
 .at-frame .loc { position:absolute; right:58px; top:96px; width:300px; height:158px; background:rgba(8,22,29,.82); border:1.5px solid rgba(244,239,227,.55); overflow:hidden; }
 .at-frame .loc svg { position:absolute; left:0; top:0; }
 .at-frame .loc .ll { fill:#c9bfa6; stroke:none; }
 .at-frame .loc .vp { fill:rgba(255,176,46,.18); stroke:var(--accent); stroke-width:2; }
-.at-frame .loc .cap { position:absolute; left:8px; bottom:4px; font-family:var(--f-mono); font-size:12px; letter-spacing:.18em; color:var(--muted); }
-#root.v .at-frame .scT { height:300px; } #root.v .at-frame .scB { height:720px; background:linear-gradient(rgba(6,18,24,0), rgba(6,18,24,.8) 20%, rgba(6,18,24,.92)); }
-#root.v .at-frame .nl { inset:150px 18px 300px; } #root.v .at-frame .nl2 { inset:158px 26px 308px; }
-#root.v .at-frame .hd { left:44px; top:176px; } #root.v .at-frame .src { left:44px; bottom:auto; top:1478px; max-width:990px; }
-#root.v .at-frame .coord { right:44px; bottom:auto; top:1560px; } #root.v .at-frame .sb { left:44px; bottom:auto; top:1262px; }
-#root.v .at-frame .loc { right:44px; top:226px; width:250px; height:132px; }
+.at-frame .loc .cap { position:absolute; left:8px; bottom:4px; font-family:var(--f-mono); font-size:16px; letter-spacing:.18em; color:var(--muted); }
+#root.v .at-frame .scT { height:330px; } #root.v .at-frame .scB { height:560px; background:linear-gradient(rgba(6,18,24,0), rgba(6,18,24,.32) 45%, rgba(6,18,24,.5)); }
+#root.v .at-frame .nl { inset:18px; } #root.v .at-frame .nl2 { inset:26px; }
+#root.v .at-frame .hd { left:44px; top:176px; } #root.v .at-frame .hd b { font-size:30px; } #root.v .at-frame .hd span { font-size:24px; }
+#root.v .at-frame .src { left:44px; bottom:auto; top:1488px; max-width:916px; font-size:22px; }   /* 9:16: just above the platform's bottom bar, under the caption */
+#root.v .at-frame .coord { right:44px; bottom:auto; top:368px; font-size:24px; }
+#root.v .at-frame .sb { left:auto; right:44px; bottom:auto; top:1560px; width:420px; }
+#root.v .at-frame .loc { right:44px; top:220px; width:250px; height:132px; }
+/* scale bar: alternating ruled segments; on a distance beat it runs from 0 to the beat's distance */
+.at-frame .sb .lbl { font-family:var(--f-mono); font-size:16px; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; margin-bottom:6px; text-shadow:0 1px 3px #061218; }
+#root.v .at-frame .sb .lbl { font-size:24px; } #root.v .at-frame .sb .n { font-size:26px; } #root.v .at-frame .sb .bar { height:12px; }
+#root.v .at-frame .sb .n span:last-child { font-weight:700; color:#fff; }
+/* legend: a ruled box, bottom-left, with a line sample for every line on the map so far */
+.at-leg { position:absolute; left:58px; bottom:72px; background:rgba(9,27,35,.86); border:1.5px solid rgba(244,239,227,.6); box-shadow:inset 0 0 0 4px rgba(9,27,35,.86), inset 0 0 0 5px rgba(244,239,227,.25);
+  padding:14px 20px 12px; color:var(--fg); }
+.at-leg .lh { font-family:var(--f-mono); font-size:15px; letter-spacing:.3em; color:var(--muted); margin-bottom:8px; }
+.at-leg .li { display:flex; align-items:center; gap:14px; font-family:var(--f-body); font-weight:500; font-size:20px; line-height:1.55; white-space:nowrap; }
+.at-leg .li svg { flex:none; }
+#root.v .at-leg { left:44px; top:1536px; bottom:auto; padding:14px 22px 12px; }   /* legend + scale bar are furniture: they sit in the bottom zone, under the caption */
+#root.v .at-leg .lh { font-size:22px; } #root.v .at-leg .li { font-size:26px; }
 .at-ov { pointer-events:none; }
 .at-title { position:absolute; left:96px; top:132px; }
 .at-title .k { font-family:var(--f-mono); font-size:19px; letter-spacing:.28em; color:var(--accent); text-transform:uppercase; }
 .at-title .t { margin-top:10px; font-family:var(--f-display); font-weight:900; line-height:1.14; color:var(--fg); text-shadow:0 4px 30px rgba(4,14,19,.85); text-wrap:balance; }
 .at-title .r { margin-top:18px; width:120px; height:4px; background:var(--accent); transform-origin:0 50%; }
-.card { position:absolute; background:rgba(8,22,29,.9); border:1px solid rgba(244,239,227,.35); border-left:4px solid var(--accent); padding:20px 26px 22px; color:var(--fg); box-shadow:0 20px 60px rgba(0,0,0,.45); }
-.card.red { border-left-color:var(--route2); }
-.card .k { font-family:var(--f-mono); font-size:16px; letter-spacing:.16em; color:var(--muted); text-wrap:balance; }
-.card .v { margin-top:6px; font-family:var(--f-mono); font-weight:700; line-height:1.05; letter-spacing:-.02em; text-wrap:balance; }
-.card .v small { font-family:var(--f-display); font-weight:900; font-size:.45em; margin-left:8px; letter-spacing:0; }
-.card .v.txt { font-family:var(--f-display); font-weight:900; letter-spacing:0; }
-.card .s { margin-top:10px; font-family:var(--f-body); font-weight:500; font-size:22px; line-height:1.35; color:var(--muted); text-wrap:balance; }
-.card .bars .row { display:grid; align-items:center; gap:14px; }
-.card .bars .row span { font-family:var(--f-mono); color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.card .bars .row i { display:block; background:var(--accent); transform-origin:0 50%; }
-.card .bars .row.hi i { background:var(--route2); }
-.card .bars .row b { font-family:var(--f-mono); text-align:right; white-space:nowrap; }
-.card .delta { margin-top:14px; font-family:var(--f-display); font-weight:900; font-size:40px; color:var(--route2); }
-.card svg.ln { display:block; margin-top:12px; overflow:visible; }
-.card svg.ln .ax { stroke:rgba(244,239,227,.3); stroke-width:1; }
-.card svg.ln .pl { fill:none; stroke:var(--route2); stroke-width:4; stroke-linejoin:round; }
-.card svg.ln .pt { fill:var(--fg); }
-.card svg.ln text { font-family:var(--f-mono); font-size:17px; fill:var(--muted); }
-.card svg.ln text.vv { fill:var(--fg); font-size:21px; font-weight:700; }
-.card ol.list { list-style:none; margin:14px 0 0; padding:0; display:grid; column-gap:26px; row-gap:4px; }
-.card ol.list li { display:flex; align-items:baseline; gap:12px; line-height:1.3; min-width:0; }
-.card ol.list li i { font-style:normal; font-family:var(--f-mono); color:var(--accent); flex:none; font-size:.8em; }
-.card ol.list li b { font-family:var(--f-body); font-weight:700; color:var(--fg); }
-.card ol.list li em { font-style:normal; font-family:var(--f-mono); color:var(--muted); margin-left:auto; white-space:nowrap; }
-.card .imgs { position:relative; margin-top:14px; }
-.card .imgs img { position:absolute; object-fit:cover; border:1px solid rgba(244,239,227,.4); }
-.card .imgs .cap { position:absolute; font-family:var(--f-mono); font-size:13px; color:#fff; background:rgba(6,18,24,.75); padding:2px 6px; }
+/* the map-title cartouche: parchment, ruled double border, small-caps label, the figure as the map's title */
+.ctc { position:absolute; background:rgba(236,228,207,.95); color:var(--ink); text-align:center; padding:26px 40px 24px;
+  box-shadow:inset 0 0 0 3px var(--ink), inset 0 0 0 9px rgba(236,228,207,.95), inset 0 0 0 10px var(--ink), 0 18px 50px rgba(4,14,19,.45); }
+.ctc::before, .ctc::after { content:""; position:absolute; width:18px; height:18px; border:3px solid var(--ink); background:rgba(236,228,207,1); }
+.ctc::before { left:-6px; top:-6px; } .ctc::after { right:-6px; bottom:-6px; }
+.ctc .k { font-family:var(--f-display); font-weight:700; font-variant:small-caps; letter-spacing:.22em; color:#2c4a56; line-height:1.3; text-wrap:balance; }
+.ctc .v { font-family:var(--f-display); font-weight:900; line-height:.92; letter-spacing:-.01em; white-space:nowrap; font-variant-numeric:lining-nums proportional-nums; }
+.ctc .v .sg { font-size:.55em; vertical-align:.2em; margin-right:.04em; }
+.ctc .v .pc { font-size:.6em; margin-left:.02em; }
+.ctc .v.txt { white-space:normal; text-wrap:balance; }
+.ctc .u { font-family:var(--f-display); font-weight:900; letter-spacing:.12em; }
+.ctc .rl { display:block; height:2px; background:var(--ink); opacity:.7; margin:14px auto 12px; width:46%; }
+.ctc .s { font-family:var(--f-body); font-weight:500; color:#2c4a56; line-height:1.35; text-wrap:balance; }
+.ctc.red .v, .ctc.red .u { color:#b3221a; }
+.ctc .ins { margin:14px auto 0; text-align:left; }
+.ctc .ins .row { display:grid; align-items:center; gap:14px; margin-top:8px; }
+.ctc .ins .row span, .ctc .ins .row b { font-family:var(--f-mono); white-space:nowrap; }
+.ctc .ins .row b { text-align:right; }
+.ctc .ins .row i { display:block; height:16px; background:repeating-linear-gradient(90deg, var(--ink) 0 18px, #3d5c68 18px 36px); transform-origin:0 50%; }
+.ctc .ins .row.hi i { background:repeating-linear-gradient(90deg, #b3221a 0 18px, #d4574d 18px 36px); }
+.ctc svg.ln { display:block; overflow:visible; margin:6px auto 0; }
+.ctc svg.ln .ax { stroke:rgba(15,39,51,.45); stroke-width:1.5; }
+.ctc svg.ln .pl { fill:none; stroke:#b3221a; stroke-width:4; stroke-linejoin:round; }
+.ctc svg.ln .pt { fill:var(--ink); }
+.ctc svg.ln text { font-family:var(--f-mono); font-size:22px; fill:#2c4a56; }
+.ctc svg.ln text.vv { fill:var(--ink); font-size:24px; font-weight:700; }
+.ctc ol.list { list-style:none; margin:10px 0 0; padding:0; display:grid; column-gap:26px; row-gap:4px; }
+.ctc ol.list li { display:flex; align-items:baseline; gap:12px; line-height:1.3; }
+.ctc ol.list li i { font-style:normal; font-family:var(--f-mono); color:#8a5a12; font-size:.8em; }
+.ctc ol.list li b { font-family:var(--f-body); font-weight:700; }
+.ctc ol.list li em { font-style:normal; font-family:var(--f-mono); margin-left:auto; }
+.ctc .imgs { position:relative; margin-top:12px; }
+.ctc .imgs img { position:absolute; object-fit:cover; border:1px solid rgba(15,39,51,.5); }
+.ctc .imgs .cap { position:absolute; font-family:var(--f-mono); font-size:13px; color:#fff; background:rgba(6,18,24,.75); padding:2px 6px; }
+/* a distance written along its route, the way a chart labels a lane */
+#mapsvg .rlab { font-family:var(--f-display); font-weight:900; letter-spacing:.08em; paint-order:stroke; stroke:#061218; stroke-linejoin:round; opacity:0; }
 .thesis { position:absolute; left:96px; top:300px; }
 .thesis .t { font-family:var(--f-display); font-weight:900; line-height:1.16; color:var(--fg); text-shadow:0 6px 40px rgba(4,14,19,.9); text-wrap:balance; }
 .outro { position:absolute; left:96px; top:330px; }
 .outro .t { font-family:var(--f-display); font-weight:900; color:var(--fg); letter-spacing:.04em; line-height:1.12; text-shadow:0 6px 40px rgba(4,14,19,.9); text-wrap:balance; }
 .outro .sub { margin-top:10px; font-family:var(--f-mono); font-size:22px; letter-spacing:.24em; color:var(--accent); }
 .outro .cta { margin-top:30px; display:inline-block; font-family:var(--f-body); font-weight:700; font-size:30px; color:var(--ink); background:var(--fg); padding:10px 26px; }
+#root.v .sea .in > div { font-size:22px; } #root.v .sea .in b { font-size:30px; }
 #root.v .at-title { left:56px; top:400px; } #root.v .thesis { left:56px; top:470px; } #root.v .outro { left:56px; top:480px; }
 """
 
@@ -377,8 +404,9 @@ class Atlas:
         self.meta = X.v.get("meta", {})
         self.P = Proj(self.meta.get("center_lon", 60))
         self.V = X.portrait
-        self.area = (40, 300, X.W - 40, 1250) if self.V else (70, 120, X.W - 70, 930)   # where the camera frames things
-        self.card_w = X.W - 112 if self.V else 600
+        self.area = (40, 330, X.W - 40, 1480) if self.V else (70, 120, X.W - 70, 930)   # where the camera frames things (9:16: down into the foot)
+        self.card_w = X.W - 88 if self.V else 640
+        self.ctc_top = 410 if self.V else 150
 
     # ---------------------------------------------------- helpers
     def T(self, v, t0, dflt=None):
@@ -475,6 +503,24 @@ class Atlas:
             d = d_of(r["parts"])
             svg.append(f'<path class="glow" id="rg-{rid}" d="{d}" stroke="{r["color"]}" stroke-dasharray="{r["L"]:.1f}" stroke-dashoffset="{r["L"]:.1f}"/>'
                        f'<path class="route" id="r-{rid}" d="{d}" stroke="{r["color"]}" stroke-dasharray="{r["L"]:.1f}" stroke-dashoffset="{r["L"]:.1f}"/>')
+        self.rlabs = []
+        for bi in self.beat_info:
+            for dr in bi["b"].get("draw", []):
+                if isinstance(dr, dict) and dr.get("label"):
+                    rid = dr["route"]; r = self.routes[rid]
+                    part = max(r["parts"], key=length)
+                    pts = [(q[0], q[1]) for q in resample([part], 80)]
+                    sm = []
+                    for k in range(len(pts)):
+                        win = pts[max(0, k - 6):k + 7]
+                        sm.append((sum(q[0] for q in win) / len(win), sum(q[1] for q in win) / len(win)))
+                    if sm[-1][0] < sm[0][0]: sm = sm[::-1]
+                    lid = f"rl{bi['i']}{rid}"
+                    X.used_text.update(dr["label"])
+                    svg.append(f'<path id="{lid}p" d="{d_of([sm])}" fill="none" stroke="none"/>'
+                               f'<text class="rlab" id="{lid}" fill="{r["color"]}" dy="-0.45em" style="font-size:calc(48px / var(--z)); stroke-width:calc(7px / var(--z))">'
+                               f'<textPath href="#{lid}p" startOffset="{float(dr.get("label_at", 0.5)) * 100:.0f}%" text-anchor="middle">{X.rich(dr["label"])}</textPath></text>')
+                    self.rlabs.append((bi, lid, dr))
         self.cuts = []
         for bi in self.beat_info:
             c = bi["b"].get("cut")
@@ -578,6 +624,17 @@ class Atlas:
                 if clr in ("zones", "all"): self.tw(f'tl.to(".zone", {{opacity:0.0, duration:0.4}}, {tcl:.3f});')
                 if clr in ("highlights", "all"): self.tw(f'tl.to("#countries .c, .detl", {{fill:"#e9e1cc", duration:0.4}}, {tcl:.3f});')
                 if clr in ("lines", "all"): self.tw(f'tl.to(".wline, .wglow, .wlab", {{opacity:0, duration:0.4}}, {tcl:.3f});')
+        offs = [bi["t"] for bi in self.beat_info if bi["b"].get("dim") or bi["b"].get("thesis") or bi["b"].get("outro")
+                or any(x in ("labels", "all") for x in bi["b"].get("clear", []))]
+        for bi, lid, dr in self.rlabs:
+            t0 = self.T(dr.get("at"), bi["t"], bi["t"] + 0.2)
+            du = float(dr.get("dur") or max(1.2, bi["t"] + bi["d"] - t0 - 0.35))
+            ton = t0 + du * 0.55
+            self.tw(f'tl.fromTo("#{lid}", {{opacity:0}}, {{opacity:1, duration:0.5, immediateRender:false}}, {ton:.3f});')
+            stay = 1 if self.X.portrait else 3      # a lane label stays for the beat that draws it and the two after (9:16: its own beat; the narrow frame swings it off the edge)
+            nxt = [b_["t"] for b_ in self.beat_info if b_["i"] >= bi["i"] + stay and b_["t"] > ton + 1.0]     # on screen ≥ 1 s even when drawn late
+            later = [o for o in offs + nxt[:1] if o > ton]
+            if later: self.tw(f'tl.to("#{lid}", {{opacity:0, duration:0.35}}, {min(later) - 0.3:.3f});')
         for bi, cid, c in self.cuts:
             tc = self.T(c.get("at"), bi["t"], bi["t"] + 1.0)
             self.tw(f'tl.to("#{cid}", {{opacity:1, duration:0.15}}, {tc:.3f});')
@@ -690,14 +747,14 @@ class Atlas:
         b = bi["b"]
         if _empty_card(b.get("card")): b.pop("card", None)
         if b.get("card"):
-            if self.V: return 400 + self.card_size(b["card"])[1] + 40
+            if self.V: return self.ctc_top + self.card_size(b["card"])[1] + 40
             return b["card"].get("side", "L")
         if b.get("title"): return self.title_bottom(bi) if self.V else ("T", self.title_bottom(bi))
         return None
 
     def title_size(self, txt):
         maxw = self.X.W - 112 if self.V else 860
-        return maxw, fit(txt, maxw, 330 if self.V else 360, 76 if self.V else 84, 34, maxlines=4)
+        return maxw, fit(txt, maxw, 360 if self.V else 360, 100 if self.V else 84, 34, maxlines=4)
 
     def title_bottom(self, bi):
         maxw, (size, lines) = self.title_size(bi["b"]["title"].get("text", ""))
@@ -711,16 +768,54 @@ class Atlas:
         return (x0 - 20, (400 if self.V else 132) - 20, x0 + min(maxw, longest) + 30, self.title_bottom(bi))
 
     def card_size(self, c):
-        w = self.card_w; typ = c.get("type", "stat")
-        h = 22 + 20 + 22 + (40 if c.get("sub") else 0)
-        if typ == "stat": h += self.stat_size(c, w)[0] * 1.1
-        elif typ == "bars":
-            rh, fs = self.bar_row(c); h += 14 + len(c.get("rows", [])) * (max(rh, (fs + 4) * 1.35) + 12) + (56 if c.get("delta") else 0)
-        elif typ == "line": h += 12 + (230 if self.V else 190) + 40 + (self.stat_size(c, w)[0] * 1.1 if c.get("value") else 0)
-        elif typ == "list": f, cols, rows = self.list_layout(c, w); h += 14 + rows * (f * 1.3 + 4)
-        elif typ == "images": h += 14 + self.img_layout(c, w - 52)[1]
-        elif typ == "text": f, n = fit(c.get("text", ""), w - 52, 300, 34, 18, maxlines=8); h += n * f * 1.4
-        return w, int(h)
+        L = self.ctc_layout(c)
+        return L["w"], L["h"]
+
+    def ctc_layout(self, c):
+        """sizes of the cartouche: label, the figure (the map's title), unit, rule, sub, and an optional inset chart."""
+        V = self.V; typ = c.get("type", "stat")
+        maxw = self.card_w; inner = maxw - 80
+        fk, fs, fu = (28, 28, 46) if V else (22, 22, 34)
+        hero = None
+        if typ == "stat":
+            hero = str(c.get("value", ""))
+            if c.get("unit") == "%" and _is_num(hero) and not hero.endswith("%"):
+                c = dict(c); c["value"] = hero = hero + "%"; c.pop("unit")
+        elif typ == "bars" and c.get("delta"): hero = str(c["delta"])
+        elif typ == "line" and c.get("value"): hero = str(c["value"])
+        L = {"typ": typ, "fk": fk, "fs": fs, "fu": fu, "hero": hero, "num": bool(hero) and _is_num(hero), "c": c}
+        if hero and L["num"]:
+            em = _hero_em(_hero_str(hero, c))
+            unit = str(c.get("unit", ""))
+            if V and unit and len(unit) <= 2 and em * 300 < 560:      # a short figure carries its unit in the title itself
+                em += 0.62 * sum(_unit(ch) for ch in unit); L["inline"] = unit
+                F = min(360, inner / max(em, 0.5))
+            else:
+                F = min(300 if V else 190, inner / max(em, 0.5))
+            L["F"], L["hw"], L["hh"] = F, em * F, F * 0.92
+        elif hero:
+            F, n = fit(hero, inner, 260 if V else 200, 124 if V else 84, 40, maxlines=2)
+            L["F"], L["hw"], L["hh"] = F, min(inner, sum(_unit(ch) for ch in hero) * F / n), n * F * 1.1
+        else:
+            L["F"], L["hw"], L["hh"] = 0, 0, 0
+        ins_w = min(inner, 680 if V else 520); ins_h = 0
+        if typ == "bars":
+            n = max(1, len(c.get("rows", []))); ins_h = 14 + n * ((fs + 6) * 1.5 + 8)
+        elif typ == "line": ins_h = (170 if V else 120) + 46
+        elif typ == "list": f, cols, rows = self.list_layout(c, ins_w + 52); ins_h = 14 + rows * (f * 1.3 + 4)
+        elif typ == "images": ins_h = 14 + self.img_layout(c, ins_w)[1]
+        elif typ == "text": f, n = fit(c.get("text", ""), ins_w, 300, 34, 18, maxlines=8); ins_h = n * f * 1.4
+        L["ins_w"], L["ins_h"] = ins_w, ins_h
+        kw = sum(_unit(ch) for ch in str(c.get("k", ""))) * fk * 1.22
+        kl = max(1, math.ceil(kw / inner)); kw = min(kw, inner)
+        sw = sum(_unit(ch) for ch in str(c.get("sub", ""))) * fs
+        sl = max(1, math.ceil(sw / inner)) if c.get("sub") else 0; sw = min(sw, inner)
+        uw = sum(_unit(ch) for ch in str(c.get("unit", ""))) * fu * 1.12 if (hero and c.get("unit") and not L.get("inline")) else 0
+        w = max(kw, L["hw"], sw, uw, ins_w if ins_h else 0) + 80
+        w = min(maxw, max(w, 560 if V else 420))
+        h = 26 + kl * fk * 1.3 + (12 + L["hh"] if hero else 0) + (12 + fu * 1.15 if uw else 0) + (28 if (sl or ins_h) else 0) + sl * fs * 1.35 + ins_h + 26
+        L["w"], L["h"] = int(w), int(h)
+        return L
 
     def stat_size(self, c, w):
         v = str(c.get("value", "")); unit = str(c.get("unit", ""))
@@ -799,8 +894,8 @@ class Atlas:
             fs, nl = fit(name, 340, 80, 30, 18, maxlines=2)
             vs = fit(val, 340, 60, 34, 18, maxlines=1)[0] if val else 0
             wn = sum(_unit(c) for c in name) * fs / max(nl, 1)
-            w = max(wn, sum(_unit(c) for c in sub) * 15, sum(_unit(c) for c in val) * vs) + 24
-            h = 10 + nl * fs * 1.2 + (19 if sub else 0) + (vs * 1.15 if val else 0)
+            w = max(wn, sum(_unit(c) for c in sub) * (21 if self.V else 15), sum(_unit(c) for c in val) * vs) + 24
+            h = 10 + nl * fs * 1.2 + ((26 if self.V else 19) if sub else 0) + (vs * 1.15 if val else 0)
             geo[pid] = (min(w * 1.08 + 6, 380), h, fs, vs)
             X.used_text.update(name + sub + val)
         sides = ["E", "W", "N", "S", "NE", "NW", "SE", "SW"]
@@ -848,7 +943,7 @@ class Atlas:
                 labs += (f'<div class="lab l-{sd}" style="{_lab_css(sd, w, h)}; width:max-content; max-width:380px; box-sizing:border-box; white-space:normal">'
                          + (f'<div class="val" style="font-size:{vs}px">{X.rich(p["value"])}</div>' if p.get("value") else "")
                          + f'<b style="font-size:{fs}px; text-wrap:balance">{words_html(X, p.get("name", pid), chars=False)}</b>'
-                         + (f'<span style="font-size:15px">{X.rich(p["sub"])}</span>' if p.get("sub") else "") + "</div>")
+                         + (f'<span style="font-size:{21 if self.V else 15}px">{X.rich(p["sub"])}</span>' if p.get("sub") else "") + "</div>")
             html.append(self.mk(f"pin pn-{pid}{' hot' if p.get('hot') else ''}{' sm' if p.get('small') else ''}", *self.ll(pid), f'<i class="ring"></i><i class="dot"></i>{labs}'))
         self.map_html[self.pin_slot] = "".join(html)
         X.clip("atlasmap", 0, self.D, f'<div id="mapcam">{"".join(self.map_html)}</div>{self.script}', "at-map", 1, track=2)
@@ -871,16 +966,21 @@ class Atlas:
 
     def obstacles(self, bi):
         X = self.X
-        o = [(0, 0, X.W, 300), (X.W - 300, 220, X.W, 380), (0, 1200, X.W, X.H)] if self.V else [(0, 0, X.W, 140), (X.W - 370, 90, X.W, 270), (0, 860, X.W, X.H)]
+        o = [(0, 0, X.W, 330), (X.W - 300, 210, X.W, 410), (0, 1350, X.W, X.H)] if self.V else [(0, 0, X.W, 140), (X.W - 370, 90, X.W, 270), (0, 870, X.W, X.H)]
         c = bi["b"].get("card")
         if c:
-            w, h = self.card_size(c)
-            if self.V: o.append((56, 400, 56 + w, 400 + h))
-            elif c.get("side", "L") == "L": o.append((96, 150, 96 + w, 150 + h))
-            else: o.append((X.W - 96 - w, 290, X.W - 96, 290 + h))
+            o.append(self.ctc_rect(c))
         if bi["b"].get("title"): o.append((0, 0, X.W, self.title_bottom(bi) + 150))
         if bi["b"].get("thesis") or bi["b"].get("outro"): o.append((0, 0, X.W, X.H * 0.62) if self.V else (0, 0, X.W * 0.66, X.H))
         return o
+
+    def ctc_rect(self, c):
+        X = self.X; w, h = self.card_size(c)
+        if self.V: x0 = (X.W - w) / 2
+        elif c.get("side", "L") == "L": x0 = 96
+        else: x0 = X.W - 96 - w
+        y0 = self.ctc_top if (self.V or c.get("side", "L") == "L") else 290
+        return (x0, y0, x0 + w, y0 + h)
 
     # ---------------------------------------------------- frame furniture
     def build_frame(self):
@@ -889,28 +989,120 @@ class Atlas:
         rs = (250 if self.V else 300) / PW
         loc = (f'<div class="loc"><svg width="{PW * rs:.0f}" height="{PH * rs:.0f}"><path class="ll" id="locland" data-s="{rs:.5f}"/>'
                f'<rect class="vp" id="vp" x="0" y="0" width="10" height="10"/></svg><div class="cap">LOCATOR</div></div>')
-        sb = '<div class="sb"><div class="bar" id="sbar" style="width:200px"></div><div class="n"><span>0</span><span id="sbn">1000 公里</span></div></div>'
-        X.used_text.update("0123456789 公里°′NSEW·LOCATOR×.,")
+        sbw = 420 if self.V else 300
+        sb = (f'<div class="sb"><div class="lbl" id="sbl">比例尺 · SCALE</div><div class="bar" id="sbar" style="width:200px"></div>'
+              f'<div class="n" id="sbnw" style="width:200px"><span>0</span><span id="sbn">1000 公里</span></div></div>')
+        X.used_text.update("0123456789 公里°′NSEW·LOCATOR×.,比例尺航程SCALEROUTE图例LEGEND")
         hd = f'<div class="hd"><b>{X.rich(meta.get("show", X.channel))}</b><span>{X.rich(meta.get("chapter", ""))}</span></div>'
-        X.clip("atframe", 0, self.D, f'<div class="scT"></div><div class="scB"></div><div class="nl"></div><div class="nl2"></div>{ticks}{hd}{loc}{sb}<div class="coord" id="coord"></div><div class="src" id="src"></div>', "at-frame", 20, track=3)
+        X.clip("atframe", 0, self.D, f'<div class="scT"></div><div class="scB"></div><div class="nl"></div><div class="nl2"></div>{ticks}{hd}{loc}{sb}<div class="coord" id="coord"></div><div class="src" id="src"></div>{self.legend()}', "at-frame", 20, track=3)
+        # distance beats: the scale bar becomes a distance bar that runs from 0 to the beat's distance while the route draws
+        dwin = []
+        for bi in self.beat_info:
+            b = bi["b"]; dist = b.get("dist")
+            if not dist:
+                for dr in b.get("draw", []):
+                    if isinstance(dr, dict) and dr.get("dist"):
+                        t0 = self.T(dr.get("at"), bi["t"], bi["t"] + 0.2)
+                        dist = {"value": dr["dist"], "unit": dr.get("unit", "海里"), "t0": t0, "dur": float(dr.get("dur") or max(1.2, bi["t"] + bi["d"] - t0 - 0.35))}
+                        break
+            elif "t0" not in dist:
+                dist = dict(dist); dist["t0"] = self.T(dist.get("at"), bi["t"], bi["t"] + 0.3); dist["dur"] = float(dist.get("dur", 1.4))
+            if dist: dwin.append((dist, bi["t"] + bi["d"]))
+        def in_dist(tk, mv=0.0):
+            return any(tk + mv >= dd["t0"] - 0.05 and tk < end for dd, end in dwin)
+        for dd, end in dwin:
+            v = float(dd["value"]); dec = 0 if v.is_integer() else 1
+            X.used_text.update(f"{v:,.{dec}f}" + str(dd.get("unit", "")))
+            self.tw(f'tl.set("#sbl", {{textContent:"航程 · ROUTE"}}, {dd["t0"]:.3f});')
+            self.tw(f'tl.set("#sbnw", {{width:{sbw}}}, {dd["t0"]:.3f});')
+            self.tw(f'tl.fromTo("#sbar", {{width:0}}, {{width:{sbw}, duration:{dd["dur"]:.2f}, ease:"none", immediateRender:false}}, {dd["t0"]:.3f});')
+            self.tw(f'(()=>{{const o={{v:0}}, el=document.querySelector("#sbn"); tl.to(o, {{v:{v}, duration:{dd["dur"]:.2f}, ease:"none", onUpdate:()=>{{el.textContent=o.v.toLocaleString("en-US", {{maximumFractionDigits:{dec}, minimumFractionDigits:{dec}}})+" {dd.get("unit", "")}";}}}}, {dd["t0"]:.3f});}})();')
+        ends = sorted(end for _, end in dwin)
+        for (tk, mv, s, x, y, lat, box) in self.cam_moves:
+            km, w = _nice_bar(s, lat, 180 if self.V else 140)
+            if in_dist(tk, mv): continue
+            verb, dur = ("set", "") if mv == 0 else ("to", f', duration:{mv:.2f}, ease:"power3.inOut"')
+            self.tw(f'tl.set("#sbl", {{textContent:"比例尺 · SCALE"}}, {tk:.3f});')
+            self.tw(f'tl.{verb}("#sbar, #sbnw", {{width:{w:.0f}{dur}}}, {tk:.3f});')
+            self.tw(f'tl.set("#sbn", {{textContent:"{km:,} 公里"}}, {tk + mv / 2:.3f});')
+            X.used_text.update(f"{km:,}")
+        for e in ends:                     # after a distance beat: back to the true scale of the camera at that moment
+            s, x, y = self.cam_at(e); lat = next(c[5] for c in reversed(self.cam_moves) if c[0] <= e + 0.01)
+            km, w = _nice_bar(s, lat, 180 if self.V else 140)
+            self.tw(f'tl.set("#sbl", {{textContent:"比例尺 · SCALE"}}, {e:.3f});')
+            self.tw(f'tl.set("#sbar, #sbnw", {{width:{w:.0f}}}, {e:.3f});')
+            self.tw(f'tl.set("#sbn", {{textContent:"{km:,} 公里"}}, {e:.3f});')
+            X.used_text.update(f"{km:,}")
+        self.legend_tweens()
         for (tk, mv, s, x, y, lat, box) in self.cam_moves:
             verb, dur = ("set", "") if mv == 0 else ("to", f', duration:{mv:.2f}, ease:"power3.inOut"')
             rx, ry, rw, rh = (-x / s) * rs, (-y / s) * rs, (X.W / s) * rs, (X.H / s) * rs
             self.tw(f'tl.{verb}("#vp", {{attr:{{x:{rx:.1f}, y:{ry:.1f}, width:{max(rw, 4):.1f}, height:{max(rh, 4):.1f}}}{dur}}}, {tk:.3f});')
-            km, w = _nice_bar(s, lat)
-            self.tw(f'tl.{verb}("#sbar", {{width:{w:.0f}{dur}}}, {tk:.3f});')
-            self.tw(f'tl.set("#sbn", {{textContent:"{km:,} 公里"}}, {tk + mv / 2:.3f});')
             lon_c, lat_c = (box[0] + box[2]) / 2, (box[1] + box[3]) / 2
             lon_c = ((lon_c + 180) % 360) - 180
             txt = f'{abs(lat_c):.1f}°{"N" if lat_c >= 0 else "S"} · {abs(lon_c):.1f}°{"E" if lon_c >= 0 else "W"} · ×{s:.1f}'
             self.tw(f'tl.set("#coord", {{textContent:"{txt}"}}, {tk + mv / 2:.3f});')
-            X.used_text.update(txt + f"{km:,}")
+            X.used_text.update(txt)
         for bi in self.beat_info:
             src = bi["b"].get("src", meta.get("src", ""))
             X.used_text.update(src)
             self.tw(f'tl.set("#src", {{textContent:{json.dumps("来源：" + src if src else "", ensure_ascii=False)}}}, {bi["t"]:.3f});')
         self.tw('tl.from(".at-frame .nl, .at-frame .nl2", {opacity:0, scale:1.03, duration:0.8, ease:"expo.out"}, 0.05);')
         self.tw('tl.from(".at-frame .hd, .at-frame .loc, .at-frame .sb", {opacity:0, y:-10, duration:0.6, ease:"expo.out", stagger:0.08}, 0.3);')
+
+    # ---------------------------------------------------- legend: one line sample per thing drawn on the map, added as it appears
+    def legend_items(self):
+        meta = self.meta; items = []
+        for bi in self.beat_info:
+            b, t = bi["b"], bi["t"]
+            for dr in b.get("draw", []):
+                dr = {"route": dr} if isinstance(dr, str) else dr
+                rid = dr["route"]; r = self.routes[rid]
+                nm = meta.get("routes", {}).get(rid, {}).get("name")
+                if nm and not any(k == ("r", rid) for k, *_ in items):
+                    items.append((("r", rid), self.T(dr.get("at"), t, t + 0.2), nm,
+                                  f'<line x1="2" y1="9" x2="46" y2="9" stroke="{r["color"]}" stroke-width="5" stroke-linecap="round"/>'))
+            for z in b.get("zones", []):
+                z = {"zone": z} if isinstance(z, str) else z
+                nm = meta.get("zones", {}).get(z["zone"], {}).get("name")
+                if nm and not any(k == ("z", z["zone"]) for k, *_ in items):
+                    items.append((("z", z["zone"]), self.T(z.get("at"), t, t + 0.4), nm,
+                                  '<rect x="3" y="1" width="42" height="16" fill="url(#lhatch)" stroke="var(--alert)" stroke-width="2"/>'))
+            c = b.get("cut")
+            if c and meta.get("cut_name") and not any(k == ("c", 0) for k, *_ in items):
+                items.append((("c", 0), self.T(c.get("at"), t, t + 1.0), meta["cut_name"],
+                              '<line x1="2" y1="9" x2="46" y2="9" stroke="var(--alert)" stroke-width="5" stroke-dasharray="7 5" stroke-linecap="round"/>'))
+            for ln in b.get("lines", []):
+                ln = {"line": ln} if isinstance(ln, str) else ln
+                nm = meta.get("lines", {}).get(ln["line"], {}).get("name")
+                if nm and not any(k == ("l", ln["line"]) for k, *_ in items):
+                    items.append((("l", ln["line"]), self.T(ln.get("at"), t, t + 0.4), nm,
+                                  '<line x1="2" y1="9" x2="46" y2="9" stroke="#5fd2ff" stroke-width="5" stroke-linecap="round"/>'))
+        return items
+
+    def legend(self):
+        items = self.legend_items()
+        self._leg = items
+        if not items: return ""
+        X = self.X
+        X.used_text.update("图例 · LEGEND" + "".join(nm for _, _, nm, _ in items))
+        rows = "".join(f'<div class="li lg{k}"><svg width="48" height="18" viewBox="0 0 48 18">{sw}</svg>{X.rich(nm)}</div>' for k, (_, _, nm, sw) in enumerate(items))
+        hatch = ('<svg width="0" height="0" style="position:absolute"><defs><pattern id="lhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">'
+                 '<rect width="6" height="6" fill="rgba(255,74,61,.12)"/><rect width="2.2" height="6" fill="rgba(255,74,61,.7)"/></pattern></defs></svg>')
+        return f'<div class="at-leg">{hatch}<div class="lh">图例 · LEGEND</div>{rows}</div>'
+
+    def legend_tweens(self):
+        items = getattr(self, "_leg", [])
+        if not items: return
+        self.tw(f'tl.set(".at-leg", {{opacity:0}}, 0);')
+        self.tw(f'tl.to(".at-leg", {{opacity:1, duration:0.4}}, {max(0, items[0][1] - 0.1):.3f});')
+        for k, (_, ta, _, _) in enumerate(items):
+            self.tw(f'tl.from(".at-leg .lg{k}", {{opacity:0, x:-12, duration:0.4, ease:"expo.out"}}, {ta:.3f});')
+            if k:
+                self.tw(f'tl.set(".at-leg .lg{k}", {{display:"none"}}, 0);')
+                self.tw(f'tl.set(".at-leg .lg{k}", {{display:"flex"}}, {ta:.3f});')
+        closing = [bi["t"] for bi in self.beat_info if bi["b"].get("thesis") or bi["b"].get("outro")]
+        if closing: self.tw(f'tl.to(".at-leg", {{opacity:0, duration:0.4}}, {min(closing) - 0.3:.3f});')
 
     # ---------------------------------------------------- overlays: titles, cards, thesis, outro
     def build_overlays(self):
@@ -943,7 +1135,7 @@ class Atlas:
                 X.sfx(t + 0.25, "hit")
             if b.get("outro"):
                 ob = b["outro"]; maxw = X.W - 112 if self.V else 1000
-                size, _ = fit(ob.get("title", X.channel), maxw, 300, 112 if self.V else 120, 48, maxlines=2)
+                size, _ = fit(ob.get("title", X.channel), maxw, 320, 150 if self.V else 120, 48, maxlines=2)
                 cid = f"otr{i}"
                 X.clip(cid, t, d, f'<div class="outro" style="max-width:{maxw}px"><div class="t" style="font-size:{size}px">{words_html(X, ob.get("title", X.channel))}</div>'
                                   f'<div class="sub">{X.rich(ob.get("sub", ""))}</div>' + (f'<div class="cta">{X.rich(ob["cta"])}</div>' if ob.get("cta") else "") + "</div>", "at-ov", 25, track=4 + i % 3)
@@ -957,88 +1149,117 @@ class Atlas:
             self.tw(f'tl.from("#atdim", {{opacity:0, duration:0.6}}, {tdim:.3f});')
 
     def card(self, bi):
+        """the beat's figure as a map-title cartouche over the sea: small-caps label, the figure 200–300 px tall in 9:16
+        (it counts up when it is a number), unit, a rule, the note; bars / line / list / images become a small inset."""
         X = self.X; b, t, d, i = bi["b"], bi["t"], bi["d"], bi["i"]
-        c = b["card"]; typ = c.get("type", "stat"); w, h = self.card_size(c)
+        L = self.ctc_layout(b["card"]); c = L["c"]; typ = L["typ"]
         t0 = self.T(c.get("at"), t, t + 0.2); t1 = t + d
-        if self.V: pos = f"left:56px; top:400px; width:{w}px"
-        elif c.get("side", "L") == "L": pos = f"left:96px; top:150px; width:{w}px"
-        else: pos = f"right:96px; top:290px; width:{w}px"
+        x0, y0, x1, y1 = self.ctc_rect(c)
         cid = f"cd{i}"
-        body = f'<div class="k">{X.rich(c.get("k", ""))}</div>'
+        fk, fs, fu, F = L["fk"], L["fs"], L["fu"], L["F"]
+        body = f'<div class="k" style="font-size:{fk}px">{X.rich(c.get("k", ""))}</div>'
         js = []
-        unit = (f'<small>{X.rich(c["unit"])}</small>' if c.get("unit") else "")
-        if typ == "stat":
-            v = str(c.get("value", "")); _, size = self.stat_size(c, w)
-            if _is_num(v) and c.get("count", True):
-                num, dec = _num(v)
-                pre = v[:len(v) - len(v.lstrip("+−-$¥≈"))]
-                body += f'<div class="v" style="font-size:{size}px"><span class="n">{pre}0</span>{unit}</div>'
+        hero = L["hero"]
+        if hero and L["num"]:
+            hs = _hero_str(hero, c)
+            pre = hs[:len(hs) - len(hs.lstrip("+−-$¥≈"))]
+            post = "%" if hs.endswith("%") else ""
+            core = hs[len(pre):len(hs) - len(post)]
+            num, dec = _num(core)
+            counting = c.get("count", True)
+            body += (f'<div class="v" style="font-size:{F:.0f}px; margin-top:12px">' + (f'<span class="sg">{X.rich(pre)}</span>' if pre else "")
+                     + f'<span class="n">{X.rich(core if not counting else ("0" if not dec else f"{0:.{dec}f}"))}</span>' + (f'<span class="pc">%</span>' if post else "")
+                     + (f'<span class="ui" style="font-size:.6em; margin-left:.06em">{X.rich(L["inline"])}</span>' if L.get("inline") else "") + "</div>")
+            if counting:
                 fmt = f'o.v.toFixed({dec})' if dec else 'Math.round(o.v).toLocaleString("en-US")'
-                js.append(f'(()=>{{const o={{v:0}}, el=document.querySelector("#{cid} .n"); tl.to(o, {{v:{num}, duration:{float(c.get("count_dur", 1.0)):.2f}, ease:"power3.out", onUpdate:()=>{{el.textContent={json.dumps(pre)}+{fmt};}}}}, {t0 + 0.2:.3f});}})();')
-                X.used_text.update(v + "0123456789.,")
-            else:
-                body += f'<div class="v txt" style="font-size:{size}px">{words_html(X, v, chars=False)}{unit}</div>'
-        elif typ == "bars":
-            rows = c.get("rows", []); rh, fs = self.bar_row(c)
-            mx = max([abs(float(r[1])) for r in rows] or [1]) or 1
-            lw = min(max([sum(_unit(ch) for ch in str(r[0])) for r in rows] or [2]) * fs + 6, (w - 52) * 0.4)
-            vw = max([sum(_unit(ch) for ch in _fmtv(r[1], c)) for r in rows] or [3]) * (fs + 4) + 8
+                js.append(f'(()=>{{const o={{v:0}}, el=document.querySelector("#{cid} .n"); tl.to(o, {{v:{num}, duration:{float(c.get("count_dur", 1.2)):.2f}, ease:"power3.out", onUpdate:()=>{{el.textContent={fmt};}}}}, {t0 + 0.3:.3f});}})();')
+            X.used_text.update(hs + "0123456789.,")
+        elif hero:
+            body += f'<div class="v txt" style="font-size:{F:.0f}px; margin-top:12px">{words_html(X, hero, chars=False)}</div>'
+        if hero and c.get("unit") and not L.get("inline"): body += f'<div class="u" style="font-size:{fu}px; margin-top:12px">{X.rich(c["unit"])}</div>'
+        if c.get("sub") or L["ins_h"]: body += '<i class="rl"></i>'
+        iw = L["ins_w"]
+        if typ == "bars":
+            rows = c.get("rows", []); mx = max([abs(float(r[1])) for r in rows] or [1]) or 1
             hi = set(str(x) for x in c.get("hi", []))
-            body += '<div class="bars">' + "".join(
-                f'<div class="row{" hi" if (str(k) in hi or str(r[0]) in hi) else ""}" style="grid-template-columns:{lw:.0f}px 1fr {vw:.0f}px; margin-top:12px">'
-                f'<span style="font-size:{fs}px">{X.rich(str(r[0]))}</span><i class="b{k}" style="height:{rh}px; width:{100 * abs(float(r[1])) / mx:.1f}%"></i><b style="font-size:{fs + 4}px">{X.rich(_fmtv(r[1], c))}</b></div>'
+            lw = max([sum(_unit(ch) for ch in str(r[0])) for r in rows] or [2]) * fs + 8
+            vw = max([sum(_unit(ch) for ch in _fmtv(r[1], c)) for r in rows] or [3]) * (fs + 6) + 8
+            body += f'<div class="ins" style="width:{iw}px">' + "".join(
+                f'<div class="row{" hi" if (str(k) in hi or str(r[0]) in hi) else ""}" style="grid-template-columns:{lw:.0f}px 1fr {vw:.0f}px">'
+                f'<span style="font-size:{fs}px">{X.rich(str(r[0]))}</span><i class="b{k}" style="width:{100 * abs(float(r[1])) / mx:.1f}%"></i><b style="font-size:{fs + 6}px">{X.rich(_fmtv(r[1], c))}</b></div>'
                 for k, r in enumerate(rows)) + "</div>"
-            if c.get("delta"): body += f'<div class="delta">{X.rich(c["delta"])}</div>'
             at_rows = c.get("at_rows") or []
             for k, r in enumerate(rows):
                 tk = self.T(at_rows[k] if k < len(at_rows) else None, t, t0 + 0.4 + k * min(0.35, 1.6 / max(len(rows), 1)))
                 js.append(f'tl.from("#{cid} .b{k}", {{scaleX:0, duration:0.6, ease:"expo.out"}}, {tk:.3f});')
-            if c.get("delta"): js.append(f'tl.from("#{cid} .delta", {{opacity:0, y:14, duration:0.4, ease:"back.out(2)"}}, {self.T(c.get("at_delta"), t, t0 + 1.2):.3f});')
+            if hero: js.append(f'tl.from("#{cid} .v", {{opacity:0, scale:1.15, duration:0.4, ease:"back.out(2)"}}, {self.T(c.get("at_delta"), t, t0 + 1.2):.3f});')
         elif typ == "line":
-            pts = c.get("points", []); W_, H_ = (w - 52, 230 if self.V else 190)
-            vals = [float(p[1]) for p in pts] or [0.0, 1.0]
-            vmin = min(0.0, min(vals)); vmax = (max(vals) * 1.1) or 1.0
+            pts = c.get("points", []); W_, H_ = iw, (170 if self.V else 120)
+            vals = [float(q[1]) for q in pts] or [0.0, 1.0]
+            vmin = min(0.0, min(vals)); vmax = (max(vals) * 1.15) or 1.0
             xy = [((k * W_ / max(len(vals) - 1, 1)), H_ - H_ * (v - vmin) / (vmax - vmin)) for k, v in enumerate(vals)]
             Lp = length(xy)
-            imax = max(range(len(vals)), key=lambda k: vals[k])
-            showv = {0, len(xy) - 1, imax} if len(xy) > 4 else set(range(len(xy)))
-            showd = {0, len(xy) - 1} if len(xy) > 3 else set(range(len(xy)))
             el = []
-            for k, ((x, y), p) in enumerate(zip(xy, pts)):
+            for k, ((x, y), q) in enumerate(zip(xy, pts)):
                 anc = "start" if k == 0 else ("end" if k == len(xy) - 1 else "middle")
-                el.append(f'<circle class="pt" cx="{x:.0f}" cy="{y:.0f}" r="{6 if len(xy) < 12 else 3}"/>')
-                if k in showv: el.append(f'<text class="vv" x="{x:.0f}" y="{y - 14:.0f}" text-anchor="{anc}">{X.rich(_fmtv(p[1], c))}</text>')
-                if k in showd: el.append(f'<text x="{x:.0f}" y="{H_ + 28}" text-anchor="{anc}">{X.rich(str(p[0]))}</text>')
-            if c.get("value"):
-                body += f'<div class="v" style="font-size:{self.stat_size(c, w)[1]}px">{X.rich(str(c["value"]))}{unit}</div>'
-            body += (f'<svg class="ln" width="{W_:.0f}" height="{H_ + 40}"><line class="ax" x1="0" y1="{H_}" x2="{W_:.0f}" y2="{H_}"/>'
+                el.append(f'<circle class="pt" cx="{x:.0f}" cy="{y:.0f}" r="6"/>')
+                if len(xy) <= 4 or k in (0, len(xy) - 1): el.append(f'<text class="vv" x="{x:.0f}" y="{y - 14:.0f}" text-anchor="{anc}">{X.rich(_fmtv(q[1], c))}</text>')
+                if len(xy) <= 3 or k in (0, len(xy) - 1): el.append(f'<text x="{x:.0f}" y="{H_ + 32}" text-anchor="{anc}">{X.rich(str(q[0]))}</text>')
+            body += (f'<svg class="ln" width="{W_:.0f}" height="{H_ + 44}"><line class="ax" x1="0" y1="{H_}" x2="{W_:.0f}" y2="{H_}"/>'
                      f'<path class="pl" d="{d_of([xy])}" stroke-dasharray="{Lp:.1f}" stroke-dashoffset="{Lp:.1f}"/>{"".join(el)}</svg>')
             js.append(f'tl.to("#{cid} .pl", {{strokeDashoffset:0, duration:1.4, ease:"power2.inOut"}}, {t0 + 0.4:.3f});')
             js.append(f'tl.from("#{cid} svg circle, #{cid} svg text", {{opacity:0, duration:0.3, stagger:{min(0.25, 1.2 / max(len(el), 1)):.3f}}}, {t0 + 0.45:.3f});')
         elif typ == "list":
-            items = c.get("items", []); f, cols, rows = self.list_layout(c, w)
+            items = c.get("items", []); f, cols, rows = self.list_layout(c, iw + 52)
             li = "".join(f'<li style="font-size:{f}px"><i>{k + 1:02d}</i><b>{words_html(X, it if isinstance(it, str) else it.get("text", ""), chars=False)}</b>'
                          + (f'<em>{X.rich(it["value"])}</em>' if isinstance(it, dict) and it.get("value") else "") + "</li>" for k, it in enumerate(items))
-            body += f'<ol class="list" style="grid-template-columns:repeat({cols}, minmax(0, 1fr)); grid-template-rows:repeat({rows}, auto); grid-auto-flow:column">{li}</ol>'
+            body += f'<div class="ins" style="width:{iw}px"><ol class="list" style="grid-template-columns:repeat({cols}, minmax(0, 1fr)); grid-template-rows:repeat({rows}, auto); grid-auto-flow:column">{li}</ol></div>'
             js.append(f'tl.from("#{cid} li", {{opacity:0, x:-16, duration:0.4, ease:"expo.out", stagger:{min(0.18, 2.0 / max(len(items), 1)):.3f}}}, {t0 + 0.3:.3f});')
             X.used_text.update("0123456789")
         elif typ == "images":
-            boxes, hh = self.img_layout(c, w - 52)
+            boxes, hh = self.img_layout(c, iw)
             im = "".join(f'<img src="{X.asset(s_)}" alt="" style="left:{x:.0f}px; top:{y:.0f}px; width:{ww:.0f}px; height:{hh_:.0f}px">'
                          + (f'<div class="cap" style="left:{x + 6:.0f}px; top:{y + hh_ - 26:.0f}px">{X.rich(cap)}</div>' if cap else "")
                          for s_, x, y, ww, hh_, cap in boxes)
             if boxes:
-                body += f'<div class="imgs" style="height:{hh:.0f}px">{im}</div>'
+                body += f'<div class="ins imgs" style="width:{iw}px; height:{hh:.0f}px">{im}</div>'
                 js.append(f'tl.from("#{cid} .imgs img", {{opacity:0, scale:0.92, duration:0.45, ease:"expo.out", stagger:{min(0.15, 1.5 / max(len(boxes), 1)):.3f}}}, {t0 + 0.3:.3f});')
         elif typ == "text":
-            f, n = fit(c.get("text", ""), w - 52, 300, 34, 18, maxlines=8)
-            body += f'<div class="v txt" style="font-size:{f}px; line-height:1.4">{words_html(X, c.get("text", ""), chars=False)}</div>'
-        if c.get("sub"): body += f'<div class="s">{X.rich(c["sub"])}</div>'
-        X.clip(cid, t, d, f'<div class="card {c.get("tone", "")}" style="{pos}">{body}</div>', "at-ov", 25, track=4 + i % 3)
-        self.tw(f'tl.from("#{cid} .card", {{opacity:0, x:-30, duration:0.5, ease:"expo.out"}}, {t0 + 0.05:.3f});')
-        self.tw(f'tl.to("#{cid} .card", {{opacity:0, x:20, duration:0.3, ease:"power2.in"}}, {t1 - 0.32:.3f});')
+            f, n = fit(c.get("text", ""), iw, 300, 34, 18, maxlines=8)
+            body += f'<div class="ins" style="width:{iw}px; font-family:var(--f-body); font-weight:600; font-size:{f}px; line-height:1.4">{words_html(X, c.get("text", ""), chars=False)}</div>'
+        if c.get("sub"): body += f'<div class="s" style="font-size:{fs}px; margin-top:{10 if L["ins_h"] else 0}px">{X.rich(c["sub"])}</div>'
+        red = " red" if c.get("tone") == "red" and hero and not L["num"] else ""
+        X.clip(cid, t, d, f'<div class="ctc{red}" data-layout-allow-overlap style="left:{x0:.0f}px; top:{y0:.0f}px; width:{x1 - x0:.0f}px; min-height:{y1 - y0 - 50:.0f}px; box-sizing:border-box">{body}</div>', "at-ov", 25, track=4 + i % 3)
+        self.tw(f'tl.from("#{cid} .ctc", {{opacity:0, scale:0.94, duration:0.45, ease:"expo.out", transformOrigin:"50% 0%"}}, {t0 + 0.05:.3f});')
+        self.tw(f'tl.from("#{cid} .ctc .k, #{cid} .ctc .u, #{cid} .ctc .rl, #{cid} .ctc .s", {{opacity:0, y:8, duration:0.4, ease:"expo.out", stagger:0.08}}, {t0 + 0.2:.3f});')
+        self.tw(f'tl.to("#{cid} .ctc", {{opacity:0, duration:0.3, ease:"power2.in"}}, {t1 - 0.32:.3f});')
         for s_ in js: self.tw(s_)
         X.sfx(t0 + 0.05, "enter")
+
+
+def _hero_str(v, c):
+    """the figure as it will finally read: 10500 → 10,500 (keeps its sign, ≈ and %)."""
+    v = str(v)
+    pre = v[:len(v) - len(v.lstrip("+−-$¥≈"))]
+    post = "%" if v.endswith("%") else ""
+    core = v[len(pre):len(v) - len(post)]
+    try:
+        num, dec = _num(core)
+        if "," in core or (c.get("count", True) and "." not in core): core = f"{num:,.{dec}f}"
+    except ValueError: pass
+    return pre + core + post
+
+
+def _hero_em(s):
+    """width of a cartouche figure in em (serif lining figures; sign and % set small)."""
+    w = 0.0
+    for ch in s:
+        if ch.isdigit(): w += 0.58
+        elif ch in ",.": w += 0.27
+        elif ch in "+−-$¥≈": w += 0.44
+        elif ch == "%": w += 0.64
+        else: w += _unit(ch)
+    return w
 
 
 def _empty_card(c):

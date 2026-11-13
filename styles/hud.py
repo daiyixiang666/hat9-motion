@@ -331,7 +331,7 @@ def outro(b, X, t, d, cid):
 
 
 SCENES = {"title": title, "compare": compare, "statement": statement, "number": number, "quote": quote, "outro": outro}
-STYLE["css"] = ""
+STYLE["css"] = "#root.v.st-hud .fx .rk .rk-v { margin-right:48px; }   /* 9:16: ranking values clear of the right-hand buttons */\n"
 
 
 # ---------------------------------------------------------------- effect cards (aefx FX_FRAME)

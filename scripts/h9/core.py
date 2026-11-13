@@ -47,6 +47,33 @@ CLIPS = {
 def esc(s): return html.escape(str(s), quote=True)
 
 
+MASCOT_OFF = ("none", "off")
+
+
+def mascot_mode(style, meta):
+    """how the faceless host (meta.mascot / meta.host_video) appears: "corner" | "cameo" | "off".
+    meta.mascot_mode (the user's choice) wins over the style; a style with mode "none" / "off", or one whose css
+    hides .mascot outright, places no host at all (only beats with "host": "force" still get one)."""
+    want = (meta or {}).get("mascot_mode")
+    if want:
+        return "off" if want in MASCOT_OFF else want
+    mode = (style.get("mascot") or {}).get("mode", "corner")
+    if mode in MASCOT_OFF:
+        return "off"
+    css = style.get("css", "") or ""
+    if re.search(r"\.mascot\s*\{\s*display\s*:\s*none", css):
+        return "off"
+    return mode
+
+
+def fx_host_ok(style, meta):
+    """may an effect page put the free host sticker in its corner? Not when the host is off (mascot_mode) and not
+    when the style frames the host itself (mascot frame "call": screen's video-call window)."""
+    if mascot_mode(style, meta) == "off":
+        return False
+    return (style.get("mascot") or {}).get("frame") != "call"
+
+
 class Cue(float):
     """a time that came from the narration ("@词"): entrances aimed at it land ON the word, not after it."""
 

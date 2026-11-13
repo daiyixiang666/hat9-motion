@@ -90,7 +90,7 @@ def skin(X):
 def ground(X, p):
     """the colours of the page this beat draws on. A beat that names a theme gets that theme; otherwise, in a film
     with chapters (scripts/h9/device.py: beat.chapter.bg), the chapter's colour world, so the type always reads on
-    the chapter ground; otherwise the style's paper theme."""
+    the chapter ground; otherwise the style's own ground (its tokens, as fx2's stage does)."""
     if p.get("theme") in THEMES:
         return dict(THEMES[p["theme"]])
     try:
@@ -112,7 +112,26 @@ def ground(X, p):
                 if w.get(key):
                     out[key] = w[key]
             return out
-    return dict(THEMES["paper"])
+    return style_ground(X)
+
+
+GROUND_DEFAULTS = (("bg", "#f0ece3"), ("fg", "#111111"), ("muted", "#625d56"), ("line", "#d3ccbf"), ("card", "#fbfaf6"),
+                   ("card-fg", "#111111"), ("accent", "#e2321f"))
+
+
+def style_ground(X):
+    """the active style's own colours (its tokens), for a beat that names no theme."""
+    tok = X.S.get("tokens", {})
+    out = {}
+    for key, dflt in GROUND_DEFAULTS:
+        out[key] = tok.get(key, dflt)
+    return out
+
+
+def _dark(c):
+    from h9.aefx import _lum
+    v = _lum(c)
+    return v is not None and v < 0.2
 
 
 def root_vars(X, p, k):
@@ -362,7 +381,8 @@ def root(X, cid, t, d, p, inner, k, cls=""):
     X.css("fx-kinfo", CSS)
     _clip(X, cid, t, d, "", p)
     body = f'<div class="ki sk-{k["sid"]} hl-{k["hl"]} {cls}" style="{root_vars(X, p, k)}">{inner}</div>'
-    sid = S.stage(X, cid, t, d, body, p, dark_chrome=p.get("theme") == "ink")
+    dark = p.get("theme") == "ink" or (p.get("theme") not in THEMES and _dark(ground(X, p).get("bg", "")))
+    sid = S.stage(X, cid, t, d, body, p, dark_chrome=dark)
     return f"#{sid}"
 
 

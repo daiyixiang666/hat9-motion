@@ -26,7 +26,12 @@ Page breaks (pages()), with or without jieba:
 Readability: in 9:16 reading mode over real footage (meta.presenter is a video, or any beat uses a video file) and
 with no meta.caption_style / meta.caption_preset, captions get a dark see-through plate (rgba(0,0,0,.55), white
 text), a plain heavy sans (PingFang SC / Noto Sans SC 700) and sit in the lower band above the platform UI.
-meta.caption_style and meta.caption_preset always win.
+meta.caption_style and meta.caption_preset always win. A style that designs its own subtitle over footage opts out
+of the plate with STYLE["caption_plate"] = False.
+
+Position per beat: a beat's "caption_pos": {"bottom": px, "align": "left" | "center" | "right"} puts that beat's
+subtitle pages there (over any position the style pins); a style's scene moves the subtitle from a time on with
+captions.place(X, t, bottom=…, align=…).
 """
 PUN = "，,。.!！?？、；;：:"
 SOFT = "，,、；;：:"          # 。！？ always end a page, even after a single glyph
@@ -462,7 +467,44 @@ def has_footage(video):
     return _mentions_video(video.get("beats", []))
 
 
+def place(X, t, bottom=None, align=None):
+    """move the subtitle from time t on: bottom = px from the frame's bottom edge, align = left / center / right.
+    For a style's scenes, e.g. a toast that alternates top / bottom per beat (a beat's own "caption_pos" is _beat_pos)."""
+    reqs = getattr(X, "caption_places", None)
+    if reqs is None:
+        reqs = []
+        X.caption_places = reqs
+    reqs.append((float(t), bottom, align))
+
+
+def _places(X):
+    """the tweens for every caption move asked for with place() (set on #root just before the beat starts)."""
+    for t, bottom, align in getattr(X, "caption_places", None) or []:
+        vals = {}
+        if bottom is not None:
+            vals["--cap-bottom"] = f"{float(bottom):.0f}px"
+        if align:
+            vals["--cap-align"] = align
+        if vals:
+            body = ", ".join(f'"{k}":"{v}"' for k, v in vals.items())
+            X.tw(f'tl.set("#root", {{{body}}}, {max(0, t - 0.02):.3f});')
+
+
+def _beat_pos(X, a):
+    """inline position for a page starting at a, from the beat's "caption_pos" (inline !important beats a style's pin)."""
+    for t0, t1, cp in getattr(X, "caption_pos", None) or []:
+        if t0 - 0.05 <= a < t1:
+            out = ""
+            if cp.get("bottom") is not None:
+                out += f"top:auto !important; bottom:{float(cp['bottom']):.0f}px !important;"
+            if cp.get("align"):
+                out += f"text-align:{cp['align']} !important;"
+            return out
+    return ""
+
+
 def build(X, D, fix=None, maxlen=None):
+    _places(X)
     if not X.chars or X.S.get("captions") is False: return
     meta = X.v.get("meta", {})
     pre = PRESETS.get(meta.get("caption_preset") or "")
@@ -487,7 +529,7 @@ def build(X, D, fix=None, maxlen=None):
                     " right:0 !important; text-align:center !important; }"
                     " #root#root.v .clip.cap { padding-left:120px; padding-right:120px; }")
         X.css("cap-user", css)
-    if not user and not pre and mode == "reading" and X.portrait and has_footage(X.v):
+    if not user and not pre and mode == "reading" and X.portrait and has_footage(X.v) and X.S.get("caption_plate", True) is not False:
         X.css("cap-auto", FOOTAGE_PLATE)
     fix = fix or {}
     hl = meta.get("caption_hl", [])
@@ -545,6 +587,7 @@ def build(X, D, fix=None, maxlen=None):
             body, times = _karaoke(X, raw[i], txt)
         else:
             body = X.rich(txt)
+        sty += _beat_pos(X, a)
         X.clip(f"cap{i}", a, min(b, D) - a, f'<span class="cp">{tag}{body}</span>', f"cap cap-{mode}{cls}{has2}", 50, track=12, sty=sty)
         if mode == "punch":
             X.tw(f'tl.from("#cap{i} .cp", {{scale:0.85, opacity:0, duration:0.18, ease:"back.out(1.7)"}}, {a:.3f});')

@@ -9,7 +9,7 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   hook          nothing changes in the first 2 s                                      (P0)
   slides        share of frames that are a flat ground with a little text (PPT look)  (P0 above 30 %)
   caption-dup   on-screen big text that only repeats the spoken line                  (P1, P0 above 30 % of text beats)
-  cut-gap       more than 6 s without a cut or a big change                           (P1)
+  cut-gap       more than 6 s without a cut or a big change (one-world styles: a camera flight counts)  (P1)
   fx-repeat     the same effect used more than 3 times                                (P1)
   form-repeat   with --video: the same layout family on 2 neighbouring beats             (P1)
   slogan-share  with --video: share of full-frame slogan beats                            (P1 above 25 %, P0 above 40 %)
@@ -364,6 +364,34 @@ def av_checks(film, vpath, bdir, cuts, dur, found):
                 found.append(("P1", "music-level", f"说话时配乐只比人声低 {v - m_sp:.1f} dB（至少 10–12 dB）：调低 music_volume 或开 duck"))
 
 
+def world_flights(film, vpath, given=None):
+    """beat starts of a one-world style (a style with WORLD: chrome3d, iso3d, atlas, studio, clay): the camera flies
+    to the next station there instead of cutting, which scene detection does not see; these count as cuts."""
+    if not vpath:
+        return []
+    bdir = build_dir(film, vpath, given)
+    tl = timeline_for(vpath, bdir) if bdir else None
+    if not tl:
+        return []
+    sid = tl.get("style") or film.stem.rsplit("_", 1)[0]
+    try:
+        from h9 import derive
+        world = False
+        for s_id in derive.chain(sid):
+            if hasattr(derive.load_base(s_id), "WORLD"):
+                world = True
+                break
+    except SystemExit:
+        return []
+    if not world:
+        return []
+    out = []
+    for x in tl.get("beats") or []:
+        if x.get("t"):
+            out.append(float(x["t"]))
+    return out
+
+
 def timeline_for(vpath, bdir=None):
     """the build's timeline.json (beat times) when there is one, else None."""
     if bdir and (Path(bdir) / "timeline.json").exists():
@@ -543,18 +571,38 @@ def _spoken_index(bdir, vpath, lead):
 
 
 def _headline(beat):
+    return _headline_key(beat)[1]
+
+
+def _headline_key(beat):
+    """(key, text) of the beat's main words: text / title / big, the first one given."""
     for key in ("text", "title", "big"):
         v = beat.get(key)
         if isinstance(v, list):
             v = "".join(str(x) for x in v)
         if isinstance(v, str) and v.strip():
-            return v
-    return ""
+            return key, v
+    return None, ""
+
+
+def _headline_anchor(beat, key):
+    """a scene-level anchor for the headline (at_big / at_title / at_text, set by the style's own scenes):
+    "word" when it is a "@词" cue (the build lands the words on that word), a number of seconds into the beat,
+    or None when the headline has no anchor of its own."""
+    v = beat.get(f"at_{key}") if key else None
+    if v is None:
+        return None
+    if isinstance(v, str) and v.strip().startswith("@"):
+        return "word"
+    if isinstance(v, (int, float)) and not isinstance(v, bool):
+        return float(v)
+    return None
 
 
 def graphics_timing(vpath, bdir, tl):
     """each beat's headline (text / title / big) should be spoken within 1 s after the beat starts — not seconds
-    later (graphic shows too early) and not before it (graphic shows too late)."""
+    later (graphic shows too early) and not before it (graphic shows too late). A headline with its own scene-level
+    anchor (at_big / at_title / at_text) is measured from that anchor instead."""
     video = json.loads(vpath.read_text())
     if not tl:
         return []
@@ -563,9 +611,14 @@ def graphics_timing(vpath, bdir, tl):
         return []
     off = []
     for b, x in zip(video["beats"], tl["beats"]):
-        head = "".join(core_chars(_headline(b)))
+        key, text = _headline_key(b)
+        head = "".join(core_chars(text))
         if len(head) < 2:
             continue
+        anchor = _headline_anchor(b, key)
+        if anchor == "word":
+            continue               # the scene lands its headline on the word it names (at_big: "@一千万")
+        shift = anchor or 0.0       # at_title: 1.2 → the headline is meant 1.2 s into the beat
         needle = head
         if spoken_str.find(needle) < 0:
             needle = ""
@@ -580,7 +633,7 @@ def graphics_timing(vpath, bdir, tl):
         best = None
         pos = spoken_str.find(needle)
         while pos >= 0:
-            delta = times[pos] - x["t"]
+            delta = times[pos] - x["t"] - shift
             if best is None or abs(delta) < abs(best):
                 best = delta
             pos = spoken_str.find(needle, pos + 1)
@@ -646,8 +699,12 @@ def tiny_text(bdir, portrait):
     if not bdir or not (Path(bdir) / "index.html").exists():
         return []
     doc = (Path(bdir) / "index.html").read_text(encoding="utf-8")
+    root = re.search(r'<div id="root" class="([^"]*)"', doc)
+    if root:                                   # the build's own frame decides which aspect's rules are live
+        portrait = "v" in root.group(1).split()
     limit = 28 if portrait else 22
-    other = "#root.h" if portrait else "#root.v"
+    mine, other = ("v", "h") if portrait else ("h", "v")
+    off_re = re.compile(r"#root[#.\w-]*\." + other + r"(?![\w-])|#root[#.\w-]*:not\(\." + mine + r"\)")
     small = {}
     size_re = re.compile(r"(?:^|[;{\s])font-size\s*:\s*([0-9.]+)(px|vmin)")
     short_re = re.compile(r"(?:^|[;{\s])font\s*:\s*([^;}]*)")
@@ -667,8 +724,15 @@ def tiny_text(bdir, portrait):
         block = re.sub(r"/\*.*?\*/", "", block, flags=re.S)
         for m in re.finditer(r"([^{}]+)\{([^{}]*)\}", block):
             sel = " ".join(m.group(1).split())
-            if other in sel or sel.startswith("@"):
+            if sel.startswith("@"):
                 continue
+            live = []                          # only the selectors of the requested aspect (#root.v / #root.h)
+            for part in sel.split(","):
+                if not off_re.search(part):
+                    live.append(part.strip())
+            if not live:
+                continue
+            sel = ", ".join(live)
             for v in sizes_in(m.group(2)):
                 if v is not None and 6 <= v < limit:
                     key = sel[:60]
@@ -676,7 +740,7 @@ def tiny_text(bdir, portrait):
                         small[key] = v
     for m in re.finditer(r'<(\w+)([^>]*?)\sstyle="([^"]*)"', doc):
         cls = re.search(r'class="([^"]*)"', m.group(2))
-        name = "." + ".".join(cls.group(1).split()) if cls else m.group(1)
+        name = "." + ".".join(c for c in cls.group(1).split() if not re.fullmatch(r"[a-z]+\d+", c)) if cls else m.group(1)   # g0 g1 … → one entry
         for v in sizes_in(m.group(3)):
             if v is not None and 6 <= v < limit:
                 key = f"{name[:50]} (inline)"
@@ -696,7 +760,8 @@ def tiny_text(bdir, portrait):
 
 
 def static_checks(vpath, bdir, tl=None, portrait=None):
-    """the gates that need only the build (no render): caption fragments, headline sync, text on face, tiny text."""
+    """the gates that need only the build (no render): caption fragments, headline sync, text on face, tiny text,
+    and (9:16) captions clear of the platform chrome."""
     found = []
     if tl is None:
         tl = timeline_for(vpath, bdir)
@@ -710,6 +775,8 @@ def static_checks(vpath, bdir, tl=None, portrait=None):
     found += graphics_timing(vpath, bdir, tl)
     found += text_on_face(vpath, tl)
     found += tiny_text(bdir, portrait)
+    if portrait:
+        found += caption_safety(bdir, tl)[0]          # P0: a 9:16 caption under the platform's title / comment bar
     return found
 
 
@@ -751,8 +818,162 @@ def region_contrast(img, box, tail):
     return max(_ratio(light, mid), _ratio(dark, mid))
 
 
+CAP_PROBE_CSS = """
+#root > *:not(.cap):not(#canvas), #canvas > *:not(.cap) { opacity:0 !important; }
+#root .clip.cap .cp, #root .clip.cap .cp * { color:#ff00ff !important; background:#ff00ff !important; text-shadow:none !important;
+  box-shadow:none !important; filter:none !important; -webkit-text-stroke:0 !important; }
+html, body, #root, #canvas { background:#000 !important; }
+"""
+# the same, plus the spoken line an effect page shows in its own frame (.ctx .cap), painted cyan
+CAP_PROBE_CSS_ALL = """
+#root > *:not(.cap):not(.ctx):not(#canvas), #canvas > *:not(.cap):not(.ctx) { opacity:0 !important; }
+#root .ctx, #root .ctx * { color:transparent !important; background:transparent !important; border-color:transparent !important;
+  box-shadow:none !important; text-shadow:none !important; outline:0 !important; -webkit-text-stroke:0 !important; filter:none !important; }
+#root .ctx img, #root .ctx video, #root .ctx svg, #root .ctx canvas { opacity:0 !important; }
+FXCAP { color:#00ffff !important; background:#00ffff !important; }
+#root .clip.cap .cp, #root .clip.cap .cp * { color:#ff00ff !important; background:#ff00ff !important; text-shadow:none !important;
+  box-shadow:none !important; filter:none !important; -webkit-text-stroke:0 !important; }
+html, body, #root, #canvas { background:#000 !important; }
+"""
+# the spoken line on an effect page: the shared frame (.ctx .cap > span) and each style's own FX_FRAME caption
+FX_CAP = [".ctx .cap > span", ".ctx .ikc .slip", ".ctx .pf-cap .tx", ".ctx .sf-tx", ".ctx .hf-line", ".ctx .zf-cl", ".ctx .mnc .cl", ".ctx .plate .in"]
+CAP_PROBE_CSS_ALL = CAP_PROBE_CSS_ALL.replace("FXCAP", ", ".join(f"#root {x}, #root {x} *" for x in FX_CAP))
+PROBE_COLORS = {"m": lambda r, g, b: r > 180 and b > 180 and g < 90, "c": lambda r, g, b: r < 90 and g > 180 and b > 180}
+
+
+def _probe(bdir, times, css):
+    """{time: {"m": box, "c": box}}: the build snapshotted at each time with `css` added (everything but the captions
+    hidden, captions painted magenta, effect-page captions cyan); boxes are (x0, y0, x1, y1) as fractions of the frame."""
+    import shutil
+    from PIL import Image
+    if not bdir or not times:
+        return {}
+    bdir = Path(bdir)
+    doc = (bdir / "index.html").read_text(encoding="utf-8")
+    if "</head>" not in doc:
+        return {}
+    probe_doc = doc.replace("</head>", "<style>" + css + "</style></head>", 1)
+    tmp = Path(tempfile.mkdtemp(prefix="h9cap_"))
+    try:
+        for entry in bdir.iterdir():
+            if entry.name in ("index.html", ".hyperframes", "renders"):
+                continue
+            (tmp / entry.name).symlink_to(entry.resolve())
+        (tmp / "index.html").write_text(probe_doc, encoding="utf-8")
+        at = ",".join(f"{t:.2f}" for t in times)
+        r = subprocess.run(["npx", "--yes", "hyperframes@0.8.191", "snapshot", "--at", at, "--no-end", "-o", str(tmp / "_snap"), "--json"],
+                           cwd=tmp, capture_output=True, text=True)
+        start = r.stdout.find("{")
+        if r.returncode or start < 0:
+            return {}
+        paths = [f["path"] for f in json.loads(r.stdout[start:])["frames"]]
+        out = {}
+        for t, path in zip(times, paths):
+            im = Image.open(path).convert("RGB")
+            w, h = im.size
+            small = im.resize((w // 4, h // 4))
+            sw, sh = small.size
+            px = small.load()
+            found = {}
+            for key in PROBE_COLORS:
+                found[key] = []
+            for y in range(sh):
+                for x in range(sw):
+                    r_, g_, b_ = px[x, y]
+                    for key, test in PROBE_COLORS.items():
+                        if test(r_, g_, b_):
+                            found[key].append((x, y))
+            boxes = {}
+            for key, pts in found.items():
+                if len(pts) < 6:
+                    continue
+                xs = [q[0] for q in pts]
+                ys = [q[1] for q in pts]
+                boxes[key] = (min(xs) / sw, min(ys) / sh, (max(xs) + 1) / sw, (max(ys) + 1) / sh)
+            out[t] = boxes
+        return out
+    except (OSError, ValueError, KeyError):
+        return {}
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
+def caption_boxes(bdir, times):
+    """{time: (x0, y0, x1, y1) as fractions of the frame} where the caption page really sits at each time: the build
+    is snapshotted with everything but the captions hidden and the caption plates painted magenta, so the box follows
+    the style's CSS, presets, caption_style and per-beat positions. {} when it cannot be measured."""
+    out = {}
+    for t, boxes in _probe(bdir, times, CAP_PROBE_CSS).items():
+        if "m" in boxes:
+            out[t] = boxes["m"]
+    return out
+
+
+# 9:16 platform chrome (scripts/h9/safearea.cjs, same tolerances): a caption must sit clear of it
+SAFE_TOP, SAFE_BOTTOM, SAFE_RIGHT = 200, 400, 120
+TOL_TOP, TOL_BOTTOM, TOL_RIGHT = 20, 16, 30
+
+
+def caption_safety(bdir, tl=None, limit=40):
+    """9:16 only: every caption page (and the spoken line on effect pages) must sit fully above the bottom 400 px,
+    below the top 200 px and clear of the right-hand buttons in the lower half — measured where the caption really
+    is in the build. Returns (findings, {"cap": (y0, y1), "fx": (y0, y1)} in px, or None when it could not measure)."""
+    if not bdir or not (Path(bdir) / "index.html").exists():
+        return [], None
+    doc = (Path(bdir) / "index.html").read_text(encoding="utf-8")
+    root = re.search(r'<div id="root" class="([^"]*)" [^>]*data-width="(\d+)" data-height="(\d+)"', doc)
+    if not root or "v" not in root.group(1).split():
+        return [], None
+    W = int(root.group(2))
+    H = int(root.group(3))
+    times = []
+    pages = caption_pages(bdir)
+    step = max(1, len(pages) // limit) if pages else 1
+    for k in range(0, len(pages), step):
+        st, du, text = pages[k]
+        times.append((round(st + min(du * 0.6, 0.6), 2), f"字幕「{text.strip()[:10]}」"))
+    if tl is None:
+        tl = timeline_for(Path(bdir), bdir)
+    for x in (tl or {}).get("beats") or []:
+        if x.get("scene") == "fx":
+            times.append((round(x["t"] + min(x["d"] * 0.6, 1.2), 2), f"#{x['i']} {x.get('fx')} 页面字幕"))
+    if not times:
+        return [], None
+    probed = _probe(bdir, [t for t, _ in times], CAP_PROBE_CSS_ALL)
+    if not probed:
+        return [("P1", "caption-safe", "量不到字幕位置（快照失败），没法检查是否压在平台界面下")], None
+    bad = []
+    span = {"cap": [None, None], "fx": [None, None]}
+    for t, what in times:
+        for key, kind in (("m", "cap"), ("c", "fx")):
+            fr = (probed.get(t) or {}).get(key)
+            if not fr:
+                continue
+            x0, y0, x1, y1 = fr[0] * W, fr[1] * H, fr[2] * W, fr[3] * H
+            lo, hi = span[kind]
+            span[kind] = [y0 if lo is None else min(lo, y0), y1 if hi is None else max(hi, y1)]
+            why = []
+            if y1 > H - SAFE_BOTTOM + TOL_BOTTOM:
+                why.append(f"底边 y {y1:.0f} 压进底部 {SAFE_BOTTOM} px（安全线 {H - SAFE_BOTTOM}）")
+            if y0 < SAFE_TOP - TOL_TOP:
+                why.append(f"顶边 y {y0:.0f} 压进顶部 {SAFE_TOP} px")
+            if x1 > W - SAFE_RIGHT + TOL_RIGHT and y1 > H / 2 + 4:
+                why.append(f"右边 x {x1:.0f} 压到右侧按钮区")
+            if why:
+                bad.append(f"{t:.1f}s {what if kind == 'cap' else what.replace('页面字幕', '效果页字幕')}：" + "，".join(why))
+    found = []
+    if bad:
+        found.append(("P0", "caption-safe", f"{len(bad)} 处 9:16 字幕压在平台界面下（标题 / 音乐 / 评论栏或右侧按钮），手机上会被挡住：" + "；".join(bad[:6])))
+    out = {}
+    for kind, (lo, hi) in span.items():
+        if lo is not None:
+            out[kind] = (round(lo), round(hi))
+    return found, out
+
+
 def contrast_check(film, vpath, bdir, tl):
-    """sample caption pages and text-only beats in the render; text vs ground under 3:1 → P1."""
+    """sample caption pages and text-only beats in the render; text vs ground under 3:1 → P1. Each caption sample is
+    taken where that caption page actually sits in the build (caption_boxes); the fixed band is only the fallback."""
     from PIL import Image
     pages = caption_pages(bdir)
     video = json.loads(vpath.read_text())
@@ -769,9 +990,18 @@ def contrast_check(film, vpath, bdir, tl):
     else:
         band = (int(sw * 0.10), int(sh * 0.84), int(sw * 0.90), int(sh * 0.97))
     step = max(1, len(pages) // 12)
+    picked = []
     for k in range(0, len(pages), step):
         st, du, text = pages[k]
-        probes.append((st + min(du * 0.6, 0.6), f"字幕「{text.strip()[:8]}」", band, 0.005))
+        picked.append((round(st + min(du * 0.6, 0.6), 2), text))
+    boxes = caption_boxes(bdir, [t for t, _ in picked])
+    for t, text in picked:
+        box = band
+        fr = boxes.get(t)
+        if fr:
+            pad = 4
+            box = (max(0, int(fr[0] * sw) - pad), max(0, int(fr[1] * sh) - pad), min(sw, int(fr[2] * sw) + pad), min(sh, int(fr[3] * sh) + pad))
+        probes.append((t, f"字幕「{text.strip()[:8]}」", box, 0.005))
     if tl:
         cats = {}
         try:
@@ -859,7 +1089,8 @@ def main():
     fr = freezes(film, dur)
     if not early and any(s <= 0.2 and e >= 2.0 for s, e in fr):
         found.append(("P0", "hook", "前 2 秒画面没有任何变化"))
-    edges = [0.0] + cuts + [dur]
+    flights = world_flights(film, Path(a.video).resolve() if a.video else None, a.build)
+    edges = sorted(set([0.0] + cuts + flights + [dur]))
     for x, y in zip(edges, edges[1:]):
         if y - x > 6.0:
             found.append(("P1", "cut-gap", f"{x:.1f}–{y:.1f}s {y - x:.1f} 秒没有切换"))

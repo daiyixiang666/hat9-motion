@@ -16,6 +16,8 @@ per variant) land in examples/stress/sheets/. A summary is written to examples/s
 Safe area (9:16): visible text must stay out of the platform chrome — top 200 px, bottom 400 px, right 120 px of the
 lower half (scripts/h9/safearea.cjs, run with the Chrome + puppeteer-core that HyperFrames already installed). Exempt:
 data-safe="ignore", a style's STYLE["safe_exempt"], SAFE_EXEMPT below (page furniture), SAFE_ALLOW per target. --no-safe skips it.
+Captions (--captions, on with --plugins): each style's showcase film built in 9:16, every caption page measured where it really
+sits (review.caption_safety) — none may enter the bottom 400 px, the top 200 px or the right-hand buttons.
 Duration (--durations, on with --plugins): a subset of effects at 0.8 s and 6 s beats (targets "pop@0.8", "pop@6").
 Work packages add targets in examples/stress/targets/<pkg>.json, any of three shapes:
   {"base", "beats": [{fx, ...}]}  ·  {"base", "targets": {fx: [variant]}, "durations": [1, 3, 8], "meta": {}, "allow": [[fx, code, rx]]}
@@ -36,7 +38,8 @@ BUILD, SHEETS, IMG = OUT / "build", OUT / "sheets", OUT / "build" / "img"
 MEDIA_RX = re.compile(r"\.(jpe?g|png|webp|gif|avif|svg|pdf|mp4|mov|webm|m4v|mp3|wav|m4a|aac|ogg|flac|json|csv|xlsx?|txt|md|srt|vtt|html?)$", re.I)
 HF = ["npx", "--yes", "hyperframes@0.8.191"]
 FAIL = {"text_box_overflow", "canvas_overflow", "container_overflow", "content_overlap", "text_occluded"}
-SAFE_EXEMPT = [".pr-hd", ".pr-ft", ".ctx .ft", ".fx-tag", ".hud-read", ".po .hd", ".po .ft", ".po .tick"]   # page furniture (show name, source line, grid ticks) may sit under chrome
+SAFE_EXEMPT = [".pr-hd", ".pr-ft", ".ctx .ft", ".fx-tag", ".hud-read", ".po .hd", ".po .ft", ".po .tick",
+               ".pr-fo .fo", ".pr-fo .sec", ".po .folio", ".pf .pf-fo"]   # page furniture (show name, page number, grid ticks) may sit under chrome; a source line may not
 SAFE_ALLOW = [("timeline", "right", r"\.tly"), ("danmaku", "right", r"wpd-i")]   # (target prefix, zone, selector regex): the timeline's neighbouring years slide off on purpose
 # known issues left for each effect's owner: reported in the report, not counted as failures (target prefix, regex on the finding, note)
 KNOWN = [
@@ -95,6 +98,12 @@ ALLOW = [
     ("comment_thread", "canvas_overflow", r"."), ("receipt", "canvas_overflow", r"."),       # a long thread scrolls / a long receipt prints past the frame (WP4)
     ("glitch", "content_overlap", r"\.r|\.cy|\.m"),
     ("slice_text", "content_overlap", r"\.a|\.b"),
+    ("bar_race", "canvas_overflow", r"div:nth-of-type\(2\) > span:nth-of-type\(\d+\)$"),   # 9:16: the giant period stamp bleeds off the bottom edge by design
+    # poster: the giant numerals bleed off the edge by design (the count .cn, the kept-frame count .cv, FIN)
+    ("poster:hundred", "canvas_overflow", r"div:nth-of-type\(1\) > span:nth-of-type\(1\)$"), ("poster:hundred", "text_box_overflow", r"div:nth-of-type\(1\) > span:nth-of-type\(1\)$"),
+    ("poster:keep", "canvas_overflow", r"div:nth-of-type\(4\) > span:nth-of-type\(1\)$"), ("poster:keep", "text_box_overflow", r"div:nth-of-type\(4\) > span:nth-of-type\(1\)$"),
+    ("poster:outro", "canvas_overflow", r"#s\d+ > div:nth-of-type\(1\) > div:nth-of-type\(1\) > div:nth-of-type\(2\)$"),
+    ("poster:outro", "text_box_overflow", r"#s\d+ > div:nth-of-type\(1\) > div:nth-of-type\(1\) > div:nth-of-type\(2\)$"),
 ]
 
 
@@ -417,6 +426,7 @@ def main():
     ap.add_argument("--aspects-extra", action="store_true", help="also 1:1 and 3:4 on a subset (on with --plugins)")
     ap.add_argument("--watermark", action="store_true", help="platform watermark zones on a subset (on with --plugins)")
     ap.add_argument("--only-aspects", action="store_true", help=argparse.SUPPRESS)
+    ap.add_argument("--captions", action="store_true", help="also every style's showcase film: 9:16 captions clear of the platform chrome (on with --plugins)")
     a = ap.parse_args()
     P = pictures()
     targets = {}
@@ -505,6 +515,24 @@ def main():
                 res.append(r)
                 print(("PASS " if r["ok"] else "FAIL ") + f"{r['target']:<28} {asp:<5} " + ("" if r["ok"] else f"{len(fl)} issues"), flush=True)
                 for f in fl[:4]: print("      ", f)
+    if (a.plugins or a.captions) and "9:16" in a.aspect.split(",") and not a.no_safe:
+        # every style's showcase film in 9:16: each caption page (and effect-page caption) clear of the platform chrome
+        import style_kit, review
+        styles = sorted(x.stem for x in (SKILL / "styles").glob("[!_]*.py"))
+        if a.only:
+            styles = [x for x in styles if f"caption:{x}" in a.only.split(",")]
+        for sid in styles:
+            out = BUILD / f"caption_{sid}_9x16"          # built here, not in the example's own build folder
+            r = subprocess.run([sys.executable, str(HERE / "build.py"), str(style_kit.showcase(sid)), "--style", sid, "--aspect", "9:16", "--out", str(out)],
+                               capture_output=True, text=True)
+            if r.returncode:
+                fails = [f"build failed: {(r.stderr or r.stdout)[-200:]}"]
+            else:
+                fl, span = review.caption_safety(out)
+                fails = [msg for lv, rule, msg in fl]
+            r = {"target": f"caption:{sid}", "aspect": "9:16", "ok": not fails, "fails": fails, "known": [], "n": 1}
+            res.append(r)
+            print(("PASS " if r["ok"] else "FAIL ") + f"{r['target']:<18} 9:16  " + ("" if r["ok"] else fails[0][:160]), flush=True)
     ok = sum(r["ok"] for r in res)
     rep = [f"# 压力测试报告", "", f"{ok} / {len(res)} 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。", "",
            "| 目标 | 画幅 | 变体 | 结果 |", "|---|---|---|---|"]
@@ -531,4 +559,7 @@ def main():
 
 if __name__ == "__main__":
     sys.path.insert(0, str(HERE))
+    from h9 import fit as _fit
+    if _fit._selftest():          # number formatting the effects print (fit.fmt_num)
+        sys.exit(1)
     main()
