@@ -2092,6 +2092,45 @@
    "suit": "开篇、点题、一个有分量的词",
    "style": "reel",
    "style_name": "动效库"
+  },
+  {
+   "id": "cube_number",
+   "file": "cube_number",
+   "band": "",
+   "title": "方块落数 Cube Number",
+   "how": "a tile board seen straight on from above-front; the digits of the number are built from accent cubes (2 cells per stroke) that fall onto it column by column, each landing with a little squash and a contact shadow. The unit (亿, 万 …) is set as flat type under the right end of the digits and arrives with the last cube. With `from`, the board first shows the old number, its cubes sink through the board, and the new number's cubes fall in — a real change, no made-up in-between values.",
+   "cat": "数据",
+   "ref": "",
+   "label": "名创优品 · 海外主品牌营收",
+   "suit": "一个数从 A 变到 B、「一年从 47.1 亿涨到 66.7 亿」，要一块一块搭出来的分量感",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "glyph_sphere",
+   "file": "glyph_sphere",
+   "band": "",
+   "title": "代码球成字 Glyph Sphere",
+   "how": "a sphere of ~1,100 small code glyphs (0–9 A–F {}[]<>/=+) turns slowly around a bright core; at the key moment every glyph flies into the pixel shape of the hero number or word, and the solid text takes over so it reads cleanly. Glyphs that are not needed fly outwards and fade.",
+   "cat": "数据",
+   "ref": "",
+   "label": "名创优品 · 2024 全年营收",
+   "suit": "一个要郑重揭晓的数字或词：「全年营收 169.9 亿」，科技、数据、AI 话题",
+   "style": "reel",
+   "style_name": "动效库"
+  },
+  {
+   "id": "wire_resolve",
+   "file": "wire_resolve",
+   "band": "",
+   "title": "线框成形 Wire Resolve",
+   "how": "the cards appear first as a glowing wireframe on a dimmed ground — outlines and bars draw on in reading order over a faint rain of code glyphs; then a bright line sweeps down the frame and everything above it is the finished card, everything below still wire. The leading card lifts at the end.",
+   "cat": "结构",
+   "ref": "",
+   "label": "",
+   "suit": "2–5 个并列的数「拆开看：国内 93.3 亿，海外 66.7 亿」，从方案到成品、从草图到落地",
+   "style": "reel",
+   "style_name": "动效库"
   }
  ],
  "transitions": [
@@ -2174,6 +2213,11 @@
    "id": "paper_tear",
    "label": "撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开）",
    "file": "tr_paper_tear"
+  },
+  {
+   "id": "anchor_match",
+   "label": "锚点匹配 · Anchor Match（只留下同一个数字 / 元素，飞到下一拍的位置并换上新样子）",
+   "file": "tr_anchor_match"
   }
  ],
  "styles": []

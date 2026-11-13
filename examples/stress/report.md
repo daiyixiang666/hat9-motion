@@ -1,6 +1,6 @@
 # 压力测试报告
 
-499 / 499 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
+513 / 513 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
 
 | 目标 | 画幅 | 变体 | 结果 |
 |---|---|---|---|
@@ -56,10 +56,12 @@
 | `callout` | 16:9 | 4 | 通过 |
 | `callout` | 9:16 | 4 | 通过 |
 | `caption:atlas` | 9:16 | 1 | 通过 |
+| `caption:bauhaus` | 9:16 | 1 | 通过 |
 | `caption:brand_qingzhou` | 9:16 | 1 | 通过 |
 | `caption:chrome3d` | 9:16 | 1 | 通过 |
 | `caption:clay` | 9:16 | 1 | 通过 |
 | `caption:doc` | 9:16 | 1 | 通过 |
+| `caption:editorial` | 9:16 | 1 | 通过 |
 | `caption:flat` | 9:16 | 1 | 通过 |
 | `caption:hud` | 9:16 | 1 | 通过 |
 | `caption:ink` | 9:16 | 1 | 通过 |
@@ -70,9 +72,15 @@
 | `caption:poster` | 9:16 | 1 | 通过 |
 | `caption:press` | 9:16 | 1 | 通过 |
 | `caption:reel` | 9:16 | 1 | 通过 |
+| `caption:riso` | 9:16 | 1 | 通过 |
 | `caption:screen` | 9:16 | 1 | 通过 |
 | `caption:sketch` | 9:16 | 1 | 通过 |
 | `caption:studio` | 9:16 | 1 | 通过 |
+| `caption:teleshop` | 9:16 | 1 | 通过 |
+| `caption:thread` | 9:16 | 1 | 通过 |
+| `caption:title` | 9:16 | 1 | 通过 |
+| `caption:vapor` | 9:16 | 1 | 通过 |
+| `caption:yuefen` | 9:16 | 1 | 通过 |
 | `caption:zine` | 9:16 | 1 | 通过 |
 | `cartoon` | 16:9 | 3 | 通过 |
 | `cartoon` | 9:16 | 3 | 通过 |
@@ -129,6 +137,8 @@
 | `converge` | 9:16 | 4 | 通过 |
 | `countdown` | 16:9 | 3 | 通过 |
 | `countdown` | 9:16 | 3 | 通过 |
+| `cube_number` | 16:9 | 4 | 通过 |
+| `cube_number` | 9:16 | 4 | 通过 |
 | `cursor` | 16:9 | 4 | 通过 |
 | `cursor` | 9:16 | 4 | 通过 |
 | `danmaku` | 16:9 | 4 | 通过 |
@@ -189,6 +199,8 @@
 | `glass` | 9:16 | 2 | 通过 |
 | `glitch` | 16:9 | 6 | 通过 |
 | `glitch` | 9:16 | 6 | 通过 |
+| `glyph_sphere` | 16:9 | 4 | 通过 |
+| `glyph_sphere` | 9:16 | 4 | 通过 |
 | `gooey` | 16:9 | 3 | 通过 |
 | `gooey` | 9:16 | 3 | 通过 |
 | `halftone` | 16:9 | 3 | 通过 |
@@ -499,6 +511,8 @@
 | `vertical_title` | 9:16 | 4 | 通过 |
 | `waterfall` | 16:9 | 4 | 通过 |
 | `waterfall` | 9:16 | 4 | 通过 |
+| `wire_resolve` | 16:9 | 3 | 通过 |
+| `wire_resolve` | 9:16 | 3 | 通过 |
 | `word_swap` | 16:9 | 3 | 通过 |
 | `word_swap` | 9:16 | 3 | 通过 |
 | `write_on` | 16:9 | 6 | 通过 |

@@ -12,7 +12,8 @@ PV = SKILL / "assets" / "previews"
 OUT = SKILL / "dist" / "gallery"
 import sys
 ORDER = sys.argv[1].split(",") if len(sys.argv) > 1 else ["press", "minimal", "poster", "zine", "screen", "atlas", "doc", "papercut", "sketch",
-                                                          "ink", "flat", "pixel", "iso3d", "chrome3d"]
+                                                          "ink", "flat", "pixel", "iso3d", "chrome3d",
+                                                          "riso", "yuefen", "editorial", "title", "bauhaus", "thread", "teleshop", "vapor"]
 FILM = {"press": "mixue"}      # style id -> its showcase film's preview name in assets/previews (when they differ)
 LINKS = {   # one representative real video per benchmark (what we studied)
     "Vox": "https://www.youtube.com/watch?v=VYJtb2YXae8", "The Economist": "https://www.youtube.com/@TheEconomist",

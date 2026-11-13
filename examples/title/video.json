@@ -1,0 +1,143 @@
+{
+ "meta": {
+  "title": "Netflix 2024：3 亿会员这一年",
+  "aspect": "9:16",
+  "silent": true,
+  "style": "title",
+  "words": "assets/audio/words.json",
+  "duration": 37.7,
+  "section": "公司财报",
+  "caption_mode": "reading"
+ },
+ "beats": [
+  {
+   "scene": "cross",
+   "t": 0,
+   "at_new": "@付费会员",
+   "old": "2.60亿",
+   "old_unit": "亿",
+   "new": "3.02",
+   "unit": "亿",
+   "label": "付费会员|2023 → 2024 年底",
+   "side": "NETFLIX · PAID MEMBERSHIPS",
+   "src": "NETFLIX Q4'24 股东信 P.1 · 260.28M → 301.63M"
+  },
+  {
+   "scene": "strip",
+   "t": "@第四季度",
+   "at_key": "@1891",
+   "label": "每季净增",
+   "note": "单季|最多",
+   "amber": "最多",
+   "side": "PAID NET ADDS · 2024 · 万",
+   "items": [
+    {
+     "q": "Q1 '24",
+     "value": 9.33,
+     "label": "933",
+     "unit": "万"
+    },
+    {
+     "q": "Q2 '24",
+     "value": 8.05,
+     "label": "805",
+     "unit": "万"
+    },
+    {
+     "q": "Q3 '24",
+     "value": 5.07,
+     "label": "507",
+     "unit": "万"
+    },
+    {
+     "q": "Q4 '24",
+     "value": 18.91,
+     "label": "1891",
+     "unit": "万"
+    }
+   ],
+   "src": "NETFLIX Q4'24 股东信 P.1 · 季度净增（百万）"
+  },
+  {
+   "scene": "tally",
+   "t": "@全年加",
+   "at_total": "@4136",
+   "count": 41,
+   "total": "4136",
+   "unit": "万",
+   "label": "1 道 = 100 万|2024 全年 41 道",
+   "side": "NET ADDS · FULL YEAR 2024",
+   "src": "9.33+8.05+5.07+18.91 = 41.36M · 股东信 P.1"
+  },
+  {
+   "scene": "quote",
+   "t": "@股东信",
+   "at_em": "@最多",
+   "lines": [
+    "史上净增",
+    "最多的",
+    "一个季度"
+   ],
+   "amber": "最多",
+   "orig": "“THE BIGGEST|QUARTER OF NET|ADDS IN OUR|HISTORY”",
+   "side": "SHAREHOLDER LETTER · JAN 21 2025",
+   "src": "NETFLIX Q4'24 股东信 P.2 · 2025-01-21"
+  },
+  {
+   "scene": "bars",
+   "t": "@全年营收",
+   "at_change": "@390",
+   "label": "全年营收|亿美元",
+   "side": "REVENUE · USD",
+   "change": "+16%",
+   "items": [
+    {
+     "year": "2023",
+     "value": 337.2,
+     "label": "337.2"
+    },
+    {
+     "year": "2024",
+     "value": 390.0,
+     "label": "390.0"
+    }
+   ],
+   "src": "股东信 P.12 · 33,723,297 → 39,000,966 千美元"
+  },
+  {
+   "scene": "cross",
+   "t": "@营业利润率",
+   "at_new": "@提到",
+   "old": "20.6%",
+   "old_unit": "%",
+   "new": "26.7",
+   "unit": "%",
+   "label": "营业利润率|2023 → 2024",
+   "side": "OPERATING MARGIN",
+   "src": "10,417,614 ÷ 39,000,966 = 26.7% · P.12"
+  },
+  {
+   "scene": "circle",
+   "t": "@第四季度，广",
+   "pct": 55,
+   "big": ">55%",
+   "label": "Q4 新注册|选了广告套餐|有广告套餐的国家",
+   "amber": "广告套餐",
+   "side": "ADS PLAN · Q4 2024",
+   "src": "NETFLIX Q4'24 股东信 P.5 · OVER 55% OF SIGN-UPS",
+   "at_hatch": "@广告国家",
+   "at_big": "@55%",
+   "at_mark": "@选了"
+  },
+  {
+   "scene": "end",
+   "t": "@就在同一天",
+   "word": "涨价",
+   "facts": "US · CANADA|PORTUGAL|ARGENTINA|多数套餐 · 同一天",
+   "amber": "同一天",
+   "channel": "示例频道",
+   "side": "PRICE CHANGES · JAN 2025",
+   "src": "NETFLIX Q4'24 股东信 P.6 · 2025-01-21"
+  }
+ ]
+}

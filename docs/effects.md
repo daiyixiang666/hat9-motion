@@ -1389,6 +1389,33 @@ ink drops hit the page and bloom — blots with turbulent, wet edges (SVG turbul
 - 参数：`at`, `ink`, `sub`, `text`
 - 人气：—
 
+### `cube_number` — 方块落数 Cube Number
+
+<img src="../assets/previews/fx/cube_number.webp" width="480" alt="cube_number">
+
+a tile board seen straight on from above-front; the digits of the number are built from accent cubes (2 cells per stroke) that fall onto it column by column, each landing with a little squash and a contact shadow. The unit (亿, 万 …) is set as flat type under the right end of the digits and arrives with the last cube. With `from`, the board first shows the old number, its cubes sink through the board, and the new number's cubes fall in — a real change, no made-up in-between values.
+
+- 参数：`from`, `sub`, `value`
+- 人气：—
+
+### `glyph_sphere` — 代码球成字 Glyph Sphere
+
+<img src="../assets/previews/fx/glyph_sphere.webp" width="480" alt="glyph_sphere">
+
+a sphere of ~1,100 small code glyphs (0–9 A–F {}[]<>/=+) turns slowly around a bright core; at the key moment every glyph flies into the pixel shape of the hero number or word, and the solid text takes over so it reads cleanly. Glyphs that are not needed fly outwards and fade.
+
+- 参数：`at`, `sub`, `text`, `value`
+- 人气：—
+
+### `wire_resolve` — 线框成形 Wire Resolve
+
+<img src="../assets/previews/fx/wire_resolve.webp" width="480" alt="wire_resolve">
+
+the cards appear first as a glowing wireframe on a dimmed ground — outlines and bars draw on in reading order over a faint rain of code glyphs; then a bright line sweeps down the frame and everything above it is the finished card, everything below still wire. The leading card lifts at the end.
+
+- 参数：`note`, `title`, `tr`
+- 人气：—
+
 ## 转场
 
 写在下一个 beat 上：`"tr": "zoomin"`。
@@ -1411,3 +1438,4 @@ ink drops hit the page and bloom — blots with turbulent, wet edges (SVG turbul
 | `whip_carry` | <img src="../assets/previews/fx/tr_whip_carry.webp" width="240"> | 甩镜带物 · Whip Carry（上一句的重点词锁在画面里带进下一拍） |
 | `shape_match` | <img src="../assets/previews/fx/tr_shape_match.webp" width="240"> | 形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状） |
 | `paper_tear` | <img src="../assets/previews/fx/tr_paper_tear.webp" width="240"> | 撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开） |
+| `anchor_match` | <img src="../assets/previews/fx/tr_anchor_match.webp" width="240"> | 锚点匹配 · Anchor Match（只留下同一个数字 / 元素，飞到下一拍的位置并换上新样子） |

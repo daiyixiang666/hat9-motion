@@ -34,6 +34,10 @@
 - 地图类动效在渲染时从 jsdelivr 加载 d3-geo 和 topojson-client（ISC），与 GSAP 相同。
 - 各示例的背景音乐由 `scripts/music.py` 合成（MIT）。
 
+## 0.18.0 新增
+- `examples/editorial/assets/img/`：7 张 Unsplash 照片（Unsplash License），每张的摄影师和原页面见 `examples/editorial/SOURCES.md`。
+- `examples/riso/` `examples/yuefen/` `examples/title/` `examples/bauhaus/` `examples/thread/` `examples/teleshop/` `examples/vapor/`：画面全部由代码绘制，无配音；数据出处见各目录的 `SOURCES.md`。
+
 ## OpenDesign（Apache-2.0）
 - 来源：[nexu-io/open-design](https://github.com/nexu-io/open-design)，Apache License 2.0。只读取文本后用我们的写法重写，没有复制代码文件。
 - `references/craft.md`、`scripts/craft_lint.py`：规则改编自它的 `craft/anti-ai-slop.md`、`craft/animation-discipline.md`、`craft/typography.md`，以及 HyperFrames 模板里的 `house-style.md`、`data-in-motion.md`、`references/motion-principles.md`、`references/typography.md`。其中 anti-ai-slop 和 typography 又改编自 [referodesign/refero_skill](https://github.com/referodesign/refero_skill)（MIT）。

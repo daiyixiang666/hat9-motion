@@ -86,7 +86,8 @@
   "drop_stack": "metaphor", "pour_fill": "metaphor", "magnet_sort": "metaphor", "topple": "structure",
   "dolly_layers": "structure", "unroll": "structure", "rack_focus": "compare", "orbit_number": "number",
   "word_mosaic": "slogan", "weight_breath": "slogan", "ink_reveal": "slogan", "type_mask": "photo",
-  "zoom_scale": "chart", "small_multiples": "chart", "stamp_press": "annotate"
+  "zoom_scale": "chart", "small_multiples": "chart", "stamp_press": "annotate",
+  "glyph_sphere": "number", "cube_number": "metaphor", "wire_resolve": "card"
  },
  "scenes": {
   "statement": "slogan", "title": "slogan", "quote": "doc", "number": "number", "compare": "compare", "outro": "card"
@@ -108,11 +109,19 @@
   "press":    {"hook": "compare", "stores": "metaphor", "turn": "annotate", "split": "chart", "chain": "structure", "wheel": "structure", "thesis": "slogan"},
   "screen":   {"dash": "chart", "api": "ui", "pricing": "card", "forecast": "chart", "shots": "montage", "palette": "ui"},
   "sketch":   {"hook": "number", "bar": "chart", "question": "structure", "ratio": "compare", "tag": "compare", "dots": "metaphor", "loop": "structure", "thesis": "slogan"},
-  "zine":     {"cover": "number", "versus": "compare", "pie": "chart", "bars": "chart", "stamps": "structure", "clip": "doc", "note": "metaphor", "thesis": "slogan"}
+  "zine":     {"cover": "number", "versus": "compare", "pie": "chart", "bars": "chart", "stamps": "structure", "clip": "doc", "note": "metaphor", "thesis": "slogan"},
+  "riso":     {"hero": "number", "circles": "compare", "bands": "chart", "grid": "metaphor", "strips": "structure", "swap": "compare", "statement": "slogan", "outro": "card"},
+  "yuefen":   {"hero": "number", "leaves": "chart", "bottles": "compare", "tinlid": "chart", "scale": "compare", "matchbox": "structure", "statement": "slogan", "label": "card"},
+  "editorial":{"cover": "photo", "figure": "number", "compare": "compare", "timeline": "chart", "share": "chart", "ranking": "structure", "statement": "slogan"},
+  "title":    {"cross": "number", "strip": "chart", "tally": "metaphor", "quote": "doc", "bars": "chart", "circle": "chart", "end": "card"},
+  "bauhaus":  {"hero": "number", "stairs": "chart", "slice": "chart", "quote": "doc", "rings": "structure", "squares": "compare", "blocks": "chart", "chain": "structure"},
+  "thread":   {"figure": "number", "split": "chart", "steps": "structure", "compare": "compare", "gate": "structure", "stack": "chart", "sum": "card"},
+  "teleshop": {"burst": "number", "versus": "compare", "countdown": "structure", "bundle": "chart", "seal": "chart", "endcard": "card"},
+  "vapor":    {"dialog": "number", "error": "number", "wizard": "chart", "progress": "compare", "explorer": "structure", "paint": "chart", "shutdown": "card"}
  },
  "number_hero": {
   "_doc": "Beats whose picture is one hero number with a small caption beside / under it; two adjacent ones trip number-repeat (P1) in forms.py. Decided from what each effect draws. fx = always; scenes = core scenes; when = only if the params say so (all conditions must hold; a missing param takes its default; \"present\": true means the param is given). Left out on purpose: icon_unit, scale_compare, one_to_many, then_now, formula (the picture is the icons / grid / equation, the number is a label) and the clock dial (the hand is the picture).",
-  "fx": ["key_card", "side_stat", "odometer", "number_pages", "scan_field", "mosaic_number", "seat_swarm", "glass", "orbit_number"],
+  "fx": ["key_card", "side_stat", "odometer", "number_pages", "scan_field", "mosaic_number", "seat_swarm", "glass", "orbit_number", "glyph_sphere"],
   "scenes": ["number"],
   "when": [
    {"fx": "dial", "all": [{"param": "mode", "default": "gauge", "is": "gauge"}, {"param": "show_value", "default": true, "is": true}]},

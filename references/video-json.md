@@ -37,6 +37,7 @@
 | `caption_pos: {"bottom": 300, "align": "left"}` | 这一句的字幕放到离底边 300 px 处、左对齐（`left` / `center` / `right`），压过风格自己的字幕位置 |
 | `chapter: true` | 这里换章节：用风格的招牌转场；否则是句间剪辑（多为硬切） |
 | `tr: "flash"` | 强制指定这一刀的转场 / 剪辑（新的四种：`whip_carry` 甩镜带物、`shape_match` 形状匹配、`paper_tear` 撕纸、`paint_wipe` 三笔刷屏） |
+| `tr: "anchor_match"` + `tr_anchor` | 锚点匹配：上一拍里带 `data-anchor` 的元素（或 `tr_anchor` 写的名字 / CSS 选择器，都没有时取字号最大的文字）飞到下一拍同名元素的位置，其余画面换掉；`glyph_sphere`、`wire_resolve` 的重点数字自带 `data-anchor="value"`，见 `references/effects/anchor_match.md` |
 | `marks: [...]` | 指哪说哪：在画面元素上画圈、下划线、箭头、方框、删除线、荧光笔，见下 |
 
 ```json
@@ -72,6 +73,7 @@
 | `speakers` | `{"A": {"name": "主持人", "color": "#f6ce3a", "side": "left"}}` | 多人对话：words.json 里每个词带 `spk`，字幕按说话人分色、分左右、带名牌 |
 | `caption_mode` | `"reading"` / `"punch"` / `"karaoke"` | 卡拉 OK：整句先暗着，说到哪个字亮哪个字 |
 | `caption_tr` | 每句一行 | 第二语言字幕（按 。！？ 切句对齐） |
+| `silent` | 默认 `false`；`true` = 无声展示片 | 成片检查不查静音（dead-air）和响度 |
 
 ### 片中快切（无人声段，卡拍）
 

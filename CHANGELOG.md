@@ -1,5 +1,21 @@
 # 更新记录
 
+## 0.18.0 · 2026-11-13
+- 新风格 `riso` 孔版印刷：荧光粉 / 蓝 / 黄三块版在暖白纸上套印，网点和套印偏移，叠印圆、网点格、刮板色带、色纸条做图表；示例《名创优品 2024：增长的那一半在海外》。
+- 新风格 `yuefen` 月份牌国货：石印卡纸、金线 Art Deco 外框和拱窗，撕页日历、柜台瓶子、铁盒盖、药房天平、火柴盒贴做图表；示例《一瓶白酒的年度账本》。
+- 新风格 `editorial` 影像杂志：真实照片 + 巨大衬线标题和数字，四种杂志页面轮流，朱红细线信息图；示例《迅销 2024 财年：优衣库的一年》（照片来自 Unsplash，署名见 `examples/editorial/SOURCES.md`）。
+- 新风格 `title` 片头字幕：会呼吸的黑色胶片、颗粒划痕，手刻数字、红线划掉旧值、计数线和胶片格；示例《Netflix 2024：3 亿会员这一年》。
+- 新风格 `bauhaus` 包豪斯构成：红蓝黄黑整页轮换，模块搭出的大数字，圆切块、同心环、面积成比例的正方形，形状按 45° 一步步转；示例《宜家降价的一年》。
+- 新风格 `thread` 一线长卷：整片一张长纸，一根橙线串起一组组卡片，镜头不切、沿线滑过去，结尾拉远看整条路；示例《小米的 2024：一条线走完年报》。
+- 新风格 `teleshop` 电视购物：显像管里的 90 年代购物广告，金箔、红绸、立体金字、爆炸价签和印章，把真实数字当奇迹商品来卖；示例《一锅火锅的年度账本》。
+- 新风格 `vapor` 蒸汽波桌面：霓虹日落网格前的 90 年代桌面，每个数装在系统对话框里，报错框、安装向导、进度条、文件列表、画图程序做图表；示例《任天堂 FY2025 账本》。
+- 新参数 `meta.silent`（默认 `false`）：无声展示片写 `true`，成片检查不再报静音（dead-air）和响度；五条新示例都开了。
+- 新效果 `glyph_sphere` 代码球成字：一团占满画面的旋转代码字符球，在关键时刻飞进数字的真实字形里拼成大字，再换成实心字，剩下的字符绕成一圈光环。
+- 新效果 `cube_number` 方块落数：从前上方看的大棋盘上，数字由一列列落下的立体方块搭成（每笔 2 格粗、接触阴影），单位用平面大字；写 `from` 时旧数的方块先沉下去，不编中间数。
+- 新效果 `wire_resolve` 线框成形：2–5 张卡片先是发光线框，一道亮线从上往下扫过，扫过的地方变成成品卡片，条形按真实比例。
+- 新转场 `anchor_match` 锚点匹配：只留下两拍共有的那个数字 / 元素，飞到下一拍的位置并换上新样子；用 `data-anchor` 或 `tr_anchor` 指定，示例 `examples/fx3/`。
+- 八种新风格的自写场景登记进 `form_families.json`，`brief check` 不再报 form-unknown；README、画廊、`references/styles.md` 同步到 26 种风格。
+
 ## 0.17.0 · 2026-11-12
 - 14 种风格重做画面：`atlas` `chrome3d` `doc` `flat` `ink` `iso3d` `minimal` `press` `papercut` `pixel` `poster` `screen` `sketch` `zine`，各自的示例片和预览重新渲染，说明见 `references/styles.md`。
 - 新效果 15 个：物理 `drop_stack` `pour_fill` `topple` `magnet_sort` · 镜头 `dolly_layers` `rack_focus` `orbit_number` · 字效 `word_mosaic` `type_mask` `weight_breath` `unroll` · 数据 `zoom_scale` `small_multiples` · 质感 `ink_reveal` `stamp_press`；示例 `examples/fx2/`，每个都有配方卡。

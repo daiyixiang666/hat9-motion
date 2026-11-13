@@ -1,0 +1,140 @@
+{
+ "base": "examples/fx3",
+ "note": "0.18 场景效果：短 / 典型 / 极长输入，主题切换，非数字值",
+ "beats": [
+  {
+   "fx": "glyph_sphere",
+   "value": "26",
+   "line": "短值。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "glyph_sphere",
+   "value": "169.9 亿",
+   "label": "名创优品 · 2024 全年营收",
+   "sub": "同比 +22.8%",
+   "line": "典型。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "glyph_sphere",
+   "value": "12,345,678",
+   "label": "一个很长很长很长很长很长很长的标题会被缩小",
+   "line": "长数字。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "glyph_sphere",
+   "value": "AI",
+   "theme": "ink",
+   "line": "两个字母。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "cube_number",
+   "value": "7",
+   "line": "一位数。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "cube_number",
+   "value": "66.7亿",
+   "from": "47.1亿",
+   "label": "名创优品 · 海外主品牌营收",
+   "sub": "2023 → 2024 · 同比 +41.9%",
+   "line": "典型。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "cube_number",
+   "value": "12,345,678",
+   "label": "很长的数字会让棋盘加列",
+   "line": "长数字。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "cube_number",
+   "value": "99.9%",
+   "from": "0.5%",
+   "theme": "lemon",
+   "sub": "占比",
+   "line": "百分比。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "wire_resolve",
+   "items": [
+    {
+     "title": "国内",
+     "value": "93.3 亿"
+    },
+    {
+     "title": "海外",
+     "value": "66.7 亿"
+    }
+   ],
+   "line": "两张。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "wire_resolve",
+   "title": "五张卡片，标题都写得比较长",
+   "items": [
+    {
+     "title": "一个很长的卡片标题一",
+     "value": "1,234 亿"
+    },
+    {
+     "title": "标题二",
+     "value": "999"
+    },
+    {
+     "title": "标题三",
+     "value": "0.5"
+    },
+    {
+     "title": "标题四",
+     "value": "77.56 亿"
+    },
+    {
+     "title": "一个更长更长的卡片标题五",
+     "value": "3"
+    }
+   ],
+   "line": "五张。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  },
+  {
+   "fx": "wire_resolve",
+   "items": [
+    {
+     "title": "没有数字",
+     "value": "未知"
+    },
+    {
+     "title": "有数字",
+     "value": "10 家"
+    },
+    {
+     "title": "重点",
+     "value": "2 家",
+     "hero": true
+    }
+   ],
+   "theme": "ink",
+   "line": "非数字值。",
+   "topic": "压力测试",
+   "src": "示例数据"
+  }
+ ]
+}

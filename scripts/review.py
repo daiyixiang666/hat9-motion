@@ -16,8 +16,8 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
   form-variety  with --video: fewer than 5 layout families in a film over 60 s           (P1)
   number-repeat with --video: two neighbouring beats that are each a big number + small caption (P1)
                 (families: scripts/h9/form_families.json; `review.py --video video.json` alone runs only these)
-  loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1)
-  dead-air      more than 1.2 s of silence inside the film                              (P1)
+  loudness      integrated loudness outside -16…-12 LUFS, or true peak above -1 dBTP     (P1; skipped when meta.silent is true)
+  dead-air      more than 1.2 s of silence inside the film                              (P1; skipped when meta.silent is true)
   pace          with --ref: the film's median shot is longer than the reference's p75   (P1)
   av-sync       with --video and measured music beats: share of picture cuts in voiceless (music-forward) stretches
                 that land within ±2 frames of a beat (P1 below 70 %), and sfx whose visual hit is off by > 2 frames (P1)
@@ -1095,7 +1095,10 @@ def main():
         if y - x > 6.0:
             found.append(("P1", "cut-gap", f"{x:.1f}–{y:.1f}s {y - x:.1f} 秒没有切换"))
 
-    if has_audio(film):
+    silent = False
+    if a.video:
+        silent = bool(json.loads(Path(a.video).read_text()).get("meta", {}).get("silent", False))   # a silent showcase film
+    if has_audio(film) and not silent:
         lufs, peak = loudness(film)
         if lufs is not None and not -16.5 <= lufs <= -11.5:
             found.append(("P1", "loudness", f"整体响度 {lufs:.1f} LUFS（平台约 -14）"))

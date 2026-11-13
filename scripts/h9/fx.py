@@ -21,7 +21,7 @@ def cut(X, prev, nxt, t, kind=None):
     the new one decelerates in (power4.out) from the same direction, both blurred at the seam."""
     kind = kind or X.M.get("cut", "hard")
     if kind == "hard" or not prev: return
-    if kind in ("dip", "flash", "wipe", "bars", "leak", "paper", "ink", "glitch", "iris", "shutter", "burn") or kind in TR2:
+    if kind in ("dip", "flash", "wipe", "bars", "leak", "paper", "ink", "glitch", "iris", "shutter", "burn") or kind in TR2 or kind in TR3:
         return transition(X, t, kind)
     a = 0.16
     if kind == "slide":
@@ -48,16 +48,18 @@ def cut(X, prev, nxt, t, kind=None):
 
 
 TR2 = ("whip_carry", "shape_match", "paper_tear", "paint_wipe")     # drawn by scripts/h9/fx/fx2_transitions.py
+TR3 = ("anchor_match",)                                               # drawn by scripts/h9/fx/fx3_transitions.py
 
 
 def _tr2(kind):
-    """the fx2 transition function for `kind` (the module is loaded with the effect library; loaded here if not yet)."""
+    """the fx2 / fx3 transition function for `kind` (the module is loaded with the effect library; loaded here if not yet)."""
     import importlib.util, pathlib, sys
-    m = sys.modules.get("h9fx_fx2_transitions")
+    name = "fx3_transitions" if kind in TR3 else "fx2_transitions"
+    m = sys.modules.get("h9fx_" + name)
     if m is None:
-        spec = importlib.util.spec_from_file_location("h9fx_fx2_transitions", pathlib.Path(__file__).with_name("fx") / "fx2_transitions.py")
+        spec = importlib.util.spec_from_file_location("h9fx_" + name, pathlib.Path(__file__).with_name("fx") / (name + ".py"))
         m = importlib.util.module_from_spec(spec)
-        sys.modules["h9fx_fx2_transitions"] = m
+        sys.modules["h9fx_" + name] = m
         spec.loader.exec_module(m)
     return m.TRS[kind]
 
@@ -65,7 +67,7 @@ def _tr2(kind):
 def transition(X, t, kind=None):
     kind = kind or X.M["transition"]
     if not kind or kind in ("cut", "hard"): return
-    if kind in TR2:          # whip_carry also moves the two scenes it joins; the others are overlays like the ones below
+    if kind in TR2 or kind in TR3:   # whip_carry also moves the two scenes it joins; the others are overlays like the ones below
         return _tr2(kind)(X, t)
     cid = X.uid("tr")
     a, b = t - 0.32, 0.7          # clip window around the cut

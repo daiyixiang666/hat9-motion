@@ -1,6 +1,6 @@
 # 九帽动效 hat9-motion
 
-> 中文优先的口播动效视频技能：文案 / 录音 → 横屏或竖屏 mp4。HTML + GSAP 场景由 HyperFrames 逐帧确定渲染；内置 18 种风格和按 VideoHive 销量、YouTube / B 站播放量排序复刻的 AE 动效库（177 个效果 + 16 种转场）。
+> 中文优先的口播动效视频技能：文案 / 录音 → 横屏或竖屏 mp4。HTML + GSAP 场景由 HyperFrames 逐帧确定渲染；内置 26 种风格和按 VideoHive 销量、YouTube / B 站播放量排序复刻的 AE 动效库（180 个效果 + 17 种转场）。
 
 ## 入口
 - [SKILL.md](SKILL.md): 给 AI 助手的使用说明（先读）

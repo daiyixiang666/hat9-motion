@@ -1,0 +1,174 @@
+{
+ "meta": {
+  "title": "宜家降价的一年",
+  "channel": "示例频道",
+  "aspect": "9:16",
+  "silent": true,
+  "style": "bauhaus",
+  "words": "assets/audio/words.json",
+  "duration": 37.6,
+  "slug": "ikea fy24",
+  "section": "商业拆解",
+  "caption_mode": "reading"
+ },
+ "beats": [
+  {
+   "scene": "hero",
+   "t": 0,
+   "ground": "red",
+   "title": "全年零售额",
+   "big": "451",
+   "unit": "亿欧元",
+   "at_big": "@零售额",
+   "src": "来源：inter ikea group financial summary fy24"
+  },
+  {
+   "scene": "stairs",
+   "t": "@比上",
+   "ground": "yellow",
+   "title": "涨了又退",
+   "items": [
+    {
+     "value": 44.6,
+     "show": "446",
+     "label": "fy22 · 亿欧元",
+     "tag": "446"
+    },
+    {
+     "value": 47.6,
+     "show": "476",
+     "label": "fy23 · 亿欧元",
+     "tag": "476",
+     "at": "@涨上去"
+    },
+    {
+     "value": 45.1,
+     "show": "451",
+     "label": "fy24 · 451",
+     "tag": "−5.3%",
+     "at": "@退了"
+    }
+   ],
+   "src": "来源：financial summary fy24 · 零售额 fy22–fy24"
+  },
+  {
+   "scene": "slice",
+   "t": "@因为",
+   "ground": "cobalt",
+   "title": "主动降价",
+   "pct": 10,
+   "big": "10%",
+   "note": "给门店的批发价 · 全球平均降幅（全年效果 15%）",
+   "at_big": "@给门店",
+   "at_cut": "@平均",
+   "src": "来源：inter ikea group financial summary fy24"
+  },
+  {
+   "scene": "quote",
+   "t": "@集团",
+   "ground": "white",
+   "l1": "“63 个市场",
+   "l2": "全部大幅降价”",
+   "by": "jon abrahamsson ring · inter ikea 集团 ceo",
+   "key": "每格 = 1 个市场",
+   "at_wave": "@一个市场",
+   "src": "来源：ikea newsroom 2024-10-10 · ikea continues to lower prices"
+  },
+  {
+   "scene": "rings",
+   "t": "@这些",
+   "ground": "black",
+   "title": "谁在开店",
+   "note": "63 个市场 · 12 家加盟商 · 环宽 = 市场数",
+   "items": [
+    {
+     "value": 31,
+     "show": "31",
+     "label": "英格卡 ingka group",
+     "at": "@英格卡"
+    },
+    {
+     "value": 5,
+     "show": "5",
+     "label": "ikano group"
+    },
+    {
+     "value": 4,
+     "show": "4",
+     "label": "al-futtaim 等 3 家"
+    }
+   ],
+   "src": "来源：financial summary fy24 · 截至 2024-08-31"
+  },
+  {
+   "scene": "squares",
+   "t": "@门店来",
+   "ground": "red",
+   "title": "人更多了",
+   "a": {
+    "value": 4.6,
+    "show": "46亿次",
+    "label": "网站访问 · website",
+    "at": "@网站"
+   },
+   "b": {
+    "value": 0.899,
+    "show": "8.99亿",
+    "label": "门店客流",
+    "at": "@门店"
+   },
+   "src": "来源：financial summary fy24 · 4.6 ÷ 0.899 ≈ 5.1",
+   "ratio_num": "5.1",
+   "ratio_label": "网站访问 ÷ 门店客流 ≈",
+   "ratio_unit": "倍"
+  },
+  {
+   "scene": "blocks",
+   "t": "@钱从",
+   "ground": "yellow",
+   "title": "钱从哪来",
+   "parts": [
+    {
+     "value": 71,
+     "show": "71%",
+     "label": "门店 · sold through stores"
+    },
+    {
+     "value": 26,
+     "show": "26%",
+     "label": "线上 · online",
+     "at": "@26%"
+    },
+    {
+     "value": 3,
+     "show": "3%",
+     "label": "服务 · services",
+     "at": "@3%"
+    }
+   ],
+   "at_cut": "@71%",
+   "src": "来源：inter ikea group financial summary fy24"
+  },
+  {
+   "scene": "chain",
+   "t": "@价格降",
+   "ground": "white",
+   "slug": "示例频道",
+   "title": "零售额 −5.3%",
+   "a": {
+    "show": "−10%",
+    "label": "批发价"
+   },
+   "m": {
+    "show": "+21%",
+    "label": "网站访问",
+    "label2": "门店客流 +4.5%",
+    "at": "@人来得"
+   },
+   "z": {
+    "at": "@零售额"
+   },
+   "src": "来源：financial summary fy24 · ikea newsroom 2024-10-10"
+  }
+ ]
+}

@@ -74,7 +74,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
 <div class="wrap">
   <div class="kick">hat9-motion · 九帽动效 <a href="fonts.html" style="color:var(--dim);text-decoration:none;margin-left:12px;letter-spacing:.06em;text-transform:none">字体样张 →</a></div>
   <h1>一条口播，变成 AE 级动效成片</h1>
-  <p class="lede">18 种风格、177 个效果和 16 种转场，按 VideoHive 销量、YouTube 和 B 站播放量复刻，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
+  <p class="lede">26 种风格、180 个效果和 17 种转场，按 VideoHive 销量、YouTube 和 B 站播放量复刻，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
   <div class="wall" role="group" aria-label="风格" id="wall"></div>
   <p class="wall-note">点一种风格：上面播它的示例成片，下面的动效卡只看这个风格。另有 <code>studio</code> / <code>clay</code> 三维影棚（整片布景，示例在做）。</p>
@@ -116,6 +116,11 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
     ["sketch", "手绘白板", "讲原理、商业模式", "sketch", "Costco 真正卖的是什么"], ["ink", "水墨国风", "国风、文化", "ink", "一只猴子，三天卖出一千万套"],
     ["flat", "扁平插画", "本地生活、城市", "flat", "一份外卖背后的城市网络"], ["pixel", "像素复古", "游戏、互联网", "pixel", "三千二百亿的游戏账本"],
     ["iso3d", "等距微缩", "物流、产业链", "iso3d", "快递的规模账"], ["chrome3d", "Y2K 镀铬", "科技、芯片", "chrome3d", "英伟达：卖铲子的人"],
+    ["riso", "孔版印刷", "消费、商业拆解", "riso", "名创优品 2024：增长的那一半在海外"], ["yuefen", "月份牌国货", "老字号、国货", "yuefen", "一瓶白酒的年度账本"],
+    ["editorial", "影像杂志", "品牌、商业特写", "editorial", "迅销 2024 财年：优衣库的一年"], ["title", "片头字幕", "财报、悬疑复盘", "title", "Netflix 2024：3 亿会员这一年"],
+    ["bauhaus", "包豪斯构成", "观点、比例结构", "bauhaus", "宜家降价的一年"],
+    ["thread", "一线长卷", "年报、层层拆解", "thread", "小米的 2024：一条线走完年报"], ["teleshop", "电视购物", "消费、年度账本", "teleshop", "一锅火锅的年度账本"],
+    ["vapor", "蒸汽波桌面", "游戏、互联网", "vapor", "任天堂 FY2025 账本"],
     ["reel", "动效库", "快节奏口播", "", ""]];
   // custom styles added with `style_kit.py publish` (listed by catalog.py) join the wall after the built-in ones
   const STYLES = BUILTIN.concat((data.styles || []).filter((s) => !BUILTIN.some((f) => f[0] === s.id))

@@ -1,10 +1,10 @@
 ---
 name: hat9-motion
-description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 18 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 193 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、掉落堆叠、倒入液面、推轨穿层、焦点转移、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
+description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 26 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 197 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、掉落堆叠、倒入液面、推轨穿层、焦点转移、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.17.0"
+  version: "0.18.0"
   author: daiyixiang666
 ---
 
@@ -78,4 +78,4 @@ metadata:
 - `scripts/hat9.py` 命令行 · `scripts/build.py` video.json → HyperFrames 工程 · `scripts/h9/aefx.py` **AE 动效库**
 - `gallery/` 在线画廊（`llms.txt` 效果索引、`effects.json`）· `references/effects/<id>.md` 每个效果的配方卡
 - `references/video-json.md` 格式 · `references/motion-rules.md` 缓动 / 时长 / 对口播 · `references/sentence-to-visual.md` 句型 → 画面 · `references/aesthetics.md` 出图规则
-- `styles/` 风格：`press` 财经刊（商业拆解 / 数据）· `screen` AI 工具台，暖白桌面窗口（产品界面 / AI 工具）· `atlas` 地图纪录（贸易 / 地缘）· `doc` 实拍纪录（实拍视频）· `minimal` 极简讲述，冷调浅底一条蓝线（观点 / 心理 / 认知）· `poster` 瑞士海报（观点 / 金句）· `zine` 拼贴杂志（潮玩 / 年轻消费）· `papercut` 层叠剪纸（节日 / 民俗）· `sketch` 手绘白板，牛皮纸（讲原理）· `ink` 水墨国风（国风 / 文化）· `flat` 五色扁平招贴（本地生活 / 城市）· `pixel` 像素复古（游戏 / 互联网）· `iso3d` 等距微缩（物流 / 产业链）· `chrome3d` Y2K 镀铬影棚（科技 / 芯片）· `reel` 动效库 · `hud` · `studio` / `clay` 三维。选法见 `references/styles.md`；用户想要自己的风格时 `python3 scripts/hat9.py style new <id> --from <最接近的风格>`，改完 `style check`，输入范围见 `references/inputs.md`· `examples/` 可直接渲染的示例
+- `styles/` 风格：`press` 财经刊（商业拆解 / 数据）· `screen` AI 工具台，暖白桌面窗口（产品界面 / AI 工具）· `atlas` 地图纪录（贸易 / 地缘）· `doc` 实拍纪录（实拍视频）· `minimal` 极简讲述，冷调浅底一条蓝线（观点 / 心理 / 认知）· `poster` 瑞士海报（观点 / 金句）· `zine` 拼贴杂志（潮玩 / 年轻消费）· `papercut` 层叠剪纸（节日 / 民俗）· `sketch` 手绘白板，牛皮纸（讲原理）· `ink` 水墨国风（国风 / 文化）· `flat` 五色扁平招贴（本地生活 / 城市）· `pixel` 像素复古（游戏 / 互联网）· `iso3d` 等距微缩（物流 / 产业链）· `chrome3d` Y2K 镀铬影棚（科技 / 芯片）· `riso` 孔版印刷，三色套印（消费 / 商业拆解）· `yuefen` 月份牌国货（老字号 / 国货）· `editorial` 影像杂志，真实照片（品牌 / 商业特写）· `title` 片头字幕，黑色胶片（财报 / 悬疑复盘）· `bauhaus` 包豪斯构成（观点 / 比例结构）· `thread` 一线长卷，一镜到底沿线走（年报 / 层层拆解）· `teleshop` 电视购物（消费 / 年度账本）· `vapor` 蒸汽波桌面，系统对话框（游戏 / 互联网）· `reel` 动效库 · `hud` · `studio` / `clay` 三维。选法见 `references/styles.md`；用户想要自己的风格时 `python3 scripts/hat9.py style new <id> --from <最接近的风格>`，改完 `style check`，输入范围见 `references/inputs.md`· `examples/` 可直接渲染的示例

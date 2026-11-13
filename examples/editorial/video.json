@@ -1,0 +1,180 @@
+{
+ "meta": {
+  "title": "迅销 2024 财年：优衣库的一年",
+  "aspect": "9:16",
+  "silent": true,
+  "style": "editorial",
+  "channel": "示例频道",
+  "folio": "FEATURE",
+  "folio_tag": "迅销 FY2024",
+  "words": "assets/audio/words.json",
+  "duration": 37.8,
+  "caption_mode": "reading",
+  "elastic": false,
+  "issue": "FY2024",
+  "strip_extra": [
+   "assets/img/floor.jpg"
+  ]
+ },
+ "beats": [
+  {
+   "scene": "cover",
+   "t": 0,
+   "anchor": false,
+   "photo": "assets/img/sweaters.jpg",
+   "focus": "50% 40%",
+   "kicker": "迅销集团 · 2024 财年",
+   "head": "一年卖出|*3.1 万亿*日元",
+   "src": "迅销 Results Summary for FY2024（2024-10-10）"
+  },
+  {
+   "scene": "figure",
+   "t": 4.4,
+   "anchor": false,
+   "photo": "assets/img/knit.jpg",
+   "focus": "50% 55%",
+   "num": "5009",
+   "unit": "亿|日元",
+   "notes": [
+    "**营业利润** · FY2024|同比 +31.4%",
+    "**首次**超过 5000 亿日元|营收同时首破 3 万亿"
+   ],
+   "src": "迅销 Results Summary for FY2024（2024-10-10）"
+  },
+  {
+   "scene": "timeline",
+   "t": 9.2,
+   "anchor": false,
+   "kicker": "集团营收",
+   "num": "3.10",
+   "unit": "万亿日元",
+   "sub": "同比 +12.2%",
+   "ticks": [
+    {
+     "year": "FY2023",
+     "value": "2.77"
+    },
+    {
+     "year": "FY2024",
+     "value": "3.10",
+     "now": true
+    },
+    {
+     "year": "FY2025",
+     "value": "3.40",
+     "note": "公司预测",
+     "delta": "+9.5%"
+    }
+   ],
+   "src": "迅销 FY2024 业绩公告：FY2023 为 2.7665 万亿，FY2025 为公司预测"
+  },
+  {
+   "scene": "statement",
+   "t": 14.4,
+   "anchor": false,
+   "photo": "assets/img/crossing.jpg",
+   "focus": "50% 35%",
+   "lines": [
+    "海外的优衣库",
+    "卖出的，已是",
+    "日本的 *1.8 倍*"
+   ],
+   "src": "按迅销公告计算：1.7118 万亿 ÷ 0.9322 万亿 ≈ 1.84"
+  },
+  {
+   "scene": "compare",
+   "t": 18.8,
+   "anchor": false,
+   "photo": "assets/img/rack.jpg",
+   "focus": "50% 40%",
+   "items": [
+    {
+     "label": "海外优衣库",
+     "value": 1.7118,
+     "show": "1.71",
+     "unit": "万亿日元"
+    },
+    {
+     "label": "日本优衣库",
+     "value": 0.9322,
+     "show": "0.93",
+     "unit": "万亿日元"
+    }
+   ],
+   "notes": [
+    "**海外优衣库** 营收|同比 +19.1%",
+    "**日本优衣库** 营收|同比 +4.7%"
+   ],
+   "src": "迅销 Results Summary for FY2024（2024-10-10）"
+  },
+  {
+   "scene": "share",
+   "t": 23.6,
+   "anchor": false,
+   "kicker": "集团营收构成",
+   "num": "55.2%",
+   "pct": 55.15,
+   "parts": [
+    {
+     "label": "海外优衣库",
+     "value": 1.7118,
+     "show": "1.71 万亿",
+     "on": true
+    },
+    {
+     "label": "日本优衣库",
+     "value": 0.9322,
+     "show": "0.93"
+    },
+    {
+     "label": "其他",
+     "value": 0.4598,
+     "show": "0.46"
+    }
+   ],
+   "src": "按迅销公告计算：1.7118 ÷ 3.1038 = 55.2%",
+   "sum": "集团营收 3.10 万亿日元 = 1.71 + 0.93 + 0.46"
+  },
+  {
+   "scene": "ranking",
+   "t": 28.4,
+   "anchor": false,
+   "photo": "assets/img/shop.jpg",
+   "focus": "50% 55%",
+   "kicker": "大中华区 · 优衣库门店",
+   "num": "1,032",
+   "unit": "家",
+   "rows": [
+    {
+     "label": "中国大陆",
+     "value": 926,
+     "show": "926"
+    },
+    {
+     "label": "台湾",
+     "value": 72,
+     "show": "72"
+    },
+    {
+     "label": "香港",
+     "value": 34,
+     "show": "34"
+    }
+   ],
+   "src": "迅销 Group Outlets · FY2024：926 + 72 + 34 = 1,032"
+  },
+  {
+   "scene": "statement",
+   "t": 33.2,
+   "anchor": false,
+   "photo": "assets/img/store.jpg",
+   "focus": "50% 50%",
+   "lines": [
+    "每卖 100 日元",
+    "就有 *16* 日元",
+    "是营业利润"
+   ],
+   "src": "迅销公告：营业利润率 16.1%（500.9 ÷ 3103.8）"
+  }
+ ]
+}

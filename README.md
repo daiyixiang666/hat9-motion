@@ -5,9 +5,9 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看成片](#成片示例) · [🎛 在线看全部 193 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看成片](#成片示例) · [🎛 在线看全部 197 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.17.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.18.0-blue)
 
 <a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
 
@@ -21,9 +21,9 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 | | |
 |---|---|
-| **18 种风格** | `press` 财经刊 · `minimal` 极简讲述 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `studio` / `clay` 三维影棚 · `reel` 动效库 |
+| **26 种风格** | `press` 财经刊 · `minimal` 极简讲述 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `riso` 孔版印刷 · `yuefen` 月份牌国货 · `editorial` 影像杂志 · `title` 片头字幕 · `bauhaus` 包豪斯构成 · `thread` 一线长卷 · `teleshop` 电视购物 · `vapor` 蒸汽波桌面 · `studio` / `clay` 三维影棚 · `reel` 动效库 |
 | **60 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
-| **193 个动效** | 177 个效果 + 16 种转场：字效、物理、镜头、质感、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
+| **197 个动效** | 180 个效果 + 17 种转场：字效、物理、镜头、质感、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
 | **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
 | **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
 | **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
@@ -32,7 +32,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | **声音和真实界面** | 配乐旁放 `.beats.json` 就自动卡拍，片中快切 `"fx": "montage"`，说话时配乐压低，渲染自动 -14 LUFS；讲产品用 `scripts/ui_capture.py 网址` 抓真实界面组件，配 `ui_lift` 出框，不编界面 |
 | **同一个重点，换着载体说** | 数字可以贴在主体旁、做成信息卡、拼成作品墙、变成仪表或钟、滚成日志；主体（录屏 / 卡通形象 / 真人）常驻画面并换位置，相机或浏览器外框按章节换模式名和底色；`review` 会拦住连续的全屏大字。见 [`references/presenter.md`](references/presenter.md)、[`references/device.md`](references/device.md) |
 | **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
-| **13 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
+| **22 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
 
 ## 成片示例
 
@@ -54,6 +54,14 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | <a href="assets/previews/iso3d_16x9.mp4"><img src="assets/previews/iso3d_16x9.jpg" width="420" alt="快递的规模账 横屏"></a> | <a href="assets/previews/iso3d_9x16.mp4"><img src="assets/previews/iso3d_9x16.jpg" width="120" alt="快递的规模账 竖屏"></a> | **《快递的规模账》**<br>`iso3d` 等距微缩：马卡龙色漂浮小岛连成一个三维微缩世界，包裹堆成山、城市长出来、柱子升起，镜头跟着包裹走完五站。<br><sub>国家邮政局 2014、2015、2020—2024 年邮政行业发展统计公报</sub> |
 | <a href="assets/previews/chrome3d_16x9.mp4"><img src="assets/previews/chrome3d_16x9.jpg" width="420" alt="英伟达：卖铲子的人 横屏"></a> | <a href="assets/previews/chrome3d_9x16.mp4"><img src="assets/previews/chrome3d_9x16.jpg" width="120" alt="英伟达：卖铲子的人 竖屏"></a> | **《英伟达：卖铲子的人》**<br>`chrome3d` Y2K 镀铬：天空、橙色地平线和深紫镜面地板，镀铬立体数字和芯片带倒影，穿过环形门换站，$5T、CUDA 上才闪一下。<br><sub>NVIDIA 历年财报（8-K）· Reuters · GTC 2025</sub> |
 | <a href="assets/previews/minimal_16x9.mp4"><img src="assets/previews/minimal_16x9.jpg" width="420" alt="棉花糖实验，测的真是自控力吗 横屏"></a> | <a href="assets/previews/minimal_9x16.mp4"><img src="assets/previews/minimal_9x16.jpg" width="120" alt="棉花糖实验，测的真是自控力吗 竖屏"></a> | **《棉花糖实验，测的真是自控力吗》**<br>`minimal` 极简讲述：冷调浅底上的剪影插画，一条钴蓝细线贯穿全片，变成地平线、钟面、坐标轴和柱子轮廓，斜体衬线只给一个重音词。<br><sub>Mischel 等 1972 · Shoda 等 1990 · Kidd 等 2013 · Watts 等 2018</sub> |
+| <a href="assets/previews/riso_16x9.mp4"><img src="assets/previews/riso_16x9.jpg" width="420" alt="名创优品 2024：增长的那一半在海外 横屏"></a> | <a href="assets/previews/riso_9x16.mp4"><img src="assets/previews/riso_9x16.jpg" width="120" alt="名创优品 2024：增长的那一半在海外 竖屏"></a> | **《名创优品 2024：增长的那一半在海外》**<br>`riso` 孔版印刷：荧光粉、蓝、黄三块版套印在暖白纸上，叠印圆对比、10×10 网点格占比、刮板色带、裁好的色纸条排行，每页三块版一块一块印上去。<br><sub>名创优品 2024 年第四季度及全年未经审计业绩公告（港交所 9896）</sub> |
+| <a href="assets/previews/yuefen_16x9.mp4"><img src="assets/previews/yuefen_16x9.jpg" width="420" alt="一瓶白酒的年度账本 横屏"></a> | <a href="assets/previews/yuefen_9x16.mp4"><img src="assets/previews/yuefen_9x16.jpg" width="120" alt="一瓶白酒的年度账本 竖屏"></a> | **《一瓶白酒的年度账本》**<br>`yuefen` 月份牌国货：玉绿石印卡纸、金线 Art Deco 外框和放射光拱窗，撕页日历、柜台瓶子、铁盒盖珐琅、药房天平、火柴盒贴，翻月历换页。<br><sub>贵州茅台 2024 年年度报告</sub> |
+| <a href="assets/previews/editorial_16x9.mp4"><img src="assets/previews/editorial_16x9.jpg" width="420" alt="迅销 2024 财年：优衣库的一年 横屏"></a> | <a href="assets/previews/editorial_9x16.mp4"><img src="assets/previews/editorial_9x16.jpg" width="120" alt="迅销 2024 财年：优衣库的一年 竖屏"></a> | **《迅销 2024 财年：优衣库的一年》**<br>`editorial` 影像杂志：真实照片配巨大衬线标题和数字，四种杂志页面轮流，朱红细线信息图，照片从一道缝打开、标题逐行升起。<br><sub>Fast Retailing FY2024 业绩摘要 · 照片来自 Unsplash</sub> |
+| <a href="assets/previews/title_16x9.mp4"><img src="assets/previews/title_16x9.jpg" width="420" alt="Netflix 2024：3 亿会员这一年 横屏"></a> | <a href="assets/previews/title_9x16.mp4"><img src="assets/previews/title_9x16.jpg" width="120" alt="Netflix 2024：3 亿会员这一年 竖屏"></a> | **《Netflix 2024：3 亿会员这一年》**<br>`title` 片头字幕：会呼吸的黑色胶片、颗粒和划痕，手刻数字逐位写出、旧值被红线划掉，计数线、胶片格、手画圆，闪帧跳切。<br><sub>Netflix 2024 年第四季度股东信</sub> |
+| <a href="assets/previews/bauhaus_16x9.mp4"><img src="assets/previews/bauhaus_16x9.jpg" width="420" alt="宜家降价的一年 横屏"></a> | <a href="assets/previews/bauhaus_9x16.mp4"><img src="assets/previews/bauhaus_9x16.jpg" width="120" alt="宜家降价的一年 竖屏"></a> | **《宜家降价的一年》**<br>`bauhaus` 包豪斯构成：红、蓝、黄、黑整页轮换，模块搭出的大数字，柱子台阶加跳球、主圆切块、同心圆环、面积成比例的正方形，形状按 45° 一步步转。<br><sub>Inter IKEA Group FY24 财务摘要 · IKEA Newsroom 2024-10-10</sub> |
+| <a href="assets/previews/thread_16x9.mp4"><img src="assets/previews/thread_16x9.jpg" width="420" alt="小米的 2024：一条线走完年报 横屏"></a> | <a href="assets/previews/thread_9x16.mp4"><img src="assets/previews/thread_9x16.jpg" width="120" alt="小米的 2024：一条线走完年报 竖屏"></a> | **《小米的 2024：一条线走完年报》**<br>`thread` 一线长卷：一整张暖色长纸上摆着一组组卡片，一根橙线从第一张走到最后一张，镜头不切、沿线滑过去；分支卡按真实比例、勾叉关卡、账本卡，结尾拉远看整条路。<br><sub>小米集团 2024 年度业绩公告</sub> |
+| <a href="assets/previews/teleshop_16x9.mp4"><img src="assets/previews/teleshop_16x9.jpg" width="420" alt="一锅火锅的年度账本 横屏"></a> | <a href="assets/previews/teleshop_9x16.mp4"><img src="assets/previews/teleshop_9x16.jpg" width="120" alt="一锅火锅的年度账本 竖屏"></a> | **《一锅火锅的年度账本》**<br>`teleshop` 电视购物：显像管里的 90 年代购物广告，金箔底、红绸题版、立体金红字，爆炸价签、去年对今年分屏、礼盒叠摞、「认准此数」印章，数字一个不改。<br><sub>海底捞 2024 年度业绩公告</sub> |
+| <a href="assets/previews/vapor_16x9.mp4"><img src="assets/previews/vapor_16x9.jpg" width="420" alt="任天堂 FY2025 账本 横屏"></a> | <a href="assets/previews/vapor_9x16.mp4"><img src="assets/previews/vapor_9x16.jpg" width="120" alt="任天堂 FY2025 账本 竖屏"></a> | **《任天堂 FY2025 账本》**<br>`vapor` 蒸汽波桌面：霓虹日落网格前的 90 年代桌面，每个数都装在灰色系统对话框里：报错框、安装向导、分段进度条、文件列表、画图程序填格子，光标点一下就换状态。<br><sub>任天堂 FY2025 合并财务摘要 · 业绩说明资料</sub> |
 
 每条片子就是一份 `video.json`（每句一个场景）加配音，源文件在 [`examples/`](examples/)。
 
@@ -181,7 +189,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
 | 配音 | 系统语音 / 本地 TTS / 静音按字数估时 | 你自己的录音（推荐） |
-| 画面 | 193 个代码动效（177 效果 + 16 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
+| 画面 | 197 个代码动效（180 效果 + 17 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
 | 字体 | 思源黑体 / 宋体、得意黑、霞鹜文楷等 OFL 字体 | — |
@@ -246,6 +254,7 @@ examples/           mixue · screen · atlas · doc · poster（5 条成片）·
 
 ## 更新
 
+- **0.18.0** 新增 8 种风格：`riso` 孔版印刷、`yuefen` 月份牌国货、`editorial` 影像杂志、`title` 片头字幕、`bauhaus` 包豪斯构成、`thread` 一线长卷、`teleshop` 电视购物、`vapor` 蒸汽波桌面，各带一条示例成片；新效果 `glyph_sphere` `cube_number` `wire_resolve` 和锚点匹配转场 `anchor_match`；无声展示片可写 `meta.silent`。
 - **0.17.0** 14 种风格重做画面；新增 15 个效果（物理、镜头、字效、数据、质感）和 4 种转场；竖屏字幕全部避开平台界面并自动检查；不出主持人的风格真的不出；字幕位置可按句指定；缺字体时明确提示。
 - **0.16.1** 字直接叠在真人画面上的排版保留不动，字自动换成浅色加阴影，压暗的画面上也读得清。
 - **0.16.0** 弱一点的模型也能出好片：字幕整句不切词、动效自动对准口播、真人口播不被字压脸、5 种出镜形式可选、渲染前后自动检查。

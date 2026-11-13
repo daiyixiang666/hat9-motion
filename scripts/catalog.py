@@ -40,7 +40,9 @@ CAT["数据"] += ["table", "statement_table", "waterfall", "scale_compare", "bar
 CAT["地图"] += ["china_map"]
 def cat_of(fx): return next((k for k, v in CAT.items() if fx in v), "其他")
 STYLE_NAMES = {"reel": "动效库", "press": "财经刊", "poster": "瑞士海报", "zine": "拼贴杂志", "screen": "AI 工具台", "hud": "暗场",
-               "doc": "实拍纪录", "papercut": "剪纸", "sketch": "手绘白板", "ink": "水墨国风", "flat": "扁平插画", "pixel": "像素复古"}
+               "doc": "实拍纪录", "papercut": "剪纸", "sketch": "手绘白板", "ink": "水墨国风", "flat": "扁平插画", "pixel": "像素复古",
+               "riso": "孔版印刷", "yuefen": "月份牌国货", "editorial": "影像杂志", "title": "片头字幕", "bauhaus": "包豪斯构成",
+               "thread": "一线长卷", "teleshop": "电视购物", "vapor": "蒸汽波桌面"}
 
 
 def cut(src, t, d, dst, w=480, fps=15):
@@ -94,7 +96,7 @@ PIT = {
 
 
 REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing",
-                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2", "fx2")]   # every demo reel that feeds the gallery
+                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2", "fx2", "fx3")]   # every demo reel that feeds the gallery
 
 
 def beats():
@@ -357,6 +359,20 @@ PIT.update({
     "zoom_scale": "`show` 写显示用的数（如 \"44.5 亿元\"），value 写换算后的同单位数值。",
     "ink_reveal": "滤镜每帧重算，长时间用会慢一点；建议 ≤ 6 秒。",
 })
+# ---- 0.18: scene effects (examples/fx3)
+CAT["数据"] += ["glyph_sphere", "cube_number"]
+CAT["结构"] += ["wire_resolve"]
+SUIT.update({
+    "glyph_sphere": "一个要郑重揭晓的数字或词：「全年营收 169.9 亿」，科技、数据、AI 话题",
+    "cube_number": "一个数从 A 变到 B、「一年从 47.1 亿涨到 66.7 亿」，要一块一块搭出来的分量感",
+    "wire_resolve": "2–5 个并列的数「拆开看：国内 93.3 亿，海外 66.7 亿」，从方案到成品、从草图到落地",
+})
+DUR.update({"glyph_sphere": "4.5–5.5 秒", "cube_number": "4–5 秒（有 from 时 5 秒）", "wire_resolve": "5–6 秒"})
+PIT.update({
+    "glyph_sphere": "很短的值（2–3 个字）字块会比较窄；细笔画字体会改用粗黑体取字形。",
+    "cube_number": "值要以数字开头；数字和 . , % 是方块，亿、万等单位排成平面字；数字越长格子越小。",
+    "wire_resolve": "值写成带单位的字符串（\"93.3 亿\"），条形按其中的数字成比例；卡片超过 5 张会报错。",
+})
 # transitions written on an effect beat ("tr" on the next beat, not a plate): how they are listed
 PREFER = {"bar_race": "fx2"}      # effects reworked later: cut their card from the newer demo reel
 TR_LABEL = {
@@ -364,6 +380,7 @@ TR_LABEL = {
     "shape_match": "形状匹配 · Shape Match（A 拍的形状盖满全屏，再收成 B 拍对应的形状）",
     "paper_tear": "撕纸 · Paper Tear（两张纸合拢，再沿斜线撕开）",
     "paint_wipe": "三笔刷屏 · Paint Wipe（三道宽笔刷扫过盖满，再扫出去）",
+    "anchor_match": "锚点匹配 · Anchor Match（只留下同一个数字 / 元素，飞到下一拍的位置并换上新样子）",
 }
 
 
