@@ -20,7 +20,7 @@ from h9 import derive, fonts  # noqa: E402
 
 HF = ["npx", "--yes", "hyperframes@0.8.191"]
 PY = sys.executable
-SHOWCASE = {"press": "mixue", "reel": "demo", "hud": "styled-hud", "studio": "demo", "clay": "demo"}
+SHOWCASE = {"press": "mixue"}
 TOKEN_NOTES = {
     "bg": "底色", "fg": "正文字色", "muted": "次要文字", "accent": "强调色（只用一个最好）", "accent2": "第二强调", "alert": "警示",
     "line": "细线 / 分隔", "paper": "纸色", "ink": "墨色", "card": "卡片底", "card-fg": "卡片上的字",

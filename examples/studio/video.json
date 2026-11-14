@@ -1,0 +1,181 @@
+{
+ "meta": {
+  "title": "苹果 2025 财年：一间展厅看完年报",
+  "channel": "示例频道",
+  "aspect": "9:16",
+  "silent": true,
+  "style": "studio",
+  "words": "assets/audio/words.json",
+  "duration": 37.8,
+  "section": "商业拆解",
+  "caption_mode": "reading",
+  "caption_len": 16,
+  "mascot_mode": "off",
+  "show": "Apple 2025 财年 10-K"
+ },
+ "beats": [
+  {
+   "scene": "title",
+   "t": 0,
+   "kicker": "APPLE · FORM 10-K · FY2025",
+   "lines": [
+    "苹果2025财年",
+    "净销售额",
+    "*4162*亿美元"
+   ],
+   "src": "来源：Apple 2025 财年 10-K（SEC，2025-10-31）",
+   "anchor": false,
+   "teaser": [
+    1.0,
+    0.504,
+    0.469
+   ]
+  },
+  {
+   "scene": "share",
+   "t": 4.6,
+   "kicker": "IPHONE · SHARE OF NET SALES",
+   "value": 50.4,
+   "show": "50.4%",
+   "label": "iPhone 2096亿",
+   "src": "同上 · 209,586 ÷ 416,161 百万美元 = 50.4%",
+   "anchor": false
+  },
+  {
+   "scene": "rank",
+   "t": 9.0,
+   "kicker": "NET SALES BY CATEGORY",
+   "items": [
+    {
+     "label": "iPhone",
+     "value": 209586,
+     "show": "2096亿"
+    },
+    {
+     "label": "服务",
+     "value": 109158,
+     "show": "1092亿"
+    },
+    {
+     "label": "可穿戴等",
+     "value": 35686,
+     "show": "357亿"
+    },
+    {
+     "label": "Mac",
+     "value": 33708,
+     "show": "337亿"
+    },
+    {
+     "label": "iPad",
+     "value": 28023,
+     "show": "280亿"
+    }
+   ],
+   "src": "同上 · 各产品线净销售额，单位美元",
+   "anchor": false
+  },
+  {
+   "scene": "compare",
+   "t": 13.8,
+   "kicker": "SERVICES · FY2024 → FY2025",
+   "left": {
+    "label": "2024财年",
+    "value": 96169,
+    "show": "962亿"
+   },
+   "right": {
+    "label": "2025财年",
+    "value": 109158,
+    "show": "1092亿"
+   },
+   "src": "同上 · 服务净销售额 96,169 → 109,158 百万美元，+14%",
+   "anchor": false
+  },
+  {
+   "scene": "number",
+   "t": 18.2,
+   "kicker": "R&D EXPENSE · FY2025",
+   "value": "346",
+   "unit": "亿美元",
+   "lit": 8,
+   "of": 100,
+   "src": "同上 · 34,550 ÷ 416,161 = 8.3%，100 格亮 8 格",
+   "anchor": false
+  },
+  {
+   "scene": "timeline",
+   "t": 23.0,
+   "kicker": "NET SALES · FY2021 → FY2025",
+   "items": [
+    {
+     "label": "2021",
+     "value": 365817,
+     "show": "3658亿"
+    },
+    {
+     "label": "2022",
+     "value": 394328,
+     "show": "3943亿"
+    },
+    {
+     "label": "2023",
+     "value": 383285,
+     "show": "3833亿"
+    },
+    {
+     "label": "2024",
+     "value": 391035,
+     "show": "3910亿"
+    },
+    {
+     "label": "2025",
+     "value": 416161,
+     "show": "4162亿"
+    }
+   ],
+   "src": "Apple 2021–2025 财年 10-K · 416,161 ÷ 365,817 = +13.8%",
+   "anchor": false
+  },
+  {
+   "scene": "statement",
+   "t": 28.0,
+   "kicker": "GROSS MARGIN · FY2025",
+   "lines": [
+    "每卖100美元",
+    "毛利*46.9*美元"
+   ],
+   "bars": [
+    {
+     "label": "产品毛利率",
+     "value": 36.8,
+     "show": "36.8%"
+    },
+    {
+     "label": "服务毛利率",
+     "value": 75.4,
+     "show": "75.4%"
+    }
+   ],
+   "src": "Apple 2025 财年 10-K · 总毛利率 46.9%",
+   "anchor": false
+  },
+  {
+   "scene": "outro",
+   "t": 32.4,
+   "kicker": "示例频道",
+   "items": [
+    "4162亿",
+    "50.4%",
+    "46.9%"
+   ],
+   "anchor": false,
+   "labels": [
+    "净销售额",
+    "iPhone 占比",
+    "毛利率"
+   ],
+   "hi": 1
+  }
+ ]
+}

@@ -13,7 +13,7 @@ const puppeteer = require(process.env.H9_PUPPETEER || "puppeteer-core");
   const page = await browser.newPage();
   await page.setViewport({ width: +W, height: +H });
   await page.goto("file://" + path.resolve(file), { waitUntil: "load", timeout: 30000 });
-  await page.waitForFunction(() => !!(window.__timelines && window.__timelines.main), { timeout: 15000, polling: 100 });
+  await page.waitForFunction(() => !!(window.__timelines && window.__timelines.main), { timeout: 45000, polling: 100 });
   await page.evaluate(() => (document.fonts ? document.fonts.ready : null));
   const out = [];
   for (const t of times.split(",").map(Number)) {

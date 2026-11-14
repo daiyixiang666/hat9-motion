@@ -77,7 +77,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   <p class="lede">26 种风格、180 个效果和 17 种转场，按 VideoHive 销量、YouTube 和 B 站播放量复刻，横屏竖屏同一套代码。每个效果都放在一句真实口播里、用最合适的风格演示；换风格时效果跟着换皮。点效果名复制 id，在 <code>video.json</code> 里写 <code>{"scene":"fx","fx":"<id>"}</code> 就能用。</p>
 
   <div class="wall" role="group" aria-label="风格" id="wall"></div>
-  <p class="wall-note">点一种风格：上面播它的示例成片，下面的动效卡只看这个风格。另有 <code>studio</code> / <code>clay</code> 三维影棚（整片布景，示例在做）。</p>
+  <p class="wall-note">点一种风格：上面播它的示例成片，下面的动效卡只看这个风格。</p>
   <section class="show" aria-label="成片示例">
     <figure><video id="sh-h" controls playsinline preload="metadata"></video><figcaption id="cap-h"></figcaption></figure>
     <figure><video id="sh-v" controls playsinline preload="metadata"></video><figcaption>同一条 · 竖屏 9:16，各自排版</figcaption></figure>
@@ -111,7 +111,7 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
   const BUILTIN = [
     ["press", "财经刊", "商业拆解、数据口播", "mixue", "一杯 4 块钱的柠檬水"], ["minimal", "极简讲述", "观点、心理、认知", "minimal", "棉花糖实验，测的真是自控力吗"], ["poster", "瑞士海报", "观点、金句", "poster", "专注，就是学会说不"],
     ["zine", "拼贴杂志", "潮玩、年轻消费", "zine", "一只怪兽，一年卖了一百四十多亿"], ["screen", "AI 工具台", "AI 工具、产品", "screen", "8 亿人在用，5% 在付钱"],
-    ["hud", "暗场 HUD", "拆解、排序", "", ""], ["atlas", "地图纪录", "贸易、航线、地缘", "atlas", "货船为什么不走苏伊士了"],
+    ["hud", "暗场 HUD", "拆解、排序", "hud", "宁德时代 2024 年报"], ["atlas", "地图纪录", "贸易、航线、地缘", "atlas", "货船为什么不走苏伊士了"],
     ["doc", "实拍纪录", "历史、行业", "doc", "一个铁箱子"], ["papercut", "剪纸", "节日、民俗", "papercut", "过年看电影，钱押给最好的那一部"],
     ["sketch", "手绘白板", "讲原理、商业模式", "sketch", "Costco 真正卖的是什么"], ["ink", "水墨国风", "国风、文化", "ink", "一只猴子，三天卖出一千万套"],
     ["flat", "扁平插画", "本地生活、城市", "flat", "一份外卖背后的城市网络"], ["pixel", "像素复古", "游戏、互联网", "pixel", "三千二百亿的游戏账本"],
@@ -121,7 +121,8 @@ h2 { font: 800 26px var(--f-display); margin: 56px 0 14px; }
     ["bauhaus", "包豪斯构成", "观点、比例结构", "bauhaus", "宜家降价的一年"],
     ["thread", "一线长卷", "年报、层层拆解", "thread", "小米的 2024：一条线走完年报"], ["teleshop", "电视购物", "消费、年度账本", "teleshop", "一锅火锅的年度账本"],
     ["vapor", "蒸汽波桌面", "游戏、互联网", "vapor", "任天堂 FY2025 账本"],
-    ["reel", "动效库", "快节奏口播", "", ""]];
+    ["studio", "三维影棚", "年报、产品", "studio", "苹果 2025 财年：一间展厅看完年报"], ["clay", "陶土影棚", "观点、品牌、消费", "clay", "乐高 2024：一块积木的年度账本"],
+    ["reel", "动效库", "快节奏口播", "reel", "拼多多 2024：3938 亿营收这一年"]];
   // custom styles added with `style_kit.py publish` (listed by catalog.py) join the wall after the built-in ones
   const STYLES = BUILTIN.concat((data.styles || []).filter((s) => !BUILTIN.some((f) => f[0] === s.id))
     .map((s) => [s.id, s.name, s.fits || (s.base ? "基于 " + s.base : ""), s.id, s.title || s.name]));
