@@ -87,7 +87,9 @@
   "dolly_layers": "structure", "unroll": "structure", "rack_focus": "compare", "orbit_number": "number",
   "word_mosaic": "slogan", "weight_breath": "slogan", "ink_reveal": "slogan", "type_mask": "photo",
   "zoom_scale": "chart", "small_multiples": "chart", "stamp_press": "annotate",
-  "glyph_sphere": "number", "cube_number": "metaphor", "wire_resolve": "card"
+  "glyph_sphere": "number", "cube_number": "metaphor", "wire_resolve": "card",
+  "card_wall": "montage", "tilt_board": "montage", "time_budget": "chart", "run_clock": "chart",
+  "doc_edit": "doc", "wave_align": "ui", "qc_sheet": "ui", "pair_check": "compare"
  },
  "scenes": {
   "statement": "slogan", "title": "slogan", "quote": "doc", "number": "number", "compare": "compare", "outro": "card"

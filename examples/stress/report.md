@@ -1,6 +1,6 @@
 # 压力测试报告
 
-513 / 513 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
+533 / 533 通过（每个目标一个合成，每种输入一个 beat，横竖屏各一遍）。联系表在 `sheets/`。
 
 | 目标 | 画幅 | 变体 | 结果 |
 |---|---|---|---|
@@ -82,6 +82,8 @@
 | `caption:vapor` | 9:16 | 1 | 通过 |
 | `caption:yuefen` | 9:16 | 1 | 通过 |
 | `caption:zine` | 9:16 | 1 | 通过 |
+| `card_wall` | 16:9 | 5 | 通过 |
+| `card_wall` | 9:16 | 5 | 通过 |
 | `cartoon` | 16:9 | 3 | 通过 |
 | `cartoon` | 9:16 | 3 | 通过 |
 | `chapter_bar` | 16:9 | 3 | 通过 |
@@ -151,6 +153,8 @@
 | `dialogue` | 9:16 | 3 | 通过 |
 | `diffuse` | 16:9 | 6 | 通过 |
 | `diffuse` | 9:16 | 6 | 通过 |
+| `doc_edit` | 16:9 | 5 | 通过 |
+| `doc_edit` | 9:16 | 5 | 通过 |
 | `doc_flip` | 16:9 | 3 | 通过 |
 | `doc_flip` | 9:16 | 3 | 通过 |
 | `doc_photo` | 16:9 | 3 | 通过 |
@@ -288,6 +292,8 @@
 | `media@6` | 9:16 | 2 | 通过 |
 | `meme_stage` | 16:9 | 3 | 通过 |
 | `meme_stage` | 9:16 | 3 | 通过 |
+| `minimal:statement` | 16:9 | 4 | 通过 |
+| `minimal:statement` | 9:16 | 4 | 通过 |
 | `mosaic` | 16:9 | 5 | 通过 |
 | `mosaic` | 9:16 | 5 | 通过 |
 | `neon` | 16:9 | 6 | 通过 |
@@ -315,6 +321,8 @@
 | `odometer@6` | 9:16 | 2 | 通过 |
 | `opener` | 16:9 | 3 | 通过 |
 | `opener` | 9:16 | 3 | 通过 |
+| `pair_check` | 16:9 | 4 | 通过 |
+| `pair_check` | 9:16 | 4 | 通过 |
 | `parallax` | 16:9 | 4 | 通过 |
 | `parallax` | 9:16 | 4 | 通过 |
 | `pip@3` | 16:9 | 3 | 通过 |
@@ -388,6 +396,8 @@
 | `profile_card` | 9:16 | 5 | 通过 |
 | `pros_cons` | 16:9 | 3 | 通过 |
 | `pros_cons` | 9:16 | 3 | 通过 |
+| `qc_sheet` | 16:9 | 4 | 通过 |
+| `qc_sheet` | 9:16 | 4 | 通过 |
 | `quadrant` | 16:9 | 3 | 通过 |
 | `quadrant` | 9:16 | 3 | 通过 |
 | `question_card` | 16:9 | 4 | 通过 |
@@ -404,10 +414,14 @@
 | `reaction@8` | 9:16 | 3 | 通过 |
 | `receipt` | 16:9 | 4 | 通过 |
 | `receipt` | 9:16 | 4 | 通过 |
+| `reel:quote` | 16:9 | 3 | 通过 |
+| `reel:quote` | 9:16 | 3 | 通过 |
 | `relation_graph` | 16:9 | 3 | 通过 |
 | `relation_graph` | 9:16 | 3 | 通过 |
 | `review_card` | 16:9 | 3 | 通过 |
 | `review_card` | 9:16 | 3 | 通过 |
+| `run_clock@7` | 16:9 | 5 | 通过 |
+| `run_clock@7` | 9:16 | 5 | 通过 |
 | `scale_compare` | 16:9 | 5 | 通过 |
 | `scale_compare` | 9:16 | 5 | 通过 |
 | `scanline` | 16:9 | 3 | 通过 |
@@ -493,6 +507,10 @@
 | `think_loop@3` | 9:16 | 3 | 通过 |
 | `think_loop@8` | 16:9 | 3 | 通过 |
 | `think_loop@8` | 9:16 | 3 | 通过 |
+| `tilt_board@7` | 16:9 | 6 | 通过 |
+| `tilt_board@7` | 9:16 | 6 | 通过 |
+| `time_budget@7` | 16:9 | 6 | 通过 |
+| `time_budget@7` | 9:16 | 6 | 通过 |
 | `timeline` | 16:9 | 2 | 通过 |
 | `timeline` | 9:16 | 2 | 通过 |
 | `tracking` | 16:9 | 6 | 通过 |
@@ -511,6 +529,8 @@
 | `vertical_title` | 9:16 | 4 | 通过 |
 | `waterfall` | 16:9 | 4 | 通过 |
 | `waterfall` | 9:16 | 4 | 通过 |
+| `wave_align` | 16:9 | 5 | 通过 |
+| `wave_align` | 9:16 | 5 | 通过 |
 | `wire_resolve` | 16:9 | 3 | 通过 |
 | `wire_resolve` | 9:16 | 3 | 通过 |
 | `word_swap` | 16:9 | 3 | 通过 |
@@ -531,6 +551,7 @@
 - WP5 interlude: the source credit is right-aligned into the 9:16 button zone（interlude@1 9:16, interlude@3 9:16, interlude@8 9:16）
 - WP5 cold_open: a long 2-line title slams full-width (and past the canvas at 3 s)（cold_open@1 9:16, cold_open@3 16:9, cold_open@3 9:16）
 - WP5 chapter_breather: a long next-chapter title runs full width（chapter_breather@1 9:16, chapter_breather@3 16:9, chapter_breather@3 9:16, chapter_breather@8 9:16）
+- code: a long source line being typed in a 5 s beat (screens.json "beat") runs under the window's right-edge fade into the 9:16 button zone（code 9:16）
 - WP4 im_chat: avatar monogram / long-thread bubble boxes (info level)（im_chat 16:9, im_chat 9:16）
 - WP4 profile_card: in the 6-person grid (9:16) the one-line bios overflow their cells（profile_card 9:16）
 - WP4 china_map: ranking labels at the right edge cross the 9:16 button zone（china_map 9:16）

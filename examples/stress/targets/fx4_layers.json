@@ -1,0 +1,185 @@
+{
+ "base": "assets/previews/fx",
+ "note": "wave 5 层与作品墙：步骤导航（8 个长标签）、钉住的章节标题（长文本）、作品墙 1 / 12 / 60 张素材、超长标题、非数字值、只给标题",
+ "beat": 5,
+ "meta": {
+  "nav": {
+   "steps": [
+    "选一个真正有冲突的题目",
+    "找素材和真实界面截图",
+    "写稿并标出关键词",
+    "配音字幕逐字对齐",
+    "剪辑和转场节奏",
+    "封面标题和发布文案",
+    "交付前自检打分",
+    "复盘数据写进下一期"
+   ],
+   "numbered": true
+  }
+ },
+ "targets": {
+  "card_wall": [
+   {
+    "media": [
+     "action_card.webp"
+    ],
+    "title": "一张图也铺满",
+    "line": "只有一张素材。",
+    "topic": "压力测试"
+   },
+   {
+    "media": [
+     "action_card.webp",
+     "app_flow.webp",
+     "apple_blur.webp",
+     "area_overlay.webp",
+     "audio_quote.webp",
+     "bar_race.webp",
+     "bars.webp",
+     "bars_csv.webp",
+     "beat_cut.webp",
+     "black_slam.webp",
+     "breather.webp",
+     "burst.webp"
+    ],
+    "value": "197",
+    "title": "个动效和转场",
+    "sub": "每一个都在画廊里",
+    "line": "十二张素材。",
+    "topic": "压力测试"
+   },
+   {
+    "media": [
+     "action_card.webp",
+     "app_flow.webp",
+     "apple_blur.webp",
+     "area_overlay.webp",
+     "audio_quote.webp",
+     "bar_race.webp",
+     "bars.webp",
+     "bars_csv.webp",
+     "beat_cut.webp",
+     "black_slam.webp",
+     "breather.webp",
+     "burst.webp",
+     "callout.webp",
+     "card_fan.webp",
+     "cartoon.webp",
+     "chapter_bar.webp",
+     "chat.webp",
+     "china_map-dots.webp",
+     "china_map.webp",
+     "chip_cycle.webp",
+     "choose_one.webp",
+     "cite_article.webp",
+     "cite_paper.webp",
+     "cite_pdf.webp",
+     "cite_post.webp",
+     "cite_quote.webp",
+     "cite_stack.webp",
+     "cite_video.webp",
+     "clip_style.webp",
+     "code.webp",
+     "cold_open.webp",
+     "collage.webp",
+     "combo.webp",
+     "comment_thread.webp",
+     "converge.webp",
+     "countdown.webp",
+     "cube_number.webp",
+     "cursor.webp",
+     "danmaku.webp",
+     "deal_card.webp",
+     "decision_tree.webp",
+     "dial.webp",
+     "dialogue.webp",
+     "diffuse.webp",
+     "doc_flip.webp",
+     "doc_photo.webp",
+     "doc_pick.webp",
+     "dolly_layers.webp",
+     "donut.webp",
+     "drop_stack.webp",
+     "earth_zoom.webp",
+     "email_card.webp",
+     "equity_tree.webp",
+     "flip3d.webp",
+     "flying_words.webp",
+     "footage.webp",
+     "form_fill.webp",
+     "formula.webp",
+     "freeze_frame.webp",
+     "funnel.webp"
+    ],
+    "value": "12,345,678",
+    "title": "这是一个非常非常长的标题，用来测试作品墙上的大标题会不会自动换行缩小并且在放不下的时候加省略号",
+    "sub": "副标题也写得很长很长很长很长很长很长很长很长很长很长很长",
+    "line": "六十张素材，超长标题。",
+    "topic": "压力测试"
+   },
+   {
+    "value": "AI",
+    "title": "非数字的值",
+    "line": "没有素材，值不是数字。",
+    "topic": "压力测试"
+   },
+   {
+    "title": "只给标题"
+   }
+  ],
+  "minimal:statement": [
+   {
+    "step": 1,
+    "lines": [
+     "第一步"
+    ],
+    "line": "第一步。"
+   },
+   {
+    "step": 8,
+    "lines": [
+     "跳到最后一步"
+    ],
+    "line": "最后一步。"
+   },
+   {
+    "step": "剪辑",
+    "lines": [
+     "按名字找步骤"
+    ],
+    "pin": {
+     "index": 2,
+     "text": "钉住的标题也可以非常非常非常非常非常非常非常长"
+    },
+    "line": "按名字。"
+   },
+   {
+    "lines": [
+     "没有步骤的拍"
+    ],
+    "line": "导航收起。"
+   }
+  ],
+  "reel:quote": [
+   {
+    "text": "短钉",
+    "pin": "短"
+   },
+   {
+    "text": "长钉住标题",
+    "pin": {
+     "index": 12,
+     "text": "工作室和团队以及一个超级超级超级超级超级超级超级超级长的说明"
+    }
+   },
+   {
+    "text": "带导航",
+    "step": 3,
+    "pin": {
+     "index": 3,
+     "text": "工作室和团队"
+    }
+   }
+  ]
+ }
+}

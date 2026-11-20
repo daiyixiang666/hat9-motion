@@ -1,10 +1,10 @@
 ---
 name: hat9-motion
-description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 26 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 197 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、掉落堆叠、倒入液面、推轨穿层、焦点转移、引用、图表、地图……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
+description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、录音或文案做成 AE 级动效视频；先定谁来口播，人一直在画面里，动效围着人换位置（横屏 16:9 / 竖屏 9:16）。内置 26 种风格（财经刊、极简讲述、瑞士海报、剪纸、手绘白板、水墨、像素、拼贴杂志、等距微缩、镀铬三维……）和 205 个按 VideoHive 销量、YouTube 与 B 站播放量复刻的 AE 动效与转场（2.5D 照片视差、重拍排版 Stomp、瞳孔穿梭、文字匹配剪辑、照片墙、数字滚动、掉落堆叠、倒入液面、推轨穿层、焦点转移、引用、图表、地图……），讲流程的片子有步骤导航和八个流程效果（作品墙、用时圆环、运行时钟、改稿窗口、声画对齐、逐帧检查、前后对照……），自动分镜、对准口播逐字时间、字幕、主持人形象，HyperFrames 逐帧确定渲染，零 API key 可出片。Use when the user wants an explainer / talking-head / 口播 / 解说 / 知识类短视频、动效、motion graphics、kinetic typography、AE 特效、片头、字幕包装、竖屏抖音视频, or asks to "turn this script into a video".
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.19.0"
+  version: "0.20.0"
   author: daiyixiang666
 ---
 
@@ -46,6 +46,8 @@ metadata:
    - 每个 beat 必须回答「这句话观众看见什么」；不合适就换 `fx`（id 见 `gallery/llms.txt`）。讲工具给真实录屏 / 截图，讲风格给同一内容不同风格并排。
    - 关键词写 `"@词"` 对时；说到「这个 / 这里」时加 `marks` 指哪说哪。
    - **同一个重点换着载体说**：数字和关键词优先用贴着主体的版式（`side_stat` `key_card` `stack_build` `stamp_compare` `strike_fix` `chip_cycle`）或数字画面（`mosaic_number` `seat_swarm` `dial` `log_scroll` `one_to_many` `scan_field` `card_fan`），全屏大字全片 ≤ 25% 且不连着用；有录屏 / 卡通形象 / 真人时开 `meta.presenter` 让它常驻并换位置（`references/presenter.md`），想要贯穿外框用 `meta.device`（`references/device.md`）；结尾用 `action_card`。
+   - **讲流程 / 「N 步」的稿子**（「我做一条视频分六步」「从写稿到发布」）：开 `meta.nav` 步骤导航（每个 beat 写 `step`），清单之后单讲某一条时写 `beat.pin` 钉住它的名字（`references/nav.md`）；画面先从这八个里挑，挑不出再用全屏大字：
+     `card_wall` 讲作品数量（一大堆真实作品当底）· `tilt_board` 讲规模（卡片墙 + 计数器）· `time_budget` 讲用时占比（按真实比例切的圆环）· `run_clock` 讲一次跑完用了多久（按真实时间排的节点）· `doc_edit` 讲写稿改稿 · `wave_align` 讲配音和字幕对齐 · `qc_sheet` 讲导出前检查 · `pair_check` 讲前后对比。这八个横屏、竖屏各自构图，数字和时间必须是真的。
    - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
    - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
 4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。

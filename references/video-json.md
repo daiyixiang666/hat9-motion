@@ -114,6 +114,9 @@
 | `meta.presenter` | `{"src": "assets/host.mp4"}` | 常驻主体（录屏、真人或卡通形象），整片连续播放；详见 `references/presenter.md` |
 | beat `presenter` | `"card"` | 这个 beat 里主体的位置：`full` / `card` / `side` / `corner` / `hidden`，换位置时平滑移动 |
 | `meta.device` | `"camera"` | 贯穿全片的外框：`camera` / `browser` / `phone`；详见 `references/device.md` |
+| `meta.nav` | `{"steps": ["选题", "写稿", "剪辑"]}` | 讲流程的片子：整章常驻的步骤导航（2–8 步），当前步骤高亮；详见 `references/nav.md` |
+| beat `step` | `2` 或 `"写稿"` | 这一拍是第几步；没写的拍导航收起 |
+| beat `pin` | `{"index": 1, "text": "设备"}` | 钉在左上角的这一条的名字，相邻几拍同一个 pin 时一直留着；上一拍是清单时从清单里飞上去 |
 | beat `chapter` | `{"label": "TIME-LAPSE", "bg": "accent"}` | 从这里开始新的一章：外框上的模式名和底色一起换（写 `true` 仍然只是换章转场） |
 
 工具：`scripts/cut_list.py`（长口播挑段精剪）、`scripts/ref_pacing.py`（量参考片的剪辑节奏）、`scripts/export_edit.py`（FCPXML + 分轨音频 + SRT，可导入剪辑软件）、`scripts/longform.py`（长片按章节分段渲染再拼接）、`scripts/share_card.py`（导出单张金句图）、`scripts/audio_tools.py`（降噪、拼接录音、剪口误）。

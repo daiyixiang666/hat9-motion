@@ -192,8 +192,8 @@ CSS = r"""
 .ki.sk-ink .k-stamp { background:var(--k-alert); color:var(--k-on-alert); border-color:var(--k-alert); border-radius:6px; }
 .ki.sk-pixel .k-stamp, .ki.sk-poster .k-stamp, .ki.sk-zine .k-stamp { border-radius:0; }
 #root.v .ki .k-kick, #root.v .ki .sb-en, #root.v .ki .sf-margin small, #root.v .ki .kc-pg,
-#root.v .ki .ss-bar span, #root.v .ki .cc-file, #root.v .ki .k-sub .k-stag { font-size:26px !important; }
-#root.v .ki .sc-lab small { font-size:26px; }
+#root.v .ki .ss-bar span, #root.v .ki .cc-file, #root.v .ki .k-sub .k-stag { font-size:30px !important; }
+#root.v .ki .sc-lab small { font-size:30px; }
 .ki .k-flash { position:absolute; inset:0; background:#fff; opacity:0; pointer-events:none; z-index:40; }
 """
 

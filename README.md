@@ -5,38 +5,36 @@
 **一条口播，变成 AE 级动效成片。**<br>
 Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one prompt.
 
-[▶ 看成片](#成片示例) · [🎛 在线看全部 197 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
+[▶ 看成片](#成片示例) · [🎛 在线看全部 205 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.19.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.20.0-blue)
 
-<a href="examples/mixue/video.json"><img src="assets/previews/hero.webp" width="1000" alt="示例《一杯 4 块钱的柠檬水》：左横屏 16:9，右竖屏 9:16"></a>
+<a href="https://daiyixiang666.github.io/hat9-motion/gallery/"><img src="assets/previews/wall.webp" width="1000" alt="16 种风格的示例成片同时在播：上面两排横屏 16:9，下面一排竖屏 9:16"></a>
 
-<sub>示例《一杯 4 块钱的柠檬水》：左横屏、右竖屏，同一份 video.json，各自排版。</sub>
+<sub>每一格都是仓库里的一条示例成片。上面两排横屏，下面一排竖屏：同一份 video.json，各自排版。</sub>
 
 </div>
 
 ---
 
-## 装上就有
-
-| | |
-|---|---|
-| **26 种风格** | `press` 财经刊 · `minimal` 极简讲述 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `riso` 孔版印刷 · `yuefen` 月份牌国货 · `editorial` 影像杂志 · `title` 片头字幕 · `bauhaus` 包豪斯构成 · `thread` 一线长卷 · `teleshop` 电视购物 · `vapor` 蒸汽波桌面 · `studio` 三维影棚 · `clay` 陶土影棚 · `reel` 动效库 |
-| **60 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
-| **197 个动效** | 180 个效果 + 17 种转场：字效、物理、镜头、质感、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
-| **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
-| **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
-| **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
-| **做自己的风格** | `hat9.py style new 我的id --from ink`：从任一风格派生，改颜色、字体、质感，或者整份复制改场景；预览、检查、放进画廊各一条命令，见 [`references/styles.md`](references/styles.md#做你自己的风格) |
-| **导演关卡** | 每一关一个命令：`brief`（需求单 + 分镜检查）→ `stills`（每个 beat 一张静帧的板）→ `sample`（最难几秒的动画小样）→ `montage`（卡拍快切，自动挑每段最好看的一秒）→ `review`（静帧板 + 自动检查 + 打分关）；`refs` 从参考片量节奏、排参考板、写原则。见 [`references/director.md`](references/director.md) |
-| **声音和真实界面** | 配乐旁放 `.beats.json` 就自动卡拍，片中快切 `"fx": "montage"`，说话时配乐压低，渲染自动 -14 LUFS；讲产品用 `scripts/ui_capture.py 网址` 抓真实界面组件，配 `ui_lift` 出框，不编界面 |
-| **同一个重点，换着载体说** | 数字可以贴在主体旁、做成信息卡、拼成作品墙、变成仪表或钟、滚成日志；主体（录屏 / 卡通形象 / 真人）常驻画面并换位置，相机或浏览器外框按章节换模式名和底色；`review` 会拦住连续的全屏大字。见 [`references/presenter.md`](references/presenter.md)、[`references/device.md`](references/device.md) |
-| **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
-| **26 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
-
 ## 成片示例
 
-点图看成片。每条都横竖屏各排一版，数据来源印在画面上。
+27 条成片，每条都横竖屏各排一版，数据来源印在画面上。点图看成片。
+
+| | | |
+|---|---|---|
+| <a href="assets/previews/mixue_16x9.mp4"><img src="assets/previews/mixue_16x9.jpg" height="118" alt="一杯 4 块钱的柠檬水 横屏"></a> <a href="assets/previews/mixue_9x16.mp4"><img src="assets/previews/mixue_9x16.jpg" height="118" alt="一杯 4 块钱的柠檬水 竖屏"></a><br>**一杯 4 块钱的柠檬水**<br><sub>`press` 财经刊</sub> | <a href="assets/previews/screen_16x9.mp4"><img src="assets/previews/screen_16x9.jpg" height="118" alt="8 亿人在用，5% 在付钱 横屏"></a> <a href="assets/previews/screen_9x16.mp4"><img src="assets/previews/screen_9x16.jpg" height="118" alt="8 亿人在用，5% 在付钱 竖屏"></a><br>**8 亿人在用，5% 在付钱**<br><sub>`screen` AI 工具台</sub> | <a href="assets/previews/atlas_16x9.mp4"><img src="assets/previews/atlas_16x9.jpg" height="118" alt="货船为什么不走苏伊士了 横屏"></a> <a href="assets/previews/atlas_9x16.mp4"><img src="assets/previews/atlas_9x16.jpg" height="118" alt="货船为什么不走苏伊士了 竖屏"></a><br>**货船为什么不走苏伊士了**<br><sub>`atlas` 地图纪录</sub> |
+| <a href="assets/previews/doc_16x9.mp4"><img src="assets/previews/doc_16x9.jpg" height="118" alt="一个铁箱子 横屏"></a> <a href="assets/previews/doc_9x16.mp4"><img src="assets/previews/doc_9x16.jpg" height="118" alt="一个铁箱子 竖屏"></a><br>**一个铁箱子**<br><sub>`doc` 实拍纪录</sub> | <a href="assets/previews/poster_16x9.mp4"><img src="assets/previews/poster_16x9.jpg" height="118" alt="专注，就是学会说不 横屏"></a> <a href="assets/previews/poster_9x16.mp4"><img src="assets/previews/poster_9x16.jpg" height="118" alt="专注，就是学会说不 竖屏"></a><br>**专注，就是学会说不**<br><sub>`poster` 瑞士海报</sub> | <a href="assets/previews/papercut_16x9.mp4"><img src="assets/previews/papercut_16x9.jpg" height="118" alt="过年看电影，钱押给最好的那一部 横屏"></a> <a href="assets/previews/papercut_9x16.mp4"><img src="assets/previews/papercut_9x16.jpg" height="118" alt="过年看电影，钱押给最好的那一部 竖屏"></a><br>**过年看电影，钱押给最好的那一部**<br><sub>`papercut` 剪纸</sub> |
+| <a href="assets/previews/sketch_16x9.mp4"><img src="assets/previews/sketch_16x9.jpg" height="118" alt="Costco 真正卖的是什么 横屏"></a> <a href="assets/previews/sketch_9x16.mp4"><img src="assets/previews/sketch_9x16.jpg" height="118" alt="Costco 真正卖的是什么 竖屏"></a><br>**Costco 真正卖的是什么**<br><sub>`sketch` 手绘白板</sub> | <a href="assets/previews/ink_16x9.mp4"><img src="assets/previews/ink_16x9.jpg" height="118" alt="一只猴子，三天卖出一千万套 横屏"></a> <a href="assets/previews/ink_9x16.mp4"><img src="assets/previews/ink_9x16.jpg" height="118" alt="一只猴子，三天卖出一千万套 竖屏"></a><br>**一只猴子，三天卖出一千万套**<br><sub>`ink` 水墨国风</sub> | <a href="assets/previews/zine_16x9.mp4"><img src="assets/previews/zine_16x9.jpg" height="118" alt="一只怪兽，一年卖了一百四十多亿 横屏"></a> <a href="assets/previews/zine_9x16.mp4"><img src="assets/previews/zine_9x16.jpg" height="118" alt="一只怪兽，一年卖了一百四十多亿 竖屏"></a><br>**一只怪兽，一年卖了一百四十多亿**<br><sub>`zine` 拼贴杂志</sub> |
+| <a href="assets/previews/flat_16x9.mp4"><img src="assets/previews/flat_16x9.jpg" height="118" alt="一份外卖背后的城市网络 横屏"></a> <a href="assets/previews/flat_9x16.mp4"><img src="assets/previews/flat_9x16.jpg" height="118" alt="一份外卖背后的城市网络 竖屏"></a><br>**一份外卖背后的城市网络**<br><sub>`flat` 扁平插画</sub> | <a href="assets/previews/pixel_16x9.mp4"><img src="assets/previews/pixel_16x9.jpg" height="118" alt="三千二百亿的游戏账本 横屏"></a> <a href="assets/previews/pixel_9x16.mp4"><img src="assets/previews/pixel_9x16.jpg" height="118" alt="三千二百亿的游戏账本 竖屏"></a><br>**三千二百亿的游戏账本**<br><sub>`pixel` 像素复古</sub> | <a href="assets/previews/iso3d_16x9.mp4"><img src="assets/previews/iso3d_16x9.jpg" height="118" alt="快递的规模账 横屏"></a> <a href="assets/previews/iso3d_9x16.mp4"><img src="assets/previews/iso3d_9x16.jpg" height="118" alt="快递的规模账 竖屏"></a><br>**快递的规模账**<br><sub>`iso3d` 等距微缩</sub> |
+| <a href="assets/previews/chrome3d_16x9.mp4"><img src="assets/previews/chrome3d_16x9.jpg" height="118" alt="英伟达：卖铲子的人 横屏"></a> <a href="assets/previews/chrome3d_9x16.mp4"><img src="assets/previews/chrome3d_9x16.jpg" height="118" alt="英伟达：卖铲子的人 竖屏"></a><br>**英伟达：卖铲子的人**<br><sub>`chrome3d` Y2K 镀铬</sub> | <a href="assets/previews/minimal_16x9.mp4"><img src="assets/previews/minimal_16x9.jpg" height="118" alt="棉花糖实验，测的真是自控力吗 横屏"></a> <a href="assets/previews/minimal_9x16.mp4"><img src="assets/previews/minimal_9x16.jpg" height="118" alt="棉花糖实验，测的真是自控力吗 竖屏"></a><br>**棉花糖实验，测的真是自控力吗**<br><sub>`minimal` 极简讲述</sub> | <a href="assets/previews/riso_16x9.mp4"><img src="assets/previews/riso_16x9.jpg" height="118" alt="名创优品 2024：增长的那一半在海外 横屏"></a> <a href="assets/previews/riso_9x16.mp4"><img src="assets/previews/riso_9x16.jpg" height="118" alt="名创优品 2024：增长的那一半在海外 竖屏"></a><br>**名创优品 2024：增长的那一半在海外**<br><sub>`riso` 孔版印刷</sub> |
+| <a href="assets/previews/yuefen_16x9.mp4"><img src="assets/previews/yuefen_16x9.jpg" height="118" alt="一瓶白酒的年度账本 横屏"></a> <a href="assets/previews/yuefen_9x16.mp4"><img src="assets/previews/yuefen_9x16.jpg" height="118" alt="一瓶白酒的年度账本 竖屏"></a><br>**一瓶白酒的年度账本**<br><sub>`yuefen` 月份牌国货</sub> | <a href="assets/previews/editorial_16x9.mp4"><img src="assets/previews/editorial_16x9.jpg" height="118" alt="迅销 2024 财年：优衣库的一年 横屏"></a> <a href="assets/previews/editorial_9x16.mp4"><img src="assets/previews/editorial_9x16.jpg" height="118" alt="迅销 2024 财年：优衣库的一年 竖屏"></a><br>**迅销 2024 财年：优衣库的一年**<br><sub>`editorial` 影像杂志</sub> | <a href="assets/previews/title_16x9.mp4"><img src="assets/previews/title_16x9.jpg" height="118" alt="Netflix 2024：3 亿会员这一年 横屏"></a> <a href="assets/previews/title_9x16.mp4"><img src="assets/previews/title_9x16.jpg" height="118" alt="Netflix 2024：3 亿会员这一年 竖屏"></a><br>**Netflix 2024：3 亿会员这一年**<br><sub>`title` 片头字幕</sub> |
+| <a href="assets/previews/bauhaus_16x9.mp4"><img src="assets/previews/bauhaus_16x9.jpg" height="118" alt="宜家降价的一年 横屏"></a> <a href="assets/previews/bauhaus_9x16.mp4"><img src="assets/previews/bauhaus_9x16.jpg" height="118" alt="宜家降价的一年 竖屏"></a><br>**宜家降价的一年**<br><sub>`bauhaus` 包豪斯构成</sub> | <a href="assets/previews/thread_16x9.mp4"><img src="assets/previews/thread_16x9.jpg" height="118" alt="小米的 2024：一条线走完年报 横屏"></a> <a href="assets/previews/thread_9x16.mp4"><img src="assets/previews/thread_9x16.jpg" height="118" alt="小米的 2024：一条线走完年报 竖屏"></a><br>**小米的 2024：一条线走完年报**<br><sub>`thread` 一线长卷</sub> | <a href="assets/previews/teleshop_16x9.mp4"><img src="assets/previews/teleshop_16x9.jpg" height="118" alt="一锅火锅的年度账本 横屏"></a> <a href="assets/previews/teleshop_9x16.mp4"><img src="assets/previews/teleshop_9x16.jpg" height="118" alt="一锅火锅的年度账本 竖屏"></a><br>**一锅火锅的年度账本**<br><sub>`teleshop` 电视购物</sub> |
+| <a href="assets/previews/vapor_16x9.mp4"><img src="assets/previews/vapor_16x9.jpg" height="118" alt="任天堂 FY2025 账本 横屏"></a> <a href="assets/previews/vapor_9x16.mp4"><img src="assets/previews/vapor_9x16.jpg" height="118" alt="任天堂 FY2025 账本 竖屏"></a><br>**任天堂 FY2025 账本**<br><sub>`vapor` 蒸汽波桌面</sub> | <a href="assets/previews/hud_16x9.mp4"><img src="assets/previews/hud_16x9.jpg" height="118" alt="宁德时代 2024 年报 横屏"></a> <a href="assets/previews/hud_9x16.mp4"><img src="assets/previews/hud_9x16.jpg" height="118" alt="宁德时代 2024 年报 竖屏"></a><br>**宁德时代 2024 年报**<br><sub>`hud` 暗场 HUD</sub> | <a href="assets/previews/reel_16x9.mp4"><img src="assets/previews/reel_16x9.jpg" height="118" alt="拼多多 2024：3938 亿营收这一年 横屏"></a> <a href="assets/previews/reel_9x16.mp4"><img src="assets/previews/reel_9x16.jpg" height="118" alt="拼多多 2024：3938 亿营收这一年 竖屏"></a><br>**拼多多 2024：3938 亿营收这一年**<br><sub>`reel` 动效库</sub> |
+| <a href="assets/previews/studio_16x9.mp4"><img src="assets/previews/studio_16x9.jpg" height="118" alt="苹果 2025 财年：一间展厅看完年报 横屏"></a> <a href="assets/previews/studio_9x16.mp4"><img src="assets/previews/studio_9x16.jpg" height="118" alt="苹果 2025 财年：一间展厅看完年报 竖屏"></a><br>**苹果 2025 财年：一间展厅看完年报**<br><sub>`studio` 三维影棚</sub> | <a href="assets/previews/clay_16x9.mp4"><img src="assets/previews/clay_16x9.jpg" height="118" alt="乐高 2024：一块积木的年度账本 横屏"></a> <a href="assets/previews/clay_9x16.mp4"><img src="assets/previews/clay_9x16.jpg" height="118" alt="乐高 2024：一块积木的年度账本 竖屏"></a><br>**乐高 2024：一块积木的年度账本**<br><sub>`clay` 陶土影棚</sub> | <a href="assets/previews/fx4_16x9.mp4"><img src="assets/previews/fx4_16x9.jpg" height="118" alt="一份 video.json 怎么变成成片 横屏"></a> <a href="assets/previews/fx4_9x16.mp4"><img src="assets/previews/fx4_9x16.jpg" height="118" alt="一份 video.json 怎么变成成片 竖屏"></a><br>**一份 video.json 怎么变成成片**<br><sub>`reel` + 讲流程套件</sub> |
+
+<details>
+<summary>每条片子用了什么手法（展开）</summary>
 
 | 横屏 16:9 | 竖屏 9:16 | 题材 · 风格 |
 |---|---|---|
@@ -66,12 +64,22 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 | <a href="assets/previews/reel_16x9.mp4"><img src="assets/previews/reel_16x9.jpg" width="420" alt="拼多多 2024：3938 亿营收这一年 横屏"></a> | <a href="assets/previews/reel_9x16.mp4"><img src="assets/previews/reel_9x16.jpg" width="120" alt="拼多多 2024：3938 亿营收这一年 竖屏"></a> | **《拼多多 2024：3938 亿营收这一年》**<br>`reel` 动效库：暖黑底上的超大黑体字和一个橙色强调，标题逐行升起、强调词下划线擦出；横条按真实长度赛跑、一根分段长条裂成一列占比、粗线加面积画出五年走势，字幕是不带底板的白色粗体。<br><sub>PDD Holdings 2024 / 2022 财年业绩公告（SEC Form 6-K）</sub> |
 | <a href="assets/previews/studio_16x9.mp4"><img src="assets/previews/studio_16x9.jpg" width="420" alt="苹果 2025 财年：一间展厅看完年报 横屏"></a> | <a href="assets/previews/studio_9x16.mp4"><img src="assets/previews/studio_9x16.jpg" width="120" alt="苹果 2025 财年：一间展厅看完年报 竖屏"></a> | **《苹果 2025 财年：一间展厅看完年报》**<br>`studio` 三维影棚：带倒影的黑漆地板，香槟色拉丝金属立体字、白瓷数字、每段一个朱红物件；斜立圆环滑出占比、地板长条排行、按比例升起的圆柱、踏步柱上滚过的金属球，镜头按每段主体重新取景。<br><sub>Apple Inc. 2021—2025 财年 Form 10-K</sub> |
 | <a href="assets/previews/clay_16x9.mp4"><img src="assets/previews/clay_16x9.jpg" width="420" alt="乐高 2024：一块积木的年度账本 横屏"></a> | <a href="assets/previews/clay_9x16.mp4"><img src="assets/previews/clay_9x16.jpg" width="120" alt="乐高 2024：一块积木的年度账本 竖屏"></a> | **《乐高 2024：一块积木的年度账本》**<br>`clay` 陶土影棚：无缝纸背景上的陶土小剧场，一个陶土小人把每句话演出来：拖着数字进场、压泵让柱子升起、从奶酪轮里拉出占比、搭台阶、跳踏脚石，赤陶是唯一的饱和色。<br><sub>乐高集团 2024 年度报告 · 2024 财务摘要</sub> |
+| <a href="assets/previews/fx4_16x9.mp4"><img src="assets/previews/fx4_16x9.jpg" width="420" alt="一份 video.json 怎么变成成片 横屏"></a> | <a href="assets/previews/fx4_9x16.mp4"><img src="assets/previews/fx4_9x16.jpg" width="120" alt="一份 video.json 怎么变成成片 竖屏"></a> | **《一份 video.json 怎么变成成片》**<br>`reel` + 讲流程套件：顶部（竖屏是左侧进度轨）一排六关常驻、当前一关高亮，左上角钉着这一关的命令名；组件墙、改稿窗口、用时圆环、静帧对照、声画对齐、运行时钟、逐帧检查、作品墙，屏幕上的数和时间都来自本仓库的真实运行。<br><sub>本仓库实测，见 `examples/fx4/SOURCES.md`</sub> |
+
+</details>
 
 每条片子就是一份 `video.json`（每句一个场景）加配音，源文件在 [`examples/`](examples/)。
 
 ## 什么素材都能放
 
 文字长短、条数多少、图片几张、横的竖的、视频、PDF、网址、表格，都能直接放进去，每种情况都有专门设计过的动效。完整清单和参数范围见 [`references/inputs.md`](references/inputs.md)；所有效果都过了压力测试（`scripts/stress.py`），横竖屏各跑一遍。
+
+**讲流程：横屏竖屏各一套**
+
+| | | |
+|---|---|---|
+| <img src="assets/previews/fx/run_clock.webp" width="260" alt="跑完时钟"><br>**挂着让它跑完**<br><sub>时钟滚动，节点按真实时间排开</sub> | <img src="assets/previews/fx/qc_sheet.webp" width="260" alt="逐帧检查"><br>**出片前自检**<br><sub>逐格扫过，有问题的那格标红</sub> | <img src="assets/previews/fx/time_budget.webp" width="260" alt="时间账"><br>**其中多少是这一部分**<br><sub>圆环按真实比例切出一块</sub> |
+| <img src="assets/previews/fx/wave_align.webp" width="260" alt="声画对齐"><br>**配音和字幕对齐**<br><sub>字幕一段段对到波形上</sub> | <img src="assets/previews/fx/doc_edit.webp" width="260" alt="改稿窗口"><br>**写稿改稿**<br><sub>划掉旧的，补上新的</sub> | <img src="assets/previews/fx/card_wall.webp" width="260" alt="作品墙"><br>**做了这么多条**<br><sub>一面缓慢移动的缩略图墙</sub> |
 
 **一张图还是两百张，动效不一样**
 
@@ -127,6 +135,24 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 |---|---|---|
 | <img src="assets/previews/fx/news_flash.webp" width="260" alt="新闻快讯"><br>**新闻快讯**<br><sub>快讯横幅 + 滚动条</sub> | <img src="assets/previews/fx/review_card.webp" width="260" alt="测评"><br>**测评**<br><sub>评分条、优缺点、结论章</sub> | <img src="assets/previews/fx/deal_card.webp" width="260" alt="带货"><br>**带货**<br><sub>原价划掉、现价砸下</sub> |
 全部动效在 [在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)，可以按类别筛选、横竖屏切换。
+
+## 装上就有
+
+| | |
+|---|---|
+| **26 种风格** | `press` 财经刊 · `minimal` 极简讲述 · `poster` 瑞士海报 · `zine` 拼贴杂志 · `screen` AI 工具台 · `hud` 暗场 · `atlas` 地图纪录 · `doc` 实拍纪录 · `papercut` 剪纸 · `sketch` 手绘白板 · `ink` 水墨国风 · `flat` 扁平插画 · `pixel` 像素复古 · `iso3d` 等距微缩 · `chrome3d` Y2K 镀铬 · `riso` 孔版印刷 · `yuefen` 月份牌国货 · `editorial` 影像杂志 · `title` 片头字幕 · `bauhaus` 包豪斯构成 · `thread` 一线长卷 · `teleshop` 电视购物 · `vapor` 蒸汽波桌面 · `studio` 三维影棚 · `clay` 陶土影棚 · `reel` 动效库 |
+| **60 款字体** | 黑体、宋体、书法、手写、像素、展示字……按场景挑，[字体样张](https://daiyixiang666.github.io/hat9-motion/gallery/fonts.html) |
+| **205 个动效** | 188 个效果 + 17 种转场：字效、物理、镜头、质感、数据图表、地图、引用、截图录屏、文档、音视频、社交人物、结构、片子类型、讲流程、不说话的时刻……换风格时动效跟着换皮。[在线画廊](https://daiyixiang666.github.io/hat9-motion/gallery/)里每个动效用最合适的风格演示，可以按风格筛选 |
+| **交付** | 16:9 / 9:16 / 1:1 / 4:5 / 3:4、平台字幕预设、AI 生成标识、品牌包、系列片头、多语言、三比例封面、导出剪辑软件（FCPXML）、长片分章渲染 |
+| **什么素材都能放** | 长短文字、1 到几百张图、视频、PDF、论文、新闻、聊天记录、评论区、录屏、长截图、网址、表格，见[下文](#什么素材都能放) |
+| **给 AI 的说明** | `SKILL.md`（Claude Code 等）· `AGENTS.md`（Codex / Cursor）· `llms.txt` |
+| **做自己的风格** | `hat9.py style new 我的id --from ink`：从任一风格派生，改颜色、字体、质感，或者整份复制改场景；预览、检查、放进画廊各一条命令，见 [`references/styles.md`](references/styles.md#做你自己的风格) |
+| **导演关卡** | 每一关一个命令：`brief`（需求单 + 分镜检查）→ `stills`（每个 beat 一张静帧的板）→ `sample`（最难几秒的动画小样）→ `montage`（卡拍快切，自动挑每段最好看的一秒）→ `review`（静帧板 + 自动检查 + 打分关）；`refs` 从参考片量节奏、排参考板、写原则。见 [`references/director.md`](references/director.md) |
+| **声音和真实界面** | 配乐旁放 `.beats.json` 就自动卡拍，片中快切 `"fx": "montage"`，说话时配乐压低，渲染自动 -14 LUFS；讲产品用 `scripts/ui_capture.py 网址` 抓真实界面组件，配 `ui_lift` 出框，不编界面 |
+| **同一个重点，换着载体说** | 数字可以贴在主体旁、做成信息卡、拼成作品墙、变成仪表或钟、滚成日志；主体（录屏 / 卡通形象 / 真人）常驻画面并换位置，相机或浏览器外框按章节换模式名和底色；`review` 会拦住连续的全屏大字。见 [`references/presenter.md`](references/presenter.md)、[`references/device.md`](references/device.md) |
+| **命令行** | `scripts/hat9.py`：自检、一键出片、分镜、渲染 |
+| **讲流程的片子** | 「我做一条视频分六步」：`meta.nav` 整章常驻一排步骤、当前步骤高亮，`beat.pin` 把清单里的这一条钉在左上角；八个流程效果（作品墙、组件墙、用时圆环、运行时钟、改稿窗口、声画对齐、逐帧检查、前后对照）横屏和竖屏各自排版，不是一版缩放。见 [`references/nav.md`](references/nav.md) |
+| **27 条示例** | `examples/` 里的源文件，改文字就能出自己的片 |
 
 ## 你说 → 会发生什么
 
@@ -193,7 +219,7 @@ python3 scripts/hat9.py render work/video.json --aspect 16:9 --preview
 | 环节 | 不花钱的默认 | 可以换成 |
 |---|---|---|
 | 配音 | 系统语音 / 本地 TTS / 静音按字数估时 | 你自己的录音（推荐） |
-| 画面 | 197 个代码动效（180 效果 + 17 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
+| 画面 | 205 个代码动效（188 效果 + 17 转场）+ 你的图片、视频、PDF、截图、表格、录音 | 任意生图工具的图片（你自己决定，付费接口会先问你） |
 | 音效 | `scripts/sfx.py` 现场合成，19 种 | — |
 | 背景音乐 | `scripts/music.py` 现场合成（鼓、贝斯、拨弦、铺底，转场处加重音） | 你自己的授权音乐 |
 | 字体 | 思源黑体 / 宋体、得意黑、霞鹜文楷等 OFL 字体 | — |
@@ -231,7 +257,7 @@ scripts/h9/aefx.py  AE 动效库（每个效果一个函数）  scripts/build.py
 gallery/            在线画廊（index.html · effects.json · llms.txt）
 references/effects/ 每个效果一张配方卡             references/           格式、动效规矩、句型→画面、出图规则
 styles/             press 财经刊 · screen AI 工具台 · atlas 地图纪录 · doc 实拍纪录 · poster 瑞士海报 · reel 动效库 · hud 暗场 · studio 三维影棚 · clay 陶土影棚 …（共 26 种）
-examples/           每种风格一条成片（mixue · screen · atlas · doc · poster · hud · reel · studio · clay …，共 26 条）· aefx（动效在真实口播里）· stress（素材压力测试）· demo（旧版）
+examples/           每种风格一条成片（mixue · screen · atlas · doc · poster · hud · reel · studio · clay …，共 26 条）· fx4（讲流程套件）· aefx（动效在真实口播里）· stress（素材压力测试）· demo（旧版）
 ```
 
 ## FAQ
@@ -258,6 +284,7 @@ examples/           每种风格一条成片（mixue · screen · atlas · doc �
 
 ## 更新
 
+- **0.20.0** 讲流程的片子：步骤导航 `meta.nav`、钉住的标题 `beat.pin`，八个流程效果 `card_wall` `tilt_board` `time_budget` `run_clock` `doc_edit` `wave_align` `qc_sheet` `pair_check`，横竖屏各自构图；示例 `examples/fx4/`。
 - **0.19.0** `hud` `reel` `studio` `clay` 按竖屏重做，各带第一条示例成片：`hud` 七种黄铜仪器、`reel` 新场景 `rank` `split` `trend`、`studio` 香槟金属 + 白瓷 + 每站重新取景、`clay` 陶土小人把每句话演出来；示例成片 26 条。
 - **0.18.0** 新增 8 种风格：`riso` 孔版印刷、`yuefen` 月份牌国货、`editorial` 影像杂志、`title` 片头字幕、`bauhaus` 包豪斯构成、`thread` 一线长卷、`teleshop` 电视购物、`vapor` 蒸汽波桌面，各带一条示例成片；新效果 `glyph_sphere` `cube_number` `wire_resolve` 和锚点匹配转场 `anchor_match`；无声展示片可写 `meta.silent`。
 - **0.17.0** 14 种风格重做画面；新增 15 个效果（物理、镜头、字效、数据、质感）和 4 种转场；竖屏字幕全部避开平台界面并自动检查；不出主持人的风格真的不出；字幕位置可按句指定；缺字体时明确提示。

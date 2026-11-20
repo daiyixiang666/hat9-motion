@@ -96,7 +96,7 @@ PIT = {
 
 
 REELS = [EX] + [SKILL / "examples" / d for d in ("media", "cite", "structure", "data", "screens", "social", "pacing",
-                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2", "fx2", "fx3")]   # every demo reel that feeds the gallery
+                                                   "avmedia", "text2", "charts2", "docs2", "ui2", "genre", "pipeline2", "fx2", "fx3", "fx4")]   # every demo reel that feeds the gallery
 
 
 def beats():
@@ -113,6 +113,8 @@ def beats():
         vj, r = ex / "video.json", ex / "renders" / "reel_16x9.mp4"
         if not (vj.exists() and r.exists()): continue
         for b in timed(ex, json.loads(vj.read_text())["beats"]):
+            if ex.name in ONLY and b.get("fx") not in ONLY[ex.name]: continue    # a showcase film: only its own kit gets cards
+            if b.get("card") is False: continue                                  # a beat that is not the effect's showcase
             yield b, r, ex / "renders" / "reel_9x16.mp4", "reel"
 
 
@@ -373,6 +375,31 @@ PIT.update({
     "cube_number": "值要以数字开头；数字和 . , % 是方块，亿、万等单位排成平面字；数字越长格子越小。",
     "wire_resolve": "值写成带单位的字符串（\"93.3 亿\"），条形按其中的数字成比例；卡片超过 5 张会报错。",
 })
+# ---- 0.20: process-explainer kit (examples/fx4), used with meta.nav / beat.pin (references/nav.md)
+CAT["流程"] = ["card_wall", "tilt_board", "time_budget", "run_clock", "doc_edit", "wave_align", "qc_sheet", "pair_check"]
+SUIT.update({
+    "card_wall": "讲作品数量：「我做过 300 多条视频」，一大堆真实作品当底，上面一句话或一个数",
+    "tilt_board": "讲规模：「拆成了 400 个组件」，一面不停流动的卡片墙 + 数上去的计数器",
+    "time_budget": "讲用时：「一天 24 小时，我只花 30 分钟」，一圈按真实比例切出来的时间",
+    "run_clock": "讲一次跑完用了多久：「23:29 发出去，01:23 全做完」，按真实时间排的节点",
+    "doc_edit": "讲改稿：文档一字一字写出来，再划掉一段、改成另一段",
+    "wave_align": "讲配音和字幕：波形扫过去，字幕一段段对到声音上，错字顺手改掉",
+    "qc_sheet": "讲检查：导出前把整条片子逐帧过一遍，哪一项没过就停在哪一帧",
+    "pair_check": "讲前后对比：「左边以前、右边现在」，一条条圈出到底好在哪",
+})
+DUR.update({"card_wall": "4–6 秒", "tilt_board": "4–6 秒", "time_budget": "5–6 秒", "run_clock": "6–8 秒（阶段多时取长）",
+            "doc_edit": "5–7 秒", "wave_align": "5–7 秒", "qc_sheet": "5–7 秒", "pair_check": "5–6 秒"})
+PIT.update({
+    "card_wall": "给够 6 张以上真实缩略图；标题太长请拆成两拍。",
+    "tilt_board": "数字很长时会缩小，想要大字就换大单位（「123 万」）。",
+    "time_budget": "切片是真实角度：比例很小时切片很细。",
+    "run_clock": "只认 24 小时制「时:分」；竖屏阶段多时镜头跟着最新的节点走。",
+    "doc_edit": "超过 60 行只打前 60 行；修改最多 4 条。",
+    "wave_align": "波形是示意的，不是真实音频的波形。",
+    "qc_sheet": "不给 media 时画通用示意帧；有真实素材请给真实帧。",
+    "pair_check": "自定义 regions 要按真实画面里的位置写。",
+})
+ONLY = {"fx4": set(CAT["流程"])}     # demo reels that also carry other effects: the effects cut from them
 # transitions written on an effect beat ("tr" on the next beat, not a plate): how they are listed
 PREFER = {"bar_race": "fx2"}      # effects reworked later: cut their card from the newer demo reel
 TR_LABEL = {
@@ -439,7 +466,7 @@ def main():
         vj = ex_dir / "video.json"
         if not vj.exists(): continue
         for ob in json.loads(vj.read_text())["beats"]:
-            if ob.get("scene") == "fx":
+            if ob.get("scene") == "fx" and ob.get("card") is not False:
                 ORIG.setdefault(f"{ob['fx']}-{ob['preview']}" if ob.get("preview") else ob["fx"], ob)
     tr_seen = set()
     for b, reel, reel_v, sid in beats():

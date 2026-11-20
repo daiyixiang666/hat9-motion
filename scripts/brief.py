@@ -61,7 +61,7 @@ TEMPLATE = """# 需求单：{title}
 """
 
 VISUAL_SCENES = {"compare", "number"}       # these always carry a picture or a chart
-MOVING_FX_CATS = {"音视频", "屏幕", "素材", "节奏"}   # effects that play footage or cut inside themselves
+MOVING_FX_CATS = {"音视频", "屏幕", "素材", "节奏", "流程"}   # effects that play footage, cut inside themselves or keep moving on a hold (the process kit)
 
 
 def catalog():

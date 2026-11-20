@@ -21,7 +21,8 @@ sits (review.caption_safety) — none may enter the bottom 400 px, the top 200 p
 Duration (--durations, on with --plugins): a subset of effects at 0.8 s and 6 s beats (targets "pop@0.8", "pop@6").
 Work packages add targets in examples/stress/targets/<pkg>.json, any of three shapes:
   {"base", "beats": [{fx, ...}]}  ·  {"base", "targets": {fx: [variant]}, "durations": [1, 3, 8], "meta": {}, "allow": [[fx, code, rx]]}
-  ·  {fx: [variant]}.
+  ·  {fx: [variant]}. A top-level "beat": 6 builds that file's targets with 6 s beats (targets named "fx@n" keep n).
+A partial run (--only) writes its summary to examples/stress/build/report_<targets>.md; the full run writes report.md.
 
 Test pictures: examples/aefx/assets/broll/*.jpg when present (Mixkit stills, never committed) plus placeholders
 drawn here in every aspect. Test video: clips under $H9_MEDIA/broll (your own media library), referenced by path; skipped when unset.
@@ -58,6 +59,7 @@ KNOWN = [
     ("interlude", r"safe right .*div\.src", "WP5 interlude: the source credit is right-aligned into the 9:16 button zone"),
     ("cold_open", r"(safe right .*span\.fl|text_box_overflow|canvas_overflow)", "WP5 cold_open: a long 2-line title slams full-width (and past the canvas at 3 s)"),
     ("chapter_breather", r"(safe right|text_box_overflow)", "WP5 chapter_breather: a long next-chapter title runs full width"),
+    ("code", r"safe right .*span\.cd-t", "code: a long source line being typed in a 5 s beat (screens.json \"beat\") runs under the window's right-edge fade into the 9:16 button zone"),
 ]
 DUR_FX = ["pop", "mask_up", "apple_blur", "stomp", "odometer", "impact", "tracking", "burst", "bars", "donut", "list_stack", "table", "media"]
 DUR_SET = (0.8, 6.0)
@@ -77,6 +79,7 @@ WM = {
 WM_EXEMPT = [".ctx .hd", ".pr-thesis .qm"]
 WM_SUBSET = ["press:hook", "press:stores", "press:thesis", "mask_up", "apple_blur", "lower3", "odometer", "cite_quote", "list_stack", "table"]
 TMETA = {}               # target -> extra meta for its composition (e.g. bpm for beat-cut effects)
+TBEAT = {}               # target -> beat length in s from its targets file (top-level "beat"), over the BEAT defaults
 # (target prefix, code, selector regex) that are intentional
 ALLOW = [
     ("*", "container_overflow", r"\.ln|> span"),           # line-mask reveals: the line box is the mask
@@ -304,10 +307,16 @@ def allowed(target, f):
     return False
 
 
+def beat_len(target):
+    """the beat length a target is built with: its "@n" suffix, else its targets file's "beat", else the defaults."""
+    if "@" in target: return float(target.rsplit("@", 1)[1])
+    if target in TBEAT: return TBEAT[target]
+    if target.startswith("press:split"): return 6.0
+    return 4.4 if ":" in target else BEAT.get(target, 2.6)
+
+
 def run_target(target, variants, aspect, snap=True, safe=True):
-    d = 4.4 if ":" in target else BEAT.get(target, 2.6)
-    if target.startswith("press:split"): d = 6.0
-    if "@" in target: d = float(target.rsplit("@", 1)[1])
+    d = beat_len(target)
     vj, style = compose(target, variants, d)
     tag = aspect.replace(":", "x")
     work = BUILD / f"{target.replace(':', '_')}_{tag}"
@@ -482,6 +491,7 @@ def main():
                     key = fxn if dd is None else f"{fxn}@{float(dd):g}"
                     targets.setdefault(key, []).extend(vs)
                     if tj.get("meta"): TMETA[key] = dict(tj["meta"])
+                    if tj.get("beat") and dd is None: TBEAT[key] = float(tj["beat"])
     if a.plugins or a.durations:    # the same effect in a 0.8 s and a 6 s beat (elastic timing: fast entrance / kept alive)
         for fxn in DUR_FX:
             if fxn in targets and targets[fxn]:
@@ -507,8 +517,7 @@ def main():
                 if t not in targets or asp not in a.aspect.split(","): continue
                 work = BUILD / f"{t.replace(':', '_')}_{asp.replace(':', 'x')}"
                 if not (work / "index.html").exists(): continue
-                d = 4.4 if ":" in t else BEAT.get(t, 2.6)
-                if t.startswith("press:split"): d = 6.0
+                d = beat_len(t)
                 style = "reel" if ":" not in t else t.split(":")[0]
                 fl = safe_area(t, style, work, settle_times(t, len(targets[t]), d), d, zones=zones, W=W_, H=H_, extra_ex=WM_EXEMPT)
                 r = {"target": f"{t} [wm {plat}]", "aspect": asp, "ok": not fl, "fails": fl, "known": [], "n": len(targets[t])}
@@ -551,7 +560,8 @@ def main():
         rep += ["", "## 未通过", ""]
         for r in fails:
             rep.append(f"### `{r['target']}` {r['aspect']}"); rep += [f"- {x}" for x in r["fails"][:20]]; rep.append("")
-    rp = OUT / ("report.md" if not a.only else f"report_{re.sub(r'[^A-Za-z0-9_]+', '-', a.only)[:60]}.md")   # partial runs never overwrite the full report
+    rp = OUT / "report.md" if not a.only else BUILD / f"report_{re.sub(r'[^A-Za-z0-9_]+', '-', a.only)[:60]}.md"   # partial runs never overwrite the full report
+    rp.parent.mkdir(parents=True, exist_ok=True)
     rp.write_text("\n".join(rep) + "\n")
     print(f"\n{ok}/{len(res)} passed → {rp}")
     sys.exit(0 if ok == len(res) else 1)

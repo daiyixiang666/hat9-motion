@@ -225,7 +225,8 @@ def fx(a):
         print((f.__doc__ or "").strip() if f else f"没有 {a.name}")
         return
     for k in sorted(aefx.FX):
-        print(f"  {k:<12} {(aefx.FX[k].__doc__ or '').strip().splitlines()[0][:70]}")
+        doc = (aefx.FX[k].__doc__ or "").strip().splitlines()
+        print(f"  {k:<12} {(doc[0] if doc else '')[:70]}")
 
 
 def styles(_):

@@ -1416,6 +1416,78 @@ the cards appear first as a glowing wireframe on a dimmed ground — outlines an
 - 参数：`note`, `title`, `tr`
 - 人气：—
 
+### `tilt_board` — 组件墙 Tilt Board
+
+<img src="../assets/previews/fx/tilt_board.webp" width="480" alt="tilt_board">
+
+a 3D-tilted board of many small cards that scroll along it continuously, a big tabular counter beside it (16:9: title + counter stacked left, the board bleeding off the right edge; 9:16: title and counter on top, the board bleeding off the bottom right). The counter climbs to `value` over the beat; every k-th step a new card drops on to the board with a 4-frame squash. A non-numeric `value` is shown as text and the board still runs.
+
+- 参数：`images`, `index`, `items`, `media`, `rows`, `title`, `unit`, `value`
+- 人气：—
+
+### `doc_edit` — 改稿窗口 Doc Edit
+
+<img src="../assets/previews/fx/doc_edit.webp" width="480" alt="doc_edit">
+
+a document window — path in the title bar, a heading, then the lines type in with a caret at an adaptive speed (all done by 80 % of the beat; long documents scroll by rule). Each edit then strikes its `from` span (the text greys) and types the `to` text in after it, marked; the paragraph reflows as it grows. 16:9: window right, a left column of big verbs (写 / 删 / 改) lighting in step with a live character count; 9:16: window full width, tags and a verb-chip row under it.
+
+- 参数：`edits`, `heading`, `kicker`, `lines`, `path`, `tags`, `text`
+- 人气：—
+
+### `time_budget` — 一天的账 Time Budget
+
+<img src="../assets/previews/fx/time_budget.webp" width="480" alt="time_budget">
+
+a thick ring is the whole day (`total`, big in the centre); `mine` is one thin accent slice at its TRUE angle from 12 o'clock, with a leader line out to its label; the rest of the ring is 24 − x segments that fill clockwise one by one (3 frames and a tick each, led by a clock hand), each dropping a finished piece on to a tower (16:9) or dealing one into a fan of cards (9:16); then `count` lands as a stamp.
+
+- 参数：`count`, `media`, `mine`, `mine_label`, `rest_label`, `thumbs`, `total`, `units`
+- 人气：—
+
+### `pair_check` — 前后对照 Pair Check
+
+<img src="../assets/previews/fx/pair_check.webp" width="480" alt="pair_check">
+
+two panels — before and after — enter together; then for each point a marker circles the matching region of the better panel (numbered), the point word lights under the panels with an underline wipe, and the other panel dims another 12 %. Regions default to bottom strip, centre, right third, whole frame (then left third); `regions` overrides them. Without media, the panels are drawn frames of visibly different richness. 16:9: side by side, points in one row; 9:16: stacked — the loser on top at 720 px, the winner under it at 900 px — points as a grid of chips.
+
+- 参数：`points`, `regions`
+- 人气：—
+
+### `wave_align` — 声画对齐 Wave Align
+
+<img src="../assets/previews/fx/wave_align.webp" width="480" alt="wave_align">
+
+a voice clip as a waveform window; a playhead sweeps it at constant speed and as it reaches each chunk the chunk's caption box snaps up onto its exact span (6 frames, overshoot) tied by a thin bracket. With `fix`, the box holding the wrong word shakes, the word is struck and the correction slides in. Chunk spans come from the film's word timestamps when the beat has them, else from the chunks' lengths. 16:9: one wide window with the boxes under it and the fix line at the bottom left; 9:16: two stacked lanes inside the window (boxes under each) and a caption-file card below that fills with timecoded rows.
+
+- 参数：`chips`, `chunks`, `fix`, `title`, `words`
+- 人气：—
+
+### `run_clock` — 夜里跑完 Run Clock
+
+<img src="../assets/previews/fx/run_clock.webp" width="480" alt="run_clock">
+
+a digital wall clock (tabular, digits roll per column) and a track. For every stage the clock rolls to its time, the node pops (0 → 1.15 → 1 in 6 frames), a line draws from the previous node and the stage's thumbnail slides out of the node; positions along the track are proportional to real time (midnight-safe). A bracket then totals the elapsed time, computed from start → end. 16:9: clock top right, a full-width horizontal track, bracket under it. 9:16: clock on top, a vertical track with one row per stage, a camera that follows the newest node, the total in a plate under the last row.
+
+- 参数：`end`, `items`, `note`, `stages`, `start`, `total_label`
+- 人气：—
+
+### `qc_sheet` — 逐帧检查 QC Sheet
+
+<img src="../assets/previews/fx/qc_sheet.webp" width="480" alt="qc_sheet">
+
+a contact sheet of the film in a window; a scan bar sweeps it row by row, once per check, each sweep faster than the last. Frames it passes get a small tick per check; each check in the list lights while its sweep runs and gets a big tick when it completes. With `fail`, that check's sweep stops on that frame: the frame is outlined in the alert colour and labelled, it flips to a corrected frame (green, the scan resumes) — or stays flagged when `fixed` is false. Without `media`, the frames are drawn generically from the style. 16:9: grid window left, checklist right with big ticks; 9:16: grid window on top, the checks stacked under it.
+
+- 参数：`checks`, `count`, `fail`, `media`, `title`
+- 人气：—
+
+### `card_wall` — 作品墙 Card Wall
+
+<img src="../assets/previews/fx/card_wall.webp" width="480" alt="card_wall">
+
+a tilted moving wall of real thumbnails under a headline (16:9 and 9:16 composed apart).
+
+- 参数：`sub`, `text`, `tilt`, `title`, `value`
+- 人气：—
+
 ## 转场
 
 写在下一个 beat 上：`"tr": "zoomin"`。

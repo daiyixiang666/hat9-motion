@@ -13,6 +13,7 @@ HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
 from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive, beatsync, presenter  # noqa: E402
+from h9 import nav  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -242,6 +243,7 @@ def main():
     pacing.breaths(X, spans, D)                                           # a small inhale in each narration pause (meta.breath)
     if layers:
         layers.build(X)                                                   # the presenter + the device chrome and grounds
+    nav.build(X, video, beats, times, D, style, [s[0] for s in spans])   # step navigator + pinned header (meta.nav / beat "pin")
     fit.scope_media(X)                                                    # video wrappers only while their video plays
     if series.get("opener"): delivery.series_opener(X, meta, float(meta.get("lead") or 1.8))
     delivery.ai_label(X, D, meta)

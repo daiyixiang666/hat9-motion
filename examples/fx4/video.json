@@ -1,0 +1,380 @@
+{
+ "meta": {
+  "title": "一份 video.json 怎么变成成片",
+  "aspect": "16:9",
+  "style": "reel",
+  "silent": true,
+  "caption_len": 16,
+  "caption_mode": "reading",
+  "words": "assets/audio/words.json",
+  "duration": 47.3,
+  "section": "工作流程",
+  "channel": "示例频道",
+  "mascot_mode": "off",
+  "nav": {
+   "steps": [
+    "需求单",
+    "静帧板",
+    "小样",
+    "整片",
+    "快切",
+    "自检"
+   ],
+   "numbered": true
+  },
+  "caption_fix": {
+   "188": "*188*",
+   "25%": "*25%*",
+   "2分45秒": "*2分45秒*",
+   "26": "*26*"
+  }
+ },
+ "beats": [
+  {
+   "scene": "fx",
+   "fx": "tilt_board",
+   "t": 0.0,
+   "d": 5.0,
+   "topic": "做片流程",
+   "value": 188,
+   "unit": "个效果",
+   "title": "这个仓库有",
+   "media": [
+    "assets/fx/area_overlay.jpg",
+    "assets/fx/beat_cut.jpg",
+    "assets/fx/black_slam.jpg",
+    "assets/fx/choose_one.jpg",
+    "assets/fx/cite_article.jpg",
+    "assets/fx/cite_stack.jpg",
+    "assets/fx/collage.jpg",
+    "assets/fx/countdown.jpg",
+    "assets/fx/cursor.jpg",
+    "assets/fx/doc_photo.jpg",
+    "assets/fx/donut.jpg",
+    "assets/fx/drop_stack.jpg",
+    "assets/fx/earth_zoom.jpg",
+    "assets/fx/formula.jpg",
+    "assets/fx/ghost_type.jpg",
+    "assets/fx/glass.jpg",
+    "assets/fx/glitch.jpg",
+    "assets/fx/glyph_sphere.jpg",
+    "assets/fx/halftone.jpg",
+    "assets/fx/handwrite.jpg",
+    "assets/fx/mosaic.jpg",
+    "assets/fx/news_flash.jpg",
+    "assets/fx/parallax.jpg",
+    "assets/fx/profile_card.jpg",
+    "assets/fx/rack_focus.jpg",
+    "assets/fx/receipt.jpg",
+    "assets/fx/relation_graph.jpg",
+    "assets/fx/scatter.jpg",
+    "assets/fx/shine.jpg",
+    "assets/fx/small_multiples.jpg",
+    "assets/fx/speed_ramp.jpg",
+    "assets/fx/sponsor_card.jpg",
+    "assets/fx/spotlight.jpg",
+    "assets/fx/stamp_press.jpg",
+    "assets/fx/talking_head.jpg",
+    "assets/fx/term_card.jpg",
+    "assets/fx/typewriter.jpg",
+    "assets/fx/vertical_title.jpg",
+    "assets/fx/waterfall.jpg"
+   ],
+   "rows": 3,
+   "line": "这个仓库有*188个*效果，外加17种转场。",
+   "src": "scripts/h9/aefx.py 登记的效果 · gallery/effects.json 的转场"
+  },
+  {
+   "scene": "fx",
+   "fx": "doc_edit",
+   "t": 5.0,
+   "d": 6.0,
+   "topic": "做片流程",
+   "step": 1,
+   "path": "examples/fx4/video.json",
+   "heading": "## 第 8 拍 · qc_sheet",
+   "lines": [
+    "{\"fx\": \"qc_sheet\", \"d\": 6,",
+    "\"checks\": [\"黑屏\", \"闪帧\", \"文字重叠\"],",
+    "\"fail\": {\"index\": 9, \"check\": 1, \"fixed\": false}}"
+   ],
+   "edits": [
+    {
+     "line": 1,
+     "from": "\"黑屏\", \"闪帧\", \"文字重叠\"",
+     "to": "\"画面不冻住\", \"字号够大\", \"字和底对比够\""
+    }
+   ],
+   "tags": [
+    "一句一个 beat",
+    "改 1 处"
+   ],
+   "line": "第一关需求单：写 video.json，一句一个 beat。",
+   "src": "本片 examples/fx4/video.json 第 8 拍"
+  },
+  {
+   "scene": "fx",
+   "fx": "time_budget",
+   "t": 11.0,
+   "d": 5.5,
+   "topic": "做片流程",
+   "step": 1,
+   "pin": "brief check",
+   "total": "38.4 秒",
+   "mine": "9.6秒",
+   "mine_label": "纯文字",
+   "rest_label": "其余 6 拍：数字和图表",
+   "thumbs": [
+    "assets/stills/reel_b1_9x16.jpg",
+    "assets/stills/reel_b3_9x16.jpg",
+    "assets/stills/reel_b4_9x16.jpg",
+    "assets/stills/reel_b5_9x16.jpg",
+    "assets/stills/reel_b6_9x16.jpg",
+    "assets/stills/reel_b7_9x16.jpg"
+   ],
+   "units": 6,
+   "count": "text-share 25%",
+   "line": "分镜检查先算一遍：reel 示例纯文字占 *25%*。",
+   "src": "hat9.py brief check examples/reel/video.json --aspect 9:16"
+  },
+  {
+   "scene": "fx",
+   "fx": "pair_check",
+   "t": 16.5,
+   "d": 4.5,
+   "topic": "做片流程",
+   "step": 2,
+   "pin": "stills",
+   "left": {
+    "label": "纯文字页 · title",
+    "media": "assets/stills/reel_title_16x9.jpg"
+   },
+   "right": {
+    "label": "图表页 · rank",
+    "media": "assets/stills/reel_rank_16x9.jpg"
+   },
+   "points": [
+    "标题只占左栏",
+    "横条按真实长度",
+    "每条标数值",
+    "底行写算式"
+   ],
+   "regions": [
+    [
+     0.0,
+     0.12,
+     0.36,
+     0.42
+    ],
+    [
+     0.5,
+     0.06,
+     0.33,
+     0.78
+    ],
+    [
+     0.85,
+     0.1,
+     0.15,
+     0.66
+    ],
+    [
+     0.03,
+     0.91,
+     0.42,
+     0.07
+    ]
+   ],
+   "line": "第二关静帧板，哪页只有字一眼看出。",
+   "src": "hat9.py stills examples/reel/video.json --aspect 16:9 --settled"
+  },
+  {
+   "scene": "fx",
+   "fx": "wave_align",
+   "t": 21.0,
+   "d": 5.5,
+   "topic": "做片流程",
+   "step": 3,
+   "pin": "sample",
+   "title": "examples/fx4 / words.json",
+   "words": [
+    "这个仓库有188个效果",
+    "外加17种转场",
+    "第一关需求单",
+    "写video.json",
+    "一句一个beat",
+    "分镜检查先算一遍"
+   ],
+   "chips": [
+    "make_timing.py",
+    "每秒 5.6 字"
+   ],
+   "line": "第三关小样，只做最难的 4 秒，字幕按时间一段段对上。",
+   "src": "本片字幕时间 examples/fx4/make_timing.py"
+  },
+  {
+   "scene": "fx",
+   "fx": "run_clock",
+   "t": 26.5,
+   "d": 6.0,
+   "topic": "做片流程",
+   "step": 4,
+   "pin": "render",
+   "start": "00:06",
+   "note": "examples/mixue 实测",
+   "stages": [
+    {
+     "label": "小样",
+     "at": "00:07",
+     "media": "assets/run/mixue_sample.jpg",
+     "cue": 1.3
+    },
+    {
+     "label": "横竖屏整片",
+     "at": "00:08",
+     "media": "assets/run/mixue_render_16x9.jpg",
+     "cue": 2.5
+    },
+    {
+     "label": "自检",
+     "at": "00:09",
+     "media": "assets/run/mixue_review.jpg",
+     "cue": 3.7
+    }
+   ],
+   "total_label": "2 分 45 秒",
+   "line": "第四关整片，横竖屏各渲一遍：mixue 示例全程 *2分45秒*。",
+   "src": "00:06:31 brief check 开始 → 00:09:16 review 结束"
+  },
+  {
+   "scene": "fx",
+   "fx": "card_wall",
+   "t": 32.5,
+   "d": 3.0,
+   "topic": "做片流程",
+   "step": 5,
+   "pin": "montage",
+   "title": "快切 montage",
+   "sub": "有实拍才用 · 这条片没有实拍",
+   "resolve": "none",
+   "line": "第五关快切，有实拍才用。",
+   "src": "hat9.py montage：卡拍快切实拍素材",
+   "anchor": false,
+   "card": false
+  },
+  {
+   "scene": "fx",
+   "fx": "qc_sheet",
+   "t": 35.5,
+   "d": 6.0,
+   "topic": "做片流程",
+   "step": 6,
+   "pin": "review",
+   "media": [
+    "assets/qc/reel_9x16_00.jpg",
+    "assets/qc/reel_9x16_01.jpg",
+    "assets/qc/reel_9x16_02.jpg",
+    "assets/qc/reel_9x16_03.jpg",
+    "assets/qc/reel_9x16_04.jpg",
+    "assets/qc/reel_9x16_05.jpg",
+    "assets/qc/reel_9x16_06.jpg",
+    "assets/qc/reel_9x16_07.jpg",
+    "assets/qc/reel_9x16_08.jpg",
+    "assets/qc/reel_9x16_09.jpg",
+    "assets/qc/reel_9x16_10.jpg",
+    "assets/qc/reel_9x16_11.jpg",
+    "assets/qc/reel_9x16_12.jpg",
+    "assets/qc/reel_9x16_13.jpg",
+    "assets/qc/reel_9x16_14.jpg",
+    "assets/qc/reel_9x16_15.jpg",
+    "assets/qc/reel_9x16_16.jpg",
+    "assets/qc/reel_9x16_17.jpg",
+    "assets/qc/reel_9x16_18.jpg",
+    "assets/qc/reel_9x16_19.jpg",
+    "assets/qc/reel_9x16_20.jpg",
+    "assets/qc/reel_9x16_21.jpg",
+    "assets/qc/reel_9x16_22.jpg",
+    "assets/qc/reel_9x16_23.jpg"
+   ],
+   "checks": [
+    "画面不冻住",
+    "字号够大",
+    "字和底对比够"
+   ],
+   "fail": {
+    "index": 9,
+    "check": 1,
+    "fixed": false
+   },
+   "title": "examples/reel / 导出前检查",
+   "line": "第六关自检，逐帧过一遍：字号不够，这一项打了叉。",
+   "src": "hat9.py render examples/reel/video.json --aspect 9:16 的自动检查"
+  },
+  {
+   "scene": "fx",
+   "fx": "card_wall",
+   "t": 41.5,
+   "d": 5.8,
+   "topic": "做片流程",
+   "media": [
+    "../../assets/previews/atlas_16x9.jpg",
+    "../../assets/previews/bauhaus_16x9.jpg",
+    "../../assets/previews/chrome3d_16x9.jpg",
+    "../../assets/previews/clay_16x9.jpg",
+    "../../assets/previews/doc_16x9.jpg",
+    "../../assets/previews/editorial_16x9.jpg",
+    "../../assets/previews/flat_16x9.jpg",
+    "../../assets/previews/hud_16x9.jpg",
+    "../../assets/previews/ink_16x9.jpg",
+    "../../assets/previews/iso3d_16x9.jpg",
+    "../../assets/previews/minimal_16x9.jpg",
+    "../../assets/previews/mixue_16x9.jpg",
+    "../../assets/previews/papercut_16x9.jpg",
+    "../../assets/previews/pixel_16x9.jpg",
+    "../../assets/previews/poster_16x9.jpg",
+    "../../assets/previews/reel_16x9.jpg",
+    "../../assets/previews/riso_16x9.jpg",
+    "../../assets/previews/screen_16x9.jpg",
+    "../../assets/previews/sketch_16x9.jpg",
+    "../../assets/previews/studio_16x9.jpg",
+    "../../assets/previews/teleshop_16x9.jpg",
+    "../../assets/previews/thread_16x9.jpg",
+    "../../assets/previews/title_16x9.jpg",
+    "../../assets/previews/vapor_16x9.jpg",
+    "../../assets/previews/yuefen_16x9.jpg",
+    "../../assets/previews/zine_16x9.jpg",
+    "../../assets/previews/atlas_9x16.jpg",
+    "../../assets/previews/bauhaus_9x16.jpg",
+    "../../assets/previews/chrome3d_9x16.jpg",
+    "../../assets/previews/clay_9x16.jpg",
+    "../../assets/previews/doc_9x16.jpg",
+    "../../assets/previews/editorial_9x16.jpg",
+    "../../assets/previews/flat_9x16.jpg",
+    "../../assets/previews/hud_9x16.jpg",
+    "../../assets/previews/ink_9x16.jpg",
+    "../../assets/previews/iso3d_9x16.jpg",
+    "../../assets/previews/minimal_9x16.jpg",
+    "../../assets/previews/mixue_9x16.jpg",
+    "../../assets/previews/papercut_9x16.jpg",
+    "../../assets/previews/pixel_9x16.jpg",
+    "../../assets/previews/poster_9x16.jpg",
+    "../../assets/previews/reel_9x16.jpg",
+    "../../assets/previews/riso_9x16.jpg",
+    "../../assets/previews/screen_9x16.jpg",
+    "../../assets/previews/sketch_9x16.jpg",
+    "../../assets/previews/studio_9x16.jpg",
+    "../../assets/previews/teleshop_9x16.jpg",
+    "../../assets/previews/thread_9x16.jpg",
+    "../../assets/previews/title_9x16.jpg",
+    "../../assets/previews/vapor_9x16.jpg",
+    "../../assets/previews/yuefen_9x16.jpg",
+    "../../assets/previews/zine_9x16.jpg"
+   ],
+   "value": "26",
+   "title": "种风格，各一条示例片",
+   "sub": "都从一份 video.json 开始",
+   "line": "*26种*风格，各一条示例片，都从一份 video.json 开始。",
+   "src": "assets/previews 里每种风格的示例片封面"
+  }
+ ]
+}

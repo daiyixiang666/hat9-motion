@@ -1,0 +1,40 @@
+{
+ "base": ".",
+ "note": "fx4 flow：time_budget / run_clock / tilt_board — 最少参数、典型、极长文字、最多条目、读不出的时间、跨午夜、非数字值",
+ "durations": [7],
+ "beats": [
+  {"fx": "time_budget", "line": "最少参数。"},
+  {"fx": "time_budget", "total": "24 小时", "mine": "30 分钟", "units": 12, "count": "一天 5–10 期",
+   "thumbs": ["assets/previews/reel_16x9.jpg", "assets/previews/flat_9x16.jpg", "assets/previews/minimal_16x9.jpg", "assets/previews/hud_16x9.jpg", "assets/previews/editorial_16x9.jpg", "assets/previews/studio_16x9.jpg"],
+   "line": "一天 24 小时，我只花 30 分钟。"},
+  {"fx": "time_budget", "total": "一整天，从早到晚的二十四个小时", "mine": "大概一个半小时左右吧", "mine_label": "我自己真正动手的那一部分时间",
+   "rest_label": "剩下的所有步骤，包括查资料、写分镜、出静帧、渲染和自检，全部交给机器去跑", "count": "一天能做很多很多很多很多很多期内容", "units": 24, "line": "极长文字。"},
+  {"fx": "time_budget", "total": "1 天", "mine": "1.5h", "units": 24, "count": "24 段", "line": "最多段数，没有缩略图。"},
+  {"fx": "time_budget", "total": "全天", "mine": "一会儿", "units": 3, "line": "读不出的时间。"},
+  {"fx": "time_budget", "total": "8 小时", "mine": "6 小时", "mine_label": "我", "units": 2, "line": "大切片。"},
+  {"fx": "run_clock", "stages": [{"label": "写分镜", "at": "09:05"}, {"label": "出静帧", "at": "09:40"}], "line": "最少参数。"},
+  {"fx": "run_clock", "start": "23:29", "note": "发完一段话，我去睡了", "stages": [
+    {"label": "写分镜", "at": "23:31", "media": "assets/previews/reel_16x9.jpg"},
+    {"label": "出静帧", "at": "23:48", "media": "assets/previews/riso_16x9.jpg"},
+    {"label": "小样", "at": "00:20", "media": "assets/previews/minimal_16x9.jpg"},
+    {"label": "整片渲染", "at": "00:57", "media": "assets/previews/hud_16x9.jpg"},
+    {"label": "自检", "at": "01:23", "media": "assets/previews/editorial_16x9.jpg"}], "line": "跨午夜，典型。"},
+  {"fx": "run_clock", "start": "08:00", "note": "这一句备注故意写得非常非常长，用来测试会不会自动缩小或者省略而不是溢出画面", "stages": [
+    {"label": "第一步：把整段文案拆成一句一句的分镜表", "at": "08:01", "media": "assets/previews/pixel_16x9.jpg"},
+    {"label": "第二步：给每一句挑一个最合适的动效", "at": "08:02"},
+    {"label": "第三步：出静帧板逐张检查", "at": "08:03", "media": "assets/previews/ink_16x9.jpg"},
+    {"label": "第四步：小样", "at": "08:40"},
+    {"label": "第五步：整片渲染并出检查图", "at": "09:10", "media": "assets/previews/zine_16x9.jpg"},
+    {"label": "第六步：自检打分", "at": "09:12"},
+    {"label": "第七步：交付", "at": "09:30", "media": "assets/previews/doc_16x9.jpg"}], "total_label": "3 小时", "line": "七步、极长文字、挤在一起的时间、总时长写错。"},
+  {"fx": "run_clock", "start": "晚上", "stages": [{"label": "查资料", "at": "很快"}, {"label": "写稿", "at": "23:50"}, {"label": "渲染", "at": "后来"}], "line": "读不出的时间。"},
+  {"fx": "run_clock", "start": "22:00", "end": "07:30", "stages": [{"label": "开跑", "at": "22:05"}, {"label": "过半", "at": "02:00"}, {"label": "最后一段", "at": "06:45"}], "line": "跨午夜并有单独的结束时间。"},
+  {"fx": "tilt_board", "value": 400, "line": "最少参数。"},
+  {"fx": "tilt_board", "value": "400+", "unit": "个组件", "title": "好看的画面，拆成组件", "index": "03", "line": "我把好看的画面拆成了 400 个组件。"},
+  {"fx": "tilt_board", "value": 0, "unit": "个", "title": "还没开始", "line": "零。"},
+  {"fx": "tilt_board", "value": 1234567, "unit": "帧", "title": "一个非常非常长的标题，用来测试两行之内放不放得下，以及放不下时会不会省略", "index": "12", "rows": 5, "line": "大数字、长标题、五行。"},
+  {"fx": "tilt_board", "value": "很多很多", "unit": "张图", "line": "不是数字。"},
+  {"fx": "tilt_board", "value": 26, "unit": "种风格", "title": "26 种风格的真实画面", "rows": 2,
+   "media": ["assets/previews/reel_16x9.jpg", "assets/previews/riso_16x9.jpg", "assets/previews/minimal_16x9.jpg", "assets/previews/hud_16x9.jpg", "assets/previews/editorial_16x9.jpg", "assets/previews/studio_16x9.jpg", "assets/previews/pixel_16x9.jpg", "assets/previews/ink_16x9.jpg"], "line": "带真实画面。"}
+ ]
+}

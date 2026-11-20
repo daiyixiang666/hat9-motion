@@ -254,9 +254,11 @@ def skin_for(style):
 
 
 # ------------------------------------------------------------------ geometry
-def content_box(X, kind, captions):
+def content_box(X, kind, captions, nav=False):
     """(left, top, right, bottom) px where the presenter and the beat's graphics may go: clear of the device chrome,
-    the platform's top bar (9:16) and the caption band."""
+    the platform's top bar (9:16) and the caption band. nav=True (the beat shows the meta.nav step navigator or a
+    pinned header, scripts/h9/nav.py) also keeps clear of that: 16:9 the row of chips at the top (about 70 px);
+    9:16 the header chip at the top and the progress rail on the left."""
     W = X.W
     H = X.H
     if X.portrait:
@@ -265,13 +267,25 @@ def content_box(X, kind, captions):
         bottom = 1296 if captions else 1480
         if H != 1920:
             bottom = int(H * bottom / 1920)
-        return (48, top, W - 48, bottom)
+        left = 48
+        if nav:
+            hd_y = 208                        # nav.py: header chip y 208–284 (under the device's top chrome when there is one)
+            if kind != "none":
+                hd_y = max(hd_y, tops.get(kind, 250) + 6)
+            top = max(top, hd_y + 76 + 16)
+            left = max(left, 64 + 16)         # the rail ends at x 64
+        return (left, top, W - 48, bottom)
     tops = {"camera": 120, "browser": 150, "phone": 132, "none": 84}
     top = tops.get(kind, 84)
     right = W - 72
     if kind == "camera":
         right = W - 220
     bottom = H - 176 if captions else H - 72
+    if nav:
+        row_y = 62                            # nav.py: the row of chips y 62–130 (under the device's top chrome when there is one)
+        if kind != "none":
+            row_y = max(row_y, top + 6)
+        top = max(top, row_y + 68 + 12)
     return (72, top, right, bottom)
 
 

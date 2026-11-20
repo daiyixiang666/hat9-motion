@@ -1097,9 +1097,25 @@ FX_CSS = r"""
 .ctx.rlx.photo .cap > span { color:#fff; text-shadow:0 2px 0 #000, 0 0 16px rgba(0,0,0,.6); }
 .ctx.rlx.photo .ft { color:rgba(255,255,255,.85); }
 #root.v .ctx.rlx .cap { top:1340px; } #root.v .ctx.rlx .cap > span { font-size:44px; }
-#root.v .ctx.rlx .ft { top:1450px; line-height:1.25; }   /* foot + source end by y 1510: inside the 1:1 / 4:5 windows (base y 170–1520) */
+#root.v .ctx.rlx .ft { top:1450px; line-height:1.25; }
+#root.v .ctx.rlx .ft { text-shadow:0 0 4px var(--bg), 0 0 10px var(--bg), 0 0 16px var(--bg); }   /* stays readable where an effect's picture runs on under the caption band */   /* foot + source end by y 1510: inside the 1:1 / 4:5 windows (base y 170–1520) */
 """
 STYLE["css"] = FX_CSS + CAP_CSS
+
+
+def _floor_number(X, i):
+    """the outline numeral under an effect page: the beat number, or — when the film runs a step navigator
+    (meta.nav) and this beat is one of its steps — the step number, so the floor never disagrees with the navigator."""
+    meta = X.v.get("meta") or {}
+    beats = X.v.get("beats") or []
+    if meta.get("nav") and i < len(beats) and isinstance(beats[i], dict) and beats[i].get("step") not in (None, False, ""):
+        from h9 import nav
+        spec = nav.spec_of(meta)
+        if spec:
+            k = nav.step_of(beats[i], spec["steps"], i)
+            if k is not None:
+                return f"{k + 1:02d}"
+    return f"{i + 1:02d}"
 
 
 def FX_FRAME(X, cid, t, d, p, parts):
@@ -1116,7 +1132,7 @@ def FX_FRAME(X, cid, t, d, p, parts):
             f'<span class="kc"><b>{i + 1:02d}</b>/{max(n, 1):02d}</span></div>')
     floor = ""
     if not parts["photo"] and P:      # the outline floor sits UNDER the effect (its own clip below the scene), never over it
-        fl, _ = outline_row(X, f"{i + 1:02d}", 1530, 380, W, stroke=LINE, H=X.H)
+        fl, _ = outline_row(X, _floor_number(X, i), 1530, 380, W, stroke=LINE, H=X.H)
         X.clip(f"{cid}f", t, d, fl, "ctx rlx rlf", 1, track=19, attrs="data-layout-allow-overflow")
         floor = fl
     cap = ""

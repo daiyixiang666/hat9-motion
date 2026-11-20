@@ -524,6 +524,7 @@ class Layers:
             current = self.spec["at"]
         start_place = current
         has_captions = bool(X.chars) and style.get("captions") is not False
+        nav_film = bool(meta.get("nav"))
         for i, b in enumerate(beats):
             if self.form:
                 place, opts = place_of(b, start_place)     # with a form, a beat without a value follows the form
@@ -558,7 +559,8 @@ class Layers:
             beat_kind = kind
             if self.chs:
                 beat_kind = self.chs["list"][self.chs["of_beat"][i]]["device"]
-            box = device.content_box(X, beat_kind, has_captions)
+            nav_on = bool(b.get("pin")) or (nav_film and b.get("step") not in (None, False, ""))
+            box = device.content_box(X, beat_kind, has_captions, nav_on)   # clear of the step navigator / pinned header
             if not self.spec:
                 pres = (0, 0, X.W, X.H)
                 region = None
