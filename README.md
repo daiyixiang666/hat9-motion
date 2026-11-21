@@ -7,7 +7,7 @@ Turn a voiceover into AE-grade motion graphics — 16:9 and 9:16, from one promp
 
 [▶ 看成片](#成片示例) · [🎛 在线看全部 205 个动效](https://daiyixiang666.github.io/hat9-motion/gallery/) · [⚡ 60 秒出第一条](#60-秒出第一条) · [🤖 交给 AI 用](#安装) · [📖 效果目录](docs/effects.md)
 
-![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.20.0-blue)
+![MIT](https://img.shields.io/badge/license-MIT-black) ![横竖屏](https://img.shields.io/badge/16%3A9%20%2B%209%3A16-✓-ff6a2b) ![零 key](https://img.shields.io/badge/API%20key-0-green) ![HyperFrames](https://img.shields.io/badge/render-HyperFrames%200.8.191-555) ![version](https://img.shields.io/badge/version-0.21.0-blue)
 
 <a href="https://daiyixiang666.github.io/hat9-motion/gallery/"><img src="assets/previews/wall.webp" width="1000" alt="16 种风格的示例成片同时在播：上面两排横屏 16:9，下面一排竖屏 9:16"></a>
 
@@ -284,6 +284,7 @@ examples/           每种风格一条成片（mixue · screen · atlas · doc �
 
 ## 更新
 
+- **0.21.0** 声画同步：有配音时画面时间一律从这段录音里量，画面不再比人声早；音效落在动作落地的那一帧，数字滚动和打字逐下出声；音效变体从 31 种到 63 种、按人声自动定音量，新开关 `meta.sfx_level`。
 - **0.20.0** 讲流程的片子：步骤导航 `meta.nav`、钉住的标题 `beat.pin`，八个流程效果 `card_wall` `tilt_board` `time_budget` `run_clock` `doc_edit` `wave_align` `qc_sheet` `pair_check`，横竖屏各自构图；示例 `examples/fx4/`。
 - **0.19.0** `hud` `reel` `studio` `clay` 按竖屏重做，各带第一条示例成片：`hud` 七种黄铜仪器、`reel` 新场景 `rank` `split` `trend`、`studio` 香槟金属 + 白瓷 + 每站重新取景、`clay` 陶土小人把每句话演出来；示例成片 26 条。
 - **0.18.0** 新增 8 种风格：`riso` 孔版印刷、`yuefen` 月份牌国货、`editorial` 影像杂志、`title` 片头字幕、`bauhaus` 包豪斯构成、`thread` 一线长卷、`teleshop` 电视购物、`vapor` 蒸汽波桌面，各带一条示例成片；新效果 `glyph_sphere` `cube_number` `wire_resolve` 和锚点匹配转场 `anchor_match`；无声展示片可写 `meta.silent`。

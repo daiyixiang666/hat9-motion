@@ -64,7 +64,7 @@ def doctor(_):
     # recommended: the caption gate and word timings depend on these two
     missing = []
     for mod, pkg, why in (("jieba", "jieba", "中文分词：字幕按词断页，渲染关卡用它查「切在词中间」的字幕"),
-                          ("faster_whisper", "faster-whisper", "自己的录音自动对齐出逐字时间（scripts/align.py）")):
+                          ("faster_whisper", "faster-whisper", "有录音时构建自动按录音对齐逐字时间（画面不早于口播）；没装只能按停顿粗对")):
         try:
             __import__(mod)
             print(f"  ✓ {pkg}（推荐）")
@@ -168,27 +168,25 @@ def _chunks(s):
 def voice_for(text, outdir, user=None):
     a = outdir / "assets" / "audio"; a.mkdir(parents=True, exist_ok=True)
     if user:
+        # your recording: the script with estimated times ("est") — the build re-times it on the recording
         dst = a / ("voice" + Path(user).suffix); shutil.copy2(user, dst)
-        return dst, None
-    clean = re.sub(r"\s+", "", text)
+        return dst, _estimate_words(text, a)
     r = sh([PY, str(HERE / "voice.py"), text, str(a)])                       # edge-tts (word timings)
     if r.returncode == 0 and (a / "words.json").exists(): return a / "voice.mp3", a / "words.json"
-    if shutil.which("say"):                                                   # macOS built-in, timings estimated
+    if shutil.which("say"):                                                   # macOS built-in: re-timed on the audio by the build
         aiff = a / "voice.aiff"
         r = sh(["say", "-v", "Tingting", "-r", "210", "-o", str(aiff), text])
         if r.returncode == 0:
             wav = a / "voice.wav"; sh(["ffmpeg", "-v", "error", "-y", "-i", str(aiff), "-ar", "48000", str(wav)]); aiff.unlink(missing_ok=True)
-            with wave.open(str(wav)) as w: dur = w.getnframes() / w.getframerate()
-            return wav, _estimate_words(clean, dur, a)
-    return None, _estimate_words(clean, len(clean) / 4.6, a)                 # silent: ~4.6 字/秒
+            return wav, _estimate_words(text, a)
+    return None, _estimate_words(text, a)                                    # silent: honest text-only estimate
 
 
-def _estimate_words(clean, dur, a):
-    """spread the script's characters evenly over the audio (pauses at punctuation weigh 2 chars)."""
-    weights = [2.0 if ch in "，。！？、；：,.!?;:" else 1.0 for ch in clean]
-    total = sum(weights); t = 0.15; per = (dur - 0.3) / total; words = []
-    for ch, w in zip(clean, weights):
-        words.append({"w": ch, "s": round(t, 3), "e": round(t + per * w, 3)}); t += per * w
+def _estimate_words(text, a):
+    """the script with estimated word times (digits read out, Latin words by syllable, pauses after punctuation),
+    every entry marked "est": a voice added later always re-times the film (h9/voicesync.py)."""
+    from h9 import voicesync
+    words = voicesync.estimate(text.strip())
     p = a / "words.json"; p.write_text(json.dumps(words, ensure_ascii=False)); return p
 
 

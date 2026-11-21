@@ -51,6 +51,8 @@ def main():
         if s[-1] not in PUN: t += 0.45
     out = HERE / "assets" / "audio"
     out.mkdir(parents=True, exist_ok=True)
+    for w in words:
+        w["est"] = True          # estimated from the text: a recording added later re-times the film
     (out / "words.json").write_text(json.dumps(words, ensure_ascii=False))
     print(f"{len(words)} tokens, {t:.2f} s")
 

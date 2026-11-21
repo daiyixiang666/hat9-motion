@@ -13,7 +13,8 @@ HERE = Path(__file__).resolve().parent
 SKILL = HERE.parent
 sys.path.insert(0, str(HERE))
 from h9 import core, fx, captions, fonts, marks, pacing, delivery, fit, aefx, derive, beatsync, presenter  # noqa: E402
-from h9 import nav  # noqa: E402
+from h9 import nav, sound  # noqa: E402
+from h9 import voicesync  # noqa: E402
 
 GSAP = "https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"
 
@@ -170,9 +171,12 @@ def main():
 
     # narration + timing
     voice = meta.get("voice")
-    if meta.get("words"):
-        X.load_words(vpath.parent / meta["words"])
-        data = json.loads((vpath.parent / meta["words"]).read_text())
+    # with a voice file the word times always come from that recording (verified, or re-aligned on it); a words.json
+    # estimated from the text or made for another take is never laid under a real voice (h9/voicesync.py)
+    words_path = voicesync.resolve(vpath, meta)
+    if words_path:
+        X.load_words(words_path)
+        data = json.loads(words_path.read_text())
         X._words = [w for x in data for w in (x["words"] if "words" in x else [x])]
     else:
         X._words = []
@@ -180,6 +184,12 @@ def main():
     voice_url = X.asset(voice, "audio") if voice else None
     voice_url, lead, _ = pacing.time_edits(X, meta, voice_url)
     D = float(meta.get("duration") or 0) or (lead + probe(out / voice_url) + float(meta.get("tail", 0.6)) if voice else 0)
+    if voice and meta.get("duration"):
+        need = lead + probe(out / voice_url)
+        if D < need - 0.05 or voicesync.estimated_meta(vpath, meta):
+            # a duration written before the recording existed (or estimated from the text) follows the recording
+            print(f"voice-sync: meta.duration {D:.2f}s 是录音之前定的，按录音改为 {need + float(meta.get('tail', 0.6)):.2f}s")
+            D = need + float(meta.get("tail", 0.6))
     beats = video["beats"]
     times = []
     pinned = set()
@@ -203,11 +213,18 @@ def main():
         times[i][1] = float(d) if d else nxt - t
     if not D: D = times[-1][0] + times[-1][1]
     X.duration = D
+    for i, b in enumerate(beats):              # beat cuts on "@词": checked against the voice like every other cue
+        cue = b.get("t")
+        if isinstance(cue, str) and cue.strip().startswith("@"):
+            X.cue_log.append({"beat": i, "cue": cue.strip(), "t": round(times[i][0], 3), "kind": "cut"})
 
     # a "world" style builds the whole film as one continuous set (e.g. the 3D studio); otherwise scene by scene
     X.extra_head = X.extra_body = ""
     world = getattr(style["_mod"], "WORLD", None)
-    if world: world(beats, times, X, D)
+    X.sfx_muted, X.sfx_quiet = set(), set()
+    if world:
+        world(beats, times, X, D)
+        sound.snap(X, 0, len(X.tws), 0)
     # presenter layer + chapter device (meta.presenter / meta.device / beat "chapter": {...}); None when absent
     layers = None
     if not world:
@@ -222,9 +239,13 @@ def main():
         if layers:
             layers.begin(X, i)                                            # the beat lays out in the space the presenter leaves
         n_tw, n_audio, n_els = len(X.tws), len(X.audio), len(X.els)
+        X.cue_beat, X.cue_kind, X.cue_marks = i, "key", []                # word-anchored moments of this beat (core.T / enter)
         X.stage_fit = b.get("frame_fit")                                  # {"scale", "x", "y"}: zoom the scene to fill the frame
         scene_fn(b["scene"], style)(b, X, t, d, cid)
         X.stage_fit = None
+        sound.snap(X, n_tw, len(X.tws), n_els)                            # each sound onto the frame its motion lands
+        if b.get("sfx") in ("off", False): X.sfx_muted.add(X.beat["i"])   # "sfx": "off" = this beat makes no effect sounds
+        if b.get("mood") == "heavy" or b.get("fx") in sound.QUIET_FX: X.sfx_quiet.add(X.beat["i"])   # quiet beats stay quiet
         mood = b.get("mood", mood) if i else b.get("mood")
         delivery.paint_mood(X, cid, n_els, mood)                          # "mood": "heavy" → the dark token set for this beat
         pacing.rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els)          # speaking rate sets the tempo (meta.rate_adapt)
@@ -233,6 +254,8 @@ def main():
         if layers:
             layers.end(X, i)
         spans.append((cid, t, d, b.get("hold") == "static"))
+        X.__dict__.setdefault("cue_marks_by_beat", []).append([i, sorted(set(X.cue_marks))])
+        X.cue_beat = None
         if i > 0:
             tr = b.get("tr")
             if isinstance(tr, str) and tr not in ("cut", "hard", "slide", "zoom", "rise", "step", "zoomin", "whip", "spin"): fx.transition(X, t, tr)
@@ -301,14 +324,18 @@ def main():
     elif meta.get("music"):
         music_url = pacing.duck(X, meta, X.asset(meta["music"], "audio"))
         aud.append(f'<audio id="music" class="clip" src="{music_url}" data-start="0" data-duration="{D:.3f}" data-track-index="41" data-volume="{beatsync.bed_volume(X, mvol)}" data-fade-in="0.8" data-fade-out="2"></audio>')
+    # effect sounds: peak on the motion's landing frame, variants rotated, levels set against the voice (h9/sound.py)
+    placed, sfx_plan, sfx_ref = sound.schedule(X, D, (out / voice_url) if voice else None,
+                                               pacing.speech_spans(X._words) if X._words else [])
     lanes = []   # greedy lane allocation so no two SFX share a track while overlapping
-    for i, (t, url, vol) in enumerate(sorted(X.audio)):
+    for i, (t, url, vol, ms) in enumerate(placed):
         if t >= D - 0.05: continue
-        t = max(t, 0); dur = min(probe(out / url) or 1.0, D - t)
+        t = max(t, 0); dur = min((probe(out / url) or 1.0) - ms, D - t)
         k = next((j for j, end in enumerate(lanes) if end <= t), None)
         if k is None: lanes.append(0); k = len(lanes) - 1
         lanes[k] = t + dur
-        aud.append(f'<audio id="fx{i}" class="clip" src="{url}" data-start="{t:.3f}" data-duration="{dur:.3f}" data-track-index="{42 + k}" data-volume="{vol}"></audio>')
+        mst = f' data-media-start="{ms:.3f}"' if ms > 0 else ""
+        aud.append(f'<audio id="fx{i}" class="clip" src="{url}" data-start="{t:.3f}" data-duration="{dur:.3f}"{mst} data-track-index="{42 + k}" data-volume="{vol}"></audio>')
 
     # css: tokens + fonts + base + transitions + scenes + style
     for s in style.get("folio", []): X.used_text.update(s)
@@ -367,6 +394,19 @@ window.__timelines["main"] = tl;
         {"i": i, "t": round(t, 3), "d": round(d, 3), "scene": b.get("scene"), "fx": b.get("fx")} for i, (b, (t, d)) in enumerate(zip(beats, times))]}
     if X.music_beats:      # beat sync: what moved onto the music's beats, and what review.py's av-sync check needs
         beatsync.record(X, tl_json, beats, D)
+    tl_json["fps"] = X.fps
+    tl_json["sfx_level"] = meta.get("sfx_level", "normal")
+    tl_json["sfx_voice_lufs"] = sfx_ref
+    tl_json["sfx_plan"] = sfx_plan
+    # voice <-> picture: every word-anchored moment and the word times the film was timed by (h9/voicesync.check)
+    tl_json["cues"] = X.cue_log
+    tl_json["cue_marks"] = X.__dict__.get("cue_marks_by_beat", [])
+    starts = []
+    for w in voicesync.voiced(X._words):
+        starts.append(round(float(w["s"]), 3))
+    tl_json["voice_sync"] = {"words": str(words_path.name) if words_path else None,
+                             "words_end": round(float(voicesync.voiced(X._words)[-1]["e"]), 3) if starts else None,
+                             "word_starts": starts}
     (out / "timeline.json").write_text(json.dumps(tl_json, ensure_ascii=False, indent=1))
     print(f"{out}  {TW}x{TH}{f' (laid out as {X.layout})' if X.canvas else ''}  {D:.2f}s  {len(X.els)} clips  {len(X.tws)} tweens  style={sid}")
 

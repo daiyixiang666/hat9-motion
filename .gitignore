@@ -19,3 +19,7 @@ examples/*/assets/audio/tts/
 examples/*/tts_win.py
 examples/*/tts_job.json
 examples/demo/gen_images.mjs
+
+# build-time voice sync cache (re-made from the recording by scripts/h9/voicesync.py)
+examples/*/assets/audio/*.sync.json
+examples/*/assets/audio/*.sync-words.json

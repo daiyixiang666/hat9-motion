@@ -130,13 +130,62 @@ def _speech_in(X, t0, t1):
     return n, secs
 
 
+LEAD_MAX = 0.30      # a word-anchored tween starts at most this long before its word (p90 x duration + 2 frames)
+
+
+def _on_word(X, times, t):
+    """True when one of these tween / sound times is a word-anchored moment of this beat ("@词" cue or the start of an
+    entrance landed on one), other than the beat's own start (which a speed-up does not move)."""
+    marks = getattr(X, "cue_marks", None) or []
+    for T in times:
+        if T <= t + 0.005:
+            continue
+        for m in marks:
+            if m - LEAD_MAX <= T <= m + 0.002:          # on the word, or a scene's own lead-in that lands on it
+                return True
+    return False
+
+
 def _wrap(X, n_tw, n_audio, t, s):
-    """play the beat's tween lines s× faster (nested timeline); SFX move with them."""
+    """play the beat's tween lines s× faster (nested timeline, compressed towards the beat start); SFX move with them.
+    Word-anchored lines and sounds stay on the main timeline at their own times: a speed-up never makes a visual land
+    before the word it belongs to (a compressed line at T would land (T - t)·(1 - 1/s) early)."""
     lines = X.tws[n_tw:]
+    fast = []
+    kept = []
+    windows = []            # (start, end) of the word-anchored tweens left at their own times
+    for ln in lines:
+        times = []
+        for x in _T.findall(ln):
+            times.append(float(x))
+        if _on_word(X, times, t):
+            kept.append(ln)
+            dur = max([float(x) for x in _DUR.findall(ln)] or [0.0])
+            for T in times:
+                windows.append((T, T + dur))
+        else:
+            fast.append(ln)
+    if not fast:
+        return
     P = t * (1 - 1 / s)
-    X.tws[n_tw:] = ["{ const __m = tl; { const tl = gsap[\"timeline\"]();\n" + "\n".join(lines)
-                    + f"\ntl.timeScale({s:.4f}); __m.add(tl, {P:.4f}); }} }}"]
-    X.audio[n_audio:] = [(t + (ta - t) / s, u, v) for ta, u, v in X.audio[n_audio:]]
+    X.tws[n_tw:] = ["{ const __m = tl; { const tl = gsap[\"timeline\"]();\n" + "\n".join(fast)
+                    + f"\ntl.timeScale({s:.4f}); __m.add(tl, {P:.4f}); }} }}"] + kept
+    moved = []
+    kept_set, fast_set = set(kept), set(fast)
+    for item in X.audio[n_audio:]:
+        ta = item[0]
+        stays = _on_word(X, [ta], t)
+        for a, b in windows:
+            if a - 0.034 <= ta <= b + 0.034:
+                stays = True               # the sound of a word-anchored motion stays with that motion
+        line = getattr(item[1], "follows", None)          # h9/sound.py paired this sound with one tween line:
+        if line in kept_set: stays = True                 # it goes wherever that line goes
+        elif line in fast_set: stays = False
+        if stays:
+            moved.append(item)
+        else:
+            moved.append((t + (ta - t) / s,) + tuple(item[1:]))
+    X.audio[n_audio:] = moved
 
 
 def rate_adapt(X, b, t, d, cid, n_tw, n_audio, n_els):
@@ -162,14 +211,14 @@ HITS = {
 
 def sound_moments(X, b, t, d, cid):
     """per-beat "sfx": sounds bound to visual hits on the same frame."""
-    for k, m in enumerate(b.get("sfx") or []):
+    for k, m in enumerate(b.get("sfx") if isinstance(b.get("sfx"), list) else []):
         at = m.get("at", 0)
         ta = float(X.T(at, t)) if isinstance(at, str) else t + float(at)
         if not (t - 0.01 <= ta <= t + d): continue
         sn = getattr(X, "snapper", None)
         if sn and m.get("snap") is not False:           # onto the music's beat, within tolerance; "@词" never well before its word
             ta = sn.snap(ta, at, f"sfx {X.beat.get('i', 0)}.{k} ({m.get('name', 'hit')})", t - 0.01, t + d)
-        X.sfx(ta, m.get("name", "hit"), m.get("vol"))
+        X.sfx(ta, m.get("name", "hit"), m.get("vol"), at="hit")
         hit = m.get("hit")
         if sn: X.__dict__.setdefault("sfx_hits", []).append({"t": round(ta, 3), "name": m.get("name", "hit"), "hit": hit})
         if hit in HITS:
@@ -211,10 +260,7 @@ def elastic(X, b, t, d, cid, n_tw, n_audio, n_els, i):
     if ent > 0.85 * d and d < 2.0:                    # short beat: the whole entrance plays faster
         s = min(3.0, ent / (0.8 * d))
         if s < 1.05: return
-        P = t * (1 - 1 / s)
-        X.tws[n_tw:] = ["{ const __m = tl; { const tl = gsap[\"timeline\"]();\n" + "\n".join(lines)
-                        + f"\ntl.timeScale({s:.4f}); __m.add(tl, {P:.4f}); }} }}"]
-        X.audio[n_audio:] = [(t + (ta - t) / s, u, v) for ta, u, v in X.audio[n_audio:]]
+        _wrap(X, n_tw, n_audio, t, s)                  # word-anchored lines keep their times
         return
     if d < 1.8: return
     if re.search(rf'["\']#{re.escape(cid)}["\']\s*,', "\n".join(lines)): return     # the effect moves its own root

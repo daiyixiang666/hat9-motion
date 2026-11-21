@@ -8,4 +8,5 @@
 4. 渲染前必须 `npx --yes hyperframes@0.8.191 check` 无 error；渲染后抽帧看一眼再交付。
 5. 讲流程 / 「N 步」的稿子：`meta.nav` 开步骤导航，每个 beat 写 `step`；画面先从 `card_wall` `tilt_board` `time_budget` `run_clock` `doc_edit` `wave_align` `qc_sheet` `pair_check` 里挑（见 `references/nav.md` 和各自的配方卡），挑不出再用全屏大字。
 6. 不要：调用付费生图 / 视频接口（先问用户）、用别人的 AI 图和视频、打包非 OFL/Apache 字体、把 GSAP 源码放进仓库。
-7. 环境有问题先跑 `python3 scripts/hat9.py doctor`。
+7. 有录音就写进 `meta.voice` 再构建，画面会自动按录音逐字对时；不要手动挪 `t` 去凑声音，不要把录音铺到已渲染的画面上，也不要在剪辑软件里变速。构建报「录音和画面对不上」时按它给的命令补逐字时间（`pip install faster-whisper` 或 `scripts/align.py`）。
+8. 环境有问题先跑 `python3 scripts/hat9.py doctor`。

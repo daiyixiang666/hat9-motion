@@ -50,6 +50,8 @@ def main():
             t += 1 / RATE
             k += 1
     out = HERE / "assets" / "audio" / "words.json"
+    for w in words:
+        w["est"] = True          # estimated from the text: a recording added later re-times the film
     out.write_text(json.dumps(words, ensure_ascii=False))
     print(f"{len(words)} tokens, {t:.2f} s -> {out}")
 

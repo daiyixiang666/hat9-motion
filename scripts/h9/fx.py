@@ -44,7 +44,7 @@ def cut(X, prev, nxt, t, kind=None):
         X.tw(f'tl.from("#{nxt} > .stage", {{rotation:-28, scale:1.9, filter:"blur(18px)", duration:0.4, ease:"power4.out"}}, {t:.3f});')
     elif kind == "step":   # stop-motion: 2 frames off-register then snap
         X.tw(f'tl.from("#{nxt} > .stage", {{x:24, rotation:-1.2, duration:0.1, ease:"steps(2)"}}, {t:.3f});')
-    X.sfx(t - 0.05, "cut")
+    X.sfx(t, "cut", at="hit")
 
 
 TR2 = ("whip_carry", "shape_match", "paper_tear", "paint_wipe")     # drawn by scripts/h9/fx/fx2_transitions.py
@@ -71,7 +71,7 @@ def transition(X, t, kind=None):
         return _tr2(kind)(X, t)
     cid = X.uid("tr")
     a, b = t - 0.32, 0.7          # clip window around the cut
-    X.sfx(t - 0.25 if kind not in ("flash", "glitch") else t, "transition")
+    X.sfx(t, "transition", at="hit")               # the whoosh peaks on the cut (h9/sound.py aligns its peak)
     if kind == "flash":
         X.clip(cid, t, 0.5, "", "tr-flash", Z_TR)
         X.tw(f'tl.fromTo("#{cid}", {{opacity:0.95}}, {{opacity:0, duration:0.45, ease:"power2.out"}}, {t:.3f});')

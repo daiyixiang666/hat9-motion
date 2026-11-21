@@ -115,6 +115,9 @@ class Ctx:
         self.els, self.tws, self.css_parts, self.audio = [], [], {}, []
         self._ids = {}
         self.chars = []
+        self.cue_log = []          # [{beat, cue, t, kind}] every "@词" resolved while a beat is being built
+        self.cue_marks = []        # this beat's word-anchored times (cue times + the starts of entrances landed on them)
+        self.cue_beat = None
         self.duration = float(meta.get("duration", 0) or 0)
         self.rand = random.Random(meta.get("seed", 9))
         self.used_text = set()
@@ -148,7 +151,13 @@ class Ctx:
             if i < 0: raise SystemExit(f"cue {x!r}: '{word}' not found in narration text:\n{self.text}")
             if self.chars[i][1] >= after - 0.05: break
         t = self.chars[i + len(word) - 1][2] if end else self.chars[i][1]
-        return Cue(round(t + off, 3))
+        cue = Cue(round(t + off, 3))
+        log = getattr(self, "cue_log", None)
+        if log is not None and getattr(self, "cue_beat", None) is not None:
+            # every word-anchored moment, for the voice-sync gate (h9/voicesync.check) and time-scale pinning
+            log.append({"beat": self.cue_beat, "cue": str(x).strip(), "t": float(cue), "kind": getattr(self, "cue_kind", "key")})
+            self.cue_marks.append(float(cue))
+        return cue
 
     def _spoken_index(self):
         """the narration as one normalized string (no spaces / punctuation / markup, ASCII lower-cased, '-' dropped)
@@ -282,16 +291,20 @@ class Ctx:
         if not dst.exists() or dst.stat().st_mtime < p.stat().st_mtime: shutil.copy2(p, dst)
         return f"assets/{sub}/{name}"
 
-    def sfx(self, t, role, vol=None):
-        """role = a style SFX role (enter/hit/transition/type/pop...) or a file name in assets/sfx."""
+    def sfx(self, t, role, vol=None, at=None):
+        """role = a style SFX role (enter/hit/transition/type/pop...) or a file name in assets/sfx.
+        t = when the motion that makes the sound starts: h9/sound.py moves the sound's peak onto the frame where that
+        motion lands (and turns count-ups / typing / staggered pops into tick sequences). at="hit": t is the impact
+        itself (a cut, a declared hit frame). vol only nudges the level relative to the style's default for the role;
+        the level itself is set against the narration (meta.sfx_level)."""
         if t is None: return
         spec = self.S.get("sfx", {}).get(role, role)
         if not spec: return
         name, v = (spec if isinstance(spec, (list, tuple)) else (spec, 0.5))
         src = SKILL / "assets" / "sfx" / f"{name}.wav"
         if not src.exists(): return
-        url = self.asset(src, "sfx")
-        self.audio.append((t, url, vol if vol is not None else v))
+        from . import sound
+        self.audio.append((float(t), sound.event(self, t, name, role, vol, v, at), vol if vol is not None else v))
 
     # ---------------- channel name
     @property
@@ -339,6 +352,9 @@ class Ctx:
             e = ease or VERBS.get(verb, (None, self.M["ease"]))[1]
             e = self.M["ease"] if e in ("expo.out", "power3.out") else e
             t = max(getattr(self, "beat", {}).get("t", 0), t - P90.get(e, .45) * dur - 2 / self.fps)
+            marks = getattr(self, "cue_marks", None)
+            if marks is not None:
+                marks.append(round(t, 3))        # this tween is word-anchored: a beat speed-up must not move it
         if verb == "type":
             self.tw(f'tl.from("{sel}", {{opacity:0, duration:0.01, stagger:{st or 0.045}, ease:"none"}}, {t:.3f});'); return
         if verb in CLIPS:

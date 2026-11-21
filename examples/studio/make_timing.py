@@ -57,6 +57,8 @@ def main():
             t += PAUSE
         t0 += slot
     out = HERE / "assets" / "audio" / "words.json"
+    for w in words:
+        w["est"] = True          # estimated from the text: a recording added later re-times the film
     out.write_text(json.dumps(words, ensure_ascii=False))
     starts = [round(sum(SLOTS[:i]), 2) for i in range(len(SLOTS))]
     print(f"{len(words)} tokens, beat starts {starts}, film ends {t0:.2f} s -> {out}")

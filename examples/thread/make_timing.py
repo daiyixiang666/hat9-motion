@@ -63,6 +63,8 @@ def main():
             t = say(words, c, t, max(1.0, room / natural)) + PAUSE
         t0 += slot
     out = HERE / "assets" / "audio" / "words.json"
+    for w in words:
+        w["est"] = True          # estimated from the text: a recording added later re-times the film
     out.write_text(json.dumps(words, ensure_ascii=False))
     print(f"{len(words)} tokens, film ends {t0:.2f} s -> {out}")
 

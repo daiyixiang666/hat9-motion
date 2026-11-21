@@ -23,9 +23,18 @@ Writes <out>/sheet_NN.jpg (2 frames per second, time-stamped) and <out>/review.m
                 that land within ±2 frames of a beat (P1 below 70 %), and sfx whose visual hit is off by > 2 frames (P1)
   music-level   with --video and its build folder: the music bed under speech vs the voice, and in the gaps
                 (P1 when the bed is less than 10 dB under the voice)
+  sfx-sync      with --video and its build folder: an effect sound's loudest instant > 60 ms from the frame its motion
+                lands on (the placed file; without narration also the film's audio)  (P1; P0 when 3+ are > 150 ms off)
+  sfx-repeat    the same effect-sound file 3 times in a row, or one file > 40 % of a film with 8+ sounds  (P1)
+  sfx-level     effect sounds > 18 LU under the voice (median, or any impact)               (P1)
   with --video and its build folder (also run by `brief.py check`, before any render):
   caption-frag  caption pages under 4 glyphs or cut inside a word / number / English run   (P1, P0 above 15 % of pages)
   sync-head     a beat's headline (text / title / big) spoken > 1 s after the beat starts, or before it   (P1, P0 above 3 beats)
+  voice-sync    with a voice: the word times the film was timed by end > max(0.3 s, 2 %) away from the recording's
+                speech, or > 10 % of them start in its pauses                                (P0)
+  voice-cut     the speech runs past the end of the picture                                  (P0)
+  cue-early     a "@词" visual lands > 120 ms before its word is spoken in the recording     (P0; P1 above 80 ms)
+  cue-scaled    a word-anchored animation sits inside a sped-up block                       (P0)   (h9/voicesync.py)
   text-on-face  real presenter footage at "full" under an effect not made to sit on a person   (P1)
   tiny-text     font sizes under 28 px (9:16, 1080 wide) / 22 px (16:9) in the built page      (P1)
   contrast      sampled caption band / big-text frames under 3:1 text-vs-ground contrast    (P1)
@@ -163,11 +172,14 @@ def label_font(size):
 
 
 def load_words(vpath):
-    """the flat word list [{w, s, e}] named by meta.words, or [] when there is none."""
+    """the flat word list [{w, s, e}] the film is timed by (with a voice: the times measured on that recording,
+    h9/voicesync.resolve), or [] when there is none."""
+    from h9 import voicesync
     meta = json.loads(vpath.read_text()).get("meta", {})
-    if not meta.get("words"):
+    path = voicesync.resolve(vpath, meta)
+    if not path:
         return []
-    data = json.loads((vpath.parent / meta["words"]).read_text())
+    data = json.loads(path.read_text())
     return [w for x in data for w in (x["words"] if "words" in x else [x])]
 
 
@@ -362,6 +374,116 @@ def av_checks(film, vpath, bdir, cuts, dur, found):
             print(f"  配乐：人声 {v:.1f} dB，说话时配乐 {m_sp:.1f} dB（低 {v - m_sp:.1f} dB）{gap_s}")
             if v - m_sp < 10:
                 found.append(("P1", "music-level", f"说话时配乐只比人声低 {v - m_sp:.1f} dB（至少 10–12 dB）：调低 music_volume 或开 duck"))
+
+
+def _env_peak(xs, sr, win=0.010):
+    """index of the loudest 10 ms (RMS) in xs, at the centre of its window."""
+    w = max(1, int(win * sr))
+    acc, best, k = 0.0, -1.0, 0
+    for i, x in enumerate(xs):
+        acc += x * x
+        if i >= w: acc -= xs[i - w] * xs[i - w]
+        if acc > best: best, k = acc, i
+    return max(0, k - w // 2), (best / w) ** 0.5 if best > 0 else 0.0
+
+
+def sfx_checks(film, bdir, tl):
+    """effect sounds against their motion, their variety and their level (timeline.json["sfx_plan"] + the render):
+      sfx-sync     a sound's loudest instant (measured: the placed file; in films without narration also the film's audio)
+                   more than 60 ms from the frame its motion lands on                    (P1; P0 when 3+ are off by > 150 ms)
+      sfx-repeat   the same file 3 times in a row, or one file > 40 % of a film with 8+ sounds   (P1)
+      sfx-level    effect sounds more than 18 LU under the voice (median, or any impact)          (P1)"""
+    import wave as _wave
+    out = []
+    plan = (tl or {}).get("sfx_plan")
+    if not plan or not bdir: return out
+    html = (Path(bdir) / "index.html").read_text()
+    placed = {}
+    for tag in re.findall(r'<audio id="fx\d+"[^>]*>', html):
+        at = dict(re.findall(r'([\w-]+)="([^"]*)"', tag))
+        placed.setdefault(Path(at["src"]).stem, []).append((float(at["data-start"]) - float(at.get("data-media-start", 0)), at["src"]))
+    peaks = {}
+    def file_peak(src):
+        if src not in peaks:
+            try:
+                with _wave.open(str(Path(bdir) / src)) as w:
+                    sr = w.getframerate(); raw = w.readframes(w.getnframes())
+                a = array("h"); a.frombytes(raw[:len(raw) // 2 * 2])
+                k, _ = _env_peak([x / 32768 for x in a], sr)
+                peaks[src] = k / sr
+            except (OSError, EOFError, _wave.Error):
+                peaks[src] = None
+        return peaks[src]
+    rows = [r for r in plan if not r.get("own")]
+    off, bad = [], 0
+    for r in rows:
+        cand = placed.get(Path(r["file"]).stem, [])
+        hit = min(cand, key=lambda c: abs(c[0] - (r["start"] - r.get("skip", 0))), default=None)
+        if not hit or abs(hit[0] - (r["start"] - r.get("skip", 0))) > 0.01: continue
+        pk = file_peak(hit[1])
+        if pk is None: continue
+        err = hit[0] + pk - r["impact"]
+        r["_err"] = err
+        if abs(err) > 0.06: off.append((r, err))
+    # in the film's own audio, where a sound stands alone (no narration in the film, nothing else within 0.3 s): its
+    # loudest 10 ms must be within 60 ms of the landing too (catches a renderer that shifts or drops sounds)
+    measured = 0
+    if film and has_audio(film) and 'id="voice"' not in html:
+        sr = 8000
+        xs = pcm(film, sr)
+        imps = sorted(r["impact"] for r in rows)
+        for r in rows:
+            if r.get("seq") or sum(1 for t in imps if abs(t - r["impact"]) < 0.3) > 1: continue
+            a0, a1 = int((r["impact"] - 0.15) * sr), int((r["impact"] + 0.15) * sr)
+            if a0 < 0 or a1 > len(xs): continue
+            seg = list(xs[a0:a1])
+            k, lv = _env_peak(seg, sr)
+            env = sorted(abs(x) for x in seg)
+            if lv <= 4 * (env[len(env) // 2] + 1e-6): continue
+            measured += 1
+            err = (a0 + k) / sr - r["impact"]
+            if abs(err) > 0.06 and all(x[0] is not r for x in off): off.append((r, err))
+    for r, err in off:
+        if abs(err) > 0.15: bad += 1
+    if off:
+        lv = "P0" if bad >= 3 else "P1"
+        out.append((lv, "sfx-sync", f"{len(off)} 个音效最响处离画面落点超过 60 ms：" +
+                    "；".join(f"{r['impact']:.2f}s {r['file']} {err * 1000:+.0f} ms" for r, err in off[:6])))
+    errs = sorted(abs(r["_err"]) for r in rows if "_err" in r)
+    seq = [r["file"] for r in sorted(rows, key=lambda r: r["start"])]
+    run = 1
+    for i in range(1, len(seq)):
+        run = run + 1 if seq[i] == seq[i - 1] else 1
+        if run == 3:
+            out.append(("P1", "sfx-repeat", f"同一个音效 {seq[i]} 连着响了 3 次（{rows[i]['impact']:.1f}s 附近）")); break
+    counts = {}
+    for f in seq: counts[f] = counts.get(f, 0) + 1
+    top = max(counts.items(), key=lambda x: x[1]) if counts else ("", 0)
+    if len(seq) >= 8 and top[1] / len(seq) > 0.40:
+        out.append(("P1", "sfx-repeat", f"{top[0]} 占了全片音效的 {top[1] / len(seq):.0%}（{top[1]}/{len(seq)}）：太单调"))
+    ref = (tl or {}).get("sfx_voice_lufs")
+    lvl_note = ""
+    if ref is not None:
+        man = json.loads((Path(__file__).resolve().parent.parent / "assets" / "sfx" / "manifest.json").read_text())
+        rel = []
+        for r in rows:
+            m = man.get(Path(r["file"]).stem)
+            if not m or not r.get("vol") or m.get("loud") is None: continue
+            import math
+            rel.append((m["loud"] + 20 * math.log10(r["vol"]) - ref, r))
+        if rel:
+            single = sorted(x for x, r in rel if not r.get("seq"))
+            med = single[len(single) // 2] if single else sorted(x for x, _ in rel)[len(rel) // 2]
+            quiet_imp = [(x, r) for x, r in rel if r.get("size") in ("L", "M_impact") and x < -18]
+            sp = sorted(x for x, r in rel if r.get("speech") and not r.get("seq"))
+            gp = sorted(x for x, r in rel if not r.get("speech") and not r.get("seq"))
+            lvl_note = (f"，比人声低：说话时中位 {-sp[len(sp) // 2]:.0f} LU" if sp else "") + (f"、停顿里 {-gp[len(gp) // 2]:.0f} LU" if gp else "")
+            if med < -18 or quiet_imp:
+                out.append(("P1", "sfx-level", f"音效太轻：中位比人声低 {-med:.0f} LU" +
+                            (f"；{len(quiet_imp)} 个冲击音低于 18 LU" if quiet_imp else "") + "（meta.sfx_level 别用 subtle，或检查音效音量）"))
+    print(f"  音效：{len(rows)} 个，{len(counts)} 种文件；峰值离画面落点中位 {errs[len(errs) // 2] * 1000 if errs else 0:.0f} ms、最大 "
+          f"{errs[-1] * 1000 if errs else 0:.0f} ms（无口播的成片里单独可测 {measured} 个）；最多的 {top[0]} {top[1]} 次{lvl_note}")
+    return out
 
 
 def world_flights(film, vpath, given=None):
@@ -773,6 +895,8 @@ def static_checks(vpath, bdir, tl=None, portrait=None):
     if n_pages and not used_jieba:
         found.append(("P1", "caption-frag", "没装 jieba，查不出切在词中间的字幕：pip install jieba"))
     found += graphics_timing(vpath, bdir, tl)
+    from h9 import voicesync
+    found += voicesync.check(vpath, bdir, tl)          # P0: picture timed off the real voice / a visual before its word
     found += text_on_face(vpath, tl)
     found += tiny_text(bdir, portrait)
     if portrait:
@@ -1155,6 +1279,8 @@ def main():
         tl = timeline_for(vpath, bdir)
         if bdir:
             for item in static_checks(vpath, bdir, tl):
+                found.append(item)
+            for item in sfx_checks(film, bdir, tl):
                 found.append(item)
             low, n_probe = contrast_check(film, vpath, bdir, tl)
             for item in low:

@@ -4,7 +4,7 @@ description: 九帽动效 hat9-motion — 把口播视频（真人出镜）、�
 license: MIT
 compatibility: Python 3.9+, Node.js 22+, FFmpeg; Chrome is fetched by HyperFrames on first render. Works in Claude Code, Codex, Cursor, WorkBuddy and any agent that can run shell commands; chat-only assistants use dist/hat9-motion.skill.md.
 metadata:
-  version: "0.20.0"
+  version: "0.21.0"
   author: daiyixiang666
 ---
 
@@ -22,7 +22,7 @@ metadata:
 | 「改一下第 3 句 / 换个转场 / 字太小」 | **C. 改已有片**：只改 `video.json` 对应 beat，重新 render |
 | 「只要封面 / 静帧」 | `scripts/cover.py` 出 16:9 / 4:3 / 3:4 封面，或 `snapshot --at` 抽帧 |
 | 「我有 PDF / 论文 / 新闻 / 截图 / 录屏 / 表格 / 一堆图 / 一个网址」 | 先查 `references/inputs.md` 找对应效果（`cite_*`、`media`、`scroll_shot`、`screencast`、`table` …）；网址用 `scripts/url_brief.py`；**讲产品 / 工具时用 `scripts/ui_capture.py 网址 --auto --aspect 9:16`** 抓真实界面组件（配 `ui_lift` 出框效果），不编界面；表格用 `csv` 参数 |
-| 「只有录音没有逐字时间」 | `scripts/align.py 录音 稿子 --out words.json` |
+| 「只有录音没有逐字时间」/「画面和声音对不上」 | 把录音写进 `meta.voice` 重新构建：画面自动按录音逐字对时（不要拿到剪辑软件里变速）；想先对好可以 `scripts/align.py 录音 稿子 --out words.json` |
 | 「看着像 AI 模板 / 不高级」 | 先读 `references/craft.md`，再跑 `python3 scripts/craft_lint.py <构建目录>` 查默认手法 |
 | 「片子不够厉害 / 太平 / 像 PPT」 | 读 `references/director.md`，从关卡 1 重走：`brief check` 查分镜 → `stills` 看静帧板 → `review` + `--gate` 打分 |
 | 「学这几条参考片的感觉」 | `hat9.py refs 参考*.mp4 --out work/refs` → 写 `principles.md` → `style new` 派生 → 先做一个场景对比参考板 |
@@ -50,7 +50,7 @@ metadata:
      `card_wall` 讲作品数量（一大堆真实作品当底）· `tilt_board` 讲规模（卡片墙 + 计数器）· `time_budget` 讲用时占比（按真实比例切的圆环）· `run_clock` 讲一次跑完用了多久（按真实时间排的节点）· `doc_edit` 讲写稿改稿 · `wave_align` 讲配音和字幕对齐 · `qc_sheet` 讲导出前检查 · `pair_check` 讲前后对比。这八个横屏、竖屏各自构图，数字和时间必须是真的。
    - 相邻 beat 不连用同一个效果；章节之间才用招牌转场（`"tr": "zoomin"` 等），句间默认硬切。
    - **分镜检查**：`hat9.py brief check work/video.json --aspect 9:16`，P0 必须改（纯文字画面太多、一个画面撑太久、大字重复字幕）。
-4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定（逐字时间戳 `meta.words` 用 `scripts/align.py`）；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。
+4. **配音**：口播视频的声音在第 1 步已经拆成 `voice.wav`，直接用；有录音就放进 `work/assets/audio/` 并在 `meta.voice` 指定，`meta.words` 写稿子的逐字时间（没有录音时按字数估的也行），构建时会按这条录音重新量出每个字的时间；只有文案时 `hat9.py quick` 会自动选本地 TTS / 系统语音 / 静音。**先出片、后录音也一样：把录音写进 `meta.voice` 重新构建，不要把声音铺到旧画面上。**
 5. **静帧板**：`hat9.py stills work/video.json --aspect 9:16` → 每个 beat 一张，带口播（加 `--settled` 再出一张每个 beat 结束前、全部内容出齐时的板）。按手机大小逐张看：读得清？和前后不一样？和这句话有关？改到满意。
 6. **小样**：`hat9.py sample work/video.json --range 0,4 --aspect 9:16` 只做最难的几秒（开场钩子、快切），带声音看手感。
 7. **整片 + 声音**：`hat9.py render work/video.json --aspect 9:16 --preview`。它会先自动跑分镜检查，有 P0 就**拒绝渲染**（改掉再来，确实要出才加 `--force`）；渲染完自动出每秒 2 帧的检查图并检查字幕碎片、音画偏差、字压脸、字太小、对比度，**有 P0 退出码非 0，不算完成**。配乐写 `meta.music`（旁边有 `.beats.json` 就自动卡拍：换画面、转场、音效吸到节拍上，不挪到口播词之前）、`"duck": true`（说话时压低）；无人声的快切段写成一个 `{"scene": "fx", "fx": "montage", "clips": [...]}` beat（每刀卡拍、自动挑每段最好看的一秒、每刀写明对应哪句话，配乐自动推上来）。渲染自动把响度标准化到 -14 LUFS。
@@ -63,8 +63,10 @@ metadata:
 - 字幕：一句一页，不在词中间断；真人画面上自动加深色底板。装上 `jieba` 断句更准（`hat9.py doctor` 会提示）。
 - 竖屏字幕不压平台界面：9:16 每页字幕必须在底部 400 px（标题 / 音乐 / 评论栏）以上、顶部 200 px 以下，检查量的是字幕的真实位置，压进去算 P0。
 - 对口播：清单的每一条、大字标题，没写 `at` / `"@词"` 时自动在说到它的那一刻出现。
+- 画面按真实录音对时：有 `meta.voice` 时，逐字时间一律从这条录音上量（装了 `faster-whisper` 用它对齐，没装按停顿切分），按字数估的、给别的录音做的 words.json 不会直接用；没有逐字时间也没有稿子时构建会停下并给出要跑的命令。落在录音停顿里的字挪到真正开口的那一刻。检查里画面比口播早 120 ms 以上、逐字时间和录音长度对不上，都是 P0。
 - 版面：真人口播时，需要地方的图文不会压在脸上，人自动挪到小卡 / 侧边 / 选定的形式位。
 - 缺内容直接报错（不画灰色占位条）：报错就补内容，别加 `skeleton: true` 糊过去。
+- 音效：每个效果的音效自动对到它的动作落定那一帧（按音效最响处对，不按文件开头），数字滚动、打字逐下响，同类声音轮换变体，音量按口播定。只用 `meta.sfx_level`（`subtle` / `normal` / `punchy` / `off`）调整体轻重，不要逐个挪音效时间或改 `vol`。
 - 检查：`render` 前后的检查会自己跑。看到 P1 也要打开检查图看一眼再交付。
 
 ## 硬规则

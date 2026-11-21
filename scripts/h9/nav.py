@@ -614,7 +614,7 @@ def row_run(X, k, ru, act, times, steps, numbered, geo, D, pin_w):
         else:
             for j in range(cur, prev):
                 X.tw(f'tl.to("{S} .nv-chip[data-k=\'{j}\'] .nv-u", {{scaleX:0, transformOrigin:"100% 50%", duration:0.24, ease:"power2.in"}}, {t:.3f});')
-        X.sfx(t - 2 * F, "click", 0.25)
+        X.sfx(t + 2 * F, "click", 0.25, at="hit")       # on the frame the active chip changes
         prev = cur
     if t1 < D:
         X.tw(f'tl.to("{S} .nv-row > *", {{y:-110, duration:0.2, ease:"power3.in", stagger:{F / 3:.4f}}}, {t1 - 0.24:.3f});')
@@ -727,7 +727,7 @@ def rail_run(X, k, ru, act, times, steps, numbered, geo, D):
         X.tw(f'tl.to("{S} .nv-ln[data-k=\'{prev}\']", {{y:-80, duration:{9 * F:.3f}, ease:"power3.inOut"}}, {t - 2 * F:.3f});')
         X.tw(f'tl.fromTo("{S} .nv-ln[data-k=\'{cur}\']", {{y:80}}, {{y:0, duration:{9 * F:.3f}, ease:"power3.inOut", immediateRender:false}}, {t - 2 * F:.3f});')
         X.tw(f'tl.to("{S} .nv-hd", {{width:{widths[cur]}, duration:{9 * F:.3f}, ease:"power3.inOut"}}, {t - 2 * F:.3f});')
-        X.sfx(t - 2 * F, "click", 0.25)
+        X.sfx(t + 2 * F, "click", 0.25, at="hit")       # on the frame the active chip changes
         prev = cur
     if t1 < D:
         X.tw(f'tl.to("{S} .nv-hd", {{y:-90, duration:0.2, ease:"power3.in"}}, {t1 - 0.22:.3f});')

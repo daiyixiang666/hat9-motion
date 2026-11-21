@@ -8,7 +8,7 @@
     "style": "editorial",            // 风格 id，见 styles.md；命令行 --style 可覆盖
     "aspect": "16:9",                // 16:9（默认）| 9:16 | 1:1 | 4:3 | 3:4
     "voice": "assets/audio/voice.mp3",
-    "words": "assets/audio/words.json",   // 逐字/逐词时间戳 [{w,s,e}]；有它才能写 "@关键词"
+    "words": "assets/audio/words.json",   // 逐字/逐词时间戳 [{w,s,e}]；有它才能写 "@关键词"；有 voice 时构建会按录音重新量
     "mascot": "assets/host.webm",  // 透明底的会说话主持人形象（webm，带 alpha）
     "mascot_mode": "cameo",          // 可选：corner 常驻 | cameo 点名出场 | off 不出；不写按风格（有的风格不出主持人）
     "music": "assets/audio/bgm.mp3", "music_volume": 0.12,   // 可选
@@ -27,6 +27,10 @@
 - `d`：可省，默认到下一个 beat 开始。
 - 场景内部的动作点（`at`、`at_left`、`at_hl`……）同样可以写 `"@词"`。写成 `@` 的入场会**提前 2 帧并按缓动的 90% 点对准这个词**，看起来正好落在字上。
 - 关键词要在 words.json 里真的存在（ASR 错字先在 `caption_fix` 外另行核对）。
+- **有录音时，时间以录音为准**（构建自动做，不用开关）：`meta.voice` 指向的录音会被拿来量每个字真正说出的时间——words.json 是用 `scripts/align.py` 在这条录音上对出来的就直接用；否则（按字数估的、TTS 自带的、给另一条录音做的）用 words.json 里的文字当稿子，在录音上重新对齐（装了 `faster-whisper` 用它，没装按停顿切分）。落在录音停顿里的字挪到开口那一刻。结果缓存在 `assets/audio/<录音名>.sync-words.json`，换录音或改 words.json 后下次构建自动重算。有录音却既没有 words.json 也没有 `meta.script` 稿子、又没装对齐模型时，构建停下并给出要跑的命令。
+- **先出片、后录音**：把录音写进 `meta.voice` 重新构建，画面会按新录音重新对时（`meta.duration` 也跟着录音走）；不要把录音铺到旧画面上，也不要在剪辑软件里变速去凑。
+- **还没有录音时**按字数估时间（`hat9.py quick` / `plan` 的静音版）：数字按读法算（「3938」读七个音）、英文按音节、标点后停 0.22 / 0.45 秒，每条带 `"est": true`，以后加录音一定重新对时。
+- **检查**（`brief check` 和渲染关卡，P0 不渲染）：`voice-sync` 逐字时间里的话和录音结束时间差超过 max(0.3 秒, 2%)，或一成以上的字落在录音的停顿里；`voice-cut` 口播比画面长；`cue-early` 某个 `"@词"` 的画面比那个词真正说出来早 120 ms 以上（早 80–120 ms 为 P1；入场按设计提前 2 帧落定，晚 150 ms 以内都算落在字上）；`cue-scaled` 对口播的动画被整段加速。
 - **不写 `at` 也会跟着口播走**（有 words.json 时）：列表、步骤、排名、数值、对白、勾选项……每一项在这个 beat 里口播**说到它**的那一刻出现（按全文匹配，匹配不上再试前 4/3/2 个字；英文不分大小写、忽略 `-`，`A-Level` = `ALevel`）；没说到的项在相邻项之间均分。写了 `at` 的项以 `at` 为准。整个 beat 也一样：`t` 不是 `"@词"` 时，如果大字（`text` / `title` / `big` / `value`）比 `t` 晚 0.8 秒以上才说到，这个 beat 自动推迟到说出来那一刻（上一个 beat 延长补上，只会推迟、不会越过下一个 beat；`montage` / `plate` / 转场 / `cold_open` 不动），构建时打印 `auto-anchor:` 一行。某个 beat 不想动就写 `"anchor": false`。
 
 ## 每个 beat 都可以带
@@ -66,10 +70,11 @@
 | `lead` | 秒数 | 配音和所有 `"@关键词"` 整体后移，前面空出来给无声开场（配合 `cold_open`） |
 | `gaps` | `[{"after": "@词$", "dur": 1.5}]` | 在那个词之后插入静音，后面的词和关键词一起后移（配合 `breather` / `interlude`） |
 | `duck` | `true` 或分贝数（默认 10） | 说话时背景音乐自动压低，停顿里恢复 |
+| `sfx_level` | `"off"` / `"subtle"` / `"normal"`（默认）/ `"punchy"` | 效果音效的整体轻重。默认就是对的：说话时冲击比人声低约 6–8 LU、嗖声约 10、小声音约 11–14，停顿里再响约 4 LU；`subtle` 全体轻 4 dB，`punchy` 重 3 dB，`off` 不要音效。音效的时间（最响处落在动作落定的那一帧）、变体轮换都是自动的 |
 | `music_beats` | beats.json 路径 | 配乐的实测节拍 `{"tempo", "beats": [秒…]}`；不写时自动找配乐旁边的 `<歌名>.beats.json`（素材库 `music/<情绪>/` 里都有） |
 | `beat_snap` | 默认开；`false` 关掉；或容差秒数（默认 0.12） | 有节拍时，换画面、转场、`sfx` 音效和它的画面冲击自动挪到最近的拍上。写 `"@词"` 的时间以口播为准：最多晚 0.12 秒、最多早 2 帧，挪不动就不挪。单个 beat 或音效写 `"snap": false` 不动。挪了什么记在构建目录的 `timeline.json` |
 | beat `music` | `"up"` 或分贝数 | 这一段配乐推上来（默认 +8 dB，`meta.music_up` 可改），用在无人声段；快切 beat 默认就推，写 `false` 不推 |
-| `elastic` | 默认开启；`false` 关掉 | 拍短时入场按比例加快，拍长时落定后镜头继续推进；单个 beat 写 `"hold": "static"` 关掉 |
+| `elastic` | 默认开启；`false` 关掉 | 拍短时入场按比例加快（对在 `"@词"` 上的动画不加速，仍落在词上），拍长时落定后镜头继续推进；单个 beat 写 `"hold": "static"` 关掉 |
 | `speakers` | `{"A": {"name": "主持人", "color": "#f6ce3a", "side": "left"}}` | 多人对话：words.json 里每个词带 `spk`，字幕按说话人分色、分左右、带名牌 |
 | `caption_mode` | `"reading"` / `"punch"` / `"karaoke"` | 卡拉 OK：整句先暗着，说到哪个字亮哪个字 |
 | `caption_tr` | 每句一行 | 第二语言字幕（按 。！？ 切句对齐） |
@@ -92,15 +97,15 @@
 - 配合 `gaps` 在那句话后面空出几拍；不写 `d` 且下一个 beat 没写 `t` 时，这段刚好按段数的拍子长。
 - 例子：`examples/beatsync/`。
 
-工具：`scripts/align.py`（录音 + 稿子 → words.json）、`scripts/cover.py`（16:9 / 4:3 / 3:4 封面）、`scripts/url_brief.py`（网址 → 长截图 + 引用 beat）、`scripts/h9/data.py`（数据效果直接读 CSV / Excel）。
+工具：`scripts/align.py`（录音 + 稿子 → words.json，并记下是在哪条录音上对的）、`scripts/cover.py`（16:9 / 4:3 / 3:4 封面）、`scripts/url_brief.py`（网址 → 长截图 + 引用 beat）、`scripts/h9/data.py`（数据效果直接读 CSV / Excel）。
 
 ## 交付开关（写在 `meta` 里，0.7）
 
 | 开关 | 写法 | 作用 |
 |---|---|---|
 | `breath` | `true` | 旁白 0.25–1.4 秒的停顿里，画面轻轻「吸一口气」 |
-| `rate_adapt` | `true` | 语速快（每秒 6 字以上）时入场整体加速，最多 1.6 倍；语速慢（每秒 3.5 字以下）时镜头推得更开，并加柔光层 |
-| beat `sfx` | `[{"at": "@词", "name": "hit", "vol": 0.5, "hit": "flash"}]` | 音效和画面冲击在同一帧；`hit` 可选 flash / dark / shake / punch |
+| `rate_adapt` | `true` | 语速快（每秒 6 字以上）时入场加速，最多 1.6 倍（对在 `"@词"` 上的动画和它的音效不加速，不会比词早）；语速慢（每秒 3.5 字以下）时镜头推得更开，并加柔光层 |
+| beat `sfx` | `[{"at": "@词", "name": "hit", "vol": 0.5, "hit": "flash"}]` | 音效和画面冲击在同一帧（音效最响处对在 `at` 那一帧）；`hit` 可选 flash / dark / shake / punch；`vol` 只在默认音量上微调。写 `"sfx": "off"` = 这个 beat 一个音效都不要 |
 | beat `mood` + `music_moods` | `"mood": "heavy"`；`{"heavy": "重.mp3"}` | 沉重段落换深色调和配乐，后面的 beat 沿用 |
 | `aspect` | `1:1` / `4:5` / `3:4` | 按 9:16 排版后缩放裁切；`canvas: false` 关掉 |
 | `ai_label` | `true` / `"AI 生成"` / `{"text", "pos"}` | 画面角落常驻「AI 生成」标识 |

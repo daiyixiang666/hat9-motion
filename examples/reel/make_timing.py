@@ -56,6 +56,8 @@ def main():
             print(f"beat {i + 1}: script runs to {t:.2f} s, past the beat end {end:.2f} s")
     out = HERE / "assets" / "audio"
     out.mkdir(parents=True, exist_ok=True)
+    for w in words:
+        w["est"] = True          # estimated from the text: a recording added later re-times the film
     (out / "words.json").write_text(json.dumps(words, ensure_ascii=False))
     print(f"{len(words)} tokens, film {len(BEATS) * BEAT:.1f} s")
 

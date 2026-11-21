@@ -45,7 +45,8 @@ def loud(mp4, lufs):
     tmp.replace(mp4)
 
 
-GATE_RULES = (("caption-frag", "字幕不碎（≥4 字、不切词）"), ("sync-head", "大字和口播同步"), ("text-on-face", "字不压脸"),
+GATE_RULES = (("caption-frag", "字幕不碎（≥4 字、不切词）"), ("sync-head", "大字和口播同步"),
+              ("voice-sync", "画面按真实录音对时"), ("cue-early", "画面不早于口播"), ("text-on-face", "字不压脸"),
               ("tiny-text", "字号够大"), ("contrast", "字和底对比够"), ("freeze", "画面不冻住"), ("hook", "前 2 秒有变化"),
               ("slides", "不是 PPT"), ("caption-dup", "大字不只重复字幕"), ("loudness", "响度"), ("dead-air", "没有空白声音"))
 

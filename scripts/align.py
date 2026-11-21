@@ -14,9 +14,14 @@ Backends (--backend auto tries them in this order):
                   length. Good enough for captions and most "@cues"; a real aligner is better for single words.
 The script is the source of truth for the text (ASR spelling mistakes never reach the captions); the recording only
 supplies the timing. Unmatched glyphs are interpolated between their matched neighbours.
+No word starts inside a pause of the recording (moved to where the speech resumes). Next to the output it writes
+<name>.align.json (which recording, which backend): the build uses these times as is only for that exact recording.
 """
-import argparse, difflib, json, re, subprocess, sys
+import argparse, difflib, json, os, re, subprocess, sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from h9 import voicesync  # noqa: E402
 
 PUN = set("，。、；：！？,.;:!?…—“”‘’（）《》「」 ")
 STOP = set("。！？!?")
@@ -38,11 +43,27 @@ def load_transcript(path):
     return out
 
 
+ASR_USED = {}
+
+
 def asr_faster_whisper(audio):
+    """Whisper word timestamps. The medium model starts words within ~40 ms of a forced aligner once the pauses are
+    fixed (voicesync.refine); small runs ~50 ms early on average and is only the fallback (H9_ASR_MODEL picks one)."""
     from faster_whisper import WhisperModel          # noqa: optional dependency
-    m = WhisperModel("small", device="auto", compute_type="auto")
-    segs, _ = m.transcribe(str(audio), language="zh", vad_filter=True, condition_on_previous_text=False, word_timestamps=True)
-    return [{"w": w.word.strip(), "s": w.start, "e": w.end} for s in segs for w in (s.words or []) if w.word.strip()]
+    names = [os.environ["H9_ASR_MODEL"]] if os.environ.get("H9_ASR_MODEL") else ["medium", "small"]
+    last = None
+    for name in names:
+        try:
+            m = WhisperModel(name, device="auto", compute_type="auto")
+        except Exception as e:                       # no network for the first download, not enough memory …
+            last = e
+            continue
+        # a short punctuated prompt: Chinese output with punctuation; never the script itself (it makes Whisper repeat lines)
+        segs, _ = m.transcribe(str(audio), language="zh", vad_filter=False, condition_on_previous_text=False, word_timestamps=True,
+                               initial_prompt="以下是普通话的句子，带标点。")
+        ASR_USED["model"] = name
+        return [{"w": w.word.strip(), "s": w.start, "e": w.end} for s in segs for w in (s.words or []) if w.word.strip()]
+    raise RuntimeError(f"faster-whisper model not available: {last}")
 
 
 def asr_whisperx(audio):
@@ -57,18 +78,31 @@ def asr_whisperx(audio):
 
 
 def match(script, words):
-    """script glyphs ← transcript glyph times (difflib on punctuation-free strings), the rest interpolated."""
+    """script glyphs ← transcript times. Both sides are compared as what is read aloud (voicesync.reading_units:
+    "248" = 二百四十八, "97.5%" = 百分之九十七点五, a Latin word = one unit), so a transcript that writes digits still
+    matches a script that spells them out and the other way round; unmatched glyphs are interpolated."""
     tc = []
     for w in words:
-        g = [c for c in w["w"] if c not in PUN]
-        for k, c in enumerate(g):
-            a = w["s"] + (w["e"] - w["s"]) * k / len(g); b = w["s"] + (w["e"] - w["s"]) * (k + 1) / len(g)
-            tc.append((c, a, b))
-    sc = [c for c in script if c not in PUN]
-    times = [None] * len(sc)
-    sm = difflib.SequenceMatcher(a=sc, b=[c for c, _, _ in tc], autojunk=False)
+        units = voicesync.reading_units(w["w"])
+        n = len(units)
+        for k in range(n):
+            a = w["s"] + (w["e"] - w["s"]) * k / n
+            b = w["s"] + (w["e"] - w["s"]) * (k + 1) / n
+            tc.append((units[k][0], a, b))
+    su = voicesync.reading_units(script)
+    sm = difflib.SequenceMatcher(a=[u for u, _ in su], b=[u for u, _, _ in tc], autojunk=False)
+    got = {}
     for blk in sm.get_matching_blocks():
-        for k in range(blk.size): times[blk.a + k] = tc[blk.b + k][1:]
+        for k in range(blk.size):
+            gi = su[blk.a + k][1]
+            a, b = tc[blk.b + k][1], tc[blk.b + k][2]
+            if gi in got:
+                got[gi] = (min(got[gi][0], a), max(got[gi][1], b))
+            else:
+                got[gi] = (a, b)
+    idx = [i for i, c in enumerate(script) if c not in PUN]
+    times = [got.get(i) for i in idx]
+    sc = [script[i] for i in idx]
     return fill(times, tc[0][1] if tc else 0.0, tc[-1][2] if tc else 1.0), sc
 
 
@@ -180,9 +214,16 @@ def main():
             used = be; break
         except ImportError:
             print(f"  · {be} not installed — pip install {be}", file=sys.stderr)
+        except RuntimeError as e:
+            print(f"  · {be}: {e}", file=sys.stderr)
     words = to_words(script, times)
+    spans, dur = voicesync.speech_spans(a.audio)
+    words = voicesync.refine(words, spans, dur)          # no word starts in a pause: visuals never land in the breath before it
     Path(a.out).parent.mkdir(parents=True, exist_ok=True)
     Path(a.out).write_text(json.dumps(words, ensure_ascii=False), encoding="utf-8")
+    # which recording these times were measured on: the build trusts them only for that exact file
+    model = ASR_USED.get("model")
+    voicesync.write_sidecar(Path(a.out), Path(a.audio), used + (f":{model}" if used == "faster-whisper" and model else ""))
     print(f"{a.out}  {len(words)} tokens  backend={used}  {words[-1]['e'] if words else 0:.2f}s")
 
 

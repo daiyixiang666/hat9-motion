@@ -22,6 +22,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from h9 import core  # noqa: E402
+from h9 import voicesync  # noqa: E402
 
 HF = ["npx", "--yes", "hyperframes@0.8.191"]
 
@@ -68,8 +69,9 @@ def main():
     style = a.style or meta.get("style", "press"); aspect = a.aspect or meta.get("aspect", "16:9")
     out = Path(a.out) if a.out else src / "long"; out.mkdir(parents=True, exist_ok=True)
     X = core.Ctx(v, {"motion": {}}, out, src, aspect)
-    if meta.get("words"): X.load_words(src / meta["words"])
-    words = json.loads((src / meta["words"]).read_text()) if meta.get("words") else []
+    wpath = voicesync.resolve(vp, meta)       # with a voice: word times measured on that recording
+    if wpath: X.load_words(wpath)
+    words = json.loads(wpath.read_text()) if wpath else []
     words = [w for x in words for w in (x["words"] if isinstance(x, dict) and "words" in x else [x])]
     voice = src / meta["voice"] if meta.get("voice") else None
     D = probe(voice) + float(meta.get("tail", 0.6)) if voice else float(meta.get("duration", 0))
